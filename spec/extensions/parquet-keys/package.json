@@ -92,7 +92,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-044. Native classification only; authored projection, binding acceptance and Key admission remain unfinished.",
+  "semantics": "CONTRACT-040 and TD-044. Native classification and separate core 0.6.0 authored scalar projection retain per-key identity residuals. Full binding acceptance and Key admission remain unfinished.",
   "scopes": [
     "document"
   ],
@@ -110,7 +110,10 @@
     "evidence": [
       "tests/core-ideals/key-parquet.test.ts",
       "fixtures/validation/key-parquet-discovery-native.json",
-      "fixtures/validation/key-parquet-browser.json"
+      "fixtures/validation/key-parquet-browser.json",
+      "tests/core-ideals/key-parquet-projection.test.ts",
+      "fixtures/validation/key-parquet-projection-native.json",
+      "fixtures/validation/key-parquet-projection-browser.json"
     ]
   }
 }

@@ -1,0 +1,1547 @@
+{
+  "scope": "Independently generated empty Parquet schema files; per-key identity residuals stay in UMF receipts",
+  "rows": [
+    {
+      "name": "primary-report",
+      "path": "fixtures/parquet/keys/projected-primary-report.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "no-primary-report",
+      "path": "fixtures/parquet/keys/projected-no-primary-report.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "rename-and-reorder",
+      "path": "fixtures/parquet/keys/projected-rename-and-reorder.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-id",
+          "keyName": "Renamed identity",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "boolean",
+      "path": "fixtures/parquet/keys/projected-boolean.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "boolean"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "cbb5307c42e1330a41c592c6c1924d7dffe03f8d84408432d071082d75fdf9bd"
+    },
+    {
+      "name": "decimal",
+      "path": "fixtures/parquet/keys/projected-decimal.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "decimal",
+              "carrier": "int64",
+              "precision": 5,
+              "scale": 2
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "1daa975086fd62e6f371e9d37530ebec6189010fddd8afc195dac5665cec68c2"
+    },
+    {
+      "name": "binary",
+      "path": "fixtures/parquet/keys/projected-binary.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "binary"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460"
+    },
+    {
+      "name": "integer-width",
+      "path": "fixtures/parquet/keys/projected-integer-width.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "integer",
+              "bits": 8,
+              "signed": true
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "1bea17d11144a9858987cdffbea176ac93edf112fd0a56851b72f7932e26150c"
+    },
+    {
+      "name": "unsigned",
+      "path": "fixtures/parquet/keys/projected-unsigned.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "integer",
+              "bits": 64,
+              "signed": false
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "5db080d0306532a7935c36dc150aab11acbd5bf6fc6153558a9b5b2b0a4872b6"
+    },
+    {
+      "name": "string-length",
+      "path": "fixtures/parquet/keys/projected-string-length.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "8d677e9f84d6643ebae6eb409fe1410965965b8eea3cbe2f687497e0990b862f"
+    },
+    {
+      "name": "binary-length",
+      "path": "fixtures/parquet/keys/projected-binary-length.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "binary"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460"
+    },
+    {
+      "name": "compound-ordered",
+      "path": "fixtures/parquet/keys/projected-compound-ordered.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Compound identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/2",
+            "/schema/1"
+          ],
+          "columns": [
+            "external_code",
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "multiple-alternates",
+      "path": "fixtures/parquet/keys/projected-multiple-alternates.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "compound",
+          "keyName": "Extra alternate",
+          "idealPath": "/modules/0/elements/0/keys/2",
+          "nativePaths": [
+            "/schema/1",
+            "/schema/2"
+          ],
+          "columns": [
+            "order_id",
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "unknown-extension",
+      "path": "fixtures/parquet/keys/projected-unknown-extension.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "unknown-key-qualifier",
+      "path": "fixtures/parquet/keys/projected-unknown-key-qualifier.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "unknown-member-qualifier",
+      "path": "fixtures/parquet/keys/projected-unknown-member-qualifier.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "unknown-facet-qualifier",
+      "path": "fixtures/parquet/keys/projected-unknown-facet-qualifier.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca"
+    },
+    {
+      "name": "quoted-identifiers",
+      "path": "fixtures/parquet/keys/projected-quoted-identifiers.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Order \"世界",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order \" id",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "int64"
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order \" id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "d2b929fdb79cd0fe192c5d758ec3a91f9f500f8241cb984a1323c1667bc39627"
+    },
+    {
+      "name": "fixed-binary",
+      "path": "fixtures/parquet/keys/projected-fixed-binary.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "fixed",
+              "bytes": 2
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "42835ebf75bc8235d56a21ffc7087b181ea53a0e7e7ad50e88721f2c5cefffe5"
+    },
+    {
+      "name": "decimal-int32",
+      "path": "fixtures/parquet/keys/projected-decimal-int32.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "decimal",
+              "carrier": "int32",
+              "precision": 5,
+              "scale": 2
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "410a168759b40517c7631406ae669800c3bb9c24d13649b28b169f853b1f809c"
+    },
+    {
+      "name": "decimal-bytes",
+      "path": "fixtures/parquet/keys/projected-decimal-bytes.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "decimal",
+              "carrier": "bytes",
+              "precision": 5,
+              "scale": 2
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "cfdcd862d3a8af0abba3a8b78d8b589f01e6c209c7d872b94994835cba3743ba"
+    },
+    {
+      "name": "decimal-fixed",
+      "path": "fixtures/parquet/keys/projected-decimal-fixed.parquet",
+      "request": {
+        "id": "parquet-key-native",
+        "record": {
+          "module": "m",
+          "element": "record"
+        },
+        "recordName": "Orders",
+        "mode": "report",
+        "columns": [
+          {
+            "field": {
+              "module": "m",
+              "element": "id"
+            },
+            "name": "order_id",
+            "carrier": {
+              "kind": "decimal",
+              "carrier": "fixed",
+              "precision": 5,
+              "scale": 2,
+              "bytes": 4
+            },
+            "fieldId": 17
+          },
+          {
+            "field": {
+              "module": "m",
+              "element": "code"
+            },
+            "name": "external_code",
+            "carrier": {
+              "kind": "primitive",
+              "nativeType": "string"
+            },
+            "fieldId": 18
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/schema/1"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/schema/2"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "2a9fb3721dca25ddce07bbf471ccba51ed028aea93df41edf0b7c041da707eb4"
+    }
+  ]
+}

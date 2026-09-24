@@ -1,0 +1,59 @@
+{
+  "scope": "Authored Parquet Key scalar-record projection and retained ideal/native recovery; collection identity remains a per-key residual. Full binding acceptance and Key admission remain unfinished.",
+  "tests": {
+    "command": [
+      "bun",
+      "test",
+      "./tests/core-ideals/key-parquet.test.ts",
+      "./tests/core-ideals/key-parquet-projection.test.ts"
+    ],
+    "passed": 40,
+    "failed": 0,
+    "assertions": 559
+  },
+  "native": {
+    "runtime": "PyArrow 21.0.0",
+    "schemas": 21,
+    "duplicateWriteReads": 21,
+    "requiredNullRefusals": 21,
+    "integerInputTruncations": 12,
+    "fixedShortValueRefused": true,
+    "physicalForms": [
+      "primitive",
+      "annotated integer",
+      "fixed binary",
+      "decimal int32",
+      "decimal int64",
+      "decimal bytes",
+      "decimal fixed"
+    ]
+  },
+  "browser": {
+    "projected": 21,
+    "blocked": 3,
+    "recoveries": 42,
+    "refusals": 42
+  },
+  "checks": [
+    "bun run typecheck",
+    "bun run build",
+    "bun scripts/core-ideals/key-parquet-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-parquet-projection-browser.ts",
+    "bun run test:schemas"
+  ],
+  "schemas": 306,
+  "packages": 53,
+  "sha256": {
+    "fixtures/validation/key-parquet-projection-native.json": "091aecb76d66327fa7ab15066c226379ccb2b5308108615b46b6ae116905412f",
+    "fixtures/validation/key-parquet-projection-browser.json": "7483054078350e5eb63e8f25813ea5b9fbff9b338097184423cac829f12a5935",
+    "src/core-ideals/key-parquet-projection.ts": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c",
+    "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
+    "scripts/core-ideals/key-parquet-projection-schema.ts": "3bd1bbd59fb7057bc7c819f09a7d715c51955090ca6c142a8d739ef05896a690",
+    "spec/core/key-parquet-projection.schema.json": "6f20b105839cb176c178ccec4add0c130b503ab80d280392a3388170874c9ff4",
+    "scripts/core-ideals/key-parquet-oracle.ts": "1ba6266fd674632ea254cfdf0ec493ef29171d5536087abd0c9f78ec47646c25",
+    "scripts/core-ideals/key-parquet-projection-oracle.ts": "f2b7153b1ffc219c5ac4dcc229b64fb753e0c83a82c57ee6253f4ba9ed24d0df",
+    "tests/core-ideals/key-parquet-projection.test.ts": "02b2acf30885289fbfe86dbcec7873e512bd561643545ff94533da7ff8999d93",
+    "spec/extensions/parquet-keys/package.json": "4f939a9475bafc3911cbf21b58c34d428d248cb44dbafcc8584087d09f010a7e",
+    "src/index.ts": "97468aa8d398979462a1c4427bd53327bbd0d8b3b5d63792dcfafafe33c4244a"
+  }
+}

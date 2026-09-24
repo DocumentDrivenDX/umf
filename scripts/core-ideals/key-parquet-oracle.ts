@@ -1,4 +1,9 @@
-/** Native discovery prerequisite; authored Key projection has separate future evidence. */
+/** Host-only native discovery and generated authored-carrier execution. */
 import assert from 'node:assert/strict';
-const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/key-parquet-discovery-native.py'],{stdout:'inherit',stderr:'inherit'});
-assert.equal(await child.exited,0,'Pinned Parquet native discovery failed');
+for(const command of [
+ ['.venv/bin/python','scripts/core-ideals/key-parquet-discovery-native.py'],
+ ['bun','scripts/core-ideals/key-parquet-projection-oracle.ts']
+]){
+ const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit'});
+ assert.equal(await child.exited,0,'Pinned Parquet native oracle failed: '+command.at(-1));
+}

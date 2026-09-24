@@ -1,0 +1,1006 @@
+{
+  "scope": "PyArrow acceptance of independently emitted empty schema files and duplicate data writes using their Arrow schemas; rewritten physical encodings are not claimed identical. No collection uniqueness or full binding acceptance claim.",
+  "runtime": "PyArrow 21.0.0",
+  "rows": [
+    {
+      "name": "primary-report",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "no-primary-report",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "rename-and-reorder",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "boolean",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "bool",
+          "physical": "BOOLEAN",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "b"
+        },
+        {
+          "order_id": false,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "decimal",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "decimal128(5, 2)",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "binary",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "binary",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "hex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "integer-width",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int8",
+          "physical": "INT32",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "unsigned",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "uint64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "string-length",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "b"
+        },
+        {
+          "order_id": "b",
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "binary-length",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "binary",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "hex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "compound-ordered",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "multiple-alternates",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "unknown-extension",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "unknown-key-qualifier",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "unknown-member-qualifier",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "unknown-facet-qualifier",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "quoted-identifiers",
+      "fields": [
+        {
+          "name": "order \" id",
+          "type": "int64",
+          "physical": "INT64",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order \" id": 1,
+          "external_code": "a"
+        },
+        {
+          "order \" id": 1,
+          "external_code": "a"
+        },
+        {
+          "order \" id": 1,
+          "external_code": "b"
+        },
+        {
+          "order \" id": 2,
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "inputTruncation": {
+        "input": 1.5,
+        "stored": 1
+      }
+    },
+    {
+      "name": "fixed-binary",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "fixed_size_binary[2]",
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "hex": "0101"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "0101"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "hex": "0101"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "hex": "0202"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2,
+      "shortFixedRefused": "ArrowInvalid"
+    },
+    {
+      "name": "decimal-int32",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "decimal128(5, 2)",
+          "physical": "INT32",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "decimal-bytes",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "decimal128(5, 2)",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    },
+    {
+      "name": "decimal-fixed",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "decimal128(5, 2)",
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "fieldId": 17,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        },
+        {
+          "name": "external_code",
+          "type": "string",
+          "physical": "BYTE_ARRAY",
+          "fieldId": 18,
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "decoded": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "requiredNullRefused": "ArrowInvalid",
+      "rowGroups": 2
+    }
+  ],
+  "sha256": {
+    "fixtures/validation/key-parquet-projection-corpus.json": "8e814387d737f0085747ebed675de660f707cb5ad11c3001ff2698ef453621ff",
+    "/home/erik/Projects/umf/scripts/core-ideals/key-parquet-projection-native.py": "178f2f87a4c80c65910b8cb7d2ad730d1222d735442fad1a766d2920d44060c9",
+    "scripts/core-ideals/key-parquet-projection-oracle.ts": "f2b7153b1ffc219c5ac4dcc229b64fb753e0c83a82c57ee6253f4ba9ed24d0df",
+    "scripts/core-ideals/key-parquet-projection-cases.ts": "881ca0cfff36b56d34e71efe6db92eefa2c6987961536876c03a0223986779c5",
+    "src/core-ideals/key-parquet-projection.ts": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c",
+    "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
+    "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
+    "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
+    "scripts/core-ideals/key-avro-projection-cases.ts": "73aa0bace86f88afb97df8c30e5820563aa4ce081573bde012812d11d75cc84e",
+    "scripts/core-ideals/key-tablespec-projection-cases.ts": "e5ee2a0bf222486801f248eb6c6969b4fae66b2849ad36fb1717aa0d122fe8cb",
+    "spec/core/key-parquet-projection.schema.json": "6f20b105839cb176c178ccec4add0c130b503ab80d280392a3388170874c9ff4",
+    "fixtures/parquet/keys/projected-primary-report.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-no-primary-report.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-rename-and-reorder.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-boolean.parquet": "cbb5307c42e1330a41c592c6c1924d7dffe03f8d84408432d071082d75fdf9bd",
+    "fixtures/parquet/keys/projected-decimal.parquet": "1daa975086fd62e6f371e9d37530ebec6189010fddd8afc195dac5665cec68c2",
+    "fixtures/parquet/keys/projected-binary.parquet": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460",
+    "fixtures/parquet/keys/projected-integer-width.parquet": "1bea17d11144a9858987cdffbea176ac93edf112fd0a56851b72f7932e26150c",
+    "fixtures/parquet/keys/projected-unsigned.parquet": "5db080d0306532a7935c36dc150aab11acbd5bf6fc6153558a9b5b2b0a4872b6",
+    "fixtures/parquet/keys/projected-string-length.parquet": "8d677e9f84d6643ebae6eb409fe1410965965b8eea3cbe2f687497e0990b862f",
+    "fixtures/parquet/keys/projected-binary-length.parquet": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460",
+    "fixtures/parquet/keys/projected-compound-ordered.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-multiple-alternates.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-extension.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-key-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-member-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-facet-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-quoted-identifiers.parquet": "d2b929fdb79cd0fe192c5d758ec3a91f9f500f8241cb984a1323c1667bc39627",
+    "fixtures/parquet/keys/projected-fixed-binary.parquet": "42835ebf75bc8235d56a21ffc7087b181ea53a0e7e7ad50e88721f2c5cefffe5",
+    "fixtures/parquet/keys/projected-decimal-int32.parquet": "410a168759b40517c7631406ae669800c3bb9c24d13649b28b169f853b1f809c",
+    "fixtures/parquet/keys/projected-decimal-bytes.parquet": "cfdcd862d3a8af0abba3a8b78d8b589f01e6c209c7d872b94994835cba3743ba",
+    "fixtures/parquet/keys/projected-decimal-fixed.parquet": "2a9fb3721dca25ddce07bbf471ccba51ed028aea93df41edf0b7c041da707eb4"
+  }
+}

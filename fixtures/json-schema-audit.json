@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 305,
-  "passed": 305,
+  "schemas": 306,
+  "passed": 306,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -300,6 +300,13 @@
     {
       "path": "spec/core/key-operation.schema.json",
       "id": "urn:umf:core:key-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/key-parquet-projection.schema.json",
+      "id": "urn:umf:core:key-parquet-projection:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
