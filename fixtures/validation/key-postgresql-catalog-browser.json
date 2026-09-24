@@ -1,0 +1,22 @@
+{
+  "scope": "Pinned native Key observation inspection and retained source only; classification, authored projection and binding acceptance remain unfinished",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "indexes": 17,
+    "recoveries": 2,
+    "refused": 4,
+    "unknownTokensPreserved": true,
+    "provenance": "unverified"
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/key-postgresql-catalog-browser.ts": "33e8b78acf2b69eb928f2976bc514b39c3657a8ddd75c561d226b3095628fb27",
+    "scripts/core-ideals/key-postgresql-catalog-schema.ts": "47ec59b2cec9040419c92ce5f6fc6fca14353badba096391264370551f8260d0",
+    "src/adapters/postgresql/key-catalog.ts": "253de4f2c1a011142ca3737485cc77d34b18dd34063a1723cba591900c826231",
+    "src/index.ts": "f09dd6738836e9ca698c38276cabc49a2e8c8d0a2370a4109e7ee4dc1e2b02d6",
+    "spec/extensions/postgresql-catalog/key-observations-v1.schema.json": "ce18e948e15951c4b6e1c4bb3ded57ad0a6d3ec82a33a9949a24517035e2a0be",
+    "fixtures/validation/key-postgresql-discovery-native.json": "7b11d0849155611c5c49cc1bbe19352140b708998922399c5937c35e070745db",
+    "native/postgresql/keys/query.sql": "30c17356dae5dcd1f0f8b8c55ebc7091a4f50d69ecb3102f9265576f12d35f25",
+    "dist/umf.js": "89b51c0fbf816e7abeb023acdeb08329ab8f8fef98f8879e9d7855078f77ad29"
+  }
+}

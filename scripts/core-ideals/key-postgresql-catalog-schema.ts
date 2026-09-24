@@ -1,0 +1,10 @@
+const text={type:'string',minLength:1},nullableText={type:['string','null']},bool={type:'boolean'},integer={type:'integer',minimum:0,maximum:Number.MAX_SAFE_INTEGER};
+const object=(properties:Record<string,unknown>)=>({type:'object',additionalProperties:true,required:Object.keys(properties),properties});
+const nullable=(schema:unknown)=>({anyOf:[{type:'null'},schema]});
+const collation=object({schema:text,name:text,provider:text,deterministic:bool,locale:nullableText,version:nullableText});
+const constraint=object({name:text,kind:{enum:['p','u']},validated:bool,deferrable:bool,deferred:bool,definition:text});
+const component=object({position:{...integer,minimum:1},attribute:integer,name:nullableText,notNull:{type:['boolean','null']},type:nullableText,typeSchema:nullableText,typeName:nullableText,typeKind:nullableText,operatorClass:nullableText,collation:nullable(collation)});
+const index=object({schema:text,table:text,relationKind:text,index:text,accessMethod:text,unique:bool,primary:bool,valid:bool,ready:bool,live:bool,immediate:bool,nullsNotDistinct:bool,keyCount:{...integer,minimum:1},attributeCount:{...integer,minimum:1},predicate:nullableText,expressions:nullableText,definition:text,constraint:nullable(constraint),parents:{type:'array',items:text,uniqueItems:true},children:{type:'array',items:text,uniqueItems:true},components:{type:'array',minItems:1,items:component}});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:postgresql:key-observations:1.0.0',title:'Pinned PostgreSQL 17.4 key observations; native refinements and source query retained',...object({profile:{const:'umf-postgresql-key-observations-17-v1'},serverVersion:{const:170004},encoding:{const:'UTF8'},query:text,indexes:{type:'array',items:index}})};
+await Bun.write('spec/extensions/postgresql-catalog/key-observations-v1.schema.json',JSON.stringify(schema,null,2)+'\n');
+export {};

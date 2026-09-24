@@ -1,0 +1,1029 @@
+{
+  "scope": "PostgreSQL 17.4 native Key enforcement/comparator/scope discovery only; no binding implementation, ideal admission or equivalence claim",
+  "serverVersion": 170004,
+  "encoding": "UTF8",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "references": [
+    "https://www.postgresql.org/docs/17/ddl-constraints.html",
+    "https://www.postgresql.org/docs/17/catalog-pg-index.html",
+    "https://www.postgresql.org/docs/17/collation.html"
+  ],
+  "cases": [
+    {
+      "id": "primary-rejects-duplicate",
+      "statement": "INSERT INTO umf_key_probe.enforced VALUES(1,11) RETURNING id::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "alternate-rejects-duplicate",
+      "statement": "INSERT INTO umf_key_probe.enforced VALUES(2,10) RETURNING id::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "primary-rejects-null",
+      "statement": "INSERT INTO umf_key_probe.enforced VALUES(NULL,12) RETURNING id::text",
+      "sqlstate": "23502",
+      "value": null
+    },
+    {
+      "id": "alternate-rejects-null",
+      "statement": "INSERT INTO umf_key_probe.enforced VALUES(3,NULL) RETURNING id::text",
+      "sqlstate": "23502",
+      "value": null
+    },
+    {
+      "id": "independent-key-tuples-accepted",
+      "statement": "INSERT INTO umf_key_probe.enforced VALUES(2,20) RETURNING id::text",
+      "sqlstate": "00000",
+      "value": "2"
+    },
+    {
+      "id": "partial-outside-predicate-duplicate",
+      "statement": "INSERT INTO umf_key_probe.partial VALUES(1,false) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "1"
+    },
+    {
+      "id": "partial-inside-predicate-duplicate",
+      "statement": "INSERT INTO umf_key_probe.partial VALUES(1,true) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "nullable-duplicate-null",
+      "statement": "INSERT INTO umf_key_probe.nullable VALUES(NULL) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": null
+    },
+    {
+      "id": "nullable-nonnull-duplicate",
+      "statement": "INSERT INTO umf_key_probe.nullable VALUES(1) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "nulls-not-distinct-duplicate",
+      "statement": "INSERT INTO umf_key_probe.nulls_equal VALUES(NULL) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "nulls-not-distinct-still-stores-null",
+      "statement": "SELECT count(*)::text FROM umf_key_probe.nulls_equal WHERE value IS NULL",
+      "sqlstate": "00000",
+      "value": "1"
+    },
+    {
+      "id": "text-trailing-space-distinct",
+      "statement": "INSERT INTO umf_key_probe.exact_text VALUES('a ') RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "a "
+    },
+    {
+      "id": "text-canonical-unicode-distinct",
+      "statement": "INSERT INTO umf_key_probe.exact_text VALUES(U&'e\\0301') RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "é"
+    },
+    {
+      "id": "text-exact-duplicate",
+      "statement": "INSERT INTO umf_key_probe.exact_text VALUES('a') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "text-empty-present",
+      "statement": "INSERT INTO umf_key_probe.exact_text VALUES('') RETURNING value::text",
+      "sqlstate": "00000",
+      "value": ""
+    },
+    {
+      "id": "text-nul-refused",
+      "statement": "INSERT INTO umf_key_probe.exact_text VALUES(chr(0)) RETURNING value::text",
+      "sqlstate": "54000",
+      "value": null
+    },
+    {
+      "id": "char-padding-collapses-distinct-ideal",
+      "statement": "INSERT INTO umf_key_probe.padded VALUES('a ') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "icu-case-fold-collapses-distinct-ideal",
+      "statement": "INSERT INTO umf_key_probe.folded_text VALUES('A') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "icu-normalization-collapses-distinct-ideal",
+      "statement": "INSERT INTO umf_key_probe.folded_text VALUES(U&'e\\0301') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "typmod-rounding-causes-duplicate",
+      "statement": "INSERT INTO umf_key_probe.rounded VALUES(1.234) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "typmod-rounding-changes-identity",
+      "statement": "INSERT INTO umf_key_probe.rounded VALUES(1.235) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "1.24"
+    },
+    {
+      "id": "typmod-allows-nan",
+      "statement": "INSERT INTO umf_key_probe.rounded VALUES('NaN') RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "NaN"
+    },
+    {
+      "id": "nan-duplicates-compare-equal",
+      "statement": "INSERT INTO umf_key_probe.rounded VALUES('NaN') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "exact-decimal-trailing-zero-duplicate",
+      "statement": "INSERT INTO umf_key_probe.exact_decimal VALUES(1.2300) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "exact-decimal-rejects-rounding",
+      "statement": "INSERT INTO umf_key_probe.exact_decimal VALUES(1.235) RETURNING value::text",
+      "sqlstate": "23514",
+      "value": null
+    },
+    {
+      "id": "exact-decimal-rejects-nan",
+      "statement": "INSERT INTO umf_key_probe.exact_decimal VALUES('NaN') RETURNING value::text",
+      "sqlstate": "23514",
+      "value": null
+    },
+    {
+      "id": "exact-decimal-rejects-infinity",
+      "statement": "INSERT INTO umf_key_probe.exact_decimal VALUES('Infinity') RETURNING value::text",
+      "sqlstate": "23514",
+      "value": null
+    },
+    {
+      "id": "exact-decimal-preserves-value",
+      "statement": "INSERT INTO umf_key_probe.exact_decimal VALUES(2.200) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "2.200"
+    },
+    {
+      "id": "binary-duplicate",
+      "statement": "INSERT INTO umf_key_probe.binary VALUES(decode('0000','hex')) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "binary-distinct",
+      "statement": "INSERT INTO umf_key_probe.binary VALUES(decode('0001','hex')) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "\\x0001"
+    },
+    {
+      "id": "boolean-duplicate",
+      "statement": "INSERT INTO umf_key_probe.boolean VALUES(false) RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "boolean-distinct",
+      "statement": "INSERT INTO umf_key_probe.boolean VALUES(true) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "true"
+    },
+    {
+      "id": "compound-duplicate",
+      "statement": "INSERT INTO umf_key_probe.compound VALUES(1,1) RETURNING tenant::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "compound-distinct-tuple",
+      "statement": "INSERT INTO umf_key_probe.compound VALUES(1,2) RETURNING tenant::text",
+      "sqlstate": "00000",
+      "value": "1"
+    },
+    {
+      "id": "compound-null",
+      "statement": "INSERT INTO umf_key_probe.compound VALUES(NULL,3) RETURNING tenant::text",
+      "sqlstate": "23502",
+      "value": null
+    },
+    {
+      "id": "inherited-child-bypasses-parent-key",
+      "statement": "INSERT INTO umf_key_probe.child VALUES(1) RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "1"
+    },
+    {
+      "id": "parent-query-includes-duplicate-child",
+      "statement": "SELECT count(*)::text FROM umf_key_probe.parent WHERE value=1",
+      "sqlstate": "00000",
+      "value": "2"
+    },
+    {
+      "id": "expression-key-collapses-distinct-column",
+      "statement": "INSERT INTO umf_key_probe.expression VALUES('ABC') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    },
+    {
+      "id": "included-column-not-key",
+      "statement": "INSERT INTO umf_key_probe.included VALUES(2,'same') RETURNING value::text",
+      "sqlstate": "00000",
+      "value": "2"
+    },
+    {
+      "id": "included-key-duplicate",
+      "statement": "INSERT INTO umf_key_probe.included VALUES(1,'different') RETURNING value::text",
+      "sqlstate": "23505",
+      "value": null
+    }
+  ],
+  "deferred": {
+    "sqlstate": "23505",
+    "visibleBeforeCheck": 2
+  },
+  "indexes": [
+    {
+      "live": true,
+      "index": "binary_value_key",
+      "ready": true,
+      "table": "binary",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "bytea",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "bytea",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.bytea_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "binary_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX binary_value_key ON umf_key_probe.\"binary\" USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "boolean_value_key",
+      "ready": true,
+      "table": "boolean",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "boolean",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "bool",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.bool_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "boolean_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX boolean_value_key ON umf_key_probe.\"boolean\" USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "compound_pkey",
+      "ready": true,
+      "table": "compound",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": true,
+      "children": [],
+      "keyCount": 2,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "tenant",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "notNull": true,
+          "position": 2,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 2,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "p",
+        "name": "compound_pkey",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "PRIMARY KEY (tenant, id)"
+      },
+      "definition": "CREATE UNIQUE INDEX compound_pkey ON umf_key_probe.compound USING btree (tenant, id)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 2,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "deferred_value_key",
+      "ready": true,
+      "table": "deferred",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": false,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "deferred_value_key",
+        "deferred": true,
+        "validated": true,
+        "deferrable": true,
+        "definition": "UNIQUE (value) DEFERRABLE INITIALLY DEFERRED"
+      },
+      "definition": "CREATE UNIQUE INDEX deferred_value_key ON umf_key_probe.deferred USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "enforced_external_key",
+      "ready": true,
+      "table": "enforced",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "external",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 2,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "enforced_external_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (external)"
+      },
+      "definition": "CREATE UNIQUE INDEX enforced_external_key ON umf_key_probe.enforced USING btree (external)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "enforced_pkey",
+      "ready": true,
+      "table": "enforced",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": true,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "id",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "p",
+        "name": "enforced_pkey",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)"
+      },
+      "definition": "CREATE UNIQUE INDEX enforced_pkey ON umf_key_probe.enforced USING btree (id)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "exact_decimal_value_key",
+      "ready": true,
+      "table": "exact_decimal",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "numeric",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "numeric",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.numeric_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "exact_decimal_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX exact_decimal_value_key ON umf_key_probe.exact_decimal USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "exact_text_value_key",
+      "ready": true,
+      "table": "exact_text",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "text",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "text",
+          "attribute": 1,
+          "collation": {
+            "name": "C",
+            "locale": null,
+            "schema": "pg_catalog",
+            "version": null,
+            "provider": "c",
+            "deterministic": true
+          },
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.text_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "exact_text_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX exact_text_value_key ON umf_key_probe.exact_text USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "expression_key",
+      "ready": true,
+      "table": "expression",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": null,
+          "type": null,
+          "notNull": null,
+          "position": 1,
+          "typeKind": null,
+          "typeName": null,
+          "attribute": 0,
+          "collation": {
+            "name": "default",
+            "locale": null,
+            "schema": "pg_catalog",
+            "version": null,
+            "provider": "d",
+            "deterministic": true
+          },
+          "typeSchema": null,
+          "operatorClass": "pg_catalog.text_ops"
+        }
+      ],
+      "constraint": null,
+      "definition": "CREATE UNIQUE INDEX expression_key ON umf_key_probe.expression USING btree (lower(value))",
+      "expressions": "lower(value)",
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "folded_text_value_key",
+      "ready": true,
+      "table": "folded_text",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "text",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "text",
+          "attribute": 1,
+          "collation": {
+            "name": "folded",
+            "locale": "und-u-ks-level2",
+            "schema": "umf_key_probe",
+            "version": "153.120",
+            "provider": "i",
+            "deterministic": false
+          },
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.text_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "folded_text_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX folded_text_value_key ON umf_key_probe.folded_text USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "included_key",
+      "ready": true,
+      "table": "included",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        },
+        {
+          "name": "payload",
+          "type": "text",
+          "notNull": false,
+          "position": 2,
+          "typeKind": "b",
+          "typeName": "text",
+          "attribute": 2,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": null
+        }
+      ],
+      "constraint": null,
+      "definition": "CREATE UNIQUE INDEX included_key ON umf_key_probe.included USING btree (value) INCLUDE (payload)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 2,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "nullable_value_key",
+      "ready": true,
+      "table": "nullable",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": false,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "nullable_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX nullable_value_key ON umf_key_probe.nullable USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "nulls_equal_value_key",
+      "ready": true,
+      "table": "nulls_equal",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": false,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "nulls_equal_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE NULLS NOT DISTINCT (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX nulls_equal_value_key ON umf_key_probe.nulls_equal USING btree (value) NULLS NOT DISTINCT",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": true
+    },
+    {
+      "live": true,
+      "index": "padded_value_key",
+      "ready": true,
+      "table": "padded",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "character(2)",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "bpchar",
+          "attribute": 1,
+          "collation": {
+            "name": "default",
+            "locale": null,
+            "schema": "pg_catalog",
+            "version": null,
+            "provider": "d",
+            "deterministic": true
+          },
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.bpchar_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "padded_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX padded_value_key ON umf_key_probe.padded USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "parent_pkey",
+      "ready": true,
+      "table": "parent",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": true,
+      "children": [
+        "umf_key_probe.child"
+      ],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "p",
+        "name": "parent_pkey",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "PRIMARY KEY (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX parent_pkey ON umf_key_probe.parent USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "partial_key",
+      "ready": true,
+      "table": "partial",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": "active",
+      "components": [
+        {
+          "name": "value",
+          "type": "integer",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "int4",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.int4_ops"
+        }
+      ],
+      "constraint": null,
+      "definition": "CREATE UNIQUE INDEX partial_key ON umf_key_probe.partial USING btree (value) WHERE active",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    },
+    {
+      "live": true,
+      "index": "rounded_value_key",
+      "ready": true,
+      "table": "rounded",
+      "valid": true,
+      "schema": "umf_key_probe",
+      "unique": true,
+      "parents": [],
+      "primary": false,
+      "children": [],
+      "keyCount": 1,
+      "immediate": true,
+      "predicate": null,
+      "components": [
+        {
+          "name": "value",
+          "type": "numeric(5,2)",
+          "notNull": true,
+          "position": 1,
+          "typeKind": "b",
+          "typeName": "numeric",
+          "attribute": 1,
+          "collation": null,
+          "typeSchema": "pg_catalog",
+          "operatorClass": "pg_catalog.numeric_ops"
+        }
+      ],
+      "constraint": {
+        "kind": "u",
+        "name": "rounded_value_key",
+        "deferred": false,
+        "validated": true,
+        "deferrable": false,
+        "definition": "UNIQUE (value)"
+      },
+      "definition": "CREATE UNIQUE INDEX rounded_value_key ON umf_key_probe.rounded USING btree (value)",
+      "expressions": null,
+      "accessMethod": "btree",
+      "relationKind": "r",
+      "attributeCount": 1,
+      "nullsNotDistinct": false
+    }
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/keys/query.sql": "30c17356dae5dcd1f0f8b8c55ebc7091a4f50d69ecb3102f9265576f12d35f25",
+    "fixtures/postgresql/keys.sql": "e18dad5cf600c550db4c1749b6c3cfb81ef9a673b3237ed4765775fa13510310",
+    "scripts/core-ideals/key-postgresql-discovery.ts": "0c396b9f18c93917040ed0908820e3fc6d866bb034c8a493f753d9c7f04aee3b"
+  }
+}

@@ -333,3 +333,5 @@ export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-ope
 export * from './core-ideals/key-tablespec';
 
 export * from './core-ideals/key-tablespec-projection';
+
+export * from './adapters/postgresql/key-catalog';
