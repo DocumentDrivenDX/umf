@@ -114,6 +114,14 @@ GraphQL.js 17.0.2, GraphQL-core 3.2.12 and Chromium retain and validate the
 native SDL without creating authored relationship intent. This is additional
 up-classification evidence, not one of the two priority-system admission
 down-projections.
+`fixtures/relationship-native/` pins the TableSpec 1.0 native
+`relationships.foreign_keys` carrier, RDF domain/range and OWL union-class
+source-domain graphs, and a LinkML class slot with range and `multivalued`.
+The native model/parsers and Chromium 148 recover the same source hashes through
+the UMF adapter codecs. TableSpec's confidence value, RDF blank-node list and
+LinkML slot metadata remain native refinements. These observations prepare
+up-classification and residual tests; they do not prove authored projection,
+named target-Key resolution, participation minima or native enforcement.
 
 ## Migration & Rollback
 
