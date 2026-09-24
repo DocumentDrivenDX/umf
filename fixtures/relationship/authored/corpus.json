@@ -1,0 +1,538 @@
+{
+  "scope": "Preparatory CONTRACT-041 cases; base is Key 0.6.0 and relationship proposals are separate until admission",
+  "base": {
+    "umf": "0.6.0",
+    "id": "relationship-authored-shapes",
+    "vocabularies": {},
+    "modules": [
+      {
+        "id": "sales",
+        "namespace": "sales",
+        "elements": [
+          {
+            "id": "Order",
+            "name": "Order",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Order.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Order primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Order.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Invoice",
+            "name": "Invoice",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Invoice.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Invoice primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Invoice.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Customer",
+            "name": "Customer",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Customer.id"
+              },
+              {
+                "module": "sales",
+                "element": "Customer.accountNumber"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Customer primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Customer.id"
+                  }
+                ]
+              },
+              {
+                "id": "account",
+                "name": "Customer account",
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Customer.accountNumber"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Product",
+            "name": "Product",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Product.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Product primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Product.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Employee",
+            "name": "Employee",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Employee.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Employee primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Employee.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Student",
+            "name": "Student",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Student.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Student primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Student.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Course",
+            "name": "Course",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Course.id"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Course primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Course.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Enrollment",
+            "name": "Enrollment",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Enrollment.id"
+              },
+              {
+                "module": "sales",
+                "element": "Enrollment.grade"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Enrollment primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Enrollment.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
+            "id": "Order.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Invoice.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Customer.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Customer.accountNumber",
+            "kind": "field",
+            "scalarType": "string",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Product.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Employee.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Student.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Course.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Enrollment.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Enrollment.grade",
+            "kind": "field",
+            "scalarType": "string",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "one-to-one",
+      "relationship": {
+        "id": "order-invoice",
+        "name": "invoice",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "order"
+      }
+    },
+    {
+      "id": "many-to-one-alternate-key",
+      "relationship": {
+        "id": "order-customer",
+        "name": "customer",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "orders"
+      }
+    },
+    {
+      "id": "many-to-many",
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      }
+    },
+    {
+      "id": "heterogeneous-source",
+      "relationship": {
+        "id": "sales-customer",
+        "name": "customerForSalesDocument",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      }
+    },
+    {
+      "id": "self-referential",
+      "relationship": {
+        "id": "employee-manager",
+        "name": "manager",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Employee"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "reports"
+      }
+    },
+    {
+      "id": "undirected",
+      "relationship": {
+        "id": "student-course",
+        "name": "studies",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "unspecified",
+        "directed": false
+      }
+    },
+    {
+      "id": "reified-association",
+      "relationship": {
+        "id": "student-course-enrollment",
+        "name": "enrollsIn",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "associationRecord": {
+          "module": "sales",
+          "element": "Enrollment"
+        },
+        "directed": true,
+        "inverse": "students"
+      }
+    }
+  ]
+}
