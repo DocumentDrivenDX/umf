@@ -1,0 +1,4295 @@
+{
+  "scope": "Authored facet projections with retained ideal recovery; not full binding acceptance",
+  "counts": {
+    "cases": 216,
+    "projected": 177,
+    "blocked": 39,
+    "idealRecoveries": 354
+  },
+  "rows": [
+    {
+      "id": "0-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f3ab572d276a2ab6dc16a99214dca47c5b4d80a5b164145bcdd1d076100571bf",
+      "expectNative": true
+    },
+    {
+      "id": "0-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f3ab572d276a2ab6dc16a99214dca47c5b4d80a5b164145bcdd1d076100571bf",
+      "expectNative": true
+    },
+    {
+      "id": "0-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-0-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f3ab572d276a2ab6dc16a99214dca47c5b4d80a5b164145bcdd1d076100571bf",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f3ab572d276a2ab6dc16a99214dca47c5b4d80a5b164145bcdd1d076100571bf",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "0-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-0-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7ce4f7b0694c699f40151585baeb89e18bc360a569b04754c299009d4640f685",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7ce4f7b0694c699f40151585baeb89e18bc360a569b04754c299009d4640f685",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-1-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7ce4f7b0694c699f40151585baeb89e18bc360a569b04754c299009d4640f685",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7ce4f7b0694c699f40151585baeb89e18bc360a569b04754c299009d4640f685",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "1-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-1-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d85a65e3e85245cd605b1fac28315e0a96792993dab9622d04fd12107b7e50ca",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "8584c672ad093f0ea1640f9d5f4c1116fb3f50afc08a7501695fefa6c7b1a4ae",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "8584c672ad093f0ea1640f9d5f4c1116fb3f50afc08a7501695fefa6c7b1a4ae",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-2-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "8584c672ad093f0ea1640f9d5f4c1116fb3f50afc08a7501695fefa6c7b1a4ae",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "8584c672ad093f0ea1640f9d5f4c1116fb3f50afc08a7501695fefa6c7b1a4ae",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "2-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-2-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "6dc74d2084de90fcfa4d55fb2cf760e9666336f94f725cfd3b676aedf46297df",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7fe05b65701cad1d96650bb5cbc307d5eb1f0c61e043e0fd441c910d950daa5d",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7fe05b65701cad1d96650bb5cbc307d5eb1f0c61e043e0fd441c910d950daa5d",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-3-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7fe05b65701cad1d96650bb5cbc307d5eb1f0c61e043e0fd441c910d950daa5d",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "7fe05b65701cad1d96650bb5cbc307d5eb1f0c61e043e0fd441c910d950daa5d",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "3-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-3-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 16,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cd3120ec895b584e7e6a223b57e6f86155b1085e0a163426a591984b3f4c7966",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "02243a436a02fd41ec460ae40bdc1a737912282bfc539b028e3de23b3f85a3c6",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "02243a436a02fd41ec460ae40bdc1a737912282bfc539b028e3de23b3f85a3c6",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-4-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "02243a436a02fd41ec460ae40bdc1a737912282bfc539b028e3de23b3f85a3c6",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "02243a436a02fd41ec460ae40bdc1a737912282bfc539b028e3de23b3f85a3c6",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "4-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-4-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "09a2bb7b95705f5f681f900aaaeedaaea4e928ca476c5ec769d19e7bfd00d21b",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5d6a56de78974b980e92518c90f0a9db5a8d4d39e0fe10f93f51a07d4f0ec184",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5d6a56de78974b980e92518c90f0a9db5a8d4d39e0fe10f93f51a07d4f0ec184",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-5-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5d6a56de78974b980e92518c90f0a9db5a8d4d39e0fe10f93f51a07d4f0ec184",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5d6a56de78974b980e92518c90f0a9db5a8d4d39e0fe10f93f51a07d4f0ec184",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "5-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-5-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 32,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ad3e7629b59112244a5f925204382b5e70787f8ac3efa67d2adf211d8a9f6544",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cb463a4b064bbd4911fcaf1fbc19002a9e86fc214e009b9c6707b5db56e4c147",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cb463a4b064bbd4911fcaf1fbc19002a9e86fc214e009b9c6707b5db56e4c147",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-6-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cb463a4b064bbd4911fcaf1fbc19002a9e86fc214e009b9c6707b5db56e4c147",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "cb463a4b064bbd4911fcaf1fbc19002a9e86fc214e009b9c6707b5db56e4c147",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "6-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-6-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "59ec7efcec2228befeaa2cf95e680698ea20e83666f2a8cd3db5511ada096e68",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "9be223a197882a5893651e83964876fb5113cc52c7c688237daa1308abb628c9",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "9be223a197882a5893651e83964876fb5113cc52c7c688237daa1308abb628c9",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-7-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "9be223a197882a5893651e83964876fb5113cc52c7c688237daa1308abb628c9",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "9be223a197882a5893651e83964876fb5113cc52c7c688237daa1308abb628c9",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "7-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-7-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 64,
+          "signed": false
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "f9e2c82e9f1a8a18664143c3fc235e65fe9d44a1d394552aa8c7e396223080fd",
+      "expectNative": true
+    },
+    {
+      "id": "8-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-8-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "8-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-8-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "9b459c516a3d835ee382870d3dba61bb3d2f6bf0db524924485877788bc45e82",
+      "expectNative": true
+    },
+    {
+      "id": "8-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-8-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "8-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-8-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "8-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-8-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "9b459c516a3d835ee382870d3dba61bb3d2f6bf0db524924485877788bc45e82",
+      "expectNative": true
+    },
+    {
+      "id": "8-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-8-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "integer",
+          "bits": 8,
+          "signed": true
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/integerWidth",
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "e2b0592feb0f7f70b643e90d75ff2763243bedc969cc8cef9e4c4cca8a66e067",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "e2b0592feb0f7f70b643e90d75ff2763243bedc969cc8cef9e4c4cca8a66e067",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-9-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "e2b0592feb0f7f70b643e90d75ff2763243bedc969cc8cef9e4c4cca8a66e067",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "e2b0592feb0f7f70b643e90d75ff2763243bedc969cc8cef9e4c4cca8a66e067",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "9-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-9-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int32",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "604b74cc20cddb5fc7447afdd948e682adedfb3aab956971d068001cd2cc98ca",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "604b74cc20cddb5fc7447afdd948e682adedfb3aab956971d068001cd2cc98ca",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-10-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "604b74cc20cddb5fc7447afdd948e682adedfb3aab956971d068001cd2cc98ca",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "604b74cc20cddb5fc7447afdd948e682adedfb3aab956971d068001cd2cc98ca",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "10-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-10-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "int64",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "d8876ff67253d5d4c8b0e4b5a6ee307aab961c7533c3d90804c7e2a1e7c95fc1",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "a40714ad98d06e9bb6192aced61fdfe9fed9b41664754c004886d484ef3f111c",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "a40714ad98d06e9bb6192aced61fdfe9fed9b41664754c004886d484ef3f111c",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-11-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "a40714ad98d06e9bb6192aced61fdfe9fed9b41664754c004886d484ef3f111c",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "a40714ad98d06e9bb6192aced61fdfe9fed9b41664754c004886d484ef3f111c",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "11-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-11-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 4,
+          "scale": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "5b79037cccb403b84c028aabdf3966009d17076c9208c3c43ef52e3e39051ee2",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ebebc38339bcc804e7d8c1dc8d5be0b9ac9692f46fbfc259b8743cf5dc08e3ae",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ebebc38339bcc804e7d8c1dc8d5be0b9ac9692f46fbfc259b8743cf5dc08e3ae",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-12-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ebebc38339bcc804e7d8c1dc8d5be0b9ac9692f46fbfc259b8743cf5dc08e3ae",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "ebebc38339bcc804e7d8c1dc8d5be0b9ac9692f46fbfc259b8743cf5dc08e3ae",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "12-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-12-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "fixed",
+          "precision": 4,
+          "scale": 2,
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "12df60cf64121b2c552ddd804e64958f9d484473c94e3c5a3ef272a12e81099a",
+      "expectNative": true
+    },
+    {
+      "id": "13-declared-schema-native-type-strict",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-native-type-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "strict",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "13-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "13-declared-schema-metadata-only-strict",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-metadata-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "strict",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "275806f69e26ef8da77e2d011b724f6b9e6bdfba6c3df2c63c2bd07b17fc8837",
+      "expectNative": false
+    },
+    {
+      "id": "13-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "275806f69e26ef8da77e2d011b724f6b9e6bdfba6c3df2c63c2bd07b17fc8837",
+      "expectNative": false
+    },
+    {
+      "id": "13-declared-schema-carrier-only-strict",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-carrier-only-strict.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "strict",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "13-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-13-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "exact",
+      "residuals": [],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "13-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-13-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/request/carrier",
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "13-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-13-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/request/carrier",
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "275806f69e26ef8da77e2d011b724f6b9e6bdfba6c3df2c63c2bd07b17fc8837",
+      "expectNative": false
+    },
+    {
+      "id": "13-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-13-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "decimal",
+          "carrier": "bytes",
+          "precision": 77,
+          "scale": 0
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/request/carrier",
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "143617249d55d5b7c69cd3fab775803cd388d9747457004e41e85dac353835d5",
+      "expectNative": false
+    },
+    {
+      "id": "14-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-14-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "2fee2b3936ed42514e7b2cfa75a6de45ccc26bb1e85960e91d6f95058a91d8b7",
+      "expectNative": true
+    },
+    {
+      "id": "14-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-14-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "ff4404ef36664b8dde2a94b966a8b65fda28aa6a185b727e561519a2a2ede5ed",
+      "expectNative": true
+    },
+    {
+      "id": "14-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-14-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "2fee2b3936ed42514e7b2cfa75a6de45ccc26bb1e85960e91d6f95058a91d8b7",
+      "expectNative": true
+    },
+    {
+      "id": "14-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-14-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "2fee2b3936ed42514e7b2cfa75a6de45ccc26bb1e85960e91d6f95058a91d8b7",
+      "expectNative": true
+    },
+    {
+      "id": "14-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-14-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "ff4404ef36664b8dde2a94b966a8b65fda28aa6a185b727e561519a2a2ede5ed",
+      "expectNative": true
+    },
+    {
+      "id": "14-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-14-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "fixed",
+          "bytes": 2
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "2fee2b3936ed42514e7b2cfa75a6de45ccc26bb1e85960e91d6f95058a91d8b7",
+      "expectNative": true
+    },
+    {
+      "id": "16-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-16-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "62473580b5b80e3a19d7de7440e9f661cb80f1c8fbf67bc07e3c4ce25ca4af1d",
+      "expectNative": true
+    },
+    {
+      "id": "16-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-16-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "7cf3cbbf1b1cbe9694bd38673a5a939062e9cfd9965452f616b528f61bb3f723",
+      "expectNative": true
+    },
+    {
+      "id": "16-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-16-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "62473580b5b80e3a19d7de7440e9f661cb80f1c8fbf67bc07e3c4ce25ca4af1d",
+      "expectNative": true
+    },
+    {
+      "id": "16-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-16-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "62473580b5b80e3a19d7de7440e9f661cb80f1c8fbf67bc07e3c4ce25ca4af1d",
+      "expectNative": true
+    },
+    {
+      "id": "16-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-16-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "7cf3cbbf1b1cbe9694bd38673a5a939062e9cfd9965452f616b528f61bb3f723",
+      "expectNative": true
+    },
+    {
+      "id": "16-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-16-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "string"
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "value-domain"
+      },
+      "outcome": "not-expressible",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0/facets/length",
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ],
+      "sha256": "62473580b5b80e3a19d7de7440e9f661cb80f1c8fbf67bc07e3c4ce25ca4af1d",
+      "expectNative": true
+    },
+    {
+      "id": "17-declared-schema-native-type-report",
+      "path": "fixtures/parquet/facets/projection-17-declared-schema-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "declared-schema",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    },
+    {
+      "id": "17-declared-schema-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-17-declared-schema-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "declared-schema",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    },
+    {
+      "id": "17-declared-schema-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-17-declared-schema-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "declared-schema",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    },
+    {
+      "id": "17-pyarrow-21-native-type-report",
+      "path": "fixtures/parquet/facets/projection-17-pyarrow-21-native-type-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "native-type",
+        "profile": "pyarrow-21",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    },
+    {
+      "id": "17-pyarrow-21-metadata-only-report",
+      "path": "fixtures/parquet/facets/projection-17-pyarrow-21-metadata-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "metadata-only",
+        "profile": "pyarrow-21",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    },
+    {
+      "id": "17-pyarrow-21-carrier-only-report",
+      "path": "fixtures/parquet/facets/projection-17-pyarrow-21-carrier-only-report.parquet",
+      "request": {
+        "id": "native",
+        "recordName": "Record",
+        "fieldName": "value",
+        "nullable": false,
+        "carrier": {
+          "kind": "primitive",
+          "nativeType": "float32"
+        },
+        "mode": "report",
+        "encoding": "carrier-only",
+        "profile": "pyarrow-21",
+        "obligation": "exact-input"
+      },
+      "outcome": "approximated",
+      "residuals": [
+        {
+          "path": "/modules/0/elements/0",
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ],
+      "sha256": "0259caa0f80d0549b9ca7279887cc996e90c0b3cd92f5e7d3b47b65a2a73ea09",
+      "expectNative": true
+    }
+  ]
+}

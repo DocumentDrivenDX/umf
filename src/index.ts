@@ -308,3 +308,4 @@ export * from './core-ideals/facets-avro';
 export * from './core-ideals/facets-avro-projection';
 
 export * from './core-ideals/facets-parquet';
+export * from './core-ideals/facets-parquet-projection';

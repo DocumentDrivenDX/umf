@@ -155,3 +155,54 @@ Author provenance, facet-to-carrier matching, strict/report losses, retained
 ideal recovery, composed classification and full binding acceptance remain to
 be implemented and verified. No new public export or package export capability
 is claimed by this checkpoint.
+
+
+## Public authored projection and composition checkpoint
+
+`projectFacetsToParquet` and `recoverFacetsFromParquet` are now public, with a
+closed projection schema and experimental import/export package capability.
+This supersedes the earlier internal-emitter and import-only checkpoints.
+The author must supply a verified core 0.5.0 facet or Field-kind declaration.
+A Field-kind receipt does not prove authorship of existing facet members.
+
+The request explicitly chooses a native carrier, optionality, names, profile,
+encoding and obligation. Carrier choice is honored as supplied; mismatched
+widths or decimal pairs are residualized rather than silently changing either
+the author assertion or native request. Metadata-only encoding additionally
+writes advisory `umf.facets` metadata; it never establishes enforcement.
+Fixed length cannot express only a maximum, and fixed length zero refuses.
+Invalid native carriers block both modes. Strict mode also blocks every loss;
+report mode emits a candidate with retained source meaning and residuals.
+
+The declared-schema profile can represent precision-77 BYTE_ARRAY decimals.
+The PyArrow 21 profile records that reader's precision limit: strict refuses,
+while report retains an explicitly unreadable candidate and its loss. No
+precision reduction is performed. Exact-input requests retain integer truncation
+and binary32 narrowing as permanent counterexamples. Availability, containers,
+other elements, unknown metadata and execution semantics are not silently
+projected by this scalar facet operation.
+
+The 216-case authored matrix has 177 emitted targets and 39 refusals, with
+354 JSON/YAML ideal recoveries. PyArrow accepts 168 emitted schemas and completes
+168 value write/read checks; nine precision-77 targets produce the expected
+reader refusal. See the [native projection record](../../../../fixtures/validation/facets-parquet-projection-native.json).
+The emitted files total 12,607 bytes. Native rewritten data files are value checks,
+not claims of unchanged physical encoding.
+
+The public Chromium matrix matches all 216 outcomes and composes projection
+with native re-import and declared-schema classification. It passes 354 ideal
+recoveries and 354 native-byte recoveries. Facet comparisons match in 165 cases,
+including six facetless controls; 12 differ with explicit residuals. A matching
+facet comparison does not eliminate other residuals, such as fixed lower bounds
+or reader limitations. Forged receipts refuse; getter calls and external
+requests are zero. See the [projection browser record](../../../../fixtures/validation/facets-parquet-projection-browser.json).
+The separate public classification matrix was refreshed against the same bundle:
+180 cases, 101 classified, 79 blocked and 202 native recoveries.
+
+All 16 scoped Parquet facet tests pass with 1,141 assertions. Typechecking,
+277 schemas / 47 extension package audits, and the public plus optional PostgreSQL
+browser builds pass. The native and public browser record fingerprints were
+verified after these checks. Complete aggregate native/browser qualification,
+priority compatibility and refreshed Field/Nullability/Cardinality conformance
+gates remain required before closing the binding. Facet admission/delivery,
+Key and native-equivalence graduation are separate and remain unclaimed.

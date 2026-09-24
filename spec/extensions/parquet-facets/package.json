@@ -2,7 +2,7 @@
   "id": "umf.parquet.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental Parquet scalar facet classification with retained native semantics",
+  "description": "Experimental Parquet scalar facet classification and authored projection with retained native semantics",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:parquet:facet-binding:1.0.0",
@@ -137,14 +137,15 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification is experimental; authored projection is not implemented; binding qualification is recorded separately in versioned acceptance evidence",
+  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
   "scopes": [
     "element"
   ],
   "capabilities": {
     "validation": "structural",
     "directions": [
-      "import"
+      "import",
+      "export"
     ],
     "native": {
       "system": "Parquet",
@@ -154,7 +155,9 @@
     "evidence": [
       "tests/core-ideals/facets-parquet.test.ts",
       "fixtures/validation/facets-parquet-discovery-native.json",
-      "fixtures/validation/facets-parquet-type-browser.json"
+      "fixtures/validation/facets-parquet-type-browser.json",
+      "tests/core-ideals/facets-parquet-projection.test.ts",
+      "fixtures/validation/facets-parquet-projection-native.json"
     ]
   }
 }
