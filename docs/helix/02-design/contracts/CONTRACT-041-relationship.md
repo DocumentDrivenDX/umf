@@ -150,6 +150,14 @@ establish an authored heterogeneous source set. These fixtures do not count
 toward the two-priority-system admission gate until directed projection and
 recovery are tested.
 
+The same corpus includes native Avro 1.12 and Parquet format 2.6 value/ID
+counterexamples (`avro-parquet-oracle.json`, `avro-parquet-browser.json`).
+avsc 5.7.9 and PyArrow 21.0.0 accept their nested-value and scalar-ID
+carriers; the UMF adapters recover the source through JSON/YAML in Bun and
+Chromium. Neither carrier establishes an authored relationship, target Key or
+referential enforcement, and this native observation is not a useful authored
+down-projection for admission.
+
 The admission record MUST contain written meaning, counterexamples, at least
 two useful evidenced down-projections to distinct priority systems and
 up-classification retaining native refinements. A refusal alone is not useful

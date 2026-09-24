@@ -125,6 +125,9 @@ the UMF adapter codecs. TableSpec's confidence value, RDF blank-node list and
 LinkML slot metadata remain native refinements. These observations prepare
 up-classification and residual tests; they do not prove authored projection,
 named target-Key resolution, participation minima or native enforcement.
+The Avro/Parquet native pair in the same corpus distinguishes nested value
+carriers from scalar ID columns with pinned avsc/PyArrow and Chromium recovery;
+it likewise cannot assert authored association or referential enforcement.
 
 ## Migration & Rollback
 
