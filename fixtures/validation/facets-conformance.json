@@ -21,31 +21,31 @@
     "records": [
       {
         "path": "fixtures/validation/facet-core-acceptance-evidence.json",
-        "sha256": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1"
+        "sha256": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f"
       },
       {
         "path": "fixtures/validation/tablespec-facets-acceptance-evidence.json",
-        "sha256": "d81c67fa4bac37ac25ce8a58e7ecfb7b8c68f32bb2115aac146e9ec398fa21d4"
+        "sha256": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9"
       },
       {
         "path": "fixtures/validation/postgresql-facets-acceptance-evidence.json",
-        "sha256": "88997af848fa5b454d81087966f4336a5c8db2c6b253d68d53eb1f7f7e785cb6"
+        "sha256": "05b0c91fd44014473579cf568217f169df522c76029f794ec6b908ab80f79734"
       },
       {
         "path": "fixtures/validation/sqlserver-facets-acceptance-evidence.json",
-        "sha256": "e029cc136f172a35de75d4cb51c1756b631062f18643f9f7e7e00fc2bae70b5e"
+        "sha256": "ff23f48cbc706f00939730496da8b974560059a9726e8780ec52eed645be870a"
       },
       {
         "path": "fixtures/validation/avro-facets-acceptance-evidence.json",
-        "sha256": "0475f7a04636cf74f0f7fd6050dc0df8d20a5d0630a18546f3fbfb775497718a"
+        "sha256": "e2eeb22cfe1a1637c6826c303c4a0fa5ab282b799ae64c21b8810857cf54a11c"
       },
       {
         "path": "fixtures/validation/parquet-facets-acceptance-evidence.json",
-        "sha256": "2983275099a744415098747a7eabf472fe9579d193762510e7985024979ddb61"
+        "sha256": "8690fa95390f38ca2dc948e8b4bc49b0f04f20dbc1f94d0998aab24d16ed7c28"
       }
     ],
-    "fingerprints": 17468,
-    "refreshSha256": "57f479d0ff8e663dbb266c73cacb448110bb486284a62b294d87efc7e4bb90ca",
+    "fingerprints": 19075,
+    "refreshSha256": "3cf1c05daa5371ae5a815e50b91465cfe8824391044ad02f390d6113f33f2279",
     "idealAdmitted": false,
     "nativeEquivalence": false
   },
@@ -148,22 +148,22 @@
     "scripts/core-ideals/facets-roundtrips.ts": "2222a522c8aa08f59aabcb5dee2821dead2bb718f8ea1cdd9daa78ac7e435216",
     "tests/core-ideals/facets-conformance.test.ts": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
     "tests/core-ideals/facets-evidence.test.ts": "3e1e1ede6bca2a78ee68c23e5ce233d8f424f3785f31674f65686a3ac8b5aa8f",
-    "fixtures/validation/facets-avro-exact-input-browser.json": "838295dd6ce9be6fbcb1367e2d90497c06e6ed303974ae236bf6dbea6cb372c8",
-    "src/index.ts": "956cd396d74954f793f2527ed7312a5635dfecc0f88675779d3d13d8a1e52ae3",
+    "fixtures/validation/facets-avro-exact-input-browser.json": "1b2d790f6073ba55695c07fdaf28c4b67e66df97a798ff6c39908104941734d7",
+    "src/index.ts": "cd7c53561245dfadd99abf4f40c068a3e7f021acf6c746d965692578cc5938ff",
     "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
     "spec/extensions/avro-facets/package.json": "83862c82e105c376c04ad625f3993e8206cac42c6d508d15db8f5a3bd07a4ebf",
     "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
-    "dist/umf.js": "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
+    "dist/umf.js": "0b9b05450396a7f5bd425a7f555dbccab80087ed35fff93407b019d8bd44015c",
     "scripts/core-ideals/facets-avro-exact-input-browser.ts": "029d17ce195ab5fd85bb038cac83468219761eb7a22beb11a8148c1594af9e07",
     "scripts/core-ideals/facets-avro-projection-cases.ts": "2050e1ad1f5bef37f4552fd5f3cc2d0bc3ae317b766f6aadea748938e59ee85a",
     "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
     "spec/core/facets-avro-projection.schema.json": "3032f6daf14e6f80f352126f55a03278353a4bf38511038126f3e5615e3ca3f4",
-    "fixtures/validation/facet-core-acceptance-evidence.json": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1",
-    "fixtures/validation/tablespec-facets-acceptance-evidence.json": "d81c67fa4bac37ac25ce8a58e7ecfb7b8c68f32bb2115aac146e9ec398fa21d4",
-    "fixtures/validation/postgresql-facets-acceptance-evidence.json": "88997af848fa5b454d81087966f4336a5c8db2c6b253d68d53eb1f7f7e785cb6",
-    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": "e029cc136f172a35de75d4cb51c1756b631062f18643f9f7e7e00fc2bae70b5e",
-    "fixtures/validation/avro-facets-acceptance-evidence.json": "0475f7a04636cf74f0f7fd6050dc0df8d20a5d0630a18546f3fbfb775497718a",
-    "fixtures/validation/parquet-facets-acceptance-evidence.json": "2983275099a744415098747a7eabf472fe9579d193762510e7985024979ddb61",
-    "fixtures/validation/field-gate-refresh-evidence.json": "57f479d0ff8e663dbb266c73cacb448110bb486284a62b294d87efc7e4bb90ca"
+    "fixtures/validation/facet-core-acceptance-evidence.json": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9",
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": "05b0c91fd44014473579cf568217f169df522c76029f794ec6b908ab80f79734",
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": "ff23f48cbc706f00939730496da8b974560059a9726e8780ec52eed645be870a",
+    "fixtures/validation/avro-facets-acceptance-evidence.json": "e2eeb22cfe1a1637c6826c303c4a0fa5ab282b799ae64c21b8810857cf54a11c",
+    "fixtures/validation/parquet-facets-acceptance-evidence.json": "8690fa95390f38ca2dc948e8b4bc49b0f04f20dbc1f94d0998aab24d16ed7c28",
+    "fixtures/validation/field-gate-refresh-evidence.json": "3cf1c05daa5371ae5a815e50b91465cfe8824391044ad02f390d6113f33f2279"
   }
 }
