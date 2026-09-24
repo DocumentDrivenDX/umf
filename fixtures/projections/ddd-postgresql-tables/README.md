@@ -7,6 +7,10 @@ The authored DDD entity payloads match the core-backed GraphQL fixture at
 `../ddd-graphql-core-fields/case.json`; `Product.tags` is an ordered DDD-many
 value bound to the PostgreSQL `products.payload` JSONB path, with its path and
 item semantics reported as residuals.
+`delta-binding.json` independently binds the same logical document to a Delta
+3.2 liquid-clustering choice for `Order.tenant`. The multi-target test checks
+both binding documents and their distinct index outcomes without changing the
+DDD model. It does not claim a Delta table-log projection for this graph.
 `generated.sql` is the table-stage candidate; all indexes are residuals at
 that stage. The subsequent table-plus-index candidate, browser result and
 PostgreSQL oracle are under `../ddd-postgresql-tables-indexes/`. Four index
