@@ -1,5 +1,5 @@
 {
-  "scope": "Native Key declaration classification and retained source recovery only; authored projection, whole binding acceptance and ideal admission remain pending",
+  "scope": "Native Key classification, explicit authored declaration projection and retained native/ideal recovery; whole binding acceptance and ideal admission remain pending",
   "browser": "148.0.7778.0",
   "checks": {
     "cases": 16,
@@ -7,19 +7,30 @@
     "strictBlocks": 14,
     "forgedRefusals": 16,
     "staleRefusals": 16,
-    "getterCalls": 0
+    "getterCalls": 0,
+    "projectionCases": 10,
+    "projected": 7,
+    "projectionBlocks": 3,
+    "idealRecoveries": 14,
+    "nativeRecoveries": 14
   },
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/key-tablespec-browser.ts": "b91085d7093d5a35973aae5cdb728bb930177ac2bfafba93c410f7c5a2d573e9",
-    "scripts/core-ideals/key-tablespec-schema.ts": "00b058579c941efda2f5e90079c456b6519bbea77108ed4f61bf1be370920c15",
+    "src/core-ideals/key-tablespec-projection.ts": "15cfbcbb9ebe7082b11f82c82aa2fc88a247e0da2ab7007a216bbd172298694b",
+    "scripts/core-ideals/key-tablespec-projection-cases.ts": "8b02f5fd3c535715475ee7723ddb539348ecc21dd6e8dbdd37905741891bcc7d",
+    "scripts/core-ideals/key-tablespec-projection-schema.ts": "864f377cc33f1db84d47395be66e642d6bda9d789e700541c997e599190097fa",
+    "tests/core-ideals/key-tablespec-projection.test.ts": "5009ed2459ad4248350ac214bb6822bdba8478586f38c63a0fb127eb5fec3c9a",
+    "spec/core/key-tablespec-projection.schema.json": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62",
+    "fixtures/validation/key-tablespec-projection-native.json": "1f04ac267f60ca9dbe23bdba1fc9982a38bb545af544eb61500384a23c2ff74d",
+    "scripts/core-ideals/key-tablespec-browser.ts": "05e9d7b99dba57cc2b1b1924357688745503810ec9067739cb5251fd34de35d4",
+    "scripts/core-ideals/key-tablespec-schema.ts": "125ab38f28b2531ea9f6933f62bfe1308723bfc19a5ea8977b1d0470e92742ac",
     "src/core-ideals/key-tablespec.ts": "550657744948952638124d95a5ad4db878b25643591473e4826630c72218b17d",
-    "src/index.ts": "4b0105805d95c436f09a7208ecfd0e27c32c5ce94d849aba83869e59907ee1e5",
+    "src/index.ts": "63d4571776ce1870f2a3224f36d016f1a53b1155c5aa417772ca84cb68cc0e04",
     "tests/core-ideals/key-tablespec.test.ts": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
     "spec/core/tablespec-key-classification.schema.json": "eb7c4968e1e62e6b95e136b774b21e177f8e968a3d627260f444cc7d74b9ef98",
     "spec/extensions/tablespec-keys/schema.json": "afdc2d48f8068953544717001c37c4ee916273cd6c953b8ca8388d038984cd3f",
-    "spec/extensions/tablespec-keys/package.json": "340f6a4b1536ebce9843a391b6cd9de233abf40bb58f170523fa259e01ce1895",
+    "spec/extensions/tablespec-keys/package.json": "694040c1f6e74248b1d5d351f6404b049e5b95e14f113f44b026ae5fef9eacfb",
     "fixtures/validation/key-tablespec-discovery-native.json": "d5665a3b20c63f644a1dcb957733866e188b708d00e5499eec3fd041a047040a",
-    "dist/umf.js": "eb9908dd01c3c4eff6ca9aae8f1f94fb0866580e7474e15d95b3c90f6ca80df0"
+    "dist/umf.js": "02eee7efaa1b914fb4123e3d706a5453fb7263149238447b8d808cea1b36b106"
   }
 }

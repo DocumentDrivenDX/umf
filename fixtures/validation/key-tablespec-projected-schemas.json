@@ -1,0 +1,30 @@
+[
+  {
+    "name": "primary-report",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "no-primary-report",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"unique_constraints\":[[\"order_id\"],[\"external_code\"]]}"
+  },
+  {
+    "name": "rename-and-reorder",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "unknown-key-field-content",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "family-boolean",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"BOOLEAN\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "family-decimal",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"DECIMAL\",\"nullable\":{\"default\":false},\"precision\":8,\"scale\":2},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "compound-ordered",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"external_code\",\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  }
+]

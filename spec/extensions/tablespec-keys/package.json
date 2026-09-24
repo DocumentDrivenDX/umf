@@ -2,7 +2,7 @@
   "id": "umf.tablespec.keys",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental native TableSpec key observations with retained source recovery",
+  "description": "Experimental TableSpec key observations and authored declaration projection with explicit residuals",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:tablespec:key-binding:1.0.0",
@@ -114,7 +114,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-044; raw declaration classification only. Authored down-projection and full binding acceptance remain unfinished.",
+  "semantics": "CONTRACT-040 and TD-044; native declarations and explicit authored projection with retained recovery. Full binding acceptance and ideal admission remain unfinished.",
   "scopes": [
     "document"
   ],
@@ -131,7 +131,10 @@
     },
     "evidence": [
       "tests/core-ideals/key-tablespec.test.ts",
-      "fixtures/validation/key-tablespec-discovery-native.json"
+      "tests/core-ideals/key-tablespec-projection.test.ts",
+      "spec/core/key-tablespec-projection.schema.json",
+      "fixtures/validation/key-tablespec-discovery-native.json",
+      "fixtures/validation/key-tablespec-projection-native.json"
     ]
   }
 }
