@@ -4826,3 +4826,26 @@ and Parquet relationship bindings, their recoveries/residuals and the separate
 two-system admission/all-five delivery gates remain queued. GraphQL/RDF/LinkML
 are additional profiles. No native-equivalence claim is made. TableSpec binding
 `umf-95881098` is the next priority relationship implementation.
+
+### TableSpec relationship carrier discovery
+
+Work on `umf-95881098` has started. Twenty pinned TableSpec model/schema
+probes cover foreign keys, outgoing multiplicity metadata, composite joins,
+expressions, lookup joins, reverse metadata and unknown members. Both native
+interfaces accept nineteen cases and reject an out-of-range confidence value.
+They accept missing endpoint columns/tables, duplicate foreign keys, malformed
+or contradictory multiplicity strings and simultaneous lookup/expression
+declarations. Native metadata validation therefore cannot establish endpoint
+resolution, coherent UMF participation bounds or execution enforcement.
+
+Native model dumps discard unknown nested relationship members. The UMF
+archive preserves those original members, including native-invalid metadata;
+22 Bun tests pass 96 assertions for JSON/YAML recovery, absence of inferred
+authored relationships, and exact split-bundle/sidecar recovery. Typechecking
+passes. See the [native discovery record](../../../fixtures/validation/relationship-tablespec-discovery-native.json).
+
+This checkpoint supplies counterexamples, not a relationship binding. The
+classification/projection APIs, complete extension/receipt schemas, strict/report
+losses, both composed recoveries and Chromium evidence remain required before
+TableSpec binding acceptance. Source-native multiplicity strings and join
+expressions must remain attached even when a supported subset is classified.
