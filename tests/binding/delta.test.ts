@@ -6,7 +6,7 @@ const source=await Bun.file(fixture.native).text();
 const native=captureDeltaLog(source,{id:'delta-native'});
 const project=(binding=fixture.binding,policy:'strict'|'report'='strict')=>projectBindingToDelta(fixture.logical as Document,binding as Document,native,policy);
 
-test('clustering action uses exact physical columns and preserves native source',()=>{
+test('@covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: clustering action uses exact physical columns and preserves native source',()=>{
   const result=project();
   expect(result.status).toBe('projected');
   expect(result.residuals).toEqual([]);
@@ -17,7 +17,7 @@ test('clustering action uses exact physical columns and preserves native source'
   expect(inspectDeltaActions(captureDeltaLog(result.candidate!,{id:'candidate'})).knownShapesValid).toBe(true);
 });
 
-test('strict blocks unsupported index and report retains it as residual',()=>{
+test('@covers US-046-AC4 @covers US-046-AC5 @covers US-047-AC4 @covers US-047-AC5: strict blocks unsupported index and report retains it as residual',()=>{
   const binding=structuredClone(fixture.binding);
   binding.extensions['umf.binding'].indexes.push({name:'lookup',kind:'gin',on:[{field:{module:'data',element:'order_id'}}],unique:false});
   expect(project(binding).status).toBe('blocked');
@@ -28,7 +28,7 @@ test('strict blocks unsupported index and report retains it as residual',()=>{
   expect(report.candidate).toBeDefined();
 });
 
-test('native partitioning and absent columns cannot silently become clustering',()=>{
+test('@covers US-046-AC3 @covers US-047-AC8: native partitioning and absent columns cannot silently become clustering',()=>{
   const binding=structuredClone(fixture.binding);
   binding.extensions['umf.binding'].fields[0].column='missing';
   expect(project(binding).status).toBe('blocked');

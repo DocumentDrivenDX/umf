@@ -6,7 +6,7 @@ const source=await Bun.file(fixture.native).text();
 const native=importIcebergTable(source,{id:'iceberg-native'});
 const project=(binding=fixture.binding,policy:'strict'|'report'='report')=>projectBindingToIceberg(fixture.logical as Document,binding as Document,native,policy);
 
-test('sort order is an explicit approximation and native source recovers',()=>{
+test('@covers US-046-AC4 @covers US-046-AC5 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC7: sort order is an explicit approximation and native source recovers',()=>{
   const strict=project(fixture.binding,'strict');
   expect(strict.status).toBe('blocked');
   expect(strict.candidate).toBeUndefined();
@@ -20,7 +20,7 @@ test('sort order is an explicit approximation and native source recovers',()=>{
   expect(inspectIcebergTableContext(importIcebergTable(report.candidate!,{id:'candidate'})).status).toBe('checked');
 });
 
-test('unsupported index and missing storage column remain residuals',()=>{
+test('@covers US-046-AC3 @covers US-047-AC8: unsupported index and missing storage column remain residuals',()=>{
   const binding=structuredClone(fixture.binding);
   binding.extensions['umf.binding'].indexes.push({name:'gin',kind:'gin',on:[{field:{module:'data',element:'sort_key'}}],unique:false});
   binding.extensions['umf.binding'].fields[0].column='missing';
