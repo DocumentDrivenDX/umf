@@ -24,8 +24,15 @@ export function validateRelationshipCandidate(input:unknown,validateBase=true):V
  add('EXPERIMENTAL_CORE_RELATIONSHIPS','/umf','Candidate authored relationship profile; native enforcement and storage are not inferred','warning');
  const unknown=(value:object,known:string[],path:string)=>{for(const key of Object.keys(value))if(!known.includes(key))add('UNKNOWN_RELATIONSHIP_QUALIFIER',path+'/'+pointer(key),'Qualifier retained without interpretation','warning');};
  const elements=new Map<string,Element>();for(const m of document.modules)for(const e of m.elements)elements.set(identity({module:m.id,element:e.id}),e);
- const presentations=new Map<string,string>();
- const presentation=(ref:RelationshipEndpoint,name:string,path:string)=>{const id=JSON.stringify([ref.module,ref.element,name]),previous=presentations.get(id);if(previous)add('RELATIONSHIP_PRESENTATION_COLLISION',path,'Presentation name already used on this endpoint at '+previous);else presentations.set(id,path);};
+ const presentations=new Map<string,{path:string;inverse:boolean}[]>();
+ const presentation=(ref:RelationshipEndpoint,name:string,path:string,inverse:boolean)=>{
+  const id=JSON.stringify([ref.module,ref.element,name]),previous=presentations.get(id)??[];
+  // Forward names are module-scoped. An inverse must be unambiguous on its
+  // target Record regardless of which module contains the other assertion.
+  const collision=previous.find(p=>inverse||p.inverse);
+  if(collision)add('RELATIONSHIP_PRESENTATION_COLLISION',path,'Inverse presentation collides on this endpoint with '+collision.path);
+  previous.push({path,inverse});presentations.set(id,previous);
+ };
  const resolve=(ref:RelationshipEndpoint,path:string)=>{
   const record=elements.get(identity(ref));
   if(!record){add('RELATIONSHIP_ENDPOINT_MISSING',path,'Endpoint does not resolve by exact module and element IDs');return;}
@@ -46,7 +53,7 @@ export function validateRelationshipCandidate(input:unknown,validateBase=true):V
      const id=identity(ref);if(seen.has(id))add('RELATIONSHIP_DUPLICATE_ENDPOINT',at,'Endpoint Record repeats, regardless of qualifiers or target key');seen.add(id);
      const record=resolve(ref,at);
      if(end==='target'&&record&&!((record.keys??[]) as {id:string}[]).some(k=>k.id===(ref as RelationshipTarget).key))add('RELATIONSHIP_TARGET_KEY',at+'/key','Target key must resolve by its stable ID');
-     if(end==='source')presentation(ref,r.name,at);else if(r.inverse)presentation(ref,r.inverse,path+'/inverse');
+     if(end==='source')presentation(ref,r.name,at,false);else if(r.inverse)presentation(ref,r.inverse,path+'/inverse',true);
     });
     const bounds=r[end+'Multiplicity' as 'sourceMultiplicity'|'targetMultiplicity'];unknown(bounds,['min','max'],path+'/'+end+'Multiplicity');
     if(bounds.max!=='*'&&bounds.max<bounds.min)add('RELATIONSHIP_MULTIPLICITY',path+'/'+end+'Multiplicity','Maximum must be at least the minimum');

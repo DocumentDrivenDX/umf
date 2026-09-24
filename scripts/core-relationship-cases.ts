@@ -47,6 +47,8 @@ export function relationshipCases(){
  add('owned-undirected',(_,r)=>{r.targetLifecycle='owned';r.directed=false;},false,'RELATIONSHIP_LIFECYCLE');
  add('inverse-collision',(d,r)=>d.modules[0].relationships.push({...r,id:'other',name:'other',source:[{module:'m',element:'Product'}]}),false,'RELATIONSHIP_PRESENTATION_COLLISION');
  add('inverse-forward-collision',(d,r)=>{const other=structuredClone(r);other.id='other';other.name='orders';other.source=[{module:'m',element:'Customer'}];other.target=[{module:'m',element:'Product',key:'identity'}];other.inverse='products';d.modules[0].relationships.push(other);},false,'RELATIONSHIP_PRESENTATION_COLLISION');
+ add('same-forward-name-other-module',(d,r)=>{const other=structuredClone(r);delete r.inverse;delete other.inverse;d.modules.push({id:'other',namespace:'other',elements:[],relationships:[other]});});
+ add('inverse-collision-other-module',(d,r)=>{const other=structuredClone(r);other.id='other';other.name='other';other.source=[{module:'m',element:'Product'}];d.modules.push({id:'other',namespace:'other',elements:[],relationships:[other]});},false,'RELATIONSHIP_PRESENTATION_COLLISION');
  add('empty-source',(_,r)=>r.source=[],false,'RELATIONSHIP_STRUCTURE');
  add('old-version',d=>d.umf='0.6.0',false,'RELATIONSHIP_STRUCTURE');
  return rows;
