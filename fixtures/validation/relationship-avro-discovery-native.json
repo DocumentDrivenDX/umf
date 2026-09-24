@@ -1,0 +1,649 @@
+{
+  "scope": "Named/nested/recursive schema carriers and unenforced relationship metadata; no relationship binding acceptance",
+  "bindingImplemented": false,
+  "nativeEquivalence": false,
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "cases": [
+    {
+      "case": "named-reuse-is-not-identity",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0e0a66697273740e12646966666572656e74"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "first": {
+                "id": 7,
+                "label": "first"
+              },
+              "second": {
+                "id": 7,
+                "label": "different"
+              }
+            }
+          ],
+          "bytesConsumed": 18
+        },
+        "fastavro": {
+          "values": [
+            {
+              "first": {
+                "id": 7,
+                "label": "first"
+              },
+              "second": {
+                "id": 7,
+                "label": "different"
+              }
+            }
+          ],
+          "bytesConsumed": 18
+        }
+      }
+    },
+    {
+      "case": "named-reuse-is-not-identity",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0e0a66697273740e12646966666572656e74"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "first": {
+                "id": 7,
+                "label": "first"
+              },
+              "second": {
+                "id": 7,
+                "label": "different"
+              }
+            }
+          ],
+          "bytesConsumed": 18
+        },
+        "fastavro": {
+          "values": [
+            {
+              "first": {
+                "id": 7,
+                "label": "first"
+              },
+              "second": {
+                "id": 7,
+                "label": "different"
+              }
+            }
+          ],
+          "bytesConsumed": 18
+        }
+      }
+    },
+    {
+      "case": "dangling-reference-metadata",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "ce0fce0f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer_id": 999
+            },
+            {
+              "customer_id": 999
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer_id": 999
+            },
+            {
+              "customer_id": 999
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "dangling-reference-metadata",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "ce0fce0f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer_id": 999
+            },
+            {
+              "customer_id": 999
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer_id": 999
+            },
+            {
+              "customer_id": 999
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "nested-record-is-not-association",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "1c53796e746865746963204c616e65"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "address": {
+                "street": "Synthetic Lane"
+              }
+            }
+          ],
+          "bytesConsumed": 15
+        },
+        "fastavro": {
+          "values": [
+            {
+              "address": {
+                "street": "Synthetic Lane"
+              }
+            }
+          ],
+          "bytesConsumed": 15
+        }
+      }
+    },
+    {
+      "case": "nested-record-is-not-association",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "1c53796e746865746963204c616e65"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "address": {
+                "street": "Synthetic Lane"
+              }
+            }
+          ],
+          "bytesConsumed": 15
+        },
+        "fastavro": {
+          "values": [
+            {
+              "address": {
+                "street": "Synthetic Lane"
+              }
+            }
+          ],
+          "bytesConsumed": 15
+        }
+      }
+    },
+    {
+      "case": "recursive-empty-children",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02000202020000"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "children": []
+            },
+            {
+              "id": 1,
+              "children": [
+                {
+                  "id": 1,
+                  "children": []
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 7
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "children": []
+            },
+            {
+              "id": 1,
+              "children": [
+                {
+                  "id": 1,
+                  "children": []
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 7
+        }
+      }
+    },
+    {
+      "case": "recursive-empty-children",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02000202020000"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "children": []
+            },
+            {
+              "id": 1,
+              "children": [
+                {
+                  "id": 1,
+                  "children": []
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 7
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "children": []
+            },
+            {
+              "id": 1,
+              "children": [
+                {
+                  "id": 1,
+                  "children": []
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 7
+        }
+      }
+    },
+    {
+      "case": "nullable-named-reference",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "020004020200"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "next": null
+            },
+            {
+              "id": 2,
+              "next": {
+                "id": 1,
+                "next": null
+              }
+            }
+          ],
+          "bytesConsumed": 6
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "next": null
+            },
+            {
+              "id": 2,
+              "next": {
+                "id": 1,
+                "next": null
+              }
+            }
+          ],
+          "bytesConsumed": 6
+        }
+      }
+    },
+    {
+      "case": "nullable-named-reference",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "020004020200"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "next": null
+            },
+            {
+              "id": 2,
+              "next": {
+                "id": 1,
+                "next": null
+              }
+            }
+          ],
+          "bytesConsumed": 6
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "next": null
+            },
+            {
+              "id": 2,
+              "next": {
+                "id": 1,
+                "next": null
+              }
+            }
+          ],
+          "bytesConsumed": 6
+        }
+      }
+    },
+    {
+      "case": "heterogeneous-record-union",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0002021273796e746865746963"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "actor": {
+                "person_id": 1
+              }
+            },
+            {
+              "actor": {
+                "company_id": "synthetic"
+              }
+            }
+          ],
+          "bytesConsumed": 13
+        },
+        "fastavro": {
+          "values": [
+            {
+              "actor": {
+                "person_id": 1
+              }
+            },
+            {
+              "actor": {
+                "company_id": "synthetic"
+              }
+            }
+          ],
+          "bytesConsumed": 13
+        }
+      }
+    },
+    {
+      "case": "heterogeneous-record-union",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0002021273796e746865746963"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "actor": {
+                "person_id": 1
+              }
+            },
+            {
+              "actor": {
+                "company_id": "synthetic"
+              }
+            }
+          ],
+          "bytesConsumed": 13
+        },
+        "fastavro": {
+          "values": [
+            {
+              "actor": {
+                "person_id": 1
+              }
+            },
+            {
+              "actor": {
+                "company_id": "synthetic"
+              }
+            }
+          ],
+          "bytesConsumed": 13
+        }
+      }
+    },
+    {
+      "case": "namespace-distinguishes-records",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02066f6e65"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "sales": {
+                "id": 1
+              },
+              "support": {
+                "id": "one"
+              }
+            }
+          ],
+          "bytesConsumed": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "sales": {
+                "id": 1
+              },
+              "support": {
+                "id": "one"
+              }
+            }
+          ],
+          "bytesConsumed": 5
+        }
+      }
+    },
+    {
+      "case": "namespace-distinguishes-records",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02066f6e65"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "sales": {
+                "id": 1
+              },
+              "support": {
+                "id": "one"
+              }
+            }
+          ],
+          "bytesConsumed": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "sales": {
+                "id": 1
+              },
+              "support": {
+                "id": "one"
+              }
+            }
+          ],
+          "bytesConsumed": 5
+        }
+      }
+    },
+    {
+      "case": "unresolved-named-type",
+      "writer": "apache",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "Type property \"sales.Missing\" not a valid Avro schema: Could not make an Avro Schema object from sales.Missing"
+      }
+    },
+    {
+      "case": "unresolved-named-type",
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "UnknownType",
+        "message": "sales.Missing"
+      }
+    },
+    {
+      "case": "forward-named-type",
+      "writer": "apache",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "Type property \"Later\" not a valid Avro schema: Could not make an Avro Schema object from Later"
+      }
+    },
+    {
+      "case": "forward-named-type",
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "UnknownType",
+        "message": "Later"
+      }
+    },
+    {
+      "case": "required-record-value-missing",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"None\" provided for \"customer\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"Customer\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"type\": \"long\",\n      \"name\": \"id\"\n    },\n    {\n      \"type\": \"string\",\n      \"name\": \"label\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "case": "required-record-value-missing",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "Field customer is specified in the schema but missing from the record"
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/avro/relationship-discovery-cases.json": "0de3f434462b9a87966df7c68a31a1e9b71bb3bf612f7da2eebd29ae5f4d12c1",
+    "scripts/core-ideals/relationship-avro-discovery-native.py": "477d68b6b7bce61775a5a0946570afc65570a37645dd0ad7d9c734abe8237000"
+  }
+}

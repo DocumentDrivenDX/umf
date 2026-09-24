@@ -1,0 +1,147 @@
+{
+  "scope": "Native relationship carrier counterexamples; no authored relationship binding",
+  "cases": [
+    {
+      "id": "named-reuse-is-not-identity",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Pair\",\n  \"fields\": [\n    {\n      \"name\": \"first\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Customer\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"long\"\n          },\n          {\n            \"name\": \"label\",\n            \"type\": \"string\"\n          }\n        ],\n        \"namespace\": \"sales\"\n      }\n    },\n    {\n      \"name\": \"second\",\n      \"type\": \"sales.Customer\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "first": {
+            "id": 7,
+            "label": "first"
+          },
+          "second": {
+            "id": 7,
+            "label": "different"
+          }
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "dangling-reference-metadata",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"fields\": [\n    {\n      \"name\": \"customer_id\",\n      \"type\": \"long\",\n      \"relationship\": {\n        \"target\": \"sales.Customer\",\n        \"key\": \"id\",\n        \"required\": true\n      }\n    }\n  ],\n  \"namespace\": \"sales\"\n}\n",
+      "values": [
+        {
+          "customer_id": 999
+        },
+        {
+          "customer_id": 999
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "nested-record-is-not-association",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Envelope\",\n  \"fields\": [\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Address\",\n        \"fields\": [\n          {\n            \"name\": \"street\",\n            \"type\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "address": {
+            "street": "Synthetic Lane"
+          }
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "recursive-empty-children",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Node\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"children\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"Node\"\n      },\n      \"default\": [],\n      \"relationship\": {\n        \"min\": 1,\n        \"owned\": true\n      }\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "children": []
+        },
+        {
+          "id": 1,
+          "children": [
+            {
+              "id": 1,
+              "children": []
+            }
+          ]
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "nullable-named-reference",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Chain\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"next\",\n      \"type\": [\n        \"null\",\n        \"Chain\"\n      ],\n      \"default\": null\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "next": null
+        },
+        {
+          "id": 2,
+          "next": {
+            "id": 1,
+            "next": null
+          }
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "heterogeneous-record-union",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Activity\",\n  \"fields\": [\n    {\n      \"name\": \"actor\",\n      \"type\": [\n        {\n          \"type\": \"record\",\n          \"name\": \"Person\",\n          \"fields\": [\n            {\n              \"name\": \"person_id\",\n              \"type\": \"long\"\n            }\n          ]\n        },\n        {\n          \"type\": \"record\",\n          \"name\": \"Company\",\n          \"fields\": [\n            {\n              \"name\": \"company_id\",\n              \"type\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "actor": {
+            "person_id": 1
+          }
+        },
+        {
+          "actor": {
+            "company_id": "synthetic"
+          }
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "namespace-distinguishes-records",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Contexts\",\n  \"fields\": [\n    {\n      \"name\": \"sales\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Customer\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"long\"\n          }\n        ],\n        \"namespace\": \"sales\"\n      }\n    },\n    {\n      \"name\": \"support\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Customer\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"string\"\n          }\n        ],\n        \"namespace\": \"support\"\n      }\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "sales": {
+            "id": 1
+          },
+          "support": {
+            "id": "one"
+          }
+        }
+      ],
+      "expectedParse": true,
+      "expectedWrite": true
+    },
+    {
+      "id": "unresolved-named-type",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"fields\": [\n    {\n      \"name\": \"customer\",\n      \"type\": \"sales.Missing\"\n    }\n  ]\n}\n",
+      "values": [],
+      "expectedParse": false,
+      "expectedWrite": null
+    },
+    {
+      "id": "forward-named-type",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Forward\",\n  \"fields\": [\n    {\n      \"name\": \"first\",\n      \"type\": \"Later\"\n    },\n    {\n      \"name\": \"later\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Later\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"long\"\n          }\n        ]\n      }\n    }\n  ]\n}\n",
+      "values": [],
+      "expectedParse": false,
+      "expectedWrite": null
+    },
+    {
+      "id": "required-record-value-missing",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Required\",\n  \"fields\": [\n    {\n      \"name\": \"customer\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Customer\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"long\"\n          },\n          {\n            \"name\": \"label\",\n            \"type\": \"string\"\n          }\n        ],\n        \"namespace\": \"sales\"\n      }\n    }\n  ]\n}\n",
+      "values": [
+        {}
+      ],
+      "expectedParse": true,
+      "expectedWrite": false
+    }
+  ]
+}

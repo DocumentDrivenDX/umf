@@ -4996,3 +4996,28 @@ PostgreSQL, SQL Server, Avro and Parquet relationship bindings and the separate
 relationship admission/delivery gates remain open. Earlier checkpoint counts
 and acceptance records retain their historical scope; the new replay and gate
 logs record the current execution.
+
+### Avro relationship native discovery
+
+The next ready relationship binding is Avro (`umf-c81cfc9c`); PostgreSQL and
+SQL Server remain dependent on the physical-binding ID migration. Ten synthetic
+schemas exercise named reuse, nested values, recursive arrays, nullable recursion,
+heterogeneous unions, namespace distinctions, dangling ID metadata, unresolved
+and forward names, and missing required record values. Apache Avro 1.12.0 and
+fastavro 1.12.2 produce twenty parser outcomes: four parse refusals and two
+write refusals. All 28 cross-codec reads reproduce the supplied values.
+
+Repeated IDs with different nested content, empty child arrays annotated with a
+custom minimum, and dangling scalar IDs carrying relationship metadata all
+encode successfully. These are counterexamples to inferring record identity,
+participation enforcement or graph associations from named schema references
+and custom metadata. Both codecs reject unresolved and forward type names.
+
+Twelve Bun tests pass 202 assertions, covering JSON/YAML native-tree recovery,
+unknown metadata, exact number lexemes and named dependencies without inferred
+authored relationships. Typechecking passes. The existing Avro adapter preserves
+native structure and number tokens, not original whitespace; the forthcoming
+relationship receipt must retain the original source text separately. See
+[the native evidence](../../../fixtures/validation/relationship-avro-discovery-native.json).
+Classification/projection APIs and schemas, authored carriers and residuals,
+composed browser evidence and binding acceptance remain required.
