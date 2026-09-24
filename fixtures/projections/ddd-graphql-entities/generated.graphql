@@ -1,0 +1,33 @@
+schema { query: Query }
+
+type Query {
+  _umfSchema: Boolean
+}
+
+scalar Decimal
+
+type Order {
+  id: Int!
+  tenant: String!
+  customerId: Int!
+  status: String!
+  details: String
+}
+
+type Customer {
+  id: Int!
+  name: String!
+}
+
+type Product {
+  id: Int!
+  sku: String!
+  tags: [String]
+}
+
+type OrderProduct {
+  id: Int!
+  orderId: Int!
+  productId: Int!
+  quantity: Decimal!
+}

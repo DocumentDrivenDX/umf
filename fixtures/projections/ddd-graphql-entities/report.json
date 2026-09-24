@@ -1,0 +1,311 @@
+{
+  "status": "reported",
+  "profile": "graphql-js-17.0.2-sdl",
+  "graphqlJs": "17.0.2",
+  "residuals": [
+    {
+      "path": "/policy/root",
+      "reason": "Synthetic query root has no resolver or execution meaning",
+      "choice": {
+        "kind": "synthetic-schema-root",
+        "typeName": "Query",
+        "fieldName": "_umfSchema"
+      }
+    },
+    {
+      "path": "/modules/0/extensions/umf.ddd",
+      "reason": "DDD bounded-context namespace and terms are retained but not expressed in SDL",
+      "choice": {
+        "namespace": "sales",
+        "context": {
+          "kind": "bounded-context",
+          "terms": []
+        }
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/id",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/tenant",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/customerId",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/status",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/details",
+      "reason": "GraphQL nullable result does not distinguish absent DDD value from present null",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "optional"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/details",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "optional"
+      }
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/identity",
+      "reason": "GraphQL object type does not enforce DDD identity or lifecycle scope",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/modules/0/elements/1/extensions/umf.ddd/fields/id",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/1/extensions/umf.ddd/fields/name",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/1/extensions/umf.ddd/identity",
+      "reason": "GraphQL object type does not enforce DDD identity or lifecycle scope",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd/fields/id",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd/fields/sku",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd/fields/tags",
+      "reason": "DDD many does not define GraphQL list order, duplicate or item-null behavior",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "many"
+      }
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd/fields/tags",
+      "reason": "GraphQL String coercion and Unicode equality are not defined by DDD scalar naming",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "string"
+        },
+        "cardinality": "many"
+      }
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd/identity",
+      "reason": "GraphQL object type does not enforce DDD identity or lifecycle scope",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd/fields/id",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd/fields/orderId",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd/fields/productId",
+      "reason": "GraphQL Int is signed 32-bit; DDD integer has no such bound",
+      "choice": {
+        "type": {
+          "kind": "scalar",
+          "name": "integer"
+        },
+        "cardinality": "one"
+      }
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd/identity",
+      "reason": "GraphQL object type does not enforce DDD identity or lifecycle scope",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/policy/scalars/decimal",
+      "reason": "Custom scalar coercion and serialization are outside SDL",
+      "choice": "Decimal"
+    }
+  ],
+  "mappings": [
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd/fields/id",
+      "target": "Order.id"
+    },
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd/fields/tenant",
+      "target": "Order.tenant"
+    },
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd/fields/customerId",
+      "target": "Order.customerId"
+    },
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd/fields/status",
+      "target": "Order.status"
+    },
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd/fields/details",
+      "target": "Order.details"
+    },
+    {
+      "sourcePath": "/modules/0/elements/0/extensions/umf.ddd",
+      "target": "Order"
+    },
+    {
+      "sourcePath": "/modules/0/elements/1/extensions/umf.ddd/fields/id",
+      "target": "Customer.id"
+    },
+    {
+      "sourcePath": "/modules/0/elements/1/extensions/umf.ddd/fields/name",
+      "target": "Customer.name"
+    },
+    {
+      "sourcePath": "/modules/0/elements/1/extensions/umf.ddd",
+      "target": "Customer"
+    },
+    {
+      "sourcePath": "/modules/0/elements/2/extensions/umf.ddd/fields/id",
+      "target": "Product.id"
+    },
+    {
+      "sourcePath": "/modules/0/elements/2/extensions/umf.ddd/fields/sku",
+      "target": "Product.sku"
+    },
+    {
+      "sourcePath": "/modules/0/elements/2/extensions/umf.ddd/fields/tags",
+      "target": "Product.tags"
+    },
+    {
+      "sourcePath": "/modules/0/elements/2/extensions/umf.ddd",
+      "target": "Product"
+    },
+    {
+      "sourcePath": "/modules/0/elements/3/extensions/umf.ddd/fields/id",
+      "target": "OrderProduct.id"
+    },
+    {
+      "sourcePath": "/modules/0/elements/3/extensions/umf.ddd/fields/orderId",
+      "target": "OrderProduct.orderId"
+    },
+    {
+      "sourcePath": "/modules/0/elements/3/extensions/umf.ddd/fields/productId",
+      "target": "OrderProduct.productId"
+    },
+    {
+      "sourcePath": "/modules/0/elements/3/extensions/umf.ddd/fields/quantity",
+      "target": "OrderProduct.quantity"
+    },
+    {
+      "sourcePath": "/modules/0/elements/3/extensions/umf.ddd",
+      "target": "OrderProduct"
+    }
+  ]
+}

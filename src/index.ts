@@ -32,6 +32,7 @@ export * from './projections/binding-postgresql/indexes';
 export * from './projections/binding-sqlserver/indexes';
 export * from './projections/binding-sqlserver/tables';
 export * from './projections/ddd-postgresql/tables';
+export * from './projections/ddd-graphql/entities';
 export * from './projections/ddd-json-schema';
 export { default as dddJsonSchemaProjectionSchema } from '../spec/projections/ddd-json-schema.schema.json';
 export * from './adapters/avro';

@@ -56,6 +56,19 @@ with at least one valid field or explicitly choose a separately contracted
 schema-mode-safe synthetic root; a list of object types without a root is not
 a successful complete schema.
 
+The relationship-independent entity stage defines one explicit synthetic-root
+profile: the caller supplies a unique root type name and one unique field name;
+the stage emits that field as nullable `Boolean` and records that it has no
+resolver or execution meaning. It also requires explicit names for every
+selected entity, scalar field and scalar family. A DDD `many` scalar field may
+be list-wrapped only with a residual: CONTRACT-005 does not assert list order,
+uniqueness or GraphQL item-null behavior. This stage reports DDD identity,
+aggregate and invariant meaning and does not claim relationship lowering.
+The bounded stage emits `String` and `Boolean` through their named built-ins;
+`Int` reports its signed 32-bit bound, while decimal, temporal and bytes need
+distinct declared custom scalars whose coercion remains a residual. It refuses
+mapping those families to an unrelated built-in merely because SDL parses.
+
 | Source assertion | SDL lowering | Required loss account |
 | --- | --- | --- |
 | Selected DDD entity | One GraphQL object type | Identity, lifecycle, aggregate ownership and equality are not enforced. |

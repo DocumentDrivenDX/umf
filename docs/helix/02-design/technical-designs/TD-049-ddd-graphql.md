@@ -78,6 +78,14 @@ and list wrappers, self and undirected relationships, heterogeneous endpoints,
 missing root, aggregate/invariant residuals, strict/report, both retained
 recoveries, two GraphQL oracles and browser parity.
 
+The relationship-independent entity stage has a checked-in Order, Customer,
+Product and OrderProduct corpus under `fixtures/projections/ddd-graphql-entities/`.
+It emits complete SDL with an explicit synthetic root and reports that root's
+missing execution meaning, DDD identity, scalar coercion, optionality and
+many-cardinality differences. `umf.graphql` schema mode, GraphQL.js,
+GraphQL-core 3.2.12 and Chromium validate the bounded result. Relationship
+fields and inverses remain in the full dependent generator.
+
 ## Migration & Rollback
 
 Retain original logical model, report and any native SDL archive across policy
