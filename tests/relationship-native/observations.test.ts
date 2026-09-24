@@ -1,6 +1,7 @@
 import {test, expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importRdfNQuads, exportRdfNQuads, getRdfQuads, importLinkmlDocument, exportLinkmlDocument, getLinkmlDocumentNode, readDocument, writeDocument} from '../../src';
+import {importRdfNQuads, exportRdfNQuads, getRdfQuads, importLinkmlDocument, exportLinkmlDocument, getLinkmlDocumentNode, importTableSpec, exportTableSpec, getTableSpecTable, readDocument, writeDocument} from '../../src';
+import {parseNativeJson} from '../../src/model/native-json';
 
 const base='fixtures/relationship-native/';
 const oracle=await Bun.file(base+'oracle-results.json').json();
@@ -14,6 +15,25 @@ test('CONTRACT-041: RDF domain and range remain native observations',async()=>{
   expect(exportRdfNQuads(readDocument(writeDocument(document,format),format))).toBe(raw);
  expect('relationships' in document.modules[0]!).toBe(false);
  expect(oracle.classification).toBe('native-observation-only');
+});
+
+test('CONTRACT-041: TableSpec foreign-key metadata stays a native observation',async()=>{
+ const raw=await Bun.file(base+'tablespec-foreign-key.json').text();
+ expect(createHash('sha256').update(raw).digest('hex')).toBe(oracle.sourceSha256.tablespec);
+ const document=importTableSpec(raw,{id:'relationship-native-tablespec',format:'json'});
+ const table=getTableSpecTable(document);
+ expect(table.kind).toBe('object');
+ if(table.kind!=='object')throw Error('Expected native table object');
+ expect(table.members.relationships).toEqual(parseNativeJson(JSON.stringify({foreign_keys:[{
+  column:oracle.tablespec.column,
+  references_table:oracle.tablespec.referencesTable,
+  references_column:oracle.tablespec.referencesColumn,
+  confidence:oracle.tablespec.confidence
+ }]})));
+ for(const format of ['json','yaml'] as const)
+  expect(exportTableSpec(readDocument(writeDocument(document,format),format))).toBe(raw);
+ expect('relationships' in document.modules[0]!).toBe(false);
+ expect(oracle.tablespec).toEqual({column:'customer_id',referencesTable:'customers',referencesColumn:'id',confidence:0.95});
 });
 
 test('CONTRACT-041: LinkML slot and range remain native observations',async()=>{

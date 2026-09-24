@@ -1,11 +1,14 @@
 {
   "native": {
     "rdflib": "7.1.4",
-    "linkmlRuntime": "1.11.0rc2"
+    "linkmlRuntime": "1.11.0rc2",
+    "tablespecModelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "pydantic": "2.12.5"
   },
   "sourceSha256": {
     "rdf": "0ad6fc995227d53f5a76d06c5993e732c2ff697c81afebb6c20247a7502fd914",
-    "linkml": "97a0cd81bd98f0e6154c765b9e0c87358a75909c4ff5285ec4cd6d6b7405128f"
+    "linkml": "97a0cd81bd98f0e6154c765b9e0c87358a75909c4ff5285ec4cd6d6b7405128f",
+    "tablespec": "80650bafe521872fda614a7f1e78e4046a86d98c3e2e52465853f48f01dd2d1e"
   },
   "rdf": {
     "quadCount": 3,
@@ -21,9 +24,16 @@
     "required": true,
     "targetIdentifier": true
   },
+  "tablespec": {
+    "column": "customer_id",
+    "referencesTable": "customers",
+    "referencesColumn": "id",
+    "confidence": 0.95
+  },
   "classification": "native-observation-only",
   "limits": [
     "RDF domain/range entail types, not reference enforcement or participation cardinality",
-    "LinkML slot range and multivalued do not select a target Key or establish source-end multiplicity"
+    "LinkML slot range and multivalued do not select a target Key or establish source-end multiplicity",
+    "TableSpec foreign-key metadata does not establish named target Key identity, lifecycle or enforcement"
   ]
 }

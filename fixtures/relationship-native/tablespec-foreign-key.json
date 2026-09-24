@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "table_name": "orders",
+  "canonical_name": "Orders",
+  "primary_key": ["id"],
+  "columns": [
+    {"name": "id", "data_type": "INTEGER"},
+    {"name": "customer_id", "data_type": "INTEGER"}
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {"column": "customer_id", "references_table": "customers", "references_column": "id", "confidence": 0.95}
+    ]
+  }
+}
