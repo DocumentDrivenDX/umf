@@ -26,6 +26,7 @@ export { default as jsonSchemaProtobufProjectionSchema } from '../spec/projectio
 export * from './extensions/ddd';
 export * from './extensions/binding';
 export * from './projections/binding-parquet';
+export * from './projections/binding-delta';
 export * from './projections/ddd-json-schema';
 export { default as dddJsonSchemaProjectionSchema } from '../spec/projections/ddd-json-schema.schema.json';
 export * from './adapters/avro';

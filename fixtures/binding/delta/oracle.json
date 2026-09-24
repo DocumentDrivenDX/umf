@@ -1,0 +1,35 @@
+{
+  "scope": "Delta 3.2 clustering domainMetadata action shape against existing native log context; reader loads metadata version 1, but no data file clustering or independent Delta writer enforcement is claimed",
+  "adapter": "umf.delta.log 0.1.0",
+  "native": {
+    "runtime": "deltalake 1.6.4",
+    "version": 1,
+    "sourceBytesRecovered": true,
+    "candidateBytesRecovered": true,
+    "schema": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "long",
+          "nullable": false,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  "knownShapesValid": true,
+  "clusteringColumns": [
+    [
+      "order_id"
+    ]
+  ],
+  "officialProtocol": "https://github.com/delta-io/delta/blob/master/PROTOCOL.md",
+  "sha256": {
+    "fixtures/binding/delta/case.json": "6b6f834e60c5d17c4c12f68c1cd55f0d275e75174e1d1ea540ef38b553eb244f",
+    "fixtures/binding/delta/native.jsonl": "796e50dd8e06d9b2e2318909165672ff4f836db4fbe0c40fb69a0e029f20d79d",
+    "fixtures/binding/delta/candidate.jsonl": "c435fec8efbb0ffad0ba811a40d08cbc011f4527e50e915a9ce24dbb45ec7f3d",
+    "src/projections/binding-delta/index.ts": "186168d2cd2f2d80af16959acd9eb360b0fd14b7f126fae641f1e95c1f1e74a6",
+    "scripts/binding/delta-native.py": "b2b502aed76427084c82df0477efe5b97ffc65c319a74e5f0d856fba041df756"
+  }
+}

@@ -172,7 +172,12 @@ export function projectBindingIndexes(binding:Document,logical:Document,lossPoli
       if(item.kind==='partial'&&item.predicate?.language==='tsql')return {name:item.name,path,outcome:'exact'};
       return {name:item.name,path,outcome:'not-expressible',reason:'No supported SQL Server index carrier for this kind'};
     }
-    if(system==='delta')return {name:item.name,path,outcome:item.kind==='clustering'?'exact':'not-expressible',...(item.kind==='clustering'?{}:{reason:'Delta profile only represents liquid clustering'})} as BindingIndexOutcome;
+    if(system==='delta'){
+      if(item.kind!=='clustering')return {name:item.name,path,outcome:'not-expressible',reason:'Delta profile only represents liquid clustering'};
+      if(!/^3\.(?:2|[3-9])(?:\.|$)/.test(version))return {name:item.name,path,outcome:'unknown',reason:'Liquid-clustering profile requires pinned Delta 3.2 or later 3.x'};
+      if(item.on.length>4||item.include?.length||item.on.some(target=>'documentPath'in target))return {name:item.name,path,outcome:'not-expressible',reason:'Liquid clustering requires at most four direct columns and no included or document-path targets'};
+      return {name:item.name,path,outcome:'exact'};
+    }
     if(system==='iceberg')return {name:item.name,path,outcome:item.kind==='clustering'?'approximated':'not-expressible',reason:item.kind==='clustering'?'Iceberg sort order is an analogue, not index enforcement':'No Iceberg index carrier for this kind'};
     if(system==='parquet')return {name:item.name,path,outcome:'not-expressible',reason:'Parquet file schema does not enforce indexes'};
     return {name:item.name,path,outcome:'unknown',reason:'Target profile has no qualified index mapping'};

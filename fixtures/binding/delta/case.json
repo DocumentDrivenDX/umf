@@ -1,0 +1,5 @@
+{
+  "logical":{"umf":"0.1.0","id":"delta-logical","vocabularies":{},"modules":[{"id":"data","namespace":"data","elements":[{"id":"order_id","kind":"field","extensions":{}}]}]},
+  "binding":{"umf":"0.1.0","id":"delta-layout","vocabularies":{"umf.binding":{"version":"0.1.0"}},"modules":[],"extensions":{"umf.binding":{"profile":"umf-binding-1","logical":{"documentId":"delta-logical","coreVersion":"0.1.0"},"target":{"system":"delta","version":"3.2","subset":"liquid-clustering-domain-metadata"},"elements":[],"fields":[{"module":"data","element":"order_id","storage":"column","column":"order_id"}],"relationships":[],"indexes":[{"name":"order_cluster","kind":"clustering","on":[{"field":{"module":"data","element":"order_id"}}],"unique":false}]}}},
+  "native":"fixtures/binding/delta/native.jsonl"
+}
