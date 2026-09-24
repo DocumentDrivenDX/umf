@@ -56,3 +56,28 @@ token and container-item selection cases. Run the binding in Chromium and refres
 its compatibility/conformance evidence before acceptance. These scalar writer
 examples do not establish arbitrary malformed-file reader behavior, general value
 conversion, enforcement by all Parquet readers or full Parquet support.
+
+
+## Internal declaration interpreter checkpoint
+
+`src/adapters/parquet/facet-type.ts` now interprets isolated decoded scalar
+SchemaElements. It identifies signed/unsigned widths, binary32/binary64 carriers,
+string, variable/exact binary length and decimal precision/scale with carrier
+capacity. Logical and converted annotations must agree; unsupported tokens,
+unknown logical parameters, unknown Thrift members and contradictory carriers
+refuse. Legacy-only supported annotations remain explicit. The native fragment
+is copied intact and unclaimed fields are listed by escaped JSON pointer.
+
+This helper does not select a repeated item, assign core facets, certify a whole
+file or prove enforcement. It is internal and is not exported by the public
+entrypoint. Declared results always state `enforcement: unverified`.
+
+Four Bun tests pass with 663 assertions, including every scalar declaration in
+the native corpus, width/carrier boundaries, decimal capacity, conflicts,
+unknown retention, source isolation and getter refusal. Typechecking passes.
+`bun scripts/core-ideals/facets-parquet-type-browser.ts` builds the internal
+browser module and verifies 90 Chromium cases: 80 declared and 10 unsupported,
+with matching outcomes, no host globals, no external requests and zero getter
+calls. See the [browser evidence](../../../../fixtures/validation/facets-parquet-type-browser.json).
+Public classification, author projection, both facet-level round trips and full
+binding qualification remain unfinished.
