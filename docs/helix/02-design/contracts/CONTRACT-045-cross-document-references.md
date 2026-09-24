@@ -67,8 +67,9 @@ merely because their unknown fields happen to use `revision`, `dependencies` or
 
 Revision IDs are owner-issued immutable identities; the SHA-256 digest is an
 integrity guard for one packaged byte representation, not the stable semantic
-identity. Reformatting may change the digest while leaving lineage identity
-unchanged. A package must contain exactly one entry for each referenced pair.
+identity. Reformatting changes the digest and therefore requires a new revision
+pin if the published bytes change, while document and element lineage identities
+can remain unchanged. A package must contain exactly one entry for each referenced pair.
 Two entries for the same `(id,revision)` are ambiguous even when their bytes
 match; differing bytes additionally produce a revision-content conflict. A
 digest mismatch, a parsed ID/revision mismatch, or a package with only a

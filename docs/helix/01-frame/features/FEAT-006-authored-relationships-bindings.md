@@ -57,8 +57,9 @@ preserve native sources; the authoring path also needs directed generation.
 ## Requirements
 
 - REL-01: Expose an authored relationship separately from generic references,
-  instance edges and native observations. It connects independently keyed Record
-  types, names a stable target-key identity, and states per-end participation
+  instance edges and native observations. It has a stable ID separate from its
+  unique presentation name, connects independently keyed Record types, names a
+  stable target-key identity, and states per-end participation
   bounds, target lifecycle, optional keyed association Record and inverse
   navigation. Preserve DDD concept-reference meaning as a qualified binding,
   not a replacement for either vocabulary. Native FK enforcement and DDD
