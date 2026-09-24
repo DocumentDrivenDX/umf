@@ -38,5 +38,11 @@ test('@covers US-048-AC3 @covers US-048-AC4: partition and embedded path losses 
   expect(report.residuals.some(x=>x.path.endsWith('/partition'))).toBe(true);
   expect(report.candidate).not.toContain('PARTITION BY LIST');
   expect(report.residuals.some(x=>x.reason.includes('embedded path presence'))).toBe(true);
+  expect(report.residuals.some(x=>x.path==='/extensions/umf.binding/fields/9'&&
+    (x.choice as {element?:string;field?:string;path?:string[]}).element==='Product'&&
+    (x.choice as {field?:string}).field==='tags'&&
+    JSON.stringify((x.choice as {path?:string[]}).path)===JSON.stringify(['tags']))).toBe(true);
+  expect(report.candidate).toContain('CREATE TABLE "sales"."products"');
+  expect(report.candidate).toContain('CONSTRAINT "ck_products_payload_object"');
   expect(report.residuals.some(x=>x.reason.includes('does not emit a primary or unique key'))).toBe(true);
 });
