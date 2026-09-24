@@ -50,7 +50,8 @@ value. Neither establishes a relationship.
   direction, optional inverse and association Record are available without
   decoding native payloads.
 - **US-045-AC2:** Given duplicate IDs or names, missing/non-Record endpoints, unresolved
-  target keys, an unkeyed association Record or malformed multiplicity, when
+  target keys, a target Key with an unowned or shared component Field, an
+  unkeyed association Record or malformed multiplicity, when
   validated, then the operation fails atomically with source paths.
 - **US-045-AC3:** Given a DDD many-valued concept field, record-valued Field,
   native FK or GraphQL object field without authored declaration, when
