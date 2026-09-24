@@ -60,6 +60,11 @@ No operation here removes a native payload, even when a mapping is exact.
 
 ## Normative Surface
 
+Relationship is the sixth ordered ideal after key. CONTRACT-041, not this
+contract's five-concept table, owns its exact shape, counterexamples and
+bindings. Existing `references` retain CONTRACT-001 meaning. Physical storage
+and indexes belong to CONTRACT-042's independently versioned `umf.binding`.
+
 The following is the proposed semantic surface, to be added incrementally after
 this contract. Existing documents do not acquire these assertions by default.
 

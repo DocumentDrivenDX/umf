@@ -14,8 +14,9 @@ ddx:
 # FEAT-005: Author and project UMF core ideals
 
 **Priority:** P0. **Covered subsystem:** Semantic representation and core.
-**Covered PRD requirements:** FR-3, FR-20, FR-21, FR-28.
-**Cross-subsystem rationale:** None; native bindings verify this semantic capability.
+**Covered PRD requirements:** FR-3, FR-20, FR-21, FR-28, FR-42.
+**Cross-subsystem rationale:** FR-42 adds relationship authoring to the core
+ideal gate; FEAT-006 covers its physical bindings and generators.
 
 ## Overview
 
@@ -38,7 +39,8 @@ projections rather than prohibit UMF from defining author intent.
 ## Requirements
 
 - IDEAL-01: Define one concept at a time in order: field, nullability,
-  cardinality, author-stated facets, key; exact meanings live in CONTRACT-040.
+  cardinality, author-stated facets, key, relationship. CONTRACT-040 owns the
+  first five meanings; CONTRACT-041 owns relationship meaning.
 - IDEAL-02: Expose author assertions separately from native classifications;
   preserve disagreement and unknown content, and diagnose stale classifications.
 - IDEAL-03: Support strict and report projections to the five priority systems;
@@ -49,8 +51,9 @@ projections rather than prohibit UMF from defining author intent.
 
 ## User Stories
 
-US-040 field, US-041 nullability, US-042 cardinality, US-043 facets and US-044 key
-provide the ordered vertical slices. Each has its own technical design.
+US-040 field, US-041 nullability, US-042 cardinality, US-043 facets, US-044 key
+and US-045 relationship provide the ordered vertical slices. Each has its own
+technical design. Relationship implementation follows the key five-system gate.
 
 ## Edge Cases and Error Handling
 

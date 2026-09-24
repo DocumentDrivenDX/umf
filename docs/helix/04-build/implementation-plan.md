@@ -21,11 +21,166 @@ ddx:
       kind: informed_by
     - id: FEAT-005
       kind: informed_by
+    - id: FEAT-006
+      kind: informed_by
+    - id: CONTRACT-041
+      kind: informed_by
+    - id: CONTRACT-042
+      kind: informed_by
+    - id: CONTRACT-043
+      kind: informed_by
+    - id: CONTRACT-044
+      kind: informed_by
 ---
 
 # UMF Implementation Plan
 
 ## Scope
+
+### Proposed alignment: authored relationships and physical bindings
+
+This section is the work plan for the Hohfeld-driven amendment. It proposes
+changes to the governed artifacts; it does not claim that the artifacts, schemas,
+projections or native evidence already exist. Continue the ordered core backlog
+with relationship **after key**. Key's five-system gate remains the prerequisite
+for relationship implementation. Drafting the upstream documents may proceed
+while that gate is open. Keep the PRD, feature and story language about product
+behavior; put exact payloads, mapping rules and error semantics in contracts.
+
+**Governing inputs:** [PRD](../01-frame/prd.md) FR-2/3/4/5/7/8/20/21/26/28/34/40/41;
+[FEAT-005](../01-frame/features/FEAT-005-core-ideals.md) IDEAL-01–05;
+[CONTRACT-001](../02-design/contracts/CONTRACT-001-core-envelope.md),
+[CONTRACT-004](../02-design/contracts/CONTRACT-004-json-schema-protobuf-projection.md),
+[CONTRACT-005](../02-design/contracts/CONTRACT-005-ddd-profile.md),
+[CONTRACT-006](../02-design/contracts/CONTRACT-006-ddd-document-projection.md),
+[CONTRACT-040](../02-design/contracts/CONTRACT-040-core-ideals.md),
+[US-044](../01-frame/user-stories/US-044-core-key.md),
+[TD-040](../02-design/technical-designs/TD-040-core-field.md),
+[TD-044](../02-design/technical-designs/TD-044-core-key.md),
+[architecture](../02-design/architecture.md), [TP-001](../03-test/test-plan.md),
+and the current execution evidence later in this plan. The selected concerns
+remain fidelity/partial understanding, identity/composition, reproducible
+portable processing, bounded processing, conformance, review/composability and
+the NFR-48–50 execution boundary. ADR-002 keeps Bun in development and a real
+browser in validation.
+
+#### Alignment ledger and authority order
+
+| Current content or gap | Classification | Destination and content to add | Follow-up / gate |
+| --- | --- | --- | --- |
+| PRD FR-3's ordered backlog ends at key ([PRD, FR-3](../01-frame/prd.md)); FR-4/40/41 do not name separately versioned physical bindings or authored generation | split | Amend FR-3 to place relationship after key, retaining its two-priority admission versus five-priority delivery distinction; add FR-42–FR-44 for authored relationships, independent physical bindings/index capabilities, and directed DDD-to-target generation. Preserve FR-40's storage-independent DDD meaning and FR-41's consumer metadata rule. | Frame first; update PRD acceptance matrix and open questions; do not imply new capability is delivered. |
+| FEAT-005 IDEAL-01 lists only five concepts ([FEAT-005, Requirements](../01-frame/features/FEAT-005-core-ideals.md)); there is no feature joining authored relationships with physical choices | split | Extend IDEAL-01 to add relationship in sixth position; create FEAT-006, “Authored relationships and physical bindings,” covering relationship/DDD precedence, separate `umf.binding`, indexes as physical capability, and the two directed projections. Link it to new FRs and FEAT-005. | Frame; check every selected concern and do not put exact schema payloads in the feature. |
+| US-044 defines the acceptance pattern ([US-044, Acceptance Criteria](../01-frame/user-stories/US-044-core-key.md)); US-045–049 do not exist | needs-new-artifact | Create US-045 relationship, US-046 binding, US-047 indexes, US-048 DDD→PostgreSQL, US-049 DDD→GraphQL. Give each stable Given/When/Then ACs and test traceability. | Frame before design; each story covers strict block, report residual, both retained recovery directions, migration/rollback and version/subset evidence, adapted to its actual direction. |
+| CONTRACT-040's semantic table and five-system mappings end at key ([CONTRACT-040, Normative Surface](../02-design/contracts/CONTRACT-040-core-ideals.md)); current DDD references are storage-neutral ([CONTRACT-005, Fields, Equality and Relationships](../02-design/contracts/CONTRACT-005-ddd-profile.md)) | split | Create CONTRACT-041 for relationship meaning and all-five bindings; CONTRACT-042 for the versioned `umf.binding` document/module and index rule; CONTRACT-043/044 for DDD+binding→PostgreSQL and DDD+relationship→GraphQL. Add only narrow cross-references to CONTRACT-040/005/006 after the new contracts settle. | Design; contracts precede every schema edit. Reject core promotion if the admission record lacks a useful down-projection in two priority systems. |
+| TD-040–044 and TP-001 describe the first five ideals ([TD-044](../02-design/technical-designs/TD-044-core-key.md); [TP-001](../03-test/test-plan.md)) | needs-new-artifact | Create TD-045–049 in the TD-040 pattern, then extend TP-001 or add story test plans mapping every new AC to an exercising test and pinned native/browser oracle. | Design then Test; implementation issues are not ready until these exist. |
+| Architecture phase table still names relationships/indexes as future pressure ([architecture, Proposed ecosystem expansion](../02-design/architecture.md)) | move | After implementation evidence, list relationship as delivered experimental core and indexes as delivered `umf.binding` capability, with version/subset/evidence. Explain DDD concept references as a qualified binding, never a merge. Until then describe them as planned. | Evolve architecture only when evidence supports “delivered”; retain historical phase table meaning. |
+
+The alignment classifications above are source-to-destination handoffs. No
+source content is removed before the destination exists. The feature/stories
+own behavioral scope; contracts own exact surface; TDs own files, sequencing and
+tests. Preserve artifact IDs, frontmatter and deliberate `ddx.links` to actual
+upstream instances. Consult installed HELIX templates, prompts and graph when
+authoring each artifact.
+
+#### Contract decisions to settle before schema work
+
+1. **Relationship shape and admission.** CONTRACT-041 defines module-unique
+   name, exact-ID source/target sets (each nonempty), per-end cardinality from
+   the existing ideal, `directed`, optional `inverse`, self-reference and
+   undirected meaning. It distinguishes schema assertion from instance edge,
+   foreign key and enforcement. Existing core `references` remain unchanged.
+   A DDD concept-reference field is a qualified binding only when the author
+   declares a relationship; `many` alone creates none. Native FK and object
+   fields classify as observations with their refinements retained, never
+   invented author intent. Specify identity across modules, rename behavior,
+   collision rules and versioned migration/rollback before reserving a core key.
+2. **Five-system gate.** TableSpec, PostgreSQL, SQL Server, Avro and Parquet
+   each need an authored down-projection and retained native up-classification,
+   including exact/approximate/residual/refusal outcomes. The brief names four
+   of these five: CONTRACT-041 must add TableSpec, likely an explicit residual
+   or refusal until its native model proves useful representation. A refusal
+   alone cannot count toward the two-useful-priority-system admission gate.
+   PostgreSQL/SQL Server FK or junction carriers, Avro/Parquet reference/nested
+   carriers, and TableSpec's actual model require versioned evidence rather
+   than assumed equivalence. GraphQL, RDF and LinkML are additional scoped
+   bindings, not substitutes for TableSpec. Test one-to-one, many-to-one,
+   many-to-many, heterogeneous source, self-reference and undirected fixtures.
+   Resolve endpoint-set cardinality and heterogeneous relation lowering
+   explicitly; a single FK column cannot claim to type-check several source
+   element kinds. GraphQL source-end cardinality and RDF union class behavior
+   need residuals. Native-only reimport never asserts the authored relationship.
+3. **Binding and index boundary.** CONTRACT-042 defines an independently
+   versioned, target-qualified `umf.binding` artifact referencing a logical
+   model without mutating its identity; one model can have distinct PostgreSQL
+   and Delta bindings. Per-element partition/table, per-field
+   column/embedded path, per-relationship edge/FK/junction/inline, and indexes
+   remain physical. The contract must define external-reference resolution,
+   missing/stale model and binding versions, conflicting target bindings,
+   path grammar and duplicate names. A field's logical definition never
+   contains or implies index availability; consumers inspect the binding for
+   filter/sort capabilities. Per-index name, kind, ordered field/path targets,
+   opaque predicate language/version, unique flag and includes need structural
+   and semantic checks. `unique` kind versus `unique: boolean` requires one
+   unambiguous rule. A catalog-observed index remains native evidence under
+   CONTRACT-015, not author intent. Preserve the Hohfeld 1-row/300,000-row,
+   21-minute/1.7-second query observation as *consumer-supplied rationale*,
+   without treating it as UMF performance evidence or executing queries.
+4. **Binding fidelity matrix.** Qualify PostgreSQL btree/hash/gin/gist,
+   expression/partial/unique and document-path expression indexes against
+   pinned 17 syntax and semantics; clustering stays residual. SQL Server
+   rowstore/unique/filtered support is scoped to its native vocabulary;
+   gin/gist stay residual. Delta liquid clustering, Iceberg sort order and
+   Parquet residual-only behavior need target versions and reports. No
+   `embedded` or `edge` choice enters core. Predicate text is opaque and
+   unenforced by UMF; do not call a generated index exact until its parsed
+   expression, target support and relevant semantics are actually checked.
+5. **Directed generators.** CONTRACT-043 defines the complete DDD+binding→
+   PostgreSQL DDL result, source retention, table/column/partition naming,
+   FK/junction/adjacency rules, index emission, SQL identifier and expression
+   safety, strict/report policy, atomic failure and adapter/native checks.
+   CONTRACT-044 defines DDD+relationship→GraphQL SDL object/field naming,
+   scalar/nullability/cardinality lowering, declared inverse only, and the same
+   fidelity/recovery policy. Both report aggregate and invariant gaps from
+   CONTRACT-006, heterogeneous endpoints and any unsupported target choice.
+   No resolver, pagination, budget, SPARQL or query execution enters either
+   projection. Hohfeld's per-entity SQL views need a later scoped projection
+   if required; the requested generator deliverable is DDL. GraphQL needs a declared root/schema-mode policy; a set of
+   object types alone may not validate as a complete schema.
+
+#### Implementation slices (after contracts, TDs and test plans)
+
+| Slice | Story / area | Governing artifacts to create | Depends on | Validation gate |
+| --- | --- | --- | --- | --- |
+| RB-01 | US-045 core representation | CONTRACT-041, TD-045, story tests | Key five-system gate and contract | New version/profile, collision-preserving migration/rollback, exact endpoint validation, typed inspection; Bun and Chromium; no `spec/core/schema.json` edit before signed semantic contract. |
+| RB-02 | US-045 native bindings | CONTRACT-041, TD-045, TP-001 | RB-01 | TableSpec, PostgreSQL, SQL Server, Avro, Parquet separate matrices; two useful priority mappings recorded for admission; all-five delivery recorded separately; GraphQL/RDF/LinkML qualified additional checks. Both retained recovery directions. |
+| RB-03 | US-046/047 extension | CONTRACT-042, TD-046/047, story tests | Contract and logical model reference rules | Publish `spec/extensions/binding/{package.json,schema.json}` and registration; independent versioning, all storage/index kinds, unknown preservation, physical-only capability inspection, strict/report and migration/rollback. |
+| RB-04 | US-048 PostgreSQL generator | CONTRACT-043, TD-048, story tests | RB-01/03 plus Field/Nullability/Cardinality/Facets/Key | Authored order/customer/product/reified-association corpus; every declared PostgreSQL index kind and storage form; checked-in DDL and report; `umf.postgresql` parse/deparse/codec; isolated PostgreSQL 17 oracle; Bun/Chromium parity. DDL generation is not a live migration or query run. |
+| RB-05 | US-049 GraphQL generator | CONTRACT-044, TD-049, story tests | RB-01 plus Field/Nullability/Cardinality | Checked-in SDL/report; `umf.graphql` schema-mode import, GraphQL.js and GraphQL-core independent-port oracles; inverse/nullability/cardinality loss cases and Bun/Chromium parity. |
+| RB-06 | Integration and publication | FEAT-006, TP-001, four contracts and five TDs | RB-02–05 | Fixture hashes, accepted/rejected native cases, both recovery directions, all-five and additional target version/subset claims, no unknown loss, strict/report evidence; only then amend architecture from pressure to delivered status. |
+
+Create one runtime work item per bounded slice and one per native binding when
+execution starts; label with `helix`, `activity:build`, story ID and area, link
+the nearest governing TD/contract/test plan via `spec-id`, and wire RB-01→RB-02,
+RB-03→RB-04, RB-01→RB-05 and RB-02–05→RB-06. Record test-to-AC links as
+`@covers US-045-ACn` through `US-049-ACn`. Required fixtures include negative
+counterexamples, original native archives, generated candidates and residual
+reports. Reuse the current pinned native harnesses and add fresh evidence;
+historical adapter evidence does not prove the new generators.
+
+**Risks and rollback:** Core name collisions or old unknown members require
+an explicit version/profile transition and reversible receipt; unsafe
+interpretation blocks. Physical path/index semantics can drift by engine
+version, so each binding pins syntax, subset and oracle and reports unsupported
+claims. Generated DDL/SDL and test-only native execution are reviewable outputs,
+not deployed changes. Reverting an experimental capability retains the original
+logical model, binding document, residuals and native source archive; it never
+silently discards new assertions or rewrites preexisting `references`.
+
+**Exit for this plan:** PRD→FEAT/stories→CONTRACT→TD→test-plan dependencies are
+explicit; the TableSpec gap and contract decisions are tracked; no unsupported
+delivery claim is made. Build exit requires the separate ideal-admission and
+all-five-delivery records, version-qualified native/browser evidence, zero
+phantom test claims and every acceptance criterion exercised.
 
 ### Current owner amendment: ideals before equivalence
 

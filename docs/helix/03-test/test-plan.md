@@ -17,11 +17,49 @@ ddx:
       kind: informed_by
     - id: FEAT-005
       kind: informed_by
+    - id: FEAT-006
+      kind: informed_by
+    - id: CONTRACT-041
+      kind: informed_by
+    - id: CONTRACT-042
+      kind: informed_by
+    - id: CONTRACT-043
+      kind: informed_by
+    - id: CONTRACT-044
+      kind: informed_by
 ---
 
 # UMF Test Plan
 
 ## Core ideal amendment: planned acceptance gates
+
+### Authored relationship and binding amendment
+
+FR-42–FR-44, FEAT-006, US-045–US-049 and CONTRACT-041–044 govern this
+planned acceptance work. Documentation is not implementation evidence.
+Relationship core work starts only after key's five-system gate. Separate
+records establish (1) two useful priority-system ideal admission, (2) qualified
+TableSpec/PostgreSQL/SQL Server/Avro/Parquet delivery, and (3) any later
+FR-28 native-equivalence graduation. GraphQL/RDF/LinkML are additional
+versioned bindings. A refusal with a retained residual is a valid observed
+outcome but not a useful down-projection for the two-system admission floor.
+
+| Story | Required exercising test families | Native/browser evidence |
+| --- | --- | --- |
+| US-045 AC1–10 | Exact endpoint/name/cardinality validation; six authored graph cases; DDD-many, undeclared FK and computed GraphQL field counterexamples; strict/report; both recoveries; old-member migration/rollback | All five priority systems plus GraphQL/RDF/LinkML with pinned subsets, Bun and real Chromium |
+| US-046 AC1–10 | One logical model with independent PostgreSQL/Delta bindings; stale IDs, choice/path errors, target residuals, isolation, both recoveries and rollback | PostgreSQL/SQL Server first; Delta/Iceberg/Parquet claims only after versioned evidence and Chromium parity |
+| US-047 AC1–10 | All index kinds, ordered column/path targets, unique-kind consistency, partial predicate metadata, no logical filterability inference, strict/report and recoveries | PostgreSQL 17 index DDL/catalog, SQL Server filtered/disabled counterexample, Delta/Iceberg analogues and Parquet residuals |
+| US-048 AC1–10 | Authored order/customer/product plus reified association and all index/storage forms; unsafe names, partitions, cyclic FK, aggregate/invariant losses, strict/report and recoveries | `umf.postgresql` parse/deparse/codec plus isolated PostgreSQL 17 catalog acceptance and Chromium |
+| US-049 AC1–10 | Entity/scalar/nullability/list/inverse/root cases; heterogeneous and undirected losses, aggregates/invariants, strict/report and recoveries | `umf.graphql` schema-mode import, pinned GraphQL.js and GraphQL-core, real Chromium |
+
+Every covering test MUST cite its criterion in parseable `@covers
+US-045-ACn` through `@covers US-049-ACn` form and exercise the claimed
+behavior. Checked-in fixtures include authored inputs, generated DDL/SDL,
+reports, expected native acceptance/rejection and source fingerprints.
+Independently compare ideal→native→ideal with retained report and
+native→ideal→native with original archive; a target-only reimport cannot
+fabricate author intent. Native execution is isolated schema validation, not
+query execution. No adapter parse alone proves database or GraphQL behavior.
 
 CONTRACT-040 and US-040–US-044 govern the next core expansion. These tests are
 required work, not part of the recorded scalar-family/native baseline. Run one

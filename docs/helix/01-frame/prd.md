@@ -39,6 +39,8 @@ Source: the project owner's functional requirements and subsequent bootstrap
 brief supplied on 2026-09-20. FR-1–FR-33 preserve the original requirement
 numbers. Original item 34 appears under Non-Goals; FR-34–FR-38 are additions
 from the later brief. FR-39–FR-41 record subsequent browser, DDD, and metamodel-consumer direction.
+FR-42–FR-44 record authored relationships, physical bindings and directed
+generation requested by a model-authoring consumer.
 All requirements remain product obligations; this draft does
 not assert that every ecosystem must ship in the first release.
 
@@ -179,7 +181,7 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   that retains unknown native detail in the extension. A projection may approximate
   or refuse the ideal; strict mode blocks loss and report mode describes it.
   Admission is not a native-equivalence claim. The ordered backlog is field,
-  nullability, cardinality, author-stated facets and key; each requires mappings
+  nullability, cardinality, author-stated facets, key and relationship; each requires mappings
   and both round-trip obligations across all five priority systems before its
   priority integration work is complete.
 - **FR-20 — Simultaneous representations.** The same logical concept must be
@@ -282,6 +284,31 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   semantics when shapes are incomplete. New vocabularies must coexist with earlier
   consumers without losing uninterpreted content. Generated consumer artifacts
   must expose unsupported semantics rather than imply validation or enforcement.
+- **FR-42 — Authored relationships.** Model authors must be able to state
+  named associations between identified element types, including direction,
+  endpoint multiplicity and an optional inverse presentation, without asserting
+  an instance edge, physical foreign key or target enforcement. Consumers must
+  distinguish authored intent from native observations and generic references.
+  Relationship follows key in the ordered core backlog under FR-3's admission
+  test; all-five delivery is a separate obligation. Unexpressed semantics and
+  native refinements remain recoverable under FR-8 and FR-28.
+
+### Subsystem: Physical Bindings and Authored Generation
+
+- **FR-43 — Independent physical bindings and capabilities.** An author must
+  be able to bind one logical model to multiple physical targets without
+  changing logical identity or meaning. Target bindings may describe element,
+  field and relationship storage and declared indexes. Consumers obtain
+  filterability and sortability from a binding's qualified physical capabilities,
+  never from a field's logical definition. Unsupported choices remain visible
+  in fidelity reports and recoverable with the source.
+- **FR-44 — Directed generation from authored meaning.** An author must be
+  able to project a DDD model with declared relationships and physical choices
+  to scoped PostgreSQL DDL, and a DDD model with relationships to GraphQL SDL.
+  Generated targets must pass their existing native adapters and independent
+  native checks within declared versions and subsets. Each operation retains
+  its source and reports missing target semantics. Query execution, resolvers,
+  pagination and business-system behavior remain outside UMF.
 
 ### Subsystem: Translation and Fidelity
 
@@ -404,6 +431,9 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-39 | Run supplied schemas through native round trips and projections in a browser and CLI | Equivalent semantic outputs and diagnostics without a transformation server |
 | FR-40 | Round-trip a sales aggregate and two distinct Customer contexts; project under explicit target mappings | Identity, aggregate boundaries, events, invariants, terminology, and context distinctions survive; unsupported target semantics are reported without asserting target enforcement |
 | FR-41 | Use one mixed table/service/DDD model to derive a transform, visualization, pipeline and validator, form metadata, agent context and human documentation; add an unfamiliar vocabulary | Consumers use selected metadata with context and provenance; edits propagate safely; unknown semantics survive and limits remain explicit; no consumer claims unsupported enforcement |
+| FR-42 | Author one-to-one, many-to-one, many-to-many, self and heterogeneous associations; classify an undeclared native FK | Authored endpoint meaning is inspectable; native observations retain refinements without inventing intent; two-priority admission and five-priority delivery remain distinct |
+| FR-43 | Bind one logical order model separately to PostgreSQL and Delta with different storage/index choices | Logical IDs and meaning agree; index availability comes only from the selected binding; unsupported choices report residuals and remain recoverable |
+| FR-44 | Generate DDL and SDL from an authored order/customer/product model with an association carrying fields | Outputs pass native adapters and versioned oracles; aggregate/invariant, endpoint and storage losses are reported; retained source and original native archives recover |
 
 ## Technical Context
 
@@ -478,7 +508,7 @@ be inspected.
   compatibility behavior require native checks. Axon's exact integration interface
   still requires identification; it is outside the current five-system priority.
 - Which first-slice capabilities are production release commitments rather than
-  spike findings? Owner: product owner; blocks release commitments. All 41
+  spike findings? Owner: product owner; blocks release commitments. All 44
   requirements remain product obligations until explicitly changed.
 
 ## Success Criteria
