@@ -123,3 +123,35 @@ contains current source/schema/bundle fingerprints and the selected native cases
 This completes the experimental classification checkpoint only. Authored
 projection, ideal recovery, composed native/ideal evidence and full compatibility
 acceptance remain required.
+
+
+## Native emitter foundation for authored projection
+
+The internal `parquetFacetFile` helper constructs empty native schema files from
+explicit carriers. It supports the existing primitive carriers, signed/unsigned
+integer annotations, fixed binary, and decimal INT32, INT64, BYTE_ARRAY and
+FIXED_LEN_BYTE_ARRAY carriers. Integer and decimal logical/legacy annotations
+agree. Names, optionality, field IDs and opaque key/value metadata are explicit.
+Invalid capacity, zero fixed length, unknown request members and unsafe inputs
+refuse before a file is returned. Fixed arithmetic is limited to 4096 bytes;
+decimal precision/scale must fit their native signed-int32 metadata fields.
+
+`bun scripts/core-ideals/facets-parquet-carrier-oracle.ts` emits 54 cases and
+verifies 108 JSON/YAML byte recoveries. PyArrow 21.0.0 reads 52 of these schemas
+and completes 52 value write/read checks using the resulting Arrow schema.
+The two BYTE_ARRAY decimal precision-77 cases are valid under the selected
+native declaration rules but are refused by the pinned reader. This is an
+explicit reader limitation, not a reason to silently reduce authored precision.
+Rewritten data files are checked for value recovery, not identical physical
+encodings. See the [native carrier evidence](../../../../fixtures/validation/facets-parquet-carrier-native.json).
+
+Three Bun tests pass with 244 assertions. Typechecking passes. Chromium produces
+identical bytes for all 54 native schemas, refuses five invalid carrier cases,
+and makes zero getter calls or external requests. The emitted files total
+5,918 bytes. See the [browser carrier evidence](../../../../fixtures/validation/facets-parquet-carrier-browser.json).
+
+This is an internal emitter foundation, not an authored facet projection API.
+Author provenance, facet-to-carrier matching, strict/report losses, retained
+ideal recovery, composed classification and full binding acceptance remain to
+be implemented and verified. No new public export or package export capability
+is claimed by this checkpoint.
