@@ -36,6 +36,14 @@ Generate reviewable native DDL from an authored `umf.ddd` logical model,
 CONTRACT-041 relationships and a separate PostgreSQL `umf.binding` document.
 The operation retains each source and reports the meaning the target lacks.
 
+The relationship-independent table stage is implemented for a pinned PostgreSQL
+17.4 subset: DDD entities and a separate binding emit quoted tables, explicit
+scalar columns, a JSONB object carrier and LIST/default partition layout.
+The table-stage report retains every index choice, relationship choice, DDD
+identity and unsupported scalar/path obligation as a residual. This stage is
+not the complete projection defined below; the relationship, key and index
+composition still requires their dependent beads.
+
 ## Scope and Boundaries
 
 The caller supplies the logical document and binding document explicitly,

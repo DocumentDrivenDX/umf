@@ -88,6 +88,15 @@ aggregate/invariant residuals, strict/report pairs, both retained recoveries,
 PostgreSQL 17 catalog oracle and Chromium parity. Fingerprint fixtures and
 native engine version.
 
+The relationship-independent table stage uses
+`fixtures/projections/ddd-postgresql-tables/` for an Order, Customer, Product
+and DDD-identified OrderProduct authoring corpus. Its binding declares all eight index
+kinds, which remain source-qualified residuals in this stage. Generated table
+DDL passes `umf.postgresql` parse/deparse/codec, executes in isolated PostgreSQL
+17.4 and matches Chromium. JSONB path semantics, DDD identity, scalar-domain
+limits and optional-to-NULL choice are reported; this evidence does not close
+the full DDD-to-PostgreSQL generator.
+
 ## Migration & Rollback
 
 Version generator policy and reports. Rollback retains authored logical and

@@ -1,0 +1,418 @@
+{
+  "scope": "PostgreSQL 17.4 isolated execution of DDD-derived tables, JSONB object carrier and LIST/default partition; relationship, key, index and path semantics remain residual",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "adapter": "@libpg-query/parser@17.6.10",
+  "observed": {
+    "tables": [
+      {
+        "name": "customers",
+        "partition_child": false,
+        "partition_strategy": null
+      },
+      {
+        "name": "order_products",
+        "partition_child": false,
+        "partition_strategy": null
+      },
+      {
+        "name": "orders",
+        "partition_child": false,
+        "partition_strategy": "l"
+      },
+      {
+        "name": "orders_default",
+        "partition_child": true,
+        "partition_strategy": null
+      },
+      {
+        "name": "products",
+        "partition_child": false,
+        "partition_strategy": null
+      }
+    ],
+    "columns": [
+      {
+        "name": "customerId",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "payload",
+        "type": "jsonb",
+        "required": false
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "tenant",
+        "type": "text",
+        "required": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "ck_orders_payload_object",
+        "validated": true,
+        "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+      }
+    ]
+  },
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/fields/0",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "tenant",
+        "storage": "column",
+        "column": "tenant"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/2",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "customerId",
+        "storage": "column",
+        "column": "customerId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/3",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "status",
+        "storage": "column",
+        "column": "status"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/4",
+      "reason": "JSONB normalizes document representation and does not enforce embedded path presence or value type",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "details",
+        "storage": "embedded",
+        "documentColumn": "payload",
+        "path": [
+          "customer",
+          "region"
+        ]
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/0",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Customer",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/6",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Customer",
+        "field": "name",
+        "storage": "column",
+        "column": "name"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/1",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/7",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Product",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/8",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Product",
+        "field": "sku",
+        "storage": "column",
+        "column": "sku"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/2",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/9",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/10",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "orderId",
+        "storage": "column",
+        "column": "orderId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/11",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "productId",
+        "storage": "column",
+        "column": "productId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/12",
+      "reason": "PostgreSQL numeric precision and scale narrow unqualified DDD decimal",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "quantity",
+        "storage": "column",
+        "column": "quantity"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/3",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/0",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_btree",
+        "kind": "btree",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/1",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_hash",
+        "kind": "hash",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "customerId"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/2",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_gin",
+        "kind": "gin",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/3",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_gist",
+        "kind": "gist",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/4",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_expression",
+        "kind": "expression",
+        "on": [
+          {
+            "documentPath": {
+              "field": {
+                "module": "sales",
+                "element": "Order",
+                "field": "details"
+              },
+              "path": [
+                "customer",
+                "region"
+              ]
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/5",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_partial",
+        "kind": "partial",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "predicate": {
+          "language": "postgresql",
+          "version": "17.4",
+          "expression": "\"status\" = 'paid'"
+        },
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/6",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_unique",
+        "kind": "unique",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": true
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/7",
+      "reason": "Index storage is handled by the separate index generator",
+      "choice": {
+        "name": "orders_clustering",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "tenant"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/projections/ddd-postgresql-tables/case.json": "85cb016cc8a179d822381717f7d73bf1545ebab0dd15ef5b9b61e32fe432f39b",
+    "fixtures/projections/ddd-postgresql-tables/generated.sql": "1c1c048bb687609272b0b490ac2b54ab84b9e16b87670df928413a8944f7ab63",
+    "src/projections/ddd-postgresql/tables.ts": "e7ec55a6e709db0a8150ee6c5ce25c58e0f1fabe75f0486921adcc92570d4f69"
+  }
+}
