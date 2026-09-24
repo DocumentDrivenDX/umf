@@ -69,6 +69,22 @@ The bounded stage emits `String` and `Boolean` through their named built-ins;
 distinct declared custom scalars whose coercion remains a residual. It refuses
 mapping those families to an unrelated built-in merely because SDL parses.
 
+For a document that authors core Field/Nullability/Cardinality ideals, the
+policy MUST pair each selected DDD scalar field with an exact
+`{module,element}` core Field reference. Pairing is explicit: identical field
+names, DDD `one`/`optional`/`many`, or a native GraphQL object field do not
+create a core assertion. The referenced element MUST have `kind: field`, a
+compatible `scalarType`, and a compatible container shape. A conflicting
+DDD/core scalar or container assertion blocks. The core Field's
+`nullability` controls the outer SDL non-null wrapper: `required` emits `!`,
+`absent-allowed` emits a nullable type, and `unspecified` remains nullable with
+a residual. For an array, an explicit `itemType` Field controls the item
+wrapper; missing item availability remains residual. A map needs a separate
+carrier and is not silently converted into a list. Core facets, SQL-like
+enforcement, defaults and present-null versus omission remain source-linked
+residuals. The older DDD-only stage remains a qualified fallback, not evidence
+that Field/Nullability ideals have been projected.
+
 | Source assertion | SDL lowering | Required loss account |
 | --- | --- | --- |
 | Selected DDD entity | One GraphQL object type | Identity, lifecycle, aggregate ownership and equality are not enforced. |

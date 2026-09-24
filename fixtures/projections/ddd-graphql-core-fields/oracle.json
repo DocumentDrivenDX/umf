@@ -1,5 +1,5 @@
 {
-  "scope": "Pinned GraphQL-core schema parse/build/validation of DDD entity-stage SDL; no resolver or query execution",
+  "scope": "Pinned GraphQL-core schema parse/build/validation of DDD core-Field-backed entity SDL; no resolver or query execution",
   "graphqlCore": "3.2.12",
   "graphqlJs": "17.0.2",
   "fields": {
@@ -20,7 +20,7 @@
     "Product": {
       "id": "Int!",
       "sku": "String!",
-      "tags": "[String]"
+      "tags": "[String!]"
     },
     "OrderProduct": {
       "id": "Int!",
@@ -29,11 +29,11 @@
       "quantity": "Decimal!"
     }
   },
-  "residuals": 22,
+  "residuals": 24,
   "sha256": {
-    "fixtures/projections/ddd-graphql-entities/case.json": "ab08554c4aca199327d608517bb0c8c4f996c12eedcc89ddf3340568536bb6e9",
-    "fixtures/projections/ddd-graphql-entities/generated.graphql": "49794b4ade16ee00bd91d3c1f3fff1bfa8f773114f709bfa4fce7d000d6fbb10",
-    "fixtures/projections/ddd-graphql-entities/report.json": "8343f5812457a7b42f1705027cd96648ec2d762d4f12b042536ab506ea44ccab",
+    "fixtures/projections/ddd-graphql-core-fields/case.json": "61c73edbae08eb0b46193bdda376471d7a3a5072d38da2cfc522a914ad3a03af",
+    "fixtures/projections/ddd-graphql-core-fields/generated.graphql": "e03c036fdbb0e0a17c133891eb3258705e1935bb4f0a1dab4431e94cf053e582",
+    "fixtures/projections/ddd-graphql-core-fields/report.json": "15af170c7d64e995780a9531dedd755ea33d10bdb183ddd1686458d7195b0c9f",
     "src/projections/ddd-graphql/entities.ts": "187715c017e04ca2d743913181c5dc221eedab7a558881fb2213140b6a39c777"
   }
 }

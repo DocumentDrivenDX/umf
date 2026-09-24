@@ -36,6 +36,13 @@ printing. Generate inverse fields only when declared. Reconcile each unsupported
 source obligation into a source-linked residual before permitting output.
 Import SDL in schema mode and compare independent GraphQL.js and GraphQL-core
 checks. Preserve original native SDL archive for the reverse recovery gate.
+The scalar-field stage uses an explicit policy reference from each selected
+DDD field to one core Field element. It validates scalar and container
+agreement, takes outer non-null from the core Nullability ideal and array-item
+non-null from an explicit itemType Field. It never treats a DDD cardinality
+label as an authored core Field assertion. Missing or conflicting pairings
+block the ideal-backed profile; the existing DDD-only profile remains
+separately qualified.
 
 ## Component Changes
 
@@ -85,6 +92,17 @@ missing execution meaning, DDD identity, scalar coercion, optionality and
 many-cardinality differences. `umf.graphql` schema mode, GraphQL.js,
 GraphQL-core 3.2.12 and Chromium validate the bounded result. Relationship
 fields and inverses remain in the full dependent generator.
+
+The core-ideal scalar stage uses
+`fixtures/projections/ddd-graphql-core-fields/`. Its UMF 0.5.0 Order,
+Customer, Product and OrderProduct corpus pairs each selected DDD scalar
+field with an exact core Field. Required, absent-allowed and unspecified
+availability produce qualified SDL wrappers; an array item Field supplies
+`[String!]` for Product tags. Conflicting or stale pairings block. The checked
+SDL passes the schema-mode adapter, GraphQL.js 17.0.2, GraphQL-core 3.2.12 and
+Chromium; source-linked residuals retain facets, identity, DDD many semantics
+and nullable/absent distinctions. Relationship fields and inverses still await
+TD-045 and do not follow from this evidence.
 
 ## Migration & Rollback
 
