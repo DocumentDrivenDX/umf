@@ -684,11 +684,11 @@
     "dist/sqlserver-facet-type.js": "3c1b54a847d9d9607d45eac08160a118983759b4076efd4637df3bd2d994dba5",
     "dist/umf.js": "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
     "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "ee84e44f55115e3e2f06da215feb02adc644ae8681916268335c0c0b03a96ba8",
-    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0",
     "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "dd96d8958c0162b23bb38c2992c28146e3913f1b463e4f66063bfbb1d8cf1144",
-    "docs/helix/03-test/test-plan.md": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
-    "docs/helix/04-build/implementation-plan.md": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
-    "docs/helix/README.md": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+    "docs/helix/03-test/test-plan.md": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82",
+    "docs/helix/04-build/implementation-plan.md": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6",
+    "docs/helix/README.md": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
@@ -1233,7 +1233,7 @@
     "fixtures/validation/nullability-core-acceptance-evidence.json": "ee4b0529d7d86de0803b7de600b520cc34e452996afe25f07dc390d635367c87",
     "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
     "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
-    "fixtures/validation/nullability-gate-acceptance-evidence.json": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c",
     "fixtures/validation/nullability-parquet-browser.json": "817df4a612e1e7f7abc03f965e445c933861e2974f68f3e3c31e1b3b7edc5948",
     "fixtures/validation/nullability-parquet-native.json": "e59c49b0777358e53ede72436479d3ed2be779b33f9c1fce6940ba37945e467c",
     "fixtures/validation/nullability-parquet-projection-browser.json": "e7926bc99980f87ed2868958319789838ce8812dbb2a7523047fa427dbb1f14b",
@@ -2312,6 +2312,33 @@
         "docs/helix/README.md": "0df47fbb8193e55a66c13048d4e42e47363b547e67c1558d4207a80f3f15c6f1",
         "fixtures/validation/nullability-gate-acceptance-evidence.json": "75861411c9cefca4015f20b8df29b3d9f5c50b5981d5b52023550d5c9c43caa4"
       }
+    },
+    {
+      "reason": "Publish completed facet admission/delivery without changing runtime semantics or rerunning native engines",
+      "previousRecordSha256": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        }
+      },
+      "ledger": "fixtures/validation/facets-documentation-revalidation.json"
     }
   ]
 }

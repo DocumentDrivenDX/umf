@@ -1,0 +1,592 @@
+{
+  "reason": "Documentation-only status publication after successful five-system facet gate. Original gate output remains historical. No source/schema/native/browser evidence changed. Runtime counts and native-run records are preserved. Current evidence consistency is checked separately.",
+  "documents": {
+    "docs/helix/README.md": {
+      "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+      "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+    },
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+      "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+      "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+    },
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": {
+      "before": "c6d4e0f669d3bc28f9672ecc3273a15a3f87ca17342951e2095ca834ae743ac4",
+      "after": "be903ed338d84e3114d9c7caf8824f85f55486cbeb5832e559fea8b11fa9a08d"
+    },
+    "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+      "before": "a3fadf2fc3789e65074005ee72210d472e43c02c775fe9821d916a53e796705a",
+      "after": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244"
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+      "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+    },
+    "docs/helix/03-test/test-plan.md": {
+      "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+      "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+    }
+  },
+  "acceptanceRecords": {
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+      "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+      "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        }
+      }
+    },
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+      "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+      "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        }
+      }
+    },
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+      "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+      "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        }
+      }
+    },
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+      "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+      "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+      "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+      "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+      "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+      "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+      "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+      "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+      "before": "6c0c71d5ee97c20e6222ddaa9e3a03636ce59740bc710e0f7fca06d178dea271",
+      "after": "145d0406dc9009aadb50f12231bb7f7284c37e9a900669eca5006b38938abd1b",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+          "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/facet-core-acceptance-evidence.json": {
+      "before": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1",
+      "after": "3e6885efc4e79a79ec80c472ec907fe273fad65154c90b5657a74b12c10e987b",
+      "fingerprints": {
+        "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+          "before": "a3fadf2fc3789e65074005ee72210d472e43c02c775fe9821d916a53e796705a",
+          "after": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244"
+        },
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/02-design/technical-designs/TD-043-core-facets.md": {
+          "before": "c6d4e0f669d3bc28f9672ecc3273a15a3f87ca17342951e2095ca834ae743ac4",
+          "after": "be903ed338d84e3114d9c7caf8824f85f55486cbeb5832e559fea8b11fa9a08d"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "6c0c71d5ee97c20e6222ddaa9e3a03636ce59740bc710e0f7fca06d178dea271",
+          "after": "145d0406dc9009aadb50f12231bb7f7284c37e9a900669eca5006b38938abd1b"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+          "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+      "before": "d81c67fa4bac37ac25ce8a58e7ecfb7b8c68f32bb2115aac146e9ec398fa21d4",
+      "after": "6cd58429990e8c2bab539097418d4aa6c1ca30c7472a866a46c1a9d94123b9e9",
+      "fingerprints": {
+        "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+          "before": "a3fadf2fc3789e65074005ee72210d472e43c02c775fe9821d916a53e796705a",
+          "after": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244"
+        },
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/02-design/technical-designs/TD-043-core-facets.md": {
+          "before": "c6d4e0f669d3bc28f9672ecc3273a15a3f87ca17342951e2095ca834ae743ac4",
+          "after": "be903ed338d84e3114d9c7caf8824f85f55486cbeb5832e559fea8b11fa9a08d"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "6c0c71d5ee97c20e6222ddaa9e3a03636ce59740bc710e0f7fca06d178dea271",
+          "after": "145d0406dc9009aadb50f12231bb7f7284c37e9a900669eca5006b38938abd1b"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1",
+          "after": "3e6885efc4e79a79ec80c472ec907fe273fad65154c90b5657a74b12c10e987b"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+          "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        }
+      }
+    },
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+      "before": "88997af848fa5b454d81087966f4336a5c8db2c6b253d68d53eb1f7f7e785cb6",
+      "after": "0c3e9e728df190ef3c4f7d09e34861d81fcff068e371a56689aef01f24fe2d21",
+      "fingerprints": {
+        "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+          "before": "a3fadf2fc3789e65074005ee72210d472e43c02c775fe9821d916a53e796705a",
+          "after": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244"
+        },
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/02-design/technical-designs/TD-043-core-facets.md": {
+          "before": "c6d4e0f669d3bc28f9672ecc3273a15a3f87ca17342951e2095ca834ae743ac4",
+          "after": "be903ed338d84e3114d9c7caf8824f85f55486cbeb5832e559fea8b11fa9a08d"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "6c0c71d5ee97c20e6222ddaa9e3a03636ce59740bc710e0f7fca06d178dea271",
+          "after": "145d0406dc9009aadb50f12231bb7f7284c37e9a900669eca5006b38938abd1b"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1",
+          "after": "3e6885efc4e79a79ec80c472ec907fe273fad65154c90b5657a74b12c10e987b"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+          "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        },
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+          "before": "d81c67fa4bac37ac25ce8a58e7ecfb7b8c68f32bb2115aac146e9ec398fa21d4",
+          "after": "6cd58429990e8c2bab539097418d4aa6c1ca30c7472a866a46c1a9d94123b9e9"
+        }
+      }
+    },
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": {
+      "before": "e029cc136f172a35de75d4cb51c1756b631062f18643f9f7e7e00fc2bae70b5e",
+      "after": "92af8b699155399a5eac9b3b4e00476158006b74f7c358bc4b05ac7feae65021",
+      "fingerprints": {
+        "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+          "before": "a3fadf2fc3789e65074005ee72210d472e43c02c775fe9821d916a53e796705a",
+          "after": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244"
+        },
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/02-design/technical-designs/TD-043-core-facets.md": {
+          "before": "c6d4e0f669d3bc28f9672ecc3273a15a3f87ca17342951e2095ca834ae743ac4",
+          "after": "be903ed338d84e3114d9c7caf8824f85f55486cbeb5832e559fea8b11fa9a08d"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "c7f0a06229b89aac01a0e7f8cd5bf25b69e6876c33a2c08f65671fc260310a73",
+          "after": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "127d8babb97c20ac8a99729f359b63569af5710a3157e3cd0f863dfe199cdbbe",
+          "after": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "6c0c71d5ee97c20e6222ddaa9e3a03636ce59740bc710e0f7fca06d178dea271",
+          "after": "145d0406dc9009aadb50f12231bb7f7284c37e9a900669eca5006b38938abd1b"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "6e215694ad0fe37671bdc9e4369ff972e57bcac24aeb3a0b6221f5e97c513ce1",
+          "after": "3e6885efc4e79a79ec80c472ec907fe273fad65154c90b5657a74b12c10e987b"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+          "after": "eba1502430f686bdb5f5decf60bbb1b4d3a5e6406743cf8c9135ea9314a4620c"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "61e97717a9ee52519a263a71a63db9a324a413367e61d702cc43fd2297a00959",
+          "after": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "9e491442e6f540f40ee57dc9500da58ee93c0bccfb208e0d1c08de5f6a6a4a7b",
+          "after": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+        },
+        "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+          "before": "88997af848fa5b454d81087966f4336a5c8db2c6b253d68d53eb1f7f7e785cb6",
+          "after": "0c3e9e728df190ef3c4f7d09e34861d81fcff068e371a56689aef01f24fe2d21"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "ca828acb9f8922c0c4becd9c494ebf515b14381dd876e3d7013083cc640868f2",
+          "after": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "342daade32093e484221bd7d12f3001da034509e8d6eca62448dd7e21a78d9eb",
+          "after": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+        },
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+          "before": "d81c67fa4bac37ac25ce8a58e7ecfb7b8c68f32bb2115aac146e9ec398fa21d4",
+          "after": "6cd58429990e8c2bab539097418d4aa6c1ca30c7472a866a46c1a9d94123b9e9"
+        }
+      }
+    }
+  },
+  "historicalGateSha256": "d4b2560f4a7d7a2111e939631c16f09f76839e2570b9b87f35a6f2042bb446ed",
+  "newEvidenceDocument": {
+    "path": "docs/helix/04-build/evidence/facet-gate-admission.md",
+    "sha256": "a8c851aaa56082d57bfef4abf21014e1d4047661c820a787ebadc1c48efdc8fb"
+  }
+}

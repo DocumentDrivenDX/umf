@@ -85,12 +85,8 @@ SQL Server facets also pass qualified binding acceptance; see the
 [acceptance record](../../fixtures/validation/sqlserver-facets-acceptance-evidence.json).
 Avro facets also pass qualified binding acceptance; see the
 [Avro acceptance record](../../fixtures/validation/avro-facets-acceptance-evidence.json).
-Parquet facet classification and authored projection are implemented, with
-aggregate qualification and refreshed prior concept gates pending. The
-[Parquet facet evidence](04-build/evidence/parquet-facet-discovery.md) records
-the current checkpoint and subsequent acceptance results. The separate
-five-system facet admission/delivery gate remains pending. No native equivalence
-is claimed.
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+[facet gate admission record](04-build/evidence/facet-gate-admission.md).
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,
 including the native counterexamples that limit each qualified profile.

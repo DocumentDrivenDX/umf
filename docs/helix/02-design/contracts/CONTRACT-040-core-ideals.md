@@ -25,13 +25,9 @@ five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has pa
 core-task acceptance. All five priority Cardinality bindings have qualified acceptance; the separate
 ideal admission and five-system delivery gate passes. See the Cardinality gate
 checkpoint below. Native equivalence remains unclaimed.
-Experimental facet core 0.5.0 has passed core-task acceptance. TableSpec,
-PostgreSQL, SQL Server and Avro facet bindings have qualified acceptance.
-Parquet facet classification and authored projection are implemented; aggregate
-qualification and refreshed prior concept gates remain pending. See the
-[Parquet facet evidence](../../04-build/evidence/parquet-facet-discovery.md)
-for subsequent acceptance checkpoints. Facet admission/delivery, key and
-native-equivalence graduation remain separate and pending.
+Experimental facet core 0.5.0 and all five priority facet bindings have passed
+qualified acceptance. Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+[facet gate admission record](../../04-build/evidence/facet-gate-admission.md).
 
 ## Purpose
 
@@ -852,3 +848,10 @@ is source authentication or a native-equivalence claim. The
 [Avro evidence record](../../04-build/evidence/avro-facet-discovery.md) records
 current qualification and unresolved acceptance checks. This profile definition
 alone does not admit facets or complete five-system delivery.
+
+### Facet gate admission
+
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. The [admission record](../../04-build/evidence/facet-gate-admission.md)
+records useful mappings, both retained recovery directions, permanent float
+counterexamples and the PostgreSQL aggregate receipt limit. This qualification
+does not alter the normative facet meaning or any native replacement gate.

@@ -79,11 +79,11 @@
     "dist/sqlserver-facet-type.js": "3c1b54a847d9d9607d45eac08160a118983759b4076efd4637df3bd2d994dba5",
     "dist/umf.js": "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
     "docs/helix/01-frame/user-stories/US-041-core-nullability.md": "f9e8134b4068a0cca1a1de2993bdd2feed1f0a49e97b878d33b0c40f5ea51505",
-    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0",
     "docs/helix/02-design/technical-designs/TD-041-core-nullability.md": "93baa1fe3f9f159e7a725abc33e15934bdecbedea9c6922231bdda1638418093",
-    "docs/helix/03-test/test-plan.md": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
-    "docs/helix/04-build/implementation-plan.md": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
-    "docs/helix/README.md": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+    "docs/helix/03-test/test-plan.md": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82",
+    "docs/helix/04-build/implementation-plan.md": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6",
+    "docs/helix/README.md": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
     "fixtures/parquet/cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
@@ -1193,6 +1193,29 @@
         "docs/helix/04-build/implementation-plan.md": "4e0afd5223809604e05057a4a566c80758158e16199ab82edc4f1eb338408115",
         "docs/helix/README.md": "0df47fbb8193e55a66c13048d4e42e47363b547e67c1558d4207a80f3f15c6f1"
       }
+    },
+    {
+      "reason": "Publish completed facet admission/delivery without changing runtime semantics or rerunning native engines",
+      "previousRecordSha256": "193faed74fcf1c250abebb7f796a776db7b776181ad62d1f576e48024bc7aabc",
+      "fingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+          "before": "ec330da864b62d4794d10f53dcaa2e4fc489b0894430efc2e2204ff7a00d20fb",
+          "after": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0"
+        },
+        "docs/helix/03-test/test-plan.md": {
+          "before": "7ba29beece795187a845eff13e6d126b831c113abb9711f28ad6970cc706a0e7",
+          "after": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82"
+        },
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "71405292e4720dc903458a99bac99808f976b6de4484c6bb374a74d4ec22ad24",
+          "after": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6"
+        },
+        "docs/helix/README.md": {
+          "before": "4cdc45b463252ffb1935df7d8befcfb4deb77ad91bbf1363c05dd10ca54c5bfa",
+          "after": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6"
+        }
+      },
+      "ledger": "fixtures/validation/facets-documentation-revalidation.json"
     }
   ]
 }

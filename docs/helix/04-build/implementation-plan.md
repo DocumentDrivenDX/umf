@@ -4388,3 +4388,9 @@ gates before acceptance. A descriptive package-status correction also requires
 rebuilding and rechecking the browser evidence. The
 [Avro evidence record](evidence/avro-facet-discovery.md) records the final outcome;
 these intermediate results alone do not close the binding.
+
+## Facet gate acceptance checkpoint
+
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+[admission evidence](evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
+failures and scope limits. Earlier pending checkpoints above remain historical.

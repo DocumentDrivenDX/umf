@@ -1,0 +1,155 @@
+{
+  "command": [
+    "bun",
+    "--eval",
+    "import {verifyFieldEvidence} from './scripts/core-ideals/field-conformance';\nimport {verifyNullabilityEvidence} from './scripts/core-ideals/nullability-conformance';\nimport {verifyCardinalityEvidence} from './scripts/core-ideals/cardinality-conformance';\nimport {verifyFacetEvidence} from './scripts/core-ideals/facets-evidence';\nconst results = await Promise.all([\n verifyFieldEvidence(), verifyNullabilityEvidence(), verifyCardinalityEvidence(), verifyFacetEvidence(),\n]);\nconsole.log(JSON.stringify({scope: 'Evidence consistency after documentation-only facet status publication; no native re-execution or round-trip rerun', concepts: Object.fromEntries(['field','nullability','cardinality','facets'].map((name,i) => [name,results[i]]))}, null, 2));\n"
+  ],
+  "exitCode": 0,
+  "result": {
+    "scope": "Evidence consistency after documentation-only facet status publication; no native re-execution or round-trip rerun",
+    "concepts": {
+      "field": {
+        "records": [
+          {
+            "path": "fixtures/validation/field-core-acceptance-evidence.json",
+            "sha256": "cd620358622a838549629954d23ade36d19d1861a2b1b4bedfa4b636dd79933e"
+          },
+          {
+            "path": "fixtures/validation/field-tablespec-acceptance-evidence.json",
+            "sha256": "61c04726684e02c13f852bbd6d6c3a968d656d78e1906f4c86cd95cc5dece9c3"
+          },
+          {
+            "path": "fixtures/validation/field-postgresql-acceptance-evidence.json",
+            "sha256": "b1eeb918a1ddc6e75f1d238cc45e9f20c5d2e77326e9a325ff776022e4b738ec"
+          },
+          {
+            "path": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+            "sha256": "aa91be31840e65603cc4cc68bb714fc5cbc1a98caf6aca100d7c054736d643e9"
+          }
+        ],
+        "fingerprints": 6500,
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ]
+      },
+      "nullability": {
+        "records": [
+          {
+            "path": "fixtures/validation/nullability-core-acceptance-evidence.json",
+            "sha256": "ee4b0529d7d86de0803b7de600b520cc34e452996afe25f07dc390d635367c87"
+          },
+          {
+            "path": "fixtures/validation/tablespec-nullability-acceptance-evidence.json",
+            "sha256": "d278ff5fe1c3665dd9c21d6010b36144629d32a0018adfa4db01d6c3f5626b4f"
+          },
+          {
+            "path": "fixtures/validation/postgresql-nullability-acceptance-evidence.json",
+            "sha256": "0a325c30284e67372782ead1c99a61ec5a4cc62b0f2218ac01e6695b54707816"
+          },
+          {
+            "path": "fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
+            "sha256": "2add3b3591def319b64b8a4d67b744fcd9b814f289059bfd055fcefd38e873e1"
+          },
+          {
+            "path": "fixtures/validation/avro-nullability-acceptance-evidence.json",
+            "sha256": "dfdf4245dbc2c7c69d717a7a40c2ab15cedd297790c750436c1266992530e5cc"
+          },
+          {
+            "path": "fixtures/validation/parquet-nullability-acceptance-evidence.json",
+            "sha256": "6597e9d8c255c696f8c9667ceca9e53505d54744c698bdaf4a82f0c1a795c567"
+          }
+        ],
+        "fingerprints": 6145,
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "refreshSha256": "57f479d0ff8e663dbb266c73cacb448110bb486284a62b294d87efc7e4bb90ca"
+      },
+      "cardinality": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "records": [
+          {
+            "path": "fixtures/validation/cardinality-core-acceptance-evidence.json",
+            "sha256": "31f3c956b787fb1c7e3fd588ec94d62fac335f0df4daace809b0af9ad4aa5269"
+          },
+          {
+            "path": "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
+            "sha256": "b533441b88479b17a78c15ec01b0495695b90e2881c4bb5f092043ebc6c3e353"
+          },
+          {
+            "path": "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
+            "sha256": "c746a9b3a160694f26d63c62cc4a64bfed09a25f695c48181592498acebceb5a"
+          },
+          {
+            "path": "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
+            "sha256": "514ed7ffc9e02cff9e8d75072bce44087e69dd0ee0c86be5921cfa3250225665"
+          },
+          {
+            "path": "fixtures/validation/avro-cardinality-acceptance-evidence.json",
+            "sha256": "f2d6713097d38e76ccf1c727f90891b2e19b1422b04acddbf7c83cc8fa18c422"
+          },
+          {
+            "path": "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
+            "sha256": "ca3a57a8bc0b2e5d06e5333df2ca78f423f82d30458e9b9203ca4f489ff2580d"
+          }
+        ],
+        "fingerprints": 8466,
+        "refreshSha256": "57f479d0ff8e663dbb266c73cacb448110bb486284a62b294d87efc7e4bb90ca"
+      },
+      "facets": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "records": [
+          {
+            "path": "fixtures/validation/facet-core-acceptance-evidence.json",
+            "sha256": "3e6885efc4e79a79ec80c472ec907fe273fad65154c90b5657a74b12c10e987b"
+          },
+          {
+            "path": "fixtures/validation/tablespec-facets-acceptance-evidence.json",
+            "sha256": "6cd58429990e8c2bab539097418d4aa6c1ca30c7472a866a46c1a9d94123b9e9"
+          },
+          {
+            "path": "fixtures/validation/postgresql-facets-acceptance-evidence.json",
+            "sha256": "0c3e9e728df190ef3c4f7d09e34861d81fcff068e371a56689aef01f24fe2d21"
+          },
+          {
+            "path": "fixtures/validation/sqlserver-facets-acceptance-evidence.json",
+            "sha256": "92af8b699155399a5eac9b3b4e00476158006b74f7c358bc4b05ac7feae65021"
+          },
+          {
+            "path": "fixtures/validation/avro-facets-acceptance-evidence.json",
+            "sha256": "0475f7a04636cf74f0f7fd6050dc0df8d20a5d0630a18546f3fbfb775497718a"
+          },
+          {
+            "path": "fixtures/validation/parquet-facets-acceptance-evidence.json",
+            "sha256": "2983275099a744415098747a7eabf472fe9579d193762510e7985024979ddb61"
+          }
+        ],
+        "fingerprints": 17468,
+        "refreshSha256": "57f479d0ff8e663dbb266c73cacb448110bb486284a62b294d87efc7e4bb90ca",
+        "idealAdmitted": false,
+        "nativeEquivalence": false
+      }
+    }
+  },
+  "stderr": ""
+}
