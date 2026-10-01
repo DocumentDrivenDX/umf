@@ -168,3 +168,61 @@ residual. A DDD invariant remains reported even if the DDL parses.
 - [x] Storage, relationship, index and partition lowerings name their limits.
 - [x] Native adapter and independent PostgreSQL oracle are required.
 - [ ] Published subset/evidence must precede a delivered claim.
+
+### Published relationship layout validation profile (2026-10-01)
+
+`validatePostgresqlRelationshipLayout(logical, binding, policy, lossPolicy)`
+publishes the metadata-validation stage of this contract. Its candidate is a
+validated policy, never SQL. `postgresql-relationship-layout-1` uses the original
+keyed-graph proposal's `keyLayouts` and `relationshipLayouts`, plus mandatory
+`fieldLayouts` and explicit collation qualifiers. The added inventory is needed
+to validate association attributes and referencing columns without guessing a
+core Field from a DDD field name.
+
+Each `fieldLayouts` entry states `coreField:{module,element}`, the exact
+`boundField:{module,element,field?}`, `table`, `column`, `sqlType`, `nullable`
+and `collation`. A core Field must be a member of the Record bound to that
+physical table. A nested DDD field must belong to that same Record and agree
+on the declared scalar family and availability. This is an explicit caller
+mapping; the validator never derives core identity from naming conventions.
+Every bound scalar column requires one unique inventory entry.
+
+Each `keyLayouts` entry retains its exact `record`, stable `key`, `table`,
+`constraint` and ordered `components`. Each component names its `keyField`,
+`boundField`, `column` and SQL type/NULL/collation qualifiers. All Keys on bound
+Records require explicit layouts. The relationship entries preserve the
+proposal's exact `relationship:{module,id}`, `storage`, `carrierTable`,
+`targetKey`, `targetConstraint` and ordered `targetComponents`; junction/edge
+entries additionally require `sourceKey`, `sourceConstraint` and
+`sourceComponents`. Endpoint components name both the ordered endpoint Key
+Field/bound column and the referencing carrier column with its qualifiers.
+Bound Record carriers require a `carrierField`; anonymous junction/edge
+carriers explicitly declare new columns. An association Record must retain
+its bound table, stable `associationKey`, all authored Keys and every member
+Field in the inventory, including attributes beyond endpoint columns.
+
+The initial safe subset permits ASCII identifiers of at most 63 bytes,
+canonical bounded builtin scalar SQL types, explicit `C` collation for text
+and `null` collation for nontext. Endpoint and referencing SQL types/collations
+must agree exactly. A nullable referencing component retains an explicit
+`MATCH SIMPLE` residual. Primary Key columns cannot be nullable. Type-domain,
+NULL-carrier and comparator equivalence still require native evidence;
+accepting policy never proves those meanings equivalent to the ideal.
+Partitioned Key layouts are blocked pending a complete partition policy.
+
+An edge requires a non-null `text COLLATE "C"` discriminator. Shared edge
+carriers require identical physical shapes, distinct discriminator values and
+the same endpoint Keys: a discriminator cannot condition ordinary FK target
+identity. Heterogeneous endpoint sets, missing/reordered/extra maps, stale
+bindings, name-for-ID substitution, unsafe SQL fragments, physical-column
+collisions and table/index/constraint namespace collisions block both modes.
+Inline choices remain explicit unsupported residuals. Unknown binding/policy
+content blocks interpretation; unknown logical qualifier values remain
+source-qualified residuals. Report mode returns a complete safe policy with
+all residuals; strict mode blocks every non-exact obligation. Both retain
+copied logical, binding and policy sources.
+
+The schemas and Bun/Chromium evidence are documented in
+[the layout validation record](../../04-build/evidence/postgresql-relationship-layout.md).
+No FK DDL generator, native constraint enforcement or Relationship admission
+is claimed by this stage.

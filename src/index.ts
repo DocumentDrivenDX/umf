@@ -364,3 +364,4 @@ export * from './core-ideals/relationship-tablespec';
 export * from './core-ideals/relationship-tablespec-projection';
 export * from './core-ideals/relationship-avro';
 export * from './core-ideals/relationship-avro-projection';
+export * from './projections/ddd-postgresql/relationship-layout';

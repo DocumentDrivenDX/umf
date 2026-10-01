@@ -133,3 +133,14 @@ binding documents and native archive; it never drops an unexpressed assertion.
 Partitioned unique constraints, cyclic FKs and JSONB path expressions can
 parse yet fail at native catalog creation. The isolated native oracle is a
 required gate, with failures reported rather than rewritten away.
+
+## Endpoint layout validation checkpoint (2026-10-01)
+
+The CONTRACT-043 metadata validator now resolves stable relationship/Key IDs,
+ordered endpoint components and explicit physical Field inventory before any
+rendering. It derives its verification corpus from the existing keyed shared
+DDD graph and PostgreSQL layout proposal, adding alternate UNIQUE, nullable
+composite, anonymous junction and edge variants. Association identity and
+attributes remain mandatory. The full generator will consume this policy;
+the current candidate is metadata only. See
+[the checkpoint evidence](../../04-build/evidence/postgresql-relationship-layout.md).
