@@ -5180,3 +5180,30 @@ projection cases, five catalog captures, eight ideal and 22 native recoveries.
 See [the acceptance record](evidence/postgresql-relationship-acceptance.md) for
 exact profiles and limits. Full DDD PostgreSQL generation, the remaining binding
 work and separate Relationship admission/delivery gates remain distinct tasks.
+
+### Additional relationship binding acceptance
+
+`umf-e6cbcca4` delivers generic authored relationship projections to GraphQL SDL,
+RDF N-Quads with explicit OWL union classes, and LinkML class/slot metadata.
+Exact Record and relationship naming, verified author checkpoints, strict/report
+losses and complete classification/projection receipt schemas prevent native
+syntax from becoming inferred author intent. Retained recoveries preserve native
+archives, unknown extensions and the entire authored source. GraphQL inverse
+fields, RDF inverse predicates and LinkML inverse slots require an authored
+inverse and an explicit native name.
+
+The authored nine-shape corpus produces 26 native carriers across the three
+systems; heterogeneous LinkML slot ranges refuse explicitly. Core Record Fields,
+Keys, participation enforcement, lifecycle and association identity remain
+source-linked residuals. GraphQL Record markers and the query root provide
+schema validity only. RDF union-domain/range lists preserve disjunctive class
+meaning without claiming closed-world reference checks. LinkML metamodel
+acceptance does not validate relationship instances.
+
+The [acceptance record](../../../fixtures/validation/relationship-extras/acceptance.json)
+links GraphQL.js 17.0.2 / GraphQL-core 3.2.12, RDFLib 7.6.0 and LinkML
+metamodel 1.11.0 / runtime 1.11.0rc2 evidence, focused Bun/schema checks and
+Chromium recoveries. Historical RDFLib 7.1.4 evidence is not relabeled.
+Repository-wide compatibility and the separate relationship admission/five-system
+delivery gates remain separate. These additional systems are not priority-gate
+substitutes, and no native equivalence is claimed.

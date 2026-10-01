@@ -1,0 +1,2172 @@
+{
+  "graphqlJs": "17.0.2",
+  "cases": [
+    {
+      "name": "one-to-one-graphql-report",
+      "request": {
+        "id": "extra-one-to-one-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-invoice"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "Invoice",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "invoice",
+        "inverseField": "order"
+      },
+      "relationship": {
+        "id": "order-invoice",
+        "name": "invoice",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Order {\n  _umfRecord: Boolean\n  invoice: Invoice\n}\n\ntype Invoice {\n  _umfRecord: Boolean\n  order: Order!\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "one-to-one-rdf-report",
+      "request": {
+        "id": "extra-one-to-one-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-invoice"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "https://example.org/type/Invoice"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/invoice",
+        "unionPolicy": "owl-union",
+        "inversePredicate": "https://example.org/relationship/order"
+      },
+      "relationship": {
+        "id": "order-invoice",
+        "name": "invoice",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Invoice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/invoice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/invoice> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Order> .\n<https://example.org/relationship/invoice> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Invoice> .\n<https://example.org/relationship/order> <http://www.w3.org/2002/07/owl#inverseOf> <https://example.org/relationship/invoice> .\n<https://example.org/relationship/order> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Invoice> .\n<https://example.org/relationship/order> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Order> .\n",
+        "blankNodeScope": "extra-one-to-one-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "one-to-one-linkml-report",
+      "request": {
+        "id": "extra-one-to-one-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-invoice"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "Invoice"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/one-to-one",
+        "schemaName": "extra_relationship",
+        "slot": "invoice",
+        "inverseSlot": "order"
+      },
+      "relationship": {
+        "id": "order-invoice",
+        "name": "invoice",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/one-to-one\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Order\": {\n      \"slots\": [\n        \"invoice\"\n      ]\n    },\n    \"Invoice\": {\n      \"slots\": [\n        \"order\"\n      ]\n    }\n  },\n  \"slots\": {\n    \"invoice\": {\n      \"range\": \"Invoice\",\n      \"multivalued\": false,\n      \"required\": false\n    },\n    \"order\": {\n      \"range\": \"Order\",\n      \"multivalued\": false,\n      \"required\": true\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Order",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Invoice",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/invoice",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/order",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "owned-one-to-many-graphql-report",
+      "request": {
+        "id": "extra-owned-one-to-many-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-lines"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Line",
+            "name": "Line",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "lines",
+        "inverseField": "order"
+      },
+      "relationship": {
+        "id": "order-lines",
+        "name": "lines",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Line",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": "*"
+        },
+        "targetLifecycle": "owned",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Order {\n  _umfRecord: Boolean\n  lines: [Line]\n}\n\ntype Line {\n  _umfRecord: Boolean\n  order: Order!\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "owned-one-to-many-rdf-report",
+      "request": {
+        "id": "extra-owned-one-to-many-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-lines"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Line",
+            "name": "https://example.org/type/Line"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/lines",
+        "unionPolicy": "owl-union",
+        "inversePredicate": "https://example.org/relationship/order"
+      },
+      "relationship": {
+        "id": "order-lines",
+        "name": "lines",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Line",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": "*"
+        },
+        "targetLifecycle": "owned",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Line> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/lines> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/lines> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Order> .\n<https://example.org/relationship/lines> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Line> .\n<https://example.org/relationship/order> <http://www.w3.org/2002/07/owl#inverseOf> <https://example.org/relationship/lines> .\n<https://example.org/relationship/order> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Line> .\n<https://example.org/relationship/order> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Order> .\n",
+        "blankNodeScope": "extra-owned-one-to-many-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "owned-one-to-many-linkml-report",
+      "request": {
+        "id": "extra-owned-one-to-many-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-lines"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Line",
+            "name": "Line"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/owned-one-to-many",
+        "schemaName": "extra_relationship",
+        "slot": "lines",
+        "inverseSlot": "order"
+      },
+      "relationship": {
+        "id": "order-lines",
+        "name": "lines",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Line",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": "*"
+        },
+        "targetLifecycle": "owned",
+        "directed": true,
+        "inverse": "order"
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/owned-one-to-many\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Order\": {\n      \"slots\": [\n        \"lines\"\n      ]\n    },\n    \"Line\": {\n      \"slots\": [\n        \"order\"\n      ]\n    }\n  },\n  \"slots\": {\n    \"lines\": {\n      \"range\": \"Line\",\n      \"multivalued\": true,\n      \"required\": true\n    },\n    \"order\": {\n      \"range\": \"Order\",\n      \"multivalued\": false,\n      \"required\": true\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Order",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Line",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/lines",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/order",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-one-alternate-key-graphql-report",
+      "request": {
+        "id": "extra-many-to-one-alternate-key-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "Customer",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "customer",
+        "inverseField": "orders"
+      },
+      "relationship": {
+        "id": "order-customer",
+        "name": "customer",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "orders"
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Order {\n  _umfRecord: Boolean\n  customer: Customer!\n}\n\ntype Customer {\n  _umfRecord: Boolean\n  orders: [Order]\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-one-alternate-key-rdf-report",
+      "request": {
+        "id": "extra-many-to-one-alternate-key-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "https://example.org/type/Customer"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/customer",
+        "unionPolicy": "owl-union",
+        "inversePredicate": "https://example.org/relationship/orders"
+      },
+      "relationship": {
+        "id": "order-customer",
+        "name": "customer",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "orders"
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Customer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/customer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/customer> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Order> .\n<https://example.org/relationship/customer> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Customer> .\n<https://example.org/relationship/orders> <http://www.w3.org/2002/07/owl#inverseOf> <https://example.org/relationship/customer> .\n<https://example.org/relationship/orders> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Customer> .\n<https://example.org/relationship/orders> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Order> .\n",
+        "blankNodeScope": "extra-many-to-one-alternate-key-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-one-alternate-key-linkml-report",
+      "request": {
+        "id": "extra-many-to-one-alternate-key-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "Customer"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/many-to-one-alternate-key",
+        "schemaName": "extra_relationship",
+        "slot": "customer",
+        "inverseSlot": "orders"
+      },
+      "relationship": {
+        "id": "order-customer",
+        "name": "customer",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "orders"
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/many-to-one-alternate-key\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Order\": {\n      \"slots\": [\n        \"customer\"\n      ]\n    },\n    \"Customer\": {\n      \"slots\": [\n        \"orders\"\n      ]\n    }\n  },\n  \"slots\": {\n    \"customer\": {\n      \"range\": \"Customer\",\n      \"multivalued\": false,\n      \"required\": true\n    },\n    \"orders\": {\n      \"range\": \"Order\",\n      \"multivalued\": true,\n      \"required\": false\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Order",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Customer",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/customer",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/orders",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-many-graphql-report",
+      "request": {
+        "id": "extra-many-to-many-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "name": "Product",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "products"
+      },
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Order {\n  _umfRecord: Boolean\n  products: [Product]\n}\n\ntype Product {\n  _umfRecord: Boolean\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-many-rdf-report",
+      "request": {
+        "id": "extra-many-to-many-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "name": "https://example.org/type/Product"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/products",
+        "unionPolicy": "owl-union"
+      },
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Product> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/products> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/products> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Order> .\n<https://example.org/relationship/products> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Product> .\n",
+        "blankNodeScope": "extra-many-to-many-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "many-to-many-linkml-report",
+      "request": {
+        "id": "extra-many-to-many-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "name": "Product"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/many-to-many",
+        "schemaName": "extra_relationship",
+        "slot": "products"
+      },
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/many-to-many\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Order\": {\n      \"slots\": [\n        \"products\"\n      ]\n    },\n    \"Product\": {\n      \"slots\": []\n    }\n  },\n  \"slots\": {\n    \"products\": {\n      \"range\": \"Product\",\n      \"multivalued\": true,\n      \"required\": false\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Order",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Product",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/products",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "heterogeneous-source-graphql-report",
+      "request": {
+        "id": "extra-heterogeneous-source-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "sales-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "Invoice",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "Customer",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "customerForSalesDocument"
+      },
+      "relationship": {
+        "id": "sales-customer",
+        "name": "customerForSalesDocument",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Order {\n  _umfRecord: Boolean\n  customerForSalesDocument: Customer!\n}\n\ntype Invoice {\n  _umfRecord: Boolean\n  customerForSalesDocument: Customer!\n}\n\ntype Customer {\n  _umfRecord: Boolean\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "heterogeneous-source-rdf-report",
+      "request": {
+        "id": "extra-heterogeneous-source-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "sales-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "https://example.org/type/Invoice"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "https://example.org/type/Customer"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/customerForSalesDocument",
+        "unionPolicy": "owl-union"
+      },
+      "relationship": {
+        "id": "sales-customer",
+        "name": "customerForSalesDocument",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Invoice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Customer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n_:umf_domain <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n_:umf_domain <http://www.w3.org/2002/07/owl#unionOf> _:umf_domain_0 .\n_:umf_domain_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Order> .\n_:umf_domain_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:umf_domain_1 .\n_:umf_domain_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Invoice> .\n_:umf_domain_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<https://example.org/relationship/customerForSalesDocument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/customerForSalesDocument> <http://www.w3.org/2000/01/rdf-schema#domain> _:umf_domain .\n<https://example.org/relationship/customerForSalesDocument> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Customer> .\n",
+        "blankNodeScope": "extra-heterogeneous-source-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-union",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/5",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/8",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/10",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/11",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "heterogeneous-source-linkml-report",
+      "request": {
+        "id": "extra-heterogeneous-source-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "sales-customer"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice",
+            "name": "Invoice"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "Customer"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/heterogeneous-source",
+        "schemaName": "extra_relationship",
+        "slot": "customerForSalesDocument"
+      },
+      "relationship": {
+        "id": "sales-customer",
+        "name": "customerForSalesDocument",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          },
+          {
+            "module": "sales",
+            "element": "Invoice"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/heterogeneous-source\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Order\": {\n      \"slots\": [\n        \"customerForSalesDocument\"\n      ]\n    },\n    \"Invoice\": {\n      \"slots\": [\n        \"customerForSalesDocument\"\n      ]\n    },\n    \"Customer\": {\n      \"slots\": []\n    }\n  },\n  \"slots\": {\n    \"customerForSalesDocument\": {\n      \"range\": \"Customer\",\n      \"multivalued\": false,\n      \"required\": true\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Order",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Invoice",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Customer",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/customerForSalesDocument",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "self-referential-graphql-report",
+      "request": {
+        "id": "extra-self-referential-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "employee-manager"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "name": "Employee",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "manager",
+        "inverseField": "reports"
+      },
+      "relationship": {
+        "id": "employee-manager",
+        "name": "manager",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Employee"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "reports"
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Employee {\n  _umfRecord: Boolean\n  manager: Employee\n  reports: [Employee]\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/2",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "self-referential-rdf-report",
+      "request": {
+        "id": "extra-self-referential-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "employee-manager"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "name": "https://example.org/type/Employee"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/manager",
+        "unionPolicy": "owl-union",
+        "inversePredicate": "https://example.org/relationship/reports"
+      },
+      "relationship": {
+        "id": "employee-manager",
+        "name": "manager",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Employee"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "reports"
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Employee> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/manager> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/manager> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Employee> .\n<https://example.org/relationship/manager> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Employee> .\n<https://example.org/relationship/reports> <http://www.w3.org/2002/07/owl#inverseOf> <https://example.org/relationship/manager> .\n<https://example.org/relationship/reports> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Employee> .\n<https://example.org/relationship/reports> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Employee> .\n",
+        "blankNodeScope": "extra-self-referential-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/2",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/5",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "self-referential-linkml-report",
+      "request": {
+        "id": "extra-self-referential-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "employee-manager"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "name": "Employee"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/self-referential",
+        "schemaName": "extra_relationship",
+        "slot": "manager",
+        "inverseSlot": "reports"
+      },
+      "relationship": {
+        "id": "employee-manager",
+        "name": "manager",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Employee"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Employee",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "reports"
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/self-referential\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Employee\": {\n      \"slots\": [\n        \"manager\",\n        \"reports\"\n      ]\n    }\n  },\n  \"slots\": {\n    \"manager\": {\n      \"range\": \"Employee\",\n      \"multivalued\": false,\n      \"required\": false\n    },\n    \"reports\": {\n      \"range\": \"Employee\",\n      \"multivalued\": true,\n      \"required\": false\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Employee",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/manager",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/reports",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "undirected-graphql-report",
+      "request": {
+        "id": "extra-undirected-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "Student",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "Course",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "orientation": "source-to-target",
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "studies"
+      },
+      "relationship": {
+        "id": "student-course",
+        "name": "studies",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "unspecified",
+        "directed": false
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Student {\n  _umfRecord: Boolean\n  studies: [Course]\n}\n\ntype Course {\n  _umfRecord: Boolean\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "undirected-rdf-report",
+      "request": {
+        "id": "extra-undirected-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "https://example.org/type/Student"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "https://example.org/type/Course"
+          }
+        ],
+        "orientation": "source-to-target",
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/studies",
+        "unionPolicy": "owl-union"
+      },
+      "relationship": {
+        "id": "student-course",
+        "name": "studies",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "unspecified",
+        "directed": false
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Student> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Course> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/studies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/studies> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Student> .\n<https://example.org/relationship/studies> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Course> .\n",
+        "blankNodeScope": "extra-undirected-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "undirected-linkml-report",
+      "request": {
+        "id": "extra-undirected-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "Student"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "Course"
+          }
+        ],
+        "orientation": "source-to-target",
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/undirected",
+        "schemaName": "extra_relationship",
+        "slot": "studies"
+      },
+      "relationship": {
+        "id": "student-course",
+        "name": "studies",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "unspecified",
+        "directed": false
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/undirected\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Student\": {\n      \"slots\": [\n        \"studies\"\n      ]\n    },\n    \"Course\": {\n      \"slots\": []\n    }\n  },\n  \"slots\": {\n    \"studies\": {\n      \"range\": \"Course\",\n      \"multivalued\": true,\n      \"required\": false\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Student",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Course",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/studies",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "reified-association-graphql-report",
+      "request": {
+        "id": "extra-reified-association-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course-enrollment"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "Student",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "Course",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "enrollsIn",
+        "inverseField": "students"
+      },
+      "relationship": {
+        "id": "student-course-enrollment",
+        "name": "enrollsIn",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "associationRecord": {
+          "module": "sales",
+          "element": "Enrollment"
+        },
+        "directed": true,
+        "inverse": "students"
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\ntype Student {\n  _umfRecord: Boolean\n  enrollsIn: [Course]\n}\n\ntype Course {\n  _umfRecord: Boolean\n  students: [Student]\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/2/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "reified-association-rdf-report",
+      "request": {
+        "id": "extra-reified-association-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course-enrollment"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "https://example.org/type/Student"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "https://example.org/type/Course"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/enrollsIn",
+        "unionPolicy": "owl-union",
+        "inversePredicate": "https://example.org/relationship/students"
+      },
+      "relationship": {
+        "id": "student-course-enrollment",
+        "name": "enrollsIn",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "associationRecord": {
+          "module": "sales",
+          "element": "Enrollment"
+        },
+        "directed": true,
+        "inverse": "students"
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Student> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Course> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/relationship/enrollsIn> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/enrollsIn> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Student> .\n<https://example.org/relationship/enrollsIn> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Course> .\n<https://example.org/relationship/students> <http://www.w3.org/2002/07/owl#inverseOf> <https://example.org/relationship/enrollsIn> .\n<https://example.org/relationship/students> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Course> .\n<https://example.org/relationship/students> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Student> .\n",
+        "blankNodeScope": "extra-reified-association-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/3",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "reified-association-linkml-report",
+      "request": {
+        "id": "extra-reified-association-linkml",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "student-course-enrollment"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Student",
+            "name": "Student"
+          },
+          {
+            "module": "sales",
+            "element": "Course",
+            "name": "Course"
+          }
+        ],
+        "system": "linkml",
+        "schemaId": "https://example.org/extra/reified-association",
+        "schemaName": "extra_relationship",
+        "slot": "enrollsIn",
+        "inverseSlot": "students"
+      },
+      "relationship": {
+        "id": "student-course-enrollment",
+        "name": "enrollsIn",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Student"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Course",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "associationRecord": {
+          "module": "sales",
+          "element": "Enrollment"
+        },
+        "directed": true,
+        "inverse": "students"
+      },
+      "archive": {
+        "format": "linkml-json",
+        "text": "{\n  \"id\": \"https://example.org/extra/reified-association\",\n  \"name\": \"extra_relationship\",\n  \"prefixes\": {\n    \"umf\": \"https://example.org/umf-extra/\"\n  },\n  \"default_prefix\": \"umf\",\n  \"classes\": {\n    \"Student\": {\n      \"slots\": [\n        \"enrollsIn\"\n      ]\n    },\n    \"Course\": {\n      \"slots\": [\n        \"students\"\n      ]\n    }\n  },\n  \"slots\": {\n    \"enrollsIn\": {\n      \"range\": \"Course\",\n      \"multivalued\": true,\n      \"required\": false\n    },\n    \"students\": {\n      \"range\": \"Student\",\n      \"multivalued\": true,\n      \"required\": false\n    }\n  }\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Student",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/classes/members/Course",
+          "kind": "linkml-class",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/enrollsIn",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.linkml/root/members/slots/members/students",
+          "kind": "linkml-slot",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "heterogeneous-target-graphql-report",
+      "request": {
+        "id": "extra-heterogeneous-target-graphql",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "Order",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "name": "Product",
+            "markerField": "_umfRecord"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "Customer",
+            "markerField": "_umfRecord"
+          }
+        ],
+        "system": "graphql",
+        "root": {
+          "typeName": "Query",
+          "fieldName": "_umfSchema"
+        },
+        "field": "products",
+        "forwardUnion": "SelectedTarget"
+      },
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "graphql-sdl",
+        "text": "schema {\n  query: Query\n}\n\ntype Query {\n  _umfSchema: Boolean\n}\n\nunion SelectedTarget = Product | Customer\n\ntype Order {\n  _umfRecord: Boolean\n  products: [SelectedTarget]\n}\n\ntype Product {\n  _umfRecord: Boolean\n}\n\ntype Customer {\n  _umfRecord: Boolean\n}\n"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.graphql/ast/definitions/3/fields/1",
+          "kind": "graphql-field",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "heterogeneous-target-rdf-report",
+      "request": {
+        "id": "extra-heterogeneous-target-rdf",
+        "mode": "report",
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "records": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "name": "https://example.org/type/Order"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "name": "https://example.org/type/Product"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "name": "https://example.org/type/Customer"
+          }
+        ],
+        "system": "rdf",
+        "predicate": "https://example.org/relationship/products",
+        "unionPolicy": "owl-union"
+      },
+      "relationship": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "account"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "directed": true
+      },
+      "archive": {
+        "format": "rdf-nquads",
+        "text": "<https://example.org/type/Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Product> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n<https://example.org/type/Customer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n_:umf_range <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .\n_:umf_range <http://www.w3.org/2002/07/owl#unionOf> _:umf_range_0 .\n_:umf_range_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Product> .\n_:umf_range_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:umf_range_1 .\n_:umf_range_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Customer> .\n_:umf_range_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<https://example.org/relationship/products> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .\n<https://example.org/relationship/products> <http://www.w3.org/2000/01/rdf-schema#domain> <https://example.org/type/Order> .\n<https://example.org/relationship/products> <http://www.w3.org/2000/01/rdf-schema#range> _:umf_range .\n",
+        "blankNodeScope": "extra-heterogeneous-target-rdf"
+      },
+      "observations": [
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/4",
+          "kind": "rdf-union",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/5",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/6",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/7",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/8",
+          "kind": "rdf-list",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/10",
+          "kind": "rdf-domain",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        },
+        {
+          "nativePath": "/modules/0/elements/0/extensions/umf.rdf/quads/11",
+          "kind": "rdf-range",
+          "provenance": "inferred",
+          "authorIntent": "unknown"
+        }
+      ]
+    }
+  ]
+}

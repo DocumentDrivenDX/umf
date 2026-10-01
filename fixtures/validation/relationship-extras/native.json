@@ -1,0 +1,381 @@
+{
+  "versions": {
+    "graphqlCore": "3.2.12",
+    "rdflib": "7.6.0",
+    "linkmlRuntime": "1.11.0rc2"
+  },
+  "environments": [
+    {
+      "versions": {
+        "graphqlCore": "3.2.12"
+      },
+      "python": "3.12.3",
+      "interpreter": "/tmp/umf-extras-work/.venv/bin/python"
+    },
+    {
+      "versions": {
+        "rdflib": "7.6.0"
+      },
+      "python": "3.12.3",
+      "interpreter": "/tmp/umf-extras-work/.cache/rdf-venv/bin/python"
+    },
+    {
+      "versions": {
+        "linkmlRuntime": "1.11.0rc2"
+      },
+      "python": "3.12.3",
+      "interpreter": "/tmp/umf-extras-work/.cache/linkml-venv/bin/python"
+    }
+  ],
+  "cases": [
+    {
+      "name": "one-to-one-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "invoice": "Invoice"
+        },
+        "Invoice": {
+          "_umfRecord": "Boolean",
+          "order": "Order!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "owned-one-to-many-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "lines": "[Line]"
+        },
+        "Line": {
+          "_umfRecord": "Boolean",
+          "order": "Order!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "many-to-one-alternate-key-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "customer": "Customer!"
+        },
+        "Customer": {
+          "_umfRecord": "Boolean",
+          "orders": "[Order]"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "many-to-many-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "products": "[Product]"
+        },
+        "Product": {
+          "_umfRecord": "Boolean"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-source-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "customerForSalesDocument": "Customer!"
+        },
+        "Invoice": {
+          "_umfRecord": "Boolean",
+          "customerForSalesDocument": "Customer!"
+        },
+        "Customer": {
+          "_umfRecord": "Boolean"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "self-referential-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Employee": {
+          "_umfRecord": "Boolean",
+          "manager": "Employee",
+          "reports": "[Employee]"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "undirected-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Student": {
+          "_umfRecord": "Boolean",
+          "studies": "[Course]"
+        },
+        "Course": {
+          "_umfRecord": "Boolean"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "reified-association-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Student": {
+          "_umfRecord": "Boolean",
+          "enrollsIn": "[Course]"
+        },
+        "Course": {
+          "_umfRecord": "Boolean",
+          "students": "[Student]"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-target-graphql-report",
+      "system": "graphql",
+      "fields": {
+        "Order": {
+          "_umfRecord": "Boolean",
+          "products": "[SelectedTarget]"
+        },
+        "Product": {
+          "_umfRecord": "Boolean"
+        },
+        "Customer": {
+          "_umfRecord": "Boolean"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "one-to-one-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Invoice"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "owned-one-to-many-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Line"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "many-to-one-alternate-key-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Customer"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "many-to-many-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Product"
+      ],
+      "quads": 5,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-source-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order",
+        "https://example.org/type/Invoice"
+      ],
+      "range": [
+        "https://example.org/type/Customer"
+      ],
+      "quads": 12,
+      "valid": true
+    },
+    {
+      "name": "self-referential-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Employee"
+      ],
+      "range": [
+        "https://example.org/type/Employee"
+      ],
+      "quads": 7,
+      "valid": true
+    },
+    {
+      "name": "undirected-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Student"
+      ],
+      "range": [
+        "https://example.org/type/Course"
+      ],
+      "quads": 5,
+      "valid": true
+    },
+    {
+      "name": "reified-association-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Student"
+      ],
+      "range": [
+        "https://example.org/type/Course"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-target-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Product",
+        "https://example.org/type/Customer"
+      ],
+      "quads": 12,
+      "valid": true
+    },
+    {
+      "name": "one-to-one-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Invoice"
+      ],
+      "slot": "invoice",
+      "range": "Invoice",
+      "multivalued": false,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "owned-one-to-many-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Line"
+      ],
+      "slot": "lines",
+      "range": "Line",
+      "multivalued": true,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "many-to-one-alternate-key-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Customer"
+      ],
+      "slot": "customer",
+      "range": "Customer",
+      "multivalued": false,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "many-to-many-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Product"
+      ],
+      "slot": "products",
+      "range": "Product",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-source-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Invoice",
+        "Customer"
+      ],
+      "slot": "customerForSalesDocument",
+      "range": "Customer",
+      "multivalued": false,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "self-referential-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Employee"
+      ],
+      "slot": "manager",
+      "range": "Employee",
+      "multivalued": false,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "undirected-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Student",
+        "Course"
+      ],
+      "slot": "studies",
+      "range": "Course",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "reified-association-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Student",
+        "Course"
+      ],
+      "slot": "enrollsIn",
+      "range": "Course",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    }
+  ]
+}

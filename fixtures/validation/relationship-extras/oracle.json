@@ -1,0 +1,27 @@
+{
+  "scope": "Native schema/graph acceptance of explicit generic Record relationship carriers; no instance validation, resolver, query execution, relationship admission or priority-gate substitution",
+  "cases": 26,
+  "versions": {
+    "graphqlJs": "17.0.2",
+    "graphqlCore": "3.2.12",
+    "rdflib": "7.6.0",
+    "linkmlMetamodel": "1.11.0",
+    "linkmlRuntime": "1.11.0rc2"
+  },
+  "sha256": {
+    "src/core-ideals/relationship-extras.ts": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33",
+    "spec/core/relationship-extras.schema.json": "8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c",
+    "scripts/core-ideals/relationship-extras-cases.ts": "99487bcb0a2e4251df0fe35d652e6c417a16f624b1a9ab34a393c97420e5ed22",
+    "scripts/core-ideals/relationship-extras-oracle.ts": "89e836eb92c3ec7b50352ed14162092fe946a97316b0994deaa0f414df4c513e",
+    "scripts/core-ideals/relationship-extras-native.py": "a92481eef4a124814fbf0c5b9c0aaec4c011c2d13af46db6630316bb413b6483",
+    "fixtures/relationship/authored/corpus.json": "aa751e8d09ad68e9423f3067f38ee51dd6bc9885a43bed22d1c8df3919a421bb",
+    "native/linkml/sources/linkml_model/meta.py": "034e4da91dfae8b85de9617f4939d044acad4fa40f24730d0a20614a6c333102",
+    "native/linkml/sources/linkml_model/annotations.py": "cfc0e5127c19f661db57782a759e14bbdaa85ae432a678e15114de3062e1333a",
+    "native/linkml/sources/linkml_model/extensions.py": "5b9729ac96c39b6b8edf43e7be1eab10a6d65dd48a1269c0e1c45919d95b7f85",
+    "fixtures/validation/relationship-extras/corpus.json": "289f1b12d72aca9bbe173c886fef5881779acf4a7911989b24178662c03674c7",
+    "fixtures/validation/relationship-extras/native.json": "88501ec5b415f03e3aeea64d7b5f255e13bc95ac19556427076a86bf1cb4e94f",
+    "fixtures/validation/relationship-extras/native-graphql.json": "e3ffe861144f612e9ed4072b9298e42dc36a8432d29ad3ea4ee1c66b64650854",
+    "fixtures/validation/relationship-extras/native-rdf.json": "9c2ca411ce5b7e32154e7f61f05fe018af5988413551c6a1c72cd76a15b5c0ee",
+    "fixtures/validation/relationship-extras/native-linkml.json": "8cc01a191c88cbf54443e30806be482b48a24516419329baf8078d97bdff348d"
+  }
+}

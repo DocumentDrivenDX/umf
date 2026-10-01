@@ -1,0 +1,120 @@
+{
+  "versions": {
+    "rdflib": "7.6.0"
+  },
+  "python": "3.12.3",
+  "interpreter": "/tmp/umf-extras-work/.cache/rdf-venv/bin/python",
+  "scope": "Native metamodel/schema parsing and graph structure; no instance or referential enforcement claim",
+  "cases": [
+    {
+      "name": "one-to-one-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Invoice"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "owned-one-to-many-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Line"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "many-to-one-alternate-key-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Customer"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "many-to-many-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Product"
+      ],
+      "quads": 5,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-source-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order",
+        "https://example.org/type/Invoice"
+      ],
+      "range": [
+        "https://example.org/type/Customer"
+      ],
+      "quads": 12,
+      "valid": true
+    },
+    {
+      "name": "self-referential-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Employee"
+      ],
+      "range": [
+        "https://example.org/type/Employee"
+      ],
+      "quads": 7,
+      "valid": true
+    },
+    {
+      "name": "undirected-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Student"
+      ],
+      "range": [
+        "https://example.org/type/Course"
+      ],
+      "quads": 5,
+      "valid": true
+    },
+    {
+      "name": "reified-association-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Student"
+      ],
+      "range": [
+        "https://example.org/type/Course"
+      ],
+      "quads": 8,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-target-rdf-report",
+      "system": "rdf",
+      "domain": [
+        "https://example.org/type/Order"
+      ],
+      "range": [
+        "https://example.org/type/Product",
+        "https://example.org/type/Customer"
+      ],
+      "quads": 12,
+      "valid": true
+    }
+  ]
+}

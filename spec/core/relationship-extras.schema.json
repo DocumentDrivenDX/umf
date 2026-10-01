@@ -1,0 +1,999 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-extras:1.0.0",
+  "title": "Qualified GraphQL RDF and LinkML relationship classification and authored projection receipts",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/classification"
+    },
+    {
+      "$ref": "#/$defs/projection"
+    }
+  ],
+  "$defs": {
+    "document": {
+      "oneOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "archive": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "enum": [
+                "graphql-sdl",
+                "linkml-json",
+                "linkml-yaml"
+              ]
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 4000000
+            }
+          },
+          "required": [
+            "format",
+            "text"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "rdf-nquads"
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 4000000
+            },
+            "blankNodeScope": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "format",
+            "text",
+            "blankNodeScope"
+          ]
+        }
+      ]
+    },
+    "projectionRequest": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mode": {
+              "enum": [
+                "strict",
+                "report"
+              ]
+            },
+            "relationship": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module",
+                "id"
+              ]
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "markerField": {
+                    "type": "string",
+                    "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+                  }
+                },
+                "required": [
+                  "module",
+                  "element",
+                  "name"
+                ]
+              },
+              "minItems": 1
+            },
+            "orientation": {
+              "const": "source-to-target"
+            },
+            "system": {
+              "const": "graphql"
+            },
+            "root": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "typeName": {
+                  "type": "string",
+                  "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+                },
+                "fieldName": {
+                  "type": "string",
+                  "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+                }
+              },
+              "required": [
+                "typeName",
+                "fieldName"
+              ]
+            },
+            "field": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "inverseField": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "forwardUnion": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "inverseUnion": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            }
+          },
+          "required": [
+            "id",
+            "mode",
+            "relationship",
+            "records",
+            "system",
+            "root",
+            "field"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mode": {
+              "enum": [
+                "strict",
+                "report"
+              ]
+            },
+            "relationship": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module",
+                "id"
+              ]
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "markerField": {
+                    "type": "string",
+                    "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+                  }
+                },
+                "required": [
+                  "module",
+                  "element",
+                  "name"
+                ]
+              },
+              "minItems": 1
+            },
+            "orientation": {
+              "const": "source-to-target"
+            },
+            "system": {
+              "const": "rdf"
+            },
+            "predicate": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inversePredicate": {
+              "type": "string",
+              "minLength": 1
+            },
+            "unionPolicy": {
+              "const": "owl-union"
+            }
+          },
+          "required": [
+            "id",
+            "mode",
+            "relationship",
+            "records",
+            "system",
+            "predicate",
+            "unionPolicy"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mode": {
+              "enum": [
+                "strict",
+                "report"
+              ]
+            },
+            "relationship": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module",
+                "id"
+              ]
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "markerField": {
+                    "type": "string",
+                    "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+                  }
+                },
+                "required": [
+                  "module",
+                  "element",
+                  "name"
+                ]
+              },
+              "minItems": 1
+            },
+            "orientation": {
+              "const": "source-to-target"
+            },
+            "system": {
+              "const": "linkml"
+            },
+            "schemaId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schemaName": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "slot": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "inverseSlot": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            }
+          },
+          "required": [
+            "id",
+            "mode",
+            "relationship",
+            "records",
+            "system",
+            "schemaId",
+            "schemaName",
+            "slot"
+          ]
+        }
+      ]
+    },
+    "classificationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "system": {
+          "enum": [
+            "graphql",
+            "rdf",
+            "linkml"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "archive": {
+          "$ref": "#/$defs/archive"
+        }
+      },
+      "required": [
+        "system",
+        "mode",
+        "archive"
+      ]
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/document"
+        },
+        "target": {
+          "$ref": "#/$defs/document"
+        },
+        "binding": {
+          "enum": [
+            "graphql-js-17.0.2_graphql-core-3.2.12_schema-sdl",
+            "rdf11-nquads_rdflib-7.6.0_owl-union",
+            "linkml-metamodel-1.11.0_runtime-1.11.0rc2"
+          ]
+        },
+        "outcome": {
+          "const": "unknown"
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "value": {
+                "$comment": "Arbitrary retained JSON source assertion or unknown extension content."
+              },
+              "outcome": {
+                "enum": [
+                  "approximated",
+                  "not-expressible",
+                  "unknown"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recovery": {
+                "const": "retained-source"
+              }
+            },
+            "required": [
+              "path",
+              "value",
+              "outcome",
+              "reason",
+              "recovery"
+            ]
+          },
+          "minItems": 1
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "RELATIONSHIP_EXTRA_LOSS"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "severity": {
+                "enum": [
+                  "warning",
+                  "error"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ]
+          },
+          "minItems": 1
+        },
+        "operation": {
+          "const": "classify-relationship-extra"
+        },
+        "status": {
+          "enum": [
+            "classified",
+            "blocked"
+          ]
+        },
+        "request": {
+          "$ref": "#/$defs/classificationRequest"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "nativePath": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "graphql-field",
+                  "rdf-domain",
+                  "rdf-range",
+                  "rdf-union",
+                  "rdf-list",
+                  "linkml-class",
+                  "linkml-slot"
+                ]
+              },
+              "provenance": {
+                "const": "inferred"
+              },
+              "authorIntent": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "nativePath",
+              "kind",
+              "provenance",
+              "authorIntent"
+            ]
+          }
+        }
+      },
+      "required": [
+        "version",
+        "source",
+        "binding",
+        "outcome",
+        "residuals",
+        "diagnostics",
+        "operation",
+        "status",
+        "request",
+        "observations"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "target": false
+            }
+          },
+          "else": {
+            "required": [
+              "target"
+            ],
+            "properties": {
+              "request": {
+                "properties": {
+                  "mode": {
+                    "const": "report"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "graphql"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "graphql-js-17.0.2_graphql-core-3.2.12_schema-sdl"
+              },
+              "request": {
+                "properties": {
+                  "archive": {
+                    "properties": {
+                      "format": {
+                        "enum": [
+                          "graphql-sdl"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "rdf"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "rdf11-nquads_rdflib-7.6.0_owl-union"
+              },
+              "request": {
+                "properties": {
+                  "archive": {
+                    "properties": {
+                      "format": {
+                        "enum": [
+                          "rdf-nquads"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "linkml"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "linkml-metamodel-1.11.0_runtime-1.11.0rc2"
+              },
+              "request": {
+                "properties": {
+                  "archive": {
+                    "properties": {
+                      "format": {
+                        "enum": [
+                          "linkml-json",
+                          "linkml-yaml"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        "binding": {
+          "enum": [
+            "graphql-js-17.0.2_graphql-core-3.2.12_schema-sdl",
+            "rdf11-nquads_rdflib-7.6.0_owl-union",
+            "linkml-metamodel-1.11.0_runtime-1.11.0rc2"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "approximated",
+            "not-expressible",
+            "unknown"
+          ]
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "value": {
+                "$comment": "Arbitrary retained JSON source assertion or unknown extension content."
+              },
+              "outcome": {
+                "enum": [
+                  "approximated",
+                  "not-expressible",
+                  "unknown"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recovery": {
+                "const": "retained-source"
+              }
+            },
+            "required": [
+              "path",
+              "value",
+              "outcome",
+              "reason",
+              "recovery"
+            ]
+          },
+          "minItems": 1
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "RELATIONSHIP_EXTRA_LOSS"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "severity": {
+                "enum": [
+                  "warning",
+                  "error"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ]
+          },
+          "minItems": 1
+        },
+        "operation": {
+          "const": "project-relationship-extra"
+        },
+        "status": {
+          "enum": [
+            "projected",
+            "blocked"
+          ]
+        },
+        "author": {
+          "allOf": [
+            {
+              "$ref": "urn:umf:core:relationship-operation:1.0.0"
+            },
+            {
+              "properties": {
+                "operation": {
+                  "const": "declare-core-relationship"
+                }
+              }
+            }
+          ]
+        },
+        "request": {
+          "$ref": "#/$defs/projectionRequest"
+        },
+        "nativeArchive": {
+          "$ref": "#/$defs/archive"
+        },
+        "mappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "idealPath": {
+                "type": "string"
+              },
+              "nativePath": {
+                "type": "string"
+              },
+              "outcome": {
+                "const": "approximated"
+              },
+              "provenance": {
+                "const": "explicit-author-declaration"
+              }
+            },
+            "required": [
+              "idealPath",
+              "nativePath",
+              "outcome",
+              "provenance"
+            ]
+          }
+        }
+      },
+      "required": [
+        "version",
+        "source",
+        "binding",
+        "outcome",
+        "residuals",
+        "diagnostics",
+        "operation",
+        "status",
+        "author",
+        "request",
+        "mappings"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "target": false,
+              "nativeArchive": false,
+              "mappings": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "required": [
+              "target",
+              "nativeArchive"
+            ],
+            "properties": {
+              "mappings": {
+                "minItems": 1
+              },
+              "outcome": {
+                "const": "approximated"
+              },
+              "request": {
+                "properties": {
+                  "mode": {
+                    "const": "report"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "graphql"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "graphql-js-17.0.2_graphql-core-3.2.12_schema-sdl"
+              },
+              "nativeArchive": {
+                "properties": {
+                  "format": {
+                    "enum": [
+                      "graphql-sdl"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "rdf"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "rdf11-nquads_rdflib-7.6.0_owl-union"
+              },
+              "nativeArchive": {
+                "properties": {
+                  "format": {
+                    "enum": [
+                      "rdf-nquads"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "system": {
+                    "const": "linkml"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "const": "linkml-metamodel-1.11.0_runtime-1.11.0rc2"
+              },
+              "nativeArchive": {
+                "properties": {
+                  "format": {
+                    "enum": [
+                      "linkml-json",
+                      "linkml-yaml"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

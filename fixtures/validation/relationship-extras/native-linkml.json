@@ -1,0 +1,114 @@
+{
+  "versions": {
+    "linkmlRuntime": "1.11.0rc2"
+  },
+  "python": "3.12.3",
+  "interpreter": "/tmp/umf-extras-work/.cache/linkml-venv/bin/python",
+  "scope": "Native metamodel/schema parsing and graph structure; no instance or referential enforcement claim",
+  "cases": [
+    {
+      "name": "one-to-one-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Invoice"
+      ],
+      "slot": "invoice",
+      "range": "Invoice",
+      "multivalued": false,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "owned-one-to-many-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Line"
+      ],
+      "slot": "lines",
+      "range": "Line",
+      "multivalued": true,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "many-to-one-alternate-key-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Customer"
+      ],
+      "slot": "customer",
+      "range": "Customer",
+      "multivalued": false,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "many-to-many-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Product"
+      ],
+      "slot": "products",
+      "range": "Product",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "heterogeneous-source-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Order",
+        "Invoice",
+        "Customer"
+      ],
+      "slot": "customerForSalesDocument",
+      "range": "Customer",
+      "multivalued": false,
+      "required": true,
+      "valid": true
+    },
+    {
+      "name": "self-referential-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Employee"
+      ],
+      "slot": "manager",
+      "range": "Employee",
+      "multivalued": false,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "undirected-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Student",
+        "Course"
+      ],
+      "slot": "studies",
+      "range": "Course",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    },
+    {
+      "name": "reified-association-linkml-report",
+      "system": "linkml",
+      "classes": [
+        "Student",
+        "Course"
+      ],
+      "slot": "enrollsIn",
+      "range": "Course",
+      "multivalued": true,
+      "required": false,
+      "valid": true
+    }
+  ]
+}
