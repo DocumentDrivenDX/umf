@@ -371,5 +371,6 @@ export * from './projections/ddd-postgresql/relationship-layout';
 export * from './core-ideals/relationship-sqlserver';
 export * from './core-ideals/relationship-sqlserver-projection';
 export * from './core-ideals/relationship-postgresql';
-
 export * from './core-ideals/relationship-extras';
+export * from './projections/binding-sqlserver';
+export * from './projections/binding-sqlserver/relationship-layout';

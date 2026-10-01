@@ -1,0 +1,863 @@
+{
+  "scope": "Complete qualified tables/columns/JSON carriers/Keys/relationships and rowstore indexes from shared keyed DDD graph; no native equivalence",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "cases": [
+    {
+      "case": "keyed-association-and-fk",
+      "tables": 4,
+      "foreignKeys": 3,
+      "catalog": "fixtures/binding/sqlserver/keyed-association-and-fk-catalog.json",
+      "sql": "fixtures/binding/sqlserver/keyed-association-and-fk.sql"
+    },
+    {
+      "case": "alternate-unique-target",
+      "tables": 4,
+      "foreignKeys": 3,
+      "catalog": "fixtures/binding/sqlserver/alternate-unique-target-catalog.json",
+      "sql": "fixtures/binding/sqlserver/alternate-unique-target.sql"
+    },
+    {
+      "case": "nullable-composite",
+      "tables": 4,
+      "foreignKeys": 3,
+      "catalog": "fixtures/binding/sqlserver/nullable-composite-catalog.json",
+      "sql": "fixtures/binding/sqlserver/nullable-composite.sql"
+    },
+    {
+      "case": "anonymous-junction",
+      "tables": 5,
+      "foreignKeys": 3,
+      "catalog": "fixtures/binding/sqlserver/anonymous-junction-catalog.json",
+      "sql": "fixtures/binding/sqlserver/anonymous-junction.sql"
+    },
+    {
+      "case": "edge",
+      "tables": 5,
+      "foreignKeys": 3,
+      "catalog": "fixtures/binding/sqlserver/edge-catalog.json",
+      "sql": "fixtures/binding/sqlserver/edge.sql"
+    },
+    {
+      "case": "inline-residual",
+      "tables": 4,
+      "foreignKeys": 2,
+      "catalog": "fixtures/binding/sqlserver/inline-residual-catalog.json",
+      "sql": "fixtures/binding/sqlserver/inline-residual.sql"
+    },
+    {
+      "case": "shared-edge",
+      "tables": 5,
+      "foreignKeys": 5,
+      "catalog": "fixtures/binding/sqlserver/shared-edge-catalog.json",
+      "sql": "fixtures/binding/sqlserver/shared-edge.sql"
+    }
+  ],
+  "rows": [
+    {
+      "case": "keyed-association-and-fk",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_0\", table \"sales.customers\", column 'id'."
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_0\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "association-attributes",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,2.25);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "same-endpoints-distinct-association",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(2,1,1,3.50);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "association-key-duplicate",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,9.99);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_order_products'. Cannot insert duplicate key in object 'sales.order_products'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "keyed-association-and-fk",
+      "id": "association-dangling",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(3,999,1,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_0\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_1\", table \"sales.customers\", column 'id'."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_1\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "association-attributes",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,2.25);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "same-endpoints-distinct-association",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(2,1,1,3.50);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "association-key-duplicate",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,9.99);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_order_products'. Cannot insert duplicate key in object 'sales.order_products'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "alternate-unique-target",
+      "id": "association-dangling",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(3,999,1,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_1\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name,code) VALUES (1,N'Alice',1);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name,code) VALUES (2,N'Alice',2);",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload,customerCode) VALUES(1,N'tenant',1,N'new',N'{}',1);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload,customerCode) VALUES(1,N'tenant',1,N'new',NULL,1);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload,customerCode) VALUES(2,N'tenant',999,N'new',NULL,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_2\", table \"sales.customers\"."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload,customerCode) VALUES(3,N'tenant',1,N'new',N'[]',1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_2\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "partial-null-native-residual",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload,customerCode) VALUES(4,N'tenant',999,N'new',NULL,NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "association-attributes",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,2.25);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "same-endpoints-distinct-association",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(2,1,1,3.50);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "association-key-duplicate",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,9.99);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_order_products'. Cannot insert duplicate key in object 'sales.order_products'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "nullable-composite",
+      "id": "association-dangling",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(3,999,1,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_2\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_3\", table \"sales.customers\", column 'id'."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_3\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "anonymous-link",
+      "statement": "INSERT INTO [sales].[links] ([orderId], [productId]) VALUES (1,1);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "duplicate-pair",
+      "statement": "INSERT INTO [sales].[links] ([orderId], [productId]) VALUES (1,1);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'PK_links_pair'. Cannot insert duplicate key in object 'sales.links'. The duplicate key value is (1, 1)."
+      }
+    },
+    {
+      "case": "anonymous-junction",
+      "id": "dangling-source",
+      "statement": "INSERT INTO [sales].[links] ([orderId], [productId]) VALUES (999,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_3\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "edge",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "edge",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "edge",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_4\", table \"sales.customers\", column 'id'."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_4\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "anonymous-link",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'products');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "edge",
+      "id": "duplicate-pair",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'products');",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'PK_edges_pair'. Cannot insert duplicate key in object 'sales.edges'. The duplicate key value is (products, 1, 1)."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "dangling-source",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (999,1,N'products');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_4\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "edge",
+      "id": "unknown-edge-label",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'unknown');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__edges__relations__412EB0B6\". The conflict occurred in database \"umf_physical_4\", table \"sales.edges\", column 'relationship'."
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_5\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "association-attributes",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,2.25);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "same-endpoints-distinct-association",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(2,1,1,3.50);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "association-key-duplicate",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,9.99);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_order_products'. Cannot insert duplicate key in object 'sales.order_products'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "inline-residual",
+      "id": "association-dangling",
+      "statement": "INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(3,999,1,1);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_5\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "customer",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (1,N'Alice');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "unique-index",
+      "statement": "INSERT INTO sales.customers (id,name) VALUES (2,N'Alice');",
+      "error": 2601,
+      "actual": {
+        "error": 2601,
+        "message": "Cannot insert duplicate key row in object 'sales.customers' with unique index 'UX_Customers_Name'. The duplicate key value is (Alice)."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "product",
+      "statement": "INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',N'{}');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "key-duplicate",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(1,N'tenant',1,N'new',NULL);",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'pk_orders'. Cannot insert duplicate key in object 'sales.orders'. The duplicate key value is (1)."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "dangling-order",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(2,N'tenant',999,N'new',NULL);",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_orders_customer\". The conflict occurred in database \"umf_physical_6\", table \"sales.customers\", column 'id'."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "json-array-refusal",
+      "statement": "INSERT INTO sales.orders(id,tenant,customerId,status,payload) VALUES(3,N'tenant',1,N'new',N'[]');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK_orders_payload_json\". The conflict occurred in database \"umf_physical_6\", table \"sales.orders\", column 'payload'."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "anonymous-link",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'products');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "duplicate-pair",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'products');",
+      "error": 2627,
+      "actual": {
+        "error": 2627,
+        "message": "Violation of PRIMARY KEY constraint 'PK_edges_pair'. Cannot insert duplicate key in object 'sales.edges'. The duplicate key value is (products, 1, 1)."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "dangling-source",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (999,1,N'products');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_order_products_order\". The conflict occurred in database \"umf_physical_6\", table \"sales.orders\", column 'id'."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "unknown-edge-label",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'unknown');",
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__edges__relations__412EB0B6\". The conflict occurred in database \"umf_physical_6\", table \"sales.edges\", column 'relationship'."
+      }
+    },
+    {
+      "case": "shared-edge",
+      "id": "shared-edge-distinct-discriminator",
+      "statement": "INSERT INTO [sales].[edges] ([orderId], [productId], [relationship]) VALUES (1,1,N'recommended');",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "message": null
+      }
+    }
+  ],
+  "sha256": {
+    "scripts/binding/sqlserver-oracle.ts": "83a105a659ac8b36d63d6a8ae08de7a49c08ab890c42f788ace47406ac5df427",
+    "scripts/binding/sqlserver-cases.ts": "f7738e5da4703cdb76a0f4360ccf8c09bc00195042d944a13bee68cd017e8ea3",
+    "src/projections/binding-sqlserver/index.ts": "f7a827846f1aadcef3e564bdb7cdffc88b31c7c403db4fe74d7fe51ae50e0908",
+    "src/projections/binding-sqlserver/relationship-layout.ts": "bba8fd85abe719438a2b846692bce37195f6ac893e8fb7f256320485b0637564",
+    "src/projections/binding-sqlserver/tables.ts": "f5cb9ba1064cf5b17df1f7cdeda086746a819e949f8002d83bfaa53474aca94c",
+    "src/projections/binding-sqlserver/indexes.ts": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98",
+    "spec/projections/sqlserver-relationship-layout.schema.json": "f7f3ff6873ea8e7f905b3ee05fcfbf3e450a1ea243e85b83c54feb5661eced01",
+    "spec/projections/sqlserver-physical-binding.schema.json": "5840c052fdbae750eb09d8684ed08897b4e692551890d0a843872655ddc5e6ce",
+    "fixtures/binding/sqlserver/cases.json": "617e0448b30b906a1f6b39130ac4a8d636b7295d84f6b7f1ad301aab7f05b857",
+    "fixtures/binding/sqlserver/keyed-association-and-fk-catalog.json": "b715686db28a46df2294fccdafe472de3678c3dfd043a12a3a7a2c9c62620c6a",
+    "fixtures/binding/sqlserver/keyed-association-and-fk.sql": "6cee48b5c28245394f21e180d6f4d8cf58ca49f0c08fb440295e5303c0832aec",
+    "fixtures/binding/sqlserver/alternate-unique-target-catalog.json": "97af955d85635d8bbcf1816d71b6fa55e79bcee1790d1709d010b44da99b4dc0",
+    "fixtures/binding/sqlserver/alternate-unique-target.sql": "f0f63dd7aa43cfc96934bd68586473ff4d697fe10cb3ff2610ad11e3053ff245",
+    "fixtures/binding/sqlserver/nullable-composite-catalog.json": "00baf9bbc4e65eece07e86e19b2836111449ad2eb5f12a65e1042d6d2a62d9fc",
+    "fixtures/binding/sqlserver/nullable-composite.sql": "a547e08ab0ffa55a876357357e314802a75199dce799e0eacf2855115b01e8ae",
+    "fixtures/binding/sqlserver/anonymous-junction-catalog.json": "91753c9b70a865fc9f2451c0e25b9dc588ac2189fb921b950819e55de90494cc",
+    "fixtures/binding/sqlserver/anonymous-junction.sql": "fc8d5e969a64ec48024802349ef0fc192e0d0c8f95f392e3223be052b4c9f070",
+    "fixtures/binding/sqlserver/edge-catalog.json": "079bc3a229da5305861265578ab55b55180fc2053f772e6d0a643ca911f753cc",
+    "fixtures/binding/sqlserver/edge.sql": "e69f1e510bcff1fc01ca973358165ed9c7ba2a68322fbcda8f5df27a3cecfee6",
+    "fixtures/binding/sqlserver/inline-residual-catalog.json": "de79ad6889bc3f46bd85c35f95c57552599869c1491f2bc20f6f85f458365e02",
+    "fixtures/binding/sqlserver/inline-residual.sql": "a97ac97f52a2ab14d2ebd8161588f337f5b215a2a1641c5b30f57b1205087cb2",
+    "fixtures/binding/sqlserver/shared-edge-catalog.json": "7109723a2b9c6c7477c9742402904e47a4aa63371588f9b7a5f5df8aab39e2b5",
+    "fixtures/binding/sqlserver/shared-edge.sql": "9c7f49aa777ee5b4311e4c00a78c79d7198cf44b747af3758aca0edfcda28bbe"
+  }
+}

@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {createHash,randomUUID} from 'node:crypto';
+import {sqlServerPhysicalCases} from './sqlserver-cases';
+import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative} from '../../src/projections/binding-sqlserver';
+import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifySqlServerRelationships} from '../../src/core-ideals/relationship-sqlserver';
+import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-full-physical-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
+let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
+async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,stderr||stdout);return {stdout,stderr};}
+const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),'-e','SQLCMDPASSWORD='+password,name,...args],input);
+const sql=(db:string,text:string)=>exec([sqlcmd,'-S','tcp:127.0.0.1,1433','-U','sa','-C','-I','-b','-l','2','-t','30','-r','1','-y','0','-w','65535','-d',db],text);
+try{
+ await run(['docker','run','-d','--platform','linux/amd64','--name',name,'--network','none','-e','ACCEPT_EULA=Y','-e','MSSQL_PID=Developer','-e','MSSQL_SA_PASSWORD='+password,image]);created=true;
+ let ready=false;for(let i=0;i<120;i++){assert.equal((await run(['docker','inspect','--format','{{.State.Running}}',name])).stdout.trim(),'true');try{await sql('master','SET NOCOUNT ON; SELECT 1;');ready=true;break;}catch{if(i===0){try{await exec(['test','-x',sqlcmd]);}catch{sqlcmd='/opt/mssql-tools/bin/sqlcmd';}}}if(i%20===19)console.log(JSON.stringify({startupAttempts:i+1}));await Bun.sleep(1000);}assert.ok(ready,'SQL Server startup did not complete');
+ const rows:any[]=[],captures:any[]=[],cases=sqlServerPhysicalCases();const q=(s:string)=>'['+s.replaceAll(']',']]')+']';
+ const query=await Bun.file('native/sqlserver/catalog-v3.sql').text();
+ for(const [i,c] of cases.entries()){
+  const db='umf_physical_'+i;await sql('master','CREATE DATABASE '+q(db)+';');const r=projectBindingToSqlServer(c.logical,c.binding,c.policy,'report');assert.equal(r.status,'reported');await Bun.write('fixtures/binding/sqlserver/'+c.id+'.sql',r.candidate!);await sql(db,r.candidate!);
+  async function json(text:string){return JSON.parse((await sql(db,text)).stdout.split(/\r?\n/).join('').trim());}
+  async function probe(id:string,statement:string,error:number){const escaped=statement.replaceAll("'","''"),actual=await json(`SET NOCOUNT ON; DECLARE @error int=0,@message nvarchar(2048)=NULL; BEGIN TRY EXEC sys.sp_executesql N'${escaped}'; END TRY BEGIN CATCH SET @error=ERROR_NUMBER(); SET @message=ERROR_MESSAGE(); END CATCH; SELECT @error AS error,@message AS message FOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;`);assert.equal(actual.error,error,c.id+'/'+id+': '+JSON.stringify(actual));rows.push({case:c.id,id,statement,error,actual});}
+  const composite=c.id==='nullable-composite';
+  await probe('customer',`INSERT INTO sales.customers (id,name${composite?',code':''}) VALUES (1,N'Alice'${composite?',1':''});`,0);
+  await probe('unique-index',`INSERT INTO sales.customers (id,name${composite?',code':''}) VALUES (2,N'Alice'${composite?',2':''});`,2601);
+  await probe('product',"INSERT INTO sales.products(id,sku,payload) VALUES(1,N'P1',NULL);",0);
+  const order=(id:number,customer:number,payload:string,code='1')=>`INSERT INTO sales.orders(id,tenant,customerId,status,payload${composite?',customerCode':''}) VALUES(${id},N'tenant',${customer},N'new',${payload}${composite?','+code:''});`;
+  await probe('order',order(1,1,"N'{}'"),0);await probe('key-duplicate',order(1,1,'NULL'),2627);await probe('dangling-order',order(2,999,'NULL'),c.id==='inline-residual'?0:547);await probe('json-array-refusal',order(3,1,"N'[]'"),547);
+  if(composite)await probe('partial-null-native-residual',order(4,999,'NULL','NULL'),0);
+  const association=c.policy.layout.relationshipLayouts.find(l=>l.associationRecord);
+  if(association){await probe('association-attributes','INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,2.25);',0);await probe('same-endpoints-distinct-association','INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(2,1,1,3.50);',0);await probe('association-key-duplicate','INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(1,1,1,9.99);',2627);await probe('association-dangling','INSERT INTO sales.order_products(id,orderId,productId,quantity) VALUES(3,999,1,1);',547);
+   const values=await json('SET NOCOUNT ON; SELECT id,quantity FROM sales.order_products ORDER BY id FOR JSON PATH;');assert.deepEqual(values,[{id:1,quantity:2.25},{id:2,quantity:3.50}]);
+  }else{
+   const links=c.policy.layout.relationshipLayouts.filter(l=>l.storage!=='foreign_key');
+   const l=links[0]!,columns=[...l.sourceComponents!,...l.targetComponents].map(x=>q(x.carrierColumn)),value=(d:string|undefined,source=1)=>`INSERT INTO ${l.carrierTable.split('.').map(q).join('.')} (${[...columns,...(l.discriminator?[q(l.discriminator.column)]:[])].join(', ')}) VALUES (${source},1${d===undefined?'':",N'"+d.replaceAll("'","''")+"'"});`;
+   await probe('anonymous-link',value(l.discriminator?.value),0);await probe('duplicate-pair',value(l.discriminator?.value),2627);await probe('dangling-source',value(l.discriminator?.value,999),547);if(l.discriminator)await probe('unknown-edge-label',value('unknown'),547);if(links.length>1)await probe('shared-edge-distinct-discriminator',value(links[1]!.discriminator!.value),0);
+  }
+  const capture=await json(query);assert.equal(capture.serverVersion,'16.0.4295.3');capture.query=query;capture.unclaimedNative={opaque:'preserved'};const nativeSource=JSON.stringify(capture,null,2).replace('"unclaimedNative": {','"unclaimedInteger": 9007199254740993,\n  "unclaimedNative": {')+'\n';await Bun.write('fixtures/binding/sqlserver/'+c.id+'-catalog.json',nativeSource);if(i===0)await Bun.write('fixtures/binding/sqlserver/catalog.json',nativeSource);
+  const table=(name:string)=>capture.tables.find((t:any)=>t.schema==='sales'&&t.name===name);assert.ok(table('order_products').columns.some((f:any)=>f.name==='quantity'&&f.base_type_name==='decimal'&&f.precision===12&&f.scale===2));assert.ok(table('order_products').keys.some((k:any)=>k.name==='pk_order_products'&&k.kind==='PK'));
+  const names=capture.tables.flatMap((t:any)=>t.indexes.map((x:any)=>x.name));for(const name of ['IX_Orders_Status','UX_Customers_Name','IX_Orders_Positive'])assert.ok(names.includes(name));assert.ok(!names.some((n:any)=>typeof n==='string'&&n.startsWith('Unsupported_')));assert.equal(table('orders').indexes.find((x:any)=>x.name==='IX_Orders_Positive').has_filter,true);
+  for(const l of c.policy.layout.relationshipLayouts){const parts=l.carrierTable.split('.'),t=capture.tables.find((t:any)=>t.schema===parts[0]&&t.name===parts[1]),fk=t.foreign_keys.find((f:any)=>f.name===l.targetConstraint);assert.ok(fk);assert.equal(fk.is_not_trusted,false);assert.equal(fk.is_disabled,false);assert.deepEqual(fk.columns.map((f:any)=>f.column_name),l.targetComponents.map(f=>f.carrierColumn));}
+  const observed=classifySqlServerRelationships(importSqlServerCatalog(nativeSource,{id:c.id}),{nativeSource,mode:'report',profile:'captured-foreign-keys'});assert.equal(observed.status,'classified');
+  const retained=projectBindingToSqlServer(c.logical,c.binding,c.policy,'report',nativeSource);assert.equal(retained.candidate,r.candidate);for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(retained,format),format) as unknown as typeof retained;assert.deepEqual(recoverBindingSqlServerSources(saved,saved.candidate!),{logical:c.logical,binding:c.binding,policy:c.policy});assert.equal(recoverBindingSqlServerNative(saved,saved.candidate!).catalog,nativeSource);}
+  captures.push({case:c.id,tables:capture.tables.length,foreignKeys:observed.observations.length,catalog:'fixtures/binding/sqlserver/'+c.id+'-catalog.json',sql:'fixtures/binding/sqlserver/'+c.id+'.sql'});
+ }
+ const paths=['scripts/binding/sqlserver-oracle.ts','scripts/binding/sqlserver-cases.ts','src/projections/binding-sqlserver/index.ts','src/projections/binding-sqlserver/relationship-layout.ts','src/projections/binding-sqlserver/tables.ts','src/projections/binding-sqlserver/indexes.ts','spec/projections/sqlserver-relationship-layout.schema.json','spec/projections/sqlserver-physical-binding.schema.json','fixtures/binding/sqlserver/cases.json',...captures.flatMap(c=>[c.catalog,c.sql])];const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
+ await Bun.write('fixtures/binding/sqlserver/oracle.json',JSON.stringify({scope:'Complete qualified tables/columns/JSON carriers/Keys/relationships and rowstore indexes from shared keyed DDD graph; no native equivalence',image,serverVersion:'16.0.4295.3',cases:captures,rows,sha256},null,2)+'\n');console.log(JSON.stringify({cases:captures.length,probes:rows.length}));
+}finally{if(created)await run(['docker','rm','-f','-v',name]);}
