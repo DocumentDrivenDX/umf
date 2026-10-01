@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 54,
-  "passed": 54,
+  "packages": 55,
+  "passed": 55,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -91,6 +91,19 @@
         "subset": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements"
       },
       "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-relationships/package.json",
+      "id": "umf.avro.relationships",
+      "version": "1.0.0",
+      "native": {
+        "system": "Apache Avro",
+        "version": "1.12.0",
+        "subset": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence"
+      },
+      "evidenceCount": 5,
       "passed": true,
       "failures": []
     },

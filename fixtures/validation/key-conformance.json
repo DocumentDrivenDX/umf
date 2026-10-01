@@ -62,47 +62,47 @@
       },
       {
         "path": "fixtures/validation/key-tablespec-classification-browser.json",
-        "sha256": "8a953dde9d5af1b1e74d12ae7da9475ec71ef9266cfa8ec1500befdfa0953ff6"
+        "sha256": "54a768f9fa2cb46cc08a39379c8914cfd3634fb8612d158a81c43a42ff805c92"
       },
       {
         "path": "fixtures/validation/key-postgresql-catalog-browser.json",
-        "sha256": "e271ce37e12fb990f915e651d269a0add5c470f51cfa9d7ed62f48f6526f192f"
+        "sha256": "9e81f51e3c24c6de9c0dfef0061307ea29bb0c76794cd7f9887e9e0d5dbb89ba"
       },
       {
         "path": "fixtures/validation/key-postgresql-browser.json",
-        "sha256": "b3a9cbf0b4c6637f489e156ac554530a68e2781045e8750036dba7e511524b7b"
+        "sha256": "0eec1f7a021ed4cf62a394178da3bae842180c33872dfd23a86430abbe8d38c9"
       },
       {
         "path": "fixtures/validation/key-sqlserver-browser.json",
-        "sha256": "a58754406f12fa2a254593c50f1c1e32ad6eb6e1c9182dc1300c9997b6fda4f1"
+        "sha256": "c2a362324b39fbdefba442324fdb51bb9a7c22325cbe63eee2e54d1d86d55f0e"
       },
       {
         "path": "fixtures/validation/key-sqlserver-encoding-browser.json",
-        "sha256": "50f7dce1fdece74807d32a7256efcda377a0833978a90764aaaba48eaea6435e"
+        "sha256": "25d218a772a3b79fcb129dfd3b6560460908523516e7cd12af3def079f81fe61"
       },
       {
         "path": "fixtures/validation/key-sqlserver-projection-browser.json",
-        "sha256": "70f62df652594828497d7320fed7dde3f08836f3fcc7c6b2b53c052d3828f0ef"
+        "sha256": "b6b23af53b55ebda389580b5380ad6021fb2b78913f921b3d5344987e3130e7e"
       },
       {
         "path": "fixtures/validation/key-avro-browser.json",
-        "sha256": "439244d4a086ea963d20fea8df6010b65eea26637a85a20c1bbbacc81fa064fc"
+        "sha256": "f54b1ffecd51701b2a69262c9c661f8879ac108a13dfda3b130ba30757c08e4d"
       },
       {
         "path": "fixtures/validation/key-avro-projection-browser.json",
-        "sha256": "788215aed326c6a016966185db0662075d6d32dd6a637c62b613c4b7c140fced"
+        "sha256": "459c249d155570de686ed98915bced24b8f91ce508ded6177df674986ea429ce"
       },
       {
         "path": "fixtures/validation/key-parquet-browser.json",
-        "sha256": "306d7fd747b6c99851648fd5a5cca43ea1e4742f4e09f33f551f07e3e1b6f2d1"
+        "sha256": "df0d86673514a5be506ef2c74396ec27a90167290e3dc6bd58d0f4e3aa977b57"
       },
       {
         "path": "fixtures/validation/key-parquet-projection-browser.json",
-        "sha256": "4d2087722dfaefe92348a90e5eef339b139d3b2e3fed32bae0f151304e4765fd"
+        "sha256": "592ff1ec8556db7db736cb19b82953961acbaa1ed4279cf64b1481f56183003f"
       }
     ],
-    "fingerprints": 473,
-    "refreshSha256": "dec39fcd68404bb6bb611a529af3ad449f5cfed035d6f1fdeec992b229963165",
+    "fingerprints": 496,
+    "refreshSha256": "8f0ab40937fccdddd587e9f738d0fc62f7d5b0f2f51003531289276ce28d98f0",
     "idealAdmitted": false,
     "nativeEquivalence": false
   },
@@ -218,6 +218,6 @@
     "tests/core-ideals/key-evidence.test.ts": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7",
     "tests/core-ideals/key-authored-roundtrips.test.ts": "284cbc3514bc78b57ac59f6cc5325498e1259c4be1feb0713fafa5eb771356bc",
     "tests/core-ideals/key-native-roundtrips.test.ts": "1d292d7cd9f9f9716b12851b4bfaecd55bda0414350d5e57ed35fb858962499a",
-    "fixtures/validation/key-gate-refresh-evidence.json": "dec39fcd68404bb6bb611a529af3ad449f5cfed035d6f1fdeec992b229963165"
+    "fixtures/validation/key-gate-refresh-evidence.json": "8f0ab40937fccdddd587e9f738d0fc62f7d5b0f2f51003531289276ce28d98f0"
   }
 }

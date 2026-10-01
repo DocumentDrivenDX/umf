@@ -5120,3 +5120,27 @@ and three browser checks. Its 126 commands record current outcomes and input
 fingerprints separately from earlier acceptance records. Full regression and
 existing conformance gates must follow a successful replay; the binding remains
 in progress until that evidence and the final acceptance audit pass.
+
+### Avro relationship qualified binding acceptance
+
+The 126-command compatibility replay, full non-gate regression and all five
+existing concept gates completed on 2026-09-24. The final publication audit on
+2026-10-01 verified every recorded source and execution-log fingerprint against
+the retained run. The regression passed 1,795 tests across 352 files with
+120,240 assertions; seven separate gate files passed thirteen tests and 186
+assertions. Total verification is 1,808 tests across 359 files, 120,426
+assertions and zero failures. The audit corrected seven null file counts by
+reading the singular `1 file` summaries; no execution logs were changed.
+
+The [qualified acceptance record](../../../fixtures/validation/relationship-avro-acceptance-evidence.json)
+accepts `umf-c81cfc9c` for native grammar classification and the explicit
+`target-key-record` authored carrier. Sixteen emitted schemas pass Apache Avro
+1.12.0 and fastavro 1.12.2 with 32 writer runs and 64 cross-codec reads.
+Chromium 148 checks 32 recoveries in each composed direction, 32 projection
+blocks, sixteen forged-receipt and sixteen stale-target refusals, with no getter
+execution or external requests. Native archives and unknown metadata remain
+attached. Dangling values, duplicates and empty required arrays still encode;
+Avro does not enforce relationship identity, participation or lifecycle.
+Heterogeneous endpoint and keyed association layouts remain explicit refusals.
+Relationship ideal admission, all-five delivery and native equivalence are
+separate and are not claimed by this acceptance.

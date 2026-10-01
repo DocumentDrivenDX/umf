@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 321,
-  "passed": 321,
+  "schemas": 324,
+  "passed": 324,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -48,6 +48,13 @@
     {
       "path": "spec/core/avro-record-type-classification.schema.json",
       "id": "urn:umf:core:avro-record-type-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-relationship-classification.schema.json",
+      "id": "urn:umf:core:avro-relationship-classification:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -725,6 +732,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/relationship-avro-projection.schema.json",
+      "id": "urn:umf:core:relationship-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/relationship-document.schema.json",
       "id": "urn:umf:core:0.7.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -958,6 +972,13 @@
     {
       "path": "spec/extensions/avro-nullability/schema.json",
       "id": "urn:umf:avro:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-relationships/schema.json",
+      "id": "urn:umf:avro:relationship-binding:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

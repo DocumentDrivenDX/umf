@@ -1,0 +1,150 @@
+{
+  "complete": true,
+  "coreTaskAccepted": false,
+  "bindingAccepted": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/field-conformance.log",
+      "logSha256": "dd5a27f1db6df88669a61de19d385390dd468d216db27391f4a0ca2fb3d5e87f"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/field-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/field-tests.log",
+      "logSha256": "2b76ce061b8757f33ddc6e77291ac26b70295c271198f9101bcad759c632ebc7",
+      "tests": 3,
+      "failures": 0,
+      "assertions": 25,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/nullability-conformance.log",
+      "logSha256": "98703d12ce45c402180dc8ca53793eb342779d29d612aafd167ba0ce9ca284ba"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/nullability-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/nullability-tests.log",
+      "logSha256": "c2e98b41f21512e5dab41b9662a525b932252b8dd4edf7be92da232b63d66819",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 17,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/cardinality-conformance.log",
+      "logSha256": "d35d35c7b13f73e8c15dc5e098630d34e456ec4e5516ca3888c84dabc3b709a7"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/cardinality-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/cardinality-tests.log",
+      "logSha256": "b934cfea3b6be80eabc6615bfcccc1b870bda27c06c53ecb15cc91ab0b36d6c0",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 57,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/facets-conformance.log",
+      "logSha256": "7d8657b8a7b1df029a83e08791294226d00eebe941ed4d1c47d57e65830530e0"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/facets-tests.log",
+      "logSha256": "43eeba8849fb08fba0b9e0c0c3ba8652d9812189b35a333271a5065b92739f94",
+      "tests": 1,
+      "failures": 0,
+      "assertions": 42,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/facets-evidence-tests.log",
+      "logSha256": "7052cb12b5a7e1006b1a97081a6c919bd30657b0c4e7ecf373ffd3ea203e0eed",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 18,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/key-conformance.log",
+      "logSha256": "4aadbdc14c4231a8038dce2410cc2a47b76286da37a93da15fd02fe6a45d5eed"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/key-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/key-tests.log",
+      "logSha256": "00e2622ce1a56be1d50ab780a6746151d440fbaf17cf1129d612c605385b2a7b",
+      "tests": 1,
+      "failures": 0,
+      "assertions": 5,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/key-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-avro-refresh/key-evidence-tests.log",
+      "logSha256": "94c08cb237089705a86bf8d11937d52eb05ab76d559d3181444a938acb403a67",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 22,
+      "files": 1
+    }
+  ]
+}

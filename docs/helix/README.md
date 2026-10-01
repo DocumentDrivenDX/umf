@@ -15,6 +15,15 @@ layouts refuse explicitly. Other relationship bindings and relationship ideal
 admission remain open. See the
 [TableSpec relationship acceptance](../../fixtures/validation/relationship-tablespec-acceptance-evidence.json).
 
+The Avro relationship binding also passes qualified acceptance for native grammar
+classification and explicit target-key-record projection with retained native and
+authored recovery. The 126-command replay and existing five concept gates pass;
+total verification covers 1,808 tests across 359 files with zero failures. Avro
+does not enforce references or participation, and heterogeneous/keyed association
+layouts refuse explicitly. See the
+[Avro relationship acceptance](../../fixtures/validation/relationship-avro-acceptance-evidence.json).
+Relationship admission and all-five delivery remain separate.
+
 **Latest core scope amendment:** UMF-defined ideals and native-equivalence
 graduation now have separate gates. The next ordered concepts are field,
 nullability, cardinality, author-stated facets and key. See
