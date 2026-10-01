@@ -476,3 +476,33 @@ recovery require recomputed retained receipts and reject stale/forged targets.
 JSON/YAML and Chromium exercise both directions without getters or networking.
 The [additional-binding acceptance](../../../../fixtures/validation/relationship-extras/acceptance.json)
 records the native/browser versions, scoped tests and support limits.
+
+### Relationship admission and delivery gate
+
+`verifyRelationshipConformance` separates `relationship-admission.json` from
+`relationship-delivery.json`. Admission requires nonempty PostgreSQL and SQL
+Server authored FK/junction mappings with actual native insertion controls.
+Delivery additionally requires every current TableSpec, Avro, Parquet and extra
+binding matrix, including its strict refusals, retained source recovery and
+versioned native/browser evidence. Neither record grants native equivalence.
+
+The canonical corpus exercises the eight authored proposals (the original six
+shapes, undirected and keyed `Enrollment`) plus bounded owned participation.
+The alternate target selects the named `account` Key; Enrollment retains its
+own primary Key and `grade` Field. Each case explicitly upgrades 0.6.0 to 0.7.0,
+archives an uninterpreted legacy `relationships` collision, and rolls back
+without discarding the new assertion. JSON/YAML and current Chromium recover
+both authored and native extra representations. Priority bindings execute
+their own qualified case matrices and recovery tests; this does not claim all
+nine logical shapes are physically representable in every target.
+
+`relationship-gate-refresh.ts` executes the exported command list and records
+successful logs, current source fingerprints and native/browser proof hashes.
+An integrated replay can call `publishRelationshipGateFromReplay` with the
+same successful runs and before/after source snapshot. The verifier rejects
+missing/failed commands, changed logs, stale sources, altered proof contents,
+unsupported versions, empty useful mappings and incomplete case matrices.
+Absolute or escaping proof paths are refused. Historical feature-worktree
+acceptance records retain their original fingerprints and scope; they are not
+silently refreshed into current-source evidence. The gate reruns focused Bun
+binding tests when invoked and rechecks its evidence afterward.

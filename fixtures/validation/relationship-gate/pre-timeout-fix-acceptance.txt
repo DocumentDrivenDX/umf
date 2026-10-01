@@ -1,0 +1,12 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/relationship-conformance.test.ts:
+(fail) authored shape corpus preserves unknown content, keyed association and migration rollback [20035.56ms]
+  ^ this test timed out after 5000ms.
+(pass) ideal admission and qualified five-system delivery require current executable proofs [176487.51ms]
+(pass) missing, failed, stale, tampered and version-mismatched proofs refuse admission [6915.99ms]
+
+ 2 pass
+ 1 fail
+ 15 expect() calls
+Ran 3 tests across 1 file. [208.25s]

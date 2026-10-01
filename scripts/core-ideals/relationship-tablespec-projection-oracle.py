@@ -5,7 +5,7 @@ import jsonschema
 from pydantic import ValidationError
 PIN='647e8e566ad78b864282ec65c0b0b2237aa63084'
 manifest_path=Path('native/tablespec/sources.json');manifest=json.loads(manifest_path.read_text());assert manifest['commit']==PIN
-paths=[Path(__file__),manifest_path,Path('scripts/core-ideals/relationship-tablespec-oracle.ts'),Path('scripts/core-ideals/relationship-tablespec-projection-cases.ts'),Path('src/core-ideals/relationship-tablespec-projection.ts'),Path('spec/core/relationship-tablespec-projection.schema.json'),Path('fixtures/validation/relationship-tablespec-projected-schemas.json')]
+paths=[Path(__file__).resolve().relative_to(Path.cwd().resolve()),manifest_path,Path('scripts/core-ideals/relationship-tablespec-oracle.ts'),Path('scripts/core-ideals/relationship-tablespec-projection-cases.ts'),Path('src/core-ideals/relationship-tablespec-projection.ts'),Path('spec/core/relationship-tablespec-projection.schema.json'),Path('fixtures/validation/relationship-tablespec-projected-schemas.json')]
 for entry in manifest['files']:
  p=Path(entry['path']);assert hashlib.sha256(p.read_bytes()).hexdigest()==entry['sha256'];paths.append(p)
 root=Path('native/tablespec/sources/src/tablespec')
