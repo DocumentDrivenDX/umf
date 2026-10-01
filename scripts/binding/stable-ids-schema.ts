@@ -1,0 +1,8 @@
+export {};
+const object=(properties:Record<string,unknown>)=>({type:'object',required:Object.keys(properties),additionalProperties:false,properties});
+const ref=($ref:string)=>({$ref});
+const document={anyOf:Array.from({length:7},(_,i)=>ref(`urn:umf:core:0.${i+1}.0`))};
+const binding=(version:string)=>({allOf:[document,{type:'object',required:['vocabularies','extensions'],properties:{vocabularies:{type:'object',required:['umf.binding'],properties:{'umf.binding':{type:'object',required:['version'],properties:{version:{const:version}}}}},extensions:{type:'object',required:['umf.binding'],properties:{'umf.binding':ref(`urn:umf:binding:${version}`)}}}}]});
+const receipt=object({profile:{const:'umf-binding-migration-1'},original:ref('#/$defs/original'),logical:ref('urn:umf:core:0.7.0'),migrated:ref('#/$defs/migrated'),mappings:{type:'array',items:object({path:{type:'string',pattern:'^/extensions/umf\\.binding/relationships/[0-9]+$'},original:ref('urn:umf:binding:0.1.0#/properties/relationships/items'),stable:ref('urn:umf:binding:0.2.0#/properties/relationships/items')})}});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:binding:migration:1.0.0',title:'Physical binding stable relationship migration and rollback results',$defs:{original:binding('0.1.0'),migrated:binding('0.2.0'),receipt,migration:object({document:ref('#/$defs/migrated'),receipt:ref('#/$defs/receipt')}),rollback:object({document:ref('#/$defs/original'),residuals:{type:'array',items:object({path:{type:'string'},reason:{type:'string',minLength:1},value:{}})}})},oneOf:[ref('#/$defs/migration'),ref('#/$defs/rollback'),ref('#/$defs/receipt')]};
+await Bun.write('spec/extensions/binding-stable/migration.schema.json',JSON.stringify(schema,null,2)+'\n');

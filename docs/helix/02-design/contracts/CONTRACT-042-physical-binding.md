@@ -25,9 +25,10 @@ ddx:
 
 # CONTRACT-042: Independent physical binding and indexes
 
-**Type:** extension schema/library. **Vocabulary:** `umf.binding` 0.1.0.
-**Status:** `umf-binding-1` package/schema published; relationship-capable
-`umf-binding-2` transition remains planned.
+**Type:** extension schema/library. **Vocabulary:** `umf.binding` 0.1.0 and 0.2.0.
+**Status:** Both profiles are published. The 0.2.0 `umf-binding-2` profile
+uses stable relationship IDs with explicit receipt migration and rollback.
+This does not establish relationship storage generation.
 
 ## Purpose
 
@@ -50,7 +51,7 @@ survive JSON/YAML read/write. The extension package permits document scope only.
 
 | Member | Shape | Required | Rule |
 | --- | --- | --- | --- |
-| `profile` | `umf-binding-1` | yes | Selects the 0.1.0 payload profile. |
+| `profile` | `umf-binding-1` or `umf-binding-2` | yes | Selects 0.1.0 name-based or 0.2.0 stable-ID payload interpretation. |
 | `logical` | `{documentId, coreVersion}` | yes | Exact match to supplied logical document `id` and `umf`; no name/namespace inference. |
 | `target` | `{system, version, subset}` | yes | Nonempty target identifiers; one binding payload chooses one target. |
 | `elements` | ordered array of element bindings | yes | Each entry has exact `{module,element}`, optional `partition` family name or explicit `null`, optional `table` name; duplicates invalid. |
@@ -197,3 +198,28 @@ metadata, not a UMF query-planning or performance guarantee.
 - [x] Index declarations and the physical-only capability rule are explicit.
 - [x] Strict/report, recovery, migration and native-observation boundaries are explicit.
 - [ ] Each target profile requires fresh versioned native/browser evidence before support claims.
+
+
+### Stable relationship binding transition evidence (2026-10-01)
+
+`spec/extensions/binding-stable/` publishes package 0.2.0, its payload schema
+and the complete migration/receipt/rollback schema. `inspectBinding` and copied
+`getBinding` support both versions. Profile 2 resolves `{module,id}` only against
+experimental core 0.7.0 authored relationships; a display-name rename leaves the
+reference intact. Missing or duplicate IDs and mismatched package/profile pairs
+are invalid. Existing 0.1.0 fixtures and schema remain unchanged.
+
+`migrateBindingRelationships(binding, logical)` requires the exact declared
+logical identity and core version, a valid core 0.7.0 model and one authored
+name match per entry. It preserves unknown content and blocks an existing
+unknown `id` member rather than overwriting it. Its copied receipt includes
+both binding documents, the complete paired logical model and old/new mappings.
+`rollbackBindingRelationships(current, logical, receipt)` recomputes that receipt,
+restores the exact original document, and returns edited or new ID-only choices
+as residuals. A full current-document residual retains all other later edits.
+The restored old document remains paired with the original logical model in
+the receipt; rollback does not reassociate old names with a renamed model.
+
+The binding suite, schema audits and Chromium migration/recovery results are
+recorded in [the transition evidence](../../04-build/evidence/binding-stable-ids.md).
+No physical storage or native relationship enforcement is claimed by this transition.
