@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 329,
-  "passed": 329,
+  "schemas": 332,
+  "passed": 332,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -2209,6 +2209,13 @@
       "failures": []
     },
     {
+      "path": "spec/projections/ddd-graphql.schema.json",
+      "id": "urn:umf:projection:ddd-graphql:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/projections/ddd-json-schema.schema.json",
       "id": "urn:umf:projection:ddd-json-schema:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -2246,6 +2253,20 @@
     {
       "path": "spec/projections/postgresql-avro.schema.json",
       "id": "urn:umf:projection:postgresql-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/postgresql-relationship-layout-result.schema.json",
+      "id": "urn:umf:postgresql:relationship-layout-result:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/postgresql-relationship-layout.schema.json",
+      "id": "urn:umf:postgresql:relationship-layout:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
