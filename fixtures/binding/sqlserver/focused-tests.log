@@ -1,0 +1,19 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/binding/sqlserver.test.ts:
+(pass) full SQL Server physical binding keyed-association-and-fk [1448.22ms]
+(pass) full SQL Server physical binding alternate-unique-target [1343.00ms]
+(pass) full SQL Server physical binding nullable-composite [1314.19ms]
+(pass) full SQL Server physical binding anonymous-junction [1353.17ms]
+(pass) full SQL Server physical binding edge [1318.19ms]
+(pass) full SQL Server physical binding inline-residual [1263.99ms]
+(pass) full SQL Server physical binding shared-edge [1314.50ms]
+(pass) exact mapping, association attributes, case collisions and unsupported Key widths refuse [5742.59ms]
+(pass) hostile getters and noncanonical filtered predicates never execute or normalize silently [1559.08ms]
+(pass) optional original catalog archive recovers exact text and unrelated native content [2014.88ms]
+(pass) every retained residual and mapping resolves against its declared source [3669.13ms]
+
+ 11 pass
+ 0 fail
+ 4455 expect() calls
+Ran 11 tests across 1 file. [27.80s]

@@ -1,0 +1,82 @@
+{
+  "bead": "umf-8606a941",
+  "status": "qualified-physical-binding-acceptance",
+  "scope": "SQL Server 2022 16.0.4295.3 complete qualified ordinary tables, JSON carriers, exact Key/relationship layouts and rowstore indexes; no native equivalence",
+  "focused": {
+    "tests": 11,
+    "assertions": 4455,
+    "failures": 0
+  },
+  "bindingCompatibility": {
+    "tests": 57,
+    "files": 12,
+    "assertions": 4708,
+    "failures": 0
+  },
+  "native": {
+    "cases": 7,
+    "probes": 78
+  },
+  "browser": {
+    "cases": 7,
+    "recoveries": 14,
+    "refusals": 14,
+    "strictBlocks": 7,
+    "getterReads": 0
+  },
+  "audits": {
+    "extensionPackages": 58,
+    "schemas": 337,
+    "failures": 0
+  },
+  "independentReplay": [
+    "focused tests",
+    "typecheck",
+    "native oracle",
+    "real Chromium"
+  ],
+  "initialFailure": "Expanded negative corpus exceeded Bun default 5-second test timeout; original log retained and successful regression uses explicit 30-second test timeout.",
+  "commands": [
+    "bun test tests/binding/sqlserver.test.ts",
+    "bun scripts/binding/sqlserver-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/binding/sqlserver-browser.ts",
+    "bun test tests/binding",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas"
+  ],
+  "sha256": {
+    "src/projections/binding-sqlserver/index.ts": "f7a827846f1aadcef3e564bdb7cdffc88b31c7c403db4fe74d7fe51ae50e0908",
+    "src/projections/binding-sqlserver/relationship-layout.ts": "bba8fd85abe719438a2b846692bce37195f6ac893e8fb7f256320485b0637564",
+    "spec/projections/sqlserver-physical-binding.schema.json": "5840c052fdbae750eb09d8684ed08897b4e692551890d0a843872655ddc5e6ce",
+    "spec/projections/sqlserver-relationship-layout.schema.json": "f7f3ff6873ea8e7f905b3ee05fcfbf3e450a1ea243e85b83c54feb5661eced01",
+    "tests/binding/sqlserver.test.ts": "887c8c728acb3c92fc7150d8b2846fcfa9d9359f48ffb687cae612e6b5d19203",
+    "scripts/binding/sqlserver-cases.ts": "f7738e5da4703cdb76a0f4360ccf8c09bc00195042d944a13bee68cd017e8ea3",
+    "scripts/binding/sqlserver-oracle.ts": "83a105a659ac8b36d63d6a8ae08de7a49c08ab890c42f788ace47406ac5df427",
+    "scripts/binding/sqlserver-browser.ts": "bcb3b6b570ccc66d146a02083e460b9bd65fa1b44c34193642687df7409295d9",
+    "docs/helix/04-build/evidence/sqlserver-physical-binding-acceptance.md": "83c06f38fa9ad81c70ea53e218a878fd94c577bb0f96714f15591a48d969c977",
+    "fixtures/binding/sqlserver/alternate-unique-target-catalog.json": "97af955d85635d8bbcf1816d71b6fa55e79bcee1790d1709d010b44da99b4dc0",
+    "fixtures/binding/sqlserver/alternate-unique-target.sql": "f0f63dd7aa43cfc96934bd68586473ff4d697fe10cb3ff2610ad11e3053ff245",
+    "fixtures/binding/sqlserver/anonymous-junction-catalog.json": "91753c9b70a865fc9f2451c0e25b9dc588ac2189fb921b950819e55de90494cc",
+    "fixtures/binding/sqlserver/anonymous-junction.sql": "fc8d5e969a64ec48024802349ef0fc192e0d0c8f95f392e3223be052b4c9f070",
+    "fixtures/binding/sqlserver/binding-regression-initial-timeout.log": "fa10f18e7e3e7ceb4010a28005daa0a15cf039d8d7247e1a896de1609760917b",
+    "fixtures/binding/sqlserver/binding-regression.log": "6de0dad6b8a4d7eb3282e50403d3e01edd67810f87fba2768c57d7458c0eea9a",
+    "fixtures/binding/sqlserver/browser-run.log": "8f0189eae4b20dd6385f748907f3c6753de1ec9f607e2f660b943226244d3668",
+    "fixtures/binding/sqlserver/browser.json": "507068094a35d7e02c0cd1ed6e83946a38bd0ada997153c69f3ad720411b29e8",
+    "fixtures/binding/sqlserver/cases.json": "617e0448b30b906a1f6b39130ac4a8d636b7295d84f6b7f1ad301aab7f05b857",
+    "fixtures/binding/sqlserver/catalog.json": "b715686db28a46df2294fccdafe472de3678c3dfd043a12a3a7a2c9c62620c6a",
+    "fixtures/binding/sqlserver/edge-catalog.json": "079bc3a229da5305861265578ab55b55180fc2053f772e6d0a643ca911f753cc",
+    "fixtures/binding/sqlserver/edge.sql": "e69f1e510bcff1fc01ca973358165ed9c7ba2a68322fbcda8f5df27a3cecfee6",
+    "fixtures/binding/sqlserver/focused-tests.log": "b7cc06e494a111bebdef0ac386209d750280cddd4d8ddcccd6887505dd3fc789",
+    "fixtures/binding/sqlserver/inline-residual-catalog.json": "de79ad6889bc3f46bd85c35f95c57552599869c1491f2bc20f6f85f458365e02",
+    "fixtures/binding/sqlserver/inline-residual.sql": "a97ac97f52a2ab14d2ebd8161588f337f5b215a2a1641c5b30f57b1205087cb2",
+    "fixtures/binding/sqlserver/keyed-association-and-fk-catalog.json": "b715686db28a46df2294fccdafe472de3678c3dfd043a12a3a7a2c9c62620c6a",
+    "fixtures/binding/sqlserver/keyed-association-and-fk.sql": "6cee48b5c28245394f21e180d6f4d8cf58ca49f0c08fb440295e5303c0832aec",
+    "fixtures/binding/sqlserver/native-run.log": "1650cf001c9279a9381e81ab6111a2185e56842e8f7e25d1318c2f3a5b67adaf",
+    "fixtures/binding/sqlserver/nullable-composite-catalog.json": "00baf9bbc4e65eece07e86e19b2836111449ad2eb5f12a65e1042d6d2a62d9fc",
+    "fixtures/binding/sqlserver/nullable-composite.sql": "a547e08ab0ffa55a876357357e314802a75199dce799e0eacf2855115b01e8ae",
+    "fixtures/binding/sqlserver/oracle.json": "f4ce525f57ae4a8ed1bc54aa28ff1ef46e9a9ccc03c07c813f7b898934c2cd56",
+    "fixtures/binding/sqlserver/shared-edge-catalog.json": "7109723a2b9c6c7477c9742402904e47a4aa63371588f9b7a5f5df8aab39e2b5",
+    "fixtures/binding/sqlserver/shared-edge.sql": "9c7f49aa777ee5b4311e4c00a78c79d7198cf44b747af3758aca0edfcda28bbe"
+  }
+}
