@@ -155,3 +155,23 @@ composite, anonymous junction and edge variants. Association identity and
 attributes remain mandatory. The full generator will consume this policy;
 the current candidate is metadata only. See
 [the checkpoint evidence](../../04-build/evidence/postgresql-relationship-layout.md).
+
+## Whole-generator implementation (2026-10-01)
+
+The exported `projectDddToPostgresql` now composes the existing stages under
+`ddd-postgresql-1`. Planning validates complete table/column inventory, exact
+ordered Keys and endpoint types, association attributes, safe predicates and
+all emitted relation namespaces. Eligible LIST Keys are checked against the
+original binding before a validation-only unpartitioned copy is passed to the
+layout checkpoint. Original logical/binding/policy inputs remain in the receipt.
+
+Rendering creates bound tables/JSONB checks and explicit carrier tables, then
+all exact Keys, then FKs, then supported indexes. Shared homogeneous edges use
+a deterministic discriminator CHECK. Unsupported inline/index semantics remain
+path-qualified losses; heterogeneous edge endpoints and association-edge
+layouts refuse atomically. The pinned native oracle compares the shared base
+SQL/catalog and exercises eligible/ineligible partition Keys, cyclic FKs,
+explicit text comparator collation, JSONB checks, association identity/attributes,
+and shared edge discrimination. The complete result schema and verified two-way
+recovery do not promote native structure to authored meaning. See
+[execution evidence](../../04-build/evidence/ddd-postgresql.md).

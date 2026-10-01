@@ -1,0 +1,4079 @@
+{
+  "scope": "Complete qualified DDD tables/JSONB, exact Keys, FK/junction/shared homogeneous edge, LIST partitions and enumerated indexes; no inferred ideal equivalence",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "sharedExpectedCatalogEqual": true,
+  "rows": [
+    {
+      "id": "keyed-association-and-fk",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "renamed-relationship",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "alternate-unique-target",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "UNIQUE (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "nullable-composite",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "code",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerCode",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "uq_customers_composite",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX uq_customers_composite ON sales.customers USING btree (id, code)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "uq_customers_composite",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "uq_customers_composite",
+            "table": "customers",
+            "definition": "UNIQUE (id, code)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\", \"customerCode\") REFERENCES sales.customers(id, code)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name,code) VALUES(1,'customer',7) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,\"customerCode\") VALUES(10,'tenant',1,'new',7) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,\"customerCode\") VALUES(11,'tenant',999,'new',7) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "anonymous-junction",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "links",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "links",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "links",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "links",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "links",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "junction",
+          "statement": "INSERT INTO sales.links(\"orderId\",\"productId\") VALUES(10,100) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "junction-orphan",
+          "statement": "INSERT INTO sales.links(\"orderId\",\"productId\") VALUES(10,999) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "edge",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "relationship",
+            "type": "text",
+            "table": "edges",
+            "notnull": true,
+            "collation": "C"
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "edges",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "edges",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "edges",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_edges_relationship_values",
+            "table": "edges",
+            "definition": "CHECK ((relationship = 'products'::text))"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "edge-products",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('products',10,100) RETURNING relationship",
+          "value": "products",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "edge-discriminator",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('unknown',10,100) RETURNING relationship",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "edge-orphan",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('products',10,999) RETURNING relationship",
+          "value": null,
+          "sqlstate": "23503"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "shared-edge",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "relationship",
+            "type": "text",
+            "table": "edges",
+            "notnull": true,
+            "collation": "C"
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "edges",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "edges",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "edges",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_edges_relationship_values",
+            "table": "edges",
+            "definition": "CHECK ((relationship = ANY (ARRAY['products'::text, 'secondary'::text])))"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_order2",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "fk_order_products_product2",
+            "table": "edges",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "edge-products",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('products',10,100) RETURNING relationship",
+          "value": "products",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "edge-secondary",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('secondary',10,100) RETURNING relationship",
+          "value": "secondary",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "edge-discriminator",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('unknown',10,100) RETURNING relationship",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "edge-orphan",
+          "statement": "INSERT INTO sales.edges(relationship,\"orderId\",\"productId\") VALUES('products',10,999) RETURNING relationship",
+          "value": null,
+          "sqlstate": "23503"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "inline-residual",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "partition-eligible",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "buckets",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "bigint",
+            "table": "buckets",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "buckets_default",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "bigint",
+            "table": "buckets_default",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_buckets",
+            "table": "buckets",
+            "definition": "CREATE UNIQUE INDEX pk_buckets ON ONLY sales.buckets USING btree (id, tenant)"
+          },
+          {
+            "name": "buckets_default_pkey",
+            "table": "buckets_default",
+            "definition": "CREATE UNIQUE INDEX buckets_default_pkey ON sales.buckets_default USING btree (id, tenant)"
+          },
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "p",
+            "name": "buckets",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "buckets_default",
+            "partition": "DEFAULT"
+          },
+          {
+            "kind": "i",
+            "name": "buckets_default_pkey",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "I",
+            "name": "pk_buckets",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_buckets",
+            "table": "buckets",
+            "definition": "PRIMARY KEY (id, tenant)"
+          },
+          {
+            "name": "buckets_default_pkey",
+            "table": "buckets_default",
+            "definition": "PRIMARY KEY (id, tenant)"
+          },
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "partition-route",
+          "statement": "INSERT INTO sales.buckets(id,tenant) VALUES(1,2) RETURNING tableoid::regclass::text",
+          "value": "sales.buckets_default",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "partition-exact-key",
+          "statement": "INSERT INTO sales.buckets(id,tenant) VALUES(1,3) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "partition-duplicate-key",
+          "statement": "INSERT INTO sales.buckets(id,tenant) VALUES(1,2) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "partition-two-schemas",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "buckets",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "bigint",
+            "table": "buckets",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "buckets_default",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "bigint",
+            "table": "buckets_default",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_buckets",
+            "table": "buckets",
+            "definition": "CREATE UNIQUE INDEX pk_buckets ON ONLY sales.buckets USING btree (id, tenant)"
+          },
+          {
+            "name": "buckets_default_pkey",
+            "table": "buckets_default",
+            "definition": "CREATE UNIQUE INDEX buckets_default_pkey ON sales.buckets_default USING btree (id, tenant)"
+          },
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "p",
+            "name": "buckets",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "buckets_default",
+            "partition": "DEFAULT"
+          },
+          {
+            "kind": "i",
+            "name": "buckets_default_pkey",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "I",
+            "name": "pk_buckets",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_buckets",
+            "table": "buckets",
+            "definition": "PRIMARY KEY (id, tenant)"
+          },
+          {
+            "name": "buckets_default_pkey",
+            "table": "buckets_default",
+            "definition": "PRIMARY KEY (id, tenant)"
+          },
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "same-basename-qualified-partition",
+          "statement": "INSERT INTO archive.buckets(id,tenant) VALUES(1,2) RETURNING tableoid::regclass::text",
+          "value": "archive.buckets_default",
+          "sqlstate": "00000"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "cyclic-fks",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "lastOrder",
+            "type": "bigint",
+            "table": "customers",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "fk_customer_last_order",
+            "table": "customers",
+            "definition": "FOREIGN KEY (\"lastOrder\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "cycle-valid",
+          "statement": "UPDATE sales.customers SET \"lastOrder\"=10 WHERE id=1 RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "cycle-orphan",
+          "statement": "UPDATE sales.customers SET \"lastOrder\"=999 WHERE id=1 RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "text-key",
+      "catalog": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "C"
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "table": "customers",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "orderId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "productId",
+            "type": "bigint",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(12,2)",
+            "table": "order_products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "orders",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "tenant",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "customerId",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "C"
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "table": "orders",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "orders",
+            "notnull": false,
+            "collation": null
+          },
+          {
+            "name": "id",
+            "type": "bigint",
+            "table": "products",
+            "notnull": true,
+            "collation": null
+          },
+          {
+            "name": "sku",
+            "type": "text",
+            "table": "products",
+            "notnull": true,
+            "collation": "default"
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "table": "products",
+            "notnull": false,
+            "collation": null
+          }
+        ],
+        "indexes": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "CREATE UNIQUE INDEX pk_customers ON sales.customers USING btree (id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "CREATE UNIQUE INDEX pk_order_products ON sales.order_products USING btree (id)"
+          },
+          {
+            "name": "orders_btree",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_btree ON sales.orders USING btree (status)"
+          },
+          {
+            "name": "orders_expression",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_expression ON sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))"
+          },
+          {
+            "name": "orders_hash",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_hash ON sales.orders USING hash (\"customerId\")"
+          },
+          {
+            "name": "orders_partial",
+            "table": "orders",
+            "definition": "CREATE INDEX orders_partial ON sales.orders USING btree (status) WHERE (status = 'paid'::text)"
+          },
+          {
+            "name": "orders_unique",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX orders_unique ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "CREATE UNIQUE INDEX pk_orders ON sales.orders USING btree (id)"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "CREATE UNIQUE INDEX pk_products ON sales.products USING btree (id)"
+          }
+        ],
+        "relations": [
+          {
+            "kind": "r",
+            "name": "customers",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "order_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_btree",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_expression",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_hash",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_partial",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "orders_unique",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_customers",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_order_products",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_orders",
+            "partition": null
+          },
+          {
+            "kind": "i",
+            "name": "pk_products",
+            "partition": null
+          },
+          {
+            "kind": "r",
+            "name": "products",
+            "partition": null
+          }
+        ],
+        "constraints": [
+          {
+            "name": "pk_customers",
+            "table": "customers",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "fk_order_products_order",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+          },
+          {
+            "name": "fk_order_products_product",
+            "table": "order_products",
+            "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+          },
+          {
+            "name": "pk_order_products",
+            "table": "order_products",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_orders_payload_object",
+            "table": "orders",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "fk_orders_customer",
+            "table": "orders",
+            "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+          },
+          {
+            "name": "pk_orders",
+            "table": "orders",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "ck_products_payload_object",
+            "table": "products",
+            "definition": "CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))"
+          },
+          {
+            "name": "pk_products",
+            "table": "products",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "jsonb-object-check",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,payload) VALUES(12,'tenant',1,'new','[]') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-attributes",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    }
+  ],
+  "sha256": {
+    "src/projections/ddd-postgresql/index.ts": "42e039e98ea7487fb050ced6fe3917c06dae136b66548179d8adadc387a12bee",
+    "src/projections/ddd-postgresql/tables.ts": "3789f24aac49742f2499bb09fd716eaca2ac529da7ae69ae34feca6a6eaf5262",
+    "src/projections/ddd-postgresql/relationship-layout.ts": "2faf22dab516791ab2f682aa162fdada7af18f1c54c6cacea290088732910111",
+    "src/projections/binding-postgresql/indexes.ts": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9",
+    "scripts/projections/ddd-postgresql-cases.ts": "1b1402bbf75e06a553351ee6ddbfada0cf75442352a1238797f7e8098e73c4c3",
+    "scripts/projections/ddd-postgresql-oracle.ts": "792c9ad5ab48e7789ace61a4410d1ea0eb2a2f3490c06cec0035b95470b20386",
+    "spec/projections/ddd-postgresql-projection.schema.json": "b74630085461e882f9ae41d77931d0540bf21a0baa11c5f82d4ba4de035faaf1",
+    "spec/projections/ddd-postgresql-policy.schema.json": "fbeb063dc058f181067631bf0a99512fd7b56d2dac97bb0117c1082790f407da"
+  }
+}
