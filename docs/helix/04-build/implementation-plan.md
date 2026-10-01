@@ -5168,3 +5168,15 @@ migration/rollback. The [acceptance record](../../../fixtures/projections/ddd-gr
 records the focused tests and source fingerprints. This completes the bounded
 schema-generation task, not GraphQL execution, relationship ideal admission or
 native equivalence.
+
+### PostgreSQL relationship binding acceptance (2026-10-01)
+
+`umf-b89363fd` now has qualified PostgreSQL 17.4 new-keyed-table FK/junction
+projection, native DDL/catalog classification and retained ideal/native recovery.
+Four generated variants pass 41 total native write/control probes including
+separate NOT VALID/MATCH SIMPLE/alternate UNIQUE/action counterexamples.
+The scoped regression passes 23 tests/489 assertions; Chromium verifies all ten
+projection cases, five catalog captures, eight ideal and 22 native recoveries.
+See [the acceptance record](evidence/postgresql-relationship-acceptance.md) for
+exact profiles and limits. Full DDD PostgreSQL generation, the remaining binding
+work and separate Relationship admission/delivery gates remain distinct tasks.

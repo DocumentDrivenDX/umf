@@ -414,3 +414,17 @@ recovery. Native probes use Apache Avro 1.12.0 and fastavro 1.12.2. Exact counts
 and source fingerprints are in the implementation plan and projection evidence.
 This checkpoint does not establish full binding acceptance, broader compatibility,
 relationship ideal admission or native equivalence.
+
+### PostgreSQL relationship binding checkpoint (2026-10-01)
+
+The 1.0.0 `umf.postgresql.relationships` package and complete operation schemas
+now cover retained raw-DDL/catalog observations plus explicit new-keyed-table
+FK/junction projection. The implementation reuses CONTRACT-043 layout validation
+and preserves sequential declaration receipts by checking the selected assertion
+and endpoint snapshots. Native PostgreSQL 17.4 checks cover generated direct,
+alternate-UNIQUE, nullable-composite and association/anonymous-junction layouts;
+separate native counterexamples cover NOT VALID, MATCH SIMPLE and actions.
+Bun and Chromium verify strict/report behavior, both recovery directions,
+unknown native content and source-qualified residuals. See
+[the acceptance record](../../04-build/evidence/postgresql-relationship-acceptance.md).
+Full DDD/edge/partition/index composition remains a separate generator task.
