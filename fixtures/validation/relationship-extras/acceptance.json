@@ -1,0 +1,86 @@
+{
+  "bead": "umf-e6cbcca4",
+  "additionalBindingsAccepted": true,
+  "idealAdmitted": false,
+  "priorityDelivery": false,
+  "nativeEquivalence": false,
+  "date": "2026-10-01",
+  "scope": "Qualified generic authored relationship projection and native-only classification for GraphQL, RDF and LinkML; scoped feature verification, not repository-wide or priority-gate admission.",
+  "sourceVersion": "0.7.0 for authored projection; validated core 0.1.0 through 0.7.0 retained native containers for classification",
+  "versions": {
+    "graphqlJs": "17.0.2",
+    "graphqlCore": "3.2.12",
+    "rdflib": "7.6.0",
+    "linkmlMetamodel": "1.11.0",
+    "linkmlRuntime": "1.11.0rc2"
+  },
+  "tests": {
+    "tests": 60,
+    "failures": 0,
+    "assertions": 1029,
+    "files": 1
+  },
+  "schemaAudit": {
+    "schemas": 333,
+    "packages": 57,
+    "failures": 0,
+    "scope": "Feature-worktree distributed schema/package checks; integrated repository refresh is separate."
+  },
+  "nativeProjectionCounts": {
+    "graphql": 9,
+    "rdf": 9,
+    "linkml": 8
+  },
+  "browser": "148.0.7778.0",
+  "browserChecks": {
+    "cases": 54,
+    "projected": 26,
+    "blocked": 28,
+    "idealRecoveries": 52,
+    "nativeRecoveries": 52,
+    "classificationRecoveries": 52,
+    "forgedRefusals": 26,
+    "staleRefusals": 26,
+    "getterReads": 0,
+    "unknownNativeRecoveries": 6,
+    "classificationStrictBlocks": 3
+  },
+  "commands": [
+    "bun test tests/core-ideals/relationship-extras.test.ts",
+    "bun scripts/core-ideals/relationship-extras-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/relationship-extras-browser.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas"
+  ],
+  "limits": [
+    "Additional systems do not substitute for the five priority relationship bindings or admit an ideal.",
+    "GraphQL Boolean Record markers and schema root carry no Record identity or execution meaning; resolvers, queries and generic Field lowering are outside this profile.",
+    "RDF domain/range and OWL union/inverse triples support inference, not closed-world validation, target-Key resolution or referential enforcement.",
+    "LinkML class-range metadata does not validate instances; heterogeneous slot ranges refuse, and unknown metamodel versions remain archived without classification.",
+    "Original source, unknown extensions, native text and RDF blank-node scope remain required in retained receipts. Verification checks internal consistency, not external author authenticity.",
+    "RDFLib7.6.0 is asserted and recorded for this new subset; historical7.1.4 observations are unchanged.",
+    "Native equivalence, priority delivery and repository-wide compatibility are not claimed."
+  ],
+  "sha256": {
+    "fixtures/validation/relationship-extras/browser.json": "f95fdd3880b6fbe13b184a8bd26d8c04e4f6f56b382aa83efb0a388ed94a2943",
+    "fixtures/validation/relationship-extras/corpus.json": "289f1b12d72aca9bbe173c886fef5881779acf4a7911989b24178662c03674c7",
+    "fixtures/validation/relationship-extras/native-graphql.json": "e3ffe861144f612e9ed4072b9298e42dc36a8432d29ad3ea4ee1c66b64650854",
+    "fixtures/validation/relationship-extras/native-linkml.json": "8cc01a191c88cbf54443e30806be482b48a24516419329baf8078d97bdff348d",
+    "fixtures/validation/relationship-extras/native-rdf.json": "9c2ca411ce5b7e32154e7f61f05fe018af5988413551c6a1c72cd76a15b5c0ee",
+    "fixtures/validation/relationship-extras/native.json": "88501ec5b415f03e3aeea64d7b5f255e13bc95ac19556427076a86bf1cb4e94f",
+    "fixtures/validation/relationship-extras/oracle.json": "20b796e5afd0196c6bc25c52a667537d4b87d3a7babf81a1f1b843959bf988e6",
+    "fixtures/validation/relationship-extras/verification-build.txt": "bd2e50f74377fd8833fbf12168e1ff197feae688bf0c39e43999e4e1f4fe5c60",
+    "fixtures/validation/relationship-extras/verification-schemas.txt": "d4e25a64f905fb176ac7995464a1c2475a2717e65e53f19e59f943ff68f0a1ff",
+    "fixtures/validation/relationship-extras/verification-tests.txt": "26cb7aa1e865137621bffbe7d122f267ae6cdc018ba7b3f0d9ee6de3f42100ac",
+    "fixtures/validation/relationship-extras/verification-typecheck.txt": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-ideals/relationship-extras-browser.ts": "c6fe86a60dc99a417c4858c8b0e0599173691f124253a2a7140896daf5c95482",
+    "scripts/core-ideals/relationship-extras-cases.ts": "99487bcb0a2e4251df0fe35d652e6c417a16f624b1a9ab34a393c97420e5ed22",
+    "scripts/core-ideals/relationship-extras-native.py": "a92481eef4a124814fbf0c5b9c0aaec4c011c2d13af46db6630316bb413b6483",
+    "scripts/core-ideals/relationship-extras-oracle.ts": "89e836eb92c3ec7b50352ed14162092fe946a97316b0994deaa0f414df4c513e",
+    "spec/core/relationship-extras.schema.json": "8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c",
+    "src/core-ideals/relationship-extras.ts": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33",
+    "src/index.ts": "4acd1332d1b901b35831ab5be155bd2c634d25667920d03705577f0b085dad7e",
+    "tests/core-ideals/relationship-extras.test.ts": "d1836cf819076789e2f0e4ce48d5a26ee0849b992b5bf2c91ee6ec5e0f1f8e42"
+  }
+}

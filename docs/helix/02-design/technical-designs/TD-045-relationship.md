@@ -414,3 +414,51 @@ recovery. Native probes use Apache Avro 1.12.0 and fastavro 1.12.2. Exact counts
 and source fingerprints are in the implementation plan and projection evidence.
 This checkpoint does not establish full binding acceptance, broader compatibility,
 relationship ideal admission or native equivalence.
+
+### Qualified additional GraphQL, RDF and LinkML bindings
+
+`projectRelationshipToExtra` accepts a verified relationship author receipt,
+current core 0.7.0 source and an exact relationship/Record naming policy. It
+checks the current assertion, endpoint Records, named Keys and member Fields
+against the retained author checkpoint. Each result uses the complete
+`spec/core/relationship-extras.schema.json` contract and recomputed receipt
+verification. These additional bindings do not substitute for a priority-system
+gate, and none claims native equivalence.
+
+The GraphQL profile explicitly names every endpoint object, one Boolean marker
+field per otherwise unprojected Record shell, a schema-only Boolean query root,
+forward field, declared inverse and any heterogeneous output unions. A required
+singular output uses `!`; larger maxima use nullable lists/items. Marker fields
+have no identity or execution meaning. Record Fields, named Keys, source-end
+bounds, list minima, ownership, inverse consistency and association identity
+remain retained losses. The dedicated DDD generator in TD-049 separately lowers
+scalar Fields; this generic relationship profile requires no DDD extension.
+
+The RDF profile explicitly names class and predicate IRIs. Multiple endpoint
+classes become one OWL union-class domain/range with a retained RDF list, never
+multiple conjunctive domain assertions. An explicitly named declared inverse
+uses `owl:inverseOf` and swapped domain/range. RDFS/OWL entailment does not
+validate participation or reference integrity. Unicode IRIs are retained;
+control characters, backslashes, delimiters and lone surrogates refuse before
+emission. The current independent subset is qualified against RDFLib **7.6.0**;
+historical 7.1.4 observation evidence retains its original scope.
+
+The LinkML profile explicitly names its schema, endpoint classes and slot. It
+emits `range`, `multivalued` and `required`, with an inverse slot only when
+explicitly declared and named. A heterogeneous slot range refuses as a whole;
+a heterogeneous source may share a slot when no heterogeneous inverse range is
+needed. `required` metadata is not distinct-record participation or instance
+validation. Qualification uses metamodel 1.11.0 and runtime 1.11.0rc2 with
+fingerprinted model sources. Unknown metamodel versions remain archived without
+claiming classified semantics.
+
+`classifyRelationshipExtra` records native syntax pointers with inferred
+provenance and unknown author intent. It never adds authored relationships to
+the native document. Native archives, GraphQL comments/directives, RDF blank
+node scope/list structure, LinkML metadata and unrelated unknown UMF extensions
+remain in the copied source. Strict classification emits no candidate; report
+classification preserves the complete document. Both authored and native
+recovery require recomputed retained receipts and reject stale/forged targets.
+JSON/YAML and Chromium exercise both directions without getters or networking.
+The [additional-binding acceptance](../../../../fixtures/validation/relationship-extras/acceptance.json)
+records the native/browser versions, scoped tests and support limits.
