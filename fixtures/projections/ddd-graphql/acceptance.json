@@ -1,0 +1,84 @@
+{
+  "bead": "umf-cf807ae4",
+  "taskAccepted": true,
+  "scope": "Qualified full DDD+relationship GraphQL schema generation; feature-worktree verification, not a fresh repository-wide conformance gate.",
+  "date": "2026-10-01",
+  "sourceVersions": {
+    "core": "0.7.0",
+    "ddd": "0.1.0"
+  },
+  "targetVersions": {
+    "graphqlJs": "17.0.2",
+    "graphqlCore": "3.2.12",
+    "chromium": "148.0.7778.0"
+  },
+  "tests": {
+    "tests": 19,
+    "failures": 0,
+    "assertions": 263,
+    "files": 3
+  },
+  "schemaAudit": {
+    "schemas": 325,
+    "packages": 55,
+    "failures": 0,
+    "scope": "Feature worktree distributed schema closure; final merged repository audit is separate."
+  },
+  "checks": {
+    "cases": 8,
+    "idealRecoveries": 16,
+    "nativeRecoveries": 16,
+    "strictBlocks": 8,
+    "forgedRefusals": 8,
+    "staleRefusals": 8,
+    "getterReads": 0,
+    "migrationRollback": true,
+    "nativeUnknownRecoveries": 2
+  },
+  "nativeCases": 8,
+  "sharedExpectedSDL": "Matched earlier independent hand-authored target by normalized AST.",
+  "commands": [
+    "bun test tests/projections/ddd-graphql.test.ts tests/projections/ddd-graphql-core-fields.test.ts tests/projections/ddd-graphql-entities.test.ts",
+    "bun scripts/projections/ddd-graphql-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/projections/ddd-graphql-browser.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas"
+  ],
+  "limits": [
+    "Schema-only; no resolvers, arguments, pagination, query execution or relationship enforcement.",
+    "Complete explicit synthetic-root, scalar/Field, Record/entity and relationship-name policy required.",
+    "All source relationships need selected endpoints; unknown relationship qualifiers and unsafe mappings refuse.",
+    "Output unions require explicit names; undirected fields require explicit display orientation; every unsupported bound, identity, lifecycle and association obligation remains retained and reported.",
+    "Recovery verifies retained source/report consistency, not external provenance authentication; native-only import does not infer author intent.",
+    "No relationship ideal admission, all-five delivery or native equivalence is claimed. Repository-wide evidence refresh after integration remains separate."
+  ],
+  "sha256": {
+    "fixtures/projections/ddd-authored-relationships/base.json": "f7187fa40e8c76064cfd08333ef30889bf1203b1a2e2c59f0612a57ca38687d8",
+    "fixtures/projections/ddd-authored-relationships/expected-relationships.graphql": "6b9ee239f7e7ae35568a31663f083d0c3b968aebdd2ec10afe47e7dffd57599c",
+    "fixtures/projections/ddd-graphql/browser.json": "ef32658c516a4b719cdb54afa7d0702cc694aa1c8535b311d5c96fd8b46504b9",
+    "fixtures/projections/ddd-graphql/case.json": "b3b54a29cc20bd491a308cc673d0c71985df0d5658216caf81294986a86bb909",
+    "fixtures/projections/ddd-graphql/generated.json": "7d2c129c528f4ecefa1bfe1edc4d88802a1f22376f0053b0b9e29f73316fc3e4",
+    "fixtures/projections/ddd-graphql/native.json": "2e6b21fd95bbac4231a9bb4c81a4cab980c1940c60eadf27593b237f4e140ed6",
+    "fixtures/projections/ddd-graphql/oracle.json": "7c8cce0de6cd3c80efa2fd6a7ad4bcdbe657758d52e8e7ba557759260b651358",
+    "fixtures/projections/ddd-graphql/verification-build.txt": "88e917760d0de6aae577e314f14395b990c2d0047023a1d4ac1e818c76b747ba",
+    "fixtures/projections/ddd-graphql/verification-schemas.txt": "669c880d9d5a635002a1fedb696cd9b294c90f1a2fd25691c67fc8e3d14ae689",
+    "fixtures/projections/ddd-graphql/verification-tests.txt": "0a9f26fe06d45c1e71facfcace03363c747c59e1cc2157ac7e9becca565dc550",
+    "fixtures/projections/ddd-graphql/verification-typecheck.txt": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/projections/ddd-graphql-browser.ts": "3a77c0d83b558269984ecb21b17133e93d6608ddc5f883c17662d4dca7742c38",
+    "scripts/projections/ddd-graphql-cases.ts": "1a55750bbbe94d659a1b7e0db82a16fcf98a006b1dc5f75a4ca78fe90bad0207",
+    "scripts/projections/ddd-graphql-core-fields-browser.ts": "6694bd45ee8745d7facd5ccd4d2ef8893d0fc6fae7c807e71d0cc2aa97a2befb",
+    "scripts/projections/ddd-graphql-core-fields-fixture.ts": "55d308cc507461b48422199722d4f0985f473fcecedce33264a51c190f784483",
+    "scripts/projections/ddd-graphql-entities-browser.ts": "e631f436dde4cf3ca7481f03cc4c1ad146db380640a41b7ed82fdae47ca2b5e2",
+    "scripts/projections/ddd-graphql-entities-fixture.ts": "3b582e467cba4b5403adc08036840713d6f687e6acc5d31e77bb3ae234b2f181",
+    "scripts/projections/ddd-graphql-native.py": "07b31bf3d9492c8a18b4d1e97fc3c027b79a2fe4f91bcc957f887700728e76d3",
+    "scripts/projections/ddd-graphql-oracle.ts": "0246f4264eb646e6fc385aa7baa63094286707593314617f4b6e6c5dcd97ecd4",
+    "spec/projections/ddd-graphql.schema.json": "8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21",
+    "src/index.ts": "3f7a0eea778471aa24c54f7684ac5a57a67c88da13fb2a3bd32b03cdad2107a9",
+    "src/projections/ddd-graphql/entities.ts": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87",
+    "src/projections/ddd-graphql/index.ts": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276",
+    "tests/projections/ddd-graphql-core-fields.test.ts": "1d6a233c468fbf320c27df01b5d0726bdbdbe83d744b7ee6e9c17953f2e3d775",
+    "tests/projections/ddd-graphql-entities.test.ts": "d9ee80074d747e9b62ecb9f3c5d07524831cc58e5168c4334e89e24820ffe707",
+    "tests/projections/ddd-graphql.test.ts": "4a5a44cada5e3dd8ee9f759d2daeb8a332dbd9906fbff4edb3342fe9c57c4eca"
+  }
+}

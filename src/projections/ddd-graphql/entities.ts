@@ -18,20 +18,25 @@ export interface DddGraphqlEntityProjection {
   profile:'graphql-js-17.0.2-sdl';residuals:DddGraphqlEntityResidual[];mappings:DddGraphqlEntityMapping[];
   candidate?:string;targetArchive?:Document;
 }
-const name=/^[_A-Za-z][_0-9A-Za-z]*$/;
+const name=/^[_A-Za-z][_0-9A-Za-z]*(?![\s\S])/;
 const valid=(value:string)=>typeof value==='string'&&name.test(value)&&!value.startsWith('__');
 const key=(r:{module:string;element:string;field?:string})=>JSON.stringify([r.module,r.element,r.field??null]);
 const scalarKind:{[K in 'string'|'boolean'|'integer'|'decimal'|'date-time'|'bytes']:string}={string:'string',boolean:'boolean',integer:'integer',decimal:'decimal','date-time':'timestamp',bytes:'binary'};
 
 /** Relationship-independent DDD entity SDL with an explicit schema-only root. */
 export function projectDddEntitiesToGraphql(logical:Document,policy:DddGraphqlEntityPolicy,lossPolicy:'strict'|'report'):DddGraphqlEntityProjection{
+  return buildDddEntityGraphql(logical,policy,lossPolicy,false);
+}
+
+/** Shared entity lowering; the full projection adds relationships before publishing SDL. */
+export function buildDddEntityGraphql(logical:Document,policy:DddGraphqlEntityPolicy,lossPolicy:'strict'|'report',full:boolean):DddGraphqlEntityProjection{
   const checked=inspectDdd(logical);
   if(!checked.valid||checked.diagnostics.some(d=>d.code==='DDD_UNKNOWN'))throw new UmfError('DDD_DOCUMENT','Invalid or uninterpreted DDD model');
-  if(logical.modules.some(m=>Object.hasOwn(m,'relationships')))throw new UmfError('GRAPHQL_RELATIONSHIP_GATE','Relationship assertions require the full projection');
+  if(!full&&logical.modules.some(m=>Object.hasOwn(m,'relationships')))throw new UmfError('GRAPHQL_RELATIONSHIP_GATE','Relationship assertions require the full projection');
   if(!policy||!Array.isArray(policy.entities)||!Array.isArray(policy.fields)||!policy.scalars||!policy.root||Object.keys(policy).some(k=>!['entities','fields','scalars','root','sourceProfile'].includes(k)))throw new UmfError('GRAPHQL_POLICY','Explicit entity, field, scalar and root policy required');
   const coreProfile=policy.sourceProfile==='core-ideals';
   if(policy.sourceProfile!==undefined&&!['ddd-only','core-ideals'].includes(policy.sourceProfile))throw new UmfError('GRAPHQL_POLICY','Unknown source profile');
-  if(coreProfile&&logical.umf!=='0.5.0')throw new UmfError('GRAPHQL_CORE_VERSION','Core Field/Nullability/Cardinality profile requires UMF 0.5.0');
+  if(coreProfile&&logical.umf!==(full?'0.7.0':'0.5.0'))throw new UmfError('GRAPHQL_CORE_VERSION','Core Field/Nullability/Cardinality profile requires UMF 0.5.0');
   if(policy.root.kind!=='synthetic-schema-root'||!valid(policy.root.typeName)||!valid(policy.root.fieldName)||Object.keys(policy.root).some(k=>!['kind','typeName','fieldName'].includes(k)))throw new UmfError('GRAPHQL_ROOT','Invalid synthetic schema root policy');
   const scalarFamilies=['string','boolean','integer','decimal','date-time','bytes'] as const;
   if(Object.keys(policy.scalars).length!==scalarFamilies.length||scalarFamilies.some(f=>!valid(policy.scalars[f])))throw new UmfError('GRAPHQL_SCALAR_POLICY','Every DDD scalar family needs one valid GraphQL name');

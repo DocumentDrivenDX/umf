@@ -5120,3 +5120,27 @@ and three browser checks. Its 126 commands record current outcomes and input
 fingerprints separately from earlier acceptance records. Full regression and
 existing conformance gates must follow a successful replay; the binding remains
 in progress until that evidence and the final acceptance audit pass.
+
+### Complete DDD and relationship GraphQL SDL
+
+`umf-cf807ae4` now implements `projectDddToGraphql` for core 0.7.0 and DDD 0.1.0,
+with explicit Field pairing, Record/entity endpoint pairing, complete root
+policy, forward/inverse naming and heterogeneous output unions. Required
+singular relationships produce non-null output fields; higher maxima produce
+lists with explicit participation and item-availability residuals. Undirected
+links require an explicit display orientation. Named Keys, lifecycle,
+association identity, aggregate boundaries, invariants and native/unknown
+content remain retained with source-linked losses. Strict mode publishes no
+SDL; invalid roots, names, references or uninterpreted relationship qualifiers
+refuse even in report mode.
+
+The eight-case [native oracle](../../../fixtures/projections/ddd-graphql/oracle.json)
+uses GraphQL.js 17.0.2 and GraphQL-core 3.2.12. The historical shared authored
+graph matches its independently written expected SDL. The
+[Chromium record](../../../fixtures/projections/ddd-graphql/browser.json) checks
+both retained recovery directions through JSON/YAML, independent native archive
+IDs, forged/stale reports, getter refusals, unknown native content and composed
+migration/rollback. The [acceptance record](../../../fixtures/projections/ddd-graphql/acceptance.json)
+records the focused tests and source fingerprints. This completes the bounded
+schema-generation task, not GraphQL execution, relationship ideal admission or
+native equivalence.

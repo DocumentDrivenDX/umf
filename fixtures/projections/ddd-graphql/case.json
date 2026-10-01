@@ -1,0 +1,815 @@
+{
+  "logical": {
+    "umf": "0.7.0",
+    "id": "ddd-relationship-graphql",
+    "vocabularies": {
+      "umf.ddd": {
+        "version": "0.1.0"
+      },
+      "future": {
+        "version": "9.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "sales",
+        "namespace": "sales",
+        "extensions": {
+          "umf.ddd": {
+            "kind": "bounded-context",
+            "terms": []
+          }
+        },
+        "elements": [
+          {
+            "id": "Order",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "tenant": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "customerId": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "status": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "details": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "optional"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                },
+                "aggregate": {
+                  "members": [
+                    {
+                      "module": "sales",
+                      "element": "OrderProduct"
+                    }
+                  ]
+                },
+                "invariants": [
+                  {
+                    "id": "order-positive",
+                    "scope": "definition",
+                    "language": "urn:example:predicate",
+                    "version": "1",
+                    "expression": "amount > 0",
+                    "references": [
+                      {
+                        "module": "sales",
+                        "element": "Order"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "field_Order_id"
+              },
+              {
+                "module": "sales",
+                "element": "field_Order_tenant"
+              },
+              {
+                "module": "sales",
+                "element": "field_Order_customerId"
+              },
+              {
+                "module": "sales",
+                "element": "field_Order_status"
+              },
+              {
+                "module": "sales",
+                "element": "field_Order_details"
+              }
+            ],
+            "keys": [
+              {
+                "id": "identity",
+                "name": "Identity",
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "field_Order_id"
+                  }
+                ],
+                "primary": true
+              }
+            ]
+          },
+          {
+            "id": "Customer",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "name": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            },
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "field_Customer_id"
+              },
+              {
+                "module": "sales",
+                "element": "field_Customer_name"
+              }
+            ],
+            "keys": [
+              {
+                "id": "identity",
+                "name": "Identity",
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "field_Customer_id"
+                  }
+                ],
+                "primary": true
+              }
+            ]
+          },
+          {
+            "id": "Product",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "sku": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "tags": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "many"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            },
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "field_Product_id"
+              },
+              {
+                "module": "sales",
+                "element": "field_Product_sku"
+              },
+              {
+                "module": "sales",
+                "element": "field_Product_tags"
+              }
+            ],
+            "keys": [
+              {
+                "id": "identity",
+                "name": "Identity",
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "field_Product_id"
+                  }
+                ],
+                "primary": true
+              }
+            ]
+          },
+          {
+            "id": "OrderProduct",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "orderId": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "productId": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "quantity": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "decimal"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            },
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "field_OrderProduct_id"
+              },
+              {
+                "module": "sales",
+                "element": "field_OrderProduct_orderId"
+              },
+              {
+                "module": "sales",
+                "element": "field_OrderProduct_productId"
+              },
+              {
+                "module": "sales",
+                "element": "field_OrderProduct_quantity"
+              }
+            ],
+            "keys": [
+              {
+                "id": "identity",
+                "name": "Identity",
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "field_OrderProduct_id"
+                  }
+                ],
+                "primary": true
+              }
+            ]
+          },
+          {
+            "id": "field_Order_id",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_Order_tenant",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "string"
+          },
+          {
+            "id": "field_Order_customerId",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_Order_status",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "string",
+            "facets": {
+              "length": {
+                "max": 20,
+                "unit": "unicode-scalar"
+              }
+            }
+          },
+          {
+            "id": "field_Order_details",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "absent-allowed",
+            "cardinality": "one",
+            "scalarType": "string"
+          },
+          {
+            "id": "field_Customer_id",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_Customer_name",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "string"
+          },
+          {
+            "id": "field_Product_id",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_Product_sku",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "string"
+          },
+          {
+            "id": "field_OrderProduct_id",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_OrderProduct_orderId",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_OrderProduct_productId",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "integer"
+          },
+          {
+            "id": "field_OrderProduct_quantity",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "required",
+            "cardinality": "one",
+            "scalarType": "decimal"
+          },
+          {
+            "id": "field_Product_tags_item",
+            "kind": "field",
+            "scalarType": "string",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "field_Product_tags",
+            "kind": "field",
+            "extensions": {},
+            "nullability": "unspecified",
+            "cardinality": "array",
+            "itemType": {
+              "module": "sales",
+              "element": "field_Product_tags_item"
+            }
+          },
+          {
+            "id": "OrderRepository",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "repository",
+                "aggregate": {
+                  "module": "sales",
+                  "element": "Order"
+                },
+                "operations": [
+                  "save"
+                ]
+              }
+            }
+          }
+        ],
+        "relationships": [
+          {
+            "id": "customer",
+            "name": "customer",
+            "source": [
+              {
+                "module": "sales",
+                "element": "Order"
+              }
+            ],
+            "target": [
+              {
+                "module": "sales",
+                "element": "Customer",
+                "key": "identity"
+              }
+            ],
+            "sourceMultiplicity": {
+              "min": 0,
+              "max": "*"
+            },
+            "targetMultiplicity": {
+              "min": 1,
+              "max": 1
+            },
+            "targetLifecycle": "independent",
+            "directed": true,
+            "inverse": "orders"
+          },
+          {
+            "id": "products",
+            "name": "products",
+            "source": [
+              {
+                "module": "sales",
+                "element": "Order"
+              }
+            ],
+            "target": [
+              {
+                "module": "sales",
+                "element": "Product",
+                "key": "identity"
+              }
+            ],
+            "sourceMultiplicity": {
+              "min": 0,
+              "max": "*"
+            },
+            "targetMultiplicity": {
+              "min": 1,
+              "max": "*"
+            },
+            "targetLifecycle": "independent",
+            "directed": true
+          },
+          {
+            "id": "lineItems",
+            "name": "lineItems",
+            "source": [
+              {
+                "module": "sales",
+                "element": "Order"
+              }
+            ],
+            "target": [
+              {
+                "module": "sales",
+                "element": "OrderProduct",
+                "key": "identity"
+              }
+            ],
+            "sourceMultiplicity": {
+              "min": 0,
+              "max": "*"
+            },
+            "targetMultiplicity": {
+              "min": 0,
+              "max": "*"
+            },
+            "targetLifecycle": "independent",
+            "directed": true,
+            "associationRecord": {
+              "module": "sales",
+              "element": "OrderProduct"
+            }
+          }
+        ]
+      }
+    ],
+    "extensions": {
+      "future": {
+        "tokens": [
+          "9007199254740993",
+          {
+            "unknown": true
+          }
+        ]
+      }
+    }
+  },
+  "policy": {
+    "entities": [
+      {
+        "module": "sales",
+        "element": "Order",
+        "name": "Order"
+      },
+      {
+        "module": "sales",
+        "element": "Customer",
+        "name": "Customer"
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "name": "Product"
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "name": "OrderProduct"
+      }
+    ],
+    "fields": [
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "id",
+        "name": "id",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Order_id"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "tenant",
+        "name": "tenant",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Order_tenant"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "customerId",
+        "name": "customerId",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Order_customerId"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "status",
+        "name": "status",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Order_status"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "details",
+        "name": "details",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Order_details"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Customer",
+        "field": "id",
+        "name": "id",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Customer_id"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Customer",
+        "field": "name",
+        "name": "name",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Customer_name"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "field": "id",
+        "name": "id",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Product_id"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "field": "sku",
+        "name": "sku",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Product_sku"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "id",
+        "name": "id",
+        "coreField": {
+          "module": "sales",
+          "element": "field_OrderProduct_id"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "orderId",
+        "name": "orderId",
+        "coreField": {
+          "module": "sales",
+          "element": "field_OrderProduct_orderId"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "productId",
+        "name": "productId",
+        "coreField": {
+          "module": "sales",
+          "element": "field_OrderProduct_productId"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "quantity",
+        "name": "quantity",
+        "coreField": {
+          "module": "sales",
+          "element": "field_OrderProduct_quantity"
+        }
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "field": "tags",
+        "name": "tags",
+        "coreField": {
+          "module": "sales",
+          "element": "field_Product_tags"
+        }
+      }
+    ],
+    "scalars": {
+      "string": "String",
+      "boolean": "Boolean",
+      "integer": "Int",
+      "decimal": "Decimal",
+      "date-time": "DateTime",
+      "bytes": "Bytes"
+    },
+    "root": {
+      "kind": "synthetic-schema-root",
+      "typeName": "Query",
+      "fieldName": "_umfSchema"
+    },
+    "sourceProfile": "core-ideals",
+    "endpoints": [
+      {
+        "record": {
+          "module": "sales",
+          "element": "Order"
+        },
+        "entity": {
+          "module": "sales",
+          "element": "Order"
+        }
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "Customer"
+        },
+        "entity": {
+          "module": "sales",
+          "element": "Customer"
+        }
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "Product"
+        },
+        "entity": {
+          "module": "sales",
+          "element": "Product"
+        }
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "OrderProduct"
+        },
+        "entity": {
+          "module": "sales",
+          "element": "OrderProduct"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "module": "sales",
+        "id": "customer",
+        "forwardName": "customer",
+        "inverseName": "orders"
+      },
+      {
+        "module": "sales",
+        "id": "products",
+        "forwardName": "products"
+      },
+      {
+        "module": "sales",
+        "id": "lineItems",
+        "forwardName": "lineItems"
+      }
+    ]
+  }
+}

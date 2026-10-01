@@ -1,0 +1,26 @@
+{
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 8,
+    "idealRecoveries": 16,
+    "nativeRecoveries": 16,
+    "strictBlocks": 8,
+    "forgedRefusals": 8,
+    "staleRefusals": 8,
+    "getterReads": 0,
+    "migrationRollback": true,
+    "nativeUnknownRecoveries": 2
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/index.ts": "3f7a0eea778471aa24c54f7684ac5a57a67c88da13fb2a3bd32b03cdad2107a9",
+    "spec/projections/ddd-graphql.schema.json": "8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21",
+    "src/projections/ddd-graphql/index.ts": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276",
+    "src/projections/ddd-graphql/entities.ts": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87",
+    "scripts/projections/ddd-graphql-cases.ts": "1a55750bbbe94d659a1b7e0db82a16fcf98a006b1dc5f75a4ca78fe90bad0207",
+    "scripts/projections/ddd-graphql-browser.ts": "3a77c0d83b558269984ecb21b17133e93d6608ddc5f883c17662d4dca7742c38",
+    "fixtures/projections/ddd-graphql/case.json": "b3b54a29cc20bd491a308cc673d0c71985df0d5658216caf81294986a86bb909",
+    "fixtures/projections/ddd-authored-relationships/base.json": "f7187fa40e8c76064cfd08333ef30889bf1203b1a2e2c59f0612a57ca38687d8",
+    "dist/umf.js": "c7dedae814a5b332cef2c7f7e11706f09e289cce95748463f8cecc02edab18db"
+  }
+}

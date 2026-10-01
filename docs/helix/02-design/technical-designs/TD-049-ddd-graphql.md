@@ -120,3 +120,43 @@ relationship intent.
 
 SDL fields can be computed, and a valid AST can fail complete schema
 validation. Require explicit root policy and schema-mode oracle acceptance.
+
+### Complete experimental 0.7.0 projection
+
+`projectDddToGraphql` implements the complete schema-only profile. Its policy
+extends the existing core-ideal entity policy with explicit one-to-one
+`endpoints` Record/entity pairs and exact `(module,id)` relationship selections.
+Each selection names its forward field and, only for an authored inverse, its
+inverse field. All declared relationships must be selected; unresolved or
+unselected endpoints block atomically. The internal entity builder reads the
+original 0.7.0 document without removing Keys, relationships or extensions.
+It is not exported from the public package.
+
+A heterogeneous output requires an explicit, unique `forwardUnion` or
+`inverseUnion`; the generated union contains all mapped object types. Unknown
+relationship qualifiers block, and unused or colliding naming policy refuses.
+Undirected assertions require `orientation: source-to-target`; this is a
+reported display approximation. Singular `1..1` uses a non-null output field;
+optional singular is nullable. Higher maxima use nullable lists with nullable
+items. These wrappers never certify stored participation, list length,
+referential integrity, target-Key resolution, lifecycle or inverse consistency.
+A separately selected association Record retains its own object fields;
+endpoint-row correspondence and association identity remain residuals.
+
+The complete policy/result schema is `spec/projections/ddd-graphql.schema.json`;
+public result creation and receipt verification validate it before publication.
+The full report retains source versions, complete logical content and policy,
+source-to-SDL mappings, residuals and native archive. Verification recomputes
+all outputs. Recovery accepts a fresh schema-mode import with an independent
+archive ID, checks all remaining native content, and restores the retained
+logical source. Target-only SDL does not infer DDD or relationship intent.
+Migration/rollback composes through the existing 0.6→0.7 transition receipt;
+original unknown member collisions and later authored assertions both survive.
+
+Eight cases cover the independent shared graph target, self links, inverse and
+no-inverse, required/optional singular, bounded/list participation, undirected
+orientation, heterogeneous unions and a reified association. The independent
+GraphQL-core oracle and Chromium evidence are recorded under
+`fixtures/projections/ddd-graphql/`. The shared graph output matches the earlier
+hand-authored expected SDL after AST formatting normalization. The qualified
+profile remains schema generation only: no resolvers or query execution.
