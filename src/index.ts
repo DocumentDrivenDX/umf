@@ -370,3 +370,4 @@ export * from './core-ideals/relationship-parquet-projection';
 export * from './projections/ddd-postgresql/relationship-layout';
 export * from './core-ideals/relationship-sqlserver';
 export * from './core-ideals/relationship-sqlserver-projection';
+export * from './core-ideals/relationship-postgresql';

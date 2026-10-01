@@ -1,0 +1,1249 @@
+{
+  "scope": "PostgreSQL17.4 new ordinary scalar-keyed tables with FK/junction plus native NOT VALID/MATCH SIMPLE/alternate UNIQUE/actions observations; actual controlled writes only, no deployed-state or native-equivalence claim",
+  "serverVersion": 170004,
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "rows": [
+    {
+      "id": "keyed-association-and-fk",
+      "status": "projected",
+      "mappings": [
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-customer"
+          },
+          "idealPath": "/modules/0/relationships/0",
+          "carrierTable": "sales.orders",
+          "constraints": [
+            "fk_orders_customer"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        },
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-product"
+          },
+          "idealPath": "/modules/0/relationships/1",
+          "carrierTable": "sales.order_products",
+          "constraints": [
+            "fk_order_products_order",
+            "fk_order_products_product"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        }
+      ],
+      "observations": [
+        {
+          "nativePath": "/snapshot/relations/1/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_order"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_order",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.orders",
+          "sourceColumns": [
+            "orderId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_orders"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/1",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_product"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_product",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.products",
+          "sourceColumns": [
+            "productId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_products"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/2/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_orders_customer"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_orders_customer",
+          "sourceTable": "sales.orders",
+          "targetTable": "sales.customers",
+          "sourceColumns": [
+            "customerId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_customers"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        }
+      ],
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-valid",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-valid",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-target-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1001,10,999,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-source-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1002,999,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,8) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "alternate-unique-target",
+      "status": "projected",
+      "mappings": [
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-customer"
+          },
+          "idealPath": "/modules/0/relationships/0",
+          "carrierTable": "sales.orders",
+          "constraints": [
+            "fk_orders_customer"
+          ],
+          "targetKey": "alternate",
+          "outcome": "approximated"
+        },
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-product"
+          },
+          "idealPath": "/modules/0/relationships/1",
+          "carrierTable": "sales.order_products",
+          "constraints": [
+            "fk_order_products_order",
+            "fk_order_products_product"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        }
+      ],
+      "observations": [
+        {
+          "nativePath": "/snapshot/relations/1/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_order"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_order",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.orders",
+          "sourceColumns": [
+            "orderId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_orders"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/1",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_product"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_product",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.products",
+          "sourceColumns": [
+            "productId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_products"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/2/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_orders_customer"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_orders_customer",
+          "sourceTable": "sales.orders",
+          "targetTable": "sales.customers",
+          "sourceColumns": [
+            "customerId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_customers"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        }
+      ],
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-valid",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-valid",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-target-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1001,10,999,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-source-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1002,999,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,8) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "nullable-composite",
+      "status": "projected",
+      "mappings": [
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-customer"
+          },
+          "idealPath": "/modules/0/relationships/0",
+          "carrierTable": "sales.orders",
+          "constraints": [
+            "fk_orders_customer"
+          ],
+          "targetKey": "composite",
+          "outcome": "approximated"
+        },
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-product"
+          },
+          "idealPath": "/modules/0/relationships/1",
+          "carrierTable": "sales.order_products",
+          "constraints": [
+            "fk_order_products_order",
+            "fk_order_products_product"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        }
+      ],
+      "observations": [
+        {
+          "nativePath": "/snapshot/relations/1/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_order"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_order",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.orders",
+          "sourceColumns": [
+            "orderId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_orders"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/1",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_product"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_product",
+          "sourceTable": "sales.order_products",
+          "targetTable": "sales.products",
+          "sourceColumns": [
+            "productId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_products"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/2/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_orders_customer"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"customerId\", \"customerCode\") REFERENCES sales.customers(id, code)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_orders_customer",
+          "sourceTable": "sales.orders",
+          "targetTable": "sales.customers",
+          "sourceColumns": [
+            "customerId",
+            "customerCode"
+          ],
+          "targetColumns": [
+            "id",
+            "code"
+          ],
+          "targetKeyCandidates": [
+            "uq_customers_composite"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        }
+      ],
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name,code) VALUES(1,'customer',7) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-valid",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,\"customerCode\") VALUES(10,'tenant',1,'new',7) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,\"customerCode\") VALUES(11,'tenant',999,'new',7) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "match-simple-null-exemption",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status,\"customerCode\") VALUES(12,'tenant',999,'new',NULL) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-valid",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,2.5) RETURNING quantity::text",
+          "value": "2.50",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "association-target-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1001,10,999,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-source-orphan",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1002,999,100,2.5) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "association-identity",
+          "statement": "INSERT INTO sales.order_products(id,\"orderId\",\"productId\",quantity) VALUES(1000,10,100,8) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "anonymous-junction",
+      "status": "projected",
+      "mappings": [
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-customer"
+          },
+          "idealPath": "/modules/0/relationships/0",
+          "carrierTable": "sales.orders",
+          "constraints": [
+            "fk_orders_customer"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        },
+        {
+          "relationship": {
+            "module": "sales",
+            "id": "order-product"
+          },
+          "idealPath": "/modules/0/relationships/1",
+          "carrierTable": "sales.links",
+          "constraints": [
+            "fk_order_products_order",
+            "fk_order_products_product"
+          ],
+          "targetKey": "pk",
+          "outcome": "approximated"
+        }
+      ],
+      "observations": [
+        {
+          "nativePath": "/snapshot/relations/1/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_order"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_order",
+          "sourceTable": "sales.links",
+          "targetTable": "sales.orders",
+          "sourceColumns": [
+            "orderId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_orders"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/1",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_order_products_product"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_order_products_product",
+          "sourceTable": "sales.links",
+          "targetTable": "sales.products",
+          "sourceColumns": [
+            "productId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_products"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/3/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_orders_customer"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_orders_customer",
+          "sourceTable": "sales.orders",
+          "targetTable": "sales.customers",
+          "sourceColumns": [
+            "customerId"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "pk_customers"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        }
+      ],
+      "probes": [
+        {
+          "id": "parent",
+          "statement": "INSERT INTO sales.customers(id,name) VALUES(1,'customer') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-valid",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(10,'tenant',1,'new') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "source-orphan",
+          "statement": "INSERT INTO sales.orders(id,tenant,\"customerId\",status) VALUES(11,'tenant',999,'new') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "product",
+          "statement": "INSERT INTO sales.products(id,sku) VALUES(100,'sku') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "junction-valid",
+          "statement": "INSERT INTO sales.links(\"orderId\",\"productId\") VALUES(10,100) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "junction-orphan",
+          "statement": "INSERT INTO sales.links(\"orderId\",\"productId\") VALUES(10,999) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "junction-duplicate-pair",
+          "statement": "INSERT INTO sales.links(\"orderId\",\"productId\") VALUES(10,100) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ],
+      "idealRecovery": true,
+      "nativeRecovery": true
+    },
+    {
+      "id": "edge",
+      "status": "blocked"
+    },
+    {
+      "id": "heterogeneous-fk",
+      "status": "blocked"
+    },
+    {
+      "id": "association-attribute-loss",
+      "status": "blocked"
+    },
+    {
+      "id": "type-mismatch",
+      "status": "blocked"
+    },
+    {
+      "id": "collation-mismatch",
+      "status": "blocked"
+    },
+    {
+      "id": "partitioned-key",
+      "status": "blocked"
+    },
+    {
+      "id": "native-counterexamples",
+      "observations": [
+        {
+          "nativePath": "/snapshot/relations/0/constraints/0",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "actions_parent_id_fkey"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": true
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": true
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (parent_id) REFERENCES rel.parent(id) ON UPDATE CASCADE ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "actions_parent_id_fkey",
+          "sourceTable": "rel.actions",
+          "targetTable": "rel.parent",
+          "sourceColumns": [
+            "parent_id"
+          ],
+          "targetColumns": [
+            "id"
+          ],
+          "targetKeyCandidates": [
+            "parent_pkey"
+          ],
+          "match": "simple",
+          "onUpdate": "cascade",
+          "onDelete": "set-null",
+          "validated": true,
+          "deferrable": true,
+          "initiallyDeferred": true,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/1",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_alt"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": false
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (parent_alt) REFERENCES rel.parent(alt) NOT VALID"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_alt",
+          "sourceTable": "rel.child",
+          "targetTable": "rel.parent",
+          "sourceColumns": [
+            "parent_alt"
+          ],
+          "targetColumns": [
+            "alt"
+          ],
+          "targetKeyCandidates": [
+            "parent_alt_key"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": false,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        },
+        {
+          "nativePath": "/snapshot/relations/1/constraints/2",
+          "nativeNode": {
+            "kind": "object",
+            "members": {
+              "kind": {
+                "kind": "string",
+                "value": "f"
+              },
+              "name": {
+                "kind": "string",
+                "value": "fk_pair"
+              },
+              "deferred": {
+                "kind": "boolean",
+                "value": false
+              },
+              "validated": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deferrable": {
+                "kind": "boolean",
+                "value": false
+              },
+              "definition": {
+                "kind": "string",
+                "value": "FOREIGN KEY (parent_a, parent_b) REFERENCES rel.parent(part_a, part_b)"
+              }
+            }
+          },
+          "origin": "catalog",
+          "name": "fk_pair",
+          "sourceTable": "rel.child",
+          "targetTable": "rel.parent",
+          "sourceColumns": [
+            "parent_a",
+            "parent_b"
+          ],
+          "targetColumns": [
+            "part_a",
+            "part_b"
+          ],
+          "targetKeyCandidates": [
+            "uq_parent_pair"
+          ],
+          "match": "simple",
+          "onUpdate": "no-action",
+          "onDelete": "no-action",
+          "validated": true,
+          "deferrable": false,
+          "initiallyDeferred": false,
+          "authorIntent": "unknown",
+          "enforcement": "unverified-native-observation"
+        }
+      ],
+      "probes": [
+        {
+          "id": "not-valid-retains-old-orphan",
+          "statement": "SELECT count(*)::text FROM rel.child WHERE parent_alt='old-orphan'",
+          "value": "1",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "not-valid-checks-new-row",
+          "statement": "INSERT INTO rel.child(id,parent_alt) VALUES(2,'new-orphan') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "match-simple-partial-null",
+          "statement": "INSERT INTO rel.child(id,parent_a,parent_b) VALUES(3,123,NULL) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "match-simple-nonnull-orphan",
+          "statement": "INSERT INTO rel.child(id,parent_a,parent_b) VALUES(4,123,456) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23503"
+        },
+        {
+          "id": "alternate-parent",
+          "statement": "INSERT INTO rel.parent VALUES(1,'alt',10,20) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "alternate-child",
+          "statement": "INSERT INTO rel.child(id,parent_alt,parent_a,parent_b) VALUES(5,'alt',10,20) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "deferred-actions-child",
+          "statement": "INSERT INTO rel.actions VALUES(1,1) RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "cascade-update",
+          "statement": "UPDATE rel.parent SET id=2 WHERE id=1 RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "set-null-delete",
+          "statement": "DELETE FROM rel.parent WHERE id=2 RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ],
+      "nativeRecovery": true
+    }
+  ],
+  "sha256": {
+    "src/core-ideals/relationship-postgresql.ts": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5",
+    "scripts/core-ideals/relationship-postgresql-schema.ts": "cd2451cad4843716c6348c6fdf627c21f6d18e60035f046ee99afca759f320ed",
+    "scripts/core-ideals/relationship-postgresql-cases.ts": "87b88c0d8fc7f48a51cd6bbe62ed6a93b610c234ab0b2fe7b7701d512ef144ef",
+    "scripts/core-ideals/relationship-postgresql-oracle.ts": "80805734e29aae6ff65ba318e9df1ae81eee0d3ae48de6b9c49db0e0f7ffe0ce",
+    "src/projections/ddd-postgresql/relationship-layout.ts": "2faf22dab516791ab2f682aa162fdada7af18f1c54c6cacea290088732910111",
+    "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de"
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-postgresql-projection:1.0.0",
+  "title": "Authored PostgreSQL new-table FK/junction projection and retained recovery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "physicalBinding",
+    "authors",
+    "request",
+    "binding",
+    "layout",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-relationships-postgresql"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "physicalBinding": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:umf:core:relationship-operation:1.0.0#/$defs/declaration"
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "profile",
+        "mode",
+        "policy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "const": "new-keyed-tables"
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "policy": {
+          "$ref": "urn:umf:postgresql:relationship-layout:1.0.0"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee"
+      }
+    },
+    "layout": {
+      "$ref": "urn:umf:postgresql:relationship-layout-result:1.0.0"
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "nativeSql": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relationship",
+          "idealPath",
+          "carrierTable",
+          "constraints",
+          "targetKey",
+          "outcome"
+        ],
+        "properties": {
+          "relationship": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "id"
+            ],
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "carrierTable": {
+            "type": "string",
+            "minLength": 1
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "targetKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "const": "approximated"
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "path",
+          "value",
+          "outcome",
+          "reason"
+        ],
+        "properties": {
+          "source": {
+            "enum": [
+              "logical",
+              "binding",
+              "policy",
+              "native"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSql"
+        ],
+        "properties": {
+          "request": {
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeSql": false
+        }
+      }
+    }
+  ]
+}

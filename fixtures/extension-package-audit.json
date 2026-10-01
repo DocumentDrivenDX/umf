@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 58,
-  "passed": 58,
+  "packages": 59,
+  "passed": 59,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -499,6 +499,19 @@
         "subset": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification"
       },
       "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-relationships/package.json",
+      "id": "umf.postgresql.relationships",
+      "version": "1.0.0",
+      "native": {
+        "system": "PostgreSQL",
+        "version": "17.4",
+        "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee"
+      },
+      "evidenceCount": 3,
       "passed": true,
       "failures": []
     },

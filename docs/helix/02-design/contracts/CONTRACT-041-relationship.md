@@ -265,3 +265,43 @@ sets are not expanded into instance edges or a Cartesian product. Selection
 performs no data query, inference or transitive traversal and cannot claim
 referential enforcement. Existing element selection keeps its declared traversal
 scope. Recomputing the selection verifies current retained consistency.
+
+### Qualified PostgreSQL binding implementation (2026-10-01)
+
+`umf.postgresql.relationships` 1.0.0 now publishes PostgreSQL 17.4 native FK
+classification and the separate `new-keyed-tables` authored projection.
+`classifyPostgresqlRelationships` accepts either exact archived raw DDL or an
+exact original catalog-capture text. DDL declarations do not claim live
+validation state. Catalog observations retain the captured validation and
+deferral state, native actions, MATCH behavior, ordered columns and candidate
+native primary/UNIQUE constraint names. Unqualified table names remain
+explicitly unresolved without search-path evidence; empty candidate lists do
+not establish absence. Every tagged native constraint node and the complete
+original text remain recoverable, including unknown catalog fields, exact
+numeric tokens and unrelated native statements/comments. Neither direction
+infers authored relationships from FK names or enforcement.
+
+`projectRelationshipsToPostgresql` consumes verified relationship declarations,
+the exact 0.2.0 stable-ID physical binding and the CONTRACT-043 ordered layout
+policy. It emits new ordinary scalar-column tables, named primary/alternate
+Key constraints and homogeneous direct FK/junction constraints. A keyed
+association retains its own Key and all attributes in the explicit inventory.
+Foreign keys use explicit `MATCH SIMPLE`, `NO ACTION` and `NOT DEFERRABLE`.
+A nullable composite reference's exemption remains a reported semantic loss.
+The SQL passes the pinned parser/deparser/codec before a candidate is returned.
+Sequential authoring receipts are supported; changes to the selected assertion,
+endpoint Record/Key or member meaning require new authoring evidence.
+
+The initial projection does not emit embedded fields, physical indexes,
+partitioned Keys, edge/discriminator storage or the full DDD model. Unknown
+logical meanings, facets, both-end participation, lifecycle, inverse navigation,
+DDD intent and all unclaimed native content remain source-qualified residuals.
+Unsafe or incomplete layouts and heterogeneous endpoints block without partial
+SQL. Strict mode blocks every non-exact obligation. Report mode returns only a
+complete qualified candidate with copied sources. Receipt recomputation and
+current native-text/tree comparison protect both ideal and native recovery.
+
+[PostgreSQL acceptance evidence](../../04-build/evidence/postgresql-relationship-acceptance.md)
+records PostgreSQL 17.4 generated-constraint/write probes and Chromium recovery.
+This is a useful FK/junction binding, not complete DDD generation, relationship
+ideal admission, all-five delivery or native-equivalence graduation.

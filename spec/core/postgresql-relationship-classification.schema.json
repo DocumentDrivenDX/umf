@@ -1,0 +1,438 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:postgresql-relationship-classification:1.0.0",
+  "title": "PostgreSQL relationship classification and retained native recovery",
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "observations",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-postgresql-relationships"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "mode",
+        "nativeSource"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "raw-ddl",
+            "captured-catalog"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "nativeSource": {
+          "type": "string"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nativePath",
+          "nativeNode",
+          "origin",
+          "name",
+          "sourceTable",
+          "targetTable",
+          "sourceColumns",
+          "targetColumns",
+          "targetKeyCandidates",
+          "match",
+          "onUpdate",
+          "onDelete",
+          "validated",
+          "deferrable",
+          "initiallyDeferred",
+          "authorIntent",
+          "enforcement"
+        ],
+        "properties": {
+          "nativePath": {
+            "type": "string"
+          },
+          "nativeNode": {
+            "$ref": "#/$defs/node"
+          },
+          "origin": {
+            "enum": [
+              "ddl",
+              "catalog"
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceTable": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "targetTable": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceColumns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "targetColumns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "targetKeyCandidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "enum": [
+              "simple",
+              "full",
+              "partial",
+              "unknown"
+            ]
+          },
+          "onUpdate": {
+            "enum": [
+              "no-action",
+              "restrict",
+              "cascade",
+              "set-null",
+              "set-default",
+              "unknown"
+            ]
+          },
+          "onDelete": {
+            "enum": [
+              "no-action",
+              "restrict",
+              "cascade",
+              "set-null",
+              "set-default",
+              "unknown"
+            ]
+          },
+          "validated": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "deferrable": {
+            "type": "boolean"
+          },
+          "initiallyDeferred": {
+            "type": "boolean"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "enforcement": {
+            "const": "unverified-native-observation"
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "path",
+          "value",
+          "outcome",
+          "reason"
+        ],
+        "properties": {
+          "source": {
+            "enum": [
+              "logical",
+              "binding",
+              "policy",
+              "native"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "request": {
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    }
+  ]
+}
