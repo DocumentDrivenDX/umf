@@ -1,0 +1,666 @@
+{
+  "idealAdmitted": true,
+  "minimumUsefulPriorityMappings": 2,
+  "usefulSystems": [
+    "postgresql",
+    "sqlserver"
+  ],
+  "usefulMappings": {
+    "postgresql": 8,
+    "sqlserver": 20
+  },
+  "qualification": {
+    "path": "fixtures/validation/relationship-gate-refresh.json",
+    "sha256": "82fdffd22a805b6c811c00d8cb8368f4103a967e9638f32bb28466870ac81659",
+    "versions": {
+      "postgresql": 170004,
+      "sqlserver": "16.0.4295.3",
+      "tablespec": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "avro": {
+        "apache": "1.12.0",
+        "fastavro": "1.12.2"
+      },
+      "parquet": "21.0.0",
+      "extras": {
+        "graphqlJs": "17.0.2",
+        "graphqlCore": "3.2.12",
+        "rdflib": "7.6.0",
+        "linkmlMetamodel": "1.11.0",
+        "linkmlRuntime": "1.11.0rc2"
+      }
+    }
+  },
+  "authored": {
+    "cases": [
+      {
+        "id": "one-to-one",
+        "relationship": {
+          "id": "order-invoice",
+          "name": "invoice",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Invoice",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "inverse": "order"
+        },
+        "sourceSha256": "c5ad51fbd6b4cbec79885e32c922143eba5697ae959adcc0d7aec3a608491ee0",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          }
+        ]
+      },
+      {
+        "id": "owned-one-to-many",
+        "relationship": {
+          "id": "order-lines",
+          "name": "lines",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Line",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": "*"
+          },
+          "targetLifecycle": "owned",
+          "directed": true,
+          "inverse": "order"
+        },
+        "sourceSha256": "bcfb115a0ea6ebabcec9db7d949c51f5aefb3b6ae66dbf6249a479e4f797f97e",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          }
+        ]
+      },
+      {
+        "id": "many-to-one-alternate-key",
+        "relationship": {
+          "id": "order-customer",
+          "name": "customer",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Customer",
+              "key": "account"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "inverse": "orders"
+        },
+        "sourceSha256": "f49fc38f8ce4956094621bcae681a0b967ac45bd3bbb352f02358d93162c2e9e",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          }
+        ]
+      },
+      {
+        "id": "many-to-many",
+        "relationship": {
+          "id": "order-product",
+          "name": "products",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Product",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        "sourceSha256": "aac671ff5b96535dee15bb97a4c76d5d9d6c91647c26c2949373e492d684fe18",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          }
+        ]
+      },
+      {
+        "id": "heterogeneous-source",
+        "relationship": {
+          "id": "sales-customer",
+          "name": "customerForSalesDocument",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            },
+            {
+              "module": "sales",
+              "element": "Invoice"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Customer",
+              "key": "account"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        "sourceSha256": "a3b9c36311f7f112057314829424733ec7cd26b20688791c27e07bdcd6273375",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          }
+        ]
+      },
+      {
+        "id": "self-referential",
+        "relationship": {
+          "id": "employee-manager",
+          "name": "manager",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Employee",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "inverse": "reports"
+        },
+        "sourceSha256": "62d3c80f9e030c6dff0ba8022355dae81d90fb77e32a0c6af71756da37e428b7",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          }
+        ]
+      },
+      {
+        "id": "undirected",
+        "relationship": {
+          "id": "student-course",
+          "name": "studies",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Student"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Course",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "unspecified",
+          "directed": false
+        },
+        "sourceSha256": "5d818c210f93d6d6ca04563e6d77b7b6c1da81d84f405c77462f511423868ee2",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 10
+          }
+        ]
+      },
+      {
+        "id": "reified-association",
+        "relationship": {
+          "id": "student-course-enrollment",
+          "name": "enrollsIn",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Student"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Course",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "associationRecord": {
+            "module": "sales",
+            "element": "Enrollment"
+          },
+          "directed": true,
+          "inverse": "students"
+        },
+        "sourceSha256": "f267ebd0b31a3f8dc257f1bbed829fed87ff7252d3cb97b827ac889b16ad64f3",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 12
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 12
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 12
+          }
+        ]
+      },
+      {
+        "id": "bounded-owned-one-to-many",
+        "relationship": {
+          "id": "order-lines",
+          "name": "lines",
+          "source": [
+            {
+              "module": "sales",
+              "element": "Order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "Line",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 1,
+            "max": 2
+          },
+          "targetMultiplicity": {
+            "min": 2,
+            "max": 3
+          },
+          "targetLifecycle": "owned",
+          "directed": true,
+          "inverse": "order"
+        },
+        "sourceSha256": "f3a78a44b8346c5fb923facc7ca9bbf12b4fe21e56f78693721b45aa50a2f2f1",
+        "recoveries": 20,
+        "refusals": 5,
+        "extras": [
+          {
+            "system": "graphql",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "graphql",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "rdf",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "rdf",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          },
+          {
+            "system": "linkml",
+            "mode": "strict",
+            "status": "blocked"
+          },
+          {
+            "system": "linkml",
+            "mode": "report",
+            "status": "projected",
+            "residuals": 11
+          }
+        ]
+      }
+    ],
+    "migration": "0.6.0 to 0.7.0 with exact legacy rollback and retained new assertions",
+    "unknownContentRetained": true
+  },
+  "nativeEquivalence": false
+}

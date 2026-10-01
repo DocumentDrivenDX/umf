@@ -5219,3 +5219,43 @@ recovery accompany pinned PostgreSQL17.4 and Chromium acceptance. Unsupported
 heterogeneous endpoints, association-edge discriminator layouts and unsafe
 structural choices remain explicit refusals. See
 [qualified execution evidence](evidence/ddd-postgresql.md).
+
+### Relationship admission and five-system conformance — umf-582e0269
+
+The executable relationship gate records ideal admission separately from
+qualified five-system delivery and keeps `nativeEquivalence: false`. Its
+canonical nine-case corpus checks named alternate Keys, keyed Enrollment with
+attributes, bounded/owned multiplicities and legacy collision rollback. A
+current-source replay covers PostgreSQL 17.4, SQL Server 2022 16.0.4295.3,
+TableSpec 647e8e56, Avro 1.12.0/fastavro 1.12.2, PyArrow 21.0.0,
+GraphQL.js 17.0.2/GraphQL-core 3.2.12, RDFLib 7.6.0, LinkML model 1.11.0/runtime
+1.11.0rc2 and Chromium 148. The gate derives case coverage from executable
+matrices and executes focused retained-recovery tests again at admission.
+
+Evidence is published to `fixtures/validation/relationship-{admission,delivery,conformance}.json`;
+`relationship-gate-refresh.json` binds successful command logs, current source
+and native/browser proofs. An integrated final replay must publish its own
+refresh record after all generators settle. Earlier feature acceptance and
+broad repository gates remain historical until that replay; this scoped gate
+does not reclassify or fabricate their previous counts.
+
+The frozen worktree replay passed all 18 commands, including 408 focused tests
+across nine files with 5,019 assertions, the native oracles, seven Chromium
+matrices and typecheck. Independent parent acceptance then passed the three
+conformance tests (15 assertions, one file, 201.72 seconds), the conformance CLI
+and typecheck. The gate verified 14 current proof records and counted eight
+useful PostgreSQL relationship mappings and 20 SQL Server projections; both
+systems have successful native writes and FK rejection controls. The canonical
+Chromium matrix recorded nine cases, 18 migration recoveries, 54 ideal
+recoveries, 108 native recoveries, 27 strict blocks and 27 forged-receipt refusals.
+
+The first independent run exposed only Bun's default five-second timeout on
+the synchronous canonical corpus test, which took about 20 seconds under
+parallel load. That test now uses an explicit 300-second timeout; no library
+behavior changed. The failed pre-fix log remains alongside the successful
+[acceptance test log](../../../fixtures/validation/relationship-gate/acceptance-tests.txt),
+[CLI log](../../../fixtures/validation/relationship-gate/acceptance-conformance.txt)
+and [typecheck log](../../../fixtures/validation/relationship-gate/acceptance-typecheck.txt).
+The full 18-command replay was repeated after the timeout edit so the published
+source snapshot matches the tested files. These are scoped worktree results;
+final integrated acceptance must replay against the merged implementation.

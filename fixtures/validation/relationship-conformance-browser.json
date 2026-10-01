@@ -1,0 +1,22 @@
+{
+  "scope": "Nine canonical authored shapes, retained migration and extra schema recoveries; independent native target subsets remain in their own proofs",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 9,
+    "migrationRecoveries": 18,
+    "idealRecoveries": 54,
+    "nativeRecoveries": 108,
+    "strictBlocks": 27,
+    "blocked": 27,
+    "refusals": 27
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/relationship-conformance-browser.ts": "ae7a67f55f81d74ca2cdb2f52df95501b83a610a74dbbda49f03bbd5b3dccb7b",
+    "scripts/core-ideals/relationship-conformance.ts": "d3d1a072a3559413f42bc9b1c16b88a924aa0d28f180f9ac5172701d2197a7de",
+    "scripts/core-ideals/relationship-extras-cases.ts": "99487bcb0a2e4251df0fe35d652e6c417a16f624b1a9ab34a393c97420e5ed22",
+    "fixtures/relationship/authored/corpus.json": "aa751e8d09ad68e9423f3067f38ee51dd6bc9885a43bed22d1c8df3919a421bb",
+    "src/index.ts": "7198ad39c3a8c8897eee2205c26dc09955db85ae1d88da36a32d7713aa008f68",
+    "dist/umf.js": "e30157bd4fe1ff19f1d4e786b2114db59cdb1fd2955564650da527217f582332"
+  }
+}
