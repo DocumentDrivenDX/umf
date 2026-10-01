@@ -1,0 +1,413 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:ddd-graphql:1.0.0",
+  "title": "Complete DDD and relationship GraphQL SDL retained projection",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "const": "project-ddd-graphql"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "blocked",
+        "reported",
+        "proposed"
+      ]
+    },
+    "logical": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "policy": {
+      "$ref": "#/$defs/policy"
+    },
+    "lossPolicy": {
+      "enum": [
+        "strict",
+        "report"
+      ]
+    },
+    "profile": {
+      "const": "graphql-js-17.0.2-sdl"
+    },
+    "sourceVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "core": {
+          "const": "0.7.0"
+        },
+        "ddd": {
+          "const": "0.1.0"
+        }
+      },
+      "required": [
+        "core",
+        "ddd"
+      ]
+    },
+    "targetVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "graphqlJs": {
+          "const": "17.0.2"
+        },
+        "graphqlCore": {
+          "const": "3.2.12"
+        },
+        "subset": {
+          "const": "schema SDL with scalar fields, object relationships and explicit output unions; no execution"
+        }
+      },
+      "required": [
+        "graphqlJs",
+        "graphqlCore",
+        "subset"
+      ]
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "choice": {
+            "$comment": "Any retained JSON source assertion, including unknown extension content."
+          }
+        },
+        "required": [
+          "path",
+          "reason",
+          "choice"
+        ]
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourcePath": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "sourcePath",
+          "target"
+        ]
+      }
+    },
+    "candidate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "targetArchive": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "const": "DDD_GRAPHQL_LOSS"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "const": "warning"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "logical",
+    "policy",
+    "lossPolicy",
+    "profile",
+    "sourceVersions",
+    "targetVersions",
+    "residuals",
+    "mappings",
+    "diagnostics"
+  ],
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              }
+            },
+            "required": [
+              "module",
+              "element",
+              "name"
+            ]
+          },
+          "minItems": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "field": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              },
+              "coreField": {
+                "$ref": "#/$defs/reference"
+              }
+            },
+            "required": [
+              "module",
+              "element",
+              "field",
+              "name",
+              "coreField"
+            ]
+          }
+        },
+        "scalars": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "string": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "boolean": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "integer": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "decimal": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "date-time": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "bytes": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            }
+          },
+          "required": [
+            "string",
+            "boolean",
+            "integer",
+            "decimal",
+            "date-time",
+            "bytes"
+          ]
+        },
+        "root": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "synthetic-schema-root"
+            },
+            "typeName": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            },
+            "fieldName": {
+              "type": "string",
+              "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+            }
+          },
+          "required": [
+            "kind",
+            "typeName",
+            "fieldName"
+          ]
+        },
+        "sourceProfile": {
+          "const": "core-ideals"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "record": {
+                "$ref": "#/$defs/reference"
+              },
+              "entity": {
+                "$ref": "#/$defs/reference"
+              }
+            },
+            "required": [
+              "record",
+              "entity"
+            ]
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "forwardName": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              },
+              "inverseName": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              },
+              "orientation": {
+                "const": "source-to-target"
+              },
+              "forwardUnion": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              },
+              "inverseUnion": {
+                "type": "string",
+                "pattern": "^(?!__)[_A-Za-z][_0-9A-Za-z]*(?![\\s\\S])"
+              }
+            },
+            "required": [
+              "module",
+              "id",
+              "forwardName"
+            ]
+          }
+        }
+      },
+      "required": [
+        "entities",
+        "fields",
+        "scalars",
+        "root",
+        "sourceProfile",
+        "endpoints",
+        "relationships"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "blocked"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "candidate": false,
+          "targetArchive": false,
+          "lossPolicy": {
+            "const": "strict"
+          }
+        }
+      },
+      "else": {
+        "required": [
+          "candidate",
+          "targetArchive"
+        ]
+      }
+    }
+  ]
+}

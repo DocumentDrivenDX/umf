@@ -1,0 +1,11 @@
+$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts
+{
+  "packages": 55,
+  "passed": 55,
+  "failures": []
+}
+{
+  "schemas": 325,
+  "passed": 325,
+  "failures": []
+}

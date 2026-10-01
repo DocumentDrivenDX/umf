@@ -1,0 +1,286 @@
+{
+  "graphqlCore": "3.2.12",
+  "cases": [
+    {
+      "id": "orders",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer!",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[Order]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "self",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "parent": "Customer!",
+          "children": "[Customer]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "undirected",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer!",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[Order]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "heterogeneous",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "CustomerOrProduct!",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[OrderOrLine]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]",
+          "orders": "[OrderOrLine]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!",
+          "customer": "CustomerOrProduct!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "bounded",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer!",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[Order]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "no-inverse",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer!",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "optional-single",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer",
+          "products": "[Product]",
+          "lineItems": "[OrderProduct]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[Order]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    },
+    {
+      "id": "shared-authored-graph",
+      "fields": {
+        "Query": {
+          "_umfSchema": "Boolean"
+        },
+        "Order": {
+          "id": "Int!",
+          "tenant": "String!",
+          "customerId": "Int!",
+          "status": "String!",
+          "details": "String",
+          "customer": "Customer!",
+          "products": "[Product]"
+        },
+        "Customer": {
+          "id": "Int!",
+          "name": "String!",
+          "orders": "[Order]"
+        },
+        "Product": {
+          "id": "Int!",
+          "sku": "String!",
+          "tags": "[String!]",
+          "orders": "[Order]"
+        },
+        "OrderProduct": {
+          "id": "Int!",
+          "orderId": "Int!",
+          "productId": "Int!",
+          "quantity": "Decimal!"
+        }
+      },
+      "valid": true
+    }
+  ]
+}

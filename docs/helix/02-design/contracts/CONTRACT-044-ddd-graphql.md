@@ -157,3 +157,25 @@ aggregate invariant remains visible in the report but is not enforced by SDL.
 - [x] Strict/report, both retained recoveries and target-only limits are explicit.
 - [x] Existing adapter and two qualified GraphQL engines are required.
 - [ ] Native/browser results and pinned subset must precede a delivered claim.
+
+### Qualified full-projection policy
+
+The experimental `projectDddToGraphql` profile selects core 0.7.0 and DDD 0.1.0
+without removing or downgrading source content. It adds explicit one-to-one
+Record/entity pairs and exact relationship identities to the earlier
+core-ideal scalar policy. Every declared relationship needs a forward name;
+only an authored inverse permits an inverse name. All endpoints must resolve
+to selected entities. Heterogeneous outputs require distinct explicit union
+names; undirected assertions require an explicit source-to-target display
+orientation. Unknown relationship qualifiers block interpretation.
+
+A singular required relationship uses an SDL non-null output wrapper as a
+qualified approximation; optional singular remains nullable. Lists retain
+nullable containers/items because participation bounds alone do not establish
+output item availability. Every bound, target Key, lifecycle, association
+Record and inverse-consistency obligation remains source-linked in the report.
+The complete source and native archive survive recomputed report verification
+and JSON/YAML recovery. A fresh native schema import may use an independent
+document ID; other target changes refuse as stale. Native-only SDL does not
+recover authored intent. Pinned native/browser results are linked in TD-049
+and the implementation plan; this profile generates no executable API behavior.

@@ -1,0 +1,31 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/projections/ddd-graphql.test.ts:
+(pass) @covers US-049-AC1 @covers US-049-AC2 @covers US-049-AC3 @covers US-049-AC6: complete selected entity and relationship schemas validate [2488.84ms]
+(pass) @covers US-049-AC4 @covers US-049-AC5 @covers US-049-AC9: strict emits no partial SDL and all obligations remain source-linked [1755.27ms]
+(pass) @covers US-049-AC7 @covers US-049-AC8 @covers US-049-AC10: fresh native imports and JSON/YAML receipts recover exact authored source [12291.71ms]
+(pass) @covers US-049-AC7 @covers US-049-AC10: forged, stale, incomplete and getter-bearing reports refuse [1323.97ms]
+(pass) @covers US-049-AC4 @covers US-049-AC5: missing roots, collisions, ambiguous endpoints and uninterpreted semantics block [1459.04ms]
+(pass) @covers US-049-AC10: projection recovery composes with collision-preserving migration and rollback [458.02ms]
+(pass) @covers US-049-AC1 @covers US-049-AC6: generated shared authored graph matches independent expected SDL [287.92ms]
+(pass) @covers US-049-AC4 @covers US-049-AC7: complete result schema rejects partial targets and missing policy/source contracts [487.20ms]
+(pass) @covers US-049-AC4: explicit names reject trailing line terminators instead of parser normalization [116.43ms]
+
+tests/projections/ddd-graphql-entities.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: entity SDL, scalar wrappers and schema-mode import [269.99ms]
+(pass) @covers US-049-AC5 @covers US-049-AC9: residuals retain root, identity, cardinality and scalar limits [108.06ms]
+(pass) @covers US-049-AC4: malformed names, unknown relationships and collisions block atomically [86.69ms]
+(pass) @covers US-049-AC5: a DDD concept field never becomes a relationship [111.44ms]
+(pass) @covers US-049-AC9: opaque DDD invariant is retained without execution [99.20ms]
+
+tests/projections/ddd-graphql-core-fields.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: core Field availability controls SDL wrappers [271.67ms]
+(pass) @covers US-049-AC3 @covers US-049-AC4: absent item availability remains a nullable item and a residual [103.26ms]
+(pass) @covers US-049-AC3: an unspecified core availability cannot borrow DDD one as SDL non-null [100.42ms]
+(pass) @covers US-049-AC4: missing, conflicting and duplicate core pairings block before SDL [125.64ms]
+(pass) @covers US-049-AC3: the DDD-only profile cannot silently ignore a core pairing [13.76ms]
+
+ 19 pass
+ 0 fail
+ 263 expect() calls
+Ran 19 tests across 3 files. [26.32s]

@@ -1,0 +1,19 @@
+{
+  "scope": "Complete schema SDL; GraphQL.js and independent GraphQL-core parse/build/validate; no resolvers or query execution",
+  "graphqlJs": "17.0.2",
+  "graphqlCore": "3.2.12",
+  "cases": 8,
+  "sha256": {
+    "spec/projections/ddd-graphql.schema.json": "8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21",
+    "src/projections/ddd-graphql/index.ts": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276",
+    "src/projections/ddd-graphql/entities.ts": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87",
+    "scripts/projections/ddd-graphql-cases.ts": "1a55750bbbe94d659a1b7e0db82a16fcf98a006b1dc5f75a4ca78fe90bad0207",
+    "scripts/projections/ddd-graphql-oracle.ts": "0246f4264eb646e6fc385aa7baa63094286707593314617f4b6e6c5dcd97ecd4",
+    "scripts/projections/ddd-graphql-native.py": "07b31bf3d9492c8a18b4d1e97fc3c027b79a2fe4f91bcc957f887700728e76d3",
+    "fixtures/projections/ddd-authored-relationships/base.json": "f7187fa40e8c76064cfd08333ef30889bf1203b1a2e2c59f0612a57ca38687d8",
+    "fixtures/projections/ddd-authored-relationships/expected-relationships.graphql": "6b9ee239f7e7ae35568a31663f083d0c3b968aebdd2ec10afe47e7dffd57599c",
+    "fixtures/projections/ddd-graphql/case.json": "b3b54a29cc20bd491a308cc673d0c71985df0d5658216caf81294986a86bb909",
+    "fixtures/projections/ddd-graphql/generated.json": "7d2c129c528f4ecefa1bfe1edc4d88802a1f22376f0053b0b9e29f73316fc3e4",
+    "fixtures/projections/ddd-graphql/native.json": "2e6b21fd95bbac4231a9bb4c81a4cab980c1940c60eadf27593b237f4e140ed6"
+  }
+}
