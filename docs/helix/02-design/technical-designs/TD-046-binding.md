@@ -111,3 +111,14 @@ keeps unsupported new choices as residuals while recovering the old document.
 
 Loose name matching would attach a binding to the wrong logical element;
 exact IDs and stale-version blocks prevent it.
+
+
+## Stable-ID transition implementation (2026-10-01)
+
+CONTRACT-042's 0.2.0 package/profile transition is implemented with copied
+receipt-backed migration and rollback. The original 0.1.0 schema/package is
+retained. Migration rejects missing/ambiguous authored matches and unknown
+`id` collisions; rollback preserves new choices explicitly. Complete operation
+schemas and Bun/Chromium evidence are in
+[the transition record](../../04-build/evidence/binding-stable-ids.md).
+Relationship storage generation remains separate work.

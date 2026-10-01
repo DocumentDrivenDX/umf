@@ -1,3 +1,4 @@
+import stableManifest from '../../../spec/extensions/binding-stable/package.json';
 import manifest from '../../../spec/extensions/binding/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -6,6 +7,7 @@ import {copyJson} from '../../model/json';
 import {pointer,UmfError,type Diagnostic,type Document,type ExtensionPackage,type Json,type Validation} from '../../model/types';
 
 export const BINDING_EXTENSION='umf.binding';
+export const stableBindingPackage=stableManifest as unknown as ExtensionPackage;
 export const bindingPackage=manifest as unknown as ExtensionPackage;
 
 export interface BindingElementRef {module:string;element:string}
@@ -13,23 +15,25 @@ export interface BindingFieldRef extends BindingElementRef {field?:string}
 export interface BindingRelationshipRef {module:string;name:string}
 export interface BindingElement extends BindingElementRef {partition?:string|null;table?:string}
 export interface BindingField extends BindingFieldRef {storage:'column'|'embedded';column?:string;documentColumn?:string;path?:string[]}
+export interface StableBindingRelationshipRef {module:string;id:string}
+export interface StableBindingRelationship extends StableBindingRelationshipRef {storage:'edge'|'foreign_key'|'junction'|'inline'}
 export interface BindingRelationship extends BindingRelationshipRef {storage:'edge'|'foreign_key'|'junction'|'inline'}
 export type BindingIndexTarget={field:BindingFieldRef}|{documentPath:{field:BindingFieldRef;path:string[]}};
 export interface BindingIndex {name:string;kind:'btree'|'hash'|'gin'|'gist'|'expression'|'partial'|'unique'|'clustering';on:BindingIndexTarget[];predicate?:{language:string;version:string;expression:string};unique:boolean;include?:BindingFieldRef[]}
 export interface BindingPayload {
-  profile:'umf-binding-1';
+  profile:'umf-binding-1'|'umf-binding-2';
   logical:{documentId:string;coreVersion:string};
   target:{system:string;version:string;subset:string};
   elements:BindingElement[];
   fields:BindingField[];
-  relationships:BindingRelationship[];
+  relationships:(BindingRelationship|StableBindingRelationship)[];
   indexes:BindingIndex[];
   [key:string]:unknown;
 }
 
 const refKey=(ref:BindingElementRef)=>JSON.stringify([ref.module,ref.element]);
 const fieldKey=(ref:BindingFieldRef)=>JSON.stringify([ref.module,ref.element,ref.field??null]);
-const relationshipKey=(ref:BindingRelationshipRef)=>JSON.stringify([ref.module,ref.name]);
+const relationshipKey=(ref:BindingRelationshipRef|StableBindingRelationshipRef,profile:BindingPayload['profile'])=>JSON.stringify([ref.module,profile==='umf-binding-2'?(ref as StableBindingRelationshipRef).id:(ref as BindingRelationshipRef).name]);
 function bindingSemantics(value:Json,context:{document:Document;path:string;scope:string}):Diagnostic[]{
   const out:Diagnostic[]=[];
   const path=context.path;
@@ -51,8 +55,8 @@ function bindingSemantics(value:Json,context:{document:Document;path:string;scop
   payload.elements.forEach((item,index)=>unknown(item as unknown as Record<string,unknown>,['module','element','partition','table'],`/elements/${index}`));
   unique(payload.fields,'fields',fieldKey);
   payload.fields.forEach((item,index)=>unknown(item as unknown as Record<string,unknown>,['module','element','field','storage','column','documentColumn','path'],`/fields/${index}`));
-  unique(payload.relationships,'relationships',relationshipKey);
-  payload.relationships.forEach((item,index)=>unknown(item as unknown as Record<string,unknown>,['module','name','storage'],`/relationships/${index}`));
+  unique(payload.relationships,'relationships',row=>relationshipKey(row,payload.profile));
+  payload.relationships.forEach((item,index)=>unknown(item as unknown as Record<string,unknown>,['module',payload.profile==='umf-binding-2'?'id':'name','storage'],`/relationships/${index}`));
   for(const[index,field]of payload.fields.entries()){
     if(field.storage==='column'&&!field.column)add('BINDING_COLUMN',`/fields/${index}/column`,'Column storage needs an explicit column name');
     if(field.storage==='column'&&(field.documentColumn!==undefined||field.path!==undefined))add('BINDING_PATH',`/fields/${index}`,'Column storage cannot also declare an embedded path');
@@ -105,19 +109,27 @@ function bindingSemantics(value:Json,context:{document:Document;path:string;scop
   return out;
 }
 
-export function bindingRegistry():Registry{return new Registry().register(bindingPackage,bindingSemantics);}
+export function bindingRegistry():Registry{return new Registry().register(bindingPackage,bindingSemantics).register(stableBindingPackage,bindingSemantics);}
 
 /** Validate a separate binding document against an explicitly supplied logical model. */
 export function inspectBinding(binding:Document,logical:Document):Validation{
+  try {
+    binding=copyJson(binding) as unknown as Document;
+    logical=copyJson(logical) as unknown as Document;
+  } catch(error) {
+    if(!(error instanceof UmfError))throw error;
+    return {valid:false,complete:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};
+  }
   const base=validateDocument(binding,bindingRegistry());
+  if(!base.valid)return base;
   const diagnostics=[...base.diagnostics];
   const add=(code:string,path:string,message:string)=>diagnostics.push({code,path,message,severity:'error' as const});
   const payload=binding.extensions?.[BINDING_EXTENSION] as unknown as BindingPayload|undefined;
-  if(binding.vocabularies[BINDING_EXTENSION]?.version!=='0.1.0'||!payload)add('BINDING_PROFILE','/extensions','Expected a document-scoped umf.binding 0.1.0 payload');
+  if(!['0.1.0','0.2.0'].includes(binding.vocabularies[BINDING_EXTENSION]?.version??'')||!payload){add('BINDING_PROFILE','/extensions','Expected a document-scoped umf.binding 0.1.0 or 0.2.0 payload');return {valid:false,complete:false,diagnostics};}
   if(payload&&base.valid){
-    if(payload.logical.documentId!==logical.id||payload.logical.coreVersion!==logical.umf)add('BINDING_MODEL','/extensions/umf.binding/logical','Logical document id/version mismatch');
     const logicalCheck=validateDocument(logical);
-    if(!logicalCheck.valid)add('BINDING_MODEL','/extensions/umf.binding/logical','Supplied logical document is invalid');
+    if(!logicalCheck.valid){add('BINDING_MODEL','/extensions/umf.binding/logical','Supplied logical document is invalid');return {valid:false,complete:false,diagnostics};}
+    if(payload.logical.documentId!==logical.id||payload.logical.coreVersion!==logical.umf)add('BINDING_MODEL','/extensions/umf.binding/logical','Logical document id/version mismatch');
     const elements=new Set(logical.modules.flatMap(m=>m.elements.map(e=>refKey({module:m.id,element:e.id}))));
     for(const [index,row]of payload.elements.entries())if(!elements.has(refKey(row)))add('BINDING_REFERENCE',`/extensions/umf.binding/elements/${index}`,'Missing logical element');
     for(const [index,row]of payload.fields.entries()){
@@ -128,8 +140,9 @@ export function inspectBinding(binding:Document,logical:Document):Validation{
     }
     for(const [index,row]of payload.relationships.entries()){
       const module=logical.modules.find(m=>m.id===row.module);
-      const relationships=(module as {relationships?:{name:string}[]}|undefined)?.relationships;
-      if(!relationships?.some(r=>r.name===row.name))add('BINDING_REFERENCE',`/extensions/umf.binding/relationships/${index}`,'Missing authored relationship');
+      const relationships=(module as {relationships?:{id?:string;name:string}[]}|undefined)?.relationships;
+      const matches=Array.isArray(relationships)?relationships.filter(r=>payload.profile==='umf-binding-2'?'id'in row&&r.id===row.id:'name'in row&&r.name===row.name):[];
+      if((payload.profile==='umf-binding-2'&&logical.umf!=='0.7.0')||matches.length!==1)add('BINDING_REFERENCE',`/extensions/umf.binding/relationships/${index}`,'Missing authored relationship');
     }
   }
   return {valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};
@@ -194,4 +207,66 @@ export function projectBindingIndexes(binding:Document,logical:Document,lossPoli
   const result:BindingIndexProjection={status:nonExact?(lossPolicy==='strict'?'blocked':'reported'):'projected',source:copyJson(binding) as unknown as Document,logical:copyJson(logical) as unknown as Document,target:copyJson(payload.target) as BindingPayload['target'],outcomes};
   if(result.status!=='blocked')result.candidate=payload.indexes.filter((_,index)=>outcomes[index]!.outcome==='exact');
   return result;
+}
+
+export interface BindingMigrationReceipt {
+  profile:'umf-binding-migration-1';
+  original:Document;
+  logical:Document;
+  migrated:Document;
+  mappings:{path:string;original:BindingRelationship;stable:StableBindingRelationship}[];
+}
+export interface BindingMigrationResult {document:Document;receipt:BindingMigrationReceipt}
+
+/** Explicit, atomic name-to-ID migration against the caller's exact paired model. */
+export function migrateBindingRelationships(binding:Document,logical:Document):BindingMigrationResult {
+  const original=copyJson(binding) as unknown as Document;
+  const model=copyJson(logical) as unknown as Document;
+  const payload=getBinding(original,model);
+  if(payload.profile!=='umf-binding-1'||original.vocabularies[BINDING_EXTENSION]?.version!=='0.1.0'||model.umf!=='0.7.0')throw new UmfError('BINDING_MIGRATION','Migration requires binding 0.1.0 and the paired relationship core 0.7.0 model');
+  const mappings:BindingMigrationReceipt['mappings']=[];
+  const document=copyJson(original) as unknown as Document;
+  const next=document.extensions![BINDING_EXTENSION] as unknown as BindingPayload;
+  next.relationships=payload.relationships.map((entry,index)=>{
+    const path=`/extensions/umf.binding/relationships/${index}`;
+    if(!('name'in entry)||Object.hasOwn(entry,'id'))throw new UmfError('BINDING_MIGRATION_COLLISION','Existing ID-shaped unknown content cannot be overwritten',path);
+    const rows=model.modules.find(m=>m.id===entry.module)?.relationships as {id:string;name:string}[]|undefined;
+    const matches=rows?.filter(r=>r.name===entry.name)??[];
+    if(matches.length!==1)throw new UmfError('BINDING_MIGRATION_REFERENCE','Exactly one authored relationship name must match',path);
+    const stable=copyJson(entry) as unknown as StableBindingRelationship & {name?:string};
+    delete stable.name;stable.id=matches[0]!.id;
+    mappings.push({path,original:copyJson(entry) as unknown as BindingRelationship,stable:copyJson(stable) as unknown as StableBindingRelationship});
+    return stable;
+  });
+  next.profile='umf-binding-2';document.vocabularies[BINDING_EXTENSION]!.version='0.2.0';
+  const checked=inspectBinding(document,model);
+  if(!checked.valid)throw new UmfError('BINDING_MIGRATION',JSON.stringify(checked.diagnostics));
+  return {document,receipt:copyJson({profile:'umf-binding-migration-1',original,logical:model,migrated:document,mappings}) as unknown as BindingMigrationReceipt};
+}
+
+function equalBindingJson(a:unknown,b:unknown):boolean {
+  if(a===b)return true;
+  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;
+  const left=Object.keys(a),right=Object.keys(b);
+  return left.length===right.length&&left.every(key=>Object.hasOwn(b,key)&&equalBindingJson((a as Record<string,unknown>)[key],(b as Record<string,unknown>)[key]));
+}
+export interface BindingRollbackResult {
+  document:Document;
+  residuals:{path:string;reason:string;value:Json}[];
+}
+/** Restore the exact original; retain every later edit explicitly, without name reassociation. */
+export function rollbackBindingRelationships(current:Document,logical:Document,receipt:BindingMigrationReceipt):BindingRollbackResult {
+  const retained=copyJson(receipt) as unknown as BindingMigrationReceipt;
+  if(retained.profile!=='umf-binding-migration-1')throw new UmfError('BINDING_RECEIPT','Unsupported migration receipt');
+  const expected=migrateBindingRelationships(retained.original,retained.logical).receipt;
+  if(!equalBindingJson(expected,retained))throw new UmfError('BINDING_RECEIPT','Receipt does not reproduce its retained migration');
+  const now=copyJson(current) as unknown as Document;
+  const payload=getBinding(now,logical);
+  if(payload.profile!=='umf-binding-2'||now.id!==retained.migrated.id||now.umf!==retained.migrated.umf||logical.id!==retained.logical.id||logical.umf!==retained.logical.umf)throw new UmfError('BINDING_ROLLBACK','Current binding/model identities differ from migration');
+  const residuals:BindingRollbackResult['residuals']=[];
+  payload.relationships.forEach((row,index)=>{
+    if(!retained.mappings.some(mapping=>equalBindingJson(mapping.stable,row)))residuals.push({path:`/extensions/umf.binding/relationships/${index}`,reason:'ID-only or edited relationship choice is not representable in the restored name-based binding',value:copyJson(row)});
+  });
+  if(!equalBindingJson(now,retained.migrated))residuals.push({path:'',reason:'Complete current binding retained: rollback restores original content and does not discard later edits',value:copyJson(now)});
+  return {document:copyJson(retained.original) as unknown as Document,residuals};
 }
