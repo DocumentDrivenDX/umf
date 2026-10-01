@@ -366,3 +366,5 @@ export * from './core-ideals/relationship-avro';
 export * from './core-ideals/relationship-avro-projection';
 export * from './core-ideals/relationship-parquet';
 export * from './core-ideals/relationship-parquet-projection';
+export * from './core-ideals/relationship-sqlserver';
+export * from './core-ideals/relationship-sqlserver-projection';

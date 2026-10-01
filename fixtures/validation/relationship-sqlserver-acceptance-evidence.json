@@ -1,0 +1,57 @@
+{
+  "bead": "umf-7e6ecaec",
+  "status": "qualified-binding-acceptance",
+  "scope": "SQL Server 2022 16.0.4295.3 integral-key FK/junction new tables and captured native refinement observations; no native equivalence or relationship admission",
+  "focused": {
+    "tests": 54,
+    "assertions": 360,
+    "failures": 0
+  },
+  "sqlserverCompatibility": {
+    "tests": 156,
+    "files": 20,
+    "assertions": 7341,
+    "failures": 0
+  },
+  "bindingCompatibility": {
+    "tests": 46,
+    "files": 11,
+    "assertions": 253,
+    "failures": 0
+  },
+  "native": {
+    "schemas": 20,
+    "probes": 156,
+    "observations": 26
+  },
+  "browser": {
+    "cases": 50,
+    "idealRecoveries": 40,
+    "bindingRecoveries": 40,
+    "sqlRecoveries": 40,
+    "catalogRecoveries": 2,
+    "refusals": 41
+  },
+  "commands": [
+    "bun test tests/core-ideals/relationship-sqlserver.test.ts",
+    "bun scripts/core-ideals/relationship-sqlserver-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/relationship-sqlserver-browser.ts",
+    "bun test tests/core-ideals/relationship-sqlserver.test.ts tests/core-ideals/*sqlserver*.test.ts",
+    "bun test tests/binding",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas"
+  ],
+  "sha256": {
+    "src/core-ideals/relationship-sqlserver.ts": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385",
+    "src/core-ideals/relationship-sqlserver-projection.ts": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf",
+    "spec/core/sqlserver-relationship-classification.schema.json": "7c551a2bd1db4d33454543f507bf3bdc868617a9d164fd1fec08a633d2ab757e",
+    "spec/core/relationship-sqlserver-projection.schema.json": "46dc1bb9e9449856bd5eb4233b0fc043d7543a91cc20f10de44f8ae430122286",
+    "tests/core-ideals/relationship-sqlserver.test.ts": "24334349e157e57898cdc0121498d86ec6f1790376fab2e8a31c876b007412ce",
+    "fixtures/validation/relationship-sqlserver-native.json": "d6faf7be2fb5b8b11b27503eb70f2771b2e91824ea5b0cfb40e7d72ca9a776ab",
+    "fixtures/validation/relationship-sqlserver-browser.json": "ccfd7190803f4df0ed5fed6b74ed75e2e52ef070201fad9d6f2177bc411517a4",
+    "fixtures/validation/relationship-sqlserver-focused.log": "746ed3c1e93e86d1708393c361b391fd33fee9f0dcc4a6aa671ea4454563893d",
+    "fixtures/validation/relationship-sqlserver-regression.log": "250636a65ff3e0afdd35fa69e3d66e1847a7bddd0eaec98705d2c36923ae3825",
+    "fixtures/validation/relationship-sqlserver-binding-regression.log": "0e49e01f48bb07d02fbbdb66c142c622b7c20db81ac8ff7181b73e9f0bbe0dac"
+  }
+}

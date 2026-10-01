@@ -1,0 +1,202 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/relationship-sqlserver.test.ts:
+(pass) SQL Server relationship boolean-strict [61.84ms]
+(pass) SQL Server relationship boolean-report [498.63ms]
+(pass) SQL Server relationship tinyint-strict [48.67ms]
+(pass) SQL Server relationship tinyint-report [410.35ms]
+(pass) SQL Server relationship smallint-strict [37.61ms]
+(pass) SQL Server relationship smallint-report [354.77ms]
+(pass) SQL Server relationship int-strict [37.25ms]
+(pass) SQL Server relationship int-report [302.91ms]
+(pass) SQL Server relationship many-to-one-strict [25.26ms]
+(pass) SQL Server relationship many-to-one-report [349.61ms]
+(pass) SQL Server relationship optional-strict [31.16ms]
+(pass) SQL Server relationship optional-report [341.72ms]
+(pass) SQL Server relationship one-to-one-strict [34.84ms]
+(pass) SQL Server relationship one-to-one-report [345.15ms]
+(pass) SQL Server relationship optional-one-to-one-strict [30.30ms]
+(pass) SQL Server relationship optional-one-to-one-report [320.76ms]
+(pass) SQL Server relationship composite-strict [35.69ms]
+(pass) SQL Server relationship composite-report [329.66ms]
+(pass) SQL Server relationship optional-composite-strict [34.36ms]
+(pass) SQL Server relationship optional-composite-report [345.64ms]
+(pass) SQL Server relationship self-strict [31.89ms]
+(pass) SQL Server relationship self-report [332.00ms]
+(pass) SQL Server relationship alternate-strict [26.54ms]
+(pass) SQL Server relationship alternate-report [334.55ms]
+(pass) SQL Server relationship junction-strict [31.40ms]
+(pass) SQL Server relationship junction-report [307.20ms]
+(pass) SQL Server relationship junction-one-strict [32.86ms]
+(pass) SQL Server relationship junction-one-report [316.98ms]
+(pass) SQL Server relationship junction-bounded-strict [27.73ms]
+(pass) SQL Server relationship junction-bounded-report [302.48ms]
+(pass) SQL Server relationship owned-strict [26.50ms]
+(pass) SQL Server relationship owned-report [305.38ms]
+(pass) SQL Server relationship undirected-strict [30.96ms]
+(pass) SQL Server relationship undirected-report [299.36ms]
+(pass) SQL Server relationship cascade-strict [31.18ms]
+(pass) SQL Server relationship cascade-report [310.75ms]
+(pass) SQL Server relationship set-null-optional-strict [26.61ms]
+(pass) SQL Server relationship set-null-optional-report [313.48ms]
+(pass) SQL Server relationship unknown-binding-strict [27.70ms]
+(pass) SQL Server relationship unknown-binding-report [306.78ms]
+(pass) SQL Server relationship heterogeneous-strict [30.37ms]
+(pass) SQL Server relationship heterogeneous-report [27.59ms]
+(pass) SQL Server relationship association-strict [32.31ms]
+(pass) SQL Server relationship association-report [27.96ms]
+(pass) SQL Server relationship string-domain-strict [28.74ms]
+(pass) SQL Server relationship string-domain-report [33.74ms]
+(pass) SQL Server relationship wrong-key-strict [27.48ms]
+(pass) SQL Server relationship wrong-key-report [31.65ms]
+(pass) SQL Server relationship wrong-column-strict [26.61ms]
+(pass) SQL Server relationship wrong-column-report [32.05ms]
+(pass) stable IDs, altered binding/author, unknown content, hostile accessors and naming refusal [152.98ms]
+(pass) native captured trust/actions/Keys and unknown source recover exactly [2342.64ms]
+(pass) schema object and generated index naming collisions refuse; binding indexes stay residual [167.51ms]
+(pass) synthetic type/collation contradictions retain refinements without compatible-enforcement claim [1292.40ms]
+
+tests/core-ideals/record-sqlserver.test.ts:
+(pass) whole captured tables become ordered records with exact source recovery [12627.42ms]
+(pass) one member conflict blocks the whole record and provenance cannot be silently replaced [9633.13ms]
+(pass) collisions, missing identities, non-increasing ordinals and stale receipts fail safely [9687.08ms]
+
+tests/core-ideals/record-sqlserver-projection.test.ts:
+(pass) record member order and strict/report policies produce atomic SQL with exact ideal recovery [98.65ms]
+(pass) empty records, collisions, stale provenance and altered SQL cannot publish or recover false meaning [21.96ms]
+
+tests/core-ideals/nullability-sqlserver.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [70336.98ms]
+(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [591.03ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1190.91ms]
+(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [3200.86ms]
+(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [669.55ms]
+
+tests/core-ideals/nullability-sqlserver-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [234.39ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [8.34ms]
+(pass) invalid permanent identifiers refuse and native nullability is always explicit [37.16ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [8.75ms]
+
+tests/core-ideals/key-sqlserver.test.ts:
+(pass) captured enforcement never invents identity; native padding prevents exact byte/string claims [159.30ms]
+(pass) strict blocks atomically and report recovers original catalog text through both serializations [792.82ms]
+(pass) unknown native numeric lexemes and core extensions remain untouched [288.51ms]
+(pass) forged exactness, stale targets, conflicting extension and accessors refuse [663.37ms]
+(pass) SQL Server key refuses disabled disagreement [126.28ms]
+(pass) SQL Server key refuses constraint kind disagreement [123.29ms]
+(pass) SQL Server key refuses tuple disagreement [128.27ms]
+(pass) SQL Server key refuses omitted constraint [127.23ms]
+(pass) SQL Server key refuses missing component [132.95ms]
+(pass) SQL Server key refuses ordinal gap [127.04ms]
+(pass) SQL Server key refuses included key [123.56ms]
+(pass) SQL Server key refuses wrong version [122.46ms]
+(pass) SQL Server key refuses modified snapshot [136.33ms]
+
+tests/core-ideals/key-sqlserver-projection.test.ts:
+(pass) SQL Server authored keys: primary-strict [13.75ms]
+(pass) SQL Server authored keys: primary-report [25.48ms]
+(pass) SQL Server authored keys: no-primary-strict [4.90ms]
+(pass) SQL Server authored keys: no-primary-report [20.67ms]
+(pass) SQL Server authored keys: rename-and-reorder [22.73ms]
+(pass) SQL Server authored keys: boolean [19.84ms]
+(pass) SQL Server authored keys: decimal [30.74ms]
+(pass) SQL Server authored keys: binary [23.65ms]
+(pass) SQL Server authored keys: integer-width [23.53ms]
+(pass) SQL Server authored keys: unsigned [25.65ms]
+(pass) SQL Server authored keys: string-length [23.81ms]
+(pass) SQL Server authored keys: binary-length [26.66ms]
+(pass) SQL Server authored keys: compound-ordered [21.43ms]
+(pass) SQL Server authored keys: multiple-alternates [51.06ms]
+(pass) SQL Server authored keys: unknown-extension [24.75ms]
+(pass) SQL Server authored keys: unknown-key-qualifier [22.98ms]
+(pass) SQL Server authored keys: unknown-member-qualifier [21.75ms]
+(pass) SQL Server authored keys: unknown-facet-qualifier [23.95ms]
+(pass) SQL Server authored keys: family-conflict [4.26ms]
+(pass) SQL Server authored keys: quoted-identifiers [30.83ms]
+(pass) SQL Server authored keys: missing-encoding [4.30ms]
+(pass) SQL Server authored keys: alternate-byte-budget [3.61ms]
+(pass) SQL Server authored keys: primary-byte-budget [4.29ms]
+(pass) SQL Server authored keys: primary-byte-boundary [20.04ms]
+(pass) SQL Server authored keys: alternate-byte-boundary [20.36ms]
+(pass) SQL Server authored keys: alternate-byte-overflow [4.06ms]
+(pass) stable identity and ordered expanded physical components remain distinct [42.96ms]
+(pass) missing, duplicated and stale author declarations refuse [40.08ms]
+(pass) physical name collisions, malformed binding and getters refuse atomically [27.61ms]
+(pass) forged receipts, altered SQL, session settings and missing residuals refuse recovery [17.61ms]
+(pass) generated native evidence records actual enforcement and source fingerprints [6.98ms]
+(pass) expanded key column limit includes encoding helpers and preserves blocked source [46.25ms]
+(pass) missing and cross-record membership never establishes key ownership [5.70ms]
+(pass) unknown component qualifiers block an exact equality claim independently of other keys [13.40ms]
+
+tests/core-ideals/key-sqlserver-encoding.test.ts:
+(pass) native encoding evidence asserts actual values, failures and pinned source fingerprints [1.34ms]
+(pass) stored byte vectors preserve the distinct core tuple values in the qualified examples [10.56ms]
+(pass) computed native keys remain observations and all encoding metadata recovers [394.73ms]
+
+tests/core-ideals/field-sqlserver.test.ts:
+(pass) SQL Server captured members classify independently of scalar/alias/index semantics [9432.05ms]
+(pass) authored conflicts block both policies, while matching authored fields remain explicit [558.21ms]
+(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [173.79ms]
+(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [357.00ms]
+
+tests/core-ideals/field-sqlserver-projection.test.ts:
+(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [40.78ms]
+(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [7.01ms]
+
+tests/core-ideals/facets-sqlserver.test.ts:
+(pass) width, decimal coefficient and byte bounds classify under explicit non-null scopes [987.83ms]
+(pass) native counterexamples remain explicit and strict/report results differ [1739.71ms]
+(pass) JSON and YAML receipts recover original native text for every discovery column [11387.93ms]
+(pass) authored facets need fresh receipts and conflict without overwriting [608.48ms]
+(pass) unknown exact tokens survive; malformed requests, getters and changed archives refuse [267.03ms]
+(pass) extension schema validates real outputs and rejects forged profile [109.92ms]
+(pass) computed columns, unresolved table associations and noncanonical ranges retain residuals [388.75ms]
+
+tests/core-ideals/facets-sqlserver-projection.test.ts:
+(pass) all authored cases block explicitly or recover the ideal through both receipt formats [646.45ms]
+(pass) range, coefficient and byte checks honor declared facets; string and conversion losses remain explicit [5.68ms]
+(pass) unknown meaning, forged receipts, invalid identifiers and unsafe comments never disappear [6.84ms]
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [132.00ms]
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [0.54ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [1.24ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [3.22ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.26ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [5.48ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.57ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.16ms]
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [4836.84ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [855.54ms]
+(pass) missing inventory, column association, type and version are explicit [1575.66ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [290.83ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.56ms]
+(pass) empty-string inference requires zero bytes, variable storage and scoped enforcement [882.30ms]
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [2.02ms]
+
+tests/core-ideals/facets-sqlserver-association.test.ts:
+(pass) independent table declaration probes establish catalog association and counterexamples [690.35ms]
+
+tests/core-ideals/cardinality-sqlserver.test.ts:
+(pass) logical representations retain physical scalar metadata and exact native text [16281.17ms]
+(pass) existing logical and physical identities, altered receipts and stale models cannot be overwritten [397.03ms]
+(pass) unknown native numeric tokens survive separate logical representation [269.24ms]
+(pass) constraint association, replication exemptions and unrecognized expressions cannot prove JSON shape [751.26ms]
+
+tests/core-ideals/cardinality-sqlserver-projection.test.ts:
+(pass) scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats [353.98ms]
+(pass) unsafe types, malformed identifiers, exact-value demands and changed receipts refuse [16.49ms]
+
+ 156 pass
+ 0 fail
+ 7341 expect() calls
+Ran 156 tests across 20 files. [183.26s]
