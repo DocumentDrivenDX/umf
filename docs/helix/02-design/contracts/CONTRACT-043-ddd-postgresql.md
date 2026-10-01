@@ -275,3 +275,42 @@ The schemas and Bun/Chromium evidence are documented in
 [the layout validation record](../../04-build/evidence/postgresql-relationship-layout.md).
 No FK DDL generator, native constraint enforcement or Relationship admission
 is claimed by this stage.
+
+## Whole-generator profile (2026-10-01)
+
+`projectDddToPostgresql` implements `ddd-postgresql-1` version `1.0.0` for
+PostgreSQL **17.4**, composing the DDD table stage, exact stable-ID layout and
+binding index stage. Its complete JSON schemas describe policy and directed
+result: copied core 0.7 logical source, stable binding 0.2 source, explicit table
+and layout policies, source-qualified residuals, statement mappings, exact SQL
+and a PostgreSQL archive. Successful report output contains every supported
+bound table, scalar/JSONB column, object CHECK, authored Key, selected carrier
+and supported index. Any unsafe or incomplete structural choice blocks the
+whole candidate. Strict mode blocks all remaining meaning gaps.
+
+Anonymous junctions and homogeneous edge carriers are real tables. Shared
+edges have identical endpoint Keys and columns, distinct discriminator values,
+and a CHECK admitting exactly those values; ordinary FKs apply to every row.
+Heterogeneous endpoints and discriminator mappings onto an association Record
+are refused. Keyed junction association Records preserve their attributes and
+all Keys. Inline storage remains a source-linked residual. No additional pair
+uniqueness, cascading actions, membership minimum or lifecycle behavior is
+inferred. Cyclic FKs are emitted after all tables and Keys exist.
+
+The whole generator extends the metadata-only partition checkpoint with an
+explicit LIST/default family: every authored Key on a partitioned table must
+already contain the partition column. Otherwise both modes block; no Field is
+added to a Key. Default partitions participate in table/backing-Key/index/carrier
+namespace collision checks. Text Key and referencing comparator columns use
+explicit `pg_catalog."C"`; other text retains table-stage default collation with
+a residual. JSONB object checks use `ck-table-column-object-v1`; normalization,
+embedded path constraints and DDD aggregate/invariant meaning remain residual.
+Every declared index is emitted by the bounded index stage or receives its
+original binding-path residual; unsafe predicates block both modes.
+
+`recoverDddPostgresqlIdeal` recomputes the complete receipt and restores logical,
+binding and policy sources. `recoverDddPostgresqlNative` verifies the native
+archive and restores exact emitted source bytes. Unclaimed native DDL remains
+available through the PostgreSQL archive; native import does not infer author
+intent. This is generated reviewable schema, not deployed migration support.
+See [whole-generator evidence](../../04-build/evidence/ddd-postgresql.md).

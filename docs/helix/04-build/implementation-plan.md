@@ -5207,3 +5207,15 @@ Chromium recoveries. Historical RDFLib 7.1.4 evidence is not relabeled.
 Repository-wide compatibility and the separate relationship admission/five-system
 delivery gates remain separate. These additional systems are not priority-gate
 substitutes, and no native equivalence is claimed.
+
+### Complete DDD PostgreSQL generation (2026-10-01)
+
+CONTRACT-043 / TD-048 now implement the whole `ddd-postgresql-1` report/strict
+projection: complete bound table/JSONB graph, exact Keys and FK/junction/keyed
+association structures, real shared homogeneous edge carriers, eligible LIST
+partitions without Key widening, and exhaustive declared-index dispositions.
+Full schemas, source/statement mappings and verified ideal/binding/policy/native
+recovery accompany pinned PostgreSQL17.4 and Chromium acceptance. Unsupported
+heterogeneous endpoints, association-edge discriminator layouts and unsafe
+structural choices remain explicit refusals. See
+[qualified execution evidence](evidence/ddd-postgresql.md).

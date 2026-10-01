@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 341,
-  "passed": 341,
+  "schemas": 343,
+  "passed": 343,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -2267,6 +2267,20 @@
     {
       "path": "spec/projections/ddd-json-schema.schema.json",
       "id": "urn:umf:projection:ddd-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/ddd-postgresql-policy.schema.json",
+      "id": "urn:umf:ddd-postgresql-policy:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/ddd-postgresql-projection.schema.json",
+      "id": "urn:umf:ddd-postgresql-projection:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
