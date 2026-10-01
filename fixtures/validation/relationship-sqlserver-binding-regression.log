@@ -1,0 +1,74 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/binding/stable-ids.test.ts:
+(pass) @covers US-046-AC3 AC9 AC10: stable ID survives rename and copied receipts preserve old unknown content [355.94ms]
+(pass) @covers US-046-AC3 AC10: duplicate, missing, stale and legacy opaque relationship references refuse [225.78ms]
+(pass) @covers US-046-AC7 AC10: rollback preserves new ID-only choices and all edits as copied residuals [98.83ms]
+(pass) @covers US-046-AC10: receipts are recomputed and unrelated bindings cannot roll back [186.26ms]
+(pass) public binding inspection refuses mismatched profiles and accessors without invoking them [22.86ms]
+(pass) published migration/receipt/rollback schema validates full retained representation and rejects missing content [184.91ms]
+(pass) legacy duplicate identity uses names even when unknown id members differ [40.81ms]
+
+tests/binding/sqlserver-tables.test.ts:
+(pass) @covers US-046-AC2 @covers US-046-AC4 @covers US-046-AC5: explicit tables, partition family and embedded residual [117.08ms]
+(pass) @covers US-046-AC3: stale model, unknown binding content and unsafe type policy block [172.46ms]
+(pass) @covers US-046-AC3: stale SQL Server table policies block before DDL emission [193.14ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5: missing partition policy and DDD identity remain residuals [110.46ms]
+(pass) @covers US-046-AC3: document-column type and path conflicts block before native DDL [110.14ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7: authored and native archives remain separate [117.93ms]
+
+tests/binding/sqlserver-tables-indexes.test.ts:
+(pass) @covers US-046-AC2 @covers US-047-AC4: authored inputs alone generate the same native-valid DDL [732.49ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: planned columns and predicates must be safe before index emission [351.07ms]
+(pass) @covers US-046-AC2 @covers US-047-AC4: generated tables and indexes compose with explicit catalog evidence [371.23ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: stale column evidence and unknown binding block [212.50ms]
+
+tests/binding/sqlserver-indexes.test.ts:
+(pass) @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC8: rowstore, unique and filtered candidates have residuals for other kinds [240.89ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: unsafe filtered predicate and unknown catalog column are residuals [200.84ms]
+(pass) @covers US-047-AC9: a filtered predicate must name an observed column [104.22ms]
+
+tests/binding/postgresql-indexes.test.ts:
+(pass) @covers US-047-AC3 @covers US-047-AC4 @covers US-047-AC5: PostgreSQL kinds, document path and clustering residual [707.26ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: absent native column and unsafe predicate are not emitted [373.46ms]
+(pass) @covers US-047-AC9: identifiers that PostgreSQL would truncate are refused [68.82ms]
+
+tests/binding/parquet.test.ts:
+(pass) @covers US-046-AC4 @covers US-047-AC4: strict Parquet projection blocks every unsupported physical obligation [52.67ms]
+(pass) @covers US-046-AC5 @covers US-047-AC5: report retains every target-specific loss and source [44.77ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: both retained recovery directions [130.06ms]
+(pass) @covers US-046-AC8 @covers US-047-AC8: Parquet version is qualified and index intent is never invented from native file [88.45ms]
+(pass) @covers US-046-AC5: unknown physical refinement remains in source and blocks unsafe lowering [18.61ms]
+
+tests/binding/package.test.ts:
+(pass) @covers US-046-AC1 @covers US-046-AC2: separate binding preserves logical identity and copied choices [78.01ms]
+(pass) @covers US-046-AC7: independent document round-trips in both UMF formats [79.81ms]
+(pass) @covers US-046-AC3: stale model and duplicate or missing bindings fail with paths [78.09ms]
+(pass) @covers US-046-AC7: unknown binding content survives but remains incomplete [55.10ms]
+(pass) @covers US-046-AC2: nested DDD field resolves by owner ID and exact field key [35.94ms]
+
+tests/binding/multi-target.test.ts:
+(pass) @covers US-046-AC1 @covers US-047-AC1: one authored graph has independent physical target bindings [286.23ms]
+(pass) @covers US-046-AC2 @covers US-047-AC3: shared graph Delta clustering is native-readable and unsupported kinds retain residuals [290.59ms]
+
+tests/binding/indexes.test.ts:
+(pass) @covers US-047-AC1 @covers US-047-AC2: ordered index capability lives only in binding [60.15ms]
+(pass) @covers US-047-AC4 @covers US-047-AC5: strict blocks and report residualizes clustering [72.72ms]
+(pass) @covers US-047-AC9: invalid index kind combinations and paths fail [37.65ms]
+(pass) @covers US-047-AC8: target outcomes are qualified and never infer author intent [154.78ms]
+(pass) @covers US-047-AC5: unknown index refinements survive but block unsafe projection [44.42ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: storage alternatives and expression paths cannot be mixed [57.69ms]
+
+tests/binding/iceberg.test.ts:
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC7: sort order is an explicit approximation and native source recovers [549.27ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: unsupported index and missing storage column remain residuals [389.20ms]
+
+tests/binding/delta.test.ts:
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: clustering action uses exact physical columns and preserves native source [112.13ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-047-AC4 @covers US-047-AC5: strict blocks unsupported index and report retains it as residual [246.51ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: native partitioning and absent columns cannot silently become clustering [165.22ms]
+
+ 46 pass
+ 0 fail
+ 253 expect() calls
+Ran 46 tests across 11 files. [13.19s]

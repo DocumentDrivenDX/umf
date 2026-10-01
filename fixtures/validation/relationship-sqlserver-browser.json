@@ -1,0 +1,29 @@
+{
+  "scope": "Qualified FK/junction authoring, stable physical binding, catalog refinements and retained recovery; no native equivalence",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 50,
+    "projected": 20,
+    "blocked": 30,
+    "idealRecoveries": 40,
+    "bindingRecoveries": 40,
+    "sqlRecoveries": 40,
+    "catalogRecoveries": 2,
+    "observations": 26,
+    "refusals": 41,
+    "getterReads": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/relationship-sqlserver-browser.ts": "a2e4ea8c995784f0163b50ceb470c2f1f63eb8b3a77a37a664e9322a0843b7c9",
+    "scripts/core-ideals/relationship-sqlserver-cases.ts": "70b08e89087a6310544361b2c02ebd3c969d5b7d2e3a408b02f471a319030fa8",
+    "src/core-ideals/relationship-sqlserver.ts": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385",
+    "src/core-ideals/relationship-sqlserver-projection.ts": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf",
+    "spec/core/sqlserver-relationship-classification.schema.json": "7c551a2bd1db4d33454543f507bf3bdc868617a9d164fd1fec08a633d2ab757e",
+    "spec/core/relationship-sqlserver-projection.schema.json": "46dc1bb9e9449856bd5eb4233b0fc043d7543a91cc20f10de44f8ae430122286",
+    "fixtures/validation/relationship-sqlserver-native.json": "d6faf7be2fb5b8b11b27503eb70f2771b2e91824ea5b0cfb40e7d72ca9a776ab",
+    "tests/core-ideals/relationship-sqlserver.test.ts": "24334349e157e57898cdc0121498d86ec6f1790376fab2e8a31c876b007412ce",
+    "dist/umf.js": "363345ba272e9da22e6aacceee14b806f5e10231ef027ea09d3921b0f9c93b8d",
+    "src/index.ts": "8ac2af0beffbd8f7447f36063c839f9a4eca233cc0f6ebb9310a44ff21d0e033"
+  }
+}

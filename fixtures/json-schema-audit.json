@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 332,
-  "passed": 332,
+  "schemas": 335,
+  "passed": 335,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -781,6 +781,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/relationship-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:relationship-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/relationship-tablespec-projection.schema.json",
       "id": "urn:umf:core:relationship-tablespec-projection:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -839,6 +846,13 @@
     {
       "path": "spec/core/sqlserver-record-classification.schema.json",
       "id": "urn:umf:core:sqlserver-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-relationship-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-relationship-classification:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -2064,6 +2078,13 @@
     {
       "path": "spec/extensions/sqlserver-nullability/schema.json",
       "id": "urn:umf:sqlserver:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-relationships/schema.json",
+      "id": "urn:umf:sqlserver:relationship-binding:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
