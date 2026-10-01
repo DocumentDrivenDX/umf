@@ -1,0 +1,37 @@
+{
+  "bead": "umf-803a5916",
+  "status": "qualified-binding-acceptance",
+  "scope": "Checked physical-schema observations and explicit nested target-key schema carriers only; no ideal admission or native equivalence",
+  "focused": {
+    "tests": 50,
+    "assertions": 299,
+    "failures": 0
+  },
+  "compatibility": {
+    "tests": 117,
+    "files": 11,
+    "assertions": 7174,
+    "failures": 0
+  },
+  "native": "PyArrow 21.0.0; 16 emitted schemas",
+  "browser": "48 strict/report cases; 32 ideal, native and classification recoveries each",
+  "commands": [
+    "bun test tests/core-ideals/relationship-parquet.test.ts",
+    "bun scripts/core-ideals/relationship-parquet-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/relationship-parquet-browser.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun test tests/core-ideals/relationship-parquet.test.ts tests/core-ideals/key-parquet.test.ts tests/core-ideals/key-parquet-projection.test.ts tests/core-ideals/cardinality-parquet*.test.ts tests/core-ideals/facets-parquet*.test.ts tests/core-ideals/nullability-parquet*.test.ts tests/core-ideals/field-parquet*.test.ts"
+  ],
+  "sha256": {
+    "src/core-ideals/relationship-parquet.ts": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151",
+    "src/core-ideals/relationship-parquet-projection.ts": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd",
+    "src/core-ideals/relationship-parquet-carrier.ts": "a760913bfe8bb33f5e3db82658f01648855a6c0f43c8a4062831edc1590828ab",
+    "tests/core-ideals/relationship-parquet.test.ts": "b570a2d7d2b5e9e3f87a23d9be779f8377a406453950395bed6310712f86ea51",
+    "fixtures/validation/relationship-parquet-focused.log": "f681b78e7e0d84985c3adfd06030343ffb65dd0f4534b45e54d0f4d9a0f4b68f",
+    "fixtures/validation/relationship-parquet-regression.log": "2d84fed4fe02e5b0803eaeeff868d869204eb375b3bc0137003eea0847fa229d",
+    "fixtures/validation/relationship-parquet-native.json": "9735bbe26c3808649c8040df37a4e51f3ebe92625d3f569eac4ac892dfa903bf",
+    "fixtures/validation/relationship-parquet-browser.json": "de8afeccdaf4d520b6f9f7049ae6d9fa33c2bb25644030e5dfec8204f5f3f277"
+  }
+}
