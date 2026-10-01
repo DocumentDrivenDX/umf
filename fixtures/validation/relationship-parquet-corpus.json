@@ -1,0 +1,476 @@
+{
+  "cases": [
+    {
+      "name": "one-or-more-report",
+      "path": "fixtures/parquet/relationships/one-or-more-report.parquet",
+      "request": {
+        "id": "avro-one-or-more",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "array",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "f9ce3a266f9309ca9d4736652b81cbf8a941082b93b6ef040acfd9fd96f36e36"
+    },
+    {
+      "name": "boolean-report",
+      "path": "fixtures/parquet/relationships/boolean-report.parquet",
+      "request": {
+        "id": "avro-boolean",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "boolean"
+          }
+        ]
+      },
+      "sha256": "24ef0c22f42948828c4334f949f17bf66f84fdf65d75fe8f60085b34adacae0a"
+    },
+    {
+      "name": "binary-report",
+      "path": "fixtures/parquet/relationships/binary-report.parquet",
+      "request": {
+        "id": "avro-binary",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "bytes"
+          }
+        ]
+      },
+      "sha256": "60b493d7f9a7297b3d3eaccb100f3e818638ed5d52d3a489da659cc0eeb7db99"
+    },
+    {
+      "name": "int32-report",
+      "path": "fixtures/parquet/relationships/int32-report.parquet",
+      "request": {
+        "id": "avro-int32",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "int"
+          }
+        ]
+      },
+      "sha256": "1b440d0489120f8f64fef9075cdbce1bbc3522f876170181a0be2e0882445d27"
+    },
+    {
+      "name": "many-to-one-report",
+      "path": "fixtures/parquet/relationships/many-to-one-report.parquet",
+      "request": {
+        "id": "avro-many-to-one",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "one-to-one-report",
+      "path": "fixtures/parquet/relationships/one-to-one-report.parquet",
+      "request": {
+        "id": "avro-one-to-one",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "many-to-many-report",
+      "path": "fixtures/parquet/relationships/many-to-many-report.parquet",
+      "request": {
+        "id": "avro-many-to-many",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "array",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "f9ce3a266f9309ca9d4736652b81cbf8a941082b93b6ef040acfd9fd96f36e36"
+    },
+    {
+      "name": "bounded-required-report",
+      "path": "fixtures/parquet/relationships/bounded-required-report.parquet",
+      "request": {
+        "id": "avro-bounded-required",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "array",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "f9ce3a266f9309ca9d4736652b81cbf8a941082b93b6ef040acfd9fd96f36e36"
+    },
+    {
+      "name": "owned-report",
+      "path": "fixtures/parquet/relationships/owned-report.parquet",
+      "request": {
+        "id": "avro-owned",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "undirected-report",
+      "path": "fixtures/parquet/relationships/undirected-report.parquet",
+      "request": {
+        "id": "avro-undirected",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "self-report",
+      "path": "fixtures/parquet/relationships/self-report.parquet",
+      "request": {
+        "id": "avro-self",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "alternate-report",
+      "path": "fixtures/parquet/relationships/alternate-report.parquet",
+      "request": {
+        "id": "avro-alternate",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.code"
+            },
+            "name": "key_0",
+            "type": "string"
+          }
+        ]
+      },
+      "sha256": "7e461cb3cabd47264d968de96335e0abbe101296bceeb2dfe49bc1c86b865d75"
+    },
+    {
+      "name": "composite-report",
+      "path": "fixtures/parquet/relationships/composite-report.parquet",
+      "request": {
+        "id": "avro-composite",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          },
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.code"
+            },
+            "name": "key_1",
+            "type": "string"
+          }
+        ]
+      },
+      "sha256": "0a6f31f552870d7e79c199de62fb45781c45660aaaf8dd2a8f7278d381afacdf"
+    },
+    {
+      "name": "unknown-report",
+      "path": "fixtures/parquet/relationships/unknown-report.parquet",
+      "request": {
+        "id": "avro-unknown",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    },
+    {
+      "name": "nullable-report",
+      "path": "fixtures/parquet/relationships/nullable-report.parquet",
+      "request": {
+        "id": "avro-nullable",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "nullable-one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "6ea294086b3d46b6fd8a689bc63ce37be02b15b55dfce7d30fa05ac52199651f"
+    },
+    {
+      "name": "facet-report",
+      "path": "fixtures/parquet/relationships/facet-report.parquet",
+      "request": {
+        "id": "avro-facet",
+        "profile": "target-key-record",
+        "relationship": {
+          "module": "m",
+          "id": "order-customer"
+        },
+        "mode": "report",
+        "recordName": "Source",
+        "namespace": "example",
+        "fieldName": "reference",
+        "keyRecordName": "TargetKey",
+        "shape": "one",
+        "components": [
+          {
+            "targetField": {
+              "module": "m",
+              "element": "Customer.id"
+            },
+            "name": "key_0",
+            "type": "long"
+          }
+        ]
+      },
+      "sha256": "7599f321e1f695490c7c0494d07396f1cbb519b74c57c3d922baeeeaf4b56c07"
+    }
+  ]
+}
