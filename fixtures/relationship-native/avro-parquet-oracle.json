@@ -1,0 +1,32 @@
+{
+  "scope": "Native value containment and scalar ID carriers only; no authored relationship, key resolution, inverse, lifecycle or enforcement inference",
+  "avro": {
+    "runtime": "avsc 5.7.9",
+    "name": "example.relationship.evidence.Order",
+    "fields": [
+      "customer_value",
+      "id",
+      "customer_id"
+    ],
+    "sourceRecovered": true,
+    "authoredRelationshipInferred": false
+  },
+  "parquet": {
+    "authoredRelationshipInferred": false,
+    "bytes": 581,
+    "format": "2.6",
+    "nativeColumns": [
+      "customer_value.id",
+      "customer_id"
+    ],
+    "rows": 0,
+    "runtime": "PyArrow 21.0.0",
+    "sha256": "d235020ee67eac82d35154e76d559adcb58c971804af0b98777d88ec76d0da56",
+    "sourceRecovered": true
+  },
+  "hashes": {
+    "fixtures/relationship-native/avro-value-and-id.avsc": "51ee8ad21655e9828c563aa0ef7db6de6979881157c1774e2a3bba75034aade7",
+    "fixtures/relationship-native/parquet-value-and-id.parquet": "d235020ee67eac82d35154e76d559adcb58c971804af0b98777d88ec76d0da56",
+    "scripts/relationship/avro-parquet-native.py": "d883f468eba6e91deea11412856febcfc77bda3ac808cb2f63960eb7cc902835"
+  }
+}

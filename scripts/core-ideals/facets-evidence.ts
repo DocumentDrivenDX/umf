@@ -19,7 +19,12 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
  const pending: {path: string; record: any}[] = [];
  let fingerprints = 0;
  function local(path: string) {
-  const p = relative(process.cwd(), resolve(path));
+  // Older TableSpec oracle records captured this checkout prefix. Resolve
+  // those proof names against this worktree only; never read the old checkout.
+  const legacy = '/home/erik/Projects/umf/';
+  const source = path.startsWith(legacy) ? path.slice(legacy.length) : path;
+  const p = relative(process.cwd(), resolve(source));
+  if (isAbsolute(source)) assert.fail(`unsafe evidence path: ${path}`);
   assert.ok(path && !isAbsolute(p) && !p.split('/').includes('..'), `unsafe evidence path: ${path}`);
   return p;
  }
@@ -33,6 +38,17 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
   if (!proofs.has(path)) proofs.set(path, JSON.parse(new TextDecoder().decode(await content(path))));
   return proofs.get(path);
  }
+ const replay = await load(file('facets-worktree-revalidation'));
+ assert.equal(replay.profile, 'facet-worktree-revalidation-1');
+ assert.equal(replay.admissionCommit, '9f6db7c5283ef98f04d93af965d6f34e9e44f5f1');
+ assert.ok(replay.changes && typeof replay.changes === 'object' && !Array.isArray(replay.changes));
+ for (const [path, row] of Object.entries(replay.changes) as [string, any][]) {
+  assert.equal(local(path), path, `unsafe revalidation path: ${path}`);
+  assert.deepEqual(Object.keys(row).sort(), ['currentSha256', 'historicalSha256']);
+  assert.match(row.currentSha256, /^[0-9a-f]{64}$/); assert.match(row.historicalSha256, /^[0-9a-f]{64}$/);
+  assert.notEqual(row.currentSha256, row.historicalSha256);
+ }
+ const revalidated = new Set<string>();
  function required(record: any, path: string) {
   assert.ok(Object.hasOwn(record.sha256 ?? {}, path), `missing required proof: ${path}`);
  }
@@ -107,7 +123,16 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
  // Validate all structural requirements first so omitted proofs cannot hide behind
  // unrelated stale fingerprints. Every actual file is read once per verification.
  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
-  assert.equal(digest(await content(p)), h, `${path}: stale ${p}`); fingerprints++;
+  const current = digest(await content(p)), expected = String(h);
+  if (current !== expected) {
+   const key = local(p), row = replay.changes[key];
+   assert.ok(row, `${path}: stale ${p}`);
+   assert.equal(row.historicalSha256, expected, `${path}: unapproved historical hash ${p}`);
+   assert.equal(row.currentSha256, current, `${path}: stale revalidated ${p}`);
+   revalidated.add(key);
+  }
+  fingerprints++;
  }
- return {systems: [...facetSystems], records, fingerprints, refreshSha256: digest(await content(refreshPath)), idealAdmitted: false, nativeEquivalence: false};
+ assert.deepEqual([...revalidated].sort(), Object.keys(replay.changes).sort(), 'Unused or missing revalidation entry');
+ return {systems: [...facetSystems], records, fingerprints, revalidated: [...revalidated].sort(), refreshSha256: digest(await content(refreshPath)), idealAdmitted: false, nativeEquivalence: false};
 }

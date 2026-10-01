@@ -1,0 +1,13 @@
+{
+  "scope": "PostgreSQL 17.4 DDL only: id-only key on tenant-partitioned Order is rejected; explicit (id,tenant) succeeds but changes authored key meaning",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "source": "CREATE SCHEMA sales;\nCREATE TABLE sales.orders (id bigint NOT NULL, tenant text NOT NULL) PARTITION BY LIST (tenant);\nCREATE TABLE sales.orders_default PARTITION OF sales.orders DEFAULT;\n",
+  "idOnly": "ALTER TABLE sales.orders ADD CONSTRAINT orders_id_key PRIMARY KEY (id);\n",
+  "composite": "ALTER TABLE sales.orders ADD CONSTRAINT orders_id_tenant_key PRIMARY KEY (id, tenant);\n",
+  "observed": {
+    "serverVersion": "170004",
+    "idOnlyError": "ERROR:  unique constraint on partitioned table must include all partitioning columns",
+    "compositeAccepted": true
+  },
+  "sha256": "1c18cd892514fd3c7f145037ffb6d6f3a0e7f6620f0dafacb2412fb7e20f39ff"
+}

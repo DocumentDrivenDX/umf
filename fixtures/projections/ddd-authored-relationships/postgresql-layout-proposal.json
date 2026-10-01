@@ -1,0 +1,591 @@
+{
+  "scope": "Prepublication layout policy proposal; exact Key/DDD/column maps require future validator and native DDL proof",
+  "logicalDocumentId": "ddd-postgresql-graph",
+  "logicalCoreVersion": "0.6.0",
+  "binding": {
+    "umf": "0.1.0",
+    "id": "ddd-keyed-postgresql-relationship-binding",
+    "vocabularies": {
+      "umf.binding": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.binding": {
+        "profile": "umf-binding-1",
+        "logical": {
+          "documentId": "ddd-postgresql-graph",
+          "coreVersion": "0.6.0"
+        },
+        "target": {
+          "system": "postgresql",
+          "version": "17.4",
+          "subset": "ddd-tables-jsonb-list-partition"
+        },
+        "elements": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "table": "sales.orders",
+            "partition": null
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "table": "sales.customers"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "table": "sales.products"
+          },
+          {
+            "module": "sales",
+            "element": "OrderProduct",
+            "table": "sales.order_products"
+          }
+        ],
+        "fields": [
+          {
+            "module": "sales",
+            "element": "Order",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "Order",
+            "field": "tenant",
+            "storage": "column",
+            "column": "tenant"
+          },
+          {
+            "module": "sales",
+            "element": "Order",
+            "field": "customerId",
+            "storage": "column",
+            "column": "customerId"
+          },
+          {
+            "module": "sales",
+            "element": "Order",
+            "field": "status",
+            "storage": "column",
+            "column": "status"
+          },
+          {
+            "module": "sales",
+            "element": "Order",
+            "field": "details",
+            "storage": "embedded",
+            "documentColumn": "payload",
+            "path": [
+              "customer",
+              "region"
+            ]
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "Customer",
+            "field": "name",
+            "storage": "column",
+            "column": "name"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "field": "sku",
+            "storage": "column",
+            "column": "sku"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "field": "tags",
+            "storage": "embedded",
+            "documentColumn": "payload",
+            "path": [
+              "tags"
+            ]
+          },
+          {
+            "module": "sales",
+            "element": "OrderProduct",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "OrderProduct",
+            "field": "orderId",
+            "storage": "column",
+            "column": "orderId"
+          },
+          {
+            "module": "sales",
+            "element": "OrderProduct",
+            "field": "productId",
+            "storage": "column",
+            "column": "productId"
+          },
+          {
+            "module": "sales",
+            "element": "OrderProduct",
+            "field": "quantity",
+            "storage": "column",
+            "column": "quantity"
+          }
+        ],
+        "relationships": [],
+        "indexes": [
+          {
+            "name": "orders_btree",
+            "kind": "btree",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_hash",
+            "kind": "hash",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "customerId"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_gin",
+            "kind": "gin",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_gist",
+            "kind": "gist",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_expression",
+            "kind": "expression",
+            "on": [
+              {
+                "documentPath": {
+                  "field": {
+                    "module": "sales",
+                    "element": "Order",
+                    "field": "details"
+                  },
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_partial",
+            "kind": "partial",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status"
+                }
+              }
+            ],
+            "predicate": {
+              "language": "postgresql",
+              "version": "17.4",
+              "expression": "\"status\" = 'paid'"
+            },
+            "unique": false
+          },
+          {
+            "name": "orders_unique",
+            "kind": "unique",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "id"
+                }
+              }
+            ],
+            "unique": true
+          },
+          {
+            "name": "orders_clustering",
+            "kind": "clustering",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "tenant"
+                }
+              }
+            ],
+            "unique": false
+          }
+        ]
+      }
+    }
+  },
+  "tablePolicy": {
+    "fieldTypes": [
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "id",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "tenant",
+        "sqlType": "text"
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "customerId",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "Order",
+        "field": "status",
+        "sqlType": "text"
+      },
+      {
+        "module": "sales",
+        "element": "Customer",
+        "field": "id",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "Customer",
+        "field": "name",
+        "sqlType": "text"
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "field": "id",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "Product",
+        "field": "sku",
+        "sqlType": "text"
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "id",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "orderId",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "productId",
+        "sqlType": "bigint"
+      },
+      {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "quantity",
+        "sqlType": "numeric(12,2)"
+      }
+    ],
+    "partitionFamilies": []
+  },
+  "physicalRelationshipChoices": [
+    {
+      "module": "sales",
+      "id": "order-customer",
+      "storage": "foreign_key"
+    },
+    {
+      "module": "sales",
+      "id": "order-product",
+      "storage": "junction"
+    }
+  ],
+  "policy": {
+    "profile": "postgresql-relationship-layout-1",
+    "targetVersion": "17.4",
+    "keyLayouts": [
+      {
+        "record": {
+          "module": "sales",
+          "element": "Order"
+        },
+        "key": "pk",
+        "table": "sales.orders",
+        "constraint": "pk_orders",
+        "components": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Order_id"
+            },
+            "boundField": {
+              "module": "sales",
+              "element": "Order",
+              "field": "id"
+            },
+            "column": "id",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "Customer"
+        },
+        "key": "pk",
+        "table": "sales.customers",
+        "constraint": "pk_customers",
+        "components": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Customer_id"
+            },
+            "boundField": {
+              "module": "sales",
+              "element": "Customer",
+              "field": "id"
+            },
+            "column": "id",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "Product"
+        },
+        "key": "pk",
+        "table": "sales.products",
+        "constraint": "pk_products",
+        "components": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Product_id"
+            },
+            "boundField": {
+              "module": "sales",
+              "element": "Product",
+              "field": "id"
+            },
+            "column": "id",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "record": {
+          "module": "sales",
+          "element": "OrderProduct"
+        },
+        "key": "pk",
+        "table": "sales.order_products",
+        "constraint": "pk_order_products",
+        "components": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_OrderProduct_id"
+            },
+            "boundField": {
+              "module": "sales",
+              "element": "OrderProduct",
+              "field": "id"
+            },
+            "column": "id",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      }
+    ],
+    "relationshipLayouts": [
+      {
+        "relationship": {
+          "module": "sales",
+          "id": "order-customer"
+        },
+        "storage": "foreign_key",
+        "carrierTable": "sales.orders",
+        "targetKey": {
+          "module": "sales",
+          "element": "Customer",
+          "key": "pk"
+        },
+        "targetConstraint": "fk_orders_customer",
+        "targetComponents": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Customer_id"
+            },
+            "endpointField": {
+              "module": "sales",
+              "element": "Customer",
+              "field": "id"
+            },
+            "endpointColumn": "id",
+            "carrierField": {
+              "module": "sales",
+              "element": "Order",
+              "field": "customerId"
+            },
+            "carrierColumn": "customerId",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "relationship": {
+          "module": "sales",
+          "id": "order-product"
+        },
+        "storage": "junction",
+        "carrierTable": "sales.order_products",
+        "associationRecord": {
+          "module": "sales",
+          "element": "OrderProduct"
+        },
+        "associationKey": {
+          "module": "sales",
+          "element": "OrderProduct",
+          "key": "pk"
+        },
+        "sourceKey": {
+          "module": "sales",
+          "element": "Order",
+          "key": "pk"
+        },
+        "targetKey": {
+          "module": "sales",
+          "element": "Product",
+          "key": "pk"
+        },
+        "sourceConstraint": "fk_order_products_order",
+        "targetConstraint": "fk_order_products_product",
+        "sourceComponents": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Order_id"
+            },
+            "endpointField": {
+              "module": "sales",
+              "element": "Order",
+              "field": "id"
+            },
+            "endpointColumn": "id",
+            "carrierField": {
+              "module": "sales",
+              "element": "OrderProduct",
+              "field": "orderId"
+            },
+            "carrierColumn": "orderId",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ],
+        "targetComponents": [
+          {
+            "keyField": {
+              "module": "sales",
+              "element": "field_Product_id"
+            },
+            "endpointField": {
+              "module": "sales",
+              "element": "Product",
+              "field": "id"
+            },
+            "endpointColumn": "id",
+            "carrierField": {
+              "module": "sales",
+              "element": "OrderProduct",
+              "field": "productId"
+            },
+            "carrierColumn": "productId",
+            "sqlType": "bigint",
+            "nullable": false
+          }
+        ]
+      }
+    ]
+  }
+}

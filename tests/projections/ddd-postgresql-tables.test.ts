@@ -32,11 +32,29 @@ test('@covers US-048-AC3 @covers US-048-AC4: stale and unknown bindings block; u
   await expect(project(duplicate)).rejects.toThrow();
 });
 
+test('@covers US-048-AC3: stale table policy entries block before DDL emission',async()=>{
+ const missing=structuredClone(fixture.policy);
+ missing.fieldTypes.push({module:'sales',element:'Order',field:'removed',sqlType:'text'});
+ await expect(project(fixture.binding,missing)).rejects.toThrow('Field type policy has no table-bound DDD column');
+ const embedded=structuredClone(fixture.policy);
+ embedded.fieldTypes.push({module:'sales',element:'Order',field:'details',sqlType:'text'});
+ await expect(project(fixture.binding,embedded)).rejects.toThrow('Field type policy has no table-bound DDD column');
+ const unbound=structuredClone(fixture.policy);
+ unbound.partitionFamilies.push({name:'unused',column:'id',defaultTable:'unused_default'});
+ await expect(project(fixture.binding,unbound)).rejects.toThrow('Partition family is not selected');
+});
+
 test('@covers US-048-AC3 @covers US-048-AC4: partition and embedded path losses are named',async()=>{
   const policy=structuredClone(fixture.policy);policy.partitionFamilies=[];
   const report=await project(fixture.binding,policy);
   expect(report.residuals.some(x=>x.path.endsWith('/partition'))).toBe(true);
   expect(report.candidate).not.toContain('PARTITION BY LIST');
   expect(report.residuals.some(x=>x.reason.includes('embedded path presence'))).toBe(true);
+  expect(report.residuals.some(x=>x.path==='/extensions/umf.binding/fields/9'&&
+    (x.choice as {element?:string;field?:string;path?:string[]}).element==='Product'&&
+    (x.choice as {field?:string}).field==='tags'&&
+    JSON.stringify((x.choice as {path?:string[]}).path)===JSON.stringify(['tags']))).toBe(true);
+  expect(report.candidate).toContain('CREATE TABLE "sales"."products"');
+  expect(report.candidate).toContain('CONSTRAINT "ck_products_payload_object"');
   expect(report.residuals.some(x=>x.reason.includes('does not emit a primary or unique key'))).toBe(true);
 });

@@ -66,3 +66,27 @@ document changes and dependent acceptance fingerprints, preserving previous
 hashes and runtime results. It does not report new native executions. The final
 [facet gate acceptance record](../../../../fixtures/validation/facets-gate-acceptance-evidence.json) links that historical execution with the current
 documentation and evidence-consistency checks.
+
+## Linked-worktree revalidation
+
+The relationship implementation worktree merges this admission after adding
+unrelated library exports and governed documents. Ten files in the retained
+proof graph consequently have different current hashes. The
+[worktree revalidation receipt](../../../../fixtures/validation/facets-worktree-revalidation.json)
+pins both the original expected hash and the current hash for each exact path.
+The verifier reads legacy TableSpec proof paths from the current worktree only,
+rejects any other absolute or escaping path, and still checks every retained
+fingerprint. A changed byte in an unchanged or revalidated source fails. The
+historical `src/index.ts` hash is present at commit `4b0922f5`; its current
+diff consists of additional binding and directed-projection exports. The
+current tree must also pass the executable five-system conformance replay;
+historical native-engine outputs remain historical evidence, not fresh native
+executions or a claim of native equivalence.
+
+The [worktree replay record](../../../../fixtures/validation/facets-worktree-gate-replay.json)
+links the unchanged historical gate to the current conformance artifact by
+SHA-256. In this worktree, the direct replay passed all five systems and
+checked 17,468 retained fingerprints; the independent Bun test passed 1 test
+and 42 assertions. The evidence verifier passed 2 tests and 24 assertions.
+Typecheck and the 278-schema / 48-package audit passed. Ten exact paths were
+revalidated; any other stale path remains a failure.

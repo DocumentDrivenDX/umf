@@ -69,6 +69,17 @@ The bounded stage emits `String` and `Boolean` through their named built-ins;
 distinct declared custom scalars whose coercion remains a residual. It refuses
 mapping those families to an unrelated built-in merely because SDL parses.
 
+`fixtures/projections/ddd-authored-relationships/expected-relationships.graphql`
+pins a hand-authored target for the future complete generator: Order has
+`customer: Customer!` and `products: [Product]`; Customer and Product each
+have only their declared `orders: [Order]` inverse. OrderProduct remains an
+object with its own identity and quantity field. GraphQL.js 17.0.2,
+GraphQL-core 3.2.12 and Chromium accept and recover the SDL. This native
+target does not encode the named target Key, source-end participation,
+lifecycle ownership or the OrderProduct association linkage; those are
+required residuals. It is an oracle, not generated output or authored
+relationship admission evidence.
+
 For a document that authors core Field/Nullability/Cardinality ideals, the
 policy MUST pair each selected DDD scalar field with an exact
 `{module,element}` core Field reference. Pairing is explicit: identical field

@@ -104,6 +104,14 @@ Chromium; source-linked residuals retain facets, identity, DDD many semantics
 and nullable/absent distinctions. Relationship fields and inverses still await
 TD-045 and do not follow from this evidence.
 
+The hand-authored expected SDL under
+`fixtures/projections/ddd-authored-relationships/` adds only the two authored
+forward relationship fields and their declared inverses to the same entity
+shape. GraphQL.js 17.0.2, GraphQL-core 3.2.12 and Chromium validate the
+expected target; the full generator must separately produce its SDL and
+residualize Key resolution, source participation, lifecycle and reified
+association meaning. No resolver or operation execution is part of this proof.
+
 ## Migration & Rollback
 
 Retain original logical model, report and any native SDL archive across policy

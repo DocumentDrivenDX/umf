@@ -1,0 +1,56 @@
+{
+  "umf": "0.1.0",
+  "id": "ddd-delta-layout",
+  "vocabularies": {
+    "umf.binding": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [],
+  "extensions": {
+    "umf.binding": {
+      "profile": "umf-binding-1",
+      "logical": {
+        "documentId": "ddd-postgresql-graph",
+        "coreVersion": "0.1.0"
+      },
+      "target": {
+        "system": "delta",
+        "version": "3.2",
+        "subset": "liquid-clustering-domain-metadata"
+      },
+      "elements": [
+        {
+          "module": "sales",
+          "element": "Order"
+        }
+      ],
+      "fields": [
+        {
+          "module": "sales",
+          "element": "Order",
+          "field": "tenant",
+          "storage": "column",
+          "column": "tenant"
+        }
+      ],
+      "relationships": [],
+      "indexes": [
+        {
+          "name": "orders_tenant_cluster",
+          "kind": "clustering",
+          "on": [
+            {
+              "field": {
+                "module": "sales",
+                "element": "Order",
+                "field": "tenant"
+              }
+            }
+          ],
+          "unique": false
+        }
+      ]
+    }
+  }
+}

@@ -85,6 +85,14 @@ containing module ID plus exact `id`; cross-document stability and revision
 pinning await the separate CONTRACT-001 successor. The current resolver stays
 within one document.
 
+The experimental Key 0.6.0 candidate makes `Record.members` the explicit
+ownership list for Key component Fields. Relationship publication waits for
+that candidate's acceptance. Endpoint validation MUST use the accepted
+authored membership and named Key, not a DDD field map, an unowned or shared
+Field, or native uniqueness evidence. The relationship envelope follows the
+accepted Key version; it does not reinterpret older documents lacking explicit
+membership as keyed Records.
+
 Multiplicity counts distinct associated record instances, not field values,
 container items or stored rows. It does not assert existing data satisfy a
 minimum, even when `min > 0`; that requires a separate data check. For `Order`
@@ -143,6 +151,14 @@ establish an authored heterogeneous source set. These fixtures do not count
 toward the two-priority-system admission gate until directed projection and
 recovery are tested.
 
+The same corpus includes native Avro 1.12 and Parquet format 2.6 value/ID
+counterexamples (`avro-parquet-oracle.json`, `avro-parquet-browser.json`).
+avsc 5.7.9 and PyArrow 21.0.0 accept their nested-value and scalar-ID
+carriers; the UMF adapters recover the source through JSON/YAML in Bun and
+Chromium. Neither carrier establishes an authored relationship, target Key or
+referential enforcement, and this native observation is not a useful authored
+down-projection for admission.
+
 The admission record MUST contain written meaning, counterexamples, at least
 two useful evidenced down-projections to distinct priority systems and
 up-classification retaining native refinements. A refusal alone is not useful
@@ -150,6 +166,13 @@ down-projection. All five priority systems still require separate scoped
 delivery, both recovery directions and native/browser evidence. GraphQL, RDF
 and LinkML are additional bindings, not substitutes for TableSpec. No binding
 is native-equivalence graduation by default.
+
+`fixtures/relationship/authored/corpus.json` prepares eight authored shape
+cases against the Key 0.6.0 candidate, including an alternate target Key and
+an owned Order→Line target and a keyed association Record. Its Key base
+validates; the relationship proposals
+remain separate until this core ideal is admitted and published. The corpus
+does not itself count as a down-projection or relationship-schema validation.
 
 ## Precedence and Compatibility
 

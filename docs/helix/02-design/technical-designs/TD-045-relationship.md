@@ -40,6 +40,9 @@ do not infer intent from DDD fields, FKs or GraphQL AST nodes. Build one
 priority binding at a time with source-linked outcomes, then run a separate
 admission gate and all-five delivery gate. Additional GraphQL/RDF/LinkML
 profiles retain their own versions and evidence.
+The Key candidate's 0.6.0 `Record.members` list establishes exclusive Field
+ownership; the relationship validator resolves each target Key ID through
+that accepted ownership rule before considering any physical binding.
 
 ## Component Changes
 
@@ -122,6 +125,9 @@ the UMF adapter codecs. TableSpec's confidence value, RDF blank-node list and
 LinkML slot metadata remain native refinements. These observations prepare
 up-classification and residual tests; they do not prove authored projection,
 named target-Key resolution, participation minima or native enforcement.
+The Avro/Parquet native pair in the same corpus distinguishes nested value
+carriers from scalar ID columns with pinned avsc/PyArrow and Chromium recovery;
+it likewise cannot assert authored association or referential enforcement.
 
 ## Migration & Rollback
 

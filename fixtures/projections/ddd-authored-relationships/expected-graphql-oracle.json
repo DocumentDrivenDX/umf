@@ -1,0 +1,50 @@
+{
+  "scope": "Hand-authored expected GraphQL SDL target; native parser/schema/adapter evidence only, no generator or resolver/query execution claim",
+  "graphqlJs": "17.0.2",
+  "native": {
+    "definitions": 7,
+    "fields": {
+      "Customer": {
+        "id": "Int!",
+        "name": "String!",
+        "orders": "[Order]"
+      },
+      "Order": {
+        "customer": "Customer!",
+        "customerId": "Int!",
+        "details": "String",
+        "id": "Int!",
+        "products": "[Product]",
+        "status": "String!",
+        "tenant": "String!"
+      },
+      "OrderProduct": {
+        "id": "Int!",
+        "orderId": "Int!",
+        "productId": "Int!",
+        "quantity": "Decimal!"
+      },
+      "Product": {
+        "id": "Int!",
+        "orders": "[Order]",
+        "sku": "String!",
+        "tags": "[String!]"
+      }
+    },
+    "operationsExecuted": 0,
+    "runtime": "GraphQL-core 3.2.12"
+  },
+  "sourceRecovered": true,
+  "authoredRelationshipsInferred": 0,
+  "residualObligations": [
+    "target key resolution",
+    "source-end participation",
+    "target lifecycle",
+    "OrderProduct association identity/attributes"
+  ],
+  "sha256": {
+    "fixtures/projections/ddd-authored-relationships/expected-relationships.graphql": "6b9ee239f7e7ae35568a31663f083d0c3b968aebdd2ec10afe47e7dffd57599c",
+    "fixtures/projections/ddd-authored-relationships/base.json": "f7187fa40e8c76064cfd08333ef30889bf1203b1a2e2c59f0612a57ca38687d8",
+    "scripts/relationship/graphql-target-native.py": "cd2d70712110bdac103c661b84be494904236cb06eed013a70c2adbeec1de463"
+  }
+}
