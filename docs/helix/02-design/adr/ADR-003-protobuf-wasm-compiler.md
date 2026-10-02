@@ -3,7 +3,7 @@ ddx:
   id: ADR-003
   type: adr
   activity: design
-  status: draft
+  status: accepted
   authoring:
     home: repo
   links:
@@ -17,7 +17,7 @@ ddx:
 
 # ADR-003: Compile Protobuf source with an optional WASM compiler
 
-**Date:** 2026-09-20. **Status:** implemented experimental choice, open to review.
+**Date:** 2026-09-20. **Status:** Accepted 2026-10-02.
 
 ## Context
 
@@ -38,7 +38,8 @@ default; Go is an optional adapter build tool, Python an independent oracle.
 Distribute the compiler as separate assets through `bun run build:protobuf`.
 The main JavaScript library does not load it implicitly. Retain original source
 files as an archive distinct from the editable descriptor state. Source emission
-must later reflect descriptor edits; replaying archived source is not sufficient.
+starts from the current descriptors, reflects accepted edits, and passes a native
+recompile-and-compare gate; replaying archived source is not sufficient.
 
 ## Alternatives
 
@@ -64,6 +65,12 @@ Native source emission now uses protoprint 1.18.1 in the worker, with recompile
 and descriptor comparison gates; Chromium verifies an edited-source round trip.
 Fifteen standard roots pass native emission; four Edition 2024 roots are explicitly
 unsupported. Broader language conformance remains outside the demonstrated scope. This choice does not promote native concepts into UMF core.
+
+The bounded decision is accepted because the implemented build, distribution,
+worker isolation and injected-interface boundaries match this ADR and the recorded
+native and Chromium evidence. Acceptance does not widen the supported language:
+Edition 2024 source operations and broader Protobuf conformance remain outside the
+demonstrated profile.
 
 ## Sources
 

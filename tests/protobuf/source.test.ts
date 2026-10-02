@@ -35,5 +35,5 @@ test('US-003-AC7: native source bundle compiles into editable descriptors with s
    expect(await oracle.exited,out+'\n'+err).toBe(0);
   }
  }finally{await rm(directory,{recursive:true,force:true});}
- await Bun.write('fixtures/protobuf/source-compiler-results.json',JSON.stringify({compiler:archive.compiler,roots:sources.roots,compiled:true,nativeDescriptorAgreement:true,normalization:'SourceCodeInfo excluded across different compilers; omitted syntax normalized to proto2; protoc --retain_options; all other descriptor fields compared',nativeBehaviorChecks:42,originalSourceRetained:true,missingImportRejected:true,invalidFieldNumberRejected:true,sourceEmission:'not yet implemented'},null,2)+'\n');
+ await Bun.write('fixtures/protobuf/source-compiler-results.json',JSON.stringify({compiler:archive.compiler,roots:sources.roots,compiled:true,nativeDescriptorAgreement:true,normalization:'SourceCodeInfo excluded across different compilers; omitted syntax normalized to proto2; protoc --retain_options; all other descriptor fields compared',nativeBehaviorChecks:42,originalSourceRetained:true,missingImportRejected:true,invalidFieldNumberRejected:true,sourceEmissionEvidence:'fixtures/protobuf/emission-results.json'},null,2)+'\n');
 },60000);

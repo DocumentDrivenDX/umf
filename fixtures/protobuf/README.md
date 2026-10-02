@@ -34,11 +34,12 @@ protobuf-es 2.15.0 descriptor graph. Unknown wire fields/options retain raw valu
 bytes and incomplete interpretation. Binary field ordering, redundant singular
 wire occurrences and source lexical spelling are outside this semantic profile.
 
-`descriptor-results.json` names the tested native files and comparison profile.
-Chromium 148.0.7778.0 executes descriptor round-trip and candidate-edit checks.
-All candidate edits report compiler validation as required. The optional browser source compiler and authored runtime behavior checks below
-do not establish full native source emission, universal runtime conformance or
-universal Editions support is claimed; those remain implementation work.
+`descriptor-results.json` names the tested native files and comparison profile and
+links to the source-language adapter evidence. Chromium 148.0.7778.0 executes
+descriptor round-trip and candidate-edit checks. All candidate edits report compiler
+validation as required. The optional browser source compiler and emitter have the
+bounded evidence below; universal runtime conformance and universal Editions support
+are not claimed.
 
 Native descriptor reference:
 [descriptor.proto v36.2](https://github.com/protocolbuffers/protobuf/blob/v36.2/src/google/protobuf/descriptor.proto).

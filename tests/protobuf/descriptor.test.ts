@@ -84,6 +84,6 @@ test('US-003-AC4: independent compiler decodes identical descriptors across auth
   expect(before).toContain('default_value: "9223372036854775807"');expect(before).toContain('51001: "stable identifier"');
   expect(before).toContain('map_entry: true');expect(before).toContain('client_streaming: true');
   const descriptors=fromBinary(FileDescriptorSetSchema,output);
-  await Bun.write('fixtures/protobuf/descriptor-results.json',JSON.stringify({compiler:'libprotoc 36.2',runtime:'@bufbuild/protobuf 2.15.0',files:descriptors.file.map(f=>f.name),nativeDescriptorTextEquality:true,sourceCodeInfoRetained:true,normalization:'Native protoc text decode; no descriptor fields stripped. Binary field ordering and duplicate singular wire occurrences are not lexical guarantees.',sourceLanguageAdapter:'not yet implemented'},null,2)+'\n');
+  await Bun.write('fixtures/protobuf/descriptor-results.json',JSON.stringify({compiler:'libprotoc 36.2',runtime:'@bufbuild/protobuf 2.15.0',files:descriptors.file.map(f=>f.name),nativeDescriptorTextEquality:true,sourceCodeInfoRetained:true,normalization:'Native protoc text decode; no descriptor fields stripped. Binary field ordering and duplicate singular wire occurrences are not lexical guarantees.',sourceLanguageAdapterEvidence:'fixtures/protobuf/source-compiler-results.json'},null,2)+'\n');
  }finally{await rm(directory,{recursive:true,force:true});}
 },20000);
