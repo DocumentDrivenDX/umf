@@ -2,9 +2,37 @@
   "profile": "facet-worktree-revalidation-1",
   "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
   "historicalIndexCommit": "4b0922f500087d6dbc9797bf80e937a0ace10bee",
-  "scope": "Current facet proof matrix after fresh integrated native/browser replay and full regression. Historical merge-drift ledger is retained separately below; no current hash exceptions are required.",
-  "driftGroups": {},
-  "changes": {},
+  "scope": "Current facet proof matrix after fresh integrated native/browser replay and full regression. The current exceptions record governed acceptance-ID normalization and the repository test-boundary clarification; native proof content is unchanged.",
+  "driftGroups": {
+    "normalized governed acceptance identifiers": [
+      "docs/helix/01-frame/user-stories/US-043-core-facets.md"
+    ],
+    "clarified canonical live-test discovery": [
+      "docs/helix/03-test/test-plan.md",
+      "docs/helix/04-build/implementation-plan.md"
+    ],
+    "kept synthetic revalidation coverage compatible with current exceptions": [
+      "tests/core-ideals/facets-evidence.test.ts"
+    ]
+  },
+  "changes": {
+    "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
+      "historicalSha256": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244",
+      "currentSha256": "5fa46fdd1dd0c834cb87a66b1d3f186ca543ddf27a1409788a0facca775f6515"
+    },
+    "docs/helix/03-test/test-plan.md": {
+      "historicalSha256": "2d4dc7ec7bb2a997e1231bb34364a9ef37baa795d042864f58374a55d15a5277",
+      "currentSha256": "5b0422d8c4017acec1d826723ee0fa8764e71675823206441a1ac69d07cb8f2b"
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "historicalSha256": "1dae5e58cc83b0fda7f175285c557ae18eb25f717b9755cae1e575e9fe030945",
+      "currentSha256": "71894767c51ae116adfcf7f89ae0a6a8b1c9262faf30f597ab8d0b49f164d432"
+    },
+    "tests/core-ideals/facets-evidence.test.ts": {
+      "historicalSha256": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
+      "currentSha256": "535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66"
+    }
+  },
   "historicalRevalidation": {
     "profile": "facet-worktree-revalidation-1",
     "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",

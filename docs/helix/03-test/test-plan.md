@@ -160,6 +160,14 @@ records below establish their qualified completion.
 
 ## Testing Strategy
 
+The repository-level Bun test boundary is configured in `bunfig.toml` with
+`test.root = "tests"`. `bun run test` and the Bun stage of
+`bun run test:conformance` therefore discover only the live root suite while
+keeping the repository root as the working directory for fixture paths. Frozen
+acceptance snapshots under `fixtures/**/tests/` remain auditable inputs and are
+never executable test-discovery roots. Focused commands may still name a live
+path under `tests/` explicitly.
+
 TableSpec table-edit checks must cover monolithic/split export, namespace refresh,
 explicit primary-key/context reference repair, retained original source and attached
 core metadata. Table-only edits must leave column/sidecar files byte-identical and

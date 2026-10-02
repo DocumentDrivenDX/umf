@@ -5266,3 +5266,15 @@ final integrated acceptance must replay against the merged implementation.
 The merged implementation passed all 175 compatibility commands and the broad repository regression: 2055 tests across 369 files, 129660 assertions and zero failures. All 8 separate gate/evidence test files and six conformance commands are recorded in the [final acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json); its unique combined totals exclude repeated nested/focused suites. Typechecking, browser builds and the 343-schema / 59-package audits passed.
 
 Architecture, README and the test plan now distinguish the delivered browser library and extension/generator subsets from historical checkpoints. Explicit coverage tags and consumer tests verify binding-aware access decisions plus ordered index/predicate/unknown-content migration and edited rollback. The old facet drift ledger is retained as history; freshly replayed proofs need no current hash exceptions. Native versions, command logs, tested-source fingerprints, refusal boundaries and the resolved pre-fix relationship timeout are retained in the final record. No native-equivalence graduation or completion of unrelated product requirements is claimed.
+
+### Canonical Bun test discovery boundary — umf-99f73baa
+
+`bunfig.toml` fixes Bun's default test root at the live repository `tests/`
+directory. The package and conformance commands retain their explicit `tests`
+target, while a direct `bun test` invocation uses the same boundary and cannot
+discover frozen acceptance snapshots under `fixtures/**/tests/`. The archived
+relationship baseline remains byte-for-byte unchanged and auditable. Typecheck,
+the retained facet-evidence gate and whitespace validation pass; the broad live
+suite traversed only root tests and exposed one governed-document fingerprint
+drift from acceptance-ID normalization, now recorded in the existing explicit
+revalidation ledger.

@@ -47,11 +47,11 @@ test('facet evidence validates exact historical-to-current revalidation and reje
  const current=createHash('sha256').update(await read('src/index.ts')).digest('hex');
  const historical='0'.repeat(64);
  proof.sha256['src/index.ts']=historical;
- replay.changes={'src/index.ts':{historicalSha256:historical,currentSha256:current}};
- replay.driftGroups={'synthetic retained checkpoint':['src/index.ts']};
+ replay.changes['src/index.ts']={historicalSha256:historical,currentSha256:current};
+ replay.driftGroups['synthetic retained checkpoint']=['src/index.ts'];
  const encode=(r:unknown)=>new TextEncoder().encode(JSON.stringify(r));
  const reader=async(p:string)=>p===replayPath?encode(replay):p===proofPath?encode(proof):read(p);
- expect((await verifyFacetEvidence(reader)).revalidated).toEqual(['src/index.ts']);
+ expect((await verifyFacetEvidence(reader)).revalidated).toEqual(Object.keys(replay.changes).sort());
  replay.changes['src/index.ts'].currentSha256='1'.repeat(64);
  await expect(verifyFacetEvidence(reader)).rejects.toThrow('stale revalidated');
  replay.changes['src/index.ts'].currentSha256=current;
