@@ -1,0 +1,154 @@
+{
+  "complete": true,
+  "coreTaskAccepted": false,
+  "bindingAccepted": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/field-conformance.log",
+      "logSha256": "9010cfc3dad32ca9f67fbbeab7c8bbe9182ea29174b3d0d33051ff3049b7da21"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/field-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/field-tests.log",
+      "logSha256": "19cc3770bf13e4e4a78e430a9440916efdb6a5dc5bd458ad098934905b51647b",
+      "tests": 3,
+      "failures": 0,
+      "assertions": 25,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/nullability-conformance.log",
+      "logSha256": "fe172f97e3b0578e1d2950a2bc33de9d25efa8cc31f0f72f1ba78e29e16ff10a"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/nullability-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/nullability-tests.log",
+      "logSha256": "00ffbd8708499df60e6346664c247fd839ff36eb07eb1722a6e09da4fab8cc67",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 17,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/cardinality-conformance.log",
+      "logSha256": "fea30c54f32d6fd6867a288e3f1b4e15b2cc8b34e271a813cc01f6090ed1cc0b"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/cardinality-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/cardinality-tests.log",
+      "logSha256": "bb01695b24d1003c61b2f0a225d3c2ebb9cd1dabb1b2ba60588958fc5f3d22c3",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 57,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/facets-conformance.log",
+      "logSha256": "7d8657b8a7b1df029a83e08791294226d00eebe941ed4d1c47d57e65830530e0"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/facets-tests.log",
+      "logSha256": "2bb841666d3332b18a4b2363858d4e2e740afbe7d1ba6c1f272ab5b125630066",
+      "tests": 1,
+      "failures": 0,
+      "assertions": 42,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/facets-evidence-final-qualified-tests.log",
+      "logSha256": "46b166981f9cb5498c7ee7ef8d0a9e64d16d814e5994c9f24ad60b1de579e3c7",
+      "tests": 3,
+      "failures": 0,
+      "assertions": 27,
+      "files": 1
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/key-conformance.log",
+      "logSha256": "4aadbdc14c4231a8038dce2410cc2a47b76286da37a93da15fd02fe6a45d5eed"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/key-conformance.test.ts",
+        "tests/core-ideals/key-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-integrated-refresh/key-tests-combined.log",
+      "logSha256": "743ffbf9e113bf44816538c3a8fc66c3a4cc2a7b3aeaeaba2b1ad9aa07c9675c"
+    }
+  ],
+  "failedAttempts": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-evidence.test.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/relationship-integrated-refresh/facets-evidence-tests.log",
+      "logSha256": "49d99d72a4600aa59367e56d34b906e6cda8ef4db4260e09aa3679ff5ca5d19a",
+      "tests": 2,
+      "failures": 1,
+      "assertions": 23,
+      "files": 1
+    }
+  ],
+  "testOnlyQualification": {
+    "ledger": "fixtures/validation/relationship-gate-test-only-qualification.json",
+    "baselinePath": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/conformance-runs.json",
+    "baselineSha256": "4ddb0160d811105d01ee9f8b266b50f0a27df6ad75b74bec0de19778be090fc7"
+  }
+}

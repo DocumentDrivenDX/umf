@@ -31,13 +31,13 @@ ddx:
 
 # UMF Test Plan
 
-## Core ideal amendment: planned acceptance gates
+## Core ideal acceptance gates
 
 ### Authored relationship and binding amendment
 
 FR-42–FR-44, FEAT-006, US-045–US-049 and CONTRACT-041–044 govern this
-planned acceptance work. Documentation is not implementation evidence.
-Relationship core work starts only after key's five-system gate. Separate
+acceptance work. Documentation is not implementation evidence. The original
+sequence required Key's five-system gate before relationship core work. Separate
 records establish (1) two useful priority-system ideal admission, (2) qualified
 TableSpec/PostgreSQL/SQL Server/Avro/Parquet delivery, and (3) any later
 FR-28 native-equivalence graduation. GraphQL/RDF/LinkML are additional
@@ -58,12 +58,14 @@ behavior. Checked-in fixtures include authored inputs, generated DDL/SDL,
 reports, expected native acceptance/rejection and source fingerprints.
 Independently compare ideal→native→ideal with retained report and
 native→ideal→native with original archive; a target-only reimport cannot
-fabricate author intent. Native execution is isolated schema validation, not
-query execution. No adapter parse alone proves database or GraphQL behavior.
+fabricate author intent. Native execution covers isolated schema validation and controlled write/behavior
+probes, not downstream application query execution. No adapter parse alone proves
+database or GraphQL behavior.
 
-CONTRACT-040 and US-040–US-044 govern the next core expansion. These tests are
-required work, not part of the recorded scalar-family/native baseline. Run one
-concept at a time in field → nullability → cardinality → facets → key order.
+CONTRACT-040 and US-040–US-044 governed the implemented Field → Nullability →
+Cardinality → Facets → Key sequence. Their tests remain regression obligations;
+implementation and gate evidence are separate from the original scalar-family
+baseline. The versioned acceptance checkpoints below retain their original scope.
 
 - Structural/core tests cover authored assertions, classified observations,
   conflicts, exact numeric bounds, unknown labels, old-member collisions and
@@ -89,6 +91,61 @@ concept at a time in field → nullability → cardinality → facets → key or
   A blocked mapping with retained residual may satisfy its explicit refusal case;
   it cannot be counted as native support for enforcing the ideal.
 
+## Final relationship/binding integration verification
+
+The final integrated execution record is
+[Final integrated acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json)
+for revision `0f20d2e4 plus the recorded final source fingerprints`. Relationship admission and five-priority
+delivery are recorded separately in
+[Separate relationship admission and delivery](../../../fixtures/validation/relationship-conformance.json).
+Broad regression results: Passed, 175/175
+compatibility commands; 2055 tests across 369 files,
+129660 assertions and 0 failures. Typecheck/build status is
+Passed; the schema audit covers 343 schemas and
+59 packages. The final record additionally includes all 8 gate/evidence test files and exact combined totals without counting nested replays twice. No native-equivalence graduation is claimed.
+
+The final replay must exercise the following composed scope, preserving the
+per-target version/subset and previously documented negative outcomes:
+
+- Core 0.7.0 authored relationship validation, operations, collisions, public
+  integration and version migration/rollback, alongside the five earlier ideal gates.
+- TableSpec metadata, PostgreSQL 17.4 FK/junction, SQL Server 2022 FK/junction,
+  Avro target-Key records and Parquet nested Key schema carriers. Native-only
+  observations retain unknowns; none may invent authored intent. Additional
+  GraphQL/RDF/LinkML evidence cannot substitute for the priority-system gate.
+- Independent physical bindings, stable-ID migration/rollback, every declared
+  index disposition and selected-binding capability isolation. The original
+  logical model, unknown content, physical choices and native archives recover.
+- Full PostgreSQL DDD output: exact shared expected SQL/catalog, Key order,
+  association attributes, real shared edge discrimination, cyclic references,
+  explicit comparator collation and eligible/ineligible partition Keys. No Key
+  widening; missing/unsafe structure blocks the whole candidate. Match mapping
+  and residual pointers against their own retained sources.
+- Full GraphQL DDD output: complete selected entity/Field/relationship/root
+  policies, unions/orientation, inverse navigation, unknown/native recovery and
+  migration/rollback. Schema acceptance does not establish resolver or Key behavior.
+- SQL Server full physical binding: declared table/JSON carriers, exact Keys,
+  association attributes, junction/edge identity and rowstore index subsets, with
+  native trust/NULL/domain limitations and partitioned-Key refusal retained.
+- Bun/Chromium parity using the final public build and optional runtime assets,
+  both JSON/YAML recovery directions, source fingerprints and scoped native
+  oracles. Browser execution must not require host globals or external requests.
+
+Feature records remain the source for qualified details:
+[PostgreSQL full generator](../04-build/evidence/ddd-postgresql.md),
+[GraphQL full generator](../../../fixtures/projections/ddd-graphql/acceptance.json),
+[SQL Server physical binding](../04-build/evidence/sqlserver-physical-binding-acceptance.md)
+and [additional relationship bindings](../../../fixtures/validation/relationship-extras/acceptance.json).
+They support the final replay but do not independently establish its status.
+
+### Reading historical checkpoints
+
+Earlier checkpoint totals, native versions and failure histories below remain
+historical evidence. A later acceptance supersedes an earlier pending statement
+only for the same operation and subset. Normative testing requirements remain
+applicable. Do not remove unresolved native disagreements, unsupported carriers,
+resource bounds or broader product requirements when updating queue status.
+
 ## Cardinality core acceptance checkpoint
 
 Core 0.4.0 representation, authoring, retained receipts, versioned APIs and selection
@@ -97,7 +154,9 @@ All four core Chromium probes and fresh five-system Field/Nullability checks pas
 Both conformance gates run separately after evidence publication and reject missing
 0.4.0 dependency fingerprints. See the
 [acceptance record](../../../fixtures/validation/cardinality-core-acceptance-evidence.json).
-Native Cardinality bindings and their ideal-admission/delivery gates remain required.
+At that core-only checkpoint, native Cardinality bindings and their
+ideal-admission/delivery gates were still required; later Cardinality acceptance
+records below establish their qualified completion.
 
 ## Testing Strategy
 
@@ -3013,7 +3072,7 @@ is unclaimed; native payloads and unknown content remain recoverable.
 
 ## Facet gate acceptance checkpoint
 
-Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. At that checkpoint Key was the next ordered concept. See the
 [admission evidence](../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
 failures and scope limits. Earlier pending checkpoints above remain historical.
 

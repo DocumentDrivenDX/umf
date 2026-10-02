@@ -16,7 +16,7 @@ test('invalid explicit native choices never emit a partial schema or execute acc
  for(const patch of [{recordName:'bad-name'},{recordName:'int'},{keyRecordName:'Order'},{namespace:'a..b'},{fieldName:'end\n'},{shape:'many'},{components:[]},{components:[{name:'id',type:'null'}]},{components:[{name:'id',type:'long'},{name:'id',type:'string'}]},{components:[{name:'id',type:'long',future:true}]},{future:true}])expect(()=>buildAvroRelationshipCarrier({...base,...patch} as any)).toThrow();
  let reads=0;expect(()=>buildAvroRelationshipCarrier({...base,get fieldName(){reads++;return 'bad';}})).toThrow();expect(reads).toBe(0);
 });
-// @covers US-045-AC3 US-045-AC7: native key values do not enforce target identity or participation.
+// @covers US-045-AC3 @covers US-045-AC7: native key values do not enforce target identity or participation.
 test('both pinned codecs independently accept carriers and expose unenforced references and narrowing',async()=>{
  const proof=await Bun.file('fixtures/validation/relationship-avro-carrier-native.json').json();expect(proof.versions).toEqual({apache:'1.12.0',fastavro:'1.12.2'});expect(proof.cases).toHaveLength(24);
  expect(proof.cases.filter((r:any)=>!r.write.ok)).toHaveLength(4);

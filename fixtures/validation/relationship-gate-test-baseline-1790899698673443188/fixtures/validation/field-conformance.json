@@ -1,0 +1,95 @@
+{
+  "scope": "Qualified Field ideal gate; native evidence retained and fingerprint-checked, not rerun by this command",
+  "idealAdmission": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "usefulBindings": 5,
+    "meaning": "CONTRACT-040 / Element.kind",
+    "nativeEquivalence": false
+  },
+  "delivery": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "scope": "Published Field binding subsets only; not general native-language conformance"
+  },
+  "evidence": {
+    "records": [
+      {
+        "path": "fixtures/validation/field-core-acceptance-evidence.json",
+        "sha256": "df28758b0cf8187c441829971c32181e97a5e170555fa79bd3b196e23fa370f8"
+      },
+      {
+        "path": "fixtures/validation/field-tablespec-acceptance-evidence.json",
+        "sha256": "cdf45434f9ed98cb2b08da902019f15db56f9abd9c8c835a1f298cdc4d581195"
+      },
+      {
+        "path": "fixtures/validation/field-postgresql-acceptance-evidence.json",
+        "sha256": "26768cb7c463caa6255066b802d1c4d8a5c9ef99ea7bb127b877dce8e81b3b15"
+      },
+      {
+        "path": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+        "sha256": "8b903ca617cf73f2c21250e7bbdb0cc6078d5f75059f3fa1bb936a4601567446"
+      }
+    ],
+    "fingerprints": 9043,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ]
+  },
+  "roundTrips": {
+    "tablespec": {
+      "usefulTargets": 2,
+      "strictBlocks": 1,
+      "reportResiduals": 1,
+      "idealRecoveries": 6,
+      "nativeRecoveries": 2,
+      "conflictBlocks": 2
+    },
+    "postgresql": {
+      "usefulTargets": 2,
+      "strictBlocks": 1,
+      "reportResiduals": 1,
+      "idealRecoveries": 6,
+      "nativeRecoveries": 2,
+      "conflictBlocks": 2
+    },
+    "sqlserver": {
+      "usefulTargets": 2,
+      "strictBlocks": 1,
+      "reportResiduals": 1,
+      "idealRecoveries": 6,
+      "nativeRecoveries": 2,
+      "conflictBlocks": 2
+    },
+    "avro": {
+      "usefulTargets": 2,
+      "strictBlocks": 1,
+      "reportResiduals": 1,
+      "idealRecoveries": 6,
+      "nativeRecoveries": 2,
+      "conflictBlocks": 2
+    },
+    "parquet": {
+      "usefulTargets": 2,
+      "strictBlocks": 1,
+      "reportResiduals": 1,
+      "idealRecoveries": 6,
+      "nativeRecoveries": 2,
+      "conflictBlocks": 2
+    }
+  }
+}

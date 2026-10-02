@@ -2,6 +2,8 @@ import {expect,test} from 'bun:test';
 import {relationshipExtraCases} from '../../scripts/core-ideals/relationship-extras-cases';
 import {projectRelationshipToExtra,classifyRelationshipExtra,importRelationshipExtraArchive,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,readJsonValue,writeJsonValue,declareCoreRelationship,type Document,type RelationshipExtraArchive,type RelationshipExtraProjection,type RelationshipExtraSystem} from '../../src';
 const cases=relationshipExtraCases();
+// @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
+// @covers US-045-AC3 @covers US-045-AC5
 for(const c of cases)test('CONTRACT-041 extras authored '+c.name,()=>{
  const before=JSON.stringify(c),r=projectRelationshipToExtra(c.source,c.author,c.request);expect(r.status).toBe(c.expected);expect(JSON.stringify(c)).toBe(before);
  expect(r.residuals.length).toBeGreaterThan(8);expect(r.diagnostics.length).toBe(r.residuals.length);
@@ -22,6 +24,7 @@ for(const c of cases)test('CONTRACT-041 extras authored '+c.name,()=>{
  for(const l of r.residuals){let value:any=l.path.startsWith('/request')?r:c.source;for(const part of l.path==='/'?[]:l.path.slice(1).split('/').map(p=>p.replace(/~1/g,'/').replace(/~0/g,'~')))value=value[part];expect(l.value).toEqual(value);}
 });
 
+// @covers US-045-AC3 @covers US-045-AC7
 test('CONTRACT-041 extras native-only archives retain unknown content without authoring',async()=>{
  const native:[RelationshipExtraSystem,RelationshipExtraArchive][]=[
   ['graphql',{format:'graphql-sdl',text:'# unknown comments\ndirective @future(text: String) on FIELD_DEFINITION\ntype Query { customer: Customer @future(text: "opaque") }\ntype Customer { id: ID }\n'}],

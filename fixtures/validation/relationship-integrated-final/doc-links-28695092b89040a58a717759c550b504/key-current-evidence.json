@@ -1,0 +1,99 @@
+{
+  "systems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
+  ],
+  "records": [
+    {
+      "path": "fixtures/validation/key-tablespec-discovery-native.json",
+      "sha256": "a45a803944fe29da218ceffb2ab62fc67382e66ff321f7b5fcbcadac7bfd749f"
+    },
+    {
+      "path": "fixtures/validation/key-tablespec-projection-native.json",
+      "sha256": "4e8ae230528352d78363d09f5667333fb1396ad5fb5931d09191957437816c7c"
+    },
+    {
+      "path": "fixtures/validation/key-postgresql-discovery-native.json",
+      "sha256": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9"
+    },
+    {
+      "path": "fixtures/validation/key-postgresql-projection-native.json",
+      "sha256": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-discovery-native.json",
+      "sha256": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-projection-native.json",
+      "sha256": "90b9c918ea9aee84d50640be2356985b683366e38b27190e566f46009cd12bcd"
+    },
+    {
+      "path": "fixtures/validation/key-avro-discovery-native.json",
+      "sha256": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1"
+    },
+    {
+      "path": "fixtures/validation/key-avro-projection-native.json",
+      "sha256": "e71e9dfa1f51c214a1d7146bb2f5dc67a06d0b132b571db4214a4caf1094d7a4"
+    },
+    {
+      "path": "fixtures/validation/key-parquet-discovery-native.json",
+      "sha256": "2326e341fd1042851a6d701cff1909009359d75ffbf1fb46c3b76c7e08891ee8"
+    },
+    {
+      "path": "fixtures/validation/key-parquet-projection-native.json",
+      "sha256": "091aecb76d66327fa7ab15066c226379ccb2b5308108615b46b6ae116905412f"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-encoding-native.json",
+      "sha256": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650"
+    },
+    {
+      "path": "fixtures/validation/key-tablespec-classification-browser.json",
+      "sha256": "3619a90d60329c1d9d372d66d015607cc9c39315aba548f2a40897ae4c8a64e1"
+    },
+    {
+      "path": "fixtures/validation/key-postgresql-catalog-browser.json",
+      "sha256": "041825680f84c1530ddce3edde65b5b436eac1723030e44efe312c6876f38157"
+    },
+    {
+      "path": "fixtures/validation/key-postgresql-browser.json",
+      "sha256": "95ad3f429cb66b736602e6ee73a71867066f727d84f5238acd5c4ce619ae1e7b"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-browser.json",
+      "sha256": "06726febe30789c3815a82c68ba0e634f1cfa072a9f8d15882d55e921ed8f22e"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-encoding-browser.json",
+      "sha256": "062b5914936834b2174664cfc0d4d9550f7d9ac23416db16bd9585f928911b30"
+    },
+    {
+      "path": "fixtures/validation/key-sqlserver-projection-browser.json",
+      "sha256": "6aa181ca500222f1f64cb8892bac7c4b819bc346421e542c5d961c270d8f1ab2"
+    },
+    {
+      "path": "fixtures/validation/key-avro-browser.json",
+      "sha256": "a0e328460d69623355892c3bbf084b3eeac6a3e811d363e5e6cc396912ec72cb"
+    },
+    {
+      "path": "fixtures/validation/key-avro-projection-browser.json",
+      "sha256": "7f988e23e65129be82af8036c90e8f7a640d691687dbfeaa14e1d4fafa371c99"
+    },
+    {
+      "path": "fixtures/validation/key-parquet-browser.json",
+      "sha256": "ee93c30544d0f35151e0b098a3d8ef110a47027e965238d27a49c318b221f7a4"
+    },
+    {
+      "path": "fixtures/validation/key-parquet-projection-browser.json",
+      "sha256": "7dadc6b5ca5838101a0a030e7e8973d4d462f91a47f1a71eb7a3ecec695f1dc4"
+    }
+  ],
+  "fingerprints": 519,
+  "refreshSha256": "46f92bc4ceefbad191eab354bb4ee5402f0fe7f258e28a1e04cacec29baad6ae",
+  "idealAdmitted": false,
+  "nativeEquivalence": false
+}

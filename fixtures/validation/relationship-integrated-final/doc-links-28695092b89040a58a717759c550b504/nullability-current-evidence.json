@@ -1,0 +1,37 @@
+{
+  "records": [
+    {
+      "path": "fixtures/validation/nullability-core-acceptance-evidence.json",
+      "sha256": "6c645b5caa8d6c59f13eeadb2ab1bc6a68ce20da9fa2628895ac6e4c1b5f0800"
+    },
+    {
+      "path": "fixtures/validation/tablespec-nullability-acceptance-evidence.json",
+      "sha256": "a3cf036d569098b46432375e3ed61bd8743334a6f754051700fadba75d47ae00"
+    },
+    {
+      "path": "fixtures/validation/postgresql-nullability-acceptance-evidence.json",
+      "sha256": "2386e9416ad67fd897f6ae2ac34974e839407c4a90d0c84badd9d2f0d1de0478"
+    },
+    {
+      "path": "fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
+      "sha256": "e4bd07e3f69a5a1981e427bc101c831f8802d4975d01a55c881a8500cefed06a"
+    },
+    {
+      "path": "fixtures/validation/avro-nullability-acceptance-evidence.json",
+      "sha256": "71a909939112526bbe5c4ae014f39ad3da710e1949e8a7880b04aebe71ab900a"
+    },
+    {
+      "path": "fixtures/validation/parquet-nullability-acceptance-evidence.json",
+      "sha256": "904527e6038cb12b8df59e12dabbfdfc28d48db97627a164a5ae6e37d69a45c6"
+    }
+  ],
+  "fingerprints": 8688,
+  "systems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
+  ],
+  "refreshSha256": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab"
+}

@@ -1,0 +1,8 @@
+{
+  status: "projected",
+  native: "deltalake 1.6.4",
+  clusteringColumns: [
+    [ "tenant" ]
+  ],
+}
+

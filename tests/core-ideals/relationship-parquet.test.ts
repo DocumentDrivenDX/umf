@@ -5,6 +5,7 @@ import {classifyParquetRelationships,recoverParquetRelationshipSource} from '../
 import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
 import {exportParquetCapture} from '../../src/adapters/parquet';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+// @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipParquetCases())test('Parquet relationship '+c.name,()=>{
  const r=projectRelationshipToParquet(c.source,c.author,c.request);expect(r.status).toBe(c.expected);
  if(r.status==='blocked'){expect(r.target).toBeUndefined();expect(r.nativeArchive).toBeUndefined();return;}
@@ -16,6 +17,7 @@ for(const c of relationshipParquetCases())test('Parquet relationship '+c.name,()
  expect(classifyParquetRelationships(fresh,{mode:'strict',profile:'file-schema'}).status).toBe('blocked');
 });
 test('input accessors refuse without invocation',()=>{const c=relationshipParquetCases()[0]!;let reads=0;expect(()=>projectRelationshipToParquet(c.source,c.author,{...c.request,get shape(){reads++;return 'one' as const;}})).toThrow();expect(reads).toBe(0);});
+// @covers US-045-AC3 @covers US-045-AC7
 test('native bytes with embedded Arrow schema, physical field IDs and unknown extensions remain exact',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/arrow-nested/map-key-counterexample.parquet').arrayBuffer());
  const source=importParquetSchema(bytes,{id:'arrow-metadata'});source.umf='0.7.0';source.vocabularies['umf.parquet.relationships']={version:'1.0.0',future:{opaque:1}} as any;source.vocabularies.future={version:'1.0.0'};source.extensions={future:{opaque:['9007199254740993',{x:1}]}};

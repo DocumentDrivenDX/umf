@@ -1,0 +1,28 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-evidence.test.ts:
+(pass) facet evidence requires all five accepted bindings without granting ideal admission [554.33ms]
+(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [625.44ms]
+124 |  // unrelated stale fingerprints. Every actual file is read once per verification.
+125 |  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
+126 |   const current = digest(await content(p)), expected = String(h);
+127 |   if (current !== expected) {
+128 |    const key = local(p), row = replay.changes[key];
+129 |    assert.ok(row, `${path}: stale ${p}`);
+                ^
+AssertionError: fixtures/validation/tablespec-facets-acceptance-evidence.json: stale fixtures/validation/facet-core-acceptance-evidence.json
+ generatedMessage: false,
+     actual: undefined,
+   expected: true,
+   operator: "==",
+       code: "ERR_ASSERTION"
+
+      at verifyFacetEvidence (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:129:11)
+      at /home/erik/Projects/umf/tests/core-ideals/facets-evidence.test.ts:58:9
+      at processTicksAndRejections (native:7:39)
+(fail) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [300.07ms]
+
+ 2 pass
+ 1 fail
+ 23 expect() calls
+Ran 3 tests across 1 file. [1.51s]

@@ -1,31 +1,69 @@
 /** Host-only compatibility replay. Historical records supply command inventory,
  * never passing outcomes for the current implementation. */
 import assert from 'node:assert/strict';
-import {createHash} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
 import {mkdir} from 'node:fs/promises';
 const previous=await Bun.file('fixtures/validation/key-native-refresh.json').json();
 const keys=await Bun.file('fixtures/validation/key-gate-refresh-evidence.json').json();
 const profile=process.argv[2]??'core';
-assert.ok(['core','tablespec','avro'].includes(profile),'Expected core, tablespec or avro refresh profile');
+assert.ok(['core','tablespec','avro','integrated'].includes(profile),'Expected core, tablespec, avro or integrated refresh profile');
 const commands:string[][]=[],seen=new Set<string>();
 for(const command of [...previous.runs.map((r:any)=>r.command),...keys.runs.map((r:any)=>r.command),...['core-relationship-browser','core-relationship-transition-browser','core-relationship-operations-browser','core-relationship-public-browser'].map(s=>['bun',`scripts/${s}.ts`])]){
  const identity=JSON.stringify(command);if(!seen.has(identity)){seen.add(identity);commands.push(command);}
 }
 if(profile!=='core')for(const name of ['relationship-tablespec-discovery-oracle','relationship-tablespec-oracle','relationship-tablespec-browser','relationship-tablespec-projection-browser'])commands.push(['bun',`scripts/core-ideals/${name}.ts`]);
-if(profile==='avro'){
+if(profile==='avro'||profile==='integrated'){
  for(const name of ['relationship-avro-carrier-cases','relationship-avro-projection-cases'])commands.push(['bun',`scripts/core-ideals/${name}.ts`]);
  for(const name of ['relationship-avro-discovery-native','relationship-avro-carrier-native','relationship-avro-projection-native'])commands.push(['.venv/bin/python',`scripts/core-ideals/${name}.py`]);
  for(const name of ['relationship-avro-browser','relationship-avro-carrier-browser','relationship-avro-projection-browser'])commands.push(['bun',`scripts/core-ideals/${name}.ts`]);
 }
+if(profile==='integrated'){
+ const scripts=[
+  'binding/stable-ids-browser',
+  'relationship-postgresql-layout-browser',
+  'core-ideals/relationship-postgresql-oracle','core-ideals/relationship-postgresql-browser',
+  'core-ideals/relationship-sqlserver-oracle','core-ideals/relationship-sqlserver-browser',
+  'core-ideals/relationship-parquet-oracle','core-ideals/relationship-parquet-browser',
+  'core-ideals/relationship-extras-oracle','core-ideals/relationship-extras-browser',
+  'relationship/postgresql-native-oracle','relationship/postgresql-native-browser',
+  'relationship/graphql-native-oracle','relationship/graphql-native-browser',
+  'relationship/avro-parquet-oracle','relationship/avro-parquet-browser',
+  'relationship/postgresql-target-oracle','relationship/postgresql-target-browser',
+  'relationship/postgresql-partitioned-key-oracle',
+  'relationship/graphql-target-oracle','relationship/graphql-target-browser',
+  'binding/postgresql-indexes-oracle','binding/postgresql-indexes-browser',
+  'binding/sqlserver-indexes-oracle','binding/sqlserver-indexes-browser',
+  'binding/sqlserver-tables-oracle','binding/sqlserver-tables-browser',
+  'binding/sqlserver-tables-indexes-oracle','binding/sqlserver-tables-indexes-browser',
+  'binding/delta-oracle','binding/delta-browser',
+  'binding/iceberg-oracle','binding/iceberg-browser',
+  'binding/parquet-oracle','binding/parquet-browser',
+  'binding/multi-target-delta-oracle','binding/multi-target-delta-browser',
+  'projections/ddd-postgresql-tables-oracle','projections/ddd-postgresql-tables-browser',
+  'projections/ddd-postgresql-tables-indexes-oracle','projections/ddd-postgresql-tables-indexes-browser',
+  'projections/ddd-graphql-oracle','projections/ddd-graphql-browser',
+  'projections/ddd-postgresql-oracle','projections/ddd-postgresql-browser',
+  'binding/sqlserver-oracle','binding/sqlserver-browser',
+ ];
+ for(const name of scripts)commands.push(['bun',`scripts/${name}.ts`]);
+}
+let relationshipSourceHashes:Record<string,string>|undefined;
+if(profile==='integrated'){
+ const gate=await import('./core-ideals/relationship-gate-inputs');
+ for(const command of gate.relationshipRefreshCommands)if(!commands.some(c=>JSON.stringify(c)===JSON.stringify(command)))commands.push(command);
+ relationshipSourceHashes=await gate.relationshipSourceHashes();
+}
 const basename=profile==='core'?'relationship-compatibility-refresh':`relationship-${profile}-compatibility-refresh`;
-const output=`fixtures/validation/${basename}.json`,directory=`.cache/${basename}`;
+const output=`fixtures/validation/${basename}.json`,directory=profile==='integrated'?`fixtures/validation/relationship-integrated-refresh/replay-${new Date().toISOString().replace(/[:.]/g,'-')}-${randomUUID()}`:`.cache/${basename}`;
 await mkdir(directory,{recursive:true});
 const patterns=['src/**/*.ts','scripts/**/*.ts','scripts/**/*.py','spec/**/*.json',...(profile!=='core'?['native/tablespec/relationship-runtime/*','tests/**/*.ts']:[])];
 const sourcePaths=(await Promise.all(patterns.map(p=>Array.fromAsync(new Bun.Glob(p).scan())))).flat().sort();
 const digest=(data:Uint8Array)=>createHash('sha256').update(data).digest('hex');
 const sha256=Object.fromEntries(await Promise.all(sourcePaths.map(async p=>[p,digest(new Uint8Array(await Bun.file(p).arrayBuffer()))])));
+let previousReplay:{path:string;sha256:string}|undefined;
+if(profile==='integrated'&&await Bun.file(output).exists()){const bytes=new Uint8Array(await Bun.file(output).arrayBuffer());const path=directory+'/previous-replay.json';await Bun.write(path,bytes);previousReplay={path,sha256:digest(bytes)};}
 const runs:{command:string[];exitCode:number;log:string;logSha256:string}[]=[];
-const record=(complete:boolean)=>({scope:profile==='core'?'Fresh compatibility command replay for public 0.7.0; separate regression and core-task acceptance required':`Fresh compatibility replay for ${profile} relationship binding; separate regression and binding acceptance required`,complete,coreTaskAccepted:false,...(profile!=='core'?{bindingAccepted:false}:{}),idealAdmitted:false,nativeEquivalence:false,commands,runs,sha256});
+const record=(complete:boolean)=>({scope:profile==='integrated'?'Fresh compatibility replay for integrated relationships, physical bindings and DDD generators; separate regression and conformance required':profile==='core'?'Fresh compatibility command replay for public 0.7.0; separate regression and core-task acceptance required':`Fresh compatibility replay for ${profile} relationship binding; separate regression and binding acceptance required`,complete,coreTaskAccepted:false,...(profile!=='core'?{bindingAccepted:false}:{}),idealAdmitted:false,nativeEquivalence:false,commands,runs,sha256,...(previousReplay?{previousReplay}:{}),...(relationshipSourceHashes?{relationshipSourceHashes}:{})});
 await Bun.write(output,JSON.stringify(record(false),null,2)+'\n');
 for(const [index,command] of commands.entries()){
  console.log(JSON.stringify({step:index+1,total:commands.length,command}));
@@ -36,4 +74,6 @@ for(const [index,command] of commands.entries()){
  assert.equal(exitCode,0,`Compatibility command failed; inspect ${log}`);
 }
 for(const [p,h] of Object.entries(sha256))assert.equal(digest(new Uint8Array(await Bun.file(p).arrayBuffer())),h,`Source changed during refresh: ${p}`);
+if(relationshipSourceHashes)assert.deepEqual(await (await import('./core-ideals/relationship-gate-inputs')).relationshipSourceHashes(),relationshipSourceHashes,'Relationship source inventory changed during integrated replay');
+if(profile==='integrated')for(const path of (await import('./core-ideals/relationship-gate-inputs')).relationshipProofs)sha256[path]=digest(new Uint8Array(await Bun.file(path).arrayBuffer()));
 await Bun.write(output,JSON.stringify(record(true),null,2)+'\n');console.log(JSON.stringify({complete:true,commands:runs.length,coreTaskAccepted:false}));

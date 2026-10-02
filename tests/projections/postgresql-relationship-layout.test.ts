@@ -2,7 +2,7 @@ import {expect,test} from 'bun:test';
 import {copyJson,validatePostgresqlRelationshipLayout} from '../../src';
 import {postgresqlLayoutCase,postgresqlLayoutCases} from '../../scripts/relationship-postgresql-layout-cases';
 
-test('@covers US-048-AC3 AC4 AC8: exact endpoint policy matrix validates atomically and retains every source',()=>{
+test('@covers US-048-AC3 @covers US-048-AC4 @covers US-048-AC8: exact endpoint policy matrix validates atomically and retains every source',()=>{
  for(const row of postgresqlLayoutCases()){
   const before=copyJson(row),result=validatePostgresqlRelationshipLayout(row.logical,row.binding,row.policy,'report');
   expect(result.status!=='blocked',row.id+': '+JSON.stringify(result.diagnostics)).toBe(row.valid);

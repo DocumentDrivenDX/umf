@@ -4,7 +4,7 @@ import {relationshipOperationCases,relationshipRequest} from '../../scripts/core
 import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from '../../src/model/relationships';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 
-// @covers US-045-AC1 US-045-AC2
+// @covers US-045-AC1
 test('candidate authoring and stable lookup expose all authored shapes with verified serialized receipts',()=>{
  for(const row of relationshipOperationCases()){
   const before=structuredClone(row.source),r=declareCoreRelationship(row.source,row.identity,row.request);
@@ -22,13 +22,14 @@ test('rename and endpoint set reorder preserve stable identity and every unknown
  expect(inspectCoreRelationships(r.target,{module:'m'}).meaning.state).toBe('partial');
  const changed=relationshipRequest(value);changed.targetMultiplicity.min=0;expect(()=>declareCoreRelationship(r.target,{module:'m'},changed)).toThrow('Unknown qualifiers');
 });
+// @covers US-045-AC2
 test('existing IDs cannot move to different endpoint keys, directions or association Records',()=>{
  const d=relationshipCandidate(),r=d.modules[0].relationships[0];
  for(const change of [(q:any)=>q.target[0].key='account-number',(q:any)=>q.source[0].element='Product',(q:any)=>q.directed=false,(q:any)=>q.associationRecord={module:'m',element:'Enrollment'}]){const request=relationshipRequest(r);change(request);expect(()=>declareCoreRelationship(d,{module:'m'},request)).toThrow('Existing ID');}
  const changed=relationshipRequest(r);changed.targetMultiplicity={min:0,max:'*'};expect(declareCoreRelationship(d,{module:'m'},changed).target.modules[0]!.relationships![0]!.targetMultiplicity).toEqual({min:0,max:'*'});
  const bad=relationshipRequest(r);bad.targetMultiplicity={min:3,max:2};expect(()=>declareCoreRelationship(d,{module:'m'},bad)).toThrow();
 });
-// @covers US-045-AC3 US-045-AC10 (legacy interpretation, not migration)
+// @covers US-045-AC3 (legacy interpretation, not migration)
 test('legacy values remain inspectable without authoring and future lifecycle stays uninterpreted',()=>{
  const d=relationshipCandidate(),request=relationshipRequest(d.modules[0].relationships[0]);d.umf='0.6.0';d.modules[0].relationships={opaque:true};
  expect(inspectCoreRelationships(d,{module:'m'}).meaning).toEqual({state:'legacy',value:{opaque:true}});

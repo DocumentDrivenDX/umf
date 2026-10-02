@@ -4,7 +4,7 @@ import {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelati
 import {classifyAvroRelationships,recoverAvroRelationshipSource} from '../../src/core-ideals/relationship-avro';
 import {importAvroSchema} from '../../src/adapters/avro';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
-// @covers US-045-AC4 US-045-AC5 US-045-AC6 US-045-AC7 US-045-AC8
+// @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipAvroProjectionCases())test('authored Avro relationship: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectRelationshipToAvro(c.source,c.author,c.request);expect(r.status).toBe(c.expected);expect(JSON.stringify(c)).toBe(before);expect(r.residuals.length).toBeGreaterThan(0);
  for(const loss of r.residuals){let value:any=(loss.path==='/request'||loss.path.startsWith('/request/'))?r:c.source;for(const k of loss.path==='/'?[]:loss.path.slice(1).split('/').map(x=>x.replace(/~1/g,'/').replace(/~0/g,'~')))value=value[k];expect(loss.value).toEqual(value);}

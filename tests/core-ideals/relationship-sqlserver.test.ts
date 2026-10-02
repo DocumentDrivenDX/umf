@@ -4,6 +4,7 @@ import {projectRelationshipToSqlServer,recoverRelationshipSqlServerIdeal,recover
 import {classifySqlServerRelationships,recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
 import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+// @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipSqlServerCases())test('SQL Server relationship '+c.name,()=>{
  const before=JSON.stringify(c),r=projectRelationshipToSqlServer(c.source,c.author,c.binding,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);if(r.status==='blocked'){expect(r.target).toBeUndefined();return;}
  expect(r.target!.sql).toContain('FOREIGN KEY');expect(r.residuals.length).toBeGreaterThan(5);
@@ -16,6 +17,7 @@ test('stable IDs, altered binding/author, unknown content, hostile accessors and
  for(const end of ['\n','\r','\u2028','\u2029'])expect(()=>projectRelationshipToSqlServer(c.source,c.author,c.binding,{...c.request,namespace:'dbo'+end})).toThrow();
  const bad=structuredClone(c.binding);(bad.extensions!['umf.binding'] as any).relationships[0].id='missing';expect(()=>projectRelationshipToSqlServer(c.source,c.author,bad,c.request)).toThrow();
 });
+// @covers US-045-AC3 @covers US-045-AC7
 test('native captured trust/actions/Keys and unknown source recover exactly',async()=>{
  const proof=await Bun.file('fixtures/validation/relationship-sqlserver-native.json').json(),nativeSource=proof.sourceText as string,source=importSqlServerCatalog(nativeSource,{id:'native'});source.vocabularies.future={version:'1.0.0'};source.extensions!.future={opaque:['9007199254740993']};
  const request={nativeSource,mode:'report',profile:'captured-foreign-keys'} as const,r=classifySqlServerRelationships(source,request);expect(r.status).toBe('classified');expect(r.observations.some(o=>o.enforcement==='disabled')).toBe(true);expect(r.observations.some(o=>o.enforcement==='enabled-untrusted')).toBe(true);expect(r.observations.some(o=>o.deleteAction==='CASCADE')).toBe(true);expect(r.observations.every(o=>o.authorIntent==='unknown')).toBe(true);

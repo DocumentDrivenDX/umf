@@ -26,7 +26,7 @@ test('mismatched archive, unsupported profile, existing extension, forged and st
  const changed=structuredClone(r.target!);changed.id='changed';expect(()=>recoverAvroRelationshipSource(r,changed)).toThrow();
  let reads=0;expect(()=>classifyAvroRelationships(source,{...request,get mode(){reads++;return 'report' as const;}})).toThrow();expect(reads).toBe(0);
 });
-// @covers US-045-AC3 US-045-AC7: structural observations never establish association intent.
+// @covers US-045-AC3 @covers US-045-AC7: structural observations never establish association intent.
 test('grammar distinguishes named tokens from record endpoints and ignores metadata schema lookalikes',()=>{
  const nativeSource={schema:' {"type":"record","name":"R","metadata":{"type":"record","name":"Fake","fields":[]},"fields":[{"name":"e","type":{"type":"enum","name":"E","symbols":["a"]}},{"name":"reuse","type":"E"},{"name":"m","type":{"type":"map","values":["null",{"type":"fixed","name":"F","size":2}]}},{"name":"f","type":{"type":"F","items":"NotSchema"}}],"token":9007199254740993} \n',dependencies:[]};
  const source=importAvroSchema(nativeSource.schema,{id:'grammar'}),r=classifyAvroRelationships(source,{nativeSource,mode:'report',profile:'schema-structure'});

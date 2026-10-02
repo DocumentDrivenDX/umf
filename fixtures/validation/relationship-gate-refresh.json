@@ -212,8 +212,11 @@
     "scripts/binding/parquet-oracle.ts": "50a861ecab15b09a0107c6a5c5753422e4877df89c22eb14295d9694e7ece5da",
     "scripts/binding/postgresql-indexes-browser.ts": "568969b294b2e2819123dfed2c90fb6641415e8128384c020e4cbf5acc29e890",
     "scripts/binding/postgresql-indexes-oracle.ts": "4bdc329f3677ce20da717c77a905c3b1757a0b0f324b86b86c1b5fbebf7bd333",
+    "scripts/binding/sqlserver-browser.ts": "bcb3b6b570ccc66d146a02083e460b9bd65fa1b44c34193642687df7409295d9",
+    "scripts/binding/sqlserver-cases.ts": "f7738e5da4703cdb76a0f4360ccf8c09bc00195042d944a13bee68cd017e8ea3",
     "scripts/binding/sqlserver-indexes-browser.ts": "049f614417dfce82305622cffbd833a9c9cdba2ec2b1e6fcae3ebfc3923e892d",
     "scripts/binding/sqlserver-indexes-oracle.ts": "a0ad7b1238b4ae51695ed8e66a8bfa64eca4f9348ae2b42d24c5cc2b582be9c3",
+    "scripts/binding/sqlserver-oracle.ts": "83a105a659ac8b36d63d6a8ae08de7a49c08ab890c42f788ace47406ac5df427",
     "scripts/binding/sqlserver-tables-browser.ts": "0ee20205bfd4bbf8e084c821103d730ba1327632f9ae8c6196c6c7ca7e3c8c2d",
     "scripts/binding/sqlserver-tables-indexes-browser.ts": "79981b6c19c6066d93e432a44ee1bb239e161faeb7945632890c951b1bacacea",
     "scripts/binding/sqlserver-tables-indexes-oracle.ts": "7e5fc1f308f264757dc9005d21fcd51079e4a1086843eb94012d5838d7243a51",
@@ -663,7 +666,7 @@
     "scripts/core-nullability-transition-schema.ts": "56ef28b06860eb45d17004e5a286a870dfc37d494bd0a413ef496671db4a600c",
     "scripts/core-relationship-browser.ts": "35ab19479ebaafc812b04af855c3651baee959359dfa1ca2b37c734034c42559",
     "scripts/core-relationship-cases.ts": "53c70e52f9f0780f8e25d967fe1d056e64423aac24063eada41967fd820e7809",
-    "scripts/core-relationship-compatibility-refresh.ts": "0b5675528e704a653568098c6f0a5511fc850a21824d1f39b089218f6c06345a",
+    "scripts/core-relationship-compatibility-refresh.ts": "8193756c87e18a8496fab22fac3ade7b4b2c9c3e58280df8b273b102d340bc5e",
     "scripts/core-relationship-metadata-schema.ts": "a21e0e655afe338a5e884aa0c083c924b95e900d492f33063158637870d81d90",
     "scripts/core-relationship-operation-cases.ts": "fbc86d5abc4616dcd6a5c91144458719fdf2881fa57ba94ec0c1a7c91db44b28",
     "scripts/core-relationship-operation-schema.ts": "cc24cfa07df23a7567a1bf4964a822efb94ff1526471e28c0f9acd6fffa7cb88",
@@ -1073,6 +1076,10 @@
     "scripts/projections/ddd-graphql-entities-oracle.py": "d2823c2d3e70470ac1d73ee20b8fca3263f33a63c67f71bac24173c83c97f693",
     "scripts/projections/ddd-graphql-native.py": "07b31bf3d9492c8a18b4d1e97fc3c027b79a2fe4f91bcc957f887700728e76d3",
     "scripts/projections/ddd-graphql-oracle.ts": "0246f4264eb646e6fc385aa7baa63094286707593314617f4b6e6c5dcd97ecd4",
+    "scripts/projections/ddd-postgresql-browser.ts": "c6751a11509ed2b0989eecade0b15f6a1e81f2650d10e8ac3c0ce7b1a167b172",
+    "scripts/projections/ddd-postgresql-cases.ts": "1b1402bbf75e06a553351ee6ddbfada0cf75442352a1238797f7e8098e73c4c3",
+    "scripts/projections/ddd-postgresql-oracle.ts": "792c9ad5ab48e7789ace61a4410d1ea0eb2a2f3490c06cec0035b95470b20386",
+    "scripts/projections/ddd-postgresql-schema.ts": "5a1b3245b78957528664a27c017cad68f9e393861c2b0978c8ebb4a9f4905a28",
     "scripts/projections/ddd-postgresql-tables-browser.ts": "5a2e0c85eb2bf1c15317ca0656c36b8c305c74682afc787e0a3e133fcc58c481",
     "scripts/projections/ddd-postgresql-tables-indexes-browser.ts": "b5633ecf53029255f3bc3698769986806cd4acebdbe3377421d1bad60fd1b006",
     "scripts/projections/ddd-postgresql-tables-indexes-oracle.ts": "8abc5082b4aa507b894d1cc054ea9aa7855882f85ae407b82f6d9f60010304c3",
@@ -1110,6 +1117,9 @@
     "scripts/rdfxml-oracle.py": "bbf871881d602bd2ef5c0df6fa2cb6a3d1eb72275554474715eb5355445b8d50",
     "scripts/rdfxml-probe-browser.ts": "d0f55ae6fe5d96e8bc529c069918ac62dab2a632c6447a5ff92e30a7e438aed8",
     "scripts/rdfxml-probe.ts": "96107de3bc82a0b76faccc2492097244da02ef3fb1b276972e51ac60b50625a8",
+    "scripts/relationship-integrated-acceptance.py": "f2a791c76ac71af75c219c227cf7677cffa3c02949e5f46275ae18ed721d1520",
+    "scripts/relationship-integrated-publish.py": "13d2bfe598c601303e7935121238e0354821288d61645f2998ae9fa14c343eac",
+    "scripts/relationship-integrated-regression.py": "a947f4e1a9295a5823493cf9ec049097bc4a9e93a8ed3250c4f1c064b72e7963",
     "scripts/relationship-native-browser.ts": "9372402336df545693ad9b4c40d0598ce65892abf060178cf605688787481ba5",
     "scripts/relationship-native-oracle.py": "34812e411866e633d539178295be2eb785d34af8cff20bcfe3476c8069a70b20",
     "scripts/relationship-postgresql-layout-browser.ts": "32f0fdf1f63d8335f16698e943ab79442ac319f6340250b0c746e08ea434a855",
@@ -1632,6 +1642,8 @@
     "spec/projections/avro-tablespec.schema.json": "51a5354baf2d63c62e7c5643f3e102a2e3360565f7c94c941a4dfe7a6cb4d49c",
     "spec/projections/ddd-graphql.schema.json": "8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21",
     "spec/projections/ddd-json-schema.schema.json": "1e1894e6ef6490e9db53c2e094a922c7a67db6d0ff1841a8375c556299f511f5",
+    "spec/projections/ddd-postgresql-policy.schema.json": "fbeb063dc058f181067631bf0a99512fd7b56d2dac97bb0117c1082790f407da",
+    "spec/projections/ddd-postgresql-projection.schema.json": "b74630085461e882f9ae41d77931d0540bf21a0baa11c5f82d4ba4de035faaf1",
     "spec/projections/graphql-input-json-schema.schema.json": "7d77853dd22584b4e863ea30a191cfc1f957140ff6f03142b547a377b77ce9c9",
     "spec/projections/json-schema-protobuf.schema.json": "c273adaa4bcf3fa96841aa82d25f46dfc1da0a49e2b1ea0418940d0c0b1c1ed4",
     "spec/projections/openapi-json-schema.schema.json": "2c94d8a8407cad226a4d80bbb5bbc4055db9b7fc14763d94b933491a8d1b4e7b",
@@ -1644,6 +1656,8 @@
     "spec/projections/spark-arrow.schema.json": "4329535d8ff9be9f4c65799a2a8a477dd5cb39ee8d5953df05cc659e1d1b54bd",
     "spec/projections/sqlserver-avro.schema.json": "bb43bd37720d66b1c23637ecbe0319bd2098baa915c903aa00daadb88637ac67",
     "spec/projections/sqlserver-ddl.schema.json": "608fd57d1a0668beb1858810dfc768fb22e0611f8966437b8654f7390025031f",
+    "spec/projections/sqlserver-physical-binding.schema.json": "5840c052fdbae750eb09d8684ed08897b4e692551890d0a843872655ddc5e6ce",
+    "spec/projections/sqlserver-relationship-layout.schema.json": "f7f3ff6873ea8e7f905b3ee05fcfbf3e450a1ea243e85b83c54feb5661eced01",
     "spec/projections/tablespec-avro.schema.json": "c0a9a84cdd3e93ab7aabeaaac068ee411a277c504f968ebc4634f91afbe3c457",
     "spec/projections/tablespec-via-avro.schema.json": "a1aa5e3ee891e403f921832de596562c4a641d2e6e77cff6d8dfca85caa12a57",
     "spec/projections/typespec-json-schema.schema.json": "b35d479450c5c05ffd6c85362302465e474f5b09ed76337fd5cce31dd4c89982",
@@ -1881,7 +1895,7 @@
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/binding/index.ts": "239e5a737a5b92edbef1e447685f75fb905cf093aa392971aadd8df2c64a050c",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "7198ad39c3a8c8897eee2205c26dc09955db85ae1d88da36a32d7713aa008f68",
+    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "018ec22d88de99ed75bab562985ae7c586aa0de3a141a9e55d93f58b8d84f65e",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -1911,12 +1925,15 @@
     "src/projections/binding-iceberg/index.ts": "b8c028166ebb4108d1bf56a08b04dd46474bae9a95cf0d0939473469dedd501d",
     "src/projections/binding-parquet/index.ts": "8df3c4b8405105eba7563713a0fff733cd35334ba216d770ec3f068447242a5a",
     "src/projections/binding-postgresql/indexes.ts": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9",
+    "src/projections/binding-sqlserver/index.ts": "f7a827846f1aadcef3e564bdb7cdffc88b31c7c403db4fe74d7fe51ae50e0908",
     "src/projections/binding-sqlserver/indexes.ts": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98",
+    "src/projections/binding-sqlserver/relationship-layout.ts": "bba8fd85abe719438a2b846692bce37195f6ac893e8fb7f256320485b0637564",
     "src/projections/binding-sqlserver/tables-indexes.ts": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17",
     "src/projections/binding-sqlserver/tables.ts": "f5cb9ba1064cf5b17df1f7cdeda086746a819e949f8002d83bfaa53474aca94c",
     "src/projections/ddd-graphql/entities.ts": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87",
     "src/projections/ddd-graphql/index.ts": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276",
     "src/projections/ddd-json-schema.ts": "ee923cf5ddfefa7cf458b51b667f21d8ecb70361bc6fbf17ee74a76231fb2af5",
+    "src/projections/ddd-postgresql/index.ts": "42e039e98ea7487fb050ced6fe3917c06dae136b66548179d8adadc387a12bee",
     "src/projections/ddd-postgresql/relationship-layout.ts": "2faf22dab516791ab2f682aa162fdada7af18f1c54c6cacea290088732910111",
     "src/projections/ddd-postgresql/tables-indexes.ts": "3724ac5ca90bd89d5ace4035fed2cb8602af8687e5d001bc4a97f01f2c78b1fe",
     "src/projections/ddd-postgresql/tables.ts": "3789f24aac49742f2499bb09fd716eaca2ac529da7ae69ae34feca6a6eaf5262",
@@ -1962,6 +1979,7 @@
     "tests/avro/projection.test.ts": "526a4b8be46d147ae57daff1a82c6af01a2b293753738d39e299a7093be66853",
     "tests/avro/tablespec-projection.test.ts": "3a7c6c504647f1607958015a382bca9ba46a71b03c4262b13f13b737fbbe12fc",
     "tests/avro/temporal-metadata.test.ts": "fba99a6d6b2011cd9b8171cca291ee61c9de286e367283ae9f795e60d835e135",
+    "tests/binding/consumer-migration.test.ts": "4a3e065b8eaeb9e531e39f750ef53b437a219d794b187544bb80aa89920161fd",
     "tests/binding/delta.test.ts": "f1be6fea946309fcf9797769fb36219617238b0a137baad791bbcc23533845fa",
     "tests/binding/iceberg.test.ts": "214acf15aebc1b5603146e18407651a2673da749df043e5478c3e3f72a14aac3",
     "tests/binding/indexes.test.ts": "d7c750e8496ff41b8e7a76403ac22086e53ae5253fc6a419d6b24cc460450ba3",
@@ -1972,7 +1990,8 @@
     "tests/binding/sqlserver-indexes.test.ts": "045245ad9aca509d8c3eb87d8d50cbfa2c456c273dc8476d277dc355c3505612",
     "tests/binding/sqlserver-tables-indexes.test.ts": "5d31d0b07fcaa85a1156282b82e5480cd5faad48703f5c694ef06099a8b35f23",
     "tests/binding/sqlserver-tables.test.ts": "f4144b71c0323c73c7495a405d8f8a85c108715122d51e85d0843f5fb79e4df5",
-    "tests/binding/stable-ids.test.ts": "5698f8c8889900e1f598a6e67541f5d98d2498096a25e11b26c19370cf353b8e",
+    "tests/binding/sqlserver.test.ts": "f67d138439e18b50d7c75a58034ca4a2965a3aefe7750d219360f296ed5d406a",
+    "tests/binding/stable-ids.test.ts": "923dbad6b9c0d31bc776ebe10373172f4096a5ac1ba8a0ff3ef2a8817cef48fc",
     "tests/consumers/orders.test.ts": "990876bbdfc9c529e196d9376b73ccda42d70a4f5aa28458cb81b66f2353f1ba",
     "tests/consumers/projection-boundaries.test.ts": "50e6cb24b479708854b40883a596c8e62760bb28e1355d51586c429d0dae149d",
     "tests/consumers/tablespec-chain.test.ts": "3119ac2a61b79bc2aa82cd20f68d540326051233720b9133158f50e806a72652",
@@ -2001,7 +2020,7 @@
     "tests/core-ideals/facets-avro-type.test.ts": "279f845d6545da325b55cff80bab7407db3579b05c9a80cb51e0009446dbcaf4",
     "tests/core-ideals/facets-avro.test.ts": "e74a235b3018f8df33b1088ad31a247f94c133627895b070c3ab1de0b3385426",
     "tests/core-ideals/facets-conformance.test.ts": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
-    "tests/core-ideals/facets-evidence.test.ts": "790960a760270bd5f43c9061c9790e105d889908f1b47ee175f2e7ffc3dc9662",
+    "tests/core-ideals/facets-evidence.test.ts": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
     "tests/core-ideals/facets-parquet-projection.test.ts": "9cec03369e6c0ec9439ae4091f33351b61aca20b90d2a5dd6c79e265480c94cf",
     "tests/core-ideals/facets-parquet.test.ts": "f0a114a29a5f8698c8d89f3fd06a833f09476bd0c3baa69f1b0c4d4bd39f5f3c",
     "tests/core-ideals/facets-postgresql-catalog.test.ts": "2d010eca3bf6489294a218276912c6ede4080642799f46c61c72112af6f14c63",
@@ -2088,15 +2107,15 @@
     "tests/core-ideals/record-tablespec-projection.test.ts": "4bc462b38d22897c5f4152cd0b155c10b11a8799fa25bb0ac3c90b3afcb97715",
     "tests/core-ideals/record-tablespec.test.ts": "af6716b762f2fe7c4815f13586f12fc98ec88ca596f5ab0017f3566b427db835",
     "tests/core-ideals/record-type.test.ts": "b76e2aeaeebf60aa15c5574e17b67807cc8e5fae4026819456dc392e2b928a96",
-    "tests/core-ideals/relationship-avro-carrier.test.ts": "9ac2e3edc11391bbb81476df58684930ec582347670058babb5859767ca6b3f6",
+    "tests/core-ideals/relationship-avro-carrier.test.ts": "cc8c0497757001abc4b0b663df4f5470ed50f37b4a522b58786284839bf929aa",
     "tests/core-ideals/relationship-avro-discovery.test.ts": "c655fb3d7fa5baab203f114aecf3f5f85e761736ec811b06e02fef2790278a72",
-    "tests/core-ideals/relationship-avro-projection.test.ts": "32940d95c0087c8bae364503cee00759256a9c41c7c0d3424dce6cd54d051f6a",
-    "tests/core-ideals/relationship-avro.test.ts": "d87edb32c9ba36d100070146047704ab455e5540b857be707176ee81935aaca2",
+    "tests/core-ideals/relationship-avro-projection.test.ts": "3bb9d6ea2f80d2ddfc8599bf444e52918e03fdcd65d27aec3c189149a8aec9b1",
+    "tests/core-ideals/relationship-avro.test.ts": "0b84fa1ddea203206b050dc579d9d21ac5199efc6cee33b4b1f4a5b311cf9c7f",
     "tests/core-ideals/relationship-conformance.test.ts": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30",
-    "tests/core-ideals/relationship-extras.test.ts": "d1836cf819076789e2f0e4ce48d5a26ee0849b992b5bf2c91ee6ec5e0f1f8e42",
-    "tests/core-ideals/relationship-parquet.test.ts": "b570a2d7d2b5e9e3f87a23d9be779f8377a406453950395bed6310712f86ea51",
-    "tests/core-ideals/relationship-postgresql.test.ts": "d857db39a85f0044c9c418a0b0c51768f5736c8854ba8e6334b40e984e701d2f",
-    "tests/core-ideals/relationship-sqlserver.test.ts": "24334349e157e57898cdc0121498d86ec6f1790376fab2e8a31c876b007412ce",
+    "tests/core-ideals/relationship-extras.test.ts": "1702dc8baefb07655e57f1c3df227fcc3ab0a6d5abe999f66b88646cc6badeed",
+    "tests/core-ideals/relationship-parquet.test.ts": "effada4fdd1e8d2bbaba5eda8a7803b997c499966bcd9975eeee7e5866256558",
+    "tests/core-ideals/relationship-postgresql.test.ts": "257f892cd3b04093d4efea647e166e4172407e642827a30e7396c6afb642792c",
+    "tests/core-ideals/relationship-sqlserver.test.ts": "3abea6052cd0d84bd42daa46b587c7bcf1f6d8cc7129f6648fe9c88185df857a",
     "tests/core-ideals/relationship-tablespec-discovery.test.ts": "761b816363c17e06087a70235c5df1c7cf241ec0ab8eac83ef77f46123c8f582",
     "tests/core-ideals/relationship-tablespec-projection.test.ts": "884727ef65bd5c0387e1778d8b438d134537915a091f8ae4ed3f70368142b51e",
     "tests/core-ideals/relationship-tablespec.test.ts": "2a7fbf595ce5432327db47f0d6a6880837b61ec5eb6be4be15bc41a0512bf5bd",
@@ -2120,9 +2139,9 @@
     "tests/core/nullability-authoring.test.ts": "8a6c0e45c37593d0e4e62387bbda954af10d2bbab3a88711fdc04aea74137936",
     "tests/core/nullability-ideals.test.ts": "c9716891c91c8f8099bf6e172e1e123003421034dd6c39bc0db395e511c3f429",
     "tests/core/nullability-transition.test.ts": "8833c37f4b50d037dfb666c780ab3e22c7a67d1a93115902401332b500db8cb1",
-    "tests/core/relationship-ideal.test.ts": "78a7911e1afa3a58ac29e4fe8f24e0c27ffd63231b165ac64c26021c52b753cb",
-    "tests/core/relationship-operations.test.ts": "a186664ac51d0f6091232b09aad6fcdcb48b2dbdaddd9bcd26cd47fcd68adcc0",
-    "tests/core/relationship-public.test.ts": "29c1009c989298be0f7853f89e8e283764371f4c2ae8db1399c82b99079d2b97",
+    "tests/core/relationship-ideal.test.ts": "132320dd68ff577d82e6dc922b26defa4af9fcf41e24f37b8601c2b50b39f896",
+    "tests/core/relationship-operations.test.ts": "d56a5acb2f619af2e65c81b445a6fec65324ade7620d8fd40838836c571924c3",
+    "tests/core/relationship-public.test.ts": "fab8bf6360b0b3df8fd9db33c4aed76acf976918c695f3b9713b54476a736566",
     "tests/core/relationship-selection.test.ts": "da8c628a1bbe907f0728a675ab52421ebd0882374c96712a475bf4682879c504",
     "tests/core/relationship-transition.test.ts": "4425c8304e253ce5ab7efa7225195246ddb05653ed285f2026d2dc0a57243720",
     "tests/core/scalar.test.ts": "dfc9712b05a32de14c22d10294af530e13f4657d00feb21cdb99d527ed92709f",
@@ -2247,8 +2266,9 @@
     "tests/projections/ddd-json-schema.test.ts": "28f5e2238dd80c77a8ad1fc511d47fa84ef34e5975d173d5c97836b5716a41c4",
     "tests/projections/ddd-postgresql-tables-indexes.test.ts": "71b3d8975e35d99066dbe08f768a7c0383c5fab756871ab96da2dab93bb2b052",
     "tests/projections/ddd-postgresql-tables.test.ts": "4d5add6381047ab1aff8f4bc49c9d85aec87beab8f310ecf686e192b5a964194",
+    "tests/projections/ddd-postgresql.test.ts": "d1bf088f55cde82feef203ccf23d582a52eaf2438f445676c61cbc334ca751e1",
     "tests/projections/json-schema-protobuf.test.ts": "0c35cdb0ad6cf61725dd00486390c9574d5a17003b2115293bcce751fa8bac2a",
-    "tests/projections/postgresql-relationship-layout.test.ts": "e76defcc01556633f9bdd4308d41ee5533da6dc68122a9dc10907acb5acc2204",
+    "tests/projections/postgresql-relationship-layout.test.ts": "1a51bc41bc7163722e81908386c87ba25bc00b2757fc52a3917a916f5f8261ff",
     "tests/protobuf/behavior.test.ts": "54a0667fcc3d9a2a509d8e1a2947a583ce113e7c7e1b431b6d58ce4baf51bc20",
     "tests/protobuf/descriptor.test.ts": "a6d7c37b05e2fcbf8e0b8686ddb18e49ff44f6856de20662fc765806e1a13697",
     "tests/protobuf/emission.test.ts": "f0087b8ca500c6c557c6a09945c22aa733fd57bd71c66eebb9f3231efafc352b",
@@ -2319,19 +2339,19 @@
   },
   "proofHashes": {
     "fixtures/validation/relationship-tablespec-projection-native.json": "ebde9744dc17fecfa718d7fe20719dcfba9acd8d7ce28bf1130ed1ada60aec1a",
-    "fixtures/validation/relationship-tablespec-projection-browser.json": "c42f175b6caa45d93617f99eee373d26194abaeb0466fce5fab52be1d781b08f",
+    "fixtures/validation/relationship-tablespec-projection-browser.json": "0c02316cb5425dd1e15de67d296c0fa07c944f6c98f87230aea23b0abe4c613b",
     "fixtures/validation/relationship-avro-projection-native.json": "15127d3df3c7dd53653a1c5883c5979471227170fefd6158826c39d8bfdf6cf3",
-    "fixtures/validation/relationship-avro-projection-browser.json": "183c508cb695fdc854ebfb6eb3c0f6d8504c5df18ebb661330d7557cd451a9d3",
-    "fixtures/validation/relationship-parquet-native.json": "8e50a7818a8ca8de2ad9958a045e9ba0ed092ba00266ae48db0e2ddb696090cb",
-    "fixtures/validation/relationship-parquet-browser.json": "ddc37f776b72adb899a957c4fe7fe21c254fd380453ebdaa5d01f72f5c17d319",
-    "fixtures/validation/relationship-sqlserver-native.json": "f7c2233d6813ae11889c4012475a998324b9cf2fff4c0ef276f2b8aed6cfa96e",
-    "fixtures/validation/relationship-sqlserver-browser.json": "a1ba8ba3675531938cf96e3a60a3a1dcb1432e6dae5b623f98c417501a92b3a0",
+    "fixtures/validation/relationship-avro-projection-browser.json": "0373718218733860718dc72530bccfabdb182157f8d58dee6196abfe93c984c6",
+    "fixtures/validation/relationship-parquet-native.json": "bc070246b092016cec9723edd4934560b76c6df769df00b28450c01b016e038a",
+    "fixtures/validation/relationship-parquet-browser.json": "c4564bf0ccafd3ff9ec9922830a09c4c1dfb48b3361f9c6df61c4dbe6073baf4",
+    "fixtures/validation/relationship-sqlserver-native.json": "3e755b09a669253fc0041849adc6b2bc76465d48a25361475d953ca3bbfc8dae",
+    "fixtures/validation/relationship-sqlserver-browser.json": "53934d31e59951c2567cc6e0b67b2c5c25adb677a92e7e3bb34fd388bd6ffe62",
     "fixtures/validation/relationship-postgresql-native.json": "eae9363c40f05a1e022deb3f7824897194986b02840804ec00442d97b8f2b3ef",
     "fixtures/validation/relationship-postgresql-browser.json": "c74bd54f1e3132f6551c2c0643ca8ff6f639e15d62f10cedcda1563b71eba6a5",
-    "fixtures/validation/relationship-conformance-browser.json": "99c16a8b22f96c56ad7bcc845479dd9af9b8f4fc885656daba663626bf4aca07",
-    "fixtures/validation/relationship-extras/native.json": "77ea32d285d7ed1cece7cd992439c15aa796e7e60b1efedb8567acaa39758115",
-    "fixtures/validation/relationship-extras/oracle.json": "c6cb434dfc1a89dc853000eea8b26f74ce2b7a17d8b87cd41522193dfa2678e1",
-    "fixtures/validation/relationship-extras/browser.json": "6a0ecd48630f780d40fc4ea8747a2f38fe3d0c4366ca21f36c40c711f515c836"
+    "fixtures/validation/relationship-conformance-browser.json": "692a295bb672455205c58667a1bac9717ac7c131e410ba99cd8c7afa39c40840",
+    "fixtures/validation/relationship-extras/native.json": "97a1b482682604b24c70d10a74fda4b67a689a28920e7746c0c2ff8e76b0b529",
+    "fixtures/validation/relationship-extras/oracle.json": "b7c6a3e4aa6c43dfa3d8964b3d5bdd524cc2539ac53ec03ba55e44754d16d814",
+    "fixtures/validation/relationship-extras/browser.json": "c87dd83387ac5bb49843afe69e53fde4bc67d5a32f19560c6f57dc83374f2275"
   },
   "commands": [
     {
@@ -2341,8 +2361,8 @@
         "build"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-0.txt",
-      "sha256": "31179e256711f24e1ed2379e8e3873e88a9ce013d325a8301ab473bb5f389abd"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/003.log",
+      "sha256": "89e29d5f2e9a9c60f5503fa58fada71566384c3a725040a81c7265bea4d76fab"
     },
     {
       "command": [
@@ -2351,8 +2371,8 @@
         "build:postgresql"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-1.txt",
-      "sha256": "591069c3e1f33b8e15c224f3f7e36545b71b4c30e509853c5842d1e2d4ef66a5"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/004.log",
+      "sha256": "2d3bb8aed105c807a7fe4f8a349a2c869c3013610095a265d145235a7354b789"
     },
     {
       "command": [
@@ -2360,8 +2380,8 @@
         "scripts/core-ideals/relationship-tablespec-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-2.txt",
-      "sha256": "1e6be9471245a6b54d7f13cb611ff7e04fc51b523adb83c147aeb8d86ba8a10a"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/116.log",
+      "sha256": "7ba5cd1ebd525e6872ec56c27ce89b5c1a049740f9751dbffe09c5491d811a95"
     },
     {
       "command": [
@@ -2369,8 +2389,8 @@
         "scripts/core-ideals/relationship-avro-projection-cases.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-3.txt",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/120.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
     },
     {
       "command": [
@@ -2378,8 +2398,8 @@
         "scripts/core-ideals/relationship-avro-projection-native.py"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-4.txt",
-      "sha256": "1b324ea8efbea305811b28e7738c0880cb00f47fd1dea845b68f4e283a3d75a7"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/123.log",
+      "sha256": "2138a466370934877e4acce5264a029e4d3743ccd978e5e70254bf9c5773e4d5"
     },
     {
       "command": [
@@ -2387,8 +2407,8 @@
         "scripts/core-ideals/relationship-parquet-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-5.txt",
-      "sha256": "639f7e2e535abd64f7b265d63f295487ab397b03254603635212288d8cdfbf1d"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/133.log",
+      "sha256": "a2c0b312f72e4cecb0775394051c38864ae50fa36ac7b1f44e4401ed49473ecf"
     },
     {
       "command": [
@@ -2396,8 +2416,8 @@
         "scripts/core-ideals/relationship-sqlserver-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-6.txt",
-      "sha256": "297f865b561a1f0fec4797c572dc255e5272baaadd2a87d71a9de3cc82b25861"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/131.log",
+      "sha256": "edce1b63ba21c9613c1123ab1cf9b5d56c343283e9d911686ce1178c26db9121"
     },
     {
       "command": [
@@ -2405,8 +2425,8 @@
         "scripts/core-ideals/relationship-postgresql-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-7.txt",
-      "sha256": "4f40a68dec4300c13bd7ef0f8ff88f2fb84039d40c028e87ff7bb2f3edc0f714"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/129.log",
+      "sha256": "bd347df5259471adb6389cf0600a8d3317218125e9966ab5deb81bfd9ef4f7b9"
     },
     {
       "command": [
@@ -2414,8 +2434,8 @@
         "scripts/core-ideals/relationship-extras-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-8.txt",
-      "sha256": "2c660781cd60f8d028bc95c55cf881b7221fff8b00dadcadf8b6ac1d9a2ae65e"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/135.log",
+      "sha256": "b7858e01bc9e75e7a45ff033317da104cc2f09be3b238515546dfcc1f97c311f"
     },
     {
       "command": [
@@ -2423,8 +2443,8 @@
         "scripts/core-ideals/relationship-tablespec-projection-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-9.txt",
-      "sha256": "1091ac71fdd10793b7c1c23c589c144fdfcc7e38bd7db9523f4e979c4578b854"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/118.log",
+      "sha256": "13409ab5617be7986a660b269581b0bbc0e3b6b43006c61354b998a19de1ebd2"
     },
     {
       "command": [
@@ -2432,8 +2452,8 @@
         "scripts/core-ideals/relationship-avro-projection-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-10.txt",
-      "sha256": "cd5bca72e498d2da9871cc92b44e75a98c30e79153b8c01be964a6ea150f061a"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/126.log",
+      "sha256": "ac792350a56c39631148cf484dad85c4348d13688662a7a228eaf6327882ed8b"
     },
     {
       "command": [
@@ -2441,8 +2461,8 @@
         "scripts/core-ideals/relationship-parquet-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-11.txt",
-      "sha256": "cd5bca72e498d2da9871cc92b44e75a98c30e79153b8c01be964a6ea150f061a"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/134.log",
+      "sha256": "ac792350a56c39631148cf484dad85c4348d13688662a7a228eaf6327882ed8b"
     },
     {
       "command": [
@@ -2450,8 +2470,8 @@
         "scripts/core-ideals/relationship-sqlserver-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-12.txt",
-      "sha256": "3327bbf1f565dbcab8291a724af5ea72d02169f3a4eabb7b0e3961fb9b2fadf3"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/132.log",
+      "sha256": "0e2ee1d4e3b0cd0b073dcd34d710448650be68a3a2b586cb359e15a8608d43cf"
     },
     {
       "command": [
@@ -2459,8 +2479,8 @@
         "scripts/core-ideals/relationship-postgresql-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-13.txt",
-      "sha256": "1e9321c7605035beede561d96f9a81fe2318a2141468e076efe707ca5b98364b"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/130.log",
+      "sha256": "ed70907da735a35299c5b2d18852942122ead7c8ae60a1f175ae14d81b05a663"
     },
     {
       "command": [
@@ -2468,8 +2488,8 @@
         "scripts/core-ideals/relationship-extras-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-14.txt",
-      "sha256": "bd111bee2ac679206a70d85138841583f03efb9a5f7e019bcd40187640822771"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/136.log",
+      "sha256": "5e907a0c6bbe71714f828227a6a8f141f12b6d6d85487a1808fa278fd11499df"
     },
     {
       "command": [
@@ -2477,8 +2497,8 @@
         "scripts/core-ideals/relationship-conformance-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-15.txt",
-      "sha256": "7b63380ee19e7efa4a25801f952feb02cdaa4a814e967ef3499e4fd92959bf5e"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/174.log",
+      "sha256": "8268e4ee91e8257e368ccfc962688424a8ab5ca3226f244b5ebc986ef39b7ec6"
     },
     {
       "command": [
@@ -2495,8 +2515,8 @@
         "tests/core-ideals/relationship-extras.test.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-16.txt",
-      "sha256": "436a8ed94dd3bdc5fea661c5aa75a768997f47e7db95c9ac761f82ffe924fdce"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/175.log",
+      "sha256": "01f2778bb7c8135f0c8198df4523a82eab87806c39de67634636f74f6d54b945"
     },
     {
       "command": [
@@ -2505,8 +2525,8 @@
         "typecheck"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-gate/command-17.txt",
-      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+      "log": "fixtures/validation/relationship-integrated-refresh/replay-2026-10-01T21-21-04-502Z-b115777d-1cb7-491d-b72e-643414383786/001.log",
+      "sha256": "b1a6cc0f4b7ea761f9223617aa029a27603b7b5f88c2452991d75c362d4f39b9"
     }
   ]
 }

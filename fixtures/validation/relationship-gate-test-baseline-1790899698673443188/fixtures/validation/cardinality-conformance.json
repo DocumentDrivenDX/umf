@@ -1,0 +1,153 @@
+{
+  "scope": "Qualified Cardinality admission and five-system delivery; retained evidence consistency is not native re-execution or authentication",
+  "idealAdmission": {
+    "outcome": "passed",
+    "requiredBindings": 2,
+    "usefulBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "meaning": "CONTRACT-040 / Element.cardinality and itemType",
+    "nativeEquivalence": false
+  },
+  "delivery": {
+    "outcome": "passed",
+    "requiredBindings": 5,
+    "qualifiedBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "scope": "Explicit supported profiles, including residuals and refusals; no general row conversion"
+  },
+  "evidence": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "records": [
+      {
+        "path": "fixtures/validation/cardinality-core-acceptance-evidence.json",
+        "sha256": "dd7d519cd2c4a145c846296d93c8cd8fa06ada5f8403891bcc732a5e09f20244"
+      },
+      {
+        "path": "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
+        "sha256": "4a4ff44c818e59627a9345c1611f6d48a71fbd8a91936f2bc723afef765edbb8"
+      },
+      {
+        "path": "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
+        "sha256": "811be7e465751e11886437c37b936fc62ed231dfe563f801fad4d04886ef2de7"
+      },
+      {
+        "path": "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
+        "sha256": "2a78f746fcee9bfb18bb3969fc0bc17d45a0e776d0ad7d1179a003625a345530"
+      },
+      {
+        "path": "fixtures/validation/avro-cardinality-acceptance-evidence.json",
+        "sha256": "40d9ec13f21df8911c055cd474429dfa852de28166edb5356757e30ecd375dd2"
+      },
+      {
+        "path": "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
+        "sha256": "ccee158940d9369f65354ea833b996182ea75c4fd5951f34252b2462c5b29841"
+      }
+    ],
+    "fingerprints": 11009,
+    "refreshSha256": "66984090da89b354652b533e050119fb3faf1d4e7334302a0371af47693dbe7a"
+  },
+  "roundTrips": {
+    "tablespec": {
+      "authoredCases": 86,
+      "strictBlocks": 38,
+      "reportResiduals": 38,
+      "idealRecoveries": 96,
+      "nativeCases": 336,
+      "nativeBlocks": 110,
+      "nativeRecoveries": 452,
+      "compositions": 48,
+      "labels": [
+        "array",
+        "map",
+        "one",
+        "unspecified"
+      ]
+    },
+    "postgresql": {
+      "authoredCases": 56,
+      "strictBlocks": 26,
+      "reportResiduals": 26,
+      "idealRecoveries": 60,
+      "nativeCases": 104,
+      "nativeBlocks": 34,
+      "nativeRecoveries": 140,
+      "compositions": 12,
+      "labels": [
+        "array",
+        "map",
+        "one",
+        "unspecified"
+      ]
+    },
+    "sqlserver": {
+      "authoredCases": 112,
+      "strictBlocks": 40,
+      "reportResiduals": 40,
+      "idealRecoveries": 144,
+      "nativeCases": 56,
+      "nativeBlocks": 20,
+      "nativeRecoveries": 72,
+      "compositions": 12,
+      "labels": [
+        "array",
+        "map",
+        "one",
+        "unspecified"
+      ]
+    },
+    "avro": {
+      "authoredCases": 86,
+      "strictBlocks": 30,
+      "reportResiduals": 30,
+      "idealRecoveries": 112,
+      "nativeCases": 80,
+      "nativeBlocks": 22,
+      "nativeRecoveries": 116,
+      "compositions": 56,
+      "labels": [
+        "array",
+        "map",
+        "one",
+        "unspecified"
+      ]
+    },
+    "parquet": {
+      "authoredCases": 168,
+      "strictBlocks": 32,
+      "reportResiduals": 32,
+      "idealRecoveries": 272,
+      "nativeCases": 120,
+      "nativeBlocks": 44,
+      "nativeRecoveries": 152,
+      "compositions": 136,
+      "labels": [
+        "array",
+        "map",
+        "one",
+        "unspecified"
+      ]
+    }
+  },
+  "fingerprints": {
+    "scripts/core-ideals/cardinality-conformance.ts": "7596e4d4dd405d2d11e3d0cd402df29ef7585e7b2a13f970a1c1c4ac2373c891",
+    "tests/core-ideals/cardinality-conformance.test.ts": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e"
+  }
+}

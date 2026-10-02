@@ -1,0 +1,177 @@
+{
+  "scope": "Qualified scalar facet bindings across the five priority systems; retained recovery does not establish native equivalence",
+  "idealAdmitted": true,
+  "priorityDelivery": true,
+  "nativeEquivalence": false,
+  "usefulSystems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
+  ],
+  "evidence": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "records": [
+      {
+        "path": "fixtures/validation/facet-core-acceptance-evidence.json",
+        "sha256": "387df811eb6fd18fb1b83ce58bbbef8b962bfabf21c0223d66cd5601fd1449dc"
+      },
+      {
+        "path": "fixtures/validation/tablespec-facets-acceptance-evidence.json",
+        "sha256": "b09e2cb461cc8d8a5e91dd882f8545d236e3e01cc77faecacd6bcba95df2192d"
+      },
+      {
+        "path": "fixtures/validation/postgresql-facets-acceptance-evidence.json",
+        "sha256": "26cf54aff962335526d16cc00c6d055673eb1722f8dc8be7bc7e2b245c70e448"
+      },
+      {
+        "path": "fixtures/validation/sqlserver-facets-acceptance-evidence.json",
+        "sha256": "e8393f61b71cdc385fa742334e194ef73e7963aa5c71ecf78791c4d9d84942da"
+      },
+      {
+        "path": "fixtures/validation/avro-facets-acceptance-evidence.json",
+        "sha256": "21148141ede83d52ea13145384c4d63ddfee4cbef794f5988c03fa4e6b1e6071"
+      },
+      {
+        "path": "fixtures/validation/parquet-facets-acceptance-evidence.json",
+        "sha256": "d92a62f1a09a691ed1874875f84b135dbbba08e324f47c585f12d0003c4fd5b0"
+      }
+    ],
+    "fingerprints": 20007,
+    "revalidated": [],
+    "refreshSha256": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab",
+    "idealAdmitted": false,
+    "nativeEquivalence": false
+  },
+  "coverage": {
+    "tablespec": {
+      "authoredCases": 540,
+      "projected": 331,
+      "strictBlocks": 209,
+      "reportBlocks": 0,
+      "reportResiduals": 209,
+      "idealRecoveries": 662,
+      "nativeRecoveries": 1236,
+      "classificationBlocks": 44,
+      "nonemptyMatches": 104,
+      "usefulExactMappings": 104,
+      "residualComparisons": 200,
+      "facetlessControls": 27,
+      "floatNarrowing": 6,
+      "fullCatalogNativeRecoveries": 0,
+      "aggregateSerializationRefusals": 0
+    },
+    "postgresql": {
+      "authoredCases": 232,
+      "projected": 145,
+      "strictBlocks": 87,
+      "reportBlocks": 0,
+      "reportResiduals": 87,
+      "idealRecoveries": 290,
+      "nativeRecoveries": 494,
+      "classificationBlocks": 43,
+      "nonemptyMatches": 54,
+      "usefulExactMappings": 48,
+      "residualComparisons": 79,
+      "facetlessControls": 12,
+      "floatNarrowing": 2,
+      "fullCatalogNativeRecoveries": 1,
+      "aggregateSerializationRefusals": 2
+    },
+    "sqlserver": {
+      "authoredCases": 238,
+      "projected": 145,
+      "strictBlocks": 93,
+      "reportBlocks": 0,
+      "reportResiduals": 93,
+      "idealRecoveries": 290,
+      "nativeRecoveries": 474,
+      "classificationBlocks": 53,
+      "nonemptyMatches": 45,
+      "usefulExactMappings": 44,
+      "residualComparisons": 88,
+      "facetlessControls": 12,
+      "floatNarrowing": 2,
+      "fullCatalogNativeRecoveries": 0,
+      "aggregateSerializationRefusals": 0
+    },
+    "avro": {
+      "authoredCases": 576,
+      "projected": 397,
+      "strictBlocks": 179,
+      "reportBlocks": 0,
+      "reportResiduals": 179,
+      "idealRecoveries": 794,
+      "nativeRecoveries": 1102,
+      "classificationBlocks": 243,
+      "nonemptyMatches": 76,
+      "usefulExactMappings": 40,
+      "residualComparisons": 150,
+      "facetlessControls": 171,
+      "floatNarrowing": 18,
+      "fullCatalogNativeRecoveries": 0,
+      "aggregateSerializationRefusals": 0
+    },
+    "parquet": {
+      "authoredCases": 216,
+      "projected": 177,
+      "strictBlocks": 33,
+      "reportBlocks": 6,
+      "reportResiduals": 27,
+      "idealRecoveries": 354,
+      "nativeRecoveries": 574,
+      "classificationBlocks": 67,
+      "nonemptyMatches": 159,
+      "usefulExactMappings": 100,
+      "residualComparisons": 12,
+      "facetlessControls": 6,
+      "floatNarrowing": 12,
+      "fullCatalogNativeRecoveries": 0,
+      "aggregateSerializationRefusals": 0
+    }
+  },
+  "limits": [
+    "Profiles and native versions remain bounded by each binding acceptance record",
+    "Matching facets do not erase native refinements, execution differences or other residuals",
+    "SQL recovery preserves captured catalogs; arbitrary DDL or live database discovery is not claimed",
+    "Unknown extension content remains attached; no native concept is replaced"
+  ],
+  "sha256": {
+    "scripts/core-ideals/facets-conformance.ts": "2493daf433d6fcb92e504968a0d96b3c88d8df9348ab1aafb1314cb07799c162",
+    "scripts/core-ideals/facets-evidence.ts": "6fd3dda475ea08e27bfe68500770193d5280d3d888c5ca63f5226a7af35db189",
+    "scripts/core-ideals/facets-roundtrips.ts": "2222a522c8aa08f59aabcb5dee2821dead2bb718f8ea1cdd9daa78ac7e435216",
+    "tests/core-ideals/facets-conformance.test.ts": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
+    "tests/core-ideals/facets-evidence.test.ts": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
+    "fixtures/validation/facets-worktree-revalidation.json": "e6c06c9ac1a4e7b18cefc422a1c0efda3f138e6f20f3826a8a79a83d3947e354",
+    "fixtures/validation/facets-avro-exact-input-browser.json": "0c33d46947757f0f77e521ed695302aeee942eaa9adc0d20514318d9cb63ab50",
+    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
+    "spec/extensions/avro-facets/package.json": "83862c82e105c376c04ad625f3993e8206cac42c6d508d15db8f5a3bd07a4ebf",
+    "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
+    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
+    "scripts/core-ideals/facets-avro-exact-input-browser.ts": "029d17ce195ab5fd85bb038cac83468219761eb7a22beb11a8148c1594af9e07",
+    "scripts/core-ideals/facets-avro-projection-cases.ts": "2050e1ad1f5bef37f4552fd5f3cc2d0bc3ae317b766f6aadea748938e59ee85a",
+    "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
+    "spec/core/facets-avro-projection.schema.json": "3032f6daf14e6f80f352126f55a03278353a4bf38511038126f3e5615e3ca3f4",
+    "fixtures/validation/facet-core-acceptance-evidence.json": "387df811eb6fd18fb1b83ce58bbbef8b962bfabf21c0223d66cd5601fd1449dc",
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": "b09e2cb461cc8d8a5e91dd882f8545d236e3e01cc77faecacd6bcba95df2192d",
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": "26cf54aff962335526d16cc00c6d055673eb1722f8dc8be7bc7e2b245c70e448",
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": "e8393f61b71cdc385fa742334e194ef73e7963aa5c71ecf78791c4d9d84942da",
+    "fixtures/validation/avro-facets-acceptance-evidence.json": "21148141ede83d52ea13145384c4d63ddfee4cbef794f5988c03fa4e6b1e6071",
+    "fixtures/validation/parquet-facets-acceptance-evidence.json": "d92a62f1a09a691ed1874875f84b135dbbba08e324f47c585f12d0003c4fd5b0",
+    "fixtures/validation/field-gate-refresh-evidence.json": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab"
+  },
+  "testOnlyQualification": {
+    "ledger": "fixtures/validation/relationship-gate-test-only-qualification.json",
+    "baselinePath": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/facets-conformance.json",
+    "baselineSha256": "963d92bdc8f0561fe9935a7ed1feac9cd8e65845cb6d585accb3a8e0e073c0fa",
+    "scope": "Evidence hash closure only; semantic results and original execution logs retained"
+  }
+}

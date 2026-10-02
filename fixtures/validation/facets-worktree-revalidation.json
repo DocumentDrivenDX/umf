@@ -2,53 +2,76 @@
   "profile": "facet-worktree-revalidation-1",
   "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
   "historicalIndexCommit": "4b0922f500087d6dbc9797bf80e937a0ace10bee",
-  "scope": "Only exact fingerprint drift caused by merging the admitted facet proof into the relationships worktree. Historical proof files are retained; current bytes are pinned here and must pass live conformance. No native equivalence claim.",
-  "driftGroups": {
-    "added library exports and rebuilt browser bundle": ["src/index.ts", "dist/umf.js"],
-    "rebuilt PostgreSQL browser runtime": ["dist/postgresql/runtime.js"],
-    "rerun browser proof with current bundles": ["fixtures/validation/facets-postgresql-catalog-browser.json", "fixtures/validation/facets-postgresql-discovery-browser.json", "fixtures/validation/facets-sqlserver-discovery-browser.json"],
-    "merged governed documents": ["docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md", "docs/helix/03-test/test-plan.md", "docs/helix/04-build/implementation-plan.md", "docs/helix/README.md"]
-  },
-  "changes": {
-    "dist/postgresql/runtime.js": {
-      "historicalSha256": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
-      "currentSha256": "4db136a846ed0066c5f4267deaa46e75d63dd0bca0a32188803ad34fa7435694"
+  "scope": "Current facet proof matrix after fresh integrated native/browser replay and full regression. Historical merge-drift ledger is retained separately below; no current hash exceptions are required.",
+  "driftGroups": {},
+  "changes": {},
+  "historicalRevalidation": {
+    "profile": "facet-worktree-revalidation-1",
+    "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
+    "historicalIndexCommit": "4b0922f500087d6dbc9797bf80e937a0ace10bee",
+    "scope": "Only exact fingerprint drift caused by merging the admitted facet proof into the relationships worktree. Historical proof files are retained; current bytes are pinned here and must pass live conformance. No native equivalence claim.",
+    "driftGroups": {
+      "added library exports and rebuilt browser bundle": [
+        "src/index.ts",
+        "dist/umf.js"
+      ],
+      "rebuilt PostgreSQL browser runtime": [
+        "dist/postgresql/runtime.js"
+      ],
+      "rerun browser proof with current bundles": [
+        "fixtures/validation/facets-postgresql-catalog-browser.json",
+        "fixtures/validation/facets-postgresql-discovery-browser.json",
+        "fixtures/validation/facets-sqlserver-discovery-browser.json"
+      ],
+      "merged governed documents": [
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+        "docs/helix/03-test/test-plan.md",
+        "docs/helix/04-build/implementation-plan.md",
+        "docs/helix/README.md"
+      ]
     },
-    "dist/umf.js": {
-      "historicalSha256": "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
-      "currentSha256": "fbd34c49885cb5246a94e65a8161b4af75995cd2124a0791e97591e382cbefcd"
-    },
-    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
-      "historicalSha256": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0",
-      "currentSha256": "c8c5bcbff2d2020370cc17cafd06c35e8ed9566bcc2ccaceb0c06c1e4501c315"
-    },
-    "docs/helix/03-test/test-plan.md": {
-      "historicalSha256": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82",
-      "currentSha256": "3061298c869cf6c64e10202fe6baf48208aae440732ec6d9baae11a5c5307f28"
-    },
-    "docs/helix/04-build/implementation-plan.md": {
-      "historicalSha256": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6",
-      "currentSha256": "15f03c5fa19a6cb83b0c8608950be643c2aadcf7dcfaa4723b1d04748056864e"
-    },
-    "docs/helix/README.md": {
-      "historicalSha256": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6",
-      "currentSha256": "1beae4d071f26cbc88ac3b454b39529661cb1a69ae76ba1c8df76154929098c6"
-    },
-    "fixtures/validation/facets-postgresql-catalog-browser.json": {
-      "historicalSha256": "f3afb6507fe867014dafe9945a86a6b849d56530a016fba5e9e2a0a53685b0a2",
-      "currentSha256": "0e69680db821cb4d7ac5ce5397e60619e91402102586592c5ec0344b7c93a84f"
-    },
-    "fixtures/validation/facets-postgresql-discovery-browser.json": {
-      "historicalSha256": "068c972ab772b16f7396276e23a65509b01f32c416f8c6f67fdacfe987a08b3c",
-      "currentSha256": "c6c010b921972c657f8fc6d33a48ae97bd2da3dc268bfccc4d48138662b13fb9"
-    },
-    "fixtures/validation/facets-sqlserver-discovery-browser.json": {
-      "historicalSha256": "021af2285cee0a69e3926a2b10ee4052a05ce248dc86599580c3e7bcd9f95c32",
-      "currentSha256": "069bfe54847215e590cacf00e4a62a91c80260f300aa19d37924955b0ea077c4"
-    },
-    "src/index.ts": {
-      "historicalSha256": "956cd396d74954f793f2527ed7312a5635dfecc0f88675779d3d13d8a1e52ae3",
-      "currentSha256": "0aa877f67f9cd1c06aeaca47fabb153de65e0521db9776e52b818b076666966a"
+    "changes": {
+      "dist/postgresql/runtime.js": {
+        "historicalSha256": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+        "currentSha256": "4db136a846ed0066c5f4267deaa46e75d63dd0bca0a32188803ad34fa7435694"
+      },
+      "dist/umf.js": {
+        "historicalSha256": "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
+        "currentSha256": "fbd34c49885cb5246a94e65a8161b4af75995cd2124a0791e97591e382cbefcd"
+      },
+      "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": {
+        "historicalSha256": "228d1007957c55bb2db2341df8aa31623e715d58f4085da00edc7179737975b0",
+        "currentSha256": "c8c5bcbff2d2020370cc17cafd06c35e8ed9566bcc2ccaceb0c06c1e4501c315"
+      },
+      "docs/helix/03-test/test-plan.md": {
+        "historicalSha256": "c8583fd3dbb80f5ff14a99fba577548f8de7db336c7f33c210c2067ba9f91d82",
+        "currentSha256": "3061298c869cf6c64e10202fe6baf48208aae440732ec6d9baae11a5c5307f28"
+      },
+      "docs/helix/04-build/implementation-plan.md": {
+        "historicalSha256": "d85eda0f87140fbffbf11933662607f76c9a9df43bfa3fbde63ba1b042c31cd6",
+        "currentSha256": "15f03c5fa19a6cb83b0c8608950be643c2aadcf7dcfaa4723b1d04748056864e"
+      },
+      "docs/helix/README.md": {
+        "historicalSha256": "235903a2cd98bbed0b8d609ef23d67621ddf40ac440e05c3b9f042d0de0c6bd6",
+        "currentSha256": "1beae4d071f26cbc88ac3b454b39529661cb1a69ae76ba1c8df76154929098c6"
+      },
+      "fixtures/validation/facets-postgresql-catalog-browser.json": {
+        "historicalSha256": "f3afb6507fe867014dafe9945a86a6b849d56530a016fba5e9e2a0a53685b0a2",
+        "currentSha256": "0e69680db821cb4d7ac5ce5397e60619e91402102586592c5ec0344b7c93a84f"
+      },
+      "fixtures/validation/facets-postgresql-discovery-browser.json": {
+        "historicalSha256": "068c972ab772b16f7396276e23a65509b01f32c416f8c6f67fdacfe987a08b3c",
+        "currentSha256": "c6c010b921972c657f8fc6d33a48ae97bd2da3dc268bfccc4d48138662b13fb9"
+      },
+      "fixtures/validation/facets-sqlserver-discovery-browser.json": {
+        "historicalSha256": "021af2285cee0a69e3926a2b10ee4052a05ce248dc86599580c3e7bcd9f95c32",
+        "currentSha256": "069bfe54847215e590cacf00e4a62a91c80260f300aa19d37924955b0ea077c4"
+      },
+      "src/index.ts": {
+        "historicalSha256": "956cd396d74954f793f2527ed7312a5635dfecc0f88675779d3d13d8a1e52ae3",
+        "currentSha256": "0aa877f67f9cd1c06aeaca47fabb153de65e0521db9776e52b818b076666966a"
+      }
     }
-  }
+  },
+  "executionEvidence": "fixtures/validation/field-gate-refresh-evidence.json"
 }

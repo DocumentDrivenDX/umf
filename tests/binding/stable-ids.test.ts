@@ -3,7 +3,7 @@ import {bindingRegistry,copyJson,getBinding,inspectBinding,migrateBindingRelatio
 import {bindingMigrationCase} from '../../scripts/binding/stable-ids-cases';
 const payload=(d:Document)=>d.extensions!['umf.binding'] as any;
 
-test('@covers US-046-AC3 AC9 AC10: stable ID survives rename and copied receipts preserve old unknown content',()=>{
+test('@covers US-046-AC3 @covers US-046-AC9: stable ID survives rename and copied receipts preserve old unknown content',()=>{
  const {binding,logical}=bindingMigrationCase(),before=copyJson(binding) as unknown as Document;
  const r=migrateBindingRelationships(binding,logical);
  expect(bindingRegistry().get('umf.binding','0.2.0')).toBeDefined();
@@ -20,7 +20,7 @@ test('@covers US-046-AC3 AC9 AC10: stable ID survives rename and copied receipts
  expect(payload(r.document).relationships[0].id).toBe('order-customer');
 });
 
-test('@covers US-046-AC3 AC10: duplicate, missing, stale and legacy opaque relationship references refuse',()=>{
+test('@covers US-046-AC3 @covers US-046-AC9: duplicate, missing, stale and legacy opaque relationship references refuse',()=>{
  for(const mutate of [
   (b:Document,l:Document)=>payload(b).relationships.push({...payload(b).relationships[0]}),
   (b:Document,l:Document)=>payload(b).relationships[0].name='missing',
@@ -34,7 +34,7 @@ test('@covers US-046-AC3 AC10: duplicate, missing, stale and legacy opaque relat
  payload(document).relationships[0].id='order-customer';payload(document).relationships.push({...payload(document).relationships[0]});expect(inspectBinding(document,logical).diagnostics.some(d=>d.code==='BINDING_DUPLICATE')).toBe(true);
 });
 
-test('@covers US-046-AC7 AC10: rollback preserves new ID-only choices and all edits as copied residuals',()=>{
+test('@covers US-046-AC9: rollback preserves new ID-only choices and all edits as copied residuals',()=>{
  const {binding,logical}=bindingMigrationCase(),r=migrateBindingRelationships(binding,logical);
  const second={...(logical.modules[0]!.relationships as any[])[0],id:'second',name:'second',inverse:'secondInverse'};
  (logical.modules[0]!.relationships as any[]).push(second);
@@ -47,7 +47,7 @@ test('@covers US-046-AC7 AC10: rollback preserves new ID-only choices and all ed
  payload(r.document).future.changed=false;expect((rolled.residuals[1]!.value as any).extensions['umf.binding'].future.changed).toBe(true);
 });
 
-test('@covers US-046-AC10: receipts are recomputed and unrelated bindings cannot roll back',()=>{
+test('@covers US-046-AC9: receipts are recomputed and unrelated bindings cannot roll back',()=>{
  const {binding,logical}=bindingMigrationCase(),r=migrateBindingRelationships(binding,logical);
  r.receipt.mappings[0]!.stable.id='tampered';expect(()=>rollbackBindingRelationships(r.document,logical,r.receipt)).toThrow();
  const fresh=migrateBindingRelationships(binding,logical);fresh.document.id='other';expect(()=>rollbackBindingRelationships(fresh.document,logical,fresh.receipt)).toThrow();

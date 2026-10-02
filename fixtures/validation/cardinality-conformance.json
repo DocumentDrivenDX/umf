@@ -38,31 +38,31 @@
     "records": [
       {
         "path": "fixtures/validation/cardinality-core-acceptance-evidence.json",
-        "sha256": "0dc0ed1e6035e66b694e55b9ec93627c98c76b7e4b2cee2f3a2b81d3b29826b4"
+        "sha256": "13d71ea91820c4ca61ccc2fea45d63b14d522bb5716456057fe7d9eb06018869"
       },
       {
         "path": "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
-        "sha256": "c7c8ec4436357fbedf2827c80afd37669d6013874ae1e91f0b7e8a4c37ad99e6"
+        "sha256": "5968d59f545f5cb575ab832e7149df4be9b1ad234201f003e3467a9a8e924e68"
       },
       {
         "path": "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
-        "sha256": "ad90b21542ca6a8962da8f5be053fada7b7456b37f6488f38ee1d50d42f71981"
+        "sha256": "546716eb0c0a684706314703270f0d76c8b758b7808b64f1b7e0c72365df9a66"
       },
       {
         "path": "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
-        "sha256": "a395534437d9b1dab68cd1771c98df3f99ddb5187f057d47ffaeddf16a9c4a04"
+        "sha256": "83f22275d9cc698ce2a66cb4a8ed97c92a3e34ebb375ec9caebfe50505a39f69"
       },
       {
         "path": "fixtures/validation/avro-cardinality-acceptance-evidence.json",
-        "sha256": "d07b58517ddedaa4f16bee8cd8f45bf605e3542c08d3bf72cd35070dbff1cdf8"
+        "sha256": "fe5971227057ef1507b8f5924f677c6720c047600c3570ec3e22397ba980ae96"
       },
       {
         "path": "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
-        "sha256": "de6a5ddadb1d82c5b04fcf61fa2ee73c586e969c5fe2e335ac2ed6bff95c30b1"
+        "sha256": "d17dfc11dbaf79f32d34a43232a6930d1c0d36cf0abe008d5fe0dc4f5d43bec0"
       }
     ],
-    "fingerprints": 10707,
-    "refreshSha256": "28e4cd3b43fcdc07278e965e30eb0bafdce1522e0f9e4ba61e43a6d06f1b852f"
+    "fingerprints": 11009,
+    "refreshSha256": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab"
   },
   "roundTrips": {
     "tablespec": {
@@ -149,5 +149,58 @@
   "fingerprints": {
     "scripts/core-ideals/cardinality-conformance.ts": "7596e4d4dd405d2d11e3d0cd402df29ef7585e7b2a13f970a1c1c4ac2373c891",
     "tests/core-ideals/cardinality-conformance.test.ts": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e"
-  }
+  },
+  "testOnlyQualification": {
+    "ledger": "fixtures/validation/relationship-gate-test-only-qualification.json",
+    "baselinePath": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/cardinality-conformance.json",
+    "baselineSha256": "052b1e5489cba5acfe539f9c99fa8262edee9897afa3d3ada44c139a8d3a7813",
+    "scope": "Evidence hash closure only; semantic results and original execution logs retained"
+  },
+  "documentationRevalidations": [
+    {
+      "scope": "Exactly six relative fixture links corrected; evidence consistency rerun only. Prior native/browser execution and semantic matrix counts retained, not rerun.",
+      "archive": "fixtures/validation/relationship-integrated-final/doc-links-28695092b89040a58a717759c550b504",
+      "oldDocumentSha256": "98bf0aa914520377a9471a4ebe830cd193cfa5727251c71d179b82e5c88b0df2",
+      "newDocumentSha256": "1dae5e58cc83b0fda7f175285c557ae18eb25f717b9755cae1e575e9fe030945",
+      "changedLines": [
+        4600,
+        4704,
+        4723,
+        4743,
+        4764,
+        4793
+      ],
+      "beforeSha256": {
+        "docs/helix/04-build/implementation-plan.md": "98bf0aa914520377a9471a4ebe830cd193cfa5727251c71d179b82e5c88b0df2",
+        "fixtures/validation/relationship-integrated-refresh/conformance-runs.json": "b9e16718b9a4c46e47437ec1049f407347257b543115f9fc08d18e59fed2c8b9",
+        "fixtures/validation/nullability-core-acceptance-evidence.json": "6c645b5caa8d6c59f13eeadb2ab1bc6a68ce20da9fa2628895ac6e4c1b5f0800",
+        "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "a3cf036d569098b46432375e3ed61bd8743334a6f754051700fadba75d47ae00",
+        "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "2386e9416ad67fd897f6ae2ac34974e839407c4a90d0c84badd9d2f0d1de0478",
+        "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "e4bd07e3f69a5a1981e427bc101c831f8802d4975d01a55c881a8500cefed06a",
+        "fixtures/validation/avro-nullability-acceptance-evidence.json": "71a909939112526bbe5c4ae014f39ad3da710e1949e8a7880b04aebe71ab900a",
+        "fixtures/validation/parquet-nullability-acceptance-evidence.json": "904527e6038cb12b8df59e12dabbfdfc28d48db97627a164a5ae6e37d69a45c6",
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": "9dad38be5dcd7e1e142cc81cde6e9857dfd2b2873ea7d7e4f1f26128eb86c611",
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "ac2d9a4b9fee8a112820a1acf24253ed8a2861b0527ed3b0a58a38bd546c10c7",
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "1329813a5152ad59c008b623be9f874e6b64135f312082992c1c32b50641a01e",
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": "950a1e18b1ef3cfc429ab663665b452bee08809ab8f3a1c82c1462d5a9a72de2",
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": "36709b479c2ee0245fe73deccec8ba4149c8a536018f11993b8f86045ead9c1c",
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": "743147d42d1f04143ef14bccba7d9bf44b7e4d556f68dae02b58333c6b0d2e6b",
+        "fixtures/validation/facet-core-acceptance-evidence.json": "387df811eb6fd18fb1b83ce58bbbef8b962bfabf21c0223d66cd5601fd1449dc",
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": "b09e2cb461cc8d8a5e91dd882f8545d236e3e01cc77faecacd6bcba95df2192d",
+        "fixtures/validation/postgresql-facets-acceptance-evidence.json": "26cf54aff962335526d16cc00c6d055673eb1722f8dc8be7bc7e2b245c70e448",
+        "fixtures/validation/sqlserver-facets-acceptance-evidence.json": "e8393f61b71cdc385fa742334e194ef73e7963aa5c71ecf78791c4d9d84942da",
+        "fixtures/validation/avro-facets-acceptance-evidence.json": "21148141ede83d52ea13145384c4d63ddfee4cbef794f5988c03fa4e6b1e6071",
+        "fixtures/validation/parquet-facets-acceptance-evidence.json": "d92a62f1a09a691ed1874875f84b135dbbba08e324f47c585f12d0003c4fd5b0",
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": "e298a86ce397ed8ed5dfa66eafc4c0000723dc39cd4b79a4f4c4673c473d8482",
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": "efac2a62759c60c921177224b33e1daec382f0c167ffb538abb6cbbc6bd3009e",
+        "fixtures/validation/facets-gate-acceptance-evidence.json": "13c8399e957374d73cb26fde0900ce5e2559727b3c2e31857c0c7f6ddbca2fbc",
+        "fixtures/validation/nullability-conformance.json": "a0e76e8b9eeb69687dc31862fdc16e1245a55ad1034c2dcf73e3cc575e0fee70",
+        "fixtures/validation/cardinality-conformance.json": "00bea96570bf3176829b7221dbbbbfb303beb16fd44774086a6f1a94436f4068",
+        "fixtures/validation/facets-conformance.json": "56e89302539ac05938b58859358368549c23f7902af4473cf09624c8ee379017",
+        "fixtures/validation/key-conformance.json": "bb2749d9d6700357a63308a76443775d543b464c518f769b65242a462ac8a813"
+      },
+      "semanticResultsRetainedFrom": "fixtures/validation/relationship-integrated-final/doc-links-28695092b89040a58a717759c550b504/before/fixtures/validation/cardinality-conformance.json",
+      "semanticResultsSourceSha256": "00bea96570bf3176829b7221dbbbbfb303beb16fd44774086a6f1a94436f4068"
+    }
+  ]
 }

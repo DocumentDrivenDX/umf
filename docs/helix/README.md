@@ -1,18 +1,66 @@
 # UMF project documentation
 
-**Current owner priority (2026-09-21):** TableSpec, PostgreSQL, Microsoft SQL Server,
-Avro and Parquet schema ingestion, with shared core field metadata and a basic
-scalar type field. This supersedes older next-step notes below. RDF/OWL/RDF/XML
-work is deferred. See the current-priority section of the
-[implementation plan](04-build/implementation-plan.md).
+## Current delivered scope
+
+The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
+schema ingestion and shared authored metadata. The browser-compatible library
+now includes experimental core 0.2.0 Field, 0.3.0 Nullability, 0.4.0 Cardinality,
+0.5.0 Facets, 0.6.0 Key and 0.7.0 Relationship operations, with older envelope
+recovery and explicit migration/rollback. Core plus independently versioned
+extensions preserve native and unknown meaning; DDD is one semantic extension,
+not UMF's worldview. See the [architecture](02-design/architecture.md) and
+[implementation plan](04-build/implementation-plan.md) for the qualified inventory.
+
+Authored relationship bindings have scoped acceptance for all five priority
+systems. Separate GraphQL/RDF/LinkML bindings retain their own native versions,
+subsets and counterexamples. Stable-ID `umf.binding` 0.2.0 keeps physical storage
+and indexes independent of the logical model, alongside the retained 0.1.0
+name-based profile and explicit migration/rollback.
+
+Delivered directed generators include
+[PostgreSQL 17.4 DDD + binding](04-build/evidence/ddd-postgresql.md),
+[GraphQL DDD + relationships](../../fixtures/projections/ddd-graphql/acceptance.json)
+and [SQL Server 2022 physical binding](04-build/evidence/sqlserver-physical-binding-acceptance.md).
+They generate reviewable schemas and complete retained receipts, with strict
+refusal or source-qualified report losses. They do not implement downstream
+query/mutation execution, database migration or native/domain equivalence.
+
+## Integrated verification status
+
+| Separate claim | Final recorded result |
+| --- | --- |
+| Relationship ideal admission (two useful priority mappings) | Passed; qualified PostgreSQL and SQL Server mappings |
+| Qualified five-priority relationship delivery | Passed, with explicit target-specific residuals/refusals |
+| Fresh integrated compatibility replay | Passed; 175/175 commands |
+| Broad Bun regression (separate gates excluded) | 2055 tests, 369 files, 129660 assertions, 0 failures |
+| Typecheck, schema/package audit and browser build | Passed; 343 schemas / 59 packages |
+| Native-equivalence graduation | Not claimed |
+
+Final records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
+and [integrated execution evidence](../../fixtures/validation/relationship-integrated-acceptance-evidence.json).
+The integrated record must name the tested revision, native/browser versions,
+subsets, command outcomes, source fingerprints and any failed attempts or reruns.
+The linked final record also includes all 8 separately executed gate/evidence test files and reports unique combined totals; nested replay tests are not counted twice. Additional
+systems do not replace the five priority bindings; refusals do not satisfy the
+two-useful-mapping admission floor. Broader ontology/platform and metadata-consumer
+requirements remain separately governed; completing this queue does not claim
+all product requirements or all native ecosystems are finished.
+
+## Historical implementation checkpoints
+
+The entries below retain their original counts, scopes and evidence links.
+Words such as “next”, “in progress”, “remain open” and “now passes” describe
+that checkpoint. Later acceptance records supersede only the matching scoped
+status; old totals are not the final integrated counts above. Native limitations
+and counterexamples remain binding unless later evidence explicitly resolves them.
 
 The TableSpec relationship binding now passes qualified acceptance for native
 metadata classification, authored outgoing-metadata projection and retained
 ideal/native recovery. All 118 compatibility commands and 1,715 tests across
 355 files pass, including the existing five concept gates. Metadata carriers
 do not establish referential enforcement; heterogeneous and keyed association
-layouts refuse explicitly. Other relationship bindings and relationship ideal
-admission remain open. See the
+layouts refuse explicitly. At this checkpoint, the other relationship bindings
+and relationship ideal admission remained open. See the
 [TableSpec relationship acceptance](../../fixtures/validation/relationship-tablespec-acceptance-evidence.json).
 
 The Avro relationship binding also passes qualified acceptance for native grammar
@@ -24,7 +72,7 @@ layouts refuse explicitly. See the
 [Avro relationship acceptance](../../fixtures/validation/relationship-avro-acceptance-evidence.json).
 Relationship admission and all-five delivery remain separate.
 
-**Latest core scope amendment:** UMF-defined ideals and native-equivalence
+**Historical core scope amendment:** UMF-defined ideals and native-equivalence
 graduation now have separate gates. The next ordered concepts are field,
 nullability, cardinality, author-stated facets and key. See
 [FEAT-005](01-frame/features/FEAT-005-core-ideals.md),
@@ -47,12 +95,12 @@ Nullability ideal admission and qualified five-system delivery now pass their
 separate gate: 90 ideal recoveries, 60 native recoveries and current native/browser
 evidence. Core 0.3.0 remains experimental; no native equivalence is claimed. See the
 [Nullability conformance record](../../fixtures/validation/nullability-conformance.json).
-Cardinality is in progress: experimental 0.4.0 schema validation, item/value Field
+At the Cardinality core checkpoint, experimental 0.4.0 schema validation, item/value Field
 references, explicit collision-preserving migration/rollback, authoring and
 inspection have Bun and Chromium evidence. Versioned Field, Nullability and
 record-type APIs now support 0.4.0 while retaining older receipts. Selection
 now follows explicit item/value links with separate boundaries and shape filters.
-Cardinality core-task acceptance now passes: 358 tests / 31,542 assertions,
+Cardinality core-task acceptance then passed: 358 tests / 31,542 assertions,
 fresh native/browser checks for all five existing Field and Nullability bindings,
 and both separate conformance gates. See the
 [core acceptance record](../../fixtures/validation/cardinality-core-acceptance-evidence.json).
@@ -147,11 +195,11 @@ refinements remain retained. No native equivalence is claimed. See the
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,
 including the native counterexamples that limit each qualified profile.
-Key follows the five-system facet gate. See the
+The implementation sequence placed Key after the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
-Design proposals for the sister engine refine named Keys and relationship
-identity in [CONTRACT-040](02-design/contracts/CONTRACT-040-core-ideals.md) and
+The authored Key/relationship contracts incorporated the sister engine
+requirements in [CONTRACT-040](02-design/contracts/CONTRACT-040-core-ideals.md) and
 [CONTRACT-041](02-design/contracts/CONTRACT-041-relationship.md). Offline
 revision-pinned references and schema comparison are framed in
 [FEAT-007](01-frame/features/FEAT-007-offline-composition.md). Temporal facets
@@ -1016,3 +1064,14 @@ passed 1,494 tests with zero failures. See the
 [core acceptance record](../../fixtures/validation/relationship-core-acceptance-evidence.json).
 Native relationship bindings and their separate admission/delivery gates remain
 unfinished. TableSpec is the next priority binding.
+
+
+**Gate-test-only qualification:** The integrated 175-command native/browser replay
+and unchanged non-gate regression retain their original execution records. A
+separately rerun synthetic facet-evidence test now mutates a leaf proof so its
+negative checks exercise the intended hash-closure boundary. This changes one
+test literal, not library, adapter, schema or native behavior. The
+[qualification record](../../fixtures/validation/relationship-gate-test-only-qualification.json)
+preserves the original snapshots, failed attempt, exact test/document deltas and
+corrected test evidence; the original native commands were not rerun against
+that test edit.

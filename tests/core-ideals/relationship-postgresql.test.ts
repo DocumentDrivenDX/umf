@@ -3,6 +3,7 @@ import {backend} from '../../native/postgresql/runtime';
 import {classifyPostgresqlRelationships,copyJson,getPostgresqlSource,importPostgresqlSql,projectRelationshipsToPostgresql,recoverPostgresqlRelationshipSource,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative,readDocument,writeDocument,Registry,postgresqlRelationshipsPackage} from '../../src';
 import {postgresqlRelationshipCases} from '../../scripts/core-ideals/relationship-postgresql-cases';
 
+// @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 test('qualified PostgreSQL FK/junction projection matrix retains authored meaning in both modes',async()=>{
  for(const c of postgresqlRelationshipCases()){
   const before=copyJson(c),r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);
@@ -18,6 +19,7 @@ test('qualified PostgreSQL FK/junction projection matrix retains authored meanin
   }else expect(r.target).toBeUndefined();
  }
 },120000);
+// @covers US-045-AC3 @covers US-045-AC7
 test('raw native NOT VALID, MATCH and actions stay observations with exact unknown/context recovery',async()=>{
  const text=(await Bun.file('fixtures/relationship/postgresql-native/constraints.sql').text())+'\n-- unknown application comment retained\n';
  const source=await importPostgresqlSql(text,backend,{id:'native'});source.extensions={future:{opaque:'native context'}};source.vocabularies.future={version:'1.0.0'};

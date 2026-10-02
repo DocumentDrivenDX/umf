@@ -1,0 +1,250 @@
+{
+  "scope": "175-command replay and unchanged non-gate regression plus excluded gate-test fixture correction; native commands were NOT rerun against the corrected test",
+  "complete": true,
+  "nativeEquivalence": false,
+  "changedTest": "tests/core-ideals/facets-evidence.test.ts",
+  "oldSha256": "7e98c7d008386bbbd94cf88d710bd1f14659ed4673e202139425b23e4f726d6e",
+  "newSha256": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
+  "exactChange": {
+    "before": "const proofPath='fixtures/validation/facet-core-acceptance-evidence.json';",
+    "after": "const proofPath='fixtures/validation/parquet-facets-acceptance-evidence.json';"
+  },
+  "baseline": {
+    "tests/core-ideals/facets-evidence.test.ts": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/tests/core-ideals/facets-evidence.test.ts",
+      "sha256": "7e98c7d008386bbbd94cf88d710bd1f14659ed4673e202139425b23e4f726d6e"
+    },
+    "docs/helix/README.md": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/docs/helix/README.md",
+      "sha256": "363a9963e06194aca68c0741b96ba0cd331c0f62def5e6b253825ccdaada9bfd"
+    },
+    "fixtures/validation/relationship-integrated-refresh/regression-result.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/regression-result.json",
+      "sha256": "3b391c1d13bb02be4d848ef2b1d00d47ef2259b38dcb27aa17308c3ff46961f9"
+    },
+    "fixtures/validation/relationship-integrated-refresh/regression-inputs.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/regression-inputs.json",
+      "sha256": "50ce8544e04fe5c5b54cb33f978b348eaab0ee463d47e4acb9fb13ef0d6ac908"
+    },
+    "fixtures/validation/relationship-integrated-refresh/regression.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/regression.log",
+      "sha256": "e7db3ed2e2387764c8cea5c8d64f82d8f1d8e71a1365b8ad6cf76516d008221b"
+    },
+    ".cache/relationship-integrated-compatibility-refresh/regression-result.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/.cache/relationship-integrated-compatibility-refresh/regression-result.json",
+      "sha256": "70228d9e7396dced5a9a3a343ef6775265cfdf6c3dab105e760b7266c1b7ff2d"
+    },
+    ".cache/relationship-integrated-compatibility-refresh/regression-inputs.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/.cache/relationship-integrated-compatibility-refresh/regression-inputs.json",
+      "sha256": "50ce8544e04fe5c5b54cb33f978b348eaab0ee463d47e4acb9fb13ef0d6ac908"
+    },
+    ".cache/relationship-integrated-compatibility-refresh/regression.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/.cache/relationship-integrated-compatibility-refresh/regression.log",
+      "sha256": "e7db3ed2e2387764c8cea5c8d64f82d8f1d8e71a1365b8ad6cf76516d008221b"
+    },
+    "fixtures/validation/relationship-integrated-refresh/field-conformance.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/field-conformance.log",
+      "sha256": "9010cfc3dad32ca9f67fbbeab7c8bbe9182ea29174b3d0d33051ff3049b7da21"
+    },
+    "fixtures/validation/relationship-integrated-refresh/field-tests.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/field-tests.log",
+      "sha256": "19cc3770bf13e4e4a78e430a9440916efdb6a5dc5bd458ad098934905b51647b"
+    },
+    "fixtures/validation/relationship-integrated-refresh/nullability-conformance.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/nullability-conformance.log",
+      "sha256": "fe172f97e3b0578e1d2950a2bc33de9d25efa8cc31f0f72f1ba78e29e16ff10a"
+    },
+    "fixtures/validation/relationship-integrated-refresh/nullability-tests.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/nullability-tests.log",
+      "sha256": "00ffbd8708499df60e6346664c247fd839ff36eb07eb1722a6e09da4fab8cc67"
+    },
+    "fixtures/validation/relationship-integrated-refresh/cardinality-conformance.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/cardinality-conformance.log",
+      "sha256": "fea30c54f32d6fd6867a288e3f1b4e15b2cc8b34e271a813cc01f6090ed1cc0b"
+    },
+    "fixtures/validation/relationship-integrated-refresh/cardinality-tests.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/cardinality-tests.log",
+      "sha256": "bb01695b24d1003c61b2f0a225d3c2ebb9cd1dabb1b2ba60588958fc5f3d22c3"
+    },
+    "fixtures/validation/relationship-integrated-refresh/facets-conformance.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/facets-conformance.log",
+      "sha256": "7d8657b8a7b1df029a83e08791294226d00eebe941ed4d1c47d57e65830530e0"
+    },
+    "fixtures/validation/relationship-integrated-refresh/facets-tests.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/facets-tests.log",
+      "sha256": "2bb841666d3332b18a4b2363858d4e2e740afbe7d1ba6c1f272ab5b125630066"
+    },
+    "fixtures/validation/relationship-integrated-refresh/facets-evidence-tests.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/facets-evidence-tests.log",
+      "sha256": "49d99d72a4600aa59367e56d34b906e6cda8ef4db4260e09aa3679ff5ca5d19a"
+    },
+    "fixtures/validation/relationship-integrated-refresh/key-conformance.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/key-conformance.log",
+      "sha256": "4aadbdc14c4231a8038dce2410cc2a47b76286da37a93da15fd02fe6a45d5eed"
+    },
+    "fixtures/validation/relationship-integrated-refresh/key-tests-combined.log": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/key-tests-combined.log",
+      "sha256": "743ffbf9e113bf44816538c3a8fc66c3a4cc2a7b3aeaeaba2b1ad9aa07c9675c"
+    },
+    "fixtures/validation/relationship-integrated-compatibility-refresh.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-compatibility-refresh.json",
+      "sha256": "33a65aa1ee17c079e4a2fb0ad116ea02d5df41e3b593e5c8460bb52e12d060f6"
+    },
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
+      "sha256": "811be7e465751e11886437c37b936fc62ed231dfe563f801fad4d04886ef2de7"
+    },
+    "fixtures/validation/facet-core-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/facet-core-acceptance-evidence.json",
+      "sha256": "835f386da36302d12009bc46134bc17d35514a4d847e4c6c4bcf38e4fe4d936b"
+    },
+    "fixtures/validation/parquet-nullability-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/parquet-nullability-acceptance-evidence.json",
+      "sha256": "4c96ecce942690f9482c8951a0f48a7171e3ded408cb4a465b8f3883ebf5869b"
+    },
+    "fixtures/validation/facets-conformance.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/facets-conformance.json",
+      "sha256": "963d92bdc8f0561fe9935a7ed1feac9cd8e65845cb6d585accb3a8e0e073c0fa"
+    },
+    "fixtures/validation/relationship-gate-refresh.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-gate-refresh.json",
+      "sha256": "ea322936f8b61aed93adda429d2a010a0914f0fd85f027ba9352636e8b57d571"
+    },
+    "fixtures/validation/avro-facets-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/avro-facets-acceptance-evidence.json",
+      "sha256": "101035784c4789889918821e73c7a8b919e547b98cae6bedf2c2196e22f081c2"
+    },
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/nullability-gate-acceptance-evidence.json",
+      "sha256": "4681903c0bd9838e90944349761238b381029a18ecd5456fadbfc3d13622af36"
+    },
+    "fixtures/validation/parquet-facets-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/parquet-facets-acceptance-evidence.json",
+      "sha256": "7a8dc4c08d491ed289a212c299666d34185753546f327bb6f39b05e9284ac1cb"
+    },
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/parquet-cardinality-acceptance-evidence.json",
+      "sha256": "ccee158940d9369f65354ea833b996182ea75c4fd5951f34252b2462c5b29841"
+    },
+    "fixtures/validation/avro-nullability-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/avro-nullability-acceptance-evidence.json",
+      "sha256": "5c630695a961a4faec1ff29ac5790942bfd444cb2e1e3db4cf009058d018f59a"
+    },
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/sqlserver-facets-acceptance-evidence.json",
+      "sha256": "698aaaa216a2885dc9e0786f9364c01013edb334821c4b5798ffbe3581a3fb46"
+    },
+    "fixtures/validation/facets-gate-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/facets-gate-acceptance-evidence.json",
+      "sha256": "63754cb1eaa8dab9e7b10fec7f603f68e4cd78154f6fbcb3e1308ebf89e0824a"
+    },
+    "fixtures/validation/field-tablespec-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/field-tablespec-acceptance-evidence.json",
+      "sha256": "cdf45434f9ed98cb2b08da902019f15db56f9abd9c8c835a1f298cdc4d581195"
+    },
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/tablespec-facets-acceptance-evidence.json",
+      "sha256": "20c1969fe1095923419612cc1673870c401e5e983986b7e5a213f02dd77813e4"
+    },
+    "fixtures/validation/field-conformance.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/field-conformance.json",
+      "sha256": "741de5c96b07ddbfdbd40d3f67972109fa06820a6fa094f45c4140db8ba9b875"
+    },
+    "fixtures/validation/field-postgresql-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/field-postgresql-acceptance-evidence.json",
+      "sha256": "26768cb7c463caa6255066b802d1c4d8a5c9ef99ea7bb127b877dce8e81b3b15"
+    },
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/avro-cardinality-acceptance-evidence.json",
+      "sha256": "40d9ec13f21df8911c055cd474429dfa852de28166edb5356757e30ecd375dd2"
+    },
+    "fixtures/validation/remaining-field-bindings-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+      "sha256": "8b903ca617cf73f2c21250e7bbdb0cc6078d5f75059f3fa1bb936a4601567446"
+    },
+    "fixtures/validation/relationship-integrated-refresh/conformance-runs.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/relationship-integrated-refresh/conformance-runs.json",
+      "sha256": "4ddb0160d811105d01ee9f8b266b50f0a27df6ad75b74bec0de19778be090fc7"
+    },
+    "fixtures/validation/nullability-core-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/nullability-core-acceptance-evidence.json",
+      "sha256": "a4b375bfef01ad139d29078587e3414944adacfd066dacf075cd8f08a16ae05b"
+    },
+    "fixtures/validation/field-gate-refresh-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/field-gate-refresh-evidence.json",
+      "sha256": "66984090da89b354652b533e050119fb3faf1d4e7334302a0371af47693dbe7a"
+    },
+    "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/cardinality-gate-acceptance-evidence.json",
+      "sha256": "778882fad08e93c9a36ad57a7844a0ecc72a4961b238f578102a3583bdc2e810"
+    },
+    "fixtures/validation/nullability-conformance.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/nullability-conformance.json",
+      "sha256": "ad4bc687e54ef02bc0119da4e025c65c93787f2a3d734949d31be8bd41ddb274"
+    },
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/tablespec-nullability-acceptance-evidence.json",
+      "sha256": "5e49d2668b8f0d7708b10e3c2d0b6b237738a183dd835f52277aa9a9f849d9a5"
+    },
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
+      "sha256": "4a4ff44c818e59627a9345c1611f6d48a71fbd8a91936f2bc723afef765edbb8"
+    },
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/cardinality-core-acceptance-evidence.json",
+      "sha256": "dd7d519cd2c4a145c846296d93c8cd8fa06ada5f8403891bcc732a5e09f20244"
+    },
+    "fixtures/validation/key-gate-refresh-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/key-gate-refresh-evidence.json",
+      "sha256": "50b6b0c45d001e60a1e822a4b4c816c32487c34606394913eb448489880aae9b"
+    },
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
+      "sha256": "2a78f746fcee9bfb18bb3969fc0bc17d45a0e776d0ad7d1179a003625a345530"
+    },
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/postgresql-nullability-acceptance-evidence.json",
+      "sha256": "fd7f48719fc7fbdc20208660ba230cf6d7b72c05039c49205014710ced9d85fc"
+    },
+    "fixtures/validation/cardinality-conformance.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/cardinality-conformance.json",
+      "sha256": "052b1e5489cba5acfe539f9c99fa8262edee9897afa3d3ada44c139a8d3a7813"
+    },
+    "fixtures/validation/key-conformance.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/key-conformance.json",
+      "sha256": "b7f74d9725c466bbc4882718cf81af2dc6cda77e38db42f8dd50e6cfacb426f5"
+    },
+    "fixtures/validation/field-core-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/field-core-acceptance-evidence.json",
+      "sha256": "df28758b0cf8187c441829971c32181e97a5e170555fa79bd3b196e23fa370f8"
+    },
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
+      "sha256": "be5ed1f6d848561044d89217149e81d0dd33b132afbca601d301b0a3860c4921"
+    },
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+      "path": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/postgresql-facets-acceptance-evidence.json",
+      "sha256": "067b7ca1d73ddad9cda574e6cd410ee3b606fbef514ff16ae748bbcdb5505246"
+    }
+  },
+  "correctionRun": {
+    "command": [
+      "bun",
+      "test",
+      "./tests/core-ideals/facets-evidence.test.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/relationship-integrated-refresh/facets-evidence-qualified-tests.log",
+    "logSha256": "bede9a5a1a353fbee8dd9ee8acee972fed557272ac2ed9bbeef66c786b19b95c",
+    "tests": 3,
+    "failures": 0,
+    "assertions": 27,
+    "files": 1
+  },
+  "documentationDelta": {
+    "path": "docs/helix/README.md",
+    "oldSha256": "363a9963e06194aca68c0741b96ba0cd331c0f62def5e6b253825ccdaada9bfd",
+    "newSha256": "855896d15d815fd5c63d9fc8b1f518ace73c89091e8868ca236c3f8e2d56033b",
+    "exactAppendedParagraph": "\n\n**Gate-test-only qualification:** The integrated 175-command native/browser replay\nand unchanged non-gate regression retain their original execution records. A\nseparately rerun synthetic facet-evidence test now mutates a leaf proof so its\nnegative checks exercise the intended hash-closure boundary. This changes one\ntest literal, not library, adapter, schema or native behavior. The\n[qualification record](../../fixtures/validation/relationship-gate-test-only-qualification.json)\npreserves the original snapshots, failed attempt, exact test/document deltas and\ncorrected test evidence; the original native commands were not rerun against\nthat test edit.\n"
+  }
+}

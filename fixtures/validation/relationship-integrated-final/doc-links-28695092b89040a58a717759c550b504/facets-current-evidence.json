@@ -1,0 +1,40 @@
+{
+  "systems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
+  ],
+  "records": [
+    {
+      "path": "fixtures/validation/facet-core-acceptance-evidence.json",
+      "sha256": "10f31d456f01250f197cb86953a654916603f0169b04647b7b454b8f37a107e6"
+    },
+    {
+      "path": "fixtures/validation/tablespec-facets-acceptance-evidence.json",
+      "sha256": "b23cbd4a2bdd3d68e453aea3cfab884b9639880b3e3180aa32768d62c3edc4a8"
+    },
+    {
+      "path": "fixtures/validation/postgresql-facets-acceptance-evidence.json",
+      "sha256": "e82703b5fe86cbc8b034b456e64384896e5748dad7dc6460332b75406ec2082d"
+    },
+    {
+      "path": "fixtures/validation/sqlserver-facets-acceptance-evidence.json",
+      "sha256": "77cfa7cabc58d764d6ab18bf7e30786a02aaf6e6cf786eabd96a965e480e3588"
+    },
+    {
+      "path": "fixtures/validation/avro-facets-acceptance-evidence.json",
+      "sha256": "ec99b28d3ac2e5c82089f9dfeecb79973b961a4dde6a2991ace8f11bcaff25ec"
+    },
+    {
+      "path": "fixtures/validation/parquet-facets-acceptance-evidence.json",
+      "sha256": "4d46cc60fb21a326bf83b05b65d67b60eb1b174684246180e92c474b39965c82"
+    }
+  ],
+  "fingerprints": 20007,
+  "revalidated": [],
+  "refreshSha256": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab",
+  "idealAdmitted": false,
+  "nativeEquivalence": false
+}

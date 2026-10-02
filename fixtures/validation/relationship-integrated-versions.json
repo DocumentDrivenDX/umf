@@ -1,0 +1,176 @@
+{
+  "systems": {
+    "tablespec": {
+      "versions": {
+        "commit": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "pydantic": "2.11.10",
+        "jsonschema": "4.25.1"
+      },
+      "scope": "Outgoing metadata and explicit column pairs; no referential enforcement or join execution",
+      "evidence": {
+        "fixtures/validation/relationship-tablespec-projection-native.json": "ebde9744dc17fecfa718d7fe20719dcfba9acd8d7ce28bf1130ed1ada60aec1a"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-tablespec-projection-native.json",
+          "pointer": "/nativeVersion",
+          "expected": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+        },
+        {
+          "path": "fixtures/validation/relationship-tablespec-projection-native.json",
+          "pointer": "/versions/pydantic",
+          "expected": "2.11.10"
+        },
+        {
+          "path": "fixtures/validation/relationship-tablespec-projection-native.json",
+          "pointer": "/versions/jsonschema",
+          "expected": "4.25.1"
+        }
+      ]
+    },
+    "postgresql": {
+      "versions": {
+        "server": 170004
+      },
+      "scope": "Qualified authored FK/junction mappings with insertion/rejection controls; broader multiplicity, ownership and inverse intent remain residuals",
+      "evidence": {
+        "fixtures/validation/relationship-postgresql-native.json": "eae9363c40f05a1e022deb3f7824897194986b02840804ec00442d97b8f2b3ef"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-postgresql-native.json",
+          "pointer": "/serverVersion",
+          "expected": 170004
+        }
+      ]
+    },
+    "sqlserver": {
+      "versions": {
+        "server": "16.0.4295.3"
+      },
+      "scope": "Qualified FK/junction layouts and catalog observations; domain lifecycle and participation remain explicit residuals",
+      "evidence": {
+        "fixtures/validation/relationship-sqlserver-native.json": "3e755b09a669253fc0041849adc6b2bc76465d48a25361475d953ca3bbfc8dae"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-sqlserver-native.json",
+          "pointer": "/serverVersion",
+          "expected": "16.0.4295.3"
+        }
+      ]
+    },
+    "avro": {
+      "versions": {
+        "apache": "1.12.0",
+        "fastavro": "1.12.2"
+      },
+      "scope": "Target-key-record schema carriers with native codec controls; no referential enforcement",
+      "evidence": {
+        "fixtures/validation/relationship-avro-projection-native.json": "15127d3df3c7dd53653a1c5883c5979471227170fefd6158826c39d8bfdf6cf3"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-avro-projection-native.json",
+          "pointer": "/versions/apache",
+          "expected": "1.12.0"
+        },
+        {
+          "path": "fixtures/validation/relationship-avro-projection-native.json",
+          "pointer": "/versions/fastavro",
+          "expected": "1.12.2"
+        }
+      ]
+    },
+    "parquet": {
+      "versions": {
+        "pyarrow": "21.0.0"
+      },
+      "scope": "Target-key file-schema carriers and retained bytes; no reference enforcement",
+      "evidence": {
+        "fixtures/validation/relationship-parquet-native.json": "bc070246b092016cec9723edd4934560b76c6df769df00b28450c01b016e038a"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-parquet-native.json",
+          "pointer": "/version",
+          "expected": "21.0.0"
+        }
+      ]
+    },
+    "graphql": {
+      "versions": {
+        "graphqlJs": "17.0.2",
+        "graphqlCore": "3.2.12"
+      },
+      "scope": "Generic Record relationship SDL; no resolver or instance referential validation",
+      "evidence": {
+        "fixtures/validation/relationship-extras/oracle.json": "b7c6a3e4aa6c43dfa3d8964b3d5bdd524cc2539ac53ec03ba55e44754d16d814"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-extras/oracle.json",
+          "pointer": "/versions/graphqlJs",
+          "expected": "17.0.2"
+        },
+        {
+          "path": "fixtures/validation/relationship-extras/oracle.json",
+          "pointer": "/versions/graphqlCore",
+          "expected": "3.2.12"
+        }
+      ]
+    },
+    "rdf": {
+      "versions": {
+        "rdflib": "7.6.0"
+      },
+      "scope": "RDF declaration graph acceptance; no closed-world relationship enforcement",
+      "evidence": {
+        "fixtures/validation/relationship-extras/oracle.json": "b7c6a3e4aa6c43dfa3d8964b3d5bdd524cc2539ac53ec03ba55e44754d16d814"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-extras/oracle.json",
+          "pointer": "/versions/rdflib",
+          "expected": "7.6.0"
+        }
+      ]
+    },
+    "linkml": {
+      "versions": {
+        "metamodel": "1.11.0",
+        "runtime": "1.11.0rc2"
+      },
+      "scope": "Native metamodel/schema acceptance; no instance relationship enforcement",
+      "evidence": {
+        "fixtures/validation/relationship-extras/oracle.json": "b7c6a3e4aa6c43dfa3d8964b3d5bdd524cc2539ac53ec03ba55e44754d16d814"
+      },
+      "checks": [
+        {
+          "path": "fixtures/validation/relationship-extras/oracle.json",
+          "pointer": "/versions/linkmlMetamodel",
+          "expected": "1.11.0"
+        },
+        {
+          "path": "fixtures/validation/relationship-extras/oracle.json",
+          "pointer": "/versions/linkmlRuntime",
+          "expected": "1.11.0rc2"
+        }
+      ]
+    }
+  },
+  "browser": {
+    "scope": "Canonical relationship authoring, migration, retained recovery and refusal corpus",
+    "evidence": {
+      "fixtures/validation/relationship-conformance-browser.json": "692a295bb672455205c58667a1bac9717ac7c131e410ba99cd8c7afa39c40840"
+    },
+    "checks": [
+      {
+        "path": "fixtures/validation/relationship-conformance-browser.json",
+        "pointer": "/browser",
+        "expected": "148.0.7778.0"
+      }
+    ],
+    "version": "148.0.7778.0"
+  }
+}

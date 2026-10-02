@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-evidence.test.ts:
+(pass) facet evidence requires all five accepted bindings without granting ideal admission [588.31ms]
+(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [670.93ms]
+(pass) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [2195.27ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [3.48s]

@@ -4,7 +4,7 @@ import {validateRelationshipCandidate} from '../../src/validation/relationships'
 import {validateDocument} from '../../src/validation/document';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 
-// @covers US-045-AC1 US-045-AC2 US-045-AC8 (candidate validation only)
+// @covers US-045-AC1 @covers US-045-AC2 (candidate validation only; projection matrix covers AC8)
 test('relationship candidate resolves keyed endpoints, participation, lifecycle and reified identity',()=>{
  const cases=relationshipCases();expect(cases.length).toBeGreaterThan(30);
  for(const row of cases){
@@ -14,7 +14,7 @@ test('relationship candidate resolves keyed endpoints, participation, lifecycle 
   for(const format of ['json','yaml'] as const){const recovered=readJsonValue(writeJsonValue(row.document,format),format);expect(recovered).toEqual(before);expect(validateRelationshipCandidate(recovered)).toEqual(r);}
  }
 });
-// @covers US-045-AC3 US-045-AC10 (legacy interpretation only; migration is separate)
+// @covers US-045-AC3 (legacy interpretation only; migration is separately tested)
 test('old relationship-shaped unknown members remain opaque and candidate does not infer associations',()=>{
  const d=relationshipCandidate();d.umf='0.6.0';d.modules[0].relationships={opaque:['not an assertion']};
  expect(validateDocument(d).valid).toBe(true);

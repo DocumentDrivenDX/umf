@@ -4597,7 +4597,7 @@ ten tests / 159 assertions. All 92 refresh commands, typechecking, the public
 build and 288 schemas / 48 packages pass. Named-key/membership authoring, lookup,
 exact tuple bytes, collision-preserving migration/rollback and versioned prior
 operations retain unknown content and browser parity. See the
-[core acceptance record](../../fixtures/validation/key-core-acceptance-evidence.json).
+[core acceptance record](../../../fixtures/validation/key-core-acceptance-evidence.json).
 This closes only the core implementation task. The five native Key binding tasks
 and their separate admission/delivery gate remain open; native equivalence is
 unclaimed. Older native binding qualifications retain their published profiles.
@@ -4701,7 +4701,7 @@ The authored corpus includes the six original shapes plus alternate keys,
 bounded participation and Enrollment with its own key and grade Field. Bun
 passes three tests / 242 assertions. Chromium matches all 35 cases (15 accepted,
 20 rejected), completes 70 JSON/YAML recoveries and invokes no getters. See
-[the candidate browser record](../../fixtures/validation/core-relationship-candidate-browser.json).
+[the candidate browser record](../../../fixtures/validation/core-relationship-candidate-browser.json).
 Typechecking, the browser build and 307-schema / 53-package audits pass. This
 checkpoint does not qualify public 0.7.0 integration, migration/rollback,
 authoring operations, native bindings or relationship ideal admission.
@@ -4720,7 +4720,7 @@ verification rejects changed receipts without claiming authentication.
 Candidate and transition tests pass seven tests / 349 assertions. Chromium
 verifies seven transition cases, fourteen serialized rollback recoveries and
 22 refusals; the 35-case candidate browser matrix also passes again. See the
-[transition browser record](../../fixtures/validation/core-relationship-transition-browser.json).
+[transition browser record](../../../fixtures/validation/core-relationship-transition-browser.json).
 Typechecking, build and 308-schema / 53-package audits pass. Public authoring,
 inspection, selection/versioned operation integration and core-task acceptance
 remain unfinished; this checkpoint does not claim native relationship admission.
@@ -4740,7 +4740,7 @@ source/target context. Native bindings and their residuals remain separate.
 
 Five Bun tests pass 157 assertions. Chromium verifies thirteen operation cases,
 78 serialized receipt recoveries and 41 refusals with no getters or host globals.
-See the [operations browser record](../../fixtures/validation/core-relationship-operations-browser.json).
+See the [operations browser record](../../../fixtures/validation/core-relationship-operations-browser.json).
 Typechecking, build and 309-schema / 53-package audits pass. Public 0.7.0
 validation/serialization, earlier versioned operations, selection and complete
 core-task acceptance remain before the first native relationship binding.
@@ -4761,7 +4761,7 @@ unsupported-version probes at 0.8.0. Public Chromium checks pass thirteen
 relationship cases, 78 receipt recoveries and 43 refusal checks, plus versioned
 operations and public serialization. Candidate, transition and operation browser
 evidence is refreshed. Typechecking, build and 317 schemas / 53 packages pass.
-See the [public integration record](../../fixtures/validation/relationship-public-integration.json).
+See the [public integration record](../../../fixtures/validation/relationship-public-integration.json).
 Relationship selection/navigation and broad native/adapter compatibility refresh
 remain before core-task acceptance; no relationship binding admission is claimed.
 
@@ -4790,7 +4790,7 @@ unique within their containing module, so assertions in different modules may
 use the same forward name on the same source Record. Inverse presentation
 collisions still reject across modules. Two corpus cases exercise the distinction.
 All 118 core tests pass across 25 files (4,152 assertions); see the
-[name-scope regression record](../../fixtures/validation/relationship-name-scope-regression.json).
+[name-scope regression record](../../../fixtures/validation/relationship-name-scope-regression.json).
 Typechecking, the browser build and 318-schema / 53-package audits also pass.
 The incomplete compatibility run was deliberately cancelled after this source
 correction; a fresh 114-command replay is required before broad regression and
@@ -5259,3 +5259,10 @@ and [typecheck log](../../../fixtures/validation/relationship-gate/acceptance-ty
 The full 18-command replay was repeated after the timeout edit so the published
 source snapshot matches the tested files. These are scoped worktree results;
 final integrated acceptance must replay against the merged implementation.
+
+
+### Integrated relationship and binding acceptance — umf-c2ef7c2c
+
+The merged implementation passed all 175 compatibility commands and the broad repository regression: 2055 tests across 369 files, 129660 assertions and zero failures. All 8 separate gate/evidence test files and six conformance commands are recorded in the [final acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json); its unique combined totals exclude repeated nested/focused suites. Typechecking, browser builds and the 343-schema / 59-package audits passed.
+
+Architecture, README and the test plan now distinguish the delivered browser library and extension/generator subsets from historical checkpoints. Explicit coverage tags and consumer tests verify binding-aware access decisions plus ordered index/predicate/unknown-content migration and edited rollback. The old facet drift ledger is retained as history; freshly replayed proofs need no current hash exceptions. Native versions, command logs, tested-source fingerprints, refusal boundaries and the resolved pre-fix relationship timeout are retained in the final record. No native-equivalence graduation or completion of unrelated product requirements is claimed.

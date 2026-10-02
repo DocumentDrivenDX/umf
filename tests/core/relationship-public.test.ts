@@ -2,13 +2,13 @@ import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 
-// @covers US-045-AC1 US-045-AC2 (public core validation/serialization)
+// @covers US-045-AC1 @covers US-045-AC2 (public core validation/serialization)
 test('public 0.7.0 validation and document serialization retain authored relationships and reject broken targets',()=>{
  const d=relationshipCandidate();expect(u.validateDocument(d).valid).toBe(true);
  for(const format of ['json','yaml'] as const)expect(u.readDocument(u.writeDocument(d,format),format)).toEqual(d);
  d.modules[0].relationships[0].target[0].key='missing';expect(u.validateDocument(d).valid).toBe(false);expect(()=>u.writeDocument(d,'json')).toThrow();
 });
-// @covers US-045-AC1 US-045-AC2 (versioned core APIs and endpoint validity)
+// @covers US-045-AC1 @covers US-045-AC2 (versioned core APIs and endpoint validity)
 test('earlier core operations use 0.7.0 receipts and refuse edits invalidating keyed endpoints',()=>{
  const doc=relationshipCandidate(),field={module:'m',element:'Order.id'},record={module:'m',element:'Order'};
  const kind=u.declareCoreElementKind(doc,field,'field'),availability=u.declareCoreNullability(doc,field,'required'),cardinality=u.declareCoreCardinality(doc,field,{cardinality:'one'}),facet=u.declareCoreFacets(doc,field,{integerWidth:{bits:32,signed:true}});
