@@ -19,7 +19,7 @@ ddx:
 
 # US-053: Describe portable value bounds without claiming native enforcement
 
-**Feature:** FEAT-005 unplaced proposal. **Requirements:**
+**Feature**: FEAT-005 unplaced proposal. **Requirements:**
 FR-3, FR-20, FR-21, FR-28; NFR-50. **Priority and backlog position:** owner decision
 pending. **Status:** design proposal; no admission or implementation claim.
 

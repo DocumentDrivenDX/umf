@@ -17,6 +17,8 @@ ddx:
 
 # US-046: Bind one logical model to physical targets
 
+**Feature**: FEAT-006
+
 ## Story
 
 **As a** model author, **I want** separate versioned physical bindings,

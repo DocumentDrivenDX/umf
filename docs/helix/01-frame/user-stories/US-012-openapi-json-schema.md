@@ -13,6 +13,8 @@ ddx:
 
 # US-012: Derive JSON instance validators from OpenAPI schemas
 
+**Feature**: FEAT-003
+
 As an integration author, I want a selected API schema's JSON constraints available
 in a portable validator, with API behavior and semantic losses explicitly reported.
 

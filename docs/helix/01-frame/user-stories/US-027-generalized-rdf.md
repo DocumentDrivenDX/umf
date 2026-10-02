@@ -13,6 +13,8 @@ ddx:
 
 # US-027: Preserve JSON-LD generalized datasets
 
+**Feature**: FEAT-002
+
 ## Story and Context
 
 As a metadata integration author, I need blank-node predicates retained when a JSON-LD

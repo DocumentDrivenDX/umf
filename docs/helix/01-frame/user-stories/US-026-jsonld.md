@@ -13,7 +13,7 @@ ddx:
 
 # US-026: Preserve JSON-LD sources and explicit context expansion
 
-**Feature:** FEAT-002 NAT-01–04. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
+**Feature**: FEAT-002 NAT-01–04. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
 
 ## Story and Context
 

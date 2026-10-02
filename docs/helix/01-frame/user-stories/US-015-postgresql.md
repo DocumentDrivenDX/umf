@@ -13,7 +13,7 @@ ddx:
 
 # US-015: Preserve and edit native PostgreSQL schemas
 
-**Feature:** FEAT-002, NAT-01–04. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
+**Feature**: FEAT-002, NAT-01–04. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
 
 As a schema author, I want PostgreSQL SQL and its native syntax tree available to browser
 metadata tools so that edits can produce verifiable SQL without silently erasing meaning.

@@ -15,6 +15,8 @@ ddx:
 
 # US-013: Preserve and compile TypeSpec source models
 
+**Feature**: FEAT-002
+
 As a schema author, I want TypeSpec models preserved with their supplied imports,
 and edits checked by the native compiler in both development and the browser.
 

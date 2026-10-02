@@ -13,10 +13,10 @@ ddx:
 
 # FEAT-005: Author and project UMF core ideals
 
-**Priority:** P0. **Covered subsystem:** Semantic representation and core.
-**Covered PRD requirements:** FR-3, FR-20, FR-21, FR-28, FR-42.
-**Cross-subsystem rationale:** FR-42 adds relationship authoring to the core
-ideal gate; FEAT-006 covers its physical bindings and generators.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Semantic Representation and Core
+**Covered PRD Requirements**: FR-2, FR-3, FR-20, FR-21, FR-28, FR-35, FR-42
+**Cross-Subsystem Rationale**: FR-42 adds relationship authoring to the core ideal gate; FEAT-006 covers its physical bindings and generators.
 
 ## Overview
 

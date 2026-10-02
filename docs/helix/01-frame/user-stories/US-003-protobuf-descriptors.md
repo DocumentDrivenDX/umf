@@ -13,6 +13,8 @@ ddx:
 
 # US-003: Access and preserve native Protobuf descriptors
 
+**Feature**: FEAT-002
+
 As a schema-tool author, I want Protobuf's native descriptor meaning available
 programmatically in UMF, so that transforms and metadata consumers can inspect
 presence, field numbers and options without flattening them into generic records.

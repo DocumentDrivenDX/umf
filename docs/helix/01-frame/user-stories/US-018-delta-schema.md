@@ -13,7 +13,7 @@ ddx:
 
 # US-018: Preserve and edit Delta schema JSON
 
-**Feature:** FEAT-002. **PRD:** FR-1/5/6/12/39/41. **Priority:** P0.
+**Feature**: FEAT-002. **PRD:** FR-1/5/6/12/39/41. **Priority:** P0.
 
 As a metadata consumer, I need Delta schemas and their column metadata available in
 Bun and browsers without native normalization or assumptions about table features.

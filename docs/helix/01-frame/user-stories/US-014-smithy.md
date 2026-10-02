@@ -13,6 +13,8 @@ ddx:
 
 # US-014: Preserve and edit Smithy native models
 
+**Feature**: FEAT-002
+
 As a service-model author, I want exact Smithy JSON AST content available to browser
 metadata tools, with candidate edits checked separately by the native model assembler.
 

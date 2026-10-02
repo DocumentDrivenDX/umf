@@ -21,6 +21,8 @@ ddx:
 
 # US-050: Resolve pinned references across offline documents
 
+**Feature**: FEAT-007
+
 ## Story
 
 **As a** schema consumer holding sales and shared reference-data models,

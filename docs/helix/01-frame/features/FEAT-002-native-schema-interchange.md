@@ -13,7 +13,10 @@ ddx:
 
 # FEAT-002: Native schema interchange
 
-**Priority:** P0. **Subsystem:** Native fidelity. **PRD:** FR-1/5/6/12/37/39/41.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Native Interchange and Durable Use; Validation and Compatibility Evidence
+**Covered PRD Requirements**: FR-1, FR-5, FR-6, FR-12, FR-14, FR-23, FR-26, FR-29, FR-30, FR-32, FR-33, FR-36, FR-37, FR-38, FR-39, FR-41
+**Cross-Subsystem Rationale**: Native interchange supplies the durable artifacts whose qualified support claims require independent validation and compatibility evidence.
 
 ## Problem and Outcome
 

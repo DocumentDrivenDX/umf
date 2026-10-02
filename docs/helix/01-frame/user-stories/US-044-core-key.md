@@ -17,6 +17,8 @@ ddx:
 
 # US-044: Core key ideal
 
+**Feature**: FEAT-005
+
 ## Story
 
 **As a** data platform engineer, **I want** to declare named primary and alternate

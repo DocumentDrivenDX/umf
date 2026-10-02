@@ -13,6 +13,8 @@ ddx:
 
 # US-004: Project JSON Schema to Protobuf with explicit losses
 
+**Feature**: FEAT-003
+
 As a schema-tool author, I want a compiled target and a precise account of source
 meaning it cannot carry, so that I can choose bindings without assuming equivalence.
 

@@ -13,7 +13,7 @@ ddx:
 
 # US-017: Preserve and edit Spark schema JSON
 
-**Feature:** FEAT-002. **PRD:** FR-1/5/6/12/39/41. **Priority:** P0.
+**Feature**: FEAT-002. **PRD:** FR-1/5/6/12/39/41. **Priority:** P0.
 
 As a schema author, I want Spark DataType/StructType metadata available to browser
 consumers without losing exact numeric metadata, unknown properties, field ordering,

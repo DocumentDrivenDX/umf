@@ -13,7 +13,10 @@ ddx:
 
 # FEAT-003: Explicit cross-system projection
 
-**Priority:** P0. **PRD:** FR-7–FR-13, FR-37. **Subsystem:** Translation and fidelity.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Translation and Fidelity; Validation and Compatibility Evidence
+**Covered PRD Requirements**: FR-7, FR-8, FR-9, FR-10, FR-11, FR-12, FR-13, FR-24, FR-25, FR-37
+**Cross-Subsystem Rationale**: Projection behavior and fidelity reporting must be verified by conformance, native round-trip, and cross-system evidence.
 
 ## Problem and Outcome
 

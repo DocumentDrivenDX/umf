@@ -19,6 +19,8 @@ ddx:
 
 # US-045: Author a relationship ideal
 
+**Feature**: FEAT-006
+
 ## Story
 
 **As a** model author, **I want** to assert a named association between

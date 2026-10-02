@@ -15,6 +15,8 @@ ddx:
 
 # US-006: Bind a domain model to a document schema
 
+**Feature**: FEAT-003
+
 As a domain-model consumer, I want to choose a document representation explicitly
 and see which domain rules it cannot enforce, so that embedding is not mistaken
 for an aggregate transaction or identity constraint.

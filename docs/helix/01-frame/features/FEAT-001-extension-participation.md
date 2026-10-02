@@ -13,10 +13,10 @@ ddx:
 
 # FEAT-001: Extension participation
 
-**Priority:** P0. **Covered subsystem:** Extensions and Partial Participation.
-**Covered PRD requirements:** FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40.
-**Cross-subsystem rationale:** None; native fidelity and consumer tooling remain
-separate capabilities. This feature's first story addresses only the envelope.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Extensions and Partial Participation
+**Covered PRD Requirements**: FR-2, FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40
+**Cross-Subsystem Rationale**: This feature owns extension participation; native fidelity and consumer tooling remain separate capabilities. Its first story addresses only the envelope.
 
 ## Overview
 

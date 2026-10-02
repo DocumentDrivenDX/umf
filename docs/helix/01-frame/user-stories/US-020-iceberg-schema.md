@@ -13,7 +13,7 @@ ddx:
 
 # US-020: Inspect and edit Iceberg schemas without losing identity
 
-**Feature:** FEAT-002. **Feature requirements:** NAT-01–04.
+**Feature**: FEAT-002. **Feature requirements:** NAT-01–04.
 **PRD requirements:** FR-1/5/6/12/37/39/41. **Priority:** P0. **Status:** draft.
 
 ## Story

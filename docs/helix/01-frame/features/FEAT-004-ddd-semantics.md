@@ -13,7 +13,10 @@ ddx:
 
 # FEAT-004: Independent DDD semantics
 
-**Priority:** P0. **PRD:** FR-40; supports FR-41.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Extensions and Partial Participation; Native Interchange and Durable Use
+**Covered PRD Requirements**: FR-40, FR-41
+**Cross-Subsystem Rationale**: DDD remains an independent semantic extension while its metadata must be available to programmatic consumers.
 
 ## Problem and Outcome
 

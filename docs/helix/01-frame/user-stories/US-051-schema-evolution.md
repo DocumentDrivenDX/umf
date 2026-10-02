@@ -21,6 +21,8 @@ ddx:
 
 # US-051: Compare two pinned revisions of a user schema
 
+**Feature**: FEAT-007
+
 ## Story
 
 **As a** consumer storing records typed by revision R1, **I want** a

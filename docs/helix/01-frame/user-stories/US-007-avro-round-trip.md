@@ -13,6 +13,8 @@ ddx:
 
 # US-007: Preserve Avro schema meaning
 
+**Feature**: FEAT-002
+
 As a schema author, I want Avro schemas to retain native declarations and unknown
 metadata through UMF so that tools can inspect and edit the understood subset.
 

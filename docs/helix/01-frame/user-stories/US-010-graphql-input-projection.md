@@ -13,6 +13,8 @@ ddx:
 
 # US-010: Produce explicit document shapes from GraphQL inputs
 
+**Feature**: FEAT-003
+
 As an integration author, I want input-document validation derived from GraphQL
 without confusing validation with GraphQL's defaulting and coercion behavior.
 

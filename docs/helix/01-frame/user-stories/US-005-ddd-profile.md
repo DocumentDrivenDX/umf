@@ -13,6 +13,8 @@ ddx:
 
 # US-005: Preserve and validate domain declarations
 
+**Feature**: FEAT-004
+
 As a domain-model author, I want portable declarations of identity, ownership and
 context boundaries so that physical systems can consume the model independently.
 

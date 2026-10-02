@@ -165,7 +165,7 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 
 ### Subsystem: Semantic Representation and Core
 
-- **FR-2 — Heterogeneous systems.** UMF must support structural, relational,
+- **FR-2** — **Heterogeneous systems.** UMF must support structural, relational,
   serialization, API, graph, ontology, analytical/data-contract, operational
   domain, physical storage, and governance/policy schemas and metadata. It
   must not require a single shared semantic worldview.
@@ -174,7 +174,7 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   disagreement. Support new implementations through extension without assuming
   all future shapes are known today. Full-superset representation is not a claim
   of complete implementation or universal cross-system equivalence.
-- **FR-3 — Common semantic core.** UMF must define useful ideal concepts whose
+- **FR-3** — **Common semantic core.** UMF must define useful ideal concepts whose
   meanings are owned by UMF, even when native systems disagree. Ideal admission
   requires a written meaning, counterexamples, a down-projection to at least two
   of TableSpec, PostgreSQL, SQL Server, Avro and Parquet, and up-classification
@@ -184,47 +184,47 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   nullability, cardinality, author-stated facets, key and relationship; each requires mappings
   and both round-trip obligations across all five priority systems before its
   priority integration work is complete.
-- **FR-20 — Simultaneous representations.** The same logical concept must be
+- **FR-20** — **Simultaneous representations.** The same logical concept must be
   able to carry compatible common, relational, API, graph, ontology, and
   governance representations together without one replacing another.
-- **FR-21 — Explicit native semantics.** Concepts without a safe common
+- **FR-21** — **Explicit native semantics.** Concepts without a safe common
   abstraction must remain explicitly source-specific. UMF must not require
   premature normalization; shared semantics apply only where correspondence is valid.
-- **FR-28 — Equivalence graduation.** Replacing a native concept with a core
+- **FR-28** — **Equivalence graduation.** Replacing a native concept with a core
   concept is a separate claim from FR-3 ideal admission. It requires documented
   preconditions and counterexamples, independent mappings in both directions
   without material semantic change, migration and rollback for older artifacts,
   and zero native/unknown-content regressions. A core label alone never deletes
   an extension payload. Any removal requires an explicitly authorized, versioned
   migration after the equivalence gate; preservation remains the default.
-- **FR-35 — Self-description.** UMF must eventually be able to represent its
+- **FR-35** — **Self-description.** UMF must eventually be able to represent its
   own metamodel and vocabularies, exercising the same extension and composition
   mechanisms as external schemas. Bootstrap validation may remain authoritative
   while self-description is introduced; this is beyond the first slice.
 
 ### Subsystem: Extensions and Partial Participation
 
-- **FR-4 — First-class extensions.** UMF must support independently defined,
+- **FR-4** — **First-class extensions.** UMF must support independently defined,
   versioned semantic extensions that define meaning absent from core. Multiple
   extensions and source-system or domain semantics must coexist in one artifact.
-- **FR-5 — Unknown semantics.** A processor must be able to read, operate on
+- **FR-5** — **Unknown semantics.** A processor must be able to read, operate on
   understood semantics, and rewrite an artifact while retaining uninterpreted
   extension content intact. Unknown extensions must not silently disappear.
-- **FR-22 — Partial understanding.** Consumers must be able to use understood
+- **FR-22** — **Partial understanding.** Consumers must be able to use understood
   portions without understanding every extension and identify which portions
   they do and do not understand.
-- **FR-27 — Extension independence.** An extension must be definable and evolve
+- **FR-27** — **Extension independence.** An extension must be definable and evolve
   within explicit compatibility rules without changes to unrelated extensions;
   a new domain must not require redesigning the entire core.
-- **FR-31 — Third-party translators.** Third parties must be able to add native
+- **FR-31** — **Third-party translators.** Third parties must be able to add native
   systems without redesigning those systems around UMF. Translators must be able
   to introduce native semantics and participate in valid common semantics.
-- **FR-34 — Extension registration and evidence.** Extensions must make their
+- **FR-34** — **Extension registration and evidence.** Extensions must make their
   identifier, namespace, version, structural schema, semantic rules, validator,
   capabilities, applicable import/export directions, and round-trip fixtures
   discoverable. Registration must distinguish understood semantics from
   preservation-only participation and must not imply both directions exist.
-- **FR-40 — Domain-driven design vocabulary.** UMF must preserve domain-driven
+- **FR-40** — **Domain-driven design vocabulary.** UMF must preserve domain-driven
   design (DDD) meaning through an independently versioned extension, introduced
   early after the first native fidelity slice. Represent bounded contexts,
   entities, value objects, identities, aggregate roots and boundaries, domain
@@ -237,43 +237,43 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 
 ### Subsystem: Native Interchange and Durable Use
 
-- **FR-1 — Preserve native meaning.** UMF must represent the full semantics of
+- **FR-1** — **Preserve native meaning.** UMF must represent the full semantics of
   every system it claims to support, including constructs with no equivalent
   elsewhere. For supported system S, `S → UMF → S` must be semantically lossless.
   A partial integration must qualify its claim with its exact subset (FR-26).
-- **FR-6 — Import and export.** Every supported native integration must define
+- **FR-6** — **Import and export.** Every supported native integration must define
   its interchange relationship with UMF, including import of native schemas,
   export of representable semantics, and compatibility scope. Available directions
   must be explicit under FR-26.
-- **FR-26 — Honest bidirectionality.** A bidirectional integration must import
+- **FR-26** — **Honest bidirectionality.** A bidirectional integration must import
   and export. Import-only, export-only, and partial integrations are valid only
   when their direction and supported subset are explicit.
-- **FR-29 — Human and machine use.** Artifacts must support human review,
+- **FR-29** — **Human and machine use.** Artifacts must support human review,
   machine generation and transformation, source control, automated validation,
   continuous integration and delivery, and tooling integration. Meaning must
   not depend on incidental presentation details.
-- **FR-30 — Tool-neutral interchange.** UMF must not require a particular
+- **FR-30** — **Tool-neutral interchange.** UMF must not require a particular
   runtime, database, language, cloud, or vendor. Represented meaning must remain
   independent of the producing tool.
-- **FR-33 — Durable artifacts.** UMF must be usable as an authoritative
+- **FR-33** — **Durable artifacts.** UMF must be usable as an authoritative
   interchange representation beyond a single conversion, retaining enough
   information for future consumers, translators, and extensions to recover
   native semantics.
-- **FR-36 — Existing artifact continuity.** Existing TableSpec UMF artifacts
+- **FR-36** — **Existing artifact continuity.** Existing TableSpec UMF artifacts
   must remain valid or have explicit deterministic migrations that preserve
   their declared meaning. The baseline must be established by inspecting the
   existing schemas and fixtures, not invented from the new design.
-- **FR-38 — Independent ecosystem participation.** LinkML and TypeSpec must
+- **FR-38** — **Independent ecosystem participation.** LinkML and TypeSpec must
   be treated as candidate bidirectional interchanges with declared fidelity
   scope. Neither is required as UMF's defining metamodel. TableSpec and Axon
   must be able to act as independent producers/consumers; a Palantir integration
   must preserve exposed native semantics within its declared version and scope.
-- **FR-39 — Browser execution.** Users must be able to validate and transform
+- **FR-39** — **Browser execution.** Users must be able to validate and transform
   supplied schemas with core and supported extensions in a browser without a
   mandatory transformation server. Browser and command-line processing must
   preserve the same meaning and report the same semantic limitations for the
   same declared inputs. Target support remains version/subset-qualified.
-- **FR-41 — Programmatic metamodel and consumer metadata.** Tools must be able
+- **FR-41** — **Programmatic metamodel and consumer metadata.** Tools must be able
   to traverse, select, compose, and safely edit understood model content and
   extract relevant metadata without parsing human documentation or depending
   on physical storage. This must support authored transforms, visualization,
@@ -284,7 +284,7 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   semantics when shapes are incomplete. New vocabularies must coexist with earlier
   consumers without losing uninterpreted content. Generated consumer artifacts
   must expose unsupported semantics rather than imply validation or enforcement.
-- **FR-42 — Authored relationships.** Model authors must be able to state
+- **FR-42** — **Authored relationships.** Model authors must be able to state
   named associations between identified element types, including direction,
   endpoint multiplicity and an optional inverse presentation, without asserting
   an instance edge, physical foreign key or target enforcement. Consumers must
@@ -295,14 +295,14 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 
 ### Subsystem: Physical Bindings and Authored Generation
 
-- **FR-43 — Independent physical bindings and capabilities.** An author must
+- **FR-43** — **Independent physical bindings and capabilities.** An author must
   be able to bind one logical model to multiple physical targets without
   changing logical identity or meaning. Target bindings may describe element,
   field and relationship storage and declared indexes. Consumers obtain
   filterability and sortability from a binding's qualified physical capabilities,
   never from a field's logical definition. Unsupported choices remain visible
   in fidelity reports and recoverable with the source.
-- **FR-44 — Directed generation from authored meaning.** An author must be
+- **FR-44** — **Directed generation from authored meaning.** An author must be
   able to project a DDD model with declared relationships and physical choices
   to scoped PostgreSQL DDL, and a DDD model with relationships to GraphQL SDL.
   Generated targets must pass their existing native adapters and independent
@@ -312,72 +312,72 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 
 ### Subsystem: Translation and Fidelity
 
-- **FR-7 — Cross-system translation.** UMF must enable `S → UMF → T` where
+- **FR-7** — **Cross-system translation.** UMF must enable `S → UMF → T` where
   meaningful mappings exist, distinguishing equivalence, approximation, meaning
   retained in UMF but not expressible in T, incompatibility, and lack of support.
   Translation must not imply universal target expressibility.
-- **FR-8 — Never silently lose meaning.** Every semantic loss, approximation,
+- **FR-8** — **Never silently lose meaning.** Every semantic loss, approximation,
   incompatibility, or unsupported construct encountered during translation must
   be observable. Consumers must be able to determine what survives; meaningful
   source semantics must not be silently dropped.
-- **FR-9 — Fidelity reports.** Every translation must be capable of producing
+- **FR-9** — **Fidelity reports.** Every translation must be capable of producing
   a human-understandable and machine-consumable report identifying concepts
   preserved, mapped equivalently, approximated, not expressible, incompatible,
   or unsupported at useful granularity. Optional report presentation does not
   waive FR-8's mandatory observability.
-- **FR-10 — Capability declarations.** Integrations and transforms must declare
+- **FR-10** — **Capability declarations.** Integrations and transforms must declare
   understood and emittable semantics precisely enough to establish full, partial,
   or impossible translation before or during execution. Broad ecosystem labels
   must not conceal subset support.
-- **FR-24 — Provenance.** UMF must identify semantic origins, associate imported
+- **FR-24** — **Provenance.** UMF must identify semantic origins, associate imported
   concepts with native constructs, and relate transformed targets to sources
   where practical for diagnostics, auditing, debugging, and fidelity evaluation.
-- **FR-25 — Deterministic transformation.** The same source model, configuration,
+- **FR-25** — **Deterministic transformation.** The same source model, configuration,
   and supported semantic versions must produce semantically equivalent results.
   Transforms must not rely on hidden or ambient semantics that cannot be
   represented or declared.
 
-### Subsystem: Identity, Composition, and Evolution
+### Subsystem: Identity / Composition / Evolution
 
-- **FR-15 — Identity and references.** UMF must support stable identity for
+- **FR-15** — **Identity and references.** UMF must support stable identity for
   schemas, elements, types, fields/properties, relationships, and extension-defined
   elements. Required intra-schema and cross-schema references and their identity
   semantics must survive native round trips.
-- **FR-16 — Composition.** Models must compose through reuse, references,
+- **FR-16** — **Composition.** Models must compose through reuse, references,
   namespaces, modularity, and independently versioned components without
   flattening everything into a monolithic artifact.
-- **FR-17 — Versioning.** UMF must support versioning of itself, core semantics,
+- **FR-17** — **Versioning.** UMF must support versioning of itself, core semantics,
   extensions, schemas/models, and integrations. Consumers must be able to determine
   semantic versions present; evolution must not silently reinterpret content.
-- **FR-18 — Schema evolution.** UMF must represent and compare additions,
+- **FR-18** — **Schema evolution.** UMF must represent and compare additions,
   removals, type, constraint, identity, relationship, and extension-specific
   changes, enabling integrations to apply native compatibility rules.
-- **FR-19 — Semantic comparison.** Comparison must distinguish textual and
+- **FR-19** — **Semantic comparison.** Comparison must distinguish textual and
   representational differences from equivalent or materially different semantics
   for round-trip validation and schema evolution.
 
 ### Subsystem: Validation and Compatibility Evidence
 
-- **FR-11 — Testable conformance.** UMF must define testable artifact and
+- **FR-11** — **Testable conformance.** UMF must define testable artifact and
   extension validity, importer/exporter/translator conformance, and the basis
   for full or partial native integration support claims.
-- **FR-12 — Native round-trip testing.** Integrations must be testable using
+- **FR-12** — **Native round-trip testing.** Integrations must be testable using
   real native schemas through `S → UMF → S`, evaluating equivalence according
   to S's semantics rather than textual equality alone.
-- **FR-13 — Cross-system testing.** UMF must support systematic tests of
+- **FR-13** — **Cross-system testing.** UMF must support systematic tests of
   `S → UMF → T` and, where useful, `S → UMF → T → UMF`, identifying semantic
   survival and loss rather than assuming reversibility.
-- **FR-14 — Real-world corpora.** Validation must support existing ecosystem
+- **FR-14** — **Real-world corpora.** Validation must support existing ecosystem
   examples, conformance suites, public specifications, and representative
   production-style schemas. Toy examples alone cannot demonstrate compatibility.
-- **FR-23 — Layered validation.** UMF must validate artifact structure, core
+- **FR-23** — **Layered validation.** UMF must validate artifact structure, core
   consistency, extension consistency, reference integrity, cross-element
   invariants, and integration requirements. Structural validity must not imply
   semantic validity.
-- **FR-32 — Observable compatibility.** UMF must support a compatibility matrix
+- **FR-32** — **Observable compatibility.** UMF must support a compatibility matrix
   derived from actual conformance and round-trip tests, exposing supported
   features and fidelity by integration. Claims must be evidence-based.
-- **FR-37 — Initial fidelity demonstration.** The first vertical slice must
+- **FR-37** — **Initial fidelity demonstration.** The first vertical slice must
   demonstrate JSON Schema and Protobuf native round trips on meaningful upstream
   and representative native corpora, plus JSON Schema-to-Protobuf translation
   with an explicit fidelity report. Exclusions must remain visible and must not

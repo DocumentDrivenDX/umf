@@ -13,7 +13,7 @@ ddx:
 
 # US-019: Preserve and inspect Parquet sources
 
-**Feature:** FEAT-002. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
+**Feature**: FEAT-002. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
 
 As a schema-tool author, I need Parquet schema and physical source information available
 in a browser without losing native metadata, exact values or unknown format extensions.

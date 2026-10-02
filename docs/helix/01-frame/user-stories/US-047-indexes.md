@@ -17,6 +17,8 @@ ddx:
 
 # US-047: Declare physical indexes in a binding
 
+**Feature**: FEAT-006
+
 ## Story
 
 **As a** metadata consumer, **I want** declared indexes and their target

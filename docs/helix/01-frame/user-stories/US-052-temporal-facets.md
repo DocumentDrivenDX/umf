@@ -17,7 +17,7 @@ ddx:
 
 # US-052: Author temporal value meaning
 
-**Feature:** FEAT-005. **PRD requirements:** FR-3, FR-20, FR-21, FR-28.
+**Feature**: FEAT-005. **PRD requirements:** FR-3, FR-20, FR-21, FR-28.
 **Priority:** unplaced by owner. **Status:** design proposal, not implemented.
 
 ## Story

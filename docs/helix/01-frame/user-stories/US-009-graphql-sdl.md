@@ -13,6 +13,8 @@ ddx:
 
 # US-009: Preserve and edit native GraphQL schema declarations
 
+**Feature**: FEAT-002
+
 As an API model author, I want SDL declarations and their exact original source
 available through UMF so metadata consumers and transformations retain API meaning.
 

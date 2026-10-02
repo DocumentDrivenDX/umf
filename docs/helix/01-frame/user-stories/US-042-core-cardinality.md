@@ -17,6 +17,8 @@ ddx:
 
 # US-042: Core cardinality ideal
 
+**Feature**: FEAT-005
+
 ## Story
 
 **As a** data platform engineer, **I want** to state whether a field is singular, an array or a map,

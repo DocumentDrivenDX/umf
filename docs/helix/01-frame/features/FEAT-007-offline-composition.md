@@ -19,8 +19,10 @@ ddx:
 
 # FEAT-007: Offline composition of pinned model revisions
 
-**Priority:** Owner placement pending. **Covered requirements:** FR-15–19 and
-FR-41; NFR-4–6, NFR-10–11, NFR-20–21 and NFR-50. **Stories:** US-050, US-051.
+**Priority:** Owner placement pending.
+**Covered PRD Subsystem(s)**: Identity / Composition / Evolution
+**Covered PRD Requirements**: FR-15, FR-16, FR-17, FR-18, FR-19, FR-41
+**Cross-Subsystem Rationale**: Offline composition gives programmatic consumers exact revision-qualified identities without expanding the feature beyond composition and evolution. NFR-4–6, NFR-10–11, NFR-20–21, and NFR-50 also apply. **Stories:** US-050, US-051.
 
 ## Overview
 

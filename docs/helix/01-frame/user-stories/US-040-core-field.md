@@ -15,6 +15,8 @@ ddx:
 
 # US-040: Core field ideal
 
+**Feature**: FEAT-005
+
 ## Story
 
 **As a** data platform engineer, **I want** to identify fields and structured definitions,

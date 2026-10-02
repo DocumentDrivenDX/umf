@@ -13,6 +13,8 @@ ddx:
 
 # US-002: Edit and round-trip JSON Schema
 
+**Feature**: FEAT-002
+
 As a schema-tool author, I want a programmatically accessible native schema in UMF,
 so that I can reuse metadata and make validated changes without losing meaning.
 

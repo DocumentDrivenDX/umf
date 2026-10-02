@@ -13,22 +13,24 @@ ddx:
 
 # US-030: TableSpec schema ingestion
 
+**Feature**: FEAT-002
+
 As a schema consumer I need TableSpec tables and columns ingested into UMF with
 usable core scalar metadata and complete native meaning retained.
 
-- AC1: Versioned extension and complete payload/native schemas; exact JSON/YAML
+- **US-030-AC1:** Versioned extension and complete payload/native schemas; exact JSON/YAML
   native recovery, including unknown fields and exact numeric metadata.
-- AC2: Core scalar classifications and copied native table/column access, retaining all
+- **US-030-AC2:** Core scalar classifications and copied native table/column access, retaining all
   qualifiers and contextual nullability; embeddings never become scalar strings.
-- AC3: Independent pinned native validation/normalization comparisons and Chromium
+- **US-030-AC3:** Independent pinned native validation/normalization comparisons and Chromium
   parity across representative schemas, with known model/schema differences explicit.
-- AC4: Explicit split-table/column bundle loading and copied edit synchronization;
+- **US-030-AC4:** Explicit split-table/column bundle loading and copied edit synchronization;
   reject ambiguity or unsupported edits without discarding original meaning.
   Support copied table metadata changes and explicit repair of table-level references
   after column renames. Preserve shadowed inline columns, unrelated files and attached
   core metadata. Independently verify accepted repaired schemas and preserved native
   rejection of unknown content; do not imply browser-side Pydantic validation.
-- AC5: Robust projections involving prioritized PostgreSQL, SQL Server, Avro and
+- **US-030-AC5:** Robust projections involving prioritized PostgreSQL, SQL Server, Avro and
   Parquet integrations, with refinement mismatches and losses reported.
 
 The initial monolithic and split importers cover portions of AC1–AC4, including

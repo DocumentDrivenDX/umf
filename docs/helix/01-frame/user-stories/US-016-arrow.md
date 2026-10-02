@@ -13,7 +13,7 @@ ddx:
 
 # US-016: Preserve and edit Arrow schemas
 
-**Feature:** FEAT-002. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
+**Feature**: FEAT-002. **PRD:** FR-1/5/6/12/37/39/41. **Priority:** P0.
 
 As a schema author, I want Arrow schema metadata available to browser metadata tools
 without erasing native type parameters, field order, dictionary identities or unknown

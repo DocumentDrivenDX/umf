@@ -17,6 +17,8 @@ ddx:
 
 # US-043: Core facets ideal
 
+**Feature**: FEAT-005
+
 ## Story
 
 **As a** data platform engineer, **I want** to state value bounds without hiding native approximation,

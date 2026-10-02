@@ -21,6 +21,8 @@ ddx:
 
 # US-048: Generate PostgreSQL DDL from DDD and binding
 
+**Feature**: FEAT-006
+
 ## Story
 
 **As a** model author, **I want** reviewable PostgreSQL DDL from an authored

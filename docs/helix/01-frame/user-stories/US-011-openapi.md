@@ -13,6 +13,8 @@ ddx:
 
 # US-011: Preserve native OpenAPI descriptions
 
+**Feature**: FEAT-002
+
 As an API integration author, I want programmatic access to OpenAPI metadata while
 retaining references, schema dialects, extensions and original JSON/YAML source.
 

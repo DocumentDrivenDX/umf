@@ -13,7 +13,7 @@ ddx:
 
 # US-001: Preserve and validate a versioned document
 
-**Feature:** FEAT-001. **Feature requirements:** EXT-01–EXT-03.
+**Feature**: FEAT-001. **Feature requirements:** EXT-01–EXT-03.
 **PRD:** FR-4/5/22/34; exercises FR-15/16/23/39 boundaries. **Priority:** P0.
 
 ## Story

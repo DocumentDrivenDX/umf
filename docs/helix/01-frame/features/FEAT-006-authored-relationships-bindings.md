@@ -17,9 +17,10 @@ ddx:
 
 # FEAT-006: Authored relationships and physical bindings
 
-**Priority:** P0. **Covered requirements:** FR-42–FR-44, with FR-3/8/40/41.
-**Subsystem:** Physical bindings and authored generation; relationship core
-admission is shared with FEAT-005. **Stories:** US-045–US-049.
+**Priority:** P0.
+**Covered PRD Subsystem(s)**: Physical Bindings and Authored Generation
+**Covered PRD Requirements**: FR-3, FR-8, FR-40, FR-41, FR-42, FR-43, FR-44
+**Cross-Subsystem Rationale**: Physical bindings and generators consume core relationships and DDD intent while preserving source meaning and reporting target losses. **Stories:** US-045–US-049.
 
 ## Overview
 

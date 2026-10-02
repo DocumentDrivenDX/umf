@@ -13,6 +13,8 @@ ddx:
 
 # US-008: Project Avro into an explicit document binding
 
+**Feature**: FEAT-003
+
 As an integration author, I want a JSON document schema derived from Avro with
 encoding choices and semantic gaps exposed, while retaining the original schema.
 

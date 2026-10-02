@@ -17,6 +17,8 @@ ddx:
 
 # US-049: Generate GraphQL SDL from DDD and relationships
 
+**Feature**: FEAT-006
+
 ## Story
 
 **As a** model author, **I want** GraphQL SDL from the authored model,

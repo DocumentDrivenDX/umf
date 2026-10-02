@@ -17,6 +17,8 @@ ddx:
 
 # US-041: Core nullability ideal
 
+**Feature**: FEAT-005
+
 ## Story
 
 **As a** data platform engineer, **I want** to state when a field may supply no value,

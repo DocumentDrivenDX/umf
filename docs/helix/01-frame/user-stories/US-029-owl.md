@@ -13,20 +13,22 @@ ddx:
 
 # US-029: OWL ontology interchange
 
+**Feature**: FEAT-002
+
 As an ontology consumer I need native OWL meaning retained across editable UMF round trips.
 
 ## Acceptance Criteria
 
-- AC1: Versioned extension package and JSON Schema; RDF-mapped source recovery,
+- **US-029-AC1:** Versioned extension package and JSON Schema; RDF-mapped source recovery,
   copied edits, scoped blank nodes and unknown content retention.
-- AC2: Programmatic ontology headers, imports, declarations, axioms and expressions;
+- **US-029-AC2:** Programmatic ontology headers, imports, declarations, axioms and expressions;
   preserve punning, axiom annotations, property chains and exact literals.
-- AC3: RDF/XML, Turtle, Functional, Manchester and OWL/XML representations must have
+- **US-029-AC3:** RDF/XML, Turtle, Functional, Manchester and OWL/XML representations must have
   explicit support inventories and robust independent native round-trip evidence.
-- AC4: Qualify OWL 2 DL/Full and EL/QL/RL profiles separately. Reasoning, consistency
+- **US-029-AC4:** Qualify OWL 2 DL/Full and EL/QL/RL profiles separately. Reasoning, consistency
   and entailment require versioned native expected-vector evidence and explicit
   import resolution, with no ambient network fetches.
-- AC5: Browser parity, metadata consumers and cross-system projections must preserve
+- **US-029-AC5:** Browser parity, metadata consumers and cross-system projections must preserve
   open-world meaning and expose losses; OWL cardinality is not a required form field.
 
 Initial work covers Turtle graph preservation and declared headers only. All other
