@@ -24,6 +24,7 @@ context, not a technology stack or another requirements layer.
 
 | Concern | Source | Areas | Why Active | Key Practices |
 | --- | --- | --- | --- | --- |
+| `typescript-bun` | HELIX library; `language-runtime` slot; owner-selected and recorded by ADR-002 | all | TypeScript is the implementation language, Bun is the pinned development/package/test runtime, and the shipped library must execute as browser JavaScript. | Pin Bun and TypeScript; keep strict type checks (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`); use `bun:test`; confine Bun/host APIs to scripts, tests, and CLI boundaries; require a host-global-free browser build and actual Chromium checks. |
 | Fidelity and partial understanding | project-local; owner requirements | `area:model`, `area:adapters`, `area:transform` | NFR-1, NFR-2, NFR-3, NFR-23, NFR-24, NFR-25, NFR-31, NFR-40, NFR-44 | Preserve unknown/native content; distinguish safe operations from retention; compare native meaning; retain disagreement. |
 | Identity and vocabulary composition | project-local; owner requirements | `area:model`, `area:extensions` | NFR-5, NFR-6, NFR-7, NFR-8, NFR-9, NFR-10, NFR-34, NFR-41, NFR-42, NFR-43 | Exercise stable identity, explicit resolution, isolated versioned vocabularies, declared authority, and conservative core promotion. |
 | Reproducible portable processing | project-local; owner requirements | `area:model`, `area:transform`, `area:tooling` | NFR-4, NFR-11, NFR-12, NFR-13, NFR-14, NFR-26, NFR-27, NFR-45, NFR-47 | Pin semantic inputs, retain origins, support offline packages, and compare optimized behavior with normative outcomes. |
@@ -34,11 +35,17 @@ context, not a technology stack or another requirements layer.
 
 ## Project Overrides
 
-No library concern practices are overridden. TypeScript is the preferred
-implementation language, browser JavaScript is required, and ADR-002 selects Bun
-for development/testing. Separate browser and tooling boundaries preserve
-implementation-neutral semantics. ADR-001 retains the YAML/JSON boundary.
-Frontend framework, datastore, deployment and authentication choices remain open.
+| Concern | Practice | Override | Authority |
+| --- | --- | --- | --- |
+| `typescript-bun` | Prefer Bun-native file, process, environment, and service APIs throughout implementation. | Bun-native and Node-compatible host APIs are permitted only in development scripts, tests, native oracles, and CLI boundaries. Browser-facing `src/` modules receive data and dependencies explicitly and must build and run without host globals. | ADR-002; FR-39 |
+| `typescript-bun` | Use Bun workspaces and split code into concern-specific packages. | UMF remains one private package while its portable source, tooling, schemas, fixtures, and extension packages are developed together. A workspace split requires a later decision backed by a concrete independent-release or dependency-boundary need. | ADR-002; current package boundary |
+| `typescript-bun` | Require Biome linting/formatting and its prescribed formatting profile. | Biome is not an accepted gate for the current repository. Review, strict TypeScript checks, focused/full Bun tests, schema/package audits, browser builds, and actual Chromium runs are the recorded gates. Adopting a formatter or linter requires an explicit tooling decision and a repository-wide baseline. | ADR-002; TP-001 |
+| `typescript-bun` | Require `verbatimModuleSyntax` and prohibit every explicit `any`. | The accepted compiler boundary is the checked-in strict `tsconfig.json`, including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`. Module preservation and stronger source-style restrictions are not claimed until separately enabled and validated across the existing adapter corpus. | ADR-002; checked-in TypeScript configuration |
+
+These overrides keep the selected runtime concern consistent with UMF's shipped
+browser boundary and current single-package delivery. ADR-001 retains the
+YAML/JSON boundary. Frontend framework, datastore, deployment and authentication
+choices remain open.
 
 DDD is modeled as an extension under FR-40, not selected as UMF's implementation
 architecture. Its context, aggregate, identity and terminology distinctions feed
