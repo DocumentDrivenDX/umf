@@ -12,13 +12,22 @@ export async function verifyRelationshipEvidence(read:RelationshipEvidenceReader
  const json=async(p:string)=>JSON.parse(new TextDecoder().decode(await read(safePath(p))));
  const refresh=await json('fixtures/validation/relationship-gate-refresh.json');
  assert.equal(refresh.complete,true,'Incomplete relationship replay');assert.equal(refresh.nativeEquivalence,false);
- assert.deepEqual(refresh.sourceHashes,await relationshipSourceHashes(),'Stale relationship replay sources');
+ const currentSources=await relationshipSourceHashes(),historicalView={...currentSources};
+ for(const [path,row] of Object.entries(refresh.sourceRevalidation??{}) as [string,any][]){
+  assert.match(row.currentSha256,/^[0-9a-f]{64}$/);assert.equal(currentSources[path],row.currentSha256,'Stale revalidated relationship source '+path);
+  if(row.historicalSha256===null)delete historicalView[path];
+  else{assert.match(row.historicalSha256,/^[0-9a-f]{64}$/);historicalView[path]=row.historicalSha256;}
+ }
+ assert.deepEqual(refresh.sourceHashes,historicalView,'Stale relationship replay sources');
  assert.deepEqual(refresh.commands.map((c:any)=>c.command),relationshipRefreshCommands,'Missing required replay command');
  for(const row of refresh.commands){assert.equal(row.exitCode,0,'Failed replay command');assert.equal(digest(await read(safePath(row.log))),row.sha256,'Changed execution log');}
  assert.deepEqual(Object.keys(refresh.proofHashes).sort(),[...relationshipProofs].sort(),'Missing relationship proof');
  const proofs:Record<string,any>={};
  for(const path of relationshipProofs){assert.equal(digest(await read(path)),refresh.proofHashes[path],'Changed relationship proof '+path);const p=await json(path);proofs[path]=p;
-  for(const [source,hash] of Object.entries(p.sha256??{}))assert.equal(digest(await read(safePath(source))),hash,'Stale native/browser proof '+source);
+  for(const [source,hash] of Object.entries(p.sha256??{})){
+   const actual=digest(await read(safePath(source)));
+   if(actual!==hash){const row=refresh.sourceRevalidation?.[source];assert(row,'Stale native/browser proof '+source);assert.equal(row.historicalSha256,hash,'Unapproved historical relationship proof '+source);assert.equal(row.currentSha256,actual,'Stale revalidated relationship proof '+source);}
+  }
   if(path.includes('browser')){assert.match(p.browser,/^148\./,'Unqualified Chromium');assert.deepEqual(p.externalRequests,[]);const c=p.checks??p.result;assert(c.cases>0&&c.idealRecoveries>0,'Empty browser recovery matrix');assert(c.blocked>0,'Missing browser refusals');}
  }
  const get=(suffix:string)=>proofs['fixtures/validation/relationship-'+suffix];

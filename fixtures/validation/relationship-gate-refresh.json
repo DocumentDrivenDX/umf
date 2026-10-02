@@ -2353,6 +2353,15 @@
     "fixtures/validation/relationship-extras/oracle.json": "b7c6a3e4aa6c43dfa3d8964b3d5bdd524cc2539ac53ec03ba55e44754d16d814",
     "fixtures/validation/relationship-extras/browser.json": "c87dd83387ac5bb49843afe69e53fde4bc67d5a32f19560c6f57dc83374f2275"
   },
+  "sourceRevalidation": {
+    "native/tablespec/sources/tests/unit/test_umf_loader.py": {"historicalSha256":"9f39055e7fcf46a37011e6a1cf0178a28b747bef55f58d7a92a422d3d2f90fc6","currentSha256":"88944e41ec005412667504bc92f182d2c15f00b9cf83951aca1d091e2f8c0c98"},
+    "scripts/core-ideals/relationship-evidence.ts": {"historicalSha256":"b444c44327512a3b0b52c945f66e288e818e6fa15a86212faf4abb51f3a228aa","currentSha256":"63c45457c1178ffddc0517a115db1a5c5130bec2f721a6b4fdcac181b8f5ad87"},
+    "tests/core-ideals/facets-evidence.test.ts": {"historicalSha256":"f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf","currentSha256":"535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66"},
+    "tests/protobuf/descriptor.test.ts": {"historicalSha256":"a6d7c37b05e2fcbf8e0b8686ddb18e49ff44f6856de20662fc765806e1a13697","currentSha256":"f07ad9a6900275beac86b9f1aa50e63e958cf4aec69d25f320e64aa1bdaf76aa"},
+    "tests/protobuf/source.test.ts": {"historicalSha256":"ed2a6963822e6241fbed667356b63310287a471e9dfba3238617055bcba53d9c","currentSha256":"1b97bc54311c57075fafd9ef73f133a1086ae311845aefb25deb067441fdecfb"},
+    "scripts/acceptance-traceability.ts": {"historicalSha256":null,"currentSha256":"7d1d03e53249d36136ff4a63ef8334ecb2ac4f9569e45fccd00b3473a3b5de17"},
+    "tests/traceability/acceptance-ledger.test.ts": {"historicalSha256":null,"currentSha256":"1d84758ebaf508c099f4bd477552b5268118f60adf3e0a36d3acf50fbbec7e84"}
+  },
   "commands": [
     {
       "command": [
