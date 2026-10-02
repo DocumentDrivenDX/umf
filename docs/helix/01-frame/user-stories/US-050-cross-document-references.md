@@ -92,7 +92,10 @@ mutations and constraint execution itself under NFR-50.
 ## Dependencies and Open Decisions
 
 FEAT-007 and CONTRACT-001/040/041/045 govern this story. Owner backlog
-placement remains open. Resolve the exact package serialization, revision-token
-syntax and digest scope before implementation; reserve no core member until
-versioned migration and collision tests are written. Schema-evolution comparison
-depends on this story's revision identity but is not part of this acceptance.
+placement selects this as the next governed slice on 2026-10-02. Before
+implementation, settle the public package API, package serialization, bounded
+profile, revision-token syntax, digest scope and initially permitted crossing
+members in CONTRACT-045; then publish TD-050 and allocate all ten criteria in
+TP-001. Reserve no core member until versioned migration and collision tests are
+written. Schema-evolution comparison depends on this story's revision identity
+but is not part of this acceptance.

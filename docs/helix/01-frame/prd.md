@@ -67,6 +67,16 @@ RDF/ontology integrations remain in the broader inventory but do not precede thi
 tabular ingestion work. Core promotion must make the metamodel useful to consumers;
 preserving only opaque native envelopes is insufficient.
 
+**Next governed slice (owner direction, 2026-10-02):** FR-15–FR-17 proceed
+through FEAT-007 and US-050 as an offline, revision-pinned cross-document
+reference slice. CONTRACT-045 must first settle the public package API, bounds,
+and permitted crossing members; TD-050 and AC-level test allocation must then
+precede implementation. FR-18/FR-19 through US-051 are deferred until US-050
+passes its governed gates because schema comparison depends on verified revision
+identity and package resolution. All other undelivered FR/NFR obligations remain
+in product scope and are deferred to the product owner for later release
+selection; absence from this slice does not demote or waive them.
+
 1. Users retain native meaning when moving supported schemas through UMF.
 2. Users translate where mappings exist and can inspect every semantic limit.
 3. Independent participants add semantic domains without redesigning the core.
@@ -510,6 +520,10 @@ be inspected.
 - Which first-slice capabilities are production release commitments rather than
   spike findings? Owner: product owner; blocks release commitments. All 44
   requirements remain product obligations until explicitly changed.
+- Which slice follows the completed relationship and binding queue? Resolved for
+  planning on 2026-10-02: US-050 is next. US-051 and every other residual
+  obligation remain deferred to the product owner pending US-050 evidence and a
+  later release-boundary decision; their product priority is unchanged.
 
 ## Success Criteria
 

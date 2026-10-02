@@ -540,6 +540,27 @@ broader ecosystem demonstrations happen later.
 | Review and tool composition | NFR-28, NFR-29, NFR-30, NFR-35, NFR-36, NFR-37 | Diff/merge checks, inspectability review, and unattended multi-tool workflows |
 | Ecosystem durability and boundary | NFR-48, NFR-49, NFR-50 | Independent recovery demonstration, license review, architecture scope review |
 
+## Next Governed Slice: US-050
+
+US-050 is the next governed product slice after the completed relationship and
+binding queue. Test implementation does not begin until CONTRACT-045 settles the
+public package API, package and traversal bounds, revision/digest rules and
+permitted crossing members, and TD-050 translates those decisions into an
+implementable design. TP-001 must then allocate US-050-AC1 through US-050-AC10
+to concrete contract, integration, migration/rollback and actual-browser cases
+before source implementation is authorized.
+
+The required gate covers legacy-local behavior, exact offline resolution,
+distinct dependency diagnostics, stop/follow selection, cycles, crossing-member
+rules, lineage versus revision identity, strict/report behavior, lossless
+migration/rollback, bounded inputs and Bun/Chromium parity. Evidence must name
+the package/core versions and supported subset and must not imply native
+round-trip or schema-evolution compatibility.
+
+US-051 and FR-18/FR-19 remain deferred until US-050 passes these gates. All
+other undelivered FR/NFR obligations remain product scope and await a later
+product-owner release decision; they are not silently allocated to this slice.
+
 ## Implementation Order
 
 This sequence concerns test development, not authorization to implement now.

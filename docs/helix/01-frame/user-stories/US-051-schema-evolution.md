@@ -107,6 +107,8 @@ closed-world record policy is inferred from an added or removed element.
 CONTRACT-045 revision identity and US-050 must precede implementation. The
 ordered core ideals and their current support gates remain independent; this
 story may compare an assertion only when its exact version/profile is understood.
-Owner backlog placement and the first comparison subset remain open. This story
-and CONTRACT-046 are design proposals; no core schema or source change is
-authorized by them.
+This story is explicitly deferred until US-050 passes its design, test and
+implementation gates. The product owner retains FR-18/FR-19 and this story in
+product scope, and must select its release boundary and first comparison subset
+after reviewing US-050 evidence. CONTRACT-046 remains a design proposal; no core
+schema or source change is authorized by it.

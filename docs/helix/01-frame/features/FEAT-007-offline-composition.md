@@ -19,7 +19,9 @@ ddx:
 
 # FEAT-007: Offline composition of pinned model revisions
 
-**Priority:** Owner placement pending.
+**Priority:** Next governed product slice begins with US-050 (owner direction,
+2026-10-02). US-051 follows only after US-050 passes its design, test and
+implementation gates.
 **Covered PRD Subsystem(s)**: Identity / Composition / Evolution
 **Covered PRD Requirements**: FR-15, FR-16, FR-17, FR-18, FR-19, FR-41
 **Cross-Subsystem Rationale**: Offline composition gives programmatic consumers exact revision-qualified identities without expanding the feature beyond composition and evolution. NFR-4–6, NFR-10–11, NFR-20–21, and NFR-50 also apply. **Stories:** US-050, US-051.
@@ -85,9 +87,13 @@ rebinding are outside UMF's described operation.
 
 ## Open Decisions and Placement
 
-The owner decides where implementation sits in the ordered core backlog and
-whether its first delivery includes every proposed crossing member or starts
-with general references and `itemType`. Decide the first supported revision-token
-syntax, package format and digest scope before a schema or API is published.
-CONTRACT-045 records a concrete proposal and diagnostics so these choices can be
-reviewed without implying implementation authorization.
+US-050 is the next governed slice after the completed relationship and binding
+queue. Its first design gate decides whether delivery includes every proposed
+crossing member or starts with general references and `itemType`, plus the first
+supported revision-token syntax, public package API, package format, digest
+scope and resource bounds. CONTRACT-045 records the proposal and diagnostics;
+the decision, TD-050 and AC-level test allocation must land before implementation.
+
+US-051 and FR-18/FR-19 are explicitly deferred until US-050 passes. Other
+undelivered FR/NFR obligations remain product scope and await product-owner
+selection of a later release slice; this ordering does not demote them.

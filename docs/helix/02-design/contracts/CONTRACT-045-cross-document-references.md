@@ -189,8 +189,9 @@ cycle; stop/follow selection; migration/rollback; unknown/native recovery; and
 Bun/Chromium parity. Evidence must name envelope/package versions and bounds.
 This proposal has no implementation or native-equivalence claim.
 
-Owner decisions remain: ordered backlog placement; exact public package
-serialization (embedded bytes versus bundled members) and resource bounds;
+Backlog placement is settled: US-050 is the next governed slice. The first
+design gate must decide the exact public package API and serialization (embedded
+bytes versus bundled members), resource bounds,
 revision-token grammar beyond nonempty exact strings; whether initial delivery
 includes all proposed crossing members; and how named key identity from the
 key design is embedded in future relationship targets. None may be resolved by

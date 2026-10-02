@@ -141,7 +141,11 @@ retargeting the primary key. A cycle is reported but is not itself an error.
 
 ## Evidence, Migration and Open Decisions
 
-The fixture corpus MUST include the R1/R2 sales and shared-reference package,
+This contract and US-051 are deferred until US-050 passes its design, test and
+implementation gates. The deferral preserves FR-18/FR-19 in product scope and
+does not authorize comparator implementation.
+
+When selected, the fixture corpus MUST include the R1/R2 sales and shared-reference package,
 formatting-only edits, equivalent representation, old/new ID changes, changed
 cross-document target pin, a dependency cycle, missing and mismatched pins,
 required↔absent-allowed, max length 50→20 and reverse, precision and scale,
@@ -156,8 +160,9 @@ Envelope migration and rollback remain governed by CONTRACT-045 and each core
 ideal's version transition. The comparator operates only after each source is
 decoded under its own declared profile; it cannot migrate old opaque members
 by matching their spelling to a new ideal. Rollback of any downstream migration
-retains the diff receipt and both original inputs. The owner must place this
-proposal after revision identity, decide whether the first delivery compares
+retains the diff receipt and both original inputs. After reviewing US-050
+evidence, the product owner must select this proposal's release boundary and
+decide whether the first delivery compares
 all listed assertions or a smaller explicitly incomplete profile, define
 extension comparator registration and bounds, and settle relationship coverage
 after its target-key design. No `spec/core/` or `src/` change follows from this
