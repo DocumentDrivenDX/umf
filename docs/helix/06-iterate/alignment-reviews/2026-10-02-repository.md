@@ -27,6 +27,23 @@ ddx:
 **Review Epic**: `umf-767cfb9c`  
 **Primary Governing Artifact**: `docs/helix/01-frame/prd.md`
 
+## Resolution Status — 2026-10-02
+
+All six actionable findings from this review have been addressed and committed
+independently. F-1 now has canonical decomposition fields and 433 stable AC IDs.
+F-2 has an executable 433-row classification ledger with no dangling citations;
+US-048-AC9 retains its reviewed Chromium harness evidence. F-3 fixes direct Bun
+discovery at the live root suite while preserving the frozen archive. F-4 selects
+the `typescript-bun` concern and records project overrides. F-5 accepts the
+bounded Protobuf WASM decision while retaining Edition 2024 and conformance
+limits. F-6 selects US-050, stages its decision/design/test/implementation queue,
+and explicitly defers US-051 and the remaining desired-state obligations.
+
+The current ledger classifies 55 criteria as `SATISFIED`, 221 as
+`UNCITED_COVERAGE`, 155 as `UNTESTED`, two as `REVIEWED_EXCEPTION`, and none as
+`ASSERTED_UNBACKED`. These classifications preserve open verification work rather
+than converting missing citations into delivery claims.
+
 ## Scope and Governing Artifacts
 
 This pass covers the governed `docs/helix/` stack, public TypeScript library,

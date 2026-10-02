@@ -1,0 +1,4006 @@
+{
+  "profile": "umf-acceptance-traceability-1",
+  "generatedFrom": {
+    "stories": "docs/helix/01-frame/user-stories",
+    "liveTests": "tests",
+    "conformanceHarnesses": "scripts"
+  },
+  "total": 433,
+  "counts": {
+    "SATISFIED": 55,
+    "UNTESTED": 155,
+    "UNCITED_COVERAGE": 221,
+    "ASSERTED_UNBACKED": 0,
+    "REVIEWED_EXCEPTION": 2
+  },
+  "danglingCitations": [],
+  "criteria": [
+    {
+      "id": "US-001-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/core.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-001-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/core/core.test.ts:1",
+        "tests/core/core.test.ts:113",
+        "tests/core/core.test.ts:20",
+        "tests/core/core.test.ts:31",
+        "tests/core/core.test.ts:38",
+        "tests/core/core.test.ts:59"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-001-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/core/core.test.ts:1",
+        "tests/core/core.test.ts:46",
+        "tests/core/core.test.ts:53"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-001-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/core/core.test.ts:1",
+        "tests/core/core.test.ts:64",
+        "tests/core/core.test.ts:68",
+        "tests/core/core.test.ts:72",
+        "tests/core/core.test.ts:79",
+        "tests/core/core.test.ts:85"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-001-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/browser.ts:1"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-001-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-002-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/json-schema/native.test.ts:1",
+        "tests/json-schema/upstream.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-002-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/json-schema/native.test.ts:1",
+        "tests/json-schema/native.test.ts:31",
+        "tests/json-schema/upstream.test.ts:1"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-002-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/json-schema/native.test.ts:1",
+        "tests/json-schema/native.test.ts:43"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-002-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/json-schema/native.test.ts:1",
+        "tests/json-schema/native.test.ts:49",
+        "tests/json-schema/native.test.ts:60",
+        "tests/json-schema/native.test.ts:67"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-002-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/json-schema/upstream.test.ts:1"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-002-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-002-json-schema-round-trip.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-003-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/protobuf/descriptor.test.ts:20",
+        "tests/protobuf/descriptor.test.ts:59"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-003-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/protobuf/descriptor.test.ts:32"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-003-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/protobuf/descriptor.test.ts:50"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-003-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/protobuf/descriptor.test.ts:66"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-003-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-003-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/protobuf/behavior.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-003-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/protobuf/source.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-003-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-003-protobuf-descriptors.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/protobuf/emission.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-004-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/json-schema-protobuf.test.ts:1"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-004-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/json-schema-protobuf.test.ts:1",
+        "tests/projections/json-schema-protobuf.test.ts:34",
+        "tests/projections/json-schema-protobuf.test.ts:74"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-004-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/json-schema-protobuf.test.ts:1",
+        "tests/projections/json-schema-protobuf.test.ts:46"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-004-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/json-schema-protobuf.test.ts:1",
+        "tests/projections/json-schema-protobuf.test.ts:56"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-004-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-005-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-005-ddd-profile.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/ddd/profile.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-005-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-005-ddd-profile.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/ddd/profile.test.ts:19"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-005-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-005-ddd-profile.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/ddd/profile.test.ts:36"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-005-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-005-ddd-profile.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/ddd/profile.test.ts:45"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-005-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-005-ddd-profile.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-006-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/ddd-json-schema.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-006-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/ddd-json-schema.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-006-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/ddd-json-schema.test.ts:32"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-006-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/projections/ddd-json-schema.test.ts:40"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-006-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-007-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/native.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/native.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/native.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-007-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-007-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/corpus.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/bundle.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/bundle.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-007-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-007-avro-round-trip.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/candidate-edit.test.ts:27",
+        "tests/avro/candidate-edit.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-008-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/projection.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-008-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/projection.test.ts:24"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-008-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-008-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-008-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/avro/projection.test.ts:37"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/native.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/native.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/native.test.ts:25"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/native.test.ts:34"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-009-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-009-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/corpus.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-009-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-009-graphql-sdl.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/corpus.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-010-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/projection.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-010-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/projection.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-010-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-010-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-010-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/graphql/projection.test.ts:32"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/native.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/native.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/native.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/native.test.ts:37"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-011-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/corpus.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/corpus.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/bundle.test.ts:10"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/bundle.test.ts:31"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/schemas.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/schemas.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/references.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/references.test.ts:19"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/references.test.ts:29"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/extraction.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/extraction.test.ts:18"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/scope.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/scope.test.ts:19"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC19",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/dynamic.test.ts:12"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-011-AC20",
+      "story": "docs/helix/01-frame/user-stories/US-011-openapi.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/dynamic.test.ts:18"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-012-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/projection.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-012-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/projection.test.ts:19",
+        "tests/openapi/projection.test.ts:41"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-012-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/openapi/projection.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-012-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-013-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/native.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/native.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/native.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-013-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/semantic.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/semantic.test.ts:21"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/corpus.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/corpus.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/libraries.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/libraries.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/all-libraries.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/emission.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/emission.test.ts:14"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/emission.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/projection.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-013-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/typespec/projection.test.ts:17"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/native.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/native.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/native.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-014-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/bundle.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/bundle.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/sources.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/sources.test.ts:14"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/sources.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/assembly.test.ts:18",
+        "tests/smithy/assembly.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/assembly.test.ts:12"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/worker.test.ts:24",
+        "tests/smithy/worker.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/sources.test.ts:28",
+        "tests/smithy/sources.test.ts:36"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/selection.test.ts:11",
+        "tests/smithy/selection.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/selection.test.ts:17",
+        "tests/smithy/worker.test.ts:28"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/projection.test.ts:12",
+        "tests/smithy/projection.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/projection.test.ts:18"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-014-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/smithy/projection.test.ts:27"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/native.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/native.test.ts:11",
+        "tests/postgresql/native.test.ts:43"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/native.test.ts:15",
+        "tests/postgresql/native.test.ts:23",
+        "tests/postgresql/native.test.ts:33"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-015-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-015-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/catalog.test.ts:13",
+        "tests/postgresql/catalog.test.ts:23",
+        "tests/postgresql/catalog.test.ts:29",
+        "tests/postgresql/catalog.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/catalog.test.ts:37"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/catalog.test.ts:52"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/projection.test.ts:13",
+        "tests/postgresql/projection.test.ts:19",
+        "tests/postgresql/projection.test.ts:27",
+        "tests/postgresql/projection.test.ts:32",
+        "tests/postgresql/projection.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-015-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-015-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-015-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-015-postgresql.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/postgresql/ddl-edits.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/schema.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/schema.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/schema.test.ts:14",
+        "tests/arrow/schema.test.ts:17",
+        "tests/arrow/schema.test.ts:26"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/ipc.test.ts:14",
+        "tests/arrow/ipc.test.ts:19",
+        "tests/arrow/ipc.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/capture.test.ts:15",
+        "tests/arrow/capture.test.ts:24",
+        "tests/arrow/capture.test.ts:31",
+        "tests/arrow/capture.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-016-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/flatbuffer-decode.test.ts:11",
+        "tests/arrow/flatbuffer-decode.test.ts:15",
+        "tests/arrow/flatbuffer-decode.test.ts:20",
+        "tests/arrow/flatbuffer-decode.test.ts:25",
+        "tests/arrow/flatbuffer-decode.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/flatbuffer-encode.test.ts:13",
+        "tests/arrow/flatbuffer-encode.test.ts:5",
+        "tests/arrow/flatbuffer-encode.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/ipc-layout.test.ts:13",
+        "tests/arrow/ipc-layout.test.ts:19",
+        "tests/arrow/ipc-layout.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/ipc-consistency.test.ts:11",
+        "tests/arrow/ipc-consistency.test.ts:15",
+        "tests/arrow/ipc-consistency.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/ipc-rename.test.ts:15",
+        "tests/arrow/ipc-rename.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-016-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-016-arrow.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/arrow/upstream.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/schema.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/collations.test.ts:3",
+        "tests/spark/metadata.test.ts:4",
+        "tests/spark/metadata.test.ts:8",
+        "tests/spark/parameters.test.ts:3",
+        "tests/spark/schema.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/schema.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/upstream.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/rename.test.ts:13",
+        "tests/spark/rename.test.ts:19",
+        "tests/spark/rename.test.ts:24",
+        "tests/spark/rename.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/projection.test.ts:12",
+        "tests/spark/projection.test.ts:16",
+        "tests/spark/projection.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-017-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/spark/arrow-origin.test.ts:3",
+        "tests/spark/reverse-projection.test.ts:12",
+        "tests/spark/reverse-projection.test.ts:16",
+        "tests/spark/reverse-projection.test.ts:22",
+        "tests/spark/reverse-projection.test.ts:7",
+        "tests/spark/upstream-projection.test.ts:3",
+        "tests/spark/upstream-projection.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/schema.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/schema.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/schema.test.ts:11"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/table.test.ts:5",
+        "tests/delta/table.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/table.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/column-mapping.test.ts:10",
+        "tests/delta/column-mapping.test.ts:14",
+        "tests/delta/column-mapping.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/mapped-nested.test.ts:3",
+        "tests/delta/rename.test.ts:14",
+        "tests/delta/rename.test.ts:6",
+        "tests/delta/rename.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/upstream.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/log.test.ts:11",
+        "tests/delta/log.test.ts:5",
+        "tests/delta/log.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/actions.test.ts:10",
+        "tests/delta/actions.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/reconcile.test.ts:10",
+        "tests/delta/reconcile.test.ts:14",
+        "tests/delta/reconcile.test.ts:18"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/history-upstream.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/checkpoint.test.ts:11",
+        "tests/delta/checkpoint.test.ts:16",
+        "tests/delta/checkpoint.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/checkpoint-parquet-trial.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/parquet-actions.test.ts:11",
+        "tests/delta/parquet-actions.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/sidecars.test.ts:15",
+        "tests/delta/sidecars.test.ts:20",
+        "tests/delta/sidecars.test.ts:6",
+        "tests/delta/sidecars.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/parquet-actions.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/parquet-checkpoint.test.ts:15",
+        "tests/delta/parquet-checkpoint.test.ts:6",
+        "tests/delta/parquet-checkpoint.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-018-AC19",
+      "story": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/delta/multipart.test.ts:11",
+        "tests/delta/multipart.test.ts:14",
+        "tests/delta/multipart.test.ts:17",
+        "tests/delta/multipart.test.ts:7",
+        "tests/delta/multipart.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/capture.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/capture.test.ts:10"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/capture.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-019-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/footer.test.ts:13",
+        "tests/parquet/footer.test.ts:6",
+        "tests/parquet/footer.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/metadata.test.ts:10",
+        "tests/parquet/metadata.test.ts:13",
+        "tests/parquet/metadata.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/schema.test.ts:10",
+        "tests/parquet/schema.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/logical.test.ts:5",
+        "tests/parquet/logical.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/containers.test.ts:18",
+        "tests/parquet/containers.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/transform.test.ts:13",
+        "tests/parquet/transform.test.ts:22",
+        "tests/parquet/transform.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/rename.test.ts:13",
+        "tests/parquet/rename.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/values-trial.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/pages.test.ts:5",
+        "tests/parquet/pages.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/bodies.test.ts:10",
+        "tests/parquet/bodies.test.ts:15",
+        "tests/parquet/bodies.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/hybrid.test.ts:10",
+        "tests/parquet/hybrid.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/levels.test.ts:5",
+        "tests/parquet/levels.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/physical.test.ts:12",
+        "tests/parquet/physical.test.ts:15",
+        "tests/parquet/physical.test.ts:6",
+        "tests/parquet/physical.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/rows.test.ts:5",
+        "tests/parquet/rows.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC19",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/values.test.ts:11",
+        "tests/parquet/values.test.ts:15",
+        "tests/parquet/values.test.ts:18",
+        "tests/parquet/values.test.ts:5",
+        "tests/parquet/values.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC20",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/offset-repair.test.ts:6",
+        "tests/parquet/offset-repair.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-019-AC21",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-019-AC22",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-019-AC23",
+      "story": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/parquet/arrow-nested.test.ts:7",
+        "tests/parquet/arrow-rename.test.ts:28",
+        "tests/parquet/arrow-rename.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-020-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-020-iceberg-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/schema.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-020-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-020-iceberg-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/schema.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-020-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-020-iceberg-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/schema.test.ts:11"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-020-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-020-iceberg-schema.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/upstream.test.ts:4",
+        "tests/iceberg/upstream.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table.test.ts:14",
+        "tests/iceberg/table.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table.test.ts:11"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table-context.test.ts:13",
+        "tests/iceberg/table-context.test.ts:17",
+        "tests/iceberg/table-context.test.ts:23"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/transforms.test.ts:10",
+        "tests/iceberg/transforms.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table-transforms.test.ts:13",
+        "tests/iceberg/table-transforms.test.ts:25",
+        "tests/iceberg/table-transforms.test.ts:33",
+        "tests/iceberg/table-transforms.test.ts:36",
+        "tests/iceberg/table-transforms.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table-rename.test.ts:17",
+        "tests/iceberg/table-rename.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/table-promotion.test.ts:18",
+        "tests/iceberg/table-promotion.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-021-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-021-iceberg-table.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/iceberg/promotion-data.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/manifest.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/manifest.test.ts:10"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/manifest.test.ts:16"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/rich.test.ts:12",
+        "tests/dbt/rich.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/graph.test.ts:10",
+        "tests/dbt/graph.test.ts:21",
+        "tests/dbt/graph.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/selection.test.ts:13",
+        "tests/dbt/selection.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/artifact.test.ts:14",
+        "tests/dbt/artifact.test.ts:5",
+        "tests/dbt/artifact.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/freshness.test.ts:5",
+        "tests/dbt/freshness.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/failure.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/semantic.test.ts:10",
+        "tests/dbt/semantic.test.ts:16",
+        "tests/dbt/semantic.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/semantic-metrics.test.ts:15",
+        "tests/dbt/semantic-metrics.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-022-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-022-dbt-manifest.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/dbt/semantic-fields.test.ts:6"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-023-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/odcs/odcs.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-023-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/odcs/odcs.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-023-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-023-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/odcs/references.test.ts:12",
+        "tests/odcs/references.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-023-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/odcs/relationships.test.ts:17",
+        "tests/odcs/relationships.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-023-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-023-odcs.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/odcs/rename.test.ts:16",
+        "tests/odcs/rename.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/linkml.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/linkml.test.ts:13"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-024-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/core/native-json.test.ts:17",
+        "tests/core/native-json.test.ts:24",
+        "tests/core/native-json.test.ts:29",
+        "tests/linkml/metamodel.test.ts:13",
+        "tests/linkml/metamodel.test.ts:17",
+        "tests/linkml/metamodel.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/imports.test.ts:13",
+        "tests/linkml/imports.test.ts:19",
+        "tests/linkml/imports.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/class-slots.test.ts:17",
+        "tests/linkml/class-slots.test.ts:24",
+        "tests/linkml/class-slots.test.ts:29",
+        "tests/linkml/class-slots.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/slot-values.test.ts:14",
+        "tests/linkml/slot-values.test.ts:22",
+        "tests/linkml/slot-values.test.ts:26",
+        "tests/linkml/slot-values.test.ts:32",
+        "tests/linkml/slot-values.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/slot-corpus.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/merge.test.ts:12",
+        "tests/linkml/merge.test.ts:18",
+        "tests/linkml/merge.test.ts:23",
+        "tests/linkml/merge.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-024-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/linkml/metamodel-merge.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/rdf.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/rdf.test.ts:13",
+        "tests/rdf/rdf.test.ts:20"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-025-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/rename.test.ts:11",
+        "tests/rdf/rename.test.ts:14",
+        "tests/rdf/rename.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/turtle.test.ts:13",
+        "tests/rdf/turtle.test.ts:18",
+        "tests/rdf/turtle.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/trig.test.ts:13",
+        "tests/rdf/trig.test.ts:20",
+        "tests/rdf/trig.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-025-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/rdf/merge.test.ts:14",
+        "tests/rdf/merge.test.ts:17",
+        "tests/rdf/merge.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/jsonld.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-026-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-026-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/jsonld.test.ts:15",
+        "tests/jsonld/jsonld.test.ts:21"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/nest.test.ts:3"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/legacy.test.ts:3",
+        "tests/jsonld/legacy.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/numeric.test.ts:11",
+        "tests/jsonld/numeric.test.ts:5"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/flatten.test.ts:17",
+        "tests/jsonld/flatten.test.ts:27",
+        "tests/jsonld/flatten.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/compaction.test.ts:19",
+        "tests/jsonld/compaction.test.ts:30",
+        "tests/jsonld/compaction.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/framing.test.ts:10",
+        "tests/jsonld/framing.test.ts:19",
+        "tests/jsonld/framing.test.ts:29"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-026-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/from-rdf.test.ts:16",
+        "tests/jsonld/from-rdf.test.ts:24",
+        "tests/jsonld/from-rdf.test.ts:9"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/to-rdf.test.ts:13",
+        "tests/jsonld/to-rdf.test.ts:29",
+        "tests/jsonld/to-rdf.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-026-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/rdf-terms.test.ts:3",
+        "tests/jsonld/rdf-terms.test.ts:7"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/unicode-iri.test.ts:11",
+        "tests/jsonld/unicode-iri.test.ts:4"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-026-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/jsonld/numeric-rdf.test.ts:11",
+        "tests/jsonld/numeric-rdf.test.ts:3",
+        "tests/jsonld/numeric-rdf.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-027-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/generalized-rdf/dataset.test.ts:8"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-027-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/generalized-rdf/dataset.test.ts:15"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-027-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/generalized-rdf/dataset.test.ts:24"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-027-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-028-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-028-shacl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-028-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-028-shacl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-028-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-028-shacl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-028-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-028-shacl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-028-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-028-shacl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-029-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-029-owl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-029-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-029-owl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-029-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-029-owl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-029-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-029-owl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-029-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-029-owl.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-030-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-030-tablespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-030-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-030-tablespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-030-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-030-tablespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-030-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-030-tablespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-030-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-030-tablespec.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-031-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-031-sqlserver.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-032-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-032-sqlserver-avro.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-032-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-032-sqlserver-avro.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-032-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-032-sqlserver-avro.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-032-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-032-sqlserver-avro.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-032-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-032-sqlserver-avro.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-040-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-041-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-042-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-043-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-044-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-045-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core/relationship-ideal.test.ts:7",
+        "tests/core/relationship-operations.test.ts:7",
+        "tests/core/relationship-public.test.ts:11",
+        "tests/core/relationship-public.test.ts:25",
+        "tests/core/relationship-public.test.ts:5",
+        "tests/core/relationship-selection.test.ts:19",
+        "tests/core/relationship-selection.test.ts:31",
+        "tests/core/relationship-selection.test.ts:6"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core/relationship-ideal.test.ts:7",
+        "tests/core/relationship-operations.test.ts:25",
+        "tests/core/relationship-public.test.ts:11",
+        "tests/core/relationship-public.test.ts:5",
+        "tests/relationship/authored-corpus.test.ts:5",
+        "tests/relationship/keyed-ddd-graph.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-carrier.test.ts:19",
+        "tests/core-ideals/relationship-avro-discovery.test.ts:9",
+        "tests/core-ideals/relationship-avro.test.ts:29",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:27",
+        "tests/core-ideals/relationship-extras.test.ts:6",
+        "tests/core-ideals/relationship-parquet.test.ts:20",
+        "tests/core-ideals/relationship-postgresql.test.ts:22",
+        "tests/core-ideals/relationship-sqlserver.test.ts:20",
+        "tests/core-ideals/relationship-tablespec-discovery.test.ts:8",
+        "tests/core-ideals/relationship-tablespec.test.ts:13",
+        "tests/core/relationship-ideal.test.ts:17",
+        "tests/core/relationship-operations.test.ts:32"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-projection.test.ts:7",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:5",
+        "tests/core-ideals/relationship-parquet.test.ts:8",
+        "tests/core-ideals/relationship-postgresql.test.ts:6",
+        "tests/core-ideals/relationship-sqlserver.test.ts:7",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:8",
+        "tests/core-ideals/relationship-tablespec.test.ts:14",
+        "tests/relationship/native-avro-parquet.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-projection.test.ts:7",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:6",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:38",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:9",
+        "tests/core-ideals/relationship-tablespec.test.ts:15",
+        "tests/relationship/graphql-native.test.ts:18",
+        "tests/relationship/graphql-native.test.ts:9",
+        "tests/relationship/postgresql-native.test.ts:19",
+        "tests/relationship/postgresql-native.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-projection.test.ts:7",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:5",
+        "tests/core-ideals/relationship-parquet.test.ts:8",
+        "tests/core-ideals/relationship-postgresql.test.ts:6",
+        "tests/core-ideals/relationship-sqlserver.test.ts:7",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:10"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-carrier.test.ts:19",
+        "tests/core-ideals/relationship-avro-discovery.test.ts:10",
+        "tests/core-ideals/relationship-avro-projection.test.ts:7",
+        "tests/core-ideals/relationship-avro.test.ts:29",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:27",
+        "tests/core-ideals/relationship-extras.test.ts:5",
+        "tests/core-ideals/relationship-parquet.test.ts:20",
+        "tests/core-ideals/relationship-parquet.test.ts:8",
+        "tests/core-ideals/relationship-postgresql.test.ts:22",
+        "tests/core-ideals/relationship-postgresql.test.ts:6",
+        "tests/core-ideals/relationship-sqlserver.test.ts:20",
+        "tests/core-ideals/relationship-sqlserver.test.ts:7",
+        "tests/core-ideals/relationship-tablespec-discovery.test.ts:27",
+        "tests/core-ideals/relationship-tablespec-discovery.test.ts:9",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:11",
+        "tests/core-ideals/relationship-tablespec.test.ts:16",
+        "tests/relationship/graphql-native.test.ts:9",
+        "tests/relationship/postgresql-native.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-avro-projection.test.ts:7",
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core-ideals/relationship-extras.test.ts:5",
+        "tests/core-ideals/relationship-parquet.test.ts:8",
+        "tests/core-ideals/relationship-postgresql.test.ts:6",
+        "tests/core-ideals/relationship-sqlserver.test.ts:7",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:12"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-conformance.test.ts:12",
+        "tests/core-ideals/relationship-conformance.test.ts:16"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-045-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core-ideals/relationship-conformance.test.ts:5",
+        "tests/core/relationship-transition.test.ts:25",
+        "tests/core/relationship-transition.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/multi-target.test.ts:7",
+        "tests/binding/package.test.ts:17",
+        "tests/relationship/keyed-ddd-graph.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/multi-target.test.ts:27",
+        "tests/binding/package.test.ts:17",
+        "tests/binding/package.test.ts:57",
+        "tests/binding/sqlserver-tables-indexes.test.ts:34",
+        "tests/binding/sqlserver-tables-indexes.test.ts:9",
+        "tests/binding/sqlserver-tables.test.ts:7"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:31",
+        "tests/binding/iceberg.test.ts:23",
+        "tests/binding/indexes.test.ts:76",
+        "tests/binding/package.test.ts:36",
+        "tests/binding/postgresql-indexes.test.ts:22",
+        "tests/binding/sqlserver-indexes.test.ts:19",
+        "tests/binding/sqlserver-tables-indexes.test.ts:21",
+        "tests/binding/sqlserver-tables-indexes.test.ts:49",
+        "tests/binding/sqlserver-tables.test.ts:23",
+        "tests/binding/sqlserver-tables.test.ts:36",
+        "tests/binding/sqlserver-tables.test.ts:63",
+        "tests/binding/sqlserver.test.ts:12",
+        "tests/binding/stable-ids.test.ts:23",
+        "tests/binding/stable-ids.test.ts:6"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:20",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/parquet.test.ts:9",
+        "tests/binding/sqlserver-tables.test.ts:48",
+        "tests/binding/sqlserver-tables.test.ts:7",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:20",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/parquet.test.ts:17",
+        "tests/binding/parquet.test.ts:47",
+        "tests/binding/sqlserver-tables.test.ts:48",
+        "tests/binding/sqlserver-tables.test.ts:7",
+        "tests/binding/sqlserver.test.ts:41"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:9",
+        "tests/binding/parquet.test.ts:29",
+        "tests/binding/sqlserver-tables.test.ts:72",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:9",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/package.test.ts:29",
+        "tests/binding/package.test.ts:48",
+        "tests/binding/parquet.test.ts:29",
+        "tests/binding/sqlserver-tables.test.ts:72",
+        "tests/binding/sqlserver.test.ts:35",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/parquet.test.ts:38"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/consumer-migration.test.ts:35",
+        "tests/binding/stable-ids.test.ts:23",
+        "tests/binding/stable-ids.test.ts:37",
+        "tests/binding/stable-ids.test.ts:50",
+        "tests/binding/stable-ids.test.ts:6"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-046-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-046-binding.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/consumer-migration.test.ts:16"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/indexes.test.ts:28",
+        "tests/binding/multi-target.test.ts:7"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/consumer-migration.test.ts:16",
+        "tests/binding/indexes.test.ts:28"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/multi-target.test.ts:27",
+        "tests/binding/postgresql-indexes.test.ts:10",
+        "tests/projections/ddd-postgresql-tables-indexes.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:20",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/indexes.test.ts:38",
+        "tests/binding/parquet.test.ts:9",
+        "tests/binding/postgresql-indexes.test.ts:10",
+        "tests/binding/sqlserver-indexes.test.ts:9",
+        "tests/binding/sqlserver-tables-indexes.test.ts:34",
+        "tests/binding/sqlserver-tables-indexes.test.ts:9",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:20",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/indexes.test.ts:38",
+        "tests/binding/indexes.test.ts:69",
+        "tests/binding/parquet.test.ts:17",
+        "tests/binding/postgresql-indexes.test.ts:10",
+        "tests/binding/sqlserver-indexes.test.ts:9",
+        "tests/binding/sqlserver.test.ts:41",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:9",
+        "tests/binding/parquet.test.ts:29",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:9",
+        "tests/binding/iceberg.test.ts:9",
+        "tests/binding/parquet.test.ts:29",
+        "tests/binding/sqlserver.test.ts:35",
+        "tests/binding/sqlserver.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/delta.test.ts:31",
+        "tests/binding/iceberg.test.ts:23",
+        "tests/binding/indexes.test.ts:60",
+        "tests/binding/parquet.test.ts:38",
+        "tests/binding/sqlserver-indexes.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/indexes.test.ts:48",
+        "tests/binding/indexes.test.ts:76",
+        "tests/binding/postgresql-indexes.test.ts:22",
+        "tests/binding/postgresql-indexes.test.ts:33",
+        "tests/binding/sqlserver-indexes.test.ts:19",
+        "tests/binding/sqlserver-indexes.test.ts:30",
+        "tests/binding/sqlserver-tables-indexes.test.ts:21",
+        "tests/binding/sqlserver-tables-indexes.test.ts:49",
+        "tests/binding/sqlserver.test.ts:30",
+        "tests/projections/ddd-postgresql-tables-indexes.test.ts:22"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-047-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-047-indexes.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/binding/consumer-migration.test.ts:35"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql-tables-indexes.test.ts:8",
+        "tests/projections/ddd-postgresql-tables.test.ts:8",
+        "tests/projections/ddd-postgresql.test.ts:14",
+        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/relationship/keyed-ddd-graph.test.ts:9",
+        "tests/relationship/postgresql-layout-proposal.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql.test.ts:7"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql-tables-indexes.test.ts:22",
+        "tests/projections/ddd-postgresql-tables-indexes.test.ts:8",
+        "tests/projections/ddd-postgresql-tables.test.ts:22",
+        "tests/projections/ddd-postgresql-tables.test.ts:35",
+        "tests/projections/ddd-postgresql-tables.test.ts:47",
+        "tests/projections/ddd-postgresql-tables.test.ts:8",
+        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/postgresql-relationship-layout.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql-tables.test.ts:22",
+        "tests/projections/ddd-postgresql-tables.test.ts:47",
+        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/postgresql-relationship-layout.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql-tables.test.ts:8",
+        "tests/projections/ddd-postgresql.test.ts:14",
+        "tests/relationship/postgresql-target.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql.test.ts:14"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql.test.ts:14",
+        "tests/relationship/postgresql-target.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/postgresql-relationship-layout.test.ts:5",
+        "tests/relationship/postgresql-layout-proposal.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-048-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/projections/ddd-postgresql-browser.ts:1"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-048-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-postgresql.test.ts:16"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql.test.ts:75",
+        "tests/projections/ddd-graphql.test.ts:8",
+        "tests/relationship/keyed-ddd-graph.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql-core-fields.test.ts:22",
+        "tests/projections/ddd-graphql-core-fields.test.ts:30",
+        "tests/projections/ddd-graphql-core-fields.test.ts:57",
+        "tests/projections/ddd-graphql-core-fields.test.ts:7",
+        "tests/projections/ddd-graphql-entities.test.ts:7",
+        "tests/projections/ddd-graphql.test.ts:8",
+        "tests/relationship/graphql-target.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql-core-fields.test.ts:22",
+        "tests/projections/ddd-graphql-core-fields.test.ts:38",
+        "tests/projections/ddd-graphql-entities.test.ts:29",
+        "tests/projections/ddd-graphql.test.ts:19",
+        "tests/projections/ddd-graphql.test.ts:49",
+        "tests/projections/ddd-graphql.test.ts:81",
+        "tests/projections/ddd-graphql.test.ts:91"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql-core-fields.test.ts:7",
+        "tests/projections/ddd-graphql-entities.test.ts:19",
+        "tests/projections/ddd-graphql-entities.test.ts:38",
+        "tests/projections/ddd-graphql-entities.test.ts:7",
+        "tests/projections/ddd-graphql.test.ts:19",
+        "tests/projections/ddd-graphql.test.ts:49",
+        "tests/relationship/graphql-target.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql-core-fields.test.ts:7",
+        "tests/projections/ddd-graphql-entities.test.ts:7",
+        "tests/projections/ddd-graphql.test.ts:75",
+        "tests/projections/ddd-graphql.test.ts:8"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql.test.ts:28",
+        "tests/projections/ddd-graphql.test.ts:40",
+        "tests/projections/ddd-graphql.test.ts:81"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql.test.ts:28"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql-entities.test.ts:19",
+        "tests/projections/ddd-graphql-entities.test.ts:47",
+        "tests/projections/ddd-graphql.test.ts:19"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-049-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/projections/ddd-graphql.test.ts:28",
+        "tests/projections/ddd-graphql.test.ts:40",
+        "tests/projections/ddd-graphql.test.ts:64"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-050-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-050-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-050-cross-document-references.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-051-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-051-schema-evolution.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-052-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-052-temporal-facets.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-053-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-053-constraint-ideals.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    }
+  ]
+}

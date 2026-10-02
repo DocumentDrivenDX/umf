@@ -513,6 +513,17 @@ allocates **requirement classes**, not completed story coverage. Before build
 completion, each selected `US-<n>-AC<m>` must receive one primary layer and
 concrete tests in its story test plan; exercising tests cite `@covers US-<n>-AC<m>`.
 
+The generated [acceptance-criteria ledger](acceptance-criteria-ledger.json) is
+the authoritative repository-wide inventory. `bun scripts/acceptance-traceability.ts
+--check` parses all 433 stable criteria, live tests and native/browser harnesses,
+rejects dangling citations, and assigns exactly one of `SATISFIED`, `UNTESTED`,
+`UNCITED_COVERAGE`, `ASSERTED_UNBACKED` or `REVIEWED_EXCEPTION`. `SATISFIED`
+is reserved for a canonical citation in a live test. Harness-only citations are
+reviewed exceptions because their pass/fail lifecycle belongs to conformance;
+title-only matches remain uncited coverage until a behavior review promotes the
+citation. `UNTESTED` records missing criterion-specific evidence without claiming
+that the corresponding implementation is absent.
+
 | Requirement Class | Sources | Primary Layer | Story Test Plans |
 | --- | --- | --- | --- |
 | Core and multiple representations | FR-2, FR-3, FR-20, FR-21, FR-28, FR-35 | Integration | To derive; self-description later |
