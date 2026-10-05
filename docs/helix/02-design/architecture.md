@@ -134,6 +134,18 @@ through Key have dated admission/five-system evidence, including the
 Relationship [core acceptance](../../../fixtures/validation/relationship-core-acceptance-evidence.json)
 and individual bindings are delivered. The separate [relationship gate](../../../fixtures/validation/relationship-conformance.json) admits the authored ideal and qualified five-priority delivery with explicit residuals and refusals.
 
+The owner clarified on 2026-10-04 that the ability to point to semantic types
+belongs in core. The planned element field `semanticTypes` contains exact
+`{vocabulary, version, term}` references; vocabulary publishers own the meanings
+and validators. Core validates reference structure and preserves unknown terms
+without interpreting them as scalar families or loading executable code.
+[CONTRACT-050](contracts/CONTRACT-050-semantic-types.md) governs this boundary.
+The existing `umf.semantic-types` 0.1.0 extension is an interim prototype;
+its tests establish prototype behavior, not delivery of this core field.
+The core release number remains unallocated pending coordination with concurrent
+core additions. Explicit migration and rollback must preserve existing extension
+annotations and collisions with previously opaque `semanticTypes` content.
+
 Core has two distinct gates. **Ideal admission** defines UMF meaning: a written
 meaning, counterexamples, down-projections to at least two of the five priority
 systems, and up-classification retaining unknown/native refinements. Native

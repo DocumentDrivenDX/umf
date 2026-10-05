@@ -217,6 +217,11 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 - **FR-4** — **First-class extensions.** UMF must support independently defined,
   versioned semantic extensions that define meaning absent from core. Multiple
   extensions and source-system or domain semantics must coexist in one artifact.
+  Core must provide a generic ability to reference semantic types by vocabulary,
+  exact version and term. Referenced domain definitions and validators must remain
+  extensible and independently versioned; core must not enumerate or define email,
+  telephone or industry-identifier meanings. Unknown references must remain
+  preserved with explicit interpretation limits.
 - **FR-5** — **Unknown semantics.** A processor must be able to read, operate on
   understood semantics, and rewrite an artifact while retaining uninterpreted
   extension content intact. Unknown extensions must not silently disappear.

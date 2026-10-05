@@ -5278,3 +5278,57 @@ the retained facet-evidence gate and whitespace validation pass; the broad live
 suite traversed only root tests and exposed one governed-document fingerprint
 drift from acceptance-ID normalization, now recorded in the existing explicit
 revalidation ledger.
+
+## Execution Evidence: Semantic type references (2026-10-04)
+
+The initial prototype for [CONTRACT-050](../02-design/contracts/CONTRACT-050-semantic-types.md) implements
+an experimental `umf.semantic-types` 0.1.0 element annotation independently of
+core schema evolution. Exact vocabulary/version/term lookup, copied definitions,
+copy-on-write authoring and explicit caller-installed value validators preserve
+native and unknown metadata. Unknown terms, qualifiers, absent validators and
+validator failures report unknown/incomplete. This does not execute TableSpec
+expectation recipes or publish universal email/telephone/industry validators.
+
+Verification on Bun 1.4.2: 8 focused tests, 40 assertions, zero failures;
+`typecheck` passes. Package audit passes 60/60; schema audit passes 344/344.
+`scripts/semantic-types-browser.ts` passes seven checks in Chromium 153.0.8010.12
+for explicit valid/invalid/unknown results, copy-on-write and both serializations.
+The initial browser attempt could not bind localhost inside the sandbox; the
+permitted rerun passed. This is authored API evidence; independent native
+validator parity and cross-system enforcement remain unclaimed. Bun 1.4.2 differs
+from the package's development pin 1.3.14 and is named here deliberately.
+
+Next slices: publisher-owned catalog releases; explicit TableSpec catalog/recipe
+import with retained detection, validation, generator and conversion distinctions;
+qualified native validator evidence; loss-aware target bindings. No fallback by
+term spelling or silent conversion is permitted. Rollback removes this additive
+profile/API while existing core and native payloads remain unchanged.
+
+Additional regression: explicit file paths for core, consumers, DDD and semantic
+annotations pass 137 tests across 30 files, 4,560 assertions, zero failures.
+An earlier directory-filter run also selected `core-ideals`; it was interrupted
+following existing Avro prototype-equality and cardinality evidence-path failures.
+That interrupted run is not a passed conformance gate or a full-suite result.
+
+## Planned Amendment: Core semantic type references (2026-10-04)
+
+Owner direction supersedes the prototype's placement: generic references belong
+in core; referenced meanings and validators remain independently extensible.
+FR-4, architecture and CONTRACT-050 now specify optional element `semanticTypes`
+as a nonempty array of `{vocabulary, version, term}` references. Email, telephone
+and industry identifiers do not become built-in scalar types. No extension
+registration is required to carry the core reference.
+
+| Slice | Work | Dependency / completion evidence |
+| --- | --- | --- |
+| ST-01 | Allocate a core revision and settle typed API and migration receipt contracts with concurrent core work | CONTRACT-050; retain older schema behavior; document unknowns before implementation |
+| ST-02 | Add core schema/type validation, copied inspection and authoring, plus unknown-reference diagnostics | ST-01; absent/empty/malformed fields, exact version/namespace identity, unknown qualifiers, browser-compatible API |
+| ST-03 | Implement explicit upgrade/rollback and interim extension migration | ST-02; archive opaque field collisions, preserve original extension and unknown qualifiers, refuse unresolved conflicts, verify forged/stale receipts and edited rollback |
+| ST-04 | Verify core references with metadata consumers and retained native payloads | ST-03; Bun and Chromium, both serializations, core/package/schema audits and applicable existing gates; publish new acceptance evidence |
+| ST-05 | Add publisher-owned catalog releases and explicit TableSpec catalog/validator bindings | ST-04; retain detection, expectation, generator and conversion distinctions; independent native evidence and target loss/refusal reporting |
+
+The prototype's 8 focused tests and seven browser checks remain historical
+extension evidence. They do not complete ST-02–ST-04. The core release number,
+public signatures and receipt schema remain unresolved; coordinate their
+allocation before changing implementation. This amendment changes governed
+intent only. Existing extension code and core schemas remain unchanged.

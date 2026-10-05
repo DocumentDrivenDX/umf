@@ -375,3 +375,4 @@ export * from './core-ideals/relationship-extras';
 export * from './projections/binding-sqlserver';
 export * from './projections/binding-sqlserver/relationship-layout';
 export * from './projections/ddd-postgresql';
+export * from './extensions/semantic-types';

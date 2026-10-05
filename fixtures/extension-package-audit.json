@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 59,
-  "passed": 59,
+  "packages": 60,
+  "passed": 60,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -551,6 +551,15 @@
         "subset": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes, RDF 1.2, entailment or canonicalization"
       },
       "evidenceCount": 15,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/semantic-types/package.json",
+      "id": "umf.semantic-types",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 2,
       "passed": true,
       "failures": []
     },
