@@ -5299,7 +5299,7 @@ revalidation ledger.
 
 ## Execution Evidence: Semantic type references (2026-10-04)
 
-The initial prototype for [CONTRACT-050](../02-design/contracts/CONTRACT-051-semantic-types.md) implements
+The initial prototype for [CONTRACT-051](../02-design/contracts/CONTRACT-051-semantic-types.md) implements
 an experimental `umf.semantic-types` 0.1.0 element annotation independently of
 core schema evolution. Exact vocabulary/version/term lookup, copied definitions,
 copy-on-write authoring and explicit caller-installed value validators preserve
@@ -5332,7 +5332,7 @@ That interrupted run is not a passed conformance gate or a full-suite result.
 
 Owner direction supersedes the prototype's placement: generic references belong
 in core; referenced meanings and validators remain independently extensible.
-FR-4, architecture and CONTRACT-050 now specify optional element `semanticTypes`
+FR-4, architecture and CONTRACT-051 now specify optional element `semanticTypes`
 as a nonempty array of `{vocabulary, version, term}` references. Email, telephone
 and industry identifiers do not become built-in scalar types. No extension
 registration is required to carry the core reference.
@@ -5377,3 +5377,14 @@ non-semantic authoring APIs retain their explicit supported-version limits.
 
 Parent review integration also reserves CONTRACT-050 for format separation;
 semantic references are finally allocated CONTRACT-051 and TD-051.
+
+### ST-02–ST-04 execution evidence
+
+Core 0.9.0 is implemented and manually reviewed. The final parent-integrated
+run passed 180 affected tests, 48 Chromium checks and 14 independent shape
+probes, plus typechecks, the public build and 60-package/352-schema audits.
+[Execution evidence](evidence/core-semantic-types.md) records scope, fingerprints,
+TableSpec source preservation, resolved findings and failed attempts. The broader
+exploratory run and retained admission gates have repository environment/evidence
+failures; they are recorded separately and keep the stacked PR draft. ST-05 and
+other version-specific authoring API upgrades remain open.

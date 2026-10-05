@@ -34,6 +34,8 @@ metadata selection and verified upgrade/rollback preserve native and unknown
 content. Prototype extension conversion is explicit and refuses unresolved
 collisions. [CONTRACT-051](02-design/contracts/CONTRACT-051-semantic-types.md) and
 [TD-051](02-design/technical-designs/TD-051-semantic-types.md) define scope.
+[Execution evidence](04-build/evidence/core-semantic-types.md) records final checks
+and the failing repository-wide native/evidence replays.
 Publisher catalogs and native validator parity remain separate work; existing
 version-specific non-semantic authoring APIs retain their supported-version limits.
 
