@@ -1,5 +1,5 @@
 """Seal only successful logged container execution; retain prior records in Git."""
-import hashlib, json, re, subprocess
+import hashlib, json, os, re, subprocess
 from pathlib import Path
 
 out = Path('fixtures/validation/core-check-refresh')
@@ -21,6 +21,7 @@ def previous(path, revision):
     return {'revision': revision, 'path': str(path), 'sha256': hashlib.sha256(raw).hexdigest()}
 
 runtime = load(out / 'container-runtime.json')
+sealing_runtime = {'imageId': os.environ.get('UMF_REPLAY_IMAGE_ID'), 'replayScriptSha256': digest('/opt/replay.py'), 'sealScriptSha256': digest('/opt/seal.py')}
 source = runtime['sourceRevision']
 native = load(out / 'native-browser.json')
 assert native['complete'] and native['commands'] == [row['command'] for row in native['runs']]
@@ -46,7 +47,7 @@ browser = load('fixtures/validation/core-semantic-types-browser.json')
 assert oracle['agreed'] == oracle['cases'] == 14
 assert len(browser['checks']) == 48 and browser['cases'] == 14 and len(browser['externalRequests']) == 0
 accept.update(sourceRevision=source, parentRevision=subprocess.check_output(['git', 'rev-parse', 'd64be8c8'], text=True).strip(), runtime={**runtime, 'chromium': native['expectedBrowser']},
-              containerReplay={'path': str(out / 'container-runtime.json'), 'sha256': digest(out / 'container-runtime.json')},
+              sealingRuntime=sealing_runtime, containerReplay={'path': str(out / 'container-runtime.json'), 'sha256': digest(out / 'container-runtime.json')},
               previousContainerEvidence=previous(acceptpath, source))
 accept.setdefault('preContainerFinalChecks', accept['finalChecks'])
 accept.setdefault('preContainerExploratoryChecks', accept['exploratoryChecks'])
@@ -71,7 +72,7 @@ paths = [out / name for name in ['native-browser.json', 'auxiliary.json', 'regre
 paths += [Path(gate['log']), Path(integrity['log']), Path(affected['log']), acceptpath]
 save(sealpath, {'complete': True, 'sourceRevision': source, 'uniqueTests': regression['passed'] + counts['tests'],
                 'uniqueTestFiles': regression['files'] + counts['files'], 'regressionTests': regression['passed'],
-                'gateTests': counts['tests'], 'nativeBrowserInventoryCommands': len(native['runs']), 'currentProofConcepts': 6,
+                'gateTests': counts['tests'], 'nativeBrowserInventoryCommands': len(native['runs']), 'currentProofConcepts': 6, 'sealingRuntime': sealing_runtime,
                 'previousEvidence': previous(sealpath, source),
                 'scope': 'Fresh container native/browser inventory, disjoint regression and complete gates; affected and auxiliary overlaps excluded. No native-equivalence or publisher-validator-parity claim.',
                 'sha256': {str(path): digest(path) for path in paths}})
