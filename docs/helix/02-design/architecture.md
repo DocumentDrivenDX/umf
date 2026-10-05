@@ -511,3 +511,16 @@ is built and loaded separately. Assembly returns source, exact native model JSON
 UMF AST model and native diagnostics with locations. Failures expose no partial model.
 Runtime limitations and mixin normalization remain explicit; asynchronous typing alone
 does not provide worker isolation or cancellation (CONTRACT-014, SPIKE-002).
+
+## Experimental shared schema properties (core 0.8.0)
+
+CONTRACT-049 extends authored metadata with title, aliases, typed examples,
+allowed-value sets, exact integer/decimal ranges, collection size, minimum
+string/binary length and literal defaults with explicit missing/null triggers.
+A separate portable literal validator checks understood values; an explicit
+resolver performs copied literal substitution without storage or I/O.
+Older envelopes require collision-archiving upgrade and retained rollback.
+Document read/write and element selection recognize 0.8.0; previous versioned
+native bindings and authoring APIs keep their scoped versions and refusal rules.
+This is an experimental core task, not a native-admission or TableSpec-port claim.
+See [the execution evidence](../04-build/evidence/schema-properties-core.md).

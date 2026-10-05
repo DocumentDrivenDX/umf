@@ -38,6 +38,11 @@ projections rather than prohibit UMF from defining author intent.
 
 ## Requirements
 
+- IDEAL-06 (owner direction, 2026-10-04): Implement CONTRACT-049 shared titles,
+  examples, aliases, collection bounds, allowed values, exact numeric ranges,
+  minimum length and explicit literal defaults with migration/rollback and
+  unknown preservation. Native admission remains separately evidenced.
+
 - IDEAL-01: Define one concept at a time in order: field, nullability,
   cardinality, author-stated facets, key, relationship. CONTRACT-040 owns the
   first five meanings; CONTRACT-041 owns relationship meaning.
@@ -69,7 +74,9 @@ remain failing exact projections. Native support versions and evidence are publi
 
 ## Out of Scope
 
-OWL, DDD lifecycle, physical encoding and default execution stay in extensions.
+OWL, DDD lifecycle, physical encoding, computed defaults and native default
+execution stay in extensions. CONTRACT-049 defines explicit literal substitution
+as a pure consumer operation; it never mutates stored rows.
 This authoring change does not modify the current envelope or claim implementation.
 
 ## Unplaced temporal-facet proposal
@@ -84,7 +91,7 @@ systems; otherwise the semantics stay in a published extension with fidelity
 reports. Neither the existing facet implementation nor Key equality gains
 temporal meaning from this framing alone.
 
-## Unplaced constraint-ideal proposal
+## Constraint-ideal proposal and core-task placement
 
 [US-053](../user-stories/US-053-constraint-ideals.md) and
 [CONTRACT-048](../../02-design/contracts/CONTRACT-048-constraint-ideals.md)
@@ -96,3 +103,9 @@ meaning and a separate ordering decision. None enters IDEAL-01's ordered
 delivery or `spec/core/` without owner placement, FR-3 evidence, a versioned
 migration and rollback; native CHECK or enum observations do not imply authored
 intent or enforcement of existing rows.
+
+The owner selected allowed values, exact numeric bounds and minimum length for
+experimental core implementation on 2026-10-04 through CONTRACT-049, together
+with descriptive metadata, collection size and literal defaults. This placement
+supersedes their unplaced core-task status; two-priority ideal admission and
+all-five native delivery remain open and must not be inferred from core tests.

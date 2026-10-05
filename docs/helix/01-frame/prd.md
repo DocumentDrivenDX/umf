@@ -77,6 +77,19 @@ identity and package resolution. All other undelivered FR/NFR obligations remain
 in product scope and are deferred to the product owner for later release
 selection; absence from this slice does not demote or waive them.
 
+**First ecosystem integration goal (owner direction, 2026-10-04):** finalize
+UMF sufficiently to port TableSpec so UMF documents become its authoritative
+schema representation. TableSpec must consume shared UMF meanings and retain
+pipeline-specific semantics through versioned extensions. Legacy schemas need
+explicit migration and recovery; native authoring must drive equivalent,
+qualified pipeline behavior. The finalization subset, stable API, Python
+consumption strategy and acceptance corpus require a dedicated feature and
+design; no native-port completion is claimed. This goal precedes TableSpec
+sinks for mutable Truss and immutable Ashlar graphs and shared query generation
+for those engines and ordinary Delta tables. Reconcile the US-050 prerequisites
+when defining the finalization gate. Query execution remains consumer-owned.
+See the [owner clarification](../00-discover/vision-input.md#owner-clarification-tablespec-becomes-umf-native-first).
+
 1. Users retain native meaning when moving supported schemas through UMF.
 2. Users translate where mappings exist and can inspect every semantic limit.
 3. Independent participants add semantic domains without redesigning the core.

@@ -3128,3 +3128,12 @@ Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+
+## Shared schema properties: CONTRACT-049
+
+Exercise all eight additions, exact integer/decimal equality and ordering,
+Unicode/byte units, null versus missing defaults, container item references,
+contradictory bounds, unknown qualifier refusals, migration collisions, forged
+and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
+API parity. Run existing core regressions, typecheck, schema audit and browser
+build. These gates establish experimental core behavior, not native enforcement.

@@ -1,3 +1,4 @@
+import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {parquetKeyProjectionCases,parquetKeyAuthors} from '../../scripts/core-ideals/key-parquet-projection-cases';
 import {projectKeysToParquet,verifyKeysParquetProjection,recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
@@ -38,6 +39,6 @@ test('native generated-schema proof verifies actual types, duplicate writing and
  for(const row of proof.rows){expect(row.decoded[0]).toEqual(row.decoded[1]);expect(row.requiredNullRefused).toBeTruthy();expect(row.fields.every((f:any)=>f.definitionLevel===0&&f.repetitionLevel===0)).toBe(true);}
  expect(proof.rows.find((r:any)=>r.name==='fixed-binary').shortFixedRefused).toBeTruthy();
  expect(proof.rows.filter((r:any)=>r.inputTruncation).length).toBe(12);
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash as string);
+ for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(recordedRepositoryPath(path)).arrayBuffer())).digest('hex')).toBe(hash as string);
  for(const item of corpus.rows){const c=parquetKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await Bun.file(item.path).arrayBuffer()));expect(r.mappings).toEqual(item.mappings);}
 });
