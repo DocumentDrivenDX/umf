@@ -31,6 +31,9 @@ Stages can also run individually: `prepare`, `native`, `auxiliary`, `regression`
 `publish`, `gates`, `seal`. Use `native --resume` or `regression --resume` to retain completed
 runs and archive failed attempts. Resume only within the same checkout and source
 revision. Publication requires successful logs; it cannot substitute for execution.
+Publication-only changes to `scripts/publish-core-check-refresh.py` may be applied
+after execution; the runtime records its exact finalization digest. All other
+implementation, test, native and manifest changes reject source reuse.
 
 The image installs Bun 1.3.14, Go 1.27.1, protoc 36.2, uv 0.12.23, Playwright 1.63.0 with
 Chromium 153.0.8010.12, Python 3.12 and OpenJDK 21. Ubuntu package patch versions

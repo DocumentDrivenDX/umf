@@ -5,6 +5,7 @@ import hashlib, json, subprocess, re, posixpath
 from pathlib import Path
 BASE='cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 OUT=Path('fixtures/validation/core-check-refresh')
+RETIRED_PATHS={'src/model/selection-verification.ts','src/model/schema-properties-receipts.ts','spec/core/schema-properties-receipt.schema.json'}
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def load(p):return json.loads(Path(p).read_text())
 def save(p,r):Path(p).write_text(json.dumps(r,indent=2)+'\n')
@@ -104,6 +105,10 @@ def main():
   active.add(p)
   r=records[p] if p in records else load(p)
   mapping={local(k):v for k,v in r.get('sha256',{}).items()}
+  retired={k:v for k,v in mapping.items() if k in RETIRED_PATHS and not Path(k).is_file()}
+  if retired:
+   r.setdefault('retiredFingerprints',{'reason':'Parent API amendment removed these paths; historical digests are retained without current validation.','sha256':{}})['sha256'].update(retired)
+   mapping={k:v for k,v in mapping.items() if k not in retired}
   for child in mapping:
    if child in records or child in changed and child.startswith('fixtures/validation/') and child.endswith('.json') and isinstance(load(child),dict) and isinstance(load(child).get('sha256'),dict):publish(child)
   r['sha256']={k:digest(k) for k in mapping}

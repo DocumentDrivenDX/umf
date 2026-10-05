@@ -55,7 +55,13 @@ for stage in stages:
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
     if stage != 'prepare' or args.resume:
         assert json.loads((out / 'container-runtime.json').read_text())['sourceRevision'] == revision, 'Replay source revision changed; start a fresh execution'
-    subprocess.run(['git', 'diff', '--exit-code', 'HEAD', '--', 'src', 'scripts', 'spec', 'tests', 'native', 'package.json', 'bun.lock'], check=True)
+    guarded = ['src', 'scripts', 'spec', 'tests', 'native', 'package.json', 'bun.lock']
+    if stage in ['publish', 'gates', 'seal']:
+        guarded.append(':(exclude)scripts/publish-core-check-refresh.py')
+        runtime = json.loads((out / 'container-runtime.json').read_text())
+        runtime['finalizationPublisher'] = {'path': 'scripts/publish-core-check-refresh.py', 'sha256': hashlib.sha256(Path('scripts/publish-core-check-refresh.py').read_bytes()).hexdigest(), 'scope': 'Publication-only tooling; native, auxiliary and regression execution source remains sourceRevision.'}
+        (out / 'container-runtime.json').write_text(json.dumps(runtime, indent=2) + '\n')
+    subprocess.run(['git', 'diff', '--exit-code', 'HEAD', '--', *guarded], check=True)
     if stage == 'prepare':
         if not Path('.venv').exists(): Path('.venv').symlink_to('/opt/venv', target_is_directory=True)
         revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
