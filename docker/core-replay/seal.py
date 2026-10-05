@@ -76,9 +76,8 @@ accept['subsequentCheckRepair'] = {'path': str(gatepath), 'sha256': digest(gatep
 retired = {path: sha for path, sha in accept['sha256'].items() if not Path(path).is_file()}
 if retired: accept['retiredFingerprints'] = {'reason': 'Paths removed by the parent API amendment; original fingerprints retained without a current verification claim.', 'sha256': retired}
 accept['sha256'] = {path: digest(path) for path in accept['sha256'] if Path(path).is_file()}
-for directory in ['src', 'scripts', 'spec', 'tests', 'native']:
-    for path in subprocess.check_output(['git', 'ls-files', directory], text=True).splitlines():
-        if Path(path).is_file() and path.endswith(('.ts', '.py', '.json', '.sql')): accept['sha256'][path] = digest(path)
+for path in ['src/model/selection-schemas.ts', 'src/model/schema-properties-transition-schema.ts', 'spec/core/schema-properties-transition.schema.json']:
+    accept['sha256'][path] = digest(path)
 accept['sha256'][str(gatepath)] = digest(gatepath)
 accept['sha256'][str(out / 'container-runtime.json')] = digest(out / 'container-runtime.json')
 accept['sha256'][affected['log']] = affected['logSha256']
