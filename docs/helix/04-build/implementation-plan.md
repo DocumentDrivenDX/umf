@@ -5352,7 +5352,7 @@ recorded separately from the prototype results.
 
 ## Shared schema properties: owner-directed core slice (2026-10-04)
 
-Implement CONTRACT-049 as experimental 0.8.0 without changing old schemas:
+Implement CONTRACT-049 as 0.8.0 without changing old schemas:
 versioned schema, portable semantic validator/literal domain, copied authoring
 and inspection, explicit defaults, migration/rollback, public export and tests.
 TP-001 owns acceptance coverage. Record actual checks after execution. Existing
@@ -5361,7 +5361,7 @@ native bindings and ideal-admission gates retain their qualified scope.
 The slice is implemented. [Execution evidence](evidence/schema-properties-core.md)
 records core regression, Chromium public-API behavior, independent exact-number
 probes, typechecks and schema/package audits. Native adapter admission and
-TableSpec integration remain outside this experimental implementation.
+TableSpec integration remain outside this implementation.
 
 ### ST-01 execution-ready decisions
 

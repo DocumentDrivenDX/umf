@@ -15,11 +15,11 @@ ddx:
       kind: informed_by
 ---
 
-# Experimental shared schema properties
+# Shared schema properties
 
 Owner-directed implementation on 2026-10-04 adds title, examples, aliases,
 collection size, allowed values, numeric range, minimum length and explicit
-literal defaults in experimental core 0.8.0. Existing schemas remain published.
+literal defaults in core 0.8.0. Existing schemas remain published.
 The public API supplies copied declarations and inspection, field-value checks,
 default resolution, receipt verification, retained migration and rollback.
 JSON/YAML document operations and metadata selection accept the new version.

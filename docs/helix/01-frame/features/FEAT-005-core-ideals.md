@@ -108,7 +108,7 @@ migration and rollback; native CHECK or enum observations do not imply authored
 intent or enforcement of existing rows.
 
 The owner selected allowed values, exact numeric bounds and minimum length for
-experimental core implementation on 2026-10-04 through CONTRACT-049, together
+core implementation on 2026-10-04 through CONTRACT-049, together
 with descriptive metadata, collection size and literal defaults. This placement
 supersedes their unplaced core-task status; two-priority ideal admission and
 all-five native delivery remain open and must not be inferred from core tests.
@@ -119,7 +119,7 @@ all-five native delivery remain open and must not be inferred from core tests.
 separates the meanings carried by TableSpec's unstructured format text. Source
 documentation and examples remain informational. Directional parsing and
 rendering recipes remain versioned extension concerns; allowed-value assertions
-follow CONTRACT-048 and, for the experimental core 0.8.0 surface, CONTRACT-049
+follow CONTRACT-048 and, for the core 0.8.0 surface, CONTRACT-049
 (allowed values must still be authored explicitly, never split from format
 text; ideal admission and all-five delivery stay open), and temporal value meaning follows CONTRACT-047. Structural
 patterns require a declared language and interpretation status. The overloaded

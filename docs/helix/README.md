@@ -14,7 +14,7 @@ three targets is not delivered. The owner's follow-up selects
 after a defined UMF finalization gate. Existing US-050 prerequisites must be
 reconciled when that gate is framed.
 
-## Experimental schema properties
+## Shared schema properties
 
 Owner-directed core 0.8.0 adds titles, aliases, typed examples, collection size,
 allowed values, exact integer/decimal ranges, minimum length and explicit literal

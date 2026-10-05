@@ -3,7 +3,7 @@ import {schemaPropertiesFixture,schemaPropertiesCases} from '../../scripts/core-
 import {selectCoreElements,verifyCoreElementSelection,validateDocument,readDocument,writeDocument,declareCoreSchemaProperties,inspectCoreSchemaProperties,verifyCoreSchemaPropertyDeclaration,validateCoreFieldValue,resolveCoreDefault,upgradeSchemaPropertiesEnvelope,rollbackSchemaPropertiesEnvelope,verifySchemaPropertiesUpgrade} from '../../src/index';
 import {type Document} from '../../src/model/types';
 const field=(element:string)=>({module:'m',element});
-describe('CONTRACT-049 experimental schema properties',()=>{
+describe('CONTRACT-049 schema properties',()=>{
  for(const row of schemaPropertiesCases())test(row.id,()=>expect(validateDocument(row.document).valid).toBe(row.valid));
  test('public JSON/YAML round trips and input copy isolation',()=>{
   const doc=schemaPropertiesFixture(),before=JSON.stringify(doc);for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(doc,format),format)).toEqual(doc);

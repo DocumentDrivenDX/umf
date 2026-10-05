@@ -17,7 +17,7 @@ ddx:
 
 # CONTRACT-049: Shared schema properties
 
-**Version:** experimental core 0.8.0. Owner requested implementation on
+**Version:** core 0.8.0. Owner requested implementation on
 2026-10-04. Core implementation and native ideal admission are separate claims.
 
 ## Purpose
