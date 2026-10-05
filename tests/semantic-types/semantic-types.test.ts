@@ -40,6 +40,10 @@ test('throwing and malformed validators cannot establish validity',()=>{
   expect(registry.check(ref,'x')).toMatchObject({status:'unknown',complete:false});
  }
 });
+test('a thrown validator error reports its message without establishing validity',()=>{
+ const result=new SemanticTypeRegistry().register(ref,{},()=>{throw new Error('checksum table missing');}).check(ref,'x');
+ expect(result).toMatchObject({status:'unknown',complete:false});expect(result.issues[0]).toContain('checksum table missing');
+});
 test('malformed identities and registration definitions reject',()=>{
  for(const bad of [{...ref,term:''},{...ref,version:42},null])expect(()=>new SemanticTypeRegistry().register(bad as any,{})).toThrow();
  expect(()=>new SemanticTypeRegistry().register(ref,[] as any)).toThrow();

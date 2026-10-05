@@ -178,6 +178,15 @@ Core 0.9.0 follows the concurrent 0.8.0 schema-properties revision. Existing
 version-specific authoring APIs retain their supported envelope limits; read/write,
 validation, element selection and semantic-type operations support 0.9.0.
 
+Known limit: the 0.8.0 schema-properties APIs (`inspectCoreSchemaProperties`,
+`declareCoreSchemaProperties`, `verifyCoreSchemaPropertyDeclaration`,
+`validateCoreFieldValue`, `resolveCoreDefault` and the schema-properties
+upgrade/rollback functions) require an exact 0.8.0 envelope and reject 0.9.0
+documents. After upgrading, schema-property authoring is unavailable until a
+0.9.0-aware revision exists; roll back or edit schema properties before upgrading.
+A validator exception makes the check `unknown` and appends the exception message
+to `issues`.
+
 A publisher-owned catalog and validator release policy, TableSpec catalog import,
 projection bindings and independent native validator parity remain unimplemented
 by this profile; none may be claimed from annotation preservation alone.

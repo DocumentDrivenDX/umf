@@ -47,7 +47,7 @@ export class SemanticTypeRegistry {
    const result=copyJson(entry.validator(copyJson(value),copyJson(entry.definition) as JsonObject)) as unknown as SemanticTypeCheck;
    if(!result||typeof result!=='object'||Array.isArray(result)||!['valid','invalid','unknown'].includes(result.status)||typeof result.complete!=='boolean'||!Array.isArray(result.issues)||result.issues.some(i=>typeof i!=='string')||Object.keys(result).some(k=>!['status','complete','issues'].includes(k))||(result.status==='unknown'&&result.complete))return unknown('Malformed validator result');
    return {reference:ref,status:result.status,complete:result.complete,issues:result.issues};
-  } catch {return unknown('Value validator failed; no validation conclusion available');}
+  } catch(error) {return unknown('Value validator failed; no validation conclusion available'+(error instanceof Error&&error.message?': '+error.message:''));}
  }
 }
 export function validateSemanticTypeValue(reference:SemanticTypeReference,value:Json,registry:SemanticTypeRegistry):SemanticTypeValueResult {return registry.check(reference,value);}
