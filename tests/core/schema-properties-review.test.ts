@@ -65,3 +65,13 @@ test('value and default APIs reject identity accessors without invoking them',()
   expect(()=>resolveCoreDefault(schemaPropertiesFixture(),identity,{state:'missing'})).toThrow();expect(calls).toBe(0);
  }
 });
+
+test('explicit malformed facet patches reject atomically',()=>{
+ const doc=schemaPropertiesFixture(),before=JSON.stringify(doc);
+ for(const facets of [null,false,0,'',[],true,'text']){
+  expect(()=>declareCoreSchemaProperties(doc,{scope:'element',module:'m',element:'quantity'},{title:'Must not apply',facets} as any)).toThrow();
+  expect(JSON.stringify(doc)).toBe(before);
+ }
+ const receipt=declareCoreSchemaProperties(doc,{scope:'element',module:'m',element:'quantity'},{facets:{range:{min:{integerToken:'1'},max:{integerToken:'2'}}}});
+ expect(verifyCoreSchemaPropertyDeclaration(receipt,receipt.target)).toEqual(receipt);
+});

@@ -44,10 +44,10 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
   if(key==='default'&&node.default)knownSchemaMembers(node.default,['value','on'],located.path+'/default');
   node[key]=copyJson(request[key]);
  }
- if(request.facets){
+ if(Object.hasOwn(request,'facets')){
   knownSchemaMembers(request.facets,['length','collectionSize','range'],'/request/facets');
   const facets=copyJson(node.facets??{}) as Record<string,Json>;
-  for(const [group,changes] of Object.entries(request.facets)){
+  for(const [group,changes] of Object.entries(request.facets!)){
    const keys=group==='length'?['min','max','unit']:group==='range'?['min','max','minInclusive','maxInclusive']:['min','max'];
    knownSchemaMembers(changes,keys,'/request/facets/'+group);
    if(facets[group])knownSchemaMembers(facets[group],keys,located.path+'/facets/'+group);
