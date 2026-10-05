@@ -58,7 +58,7 @@ def prepare_namespaces():
     for name in ['rdf-venv','linkml-venv']:
         p=Path('.cache')/name
         if not p.exists():p.symlink_to('../.venv',target_is_directory=True)
-def counted_regression():
+def counted_regression(resume=False):
     paths=sorted(p for p in subprocess.check_output(['rg','--files','tests'],text=True).splitlines() if p.endswith('.test.ts') and not ('/core-ideals/' in p and (p.endswith('conformance.test.ts') or p.endswith('evidence.test.ts'))))
     groups=[[],[],[],[]]
     for path in paths:
@@ -68,12 +68,19 @@ def counted_regression():
         elif category in ['typespec','smithy','openapi','json-schema','protobuf','projections','graphql']:index=2
         else:index=3
         groups[index].append(path)
+    previous=json.loads((OUT/'regression.json').read_text()) if resume and (OUT/'regression.json').exists() else {'runs':[],'failedAttempts':[]}
     def execute(item):
         i,group=item;command=['bun','test',*group];log=OUT/f'regression-{i+1}.log'
+        old=next((r for r in previous['runs'] if r['command']==command),None)
+        if old and old['exitCode']==0:
+            assert digest(old['log'])==old['logSha256'];return old
+        if old:
+            kept=OUT/f'regression-failed-{i+1}-{len(previous.get("failedAttempts",[]))+1}.log'
+            shutil.copyfile(log,kept);previous.setdefault('failedAttempts',[]).append({**old,'log':str(kept)})
         with log.open('wb') as f: child=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,env=os.environ)
         return {'command':command,'exitCode':child.returncode,'log':str(log),'logSha256':digest(log)}
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(execute,enumerate(groups)))
-    (OUT/'regression.json').write_text(json.dumps({'runs':rows,'scope':'Disjoint explicit live-test file shards; eight admission/evidence files are checked separately'},indent=2)+'\n')
+    (OUT/'regression.json').write_text(json.dumps({'runs':rows,'failedAttempts':previous.get('failedAttempts',[]),'scope':'Disjoint explicit live-test file shards; eight admission/evidence files are checked separately'},indent=2)+'\n')
     if any(r['exitCode'] for r in rows):raise SystemExit('Live regression failed; inspect shard logs')
 def auxiliary():
     relationship=json.loads((OUT/'relationship-commands.json').read_text())
@@ -91,6 +98,6 @@ def auxiliary():
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--resume',action='store_true');p.add_argument('--regression',action='store_true');p.add_argument('--auxiliary',action='store_true');p.add_argument('--prepare-namespaces',action='store_true');args=p.parse_args()
     if args.prepare_namespaces:prepare_namespaces()
-    elif args.regression:counted_regression()
+    elif args.regression:counted_regression(args.resume)
     elif args.auxiliary:auxiliary()
     else:run(args.resume)
