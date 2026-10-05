@@ -2,7 +2,7 @@ import schema from '../../spec/core/schema-properties-document.schema.json';
 import {createValidator} from './schema';
 // Intentional, known import cycle with ./document (CONTRACT-049); both sides only use the other inside functions.
 import {validateDocument} from './document';
-import {Registry} from '../registry/registry';
+import {Registry,type Registration} from '../registry/registry';
 import {copyJson} from '../model/json';
 import {type Document,type Diagnostic,type Validation,type Element,UmfError,pointer} from '../model/types';
 import {checkSchemaLiteral,literalIdentity,schemaCoefficient,type CoreLiteral,schemaPropertyNames,newFacetNames} from '../model/schema-literals';
@@ -23,7 +23,16 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
  const add=(message:string,path:string,severity:'error'|'warning'='error',code='CORE_SCHEMA_PROPERTIES')=>diagnostics.push({code,path,message,severity});
  let doc:Document;try{doc=copyJson(input) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;add(error.message,error.path);return {valid:false,complete:false,diagnostics};}
  if(!checkSchemaProperties(doc)){for(const e of checkSchemaProperties.errors??[])add(e.message??'Invalid schema properties',e.instancePath);return {valid:false,complete:false,diagnostics};}
- diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),registry).diagnostics);
+ // Only core validation uses the compatibility view. Extension validators must
+ // inspect an isolated copy of the complete document and its actual version.
+ const extensionRegistry=new class extends Registry {
+  override get(id:string,version:string):Registration|undefined {
+   const entry=registry.get(id,version);if(!entry?.semantics)return entry;
+   const semantics=entry.semantics;
+   return {...entry,semantics:(payload,context)=>semantics(payload,{...context,document:copyJson(doc) as unknown as Document})};
+  }
+ };
+ diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),extensionRegistry).diagnostics);
  add('Experimental 0.8.0 properties; native enforcement/admission not implied','/umf','warning','EXPERIMENTAL_CORE_SCHEMA_PROPERTIES');
  const unknown=(v:Record<string,unknown>,known:string[],path:string)=>{for(const key of Object.keys(v))if(!known.includes(key))add('Qualifier retained without interpretation',path+'/'+pointer(key),'warning','UNKNOWN_SCHEMA_PROPERTY');};
  doc.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
