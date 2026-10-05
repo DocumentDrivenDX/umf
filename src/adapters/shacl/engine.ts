@@ -11,7 +11,7 @@ export interface ShaclEngineReport {
  stringProfile:'umf-string-1';numericProfile:'umf-numeric-2';engine:'rdf-validate-shacl@0.6.5';blankNodePolicy:'disjoint-inputs'|'shared-scope';status:'evaluated'|'blocked';complete:false;
  shapes:Document;data:Document;engineConforms?:boolean;report?:Document;diagnostics:Diagnostic[];
 }
-/** Experimental engine evidence, NOT a UMF conformance verdict. All input meaning remains recoverable. */
+/** Engine evidence, NOT a UMF conformance verdict. All input meaning remains recoverable. */
 export async function proposeShaclEngineValidation(shapes:Document,data:Document,options:{id:string;blankNodePolicy:'disjoint-inputs'|'shared-scope'}):Promise<ShaclEngineReport>{
  if(!options||typeof options.id!=='string'||!options.id.length||!['disjoint-inputs','shared-scope'].includes(options.blankNodePolicy))throw new UmfError('SHACL_OPTIONS','Expected nonempty report id and explicit blank-node policy');
  const r:ShaclEngineReport={stringProfile:'umf-string-1',numericProfile:'umf-numeric-2',engine:'rdf-validate-shacl@0.6.5',blankNodePolicy:options.blankNodePolicy,status:'blocked',complete:false,shapes:copyJson(shapes) as unknown as Document,data:copyJson(data) as unknown as Document,diagnostics:[{code:'SHACL_ENGINE_EXPERIMENTAL',path:'',severity:'warning',message:'Pinned engine with UMF numeric and string validators. Complete SHACL conformance, shape syntax checking, numeric fidelity and recursion semantics are not established. Do not treat engineConforms as a verified UMF conformance verdict.'}]};

@@ -29,7 +29,7 @@ native port remain separate work.
 
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
 schema ingestion and shared authored metadata. The browser-compatible library
-now includes experimental core 0.2.0 Field, 0.3.0 Nullability, 0.4.0 Cardinality,
+now includes core 0.2.0 Field, 0.3.0 Nullability, 0.4.0 Cardinality,
 0.5.0 Facets, 0.6.0 Key and 0.7.0 Relationship operations, with older envelope
 recovery and explicit migration/rollback. Core plus independently versioned
 extensions preserve native and unknown meaning; DDD is one semantic extension,
@@ -103,10 +103,10 @@ nullability, cardinality, author-stated facets and key. See
 [FEAT-005](01-frame/features/FEAT-005-core-ideals.md),
 [CONTRACT-040](02-design/contracts/CONTRACT-040-core-ideals.md), and the
 [ordered implementation plan](04-build/implementation-plan.md).
-Experimental Field authoring and validation are implemented in core 0.2.0.
+Field authoring and validation are implemented in core 0.2.0.
 Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
-has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
+has passed its core-task acceptance: 0.3.0 validation, typed authoring,
 migration/rollback, selection and versioned Field APIs are implemented.
 All five priority Nullability bindings have passed qualified acceptance, including
 explicit scope/carrier metadata, strict/report projection and both retained recovery
@@ -120,7 +120,7 @@ Nullability ideal admission and qualified five-system delivery now pass their
 separate gate: 90 ideal recoveries, 60 native recoveries and current native/browser
 evidence. Core 0.3.0 remains experimental; no native equivalence is claimed. See the
 [Nullability conformance record](../../fixtures/validation/nullability-conformance.json).
-At the Cardinality core checkpoint, experimental 0.4.0 schema validation, item/value Field
+At the Cardinality core checkpoint, 0.4.0 schema validation, item/value Field
 references, explicit collision-preserving migration/rollback, authoring and
 inspection have Bun and Chromium evidence. Versioned Field, Nullability and
 record-type APIs now support 0.4.0 while retaining older receipts. Selection
@@ -155,19 +155,19 @@ conformance gate: 684 ideal recoveries and 932 native recoveries, with current
 five-system native/Chromium evidence. See the
 [Cardinality conformance record](../../fixtures/validation/cardinality-conformance.json).
 No native equivalence is claimed.
-Experimental core 0.5.0 facets now pass core-task acceptance: public validation,
+Core 0.5.0 facets now pass core-task acceptance: public validation,
 explicit migration/rollback, typed authoring/inspection, versioned existing
 operations and item/value selection have Bun and Chromium evidence. At that
 core-task checkpoint, all three existing concept gates passed after the
 five-system native/browser refresh.
 [Facet core acceptance](../../fixtures/validation/facet-core-acceptance-evidence.json)
-does not admit native facet bindings or equivalence. Experimental TableSpec facet
+does not admit native facet bindings or equivalence. TableSpec facet
 classification and authored projection pass qualified binding acceptance after
 the full compatibility refresh and the prior three concept gates. Profiles keep
 metadata declarations, generated schemas, explicit GX suites and ingest casts
 distinct; both native and ideal recovery retain unclaimed meaning. See the
 [TableSpec facet acceptance record](../../fixtures/validation/tablespec-facets-acceptance-evidence.json).
-Experimental PostgreSQL facets also pass qualified binding acceptance after the
+PostgreSQL facets also pass qualified binding acceptance after the
 full compatibility refresh and prior concept gates. The binding preserves native
 value scopes, unknown refinements and explicit projection losses; all 145 emitted
 schemas have composed native/ideal recovery evidence. See the
@@ -179,7 +179,7 @@ Avro facets also pass qualified binding acceptance; see the
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [facet gate admission record](04-build/evidence/facet-gate-admission.md).
 
-Experimental core 0.6.0 now exposes named Key and Record membership authoring,
+Core 0.6.0 now exposes named Key and Record membership authoring,
 inspection, stable-ID lookup, exact tuple encoding, collision-preserving
 migration/rollback and selection through the public browser API. Earlier core
 operations have versioned 0.6.0 receipts while older schemas remain unchanged.
@@ -349,7 +349,7 @@ OntoBricks, Stardog and related alternatives. The
 extension round trips, early DDD, metadata consumers and evidence-based promotion.
 
 [CONTRACT-001](02-design/contracts/CONTRACT-001-core-envelope.md) defines the
-experimental core envelope and package schema. Bun tests and actual Chromium
+core envelope and package schema. Bun tests and actual Chromium
 checks cover preservation, validation and conservative edits; scoped results are
 recorded in the implementation plan.
 
@@ -1013,7 +1013,7 @@ SHACL Core target selection is now implemented: 60 independent native comparison
 scope/hierarchy matrix. Constraint execution and validation-report comparison remain open.
 
 
-SHACL's experimental constraint engine executes all 98 official Core cases and matches
+SHACL's constraint engine executes all 98 official Core cases and matches
 all expected conformance booleans. Qualified report comparisons and PySHACL differences
 are recorded; 196 browser evaluations pass. The API always reports `complete: false`:
 source-anchored report identity, messages/details, malformed shapes and broader datatype
@@ -1034,7 +1034,7 @@ The older mixed-promotion limitation is resolved; full report fidelity and other
 remaining semantic/extension work keep the overall goal active.
 
 
-SHACL experimental validation now records `umf-string-1`: 106 authored Unicode,
+SHACL validation now records `umf-string-1`: 106 authored Unicode,
 lexical-length and language-range cases, with six explicit PySHACL disagreements.
 Chromium passed both recovery formats for this corpus and the 98 official Core
 cases. See [the SHACL contract](02-design/contracts/CONTRACT-028-shacl.md) for scope
@@ -1049,22 +1049,22 @@ and projections remain in scope.
 [SPIKE-006](02-design/spikes/SPIKE-006-rdfxml-browser-fidelity.md) evaluates RDF/XML
 parsing against 166 pinned W3C cases plus authored boundaries. Chromium parity is
 established, but document-finalization and XML-literal fidelity defects prevent
-claiming a public RDF/XML adapter. The spike records the experimental correction,
+claiming a public RDF/XML adapter. The spike records the correction,
 remaining discrepancies and required integration work.
 
-SQL Server facets now have an experimental public classification API, operation
+SQL Server facets now have an public classification API, operation
 schema and extension package. Classification uses a separately selected logical
 scalar Field, explicit stored/ordinary-checked-write profiles, strict/report
 residuals and verified original native-text recovery. Physical catalog columns
 remain unchanged. Full SQL Server facet acceptance remains
-open; see [TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-facet-classification-api).
+open; see [TD-043](02-design/technical-designs/TD-043-core-facets.md#sql-server-facet-classification-api).
 
 SQL Server authored facet projection is also implemented experimentally, with
 checked/type-modifier/carrier-only DDL, strict/report residuals and verified ideal
 receipt recovery. Independent native execution covers 145 emitted targets from
 238 cases; Chromium covers 290 ideal recoveries. Composition through native capture
 and classification, then full binding acceptance, remain required. See
-[TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-authored-facet-projection).
+[TD-043](02-design/technical-designs/TD-043-core-facets.md#sql-server-authored-facet-projection).
 
 SQL Server facet composition now passes: 145 ideal/native recoveries, 57 direct
 authored-facet recoveries and 88 explicit residual cases, plus full-catalog
@@ -1074,14 +1074,14 @@ and binding acceptance remain next; see the
 [composition record](../../fixtures/validation/facets-sqlserver-composition-evidence.json).
 
 
-Avro facets now expose experimental public classification and authored projection
+Avro facets now expose public classification and authored projection
 with retained ideal/native recovery. Versioned scope, counterexamples and current
 acceptance status are recorded in the
 [Avro facet evidence](04-build/evidence/avro-facet-discovery.md). Parquet facets,
 the separate facet admission/delivery gate and Key remain required.
 
 
-The experimental relationship core 0.7.0 implementation is accepted under
+The relationship core 0.7.0 implementation is accepted under
 TD-045: validation, serialization, authoring/inspection, metadata selection,
 migration/rollback and versioned earlier operations have Bun and Chromium
 evidence. The compatibility refresh passed 114 commands; all 352 test files

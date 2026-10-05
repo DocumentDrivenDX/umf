@@ -426,7 +426,7 @@ resource limits and transparent expensive operations remain required.
 | --- | --- | --- | --- |
 | Browser execution; TypeScript compiled to JavaScript by default | Browser target required by owner on 2026-09-20; TypeScript preferred | Simple implementation; high performance is not a primary driver | Pin browser/tool versions; verify browser round trips; consider WASM per adapter |
 | Bun development and testing runtime | Accepted in ADR-002 | Explicit owner direction | Pin Bun and dependencies; retain independent browser/type-check gates |
-| Small core plus versioned semantic vocabularies | Implemented experimental envelopes and packages | Preserve multiple native semantic systems | Retain distinct admission, delivery and equivalence gates |
+| Small core plus versioned semantic vocabularies | Implemented envelopes and packages | Preserve multiple native semantic systems | Retain distinct admission, delivery and equivalence gates |
 | YAML-first, JSON-compatible bootstrap | Accepted direction in ADR-001 | Preserve human interchange and existing approach | Specify serialization edge cases |
 | Native-semantic round-trip oracles | Owner-directed | Text equality is insufficient | TP-001 defines bounded oracle claims |
 | Native libraries before new parsers | Preferred direction | Reuse ecosystem interpretation | Select versions and verify browser compatibility; keep independent native oracles in the harness |

@@ -103,7 +103,7 @@ core task or admit the Key ideal.
 
 ## Public Key integration checkpoint
 
-Experimental core 0.6.0 is now available through the public browser entry point.
+Core 0.6.0 is now available through the public browser entry point.
 Membership and named-key authoring, inspection and stable-ID lookup preserve
 unknown qualifiers and reject changes to an existing key's ordered tuple.
 Explicit migration, rollback and exact tuple encoding are exported. Public
@@ -152,7 +152,7 @@ task, widen older native profiles to Key semantics or admit the Key ideal.
 
 ## Core task acceptance
 
-Experimental core 0.6.0 now passes its core implementation acceptance. The public
+Core 0.6.0 now passes its core implementation acceptance. The public
 schema, typed membership/key authoring, inspection and stable-ID lookup, exact
 `umf-key-tuple-v1` encoding, explicit migration/rollback, versioned prior APIs and
 selection have Bun and Chromium evidence. The 54-case validator matrix, 58-case

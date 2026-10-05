@@ -2,7 +2,7 @@
   "id": "umf.tablespec.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental profile-qualified TableSpec facet classification and authored projection with retained source meaning",
+  "description": "Profile-qualified TableSpec facet classification and authored projection with retained source meaning",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:tablespec:facet-binding:1.0.0",
@@ -115,7 +115,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
+  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
   "scopes": [
     "element"
   ],

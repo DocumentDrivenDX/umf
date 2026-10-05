@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:umf:core:cardinality-transition:1.0.0",
-  "title": "Explicit experimental Cardinality envelope transition receipts",
+  "title": "Explicit Cardinality envelope transition receipts",
   "$defs": {
     "legacy": {
-      "title": "UMF 0.3.0 experimental nullability envelope",
+      "title": "UMF 0.3.0 nullability envelope",
       "type": "object",
       "required": [
         "umf",
@@ -235,7 +235,7 @@
       "description": "Explicit ideal value availability on Fields. No implicit upgrade from older envelopes, native NULL mapping, or default execution."
     },
     "field": {
-      "title": "UMF 0.4.0 experimental cardinality envelope",
+      "title": "UMF 0.4.0 cardinality envelope",
       "type": "object",
       "required": [
         "umf",

@@ -51,7 +51,6 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
   }
  };
  diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),extensionRegistry).diagnostics);
- add('Experimental 0.8.0 properties; native enforcement/admission not implied','/umf','warning','EXPERIMENTAL_CORE_SCHEMA_PROPERTIES');
  const unknown=(v:Record<string,unknown>,known:string[],path:string)=>{for(const key of Object.keys(v))if(!known.includes(key))add('Qualifier retained without interpretation',path+'/'+pointer(key),'warning','UNKNOWN_SCHEMA_PROPERTY');};
  doc.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
   const path=`/modules/${mi}/elements/${ei}`,f=e.facets as Record<string,any>|undefined;

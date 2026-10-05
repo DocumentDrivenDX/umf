@@ -71,7 +71,7 @@ the remaining SHACL/SPARQL, ontology/platform and consumer scope in the active g
 The browser implementation pins [rdf-validate-shacl 0.6.5](https://github.com/zazuko/rdf-validate-shacl)
 under its MIT license. The wrapper disables its silent repeated-check cutoff, rejects
 cyclic shape/list dependencies, requires an explicit blank-node policy, and blocks
-integer/decimal conversions that change value. It returns an experimental engine outcome,
+integer/decimal conversions that change value. It returns an engine outcome,
 not a verified UMF conformance verdict. Original source graphs are always retained.
 
 Create the development-only oracle environment with `python3 -m venv .cache/shacl-venv`
@@ -160,7 +160,7 @@ disagreements; see CONTRACT-028 for their interpretation and limits. Chromium pa
 external requests or Node globals. Reproduce with `bun scripts/shacl-strings.ts`,
 `.cache/shacl-venv/bin/python scripts/shacl-string-oracle.py`, and
 `bun scripts/shacl-string-browser.ts` (set UMF_CHROMIUM_PATH when needed).
-This remains experimental engine evidence, not complete SHACL conformance.
+This remains engine evidence, not complete SHACL conformance.
 
 The authored `metadata.ttl` order example exercises declared shape metadata for
 consumers. `bun scripts/shacl-metadata-schema.ts` regenerates the API JSON Schema;

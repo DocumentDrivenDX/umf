@@ -1,7 +1,7 @@
 # RDF/XML feasibility experiment
 
 This directory supports SPIKE-006, not an implemented UMF syntax adapter.
-`probe.ts` tests rdfxml-streaming-parser 3.3.0 baseline and an experimental private
+`probe.ts` tests rdfxml-streaming-parser 3.3.0 baseline and an private
 Saxes finalization hook. Sources are pinned to W3C rdf-tests commit
 369a90d1a60c021b746df2e411da0ff36258a758 with license, hashes and all 166 active cases
 in `sources/sources.json`. Additional authored inputs live in `scripts/rdfxml-probe.ts`.

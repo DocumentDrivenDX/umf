@@ -22,7 +22,7 @@ ddx:
 Implement US-041 under CONTRACT-040. Architecture is the direct parent; no
 separate solution design exists for this core slice. Core 0.2.0 implements the
 admitted Field ideal and scalar-family metadata. Nullability remains a new
-experimental slice; its five-system admission is not established.
+slice; its five-system admission is not established.
 
 ## Technical Approach
 
@@ -668,7 +668,7 @@ content and both receipt recovery directions have explicit checks. Unspecified
 author intent remains distinct from native permission to store NULL.
 
 TableSpec and PostgreSQL now have qualified Nullability bindings. SQL Server,
-Avro and Parquet remain ready, and the experimental concept's delivery gate stays
+Avro and Parquet remain ready, and the concept's delivery gate stays
 open. This acceptance neither replaces native concepts nor completes US-041 or
 the overall extension goal.
 
@@ -833,7 +833,7 @@ pending.
 The [qualified acceptance record](../../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json)
 closes the SQL Server binding's implementation criteria and supersedes its pending
 acceptance status above. It covers SQL Server 2022 build 16.0.4295.3, captured
-catalog-v3 plus supplement v2, experimental core 0.3.0 Fields, and explicit
+catalog-v3 plus supplement v2, core 0.3.0 Fields, and explicit
 stored-relation/SQL-NULL policy. Authored single-column projection covers 14
 existing scalar carriers. Unknown native refinements remain attached; unresolved
 constraints, rules, triggers and computed/generated interactions do not become

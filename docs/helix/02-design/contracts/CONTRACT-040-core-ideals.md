@@ -21,11 +21,11 @@ ddx:
 
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field and Nullability ideals have passed their qualified
-five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has passed
+five-system admission/delivery gates. Cardinality core 0.4.0 has passed
 core-task acceptance. All five priority Cardinality bindings have qualified acceptance; the separate
 ideal admission and five-system delivery gate passes. See the Cardinality gate
 checkpoint below. Native equivalence remains unclaimed.
-Experimental facet core 0.5.0 and all five priority facet bindings have passed
+Facet core 0.5.0 and all five priority facet bindings have passed
 qualified acceptance. Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [facet gate admission record](../../04-build/evidence/facet-gate-admission.md).
 
@@ -283,7 +283,7 @@ two UTF-16 code units. A native length annotation alone cannot satisfy the ideal
 
 ### Explicit record-type reference authoring
 
-The experimental Field authoring API may append a `record-type` reference to a
+The Field authoring API may append a `record-type` reference to a
 Field, identifying a separate record definition by module/element identity. This
 operation requires verified Field and record kind declarations over the same
 current document. A scalarType-bearing Field cannot also assert a record type.
@@ -353,7 +353,7 @@ limited to each retained binding's published version and subset.
 
 ### Field admission and qualified delivery decision
 
-The Field ideal is admitted in experimental core 0.2.0. Its meaning is the
+The Field ideal is admitted in core 0.2.0. Its meaning is the
 `Element.kind` row above: a named member/value slot, a record definition, or an
 organizational group. Names, scalar families and opaque scalar-like annotations
 do not substitute for kind. Kind does not assert nullability, cardinality, facets,
@@ -390,7 +390,7 @@ whole envelope or imply author provenance from a bare label. Nullability is the
 next ordered concept, with its own contract interpretation, schema transition,
 five binding tasks and exit gate. This decision does not admit the later concepts.
 
-### Experimental Nullability envelope boundary
+### Nullability envelope boundary
 
 Core 0.3.0 reserves `Element.nullability` only on explicit Fields. Core 0.1.0 and
 0.2.0 retain that member as opaque JSON, even for strings that resemble the three
@@ -569,7 +569,7 @@ qualification neither removes native payloads nor graduates native equivalence.
 ### Nullability ideal admission and delivery decision
 
 The [five-system gate](../../../../fixtures/validation/nullability-conformance.json)
-now admits experimental core 0.3.0 Nullability as a UMF-defined ideal and verifies
+now admits core 0.3.0 Nullability as a UMF-defined ideal and verifies
 qualified delivery across TableSpec, PostgreSQL, SQL Server, Avro and Parquet.
 The >=2-system admission threshold and all-five delivery requirement are recorded
 separately. TD-041 owns the tested profiles and retained counterexamples.
@@ -586,7 +586,7 @@ supersedes earlier pending Nullability gate notes and permits Cardinality work.
 
 ### Cardinality representation and version decision
 
-Experimental core 0.4.0 reserves `cardinality` and `itemType` on elements after
+Core 0.4.0 reserves `cardinality` and `itemType` on elements after
 explicit migration from 0.3.0. Cardinality applies only to Fields. Known array/map
 containers cannot carry `scalarType`; an optional `itemType` reference identifies
 a Field whose own scalar, record-reference, nullability or nested cardinality
@@ -680,7 +680,7 @@ counterexamples remain binding constraints. Core 0.4.0 stays experimental.
 
 ### Facet representation and version decision
 
-The experimental facet envelope is 0.5.0. It reserves `Element.facets` only after
+The facet envelope is 0.5.0. It reserves `Element.facets` only after
 explicit migration from 0.4.0, preserving the original document and archiving every
 preexisting facet-shaped member without interpreting it. Rollback restores that
 original and retains subsequent 0.5.0 assertions separately. This decision does not
@@ -707,7 +707,7 @@ supply new author assertions. See TD-043 for versioned APIs and acceptance order
 
 ### Facet authoring and receipt semantics
 
-Experimental 0.5.0 document validation now combines the facet JSON Schema with
+0.5.0 document validation now combines the facet JSON Schema with
 semantic scale/precision checking and existing identity/reference checks. Explicit
 `upgradeFacetEnvelope` and `rollbackFacetEnvelope` preserve old facet collisions
 and later assertions in separate retained documents; no native payload is removed.
@@ -768,7 +768,7 @@ and unknown numeric tokens must stay attached to any classification/projection.
 
 ### Qualified TableSpec facet binding
 
-The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers core 0.5.0 TableSpec facet
 classification, authored projection, strict/report loss handling and verified
 native/ideal recovery. It supersedes the earlier classification/projection
 checkpoints' full-refresh limitation; their original evidence remains historical.
@@ -803,7 +803,7 @@ gate, and Key remain required. Native-equivalence graduation is not claimed.
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.
@@ -851,7 +851,7 @@ remain required. No native-equivalence graduation is claimed.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.
@@ -886,7 +886,7 @@ is unclaimed; native payloads and unknown content remain recoverable.
 
 ### Avro facet binding profile and acceptance boundary
 
-The experimental core 0.5.0 Avro facet profile separates declared schema meaning,
+The core 0.5.0 Avro facet profile separates declared schema meaning,
 Apache Avro 1.12.0 datum-writer behavior and fastavro 1.12.2 schemaless-writer
 behavior. Native classification retains selected locations, named dependencies,
 union branches and unknown refinements. Authored projection emits one non-null
@@ -918,7 +918,7 @@ does not alter the normative facet meaning or any native replacement gate.
 
 ### Key representation and version decision
 
-Reserve `Element.keys` and `Element.members` in experimental core 0.6.0 only.
+Reserve `Element.keys` and `Element.members` in core 0.6.0 only.
 `members` is an ordered list of `{module, element}` references on a Record; it
 explicitly declares the Record's direct Field slots. An empty Record may have an
 empty list. A Record with keys must supply membership. Each reference resolves to

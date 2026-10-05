@@ -72,12 +72,12 @@ Consumer selection must preserve source identity and source paths, not merge nam
 
 ## Data Model Changes
 
-The initial implementation selects a separate experimental envelope `umf: "0.2.0"`
+The initial implementation selects a separate envelope `umf: "0.2.0"`
 with schema ID `urn:umf:core:0.2.0`. Version `0.1.0` retains its current schema
 and interpretation, including opaque `kind` members of any JSON shape. Only
 `0.2.0` interprets field/record/group. No automatic upgrade is permitted.
 Unknown kind strings are preserved without interpretation; record/group cannot
-carry scalarType. Validation reports this envelope as experimental and incomplete
+carry scalarType. Validation reports this envelope as and incomplete
 until provenance, explicit migration/rollback and admission evidence are present.
 The version choice precedes schema publication; it is not a release or admission.
 
@@ -972,8 +972,7 @@ not close the Field admission or five-system delivery gates.
 
 ## Parquet primitive Field classification
 
-`classifyParquetField` classifies checked primitive schema leaves in the experimental
-0.2 envelope. It requires coherent materialized metadata and checked logical/container
+`classifyParquetField` classifies checked primitive schema leaves in the 0.2 envelope. It requires coherent materialized metadata and checked logical/container
 topology, selects by native schema index, and retains the complete native fragment
 and file bytes. Repeated leaves remain Field roles; their definition/repetition levels
 and LIST/MAP wrappers remain native. No cardinality, requiredness or scalar-domain
@@ -1120,7 +1119,7 @@ open. No native payload is deleted or reinterpreted by this authoring operation.
 
 The selection-schema gap above is resolved by a separate
 `urn:umf:core:element-selection:0.2.0` schema. It checks source and selected elements
-against the experimental Field envelope. The existing 0.1 schema is unchanged,
+against the Field envelope. The existing 0.1 schema is unchanged,
 including its opaque legacy kind semantics. Both schemas are exported for consumers.
 `verifyCoreElementSelection` validates the appropriate schema and recomputes the
 report from its retained source/query and caller-supplied registry. Changed paths,
@@ -1371,8 +1370,7 @@ the Field admission/delivery audit remain open.
 
 ### Field core authoring acceptance audit
 
-The acceptance criteria of `umf-97221618-994aef58` cover the experimental
-representation and validation; native adapter execution and admission belong to
+The acceptance criteria of `umf-97221618-994aef58` cover the representation and validation; native adapter execution and admission belong to
 separate binding and gate beads. Reverification passes the declared Field ideal
 tests (5 tests, 140 assertions), typecheck, all 208 schemas and 32 extension
 packages, and the browser build. Chromium 148 verifies 40 validation decisions,
@@ -1392,7 +1390,7 @@ require both native classification and authored projection, structured records,
 qualified common reports, namespace-loss cases and current browser/native evidence.
 Their previous classification-only commands were insufficient for their scope.
 Core authoring acceptance does not admit Field, complete any native binding, or
-establish equivalence. The envelope remains experimental until the separate
+establish equivalence. The envelope remains until the separate
 `umf-97221618-c4baf8f1` gate passes. Nullability remains behind that gate.
 
 ### TableSpec Field binding acceptance
@@ -1516,7 +1514,7 @@ regression passes 142 tests and 4,685 assertions across 41 core/core-ideal files
 Typecheck and all 208 schemas/32 packages pass.
 
 The old runtime warning incorrectly said admission/provenance evidence was still
-missing. Its wording now states that the envelope remains experimental and that
+missing. Its wording now states that the envelope remains and that
 kind labels alone prove neither authorship nor equivalence; validation rules are
 unchanged. All five native bindings and their browser checks were rerun after the
 change. `field-gate-refresh-evidence.json` records 31 native/browser/corpus commands,
@@ -1527,6 +1525,5 @@ and link this refresh rather than silently replacing their history.
 
 CONTRACT-040 now records Field ideal admission and qualified five-system delivery
 as separate passed claims. Native equivalence is not claimed and no native payload
-or concept is removed. This completes the Field gate only. The experimental
-envelope is not a full core release; nullability, cardinality, facets and key each
+or concept is removed. This completes the Field gate only. The envelope is not a full core release; nullability, cardinality, facets and key each
 retain their own ordered implementation and acceptance work.

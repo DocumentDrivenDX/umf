@@ -9,7 +9,7 @@ combined binding acceptance remain unfinished.
 ## Implemented surface
 
 `umf.tablespec.facets` 1.0.0 has a complete element payload schema and a complete
-classification operation schema. It targets experimental core 0.5.0 and pinned
+classification operation schema. It targets core 0.5.0 and pinned
 TableSpec commit `647e8e566ad78b864282ec65c0b0b2237aa63084`.
 
 The browser API exports `classifyTableSpecFacets`,

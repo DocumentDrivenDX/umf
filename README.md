@@ -5,7 +5,7 @@ systems built over evolving, partly understood data shapes. Reuse metadata for
 transforms, visualization, generators, forms, AI context, and human documentation
 while preserving native meaning and making translation limits explicit.
 
-The experimental TypeScript core provides a versioned document envelope,
+The TypeScript core provides a versioned document envelope,
 extension registration, JSON/YAML preservation, validation and conservative edits.
 The JSON Schema Draft 2020-12 extension adds native round trips, exact numeric
 preservation, explicit resources and typed edits. Bun, independent native oracles
@@ -199,7 +199,7 @@ supplied pinned JavaScript backend. It retains source, exact assembled model JSO
 native diagnostics, including locations. The result remains qualified by port limits
 and native mixin normalization; worker isolation and broader coverage remain open.
 
-The experimental Iceberg schema adapter (`umf.iceberg`) preserves exact schema JSON and
+The Iceberg schema adapter (`umf.iceberg`) preserves exact schema JSON and
 unknown native content, checks known identity constraints, and supports copied pointer edits.
 Its PyIceberg 0.11.0/browser evidence is scoped to authored standalone schemas. Table metadata,
 partition/sort specs, format-version/default semantics and physical evolution remain pending;
@@ -211,7 +211,7 @@ Iceberg's upstream schema oracle additionally uses Maven and Apache Iceberg Java
 UMF's browser output. Upstream table/view resources currently provide schema-fragment evidence.
 
 
-The experimental RDF package now covers RDF 1.1 N-Quads, Turtle and TriG with pinned official
+The RDF package now covers RDF 1.1 N-Quads, Turtle and TriG with pinned official
 corpora and browser/native evidence. TriG retains empty named graphs and blocks lossy N-Quads
 or Turtle export. Dataset merge proposals retain source documents and quad provenance, with
 explicit graph-union and disjoint-blank policies. OWL reasoning, SHACL validation and other RDF
@@ -219,7 +219,7 @@ syntaxes remain separate work;
 see [the RDF contract](docs/helix/02-design/contracts/CONTRACT-025-rdf.md).
 
 
-The experimental JSON-LD package preserves exact source/context JSON and offers expansion, flattening, compaction and framing with
+The JSON-LD package preserves exact source/context JSON and offers expansion, flattening, compaction and framing with
 explicit loss reporting or rejection. It uses only supplied contexts, preserves exact numeric values through expansion and reports
 remaining processor limits. Flattening includes optional target-context compaction. The official corpora, PyLD and Chromium qualify support; legacy compaction/framing discrepancies and malformed official string-boolean frames are documented;
 see [the JSON-LD contract](docs/helix/02-design/contracts/CONTRACT-026-jsonld.md).

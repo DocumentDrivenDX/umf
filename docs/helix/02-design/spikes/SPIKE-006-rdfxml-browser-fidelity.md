@@ -53,7 +53,7 @@ and finalized profiles match every available official expected graph. That corpu
 does not expose all fidelity defects:
 
 - Baseline accepts empty input, an unclosed root and an unclosed property. Installed
-  3.3.0 never closes its Saxes parser at stream end. The experimental finalizer
+  3.3.0 never closes its Saxes parser at stream end. The finalizer
   rejects all three, agrees with RDFLib acceptance on all 176 inputs and passes the
   official corpus unchanged.
 - The authored XML literal loses an inherited namespace and emits the decoded
@@ -78,7 +78,7 @@ External requests are zero and Node globals are absent. Three focused tests pass
 
 ## Evidence and reproduction
 
-- `native/rdfxml/probe.ts`: experimental parser/finalizer and comparison helper.
+- `native/rdfxml/probe.ts`: parser/finalizer and comparison helper.
 - `native/rdfxml/sources/sources.json`: pinned inventory, active cases and hashes.
 - `fixtures/rdfxml/probe.json`, `corpus.json`: every parser outcome and graph.
 - `fixtures/rdfxml/oracle.json`: independent comparisons and retained discrepancies.
@@ -103,7 +103,7 @@ escaped text/attributes, CDATA, comments, processing instructions and external/i
 entity cases before selecting a repair. Full OWL structural parsing and reasoning
 remain separate requirements. No concept is promoted into core by this experiment.
 
-## Experimental XML literal repair
+## XML literal repair
 
 `native/rdfxml/literal-parser.ts` adds a fourth, explicit `literal-repair` profile.
 It finalizes XML parsing, escapes decoded text and attributes, retains comments and
@@ -115,7 +115,7 @@ serialization, not canonical XML or full namespace-context capture.
 
 The additional matrix contains 14 XML-literal cases and one ordinary CDATA case,
 run before/after repair. The repaired profile also reruns the earlier ten probes
-and 166 official cases, for 206 total experimental runs. All official acceptance
+and 166 official cases, for 206 total runs. All official acceptance
 and exact graph comparisons still agree. The original inherited-prefix/escaped
 attribute defect now agrees with RDFLib.
 

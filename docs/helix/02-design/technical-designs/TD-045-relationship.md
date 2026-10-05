@@ -25,7 +25,7 @@ ddx:
 
 Implement [[US-045]] under CONTRACT-041 after the key five-system gate. The
 architecture is the parent design, as in TD-040–044; no separate solution
-design exists. This is an experimental ideal, not native replacement.
+design exists. This is an ideal, not native replacement.
 
 ## Technical Approach
 
@@ -153,10 +153,10 @@ binding connects an association Record to endpoint-key columns. These are
 design decisions, not authorization to infer semantics from storage.
 
 
-## Experimental 0.7.0 implementation decision
+## 0.7.0 implementation decision
 
 The Key five-system gate is accepted in e3230451. Reserve
-`module.relationships` only in the experimental 0.7.0 candidate schema. First
+`module.relationships` only in the 0.7.0 candidate schema. First
 implement complete structural and semantic validation against unchanged keyed
 Record semantics. Then integrate collision-preserving migration/rollback, typed
 authoring/inspection and browser operations before core-task acceptance. Until
@@ -188,14 +188,14 @@ plan; broad compatibility and complete core-task acceptance remain pending.
 ### Core implementation acceptance
 
 The subsequent compatibility refresh and all required regression/conformance
-tests passed. The experimental core implementation task is accepted in
+tests passed. The core implementation task is accepted in
 [the acceptance record](../../../../fixtures/validation/relationship-core-acceptance-evidence.json):
 1,494 tests across 352 files, 114 compatibility commands, 318 schemas and
 53 extension packages. This supersedes the pending core-task status of the
 checkpoints above. Native relationship bindings and the separate ideal-admission
 and delivery gates remain required; US-045 is not complete.
 
-### Experimental TableSpec native classification
+### TableSpec native classification
 
 `classifyTableSpecRelationships` observes the pinned TableSpec metadata profile
 without creating authored relationships or upgrading its source envelope.

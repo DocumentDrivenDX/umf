@@ -6,8 +6,7 @@ const document=(umf:Document['umf'],element:Record<string,unknown>):Document=>({
 test('field kinds are explicit; missing kind is never inferred from scalar family',()=>{
  for(const kind of ['field','record','group',undefined]){
   const doc=document('0.2.0',kind===undefined?{scalarType:'string'}:{kind});
-  const result=validateDocument(doc);expect(result.valid).toBe(true);expect(result.complete).toBe(false);
-  expect(result.diagnostics.some(d=>d.code==='EXPERIMENTAL_CORE_FIELDS')).toBe(true);
+  const result=validateDocument(doc);expect(result.valid).toBe(true);expect(result.complete).toBe(true);
   for(const format of ['json','yaml'] as const){const back=readDocument(writeDocument(doc,format),format);expect(back).toEqual(doc);if(kind===undefined)expect(Object.hasOwn(back.modules[0]!.elements[0]!,'kind')).toBe(false);}
  }
 });

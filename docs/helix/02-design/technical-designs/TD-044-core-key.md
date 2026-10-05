@@ -20,7 +20,7 @@ ddx:
 ## Scope
 
 Implement US-044 under CONTRACT-040. Architecture is the direct parent; no
-separate solution design exists for this core slice. Experimental core 0.5.0
+separate solution design exists for this core slice. Core 0.5.0
 includes Field, Nullability, Cardinality and author-stated facets alongside
 scalar-family metadata. Field, Nullability and Cardinality have passed their
 qualified five-system gates, including the completed facet delivery gate. Key
@@ -182,7 +182,7 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [x] Schema/version transition, five bindings and qualified regression evidence implemented.
 
-## Experimental 0.6.0 implementation decision
+## 0.6.0 implementation decision
 
 CONTRACT-040 now reserves plural keys and explicit Record membership in 0.6.0.
 Use `spec/core/key-document.schema.json` for the candidate and

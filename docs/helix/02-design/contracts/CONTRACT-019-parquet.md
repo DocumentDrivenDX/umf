@@ -537,7 +537,7 @@ Four PyArrow 21.0.0 fixtures cover data-page versions 1.0/2.0 with dictionary en
 They retain duplicate and integer map keys, nested decimal values beyond safe integer range,
 null and empty lists/maps, uint64 maximum, local/UTC timestamps, time-of-day and fields named
 `__proto__` or containing dots. Native expected values derive from Arrow scalar types and
-ordered map scalars; Bun and Chromium match all values. This is experimental evidence only:
+ordered map scalars; Bun and Chromium match all values. This is evidence only:
 no bounded public decoder, complete codecs/pages, arbitrary logical types, INT96 semantics
 or nonfinite floating-point payload fidelity is claimed. Input/decompression/allocation bounds
 and malformed-page behavior remain required before promoting the implementation. Hyparquet
@@ -608,7 +608,7 @@ content and literal/copy variants. Tests reject oversized prefixes, malformed/tr
 blocks, bad back-references, output under/overflow, CRC corruption and altered Snappy length
 prefixes. Chromium repeats the 47 corpus files plus 18 prior controls/mutations: 46 decoded,
 19 blocked, including payload corruption that earlier header inspection could not detect.
-Evidence is under fixtures/parquet/bodies. The experimental typed decoder remains separate
+Evidence is under fixtures/parquet/bodies. The typed decoder remains separate
 until level/encoding allocation bounds and broader codec behavior are established.
 
 ## Hybrid decoding building block (US-019-AC15)

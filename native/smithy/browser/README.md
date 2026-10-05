@@ -1,4 +1,4 @@
-# Experimental Smithy JavaScript runtime
+# Smithy JavaScript runtime
 
 `bun run build:smithy-experiment` verifies pinned source hashes, regenerates the narrow
 compatibility patches, and compiles Smithy 1.73.0 through TeaVM 0.15.0. The generated
@@ -33,7 +33,7 @@ Current reports show complete agreement for this corpus. This does not establish
 arbitrary custom-validator/reflective behavior or the complete language/runtime surface.
 More negative fixtures and remaining reflective behavior require
 additional work before a broader support claim. The public API reports current limits. The full conformance gate now builds the optional runtime and checks the public API
-against the native corpus. Runtime-specific experimental reports remain separate.
+against the native corpus. Runtime-specific reports remain separate.
 
 Public integration (after building and serving the generated module):
 
@@ -69,7 +69,7 @@ Cancellation and deadline expiry return blocked results without a partial model.
 The negative-corpus gate is `bun scripts/smithy-negative-oracle.ts`, after building the
 runtime. It checks every pinned invalid-loader model after UMF source round trip and
 records native exceptions separately. The expanded Chromium report contains 326 cases;
-the older Bun experimental report remains its original 144-case scope.
+the older Bun report remains its original 144-case scope.
 
 Native shape-set queries are available with `createSmithyJavaScriptSelectionBackend(runtime)`
 and `selectSmithyShapes(document, backend, selector, {id})`. The generated module exports

@@ -26,7 +26,6 @@ export function validateKeyCandidate(input:unknown,validateBase=true):Validation
  const base=copyJson(document) as unknown as Document;base.umf='0.5.0';
  for(const m of base.modules)for(const e of m.elements){delete e.members;delete e.keys;}
  if(validateBase)diagnostics.push(...validateDocument(base).diagnostics);
- add('EXPERIMENTAL_CORE_KEYS','/umf','Candidate key profile; native uniqueness and author provenance are not inferred','warning');
  const unknown=(o:object,known:string[],path:string)=>{
   for(const key of Object.keys(o))if(!known.includes(key))add('UNKNOWN_KEY_QUALIFIER',path+'/'+pointer(key),'Qualifier retained without interpretation','warning');
  };

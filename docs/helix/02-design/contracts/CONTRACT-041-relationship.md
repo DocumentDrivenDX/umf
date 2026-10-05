@@ -24,7 +24,7 @@ ddx:
 # CONTRACT-041: Authored relationship ideal
 
 **Type:** core schema/library. **Status:** draft semantic authority before a
-core schema change. **Version:** experimental 0.7.0, following the accepted 0.6.0 Key envelope.
+core schema change. **Version:** 0.7.0, following the accepted 0.6.0 Key envelope.
 Schema/validator staging does not itself establish public operation support or
 relationship ideal admission.
 
@@ -85,7 +85,7 @@ containing module ID plus exact `id`; cross-document stability and revision
 pinning await the separate CONTRACT-001 successor. The current resolver stays
 within one document.
 
-The experimental Key 0.6.0 candidate makes `Record.members` the explicit
+The Key 0.6.0 candidate makes `Record.members` the explicit
 ownership list for Key component Fields. Relationship publication waits for
 that candidate's acceptance. Endpoint validation MUST use the accepted
 authored membership and named Key, not a DDD field map, an unowned or shared
