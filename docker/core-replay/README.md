@@ -1,25 +1,43 @@
-# Core replay image (unfinished)
+# Core acceptance replay
 
-Goal: run the native/browser replay from `docs/helix/04-build/evidence/core-check-repair.md`
-in a reproducible pinned container (Ubuntu 24.04, Bun 1.3.14, Python 3.12, OpenJDK 21,
-Go 1.27.1, flatc 23.5.26, Playwright 1.63.0 Chromium, Docker CLI for sibling oracle containers).
+Build from the repository root:
 
-Status: **not working yet, nothing here has been run to completion.**
-- Image build gets through apt, Bun, Go, Docker CLI and the Python venv, then fails at the
-  Playwright step: `bunx: not found`. Bun's installer here does not create the `bunx` link; use
-  `bun x playwright@1.63.0 install --with-deps chromium` or symlink `bunx` to `bun`.
-- `oracle-requirements.txt` and `shacl-requirements.txt` are copies of `scripts/oracle-requirements.txt`
-  and `native/shacl/requirements.txt` (Docker build context). Note `oracle-requirements.txt` pins
-  jsonschema 4.26.0 while the repair evidence says 4.25.1 for the TableSpec probes; the Dockerfile
-  installs 4.25.1 last. Confirm which the native scripts expect.
-- The `JAVA_HOME` path and the symlink step assume arm64; check on amd64.
-- Not yet decided: how to run the replay. Suggested: clone the committed repo inside the
-  container (so evidence reflects committed code), mount the host Docker socket for the
-  PostgreSQL 17.4 / SQL Server 2022 sibling containers (SQL Server is amd64 under emulation on
-  Apple silicon), run the steps listed in `core-check-repair.md`, then copy `fixtures/` and `docs/`
-  changes back out.
-- The replay does not need `.venv/bin/python` on the host; scripts hardcode `.venv/bin/python`,
-  so symlink `/work/.venv` to `/opt/venv` inside the container.
+```sh
+docker build -t umf-core-replay docker/core-replay
+```
 
-Nothing from this has been recorded in the acceptance evidence; the acceptance record still states
-that the native replay and retained gates were not re-run.
+Use a disposable clone with its full Git history. The replay reads historical
+command inventories from Git and writes generated evidence into that checkout.
+Do not mount the working repository or host dependency directories as `/work`.
+
+```sh
+git clone --no-hardlinks /path/to/umf /tmp/umf-replay
+cd /tmp/umf-replay
+git checkout <source-commit>
+docker run --name umf-core-replay-run --shm-size=1g \
+  -v "$PWD:/work" -v /var/run/docker.sock:/var/run/docker.sock \
+  -e UMF_REPLAY_IMAGE_ID="$(docker image inspect --format '{{.Id}}' umf-core-replay)" \
+  umf-core-replay all
+```
+
+The entrypoint installs the frozen Bun dependencies, prepares the vendored Python
+namespaces and Protobuf WASM compiler, runs the retained native/browser inventory,
+auxiliary checks and disjoint regression shards, then publishes fingerprints and
+runs all admission gates plus proof-integrity checks. It stops on failure. Logs
+and command hashes are written under `fixtures/validation/core-check-refresh/`.
+Review and copy generated artifacts back to the source checkout after success.
+
+Stages can also run individually: `prepare`, `native`, `auxiliary`, `regression`,
+`publish`, `gates`. Use `native --resume` or `regression --resume` to retain completed
+runs and archive failed attempts. Resume only within the same checkout and source
+revision. Publication requires successful logs; it cannot substitute for execution.
+
+The image installs Bun 1.3.14, Go 1.27.1, protoc 36.2, Playwright 1.63.0 with
+Chromium 153.0.8010.12, Python 3.12 and OpenJDK 21. Ubuntu package patch versions
+are recorded by the execution environment rather than claimed as immutable.
+Python oracle versions are pinned in the requirements and Dockerfile; jsonschema
+4.25.1 is the explicit TableSpec probe override. The Java path works on ARM64 and
+AMD64. The Docker socket is used to launch the pinned disposable PostgreSQL and
+SQL Server oracle containers; those scripts use `--network none`. SQL Server uses
+AMD64 emulation on ARM64. The runner image needs network access during dependency
+installation. Browser probes enforce their own zero-external-request controls.

@@ -5409,3 +5409,17 @@ through `a81e9a9c`. Corrected aggregate browser metadata passes the affected
 Field rerun; no native recovery implementation or admission floor is relaxed.
 [Repair evidence](evidence/core-check-repair.md) records runtimes, source-qualified
 reuse, raw failures/retries, pinned-byte restoration and final proof integrity.
+
+### Container replay repair (2026-10-05)
+
+The owner requests completion of the Docker scaffold and regeneration of the
+latest branch's evidence. Finish a portable replay image and staged entrypoint,
+then execute in a disposable checkout with pinned native/browser prerequisites.
+Run the full retained native/browser inventory, auxiliary checks and disjoint
+regression before publishing fresh proof fingerprints. Run all retained admission
+gates and the six proof-integrity closures after publication. Preserve failed
+attempts and qualify the source revision and actual container runtimes. Correct
+the semantic evidence revision typo and update acceptance and PR claims only
+from successful execution. Current status: execution pending; prior counts remain
+historical until this replay completes. CONTRACT-051 and TP-001 govern scope;
+no validator-parity, admission-floor or native-equivalence claim is widened.

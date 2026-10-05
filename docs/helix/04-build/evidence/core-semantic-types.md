@@ -98,7 +98,7 @@ removed; upgrade collisions remain archived only in the receipt `residuals`.
 
 The [current acceptance](../../../../fixtures/validation/core-semantic-types-acceptance.json)
 records `reviewFixRevalidation` for source revision
-`6e41b2043c4d02e2dd6a1c62e9cca3a1ffcbfa4f` and supersedes the prior record, retained at
+`6e41b204587ceb722f6137dba39f30a1b1c825a2` and supersedes the prior record, retained at
 `59c3c424`. With Bun 1.4.2, Python 3.9.6, jsonschema 4.25.1 and Chromium 153.0.8010.12:
 
 - affected API replay: 212 passed, zero failed; 5,127 assertions across 33 files.
