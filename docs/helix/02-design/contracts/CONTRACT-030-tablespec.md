@@ -91,7 +91,7 @@ glob check in `scripts/tablespec-boundaries-oracle.py` exercise these boundaries
 The current adapter does not execute Pydantic rules or translate data values.
 Column `format` and `fallback_formats` remain native metadata. Their distinct
 documentation, parsing, rendering and constraint interpretations follow
-[CONTRACT-049](CONTRACT-049-format-separation.md); import does not promote the
+[CONTRACT-050](CONTRACT-050-format-separation.md); import does not promote the
 overloaded text to a core assertion.
 Explicit schema projections are governed by CONTRACT-033, CONTRACT-038 and CONTRACT-039;
 broader TableSpec fixtures, value conversion and native pipeline execution remain required.

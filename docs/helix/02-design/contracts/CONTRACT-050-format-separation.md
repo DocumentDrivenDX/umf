@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: CONTRACT-049
+  id: CONTRACT-050
   type: contract
   activity: design
   status: draft
@@ -17,9 +17,11 @@ ddx:
       kind: informed_by
     - id: CONTRACT-048
       kind: informed_by
+    - id: CONTRACT-049
+      kind: informed_by
 ---
 
-# CONTRACT-049: Separate format documentation, recipes and constraints
+# CONTRACT-050: Separate format documentation, recipes and constraints
 
 **Type:** semantic boundary proposal. **Version:** design-only v0.
 **Status:** draft; package names and schemas for new extension surfaces remain
@@ -35,7 +37,9 @@ that content. The presence of a string MUST NOT establish a portable assertion.
 
 This contract governs decomposition of legacy TableSpec metadata and explicit
 author interpretation. CONTRACT-030 owns native import/edit/export recovery;
-CONTRACT-048 owns candidate allowed-value meaning and pattern constraints;
+CONTRACT-048 owns allowed-value meaning triage and pattern constraints, and
+CONTRACT-049 owns the experimental core 0.8.0 shared schema property surface
+(including allowed values, owner-placed 2026-10-04);
 CONTRACT-047 owns proposed temporal value meaning. Parsing and rendering recipes
 belong in independently versioned extensions, outside core scalar/facet meaning.
 TableSpec pipeline execution and general pattern translation are outside scope.
@@ -45,7 +49,7 @@ TableSpec pipeline execution and general pattern translation are outside scope.
 | Source documentation or example | Native `umf.tablespec` column; optional future informational extension view | Exact source text survives. A textual example is not a typed value, default or validation rule. |
 | Input parsing | Versioned recipe extension, or retained TableSpec-native behavior | Text-to-value direction with explicit pattern language, target meaning and execution policy. No new core `format`. |
 | Output rendering | Separate versioned recipe extension, or retained TableSpec-native behavior | Value-to-text direction; display/export representation supplies no parser or constraint. |
-| Enumeration | Explicit author declaration under CONTRACT-048 | Finite typed allowed-value set with defined equality; comma-separated prose supplies no set automatically. Candidate core admission remains separate. |
+| Enumeration | Explicit author declaration under CONTRACT-048 | Finite typed allowed-value set with defined equality; comma-separated prose supplies no set automatically. CONTRACT-049 gives allowed values an experimental core 0.8.0 surface; ideal admission and all-five delivery remain open. Values MUST still be authored explicitly, never split from format text. |
 | Structural pattern | Proposed `umf.constraints` under CONTRACT-048, or native opaque content | A named layout requires an explicit grammar. Regex requires its own dialect, version and match semantics. Neither implies the other. |
 
 ## Normative Surface
@@ -63,7 +67,7 @@ not member names added to an existing envelope or published package.
 | Input recipe | Ordered patterns, declared language/version, input scope, target value meaning, fallback policy and failure policy | First-success precedence MUST be explicit. Implicit registry/common fallbacks MUST be named and versioned or reported as unknown. Failure handling MUST distinguish reject, null, retain text and other native behavior. |
 | Output recipe | Declared language/version, pattern, input value meaning, output scope and failure policy | Input parsing MUST NOT be inferred from rendering. Offset/precision loss MUST be reported even if parsing the rendered text succeeds. |
 | Recipe environment | Relevant locale, calendar, timezone, precision, ambiguity and engine settings | Each dependency MUST be specified, bound to a named versioned execution profile, or marked unknown; unknown execution semantics prohibit an exact behavior claim. |
-| Allowed values | Explicit typed values and scalar domain per CONTRACT-048 | No splitting on commas, pipes or whitespace; order, nullability, defaults and symbol identity remain independent. |
+| Allowed values | Explicit typed values and scalar domain per CONTRACT-048/CONTRACT-049 | No splitting on commas, pipes or whitespace; the experimental core 0.8.0 surface does not relax this and ideal admission/all-five delivery remain open; order, nullability, defaults and symbol identity remain independent. |
 | Structural constraint | Field, source, language/version, match mode/flags where applicable, interpretation status | `State_LOB` MUST remain documentation until an author supplies a grammar or constraint. Unknown language MUST remain preserved without evaluation. |
 
 `fallback_formats` MUST remain separately retained, including order, duplicates,
@@ -117,7 +121,7 @@ separate authorized migration, never a side effect of decomposition.
 
 | Native column metadata | Import outcome | Explicit follow-on action |
 | --- | --- | --- |
-| `VARCHAR`, format `M, F, U` | Original documentation; no inferred enum | Author string set `["M", "F", "U"]` under CONTRACT-048. |
+| `VARCHAR`, format `M, F, U` | Original documentation; no inferred enum | Author string set `["M", "F", "U"]` under CONTRACT-048/CONTRACT-049. |
 | `VARCHAR`, format `State_LOB` | Opaque layout description | Author a grammar with explicit component meanings, or a dialect-qualified constraint. Underscore alone defines neither. |
 | `DECIMAL`, format `1.85` | Textual example | Author a typed example separately; do not infer scale, default or a singleton set. |
 | `DATE`, format `YYYY-MM-DD`, fallback_formats `["MM/DD/YYYY"]` | Retained native metadata; candidate input/output uses | Qualify parsing and rendering independently against named TableSpec paths and engine settings. |
@@ -134,6 +138,8 @@ also require precision/offset and engine-setting qualifications where relevant.
 - [x] Every legacy meaning has a placement and an explicit interpretation boundary.
 - [x] Native observations and author declarations have separate provenance.
 - [x] Compatibility, collision handling, errors and recovery are defined.
+- [ ] Re-verify allowed-value references against CONTRACT-049 once it merges
+  (draft/design only; no implementation or admission claim here).
 - [ ] Publish extension schemas and a technical design before runtime work.
 - [ ] Exercise the examples, simultaneous meanings, stale source, opaque members,
   malformed declarations, native-slot collisions and rollback in Bun and Chromium.
