@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:schema-properties-receipt:1.0.0",
+  "title": "Schema property authoring and transition receipts",
+  "$defs": {
+    "identity": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "const": "document"
+            }
+          },
+          "required": [
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "const": "module"
+            },
+            "module": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "scope",
+            "module"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "const": "element"
+            },
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "scope",
+            "module",
+            "element"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "patch": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+          }
+        },
+        "allowedValues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+          }
+        },
+        "default": {
+          "type": "object",
+          "required": [
+            "value",
+            "on"
+          ],
+          "properties": {
+            "value": {
+              "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+            },
+            "on": {
+              "enum": [
+                "missing",
+                "null",
+                "missing-or-null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "facets": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "object",
+              "required": [
+                "unit"
+              ],
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "collectionSize": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "additionalProperties": true
+            },
+            "range": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                },
+                "max": {
+                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                },
+                "minInclusive": {
+                  "type": "boolean"
+                },
+                "maxInclusive": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "declare-core-schema-properties"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "identity": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "const": "document"
+                }
+              },
+              "required": [
+                "scope"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "const": "module"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "scope",
+                "module"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "const": "element"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "scope",
+                "module",
+                "element"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "aliases": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+              }
+            },
+            "allowedValues": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+              }
+            },
+            "default": {
+              "type": "object",
+              "required": [
+                "value",
+                "on"
+              ],
+              "properties": {
+                "value": {
+                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                },
+                "on": {
+                  "enum": [
+                    "missing",
+                    "null",
+                    "missing-or-null"
+                  ]
+                }
+              },
+              "additionalProperties": true
+            },
+            "facets": {
+              "type": "object",
+              "properties": {
+                "length": {
+                  "type": "object",
+                  "required": [
+                    "unit"
+                  ],
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "max": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "unit": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "collectionSize": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "max": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "range": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                    },
+                    "max": {
+                      "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                    },
+                    "minInclusive": {
+                      "type": "boolean"
+                    },
+                    "maxInclusive": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "minProperties": 1
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "path": {
+              "type": "string"
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            }
+          },
+          "required": [
+            "origin",
+            "path",
+            "basis"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "request",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    "upgrade": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "upgrade-schema-properties-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "value": {},
+              "reason": {
+                "const": "Legacy content retained without reinterpretation"
+              }
+            },
+            "required": [
+              "path",
+              "value",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "residuals"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/declaration"
+    },
+    {
+      "$ref": "#/$defs/upgrade"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "rollback-schema-properties-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "receipt": {
+          "$ref": "#/$defs/upgrade"
+        },
+        "reason": {
+          "const": "Original envelope restored; subsequent content retained in source"
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "receipt",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

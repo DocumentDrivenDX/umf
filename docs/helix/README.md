@@ -1,5 +1,30 @@
 # UMF project documentation
 
+## Ecosystem integration direction
+
+The owner's 2026-10-04 goal is shared UMF schemas feeding TableSpec pipelines,
+mutable Truss graphs and immutable Ashlar graph revisions, with query generation
+for ordinary Delta tables and both graph backends. The
+[ecosystem inventory](00-discover/current-state-inventory-ecosystem.md) separates
+existing capability from missing integrations; the
+[direction and proposed first proof](00-discover/vision-input.md#owner-direction-shared-schema-ingestion-and-backend-queries)
+capture the workflow for subsequent framing. End-to-end execution across the
+three targets is not delivered. The owner's follow-up selects
+[UMF-native TableSpec as the first integration goal](00-discover/vision-input.md#owner-clarification-tablespec-becomes-umf-native-first),
+after a defined UMF finalization gate. Existing US-050 prerequisites must be
+reconciled when that gate is framed.
+
+## Experimental schema properties
+
+Owner-directed core 0.8.0 adds titles, aliases, typed examples, collection size,
+allowed values, exact integer/decimal ranges, minimum length and explicit literal
+defaults. Document validation, authoring/inspection, default resolution,
+serialization, metadata selection and migration/rollback are implemented.
+[CONTRACT-049](02-design/contracts/CONTRACT-049-schema-properties.md) defines the
+bounded API; [execution evidence](04-build/evidence/schema-properties-core.md)
+qualifies checks and limitations. Native bindings/admission and the TableSpec
+native port remain separate work.
+
 ## Current delivered scope
 
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
