@@ -35,6 +35,6 @@ WORKDIR /work
 
 ENV GOCACHE=/tmp/go-cache UMF_EXPECTED_CHROMIUM_VERSION=153.0.8010.12 \
     UMF_TABLESPEC_PYTHON=.venv/bin/python PYTHONPATH=native/tablespec/sources/src:.cache/tablespec-python
-COPY replay.py /opt/replay.py
+COPY replay.py seal.py /opt/
 ENTRYPOINT ["/opt/venv/bin/python", "/opt/replay.py"]
 CMD ["all"]

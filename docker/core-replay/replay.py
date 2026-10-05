@@ -24,12 +24,12 @@ def run(command, name=None):
         subprocess.run(command, check=True)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('stage', choices=['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'all'])
+parser.add_argument('stage', choices=['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal', 'all'])
 parser.add_argument('--resume', action='store_true')
 args = parser.parse_args()
 out.mkdir(parents=True, exist_ok=True)
 python = '.venv/bin/python'
-stages = ['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates'] if args.stage == 'all' else [args.stage]
+stages = ['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal'] if args.stage == 'all' else [args.stage]
 for stage in stages:
     if stage == 'prepare':
         if not Path('.venv').exists(): Path('.venv').symlink_to('/opt/venv', target_is_directory=True)
@@ -54,6 +54,10 @@ for stage in stages:
         run([python, 'scripts/core-semantic-types-oracle.py'], 'container-semantic-oracle')
         run(['bun', '-e', "import {relationshipSourceHashes} from './scripts/core-ideals/relationship-gate-inputs'; await Bun.write('fixtures/validation/core-check-refresh/relationship-source-hashes.json', JSON.stringify(await relationshipSourceHashes(), null, 2));"])
         run([python, 'scripts/publish-core-check-refresh.py'], 'container-publication')
+    elif stage == 'seal':
+        historical = json.loads(subprocess.check_output(['git', 'show', '59c3c424:fixtures/validation/core-check-refresh/finalization.json']))
+        run(historical['runs'][0]['command'], 'container-affected')
+        run([python, '/opt/seal.py'])
     elif stage == 'gates':
         gates = sorted(str(p) for p in Path('tests/core-ideals').glob('*.test.ts') if p.name.endswith(('conformance.test.ts', 'evidence.test.ts')))
         run(['bun', 'test', *gates], 'container-gates')

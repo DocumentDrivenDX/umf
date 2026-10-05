@@ -23,12 +23,12 @@ docker run --name umf-core-replay-run --shm-size=1g \
 The entrypoint installs the frozen Bun dependencies, prepares the vendored Python
 namespaces and Protobuf WASM compiler, runs the retained native/browser inventory,
 auxiliary checks and disjoint regression shards, then publishes fingerprints and
-runs all admission gates plus proof-integrity checks. It stops on failure. Logs
+runs all admission gates plus proof-integrity checks, then seals the semantic acceptance and final replay records. It stops on failure. Logs
 and command hashes are written under `fixtures/validation/core-check-refresh/`.
 Review and copy generated artifacts back to the source checkout after success.
 
 Stages can also run individually: `prepare`, `native`, `auxiliary`, `regression`,
-`publish`, `gates`. Use `native --resume` or `regression --resume` to retain completed
+`publish`, `gates`, `seal`. Use `native --resume` or `regression --resume` to retain completed
 runs and archive failed attempts. Resume only within the same checkout and source
 revision. Publication requires successful logs; it cannot substitute for execution.
 
