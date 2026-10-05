@@ -15,7 +15,7 @@ ddx:
 
 # CONTRACT-050: Versioned semantic types
 
-**Type:** core library/schema. **Version:** planned core revision, unallocated.
+**Type:** core library/schema. **Version:** experimental core 0.9.0, layered on core 0.8.0.
 The existing `umf.semantic-types` 0.1.0 implementation is an interim prototype.
 
 ## Purpose
@@ -39,7 +39,8 @@ An element MAY contain `semanticTypes`, a nonempty array of references.
 Each reference MUST have nonempty strings `vocabulary`, `version`, `term`.
 An absent field makes no semantic type declaration. An empty array MUST reject;
 clearing a declaration removes the optional field.
-Version is an exact opaque release identifier, never a range or latest alias.
+Version is an exact opaque release identifier; strings are matched literally,
+without range evaluation, latest aliases or fallback.
 Unknown properties MUST survive serialization and copied access; interpretation
 of a reference with unknown properties MUST report incomplete.
 Multiple references are conjunctive declarations, without ordering precedence.
@@ -55,12 +56,31 @@ registration; distinct vocabularies and versions MUST coexist. Definition conten
 is vocabulary-owned metadata; it MUST NOT authorize validator loading or execution.
 `lookup(reference)` MUST return a copied definition or undefined.
 
-Core typed inspection and authoring MUST expose the `semanticTypes` references,
-validate the document and supported core revision, and return copied data.
-Authoring MUST use a copied document, reject missing elements and unsupported
-core revisions, and validate the candidate before returning it. The final public
-API signatures MUST be settled before implementation; the prototype's annotation
-wrapper MUST NOT silently change to an array under the same API contract.
+`inspectCoreSemanticTypes(document, {module,element})` MUST return an
+`inspect-core-semantic-types` 1.0.0 receipt with copied `source`, exact `identity`,
+JSON Pointer `path`, `meaning` and `diagnostics`. Meaning is `missing`, `legacy`
+(with opaque `value` on older cores), or `declared` (with copied `types`).
+`getCoreSemanticTypes(document, identity)` MUST require core 0.9.0 and return
+copied references or undefined. `declareCoreSemanticTypes(document, identity,
+typesOrNull)` MUST require 0.9.0, use null to remove the optional field, and return
+`declare-core-semantic-types` 1.0.0 with copied `source`, validated `target`,
+`identity`, `request:{types:typesOrNull}`, `diagnostics` and
+`provenance:{origin:"authored",path,basis:"explicit-author-declaration"}`.
+Identity MUST have only nonempty module/element strings. Unknown qualifiers in
+an existing array MUST block replacement/removal unless the array is unchanged.
+`verifyCoreSemanticTypeDeclaration(receipt,current)` MUST recompute the declaration
+and require exact JSON equality with both receipt and current target, ignoring
+object key order; any subsequent document edit makes the declaration stale.
+
+`validateCoreSemanticTypeValue(document,identity,value,registry)` MUST evaluate
+all declared references in array order and return copied `source`, `identity`,
+`checks`, aggregate `status`, `complete` and `issues`. Each check follows
+`validateSemanticTypeValue`. Invalid dominates unknown, which dominates valid;
+completeness requires every check complete. Absence returns unknown/incomplete.
+This aggregate MUST NOT imply validation of other core constraints or native
+payloads. Document-level interpretation remains incomplete without resolving
+external meanings; extension registry registration is independent of term lookup.
+
 `validateSemanticTypeValue(reference,value,registry)` MUST return the copied
 reference, `status` (`valid`, `invalid`, `unknown`), `complete`, and `issues`.
 An explicitly registered validator MUST receive isolated JSON copies of value and
@@ -71,6 +91,33 @@ A validator result `unknown` MUST NOT claim completeness. Validity is scoped sol
 to that exact term's supplied validator; it does not certify field nullability,
 scalar compatibility, normalization, deliverability, identifier ownership or native
 system enforcement. `null` MUST be passed unchanged to the supplied validator.
+
+
+`upgradeSemanticTypesEnvelope(document, {migrateExtension:false})` MUST require
+valid 0.8.0 and return `upgrade-semantic-types-envelope` 1.0.0 with copied
+`source`, 0.9.0 `target`, exact `request`, and ordered `residuals` of
+`{path,value,reason:"Legacy semanticTypes content retained without reinterpretation"}`.
+Default policy is false. It MUST archive/remove every old element `semanticTypes`
+field, including well-shaped lookalikes. Root/module fields remain opaque.
+With `migrateExtension:true`, selected element `umf.semantic-types` payloads MUST
+have profile 0.1.0 and valid nonempty `types`. Unknown annotation-level keys,
+opaque-field collisions or unsupported profiles MUST refuse conversion. Reference
+qualifiers MUST remain copied and incomplete; the original extension remains in
+both source and target. No conversion is inferred from native `domain_type`.
+
+`verifySemanticTypesTransition(receipt)` MUST schema-check and recompute either
+upgrade or rollback. `rollbackSemanticTypesEnvelope(upgrade,current)` MUST verify
+the upgrade, validate current core 0.9.0 and require the same document ID, then
+return `rollback-semantic-types-envelope` 1.0.0 with `source:current`,
+`target:upgrade.source`, verified `receipt` and
+`reason:"Original envelope restored; subsequent content retained in source"`.
+Later edits MUST remain fully archived in `source`, without applying them to the
+restored original. Receipts certify internal consistency, not source authenticity.
+
+Published schemas: `semantic-types-document.schema.json`,
+`semantic-type-reference.schema.json`, `semantic-types-operation.schema.json`,
+`semantic-types-transition.schema.json`, `semantic-types-selection.schema.json`
+under `spec/core/`. Existing prototype APIs retain their extension wrapper shape.
 
 ## Precedence and Compatibility
 
@@ -122,10 +169,23 @@ The public library MUST execute in a real browser without host-specific APIs.
 
 ## Unknowns
 
-The release number, core API signatures and migration receipt schema remain to
-be allocated alongside concurrent core work. The core reference field is planned,
-not implemented by the interim extension.
+Core 0.9.0 follows the concurrent 0.8.0 schema-properties revision. Existing
+version-specific authoring APIs retain their supported envelope limits; read/write,
+validation, element selection and semantic-type operations support 0.9.0.
 
 A publisher-owned catalog and validator release policy, TableSpec catalog import,
 projection bindings and independent native validator parity remain unimplemented
 by this profile; none may be claimed from annotation preservation alone.
+
+## Retained Prototype Compatibility
+
+The interim `umf.semantic-types` 0.1.0 extension attaches only to elements and
+contains `{types:[reference,...]}`. It MUST be declared in the extension
+`vocabularies` map. Unknown wrapper/reference properties remain preserved and
+incomplete. `getSemanticTypes(document,module,element)` returns the copied wrapper;
+`setSemanticTypes(document,module,element,annotation)` returns a copied validated
+document, declaring that exact profile when absent and refusing a conflicting
+profile version. These APIs MUST keep their wrapper signatures and MUST NOT be
+used as the core pointing API. `semanticTypesRegistry()` registers the prototype
+schema and incomplete semantic inspection. It is independent of
+`SemanticTypeRegistry` and is never required for core 0.9.0 references.

@@ -3137,3 +3137,23 @@ contradictory bounds, unknown qualifier refusals, migration collisions, forged
 and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
 API parity. Run existing core regressions, typecheck, schema audit and browser
 build. These gates establish experimental core behavior, not native enforcement.
+
+## Core semantic references: CONTRACT-050
+
+[TD-050](../02-design/technical-designs/TD-050-semantic-types.md) implements
+experimental core 0.9.0 on the 0.8.0 property envelope. Core owns exact pointing
+structure; publishers own domain meaning and explicitly supplied value validators.
+`tests/semantic-types/core.test.ts` covers structure, absence, opaque old fields,
+copy-on-write declarations, exact identities, unknown qualifiers, conjunction,
+source retention, opt-in extension conversion and verified migration/rollback.
+The earlier extension tests remain compatibility tests for the prototype API.
+
+`core-semantic-types-cases.ts` supplies authored positive/negative boundaries;
+Python jsonschema independently validates the published schema and exact reference
+resource. Structural agreement does not establish inherited semantic correctness
+or native domain equivalence. `core-semantic-types-browser.ts` executes the public
+bundle, compares Bun diagnostics and verifies serialized declarations, selections,
+upgrade/rollback, unknown handling and refusals in Chromium without external fetch.
+Required checks include pinned Bun, TypeScript, package/schema audits, public browser
+build and affected regressions. Historical fingerprint-gate drift is reported
+separately; it must not be rewritten into a passed acceptance claim.

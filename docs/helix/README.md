@@ -25,6 +25,18 @@ bounded API; [execution evidence](04-build/evidence/schema-properties-core.md)
 qualifies checks and limitations. Native bindings/admission and the TableSpec
 native port remain separate work.
 
+## Experimental semantic type references
+
+Core 0.9.0 adds optional element `semanticTypes` references with exact vocabulary,
+release and term identities. Definitions and explicitly installed value validators
+remain extensible. Read/write, structural validation, copied inspection/authoring,
+metadata selection and verified upgrade/rollback preserve native and unknown
+content. Prototype extension conversion is explicit and refuses unresolved
+collisions. [CONTRACT-050](02-design/contracts/CONTRACT-050-semantic-types.md) and
+[TD-050](02-design/technical-designs/TD-050-semantic-types.md) define scope.
+Publisher catalogs and native validator parity remain separate work; existing
+version-specific non-semantic authoring APIs retain their supported-version limits.
+
 ## Current delivered scope
 
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet

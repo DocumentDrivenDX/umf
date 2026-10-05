@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 347,
-  "passed": 347,
+  "schemas": 352,
+  "passed": 352,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -846,6 +846,41 @@
     {
       "path": "spec/core/schema.json",
       "id": "urn:umf:core:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "id": "urn:umf:core:semantic-type-reference:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-document.schema.json",
+      "id": "urn:umf:core:0.9.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-operation.schema.json",
+      "id": "urn:umf:core:semantic-types-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-selection.schema.json",
+      "id": "urn:umf:core:semantic-types-selection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-transition.schema.json",
+      "id": "urn:umf:core:semantic-types-transition:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

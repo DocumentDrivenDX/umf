@@ -5328,10 +5328,9 @@ registration is required to carry the core reference.
 | ST-05 | Add publisher-owned catalog releases and explicit TableSpec catalog/validator bindings | ST-04; retain detection, expectation, generator and conversion distinctions; independent native evidence and target loss/refusal reporting |
 
 The prototype's 8 focused tests and seven browser checks remain historical
-extension evidence. They do not complete ST-02–ST-04. The core release number,
-public signatures and receipt schema remain unresolved; coordinate their
-allocation before changing implementation. This amendment changes governed
-intent only. Existing extension code and core schemas remain unchanged.
+extension evidence. They do not establish core delivery. The implementation
+uses core 0.9.0 and the API/receipt contracts settled below; core acceptance is
+recorded separately from the prototype results.
 
 ## Shared schema properties: owner-directed core slice (2026-10-04)
 
@@ -5345,3 +5344,15 @@ The slice is implemented. [Execution evidence](evidence/schema-properties-core.m
 records core regression, Chromium public-API behavior, independent exact-number
 probes, typechecks and schema/package audits. Native adapter admission and
 TableSpec integration remain outside this experimental implementation.
+
+### ST-01 execution-ready decisions
+
+Core 0.8.0 is allocated by PR #1 (`codex/core-schema-properties`). This work
+stacks core 0.9.0 on that branch; it does not modify the 0.8.0 contract.
+CONTRACT-050 and [TD-050](../02-design/technical-designs/TD-050-semantic-types.md)
+settle APIs, reference structure, source-retaining declaration and transition
+receipts, opt-in prototype conversion and rollback verification. CONTRACT-050
+replaces this chat's uncommitted CONTRACT-049 ID to avoid concurrent allocation.
+ST-02–ST-04 are the requested implementation scope; ST-05 catalog/native bindings
+remain subsequent independently evidenced work. Existing version-specific
+non-semantic authoring APIs retain their explicit supported-version limits.

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:semantic-types-transition:1.0.0",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "properties": {
+        "migrateExtension": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "migrateExtension"
+      ],
+      "additionalProperties": false
+    },
+    "residual": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "value": {},
+        "reason": {
+          "const": "Legacy semanticTypes content retained without reinterpretation"
+        }
+      },
+      "required": [
+        "path",
+        "value",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "upgrade": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "upgrade-semantic-types-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.9.0"
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/residual"
+          }
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "request",
+        "residuals"
+      ],
+      "additionalProperties": false
+    },
+    "rollback": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "rollback-semantic-types-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.9.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "receipt": {
+          "$ref": "#/$defs/upgrade"
+        },
+        "reason": {
+          "const": "Original envelope restored; subsequent content retained in source"
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "receipt",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/upgrade"
+    },
+    {
+      "$ref": "#/$defs/rollback"
+    }
+  ]
+}

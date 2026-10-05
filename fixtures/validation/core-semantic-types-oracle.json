@@ -1,0 +1,98 @@
+{
+  "scope": "Published 0.9.0 JSON Schema shape only; neither inherited semantic rules nor external term meanings",
+  "python": "3.9.6",
+  "jsonschema": "4.25.1",
+  "cases": 14,
+  "agreed": 14,
+  "observations": [
+    {
+      "id": "declared",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "missing",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "namespace-and-release",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "unknown-qualifier",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "empty",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "null",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "string",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "emptyReference",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "emptyTerm",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "numericVersion",
+      "pythonStructureValid": false,
+      "bunStructureValid": false,
+      "agrees": true
+    },
+    {
+      "id": "rangeVersion",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "root-is-opaque",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "native-reference-broken",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    },
+    {
+      "id": "inherited-property-invalid",
+      "pythonStructureValid": true,
+      "bunStructureValid": true,
+      "agrees": true
+    }
+  ],
+  "sha256": {
+    "spec/core/semantic-types-document.schema.json": "8f2df9f2cfab452a01a6c711c9afec9f0e22cf7a87e1f2321abbbdd95633b058",
+    "spec/core/semantic-type-reference.schema.json": "cf098e7fe5efb2863466708964faeb63f8eeea254fb4fb2a65cab32c2821a009",
+    "fixtures/validation/core-semantic-types-oracle-inputs.json": "1ae18ea65fbafb0d17ff53f1a509fab3a3d7401edd9686c9f36e24d83c2cb65f"
+  }
+}

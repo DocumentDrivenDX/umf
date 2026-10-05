@@ -2,11 +2,11 @@ import manifest from '../../../spec/extensions/semantic-types/package.json';
 import {Registry} from '../../registry/registry';
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';
-import {UmfError, pointer, type Document, type Json, type JsonObject, type ExtensionPackage, type Diagnostic} from '../../model/types';
+import {UmfError, pointer, type Document, type Json, type JsonObject, type ExtensionPackage, type Diagnostic, type CoreSemanticTypeReference} from '../../model/types';
 
 export const SEMANTIC_TYPES_EXTENSION='umf.semantic-types';
 export const semanticTypesPackage=manifest as unknown as ExtensionPackage;
-export interface SemanticTypeReference {vocabulary:string;version:string;term:string;[key:string]:unknown}
+export interface SemanticTypeReference extends CoreSemanticTypeReference {}
 export interface SemanticTypeAnnotation {types:SemanticTypeReference[];[key:string]:unknown}
 export interface SemanticTypeCheck {status:'valid'|'invalid'|'unknown';complete:boolean;issues:string[]}
 export interface SemanticTypeValueResult extends SemanticTypeCheck {reference:SemanticTypeReference}
