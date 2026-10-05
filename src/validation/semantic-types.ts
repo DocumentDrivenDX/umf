@@ -28,7 +28,8 @@ export function validateSemanticTypesDocument(input:unknown,registry=new Registr
   const entry=registry.get(id,declaration.version);
   if(entry)contextualRegistry.register(entry.manifest,entry.semantics?(payload,context)=>entry.semantics!(payload,{...context,document:copyJson(source) as unknown as Document}):undefined);
  }
- diagnostics.push(...validateSchemaPropertiesDocument(base,contextualRegistry).diagnostics);
+ // The 0.8.0 view is an implementation detail; do not report its version for a 0.9.0 document.
+ diagnostics.push(...validateSchemaPropertiesDocument(base,contextualRegistry).diagnostics.map(d=>d.code==='EXPERIMENTAL_CORE_SCHEMA_PROPERTIES'?{...d,message:'Experimental schema properties inherited from 0.8.0; native enforcement/admission not implied'}:d));
  add('EXPERIMENTAL_CORE_SEMANTIC_TYPES','/umf','Experimental semantic references; publisher-owned meanings and native enforcement are not inferred');
  source.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
   if(!e.semanticTypes)return;

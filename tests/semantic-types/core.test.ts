@@ -150,3 +150,9 @@ test('core and prototype extension meanings that disagree are reported, agreeing
  const found=validateDocument(edited).diagnostics.filter(d=>d.code==='SEMANTIC_TYPE_COMPETING_MEANING');
  expect(found).toHaveLength(1);expect(found[0]!.severity).toBe('warning');expect(validateDocument(edited).valid).toBe(true);
 });
+
+test('0.9.0 diagnostics do not describe the document as 0.8.0',()=>{
+ const messages=validateDocument(core()).diagnostics.map(d=>d.message);
+ expect(messages.some(m=>m.includes('Experimental 0.8.0'))).toBe(false);
+ expect(messages.some(m=>m.includes('inherited from 0.8.0'))).toBe(true);
+});
