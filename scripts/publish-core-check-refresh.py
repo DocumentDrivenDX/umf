@@ -1,7 +1,7 @@
 """Publish new qualification fingerprints only after logged native and live execution.
 Previous records remain recoverable at the immutable baseline revision.
 """
-import hashlib, json, subprocess, re
+import hashlib, json, subprocess, re, posixpath
 from pathlib import Path
 BASE='cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 OUT=Path('fixtures/validation/core-check-refresh')
@@ -15,7 +15,9 @@ def check_run(r):
 def local(p):
  prefix=str(Path.cwd())+'/'
  if p.startswith(prefix):p=p[len(prefix):]
+ original=p;p=posixpath.normpath(p)
  assert not p.startswith('/') and '..' not in Path(p).parts and '\\' not in p,f'Unsafe proof path {p}'
+ if original!=p:assert digest(original)==digest(p),'Normalization changed proof identity'
  return p
 def main():
  native=load(OUT/'native-browser.json');assert native['complete'] is True
@@ -43,8 +45,13 @@ def main():
   if p.startswith('fixtures/validation/') and p.endswith('.json'):
    r=load(p)
    if isinstance(r,dict) and isinstance(r.get('sha256'),dict):
-    mapping={local(k):v for k,v in r['sha256'].items()}
-    assert len(mapping)==len(r['sha256']),'Colliding normalized fingerprints'
+    mapping={};aliases={}
+    for original,h in r['sha256'].items():
+     path=local(original)
+     assert path not in mapping or mapping[path]==h,'Conflicting normalized fingerprints'
+     mapping[path]=h;aliases.setdefault(path,[]).append(original)
+    duplicates={p:keys for p,keys in aliases.items() if len(keys)>1 or keys!=[p]}
+    if duplicates:r['normalizedFingerprintAliases']=duplicates
     if mapping!=r['sha256']:r['sha256']=mapping;save(p,r);normalized.append(p)
  # Refresh aggregate fingerprints in dependency order. Immutable old roots are
  # traceable via their original Git revision and exact retained record digest.
@@ -58,6 +65,7 @@ def main():
   historical=subprocess.check_output(['git','show',f'{BASE}:{p}'])
   r['previousEvidence']={'revision':BASE,'path':p,'sha256':hashlib.sha256(historical).hexdigest()}
   r['currentReplay']=execution
+  r['currentBrowserReplay']={'path':str(OUT/'auxiliary.json'),'sha256':digest(OUT/'auxiliary.json')}
   if 'results' in r:
    r['historicalResults']=r['results']
    r['results']=json.loads(json.dumps(r['results']))
@@ -70,6 +78,9 @@ def main():
     if isinstance(v,list):return [version(x) for x in v]
     return v
    r['results']=version(r['results'])
+   if 'systems' in r:
+    r['historicalSystems']=r['systems']
+    r['systems']=version(r['systems'])
  def lookup(c):
   c=list(c)
   if c[0].endswith('/python'):c[0]='.venv/bin/python'
