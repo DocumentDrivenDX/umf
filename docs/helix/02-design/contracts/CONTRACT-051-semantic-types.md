@@ -106,7 +106,9 @@ With `migrateExtension:true`, selected element `umf.semantic-types` payloads MUS
 have profile 0.1.0 and valid nonempty `types`. Unknown annotation-level keys,
 opaque-field collisions or unsupported profiles MUST refuse conversion. Reference
 qualifiers MUST remain copied and incomplete; the original extension remains in
-both source and target. No conversion is inferred from native `domain_type`.
+both source and target. Validation MUST warn `SEMANTIC_TYPE_COMPETING_MEANING`
+when an element's core `semanticTypes` differ from its retained extension
+payload `types`; core is authoritative and neither copy is modified. No conversion is inferred from native `domain_type`.
 
 `verifySemanticTypesTransition(receipt)` MUST schema-check and recompute either
 upgrade or rollback. `rollbackSemanticTypesEnvelope(upgrade,current)` MUST verify

@@ -4,6 +4,7 @@ import {createValidator} from './schema';
 import {validateSchemaPropertiesDocument} from './schema-properties';
 import {Registry} from '../registry/registry';
 import {copyJson} from '../model/json';
+import {canonicalSchemaJson} from '../model/schema-literals';
 import {UmfError,pointer,type Document,type Diagnostic,type Validation} from '../model/types';
 const validator=createValidator();validator.addSchema(referenceSchema);
 export const checkSemanticTypesDocument=validator.compile(schema);
@@ -33,6 +34,8 @@ export function validateSemanticTypesDocument(input:unknown,registry=new Registr
   if(!e.semanticTypes)return;
   const path=`/modules/${mi}/elements/${ei}/semanticTypes`;
   add('SEMANTIC_TYPE_EXTERNAL',path,'Exact external semantic definitions and value validators are resolved separately');
+  const proto=e.extensions['umf.semantic-types'];
+  if(proto&&typeof proto==='object'&&!Array.isArray(proto)&&'types' in proto&&canonicalSchemaJson(proto.types)!==canonicalSchemaJson(e.semanticTypes))add('SEMANTIC_TYPE_COMPETING_MEANING',path,'Core semanticTypes differ from the umf.semantic-types extension payload; core is authoritative and the extension is retained unchanged');
   e.semanticTypes.forEach((ref,i)=>{for(const key of Object.keys(ref))if(!['vocabulary','version','term'].includes(key))add('UNKNOWN_SEMANTIC_TYPE_QUALIFIER',path+`/${i}/`+pointer(key),'Qualifier retained without interpretation');});
  }));
  return {valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};

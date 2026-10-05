@@ -142,3 +142,11 @@ test('core declarations preserve an actual pinned TableSpec source through expli
  }
  expect(u.exportTableSpec(imported)).toBe(native);
 },30_000);
+
+test('core and prototype extension meanings that disagree are reported, agreeing ones are not',()=>{
+ const agree=upgradeSemanticTypesEnvelope(prototype(),{migrateExtension:true}).target;
+ expect(validateDocument(agree).diagnostics.some(d=>d.code==='SEMANTIC_TYPE_COMPETING_MEANING')).toBe(false);
+ const edited=clone(agree);edited.modules[0]!.elements[0]!.semanticTypes=[{...ref,term:'other'}];
+ const found=validateDocument(edited).diagnostics.filter(d=>d.code==='SEMANTIC_TYPE_COMPETING_MEANING');
+ expect(found).toHaveLength(1);expect(found[0]!.severity).toBe('warning');expect(validateDocument(edited).valid).toBe(true);
+});
