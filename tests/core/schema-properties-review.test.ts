@@ -46,3 +46,12 @@ test('unknown facets cannot bypass known range validation or receipt verificatio
   expect(()=>verifyCoreSchemaPropertyDeclaration(forged,forged.target)).toThrow();
  }
 });
+
+test('integer and fixed-scale ranges reject empty discrete intervals',()=>{
+ for(const scalarType of ['integer','decimal'])for(const start of [-1,0,1])for(const gap of [0,1,2])for(const minInclusive of [false,true])for(const maxInclusive of [false,true]){
+  const token=(n:number)=>scalarType==='integer'?{integerToken:String(n)}:{decimalToken:(n/100).toFixed(2)};
+  const doc=numericDocument(scalarType,{min:token(start),max:token(start+gap),minInclusive,maxInclusive});
+  const valid=start+(minInclusive?0:1)<=start+gap-(maxInclusive?0:1);
+  expect(validateDocument(doc).valid).toBe(valid);
+ }
+});

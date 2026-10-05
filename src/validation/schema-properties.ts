@@ -55,7 +55,7 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
      if(f.integerWidth)numericFacets.integerWidth={bits:f.integerWidth.bits,signed:f.integerWidth.signed};
      const unbounded={...e,facets:numericFacets} as Element;delete unbounded.allowedValues;delete unbounded.default;
      for(const end of ['min','max']){if(r[end]!==undefined){if(r[end]===null)throw new UmfError('CORE_SCHEMA_PROPERTIES','Numeric bounds cannot be null','/'+end);checkSchemaLiteral(doc,unbounded,r[end]);}else if(r[end+'Inclusive']!==undefined)add('Inclusive flag requires its bound',path+'/facets/range/'+end+'Inclusive');}
-     if(r.min!==undefined&&r.max!==undefined){const wrapper=e.scalarType==='integer'?'integerToken':'decimalToken',scale=e.scalarType==='integer'?0:f.scale,min=schemaCoefficient(r.min[wrapper],scale,f.precision),max=schemaCoefficient(r.max[wrapper],scale,f.precision);if(min>max||min===max&&(r.minInclusive===false||r.maxInclusive===false))add('Empty or inverted numeric interval',path+'/facets/range');}
+     if(r.min!==undefined&&r.max!==undefined){const wrapper=e.scalarType==='integer'?'integerToken':'decimalToken',scale=e.scalarType==='integer'?0:f.scale,min=schemaCoefficient(r.min[wrapper],scale,f.precision),max=schemaCoefficient(r.max[wrapper],scale,f.precision);if(min+(r.minInclusive===false?1n:0n)>max-(r.maxInclusive===false?1n:0n))add('Empty or inverted numeric interval',path+'/facets/range');}
     },path+'/facets/range');
    }
   }
