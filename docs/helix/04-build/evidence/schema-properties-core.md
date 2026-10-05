@@ -195,3 +195,26 @@ Git text conversion disabled. Cardinality browser wrappers and facet conformance
 now require the exact replayed Chromium pin, with the retained 148 default for
 historical records. Current replay uses Chromium 153.0.8010.12. Failed and partial
 attempts remain separate from the passing command inventory.
+
+## Completed pre-simplification regression run
+
+This run and its focused replays cover the implementation at `0ed68e30`,
+before the concurrent API simplification commits `5a001660` through `cdd0070c`.
+They do not verify those later changes.
+
+The complete `bun test tests` run finished in 1,911.38 seconds: 2,114 passed,
+18 failed, 130,636 assertions across 380 files. It began before the dbt repair
+and without `UMF_PYTHON_PATH`; it is not a green run of the final checkout.
+Post-fix replays clear the dbt failure, the acceptance-ledger timeout, the
+projection oracle and four Protobuf failures. The Protobuf directory passes
+10 tests and 103 assertions with its configured pinned Python runtime.
+Eleven observed qualification-gate failures remain unrepaired: cardinality
+(one), facets (four), relationship (one), key (three), field (one) and
+nullability (one). They include stale fingerprints, missing generated bundles
+and historical absolute-path handling. Native evidence regeneration and
+portable-path follow-up remain outstanding; no gate was weakened.
+
+After integrating the concurrent upstream changes through `cdd0070c`, a fresh
+core-only replay passes 177 tests across 27 files with 4,586 assertions; both
+source and tool TypeScript checks pass. This verifies the simplified core API,
+not a fresh full repository or integrated native qualification run.
