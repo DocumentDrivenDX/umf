@@ -46,13 +46,26 @@ oracle = load('fixtures/validation/core-semantic-types-oracle.json')
 browser = load('fixtures/validation/core-semantic-types-browser.json')
 assert oracle['agreed'] == oracle['cases'] == 14
 assert len(browser['checks']) == 48 and browser['cases'] == 14 and len(browser['externalRequests']) == 0
-accept.update(sourceRevision=source, parentRevision=subprocess.check_output(['git', 'rev-parse', 'd64be8c8'], text=True).strip(), runtime={**runtime, 'chromium': native['expectedBrowser']},
+accept.update(sourceRevision=source, parentRevision=runtime['parentRevision'], runtime={**runtime, 'chromium': native['expectedBrowser']},
               sealingRuntime=sealing_runtime, containerReplay={'path': str(out / 'container-runtime.json'), 'sha256': digest(out / 'container-runtime.json')},
               previousContainerEvidence=previous(acceptpath, source))
 accept.setdefault('preContainerFinalChecks', accept['finalChecks'])
 accept.setdefault('preContainerExploratoryChecks', accept['exploratoryChecks'])
+audit_run = next(row for row in load(out / 'auxiliary.json')['runs'] if row['command'] == ['bun', 'run', 'test:schemas'])
+audit_text = Path(audit_run['log']).read_text()
+audit_objects = []
+position = 0
+while True:
+    start = audit_text.find('{', position)
+    if start < 0: break
+    value, consumed = json.JSONDecoder().raw_decode(audit_text[start:])
+    audit_objects.append(value); position = start + consumed
+package_audit = next(row for row in audit_objects if 'packages' in row)
+schema_audit = next(row for row in audit_objects if 'schemas' in row)
+assert package_audit['passed'] == package_audit['packages'] and not package_audit['failures']
+assert schema_audit['passed'] == schema_audit['schemas'] and not schema_audit['failures']
 accept['finalChecks'] = {'affected': summary(affected), 'typecheck': 'passed', 'build': 'passed',
-                       'packages': {'passed': 60, 'total': 60}, 'schemas': {'passed': 352, 'total': 352},
+                       'packages': {'passed': package_audit['passed'], 'total': package_audit['packages']}, 'schemas': {'passed': schema_audit['passed'], 'total': schema_audit['schemas']},
                        'browser': {'checks': 48, 'cases': 14, 'externalRequests': 0},
                        'independentShapeOracle': {'agreed': oracle['agreed'], 'cases': oracle['cases']}}
 accept['finalChecks']['regression'] = publication['regression']
@@ -60,7 +73,12 @@ accept['finalChecks']['uniqueGates'] = {'passed': counts['tests'], 'failed': 0, 
 accept['exploratoryChecks'] = {'broad': {**publication['regression'], 'tests': publication['regression']['passed']}, 'retainedGates': counts}
 accept['subsequentCheckRepair'] = {'path': str(gatepath), 'sha256': digest(gatepath), 'nativeBrowserCommands': len(native['runs']),
                                  'scope': 'Every retained native/browser command freshly executed in the container; historical post-parent browser counts do not apply.'}
-accept['sha256'] = {path: digest(path) for path in accept['sha256']}
+retired = {path: sha for path, sha in accept['sha256'].items() if not Path(path).is_file()}
+if retired: accept['retiredFingerprints'] = {'reason': 'Paths removed by the parent API amendment; original fingerprints retained without a current verification claim.', 'sha256': retired}
+accept['sha256'] = {path: digest(path) for path in accept['sha256'] if Path(path).is_file()}
+for directory in ['src', 'scripts', 'spec', 'tests', 'native']:
+    for path in subprocess.check_output(['git', 'ls-files', directory], text=True).splitlines():
+        if Path(path).is_file() and path.endswith(('.ts', '.py', '.json', '.sql')): accept['sha256'][path] = digest(path)
 accept['sha256'][str(gatepath)] = digest(gatepath)
 accept['sha256'][str(out / 'container-runtime.json')] = digest(out / 'container-runtime.json')
 accept['sha256'][affected['log']] = affected['logSha256']

@@ -38,7 +38,8 @@ for stage in stages:
     if stage == 'prepare':
         if not Path('.venv').exists(): Path('.venv').symlink_to('/opt/venv', target_is_directory=True)
         revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-        runtime = {'sourceRevision': revision, 'imageId': os.environ.get('UMF_REPLAY_IMAGE_ID'),
+        parents = subprocess.check_output(['git', 'log', '-1', '--merges', '--format=%P'], text=True).split()
+        runtime = {'sourceRevision': revision, 'parentRevision': parents[1] if len(parents) == 2 else None, 'imageId': os.environ.get('UMF_REPLAY_IMAGE_ID'),
                    'platform': platform.platform(), 'python': platform.python_version(),
                    'jsonschema': importlib.metadata.version('jsonschema'),
                    'bun': subprocess.check_output(['bun', '--version'], text=True).strip(),
