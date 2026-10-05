@@ -145,3 +145,9 @@ Bun 1.3.14: 186 affected tests across 30 files, 4,830 assertions, no failures.
 Chromium 153.0.8010.12: 38 validation cases, four serialization recoveries,
 12 refusals and four unknown-unit checks; no getter execution or external requests.
 The browser record fingerprints the current implementation and transition schema.
+
+All six affected metadata browser harnesses also replay successfully in Chromium
+153: relationship (28 selection recoveries), key (4), facets (4), cardinality
+(24), nullability (10) and record type (12). Their committed browser records
+contain refreshed fingerprints from the actual replays. Schema generation is
+deterministic; final source/tool typechecks and all 346 schemas / 59 packages pass.

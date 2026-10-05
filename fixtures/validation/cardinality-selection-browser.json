@@ -1,19 +1,19 @@
 {
-  "scope": "0.4.0 cardinality filtering, item/generic reference traversal and verified copied reports; older item/cardinality fields remain opaque",
-  "browser": "148.0.7778.0",
+  "scope": "0.4.0 cardinality filtering, item/generic reference traversal and copied metadata results; older item/cardinality fields remain opaque",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 12,
     "recoveries": 24,
-    "refusals": 16,
-    "legacyVerified": true
+    "refusals": 3,
+    "legacySelected": true
   },
   "externalRequests": [],
   "fingerprints": {
-    "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
+    "scripts/core-ideals/cardinality-selection-browser.ts": "6d24705395c56c4a2b08eebb1098fcc80b80291003d01b5393fd38eb6eeb8da4",
     "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
-    "src/model/selection.ts": "45ad31f1805bf5287880beec63bb7f419c8aac6848ca93a7c077fced4972a1ae",
-    "src/model/selection-verification.ts": "6b582a843164284356631262cc3851aed60faca4bf7f6ae9ee90e3dd679d2b64",
-    "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce"
+    "src/model/selection.ts": "101d15bea9c048316aa557b82d6a8edab31573cd976bf30f1e50ceba11b65dda",
+    "src/model/selection-schemas.ts": "1c0142a7e5a92ad804590e6aae6ab5d5c9e4be97f2e56baa51a36cab79f7dfd5",
+    "spec/core/cardinality-selection.schema.json": "a8359f041c104d94765298fd34ff038d27952820f3f828490c1fc5b67e81e6d2",
+    "dist/umf.js": "68ae0a27e15d5e22a6cf0f54900aad4f2c4196f0417868c1859d9ddfeb566469"
   }
 }

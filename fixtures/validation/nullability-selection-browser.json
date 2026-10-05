@@ -1,11 +1,11 @@
 {
-  "scope": "0.3.0 metadata selection and report verification; no native absence or provenance inference",
-  "browser": "148.0.7778.0",
+  "scope": "0.3.0 metadata selection and result serialization; no native absence or provenance inference",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 5,
     "recoveries": 10,
-    "refusals": 5,
-    "legacyVerified": true
+    "refusals": 0,
+    "legacySelected": true
   },
   "externalRequests": []
 }
