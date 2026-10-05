@@ -151,3 +151,8 @@ All six affected metadata browser harnesses also replay successfully in Chromium
 (24), nullability (10) and record type (12). Their committed browser records
 contain refreshed fingerprints from the actual replays. Schema generation is
 deterministic; final source/tool typechecks and all 346 schemas / 59 packages pass.
+
+An optional `bun test tests` run was stopped after 477 passing tests while it
+continued through unrelated upstream fixtures, with no failures observed at
+that point. It is not a completed full-suite result. Current native qualification
+gates were not regenerated or weakened by this amendment.
