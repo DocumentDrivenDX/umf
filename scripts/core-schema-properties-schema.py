@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 s=json.loads(Path('spec/core/relationship-document.schema.json').read_text())
-s['$id']='urn:umf:core:0.8.0';s['title']='UMF 0.8.0 experimental schema properties';s['properties']['umf']['const']='0.8.0'
+s['$id']='urn:umf:core:0.8.0';s['title']='UMF 0.8.0 schema properties';s['properties']['umf']['const']='0.8.0'
 s['description']='Shared annotations, literal defaults and exact value/collection bounds; semantic validator required.'
 d=s['$defs']; safe={'type':'integer','minimum':0,'maximum':9007199254740991}
 token={'type':'string','pattern':r'^-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\s\S])'}
