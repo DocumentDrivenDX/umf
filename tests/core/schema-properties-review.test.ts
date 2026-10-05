@@ -55,3 +55,13 @@ test('integer and fixed-scale ranges reject empty discrete intervals',()=>{
   expect(validateDocument(doc).valid).toBe(valid);
  }
 });
+
+test('value and default APIs reject identity accessors without invoking them',()=>{
+ for(const property of ['module','element'])for(const enumerable of [true,false]){
+  let calls=0;const identity={module:'m',element:'quantity'};
+  Object.defineProperty(identity,property,{enumerable,get(){calls++;return property==='module'?'m':'quantity';}});
+  const result=validateCoreFieldValue(schemaPropertiesFixture(),identity,{integerToken:'1'});
+  expect(result.valid).toBe(false);expect(calls).toBe(0);
+  expect(()=>resolveCoreDefault(schemaPropertiesFixture(),identity,{state:'missing'})).toThrow();expect(calls).toBe(0);
+ }
+});
