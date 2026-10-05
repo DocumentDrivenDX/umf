@@ -1,0 +1,5 @@
+# Pinned upstream evidence is byte-sensitive, including original mixed line endings.
+/native/rdfxml/sources/** -text -whitespace
+/native/shacl/sources/** -text -whitespace
+/fixtures/shacl/** -text -whitespace
+/native/tablespec/sources/** -text -whitespace

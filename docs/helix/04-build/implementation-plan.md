@@ -5388,3 +5388,15 @@ TableSpec source preservation, resolved findings and failed attempts. The broade
 exploratory run and retained admission gates have repository environment/evidence
 failures; they are recorded separately and keep the stacked PR draft. ST-05 and
 other version-specific authoring API upgrades remain open.
+
+### Semantic-reference PR check repair (2026-10-04)
+
+The owner requests repair and replay of the failing repository checks. Restore
+pinned W3C fixture bytes and exact SHACL exports without changing their recorded
+upstream digests; prevent checkout line-ending normalization. Separate unarchived
+dbt caches from verifiable retained provenance and keep their historical hashes.
+Prepare pinned local native environments and replay the retained native/browser
+command inventory with actual logs. Preserve previous acceptance records through
+immutable Git revision references; publish current fingerprints only after real
+execution, then run the full live regression and stale/forged-proof negative gates.
+Native equivalence claims and ideal admission thresholds remain unchanged.

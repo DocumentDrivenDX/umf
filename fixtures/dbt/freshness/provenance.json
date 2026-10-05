@@ -30,30 +30,6 @@
   "scope": "Synthetic custom SQL in local in-memory DuckDB; no physical source-table freshness claim",
   "files": [
     {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph.gpickle",
-      "sha256": "c5d0d9bb6dc0174e2c3afc1a508355c7bb82823754dc65b30a6e377d5a172fc7"
-    },
-    {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph_summary.json",
-      "sha256": "d170464493a0adbeb11352910ecbc5a5b95258ff11b9bdeea7719bf7e6db5f73"
-    },
-    {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/manifest.json",
-      "sha256": "0bf03be06dd5da4f063bd83fb6ebf7fb9c3da15a542cff9ab94e183d06d7d390"
-    },
-    {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/partial_parse.msgpack",
-      "sha256": "f3df2897862f1ddd27247c1c3ca2d96477a0ec517ed46e91faaaafcba641425b"
-    },
-    {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/semantic_manifest.json",
-      "sha256": "ba3498492b9c02670717cac98b47113e8d74c5288b55be26b30ce1af97dfe518"
-    },
-    {
-      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/sources.json",
-      "sha256": "f31e4cc0917b0a41cf30a00c7e778dba93cc3a1bfafc13f647fbed64e0312a96"
-    },
-    {
       "path": "native/dbt/freshness-project/dbt_project.yml",
       "sha256": "89d1b92067e6d3029d1fe2b2c513348c451e551fb61d5a3ffb5b150acc6ccc78"
     },
@@ -84,6 +60,38 @@
     {
       "path": "native/dbt/oracle-requirements.txt",
       "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ],
+  "unretainedGeneratedFiles": [
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph.gpickle",
+      "sha256": "c5d0d9bb6dc0174e2c3afc1a508355c7bb82823754dc65b30a6e377d5a172fc7",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph_summary.json",
+      "sha256": "d170464493a0adbeb11352910ecbc5a5b95258ff11b9bdeea7719bf7e6db5f73",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/manifest.json",
+      "sha256": "0bf03be06dd5da4f063bd83fb6ebf7fb9c3da15a542cff9ab94e183d06d7d390",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/partial_parse.msgpack",
+      "sha256": "f3df2897862f1ddd27247c1c3ca2d96477a0ec517ed46e91faaaafcba641425b",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/semantic_manifest.json",
+      "sha256": "ba3498492b9c02670717cac98b47113e8d74c5288b55be26b30ce1af97dfe518",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/sources.json",
+      "sha256": "f31e4cc0917b0a41cf30a00c7e778dba93cc3a1bfafc13f647fbed64e0312a96",
+      "reason": "Ignored native runner cache; hash retained as historical provenance, bytes were not archived"
     }
   ]
 }

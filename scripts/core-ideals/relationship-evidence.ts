@@ -28,7 +28,7 @@ export async function verifyRelationshipEvidence(read:RelationshipEvidenceReader
    const actual=digest(await read(safePath(source)));
    if(actual!==hash){const row=refresh.sourceRevalidation?.[source];assert(row,'Stale native/browser proof '+source);assert.equal(row.historicalSha256,hash,'Unapproved historical relationship proof '+source);assert.equal(row.currentSha256,actual,'Stale revalidated relationship proof '+source);}
   }
-  if(path.includes('browser')){assert.match(p.browser,/^148\./,'Unqualified Chromium');assert.deepEqual(p.externalRequests,[]);const c=p.checks??p.result;assert(c.cases>0&&c.idealRecoveries>0,'Empty browser recovery matrix');assert(c.blocked>0,'Missing browser refusals');}
+  if(path.includes('browser')){assert.equal(p.browser,refresh.browser??'148.0.7778.0','Unqualified Chromium');assert.deepEqual(p.externalRequests,[]);const c=p.checks??p.result;assert(c.cases>0&&c.idealRecoveries>0,'Empty browser recovery matrix');assert(c.blocked>0,'Missing browser refusals');}
  }
  const get=(suffix:string)=>proofs['fixtures/validation/relationship-'+suffix];
  assert.equal(get('tablespec-projection-native.json').nativeVersion,'647e8e566ad78b864282ec65c0b0b2237aa63084');

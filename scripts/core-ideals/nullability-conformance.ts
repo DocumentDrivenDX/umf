@@ -29,6 +29,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
    assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
+ const refresh=await load('fixtures/validation/field-gate-refresh-evidence.json');
  const records=[];
  for(const name of ['nullability-core-acceptance-evidence',...nullabilitySystems.map(s=>s+'-nullability-acceptance-evidence')]){
   const path=`fixtures/validation/${name}.json`,record=await load(path);
@@ -43,7 +44,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   }
   await verify(record,name);records.push({path,sha256:await hash(path)});
  }
- const refresh=await load('fixtures/validation/field-gate-refresh-evidence.json');
+
  assert.equal(refresh.regression.failures,0);assert.ok(refresh.regression.tests>=340);
  for(const run of refresh.runs)assert.equal(run.exitCode,0,`Failed command ${run.command}`);
  for(const system of nullabilitySystems){
@@ -52,7 +53,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   for(const suffix of system==='tablespec'?['classification-browser','projection-browser']:['browser','projection-browser']){
    const file=`fixtures/validation/nullability-${system}-${suffix}.json`;
    assert.ok(Object.hasOwn(refresh.sha256,file),`Missing browser proof ${file}`);
-   const browser=await load(file);assert.match(browser.browser,/^148\./);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
+   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
   }
  }
  for(const script of ['nullability-tablespec-classification-oracle.py','nullability-tablespec-projection-oracle.py','nullability-tablespec-execution-oracle.py'])assert.ok(refresh.runs.some((r:any)=>r.command.includes('scripts/core-ideals/'+script)),`Missing native command ${script}`);

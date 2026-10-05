@@ -5,7 +5,7 @@ const runs=[],checks:Record<string,unknown>={},paths=['scripts/core-ideals/cardi
 for(const part of ['classification','projection']){
  const script=`scripts/core-ideals/cardinality-sqlserver-${part}-browser.ts`,command=['bun',script];
  const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit',env:process.env}),exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`${part} browser failed`);
- const path=`fixtures/validation/cardinality-sqlserver-${part}-browser.json`,proof=await Bun.file(path).json();assert.deepEqual(proof.externalRequests,[]);assert.match(proof.browser,/^148\./);if(browser)assert.equal(proof.browser,browser);browser=proof.browser;checks[part]=proof.checks;
+ const path=`fixtures/validation/cardinality-sqlserver-${part}-browser.json`,proof=await Bun.file(path).json();assert.deepEqual(proof.externalRequests,[]);assert.equal(proof.browser,process.env.UMF_EXPECTED_CHROMIUM_VERSION??'148.0.7778.0');if(browser)assert.equal(proof.browser,browser);browser=proof.browser;checks[part]=proof.checks;
  const fingerprints=proof.sha256??proof.fingerprints;
  for(const [file,expected] of Object.entries(fingerprints))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex'),expected,`Stale browser proof: ${file}`);
  paths.push(script,path,...Object.keys(fingerprints));

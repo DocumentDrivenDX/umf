@@ -31,6 +31,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
    assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
+ const refresh=await load(file('field-gate-refresh-evidence'));
  const required=(record:any,path:string)=>assert.ok(Object.hasOwn(record.sha256??{},path),`missing required proof ${path}`);
  for(const name of ['cardinality-core-acceptance-evidence',...cardinalitySystems.map(s=>`${s}-cardinality-acceptance-evidence`)]){
   const path=file(name),r=await load(path);assert.equal(r.results.failures,0,`${name}: failures`);assert.equal(r.results.typecheck,'passed');assert.equal(r.nativeEquivalence,false);
@@ -39,7 +40,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   if(name.startsWith('cardinality-core')){
    for(const p of ['spec/core/cardinality-operation.schema.json','spec/core/cardinality-transition.schema.json','spec/core/cardinality-selection.schema.json','spec/core/kind-operation-v3.schema.json','spec/core/record-type-operation-v3.schema.json','spec/core/nullability-operation-v2.schema.json'])required(r,p);
    for(const proof of ['core-cardinality-browser','core-cardinality-operations-browser','cardinality-field-operations-browser','cardinality-selection-browser']){
-    required(r,file(proof));const browser=await load(file(proof));assert.match(browser.browser,/^148\./);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
+    required(r,file(proof));const browser=await load(file(proof));assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
    }
   }
   if(!name.startsWith('cardinality-core')){
@@ -48,7 +49,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   }
   pending.push({record:r,name});records.push({path,sha256:await hash(path)});
  }
- const refresh=await load(file('field-gate-refresh-evidence'));
+
  assert.equal(refresh.regression.failures,0);assert.ok(refresh.regression.tests>=407);assert.equal(refresh.typecheck,'passed');
  for(const run of refresh.runs)assert.equal(run.exitCode,0,`Failed command ${run.command}`);
  for(const system of cardinalitySystems)for(const part of ['native','browser']){
@@ -57,7 +58,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   const path=file(`cardinality-${system}-${part}`);required(refresh,path);const r=await load(path);
   assert.ok(r.runs?.length,`${path}: missing child commands`);for(const run of r.runs)assert.equal(run.exitCode,0,`${path}: failed child command`);
   if(part==='browser'){
-   assert.match(r.browser,/^148\./);assert.ok(Object.keys(r.checks).length);
+   assert.equal(r.browser,refresh.browser??'148.0.7778.0');assert.ok(Object.keys(r.checks).length);
    if(Object.hasOwn(r,'externalRequests'))assert.deepEqual(r.externalRequests,[]);
    const children=Object.keys(r.sha256??{}).filter(p=>p.endsWith('-browser.json'));assert.ok(children.length);
    for(const child of children){
