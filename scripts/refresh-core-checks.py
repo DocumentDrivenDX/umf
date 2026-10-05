@@ -74,9 +74,10 @@ def counted_regression(resume=False):
         old=next((r for r in previous['runs'] if r['command']==command),None)
         if old and old['exitCode']==0:
             assert digest(old['log'])==old['logSha256'];return old
-        if old:
+        prior=old or next((r for r in previous['runs'] if r['log']==str(log)),None)
+        if prior:
             kept=OUT/f'regression-failed-{i+1}-{len(previous.get("failedAttempts",[]))+1}.log'
-            shutil.copyfile(log,kept);previous.setdefault('failedAttempts',[]).append({**old,'log':str(kept)})
+            shutil.copyfile(log,kept);previous.setdefault('failedAttempts',[]).append({**prior,'log':str(kept)})
         with log.open('wb') as f: child=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,env=os.environ)
         return {'command':command,'exitCode':child.returncode,'log':str(log),'logSha256':digest(log)}
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(execute,enumerate(groups)))

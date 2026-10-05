@@ -21,6 +21,7 @@ test('Key evidence rejects missing, stale, failed, unsafe, incompatible and inco
   ['key-parquet-projection-native', r => r.rows[0].decoded[1]={changed:true}, 'missing duplicate record control'],
   ['key-parquet-projection-native', r => r.rows=[], 'empty native evidence'],
   ['key-sqlserver-browser', r => r.checks.strictBlocked=false, 'incomplete browser coverage'],
+  ['key-avro-browser', r => r.browser='0.0.0.0', 'incompatible browser'],
   ['key-avro-browser', r => r.externalRequests=['https://example.invalid'], 'external browser requests'],
   ['key-parquet-browser', r => r.sha256['../../outside']='0'.repeat(64), 'unsafe evidence path'],
   ['key-parquet-browser', r => r.sha256['/etc/passwd']='0'.repeat(64), 'unsafe evidence path'],
