@@ -28,6 +28,8 @@ test('nullable numeric Fields reject null bounds without throwing',()=>{
   expect(validateDocument(doc).valid).toBe(false);
   expect(validateCoreFieldValue(doc,{module:'m',element:'f'},{[wrapper]:'1'} as any).valid).toBe(false);
  }
+ const referenced=schemaPropertiesFixture();const item=referenced.modules[0]!.elements[4]!;item.nullability='absent-allowed';item.facets={range:{min:null}};
+ expect(validateDocument(referenced).valid).toBe(false);
 });
 
 function numericDocument(scalarType='integer',range:Record<string,unknown>={min:{integerToken:'0'},max:{integerToken:'10'}}):any {
@@ -41,7 +43,7 @@ test('unknown facets cannot bypass known range validation or receipt verificatio
   expect(()=>declareCoreSchemaProperties(bad,numericIdentity,{title:'Invalid'})).toThrow();
   const good=numericDocument();good.modules[0].elements[0].facets.future=true;
   const receipt=declareCoreSchemaProperties(good,numericIdentity,{title:'Good'});
-  expect(receipt.target.modules[0]!.elements[0]!.facets!.future).toBe(true);
+  expect((receipt.target.modules[0]!.elements[0]!.facets as any).future).toBe(true);
   const forged=structuredClone(receipt);Object.assign((forged.target.modules[0]!.elements[0]!.facets as any),unknown,{range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
   expect(()=>verifyCoreSchemaPropertyDeclaration(forged,forged.target)).toThrow();
  }
