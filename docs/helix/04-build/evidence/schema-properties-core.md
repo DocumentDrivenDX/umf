@@ -102,3 +102,26 @@ with the required worktree write access.
 The label-removal replay refreshes the four stale source fingerprints in the
 schema-properties browser record. The schema generator now reproduces the
 checked-in schemas without restoring the removed title label.
+
+## Post-sweep evidence repair (2026-10-05)
+
+The schema generator now reproduces the published title. A fresh Chromium replay
+passes 38 cases, six recoveries, nine refusals and six extension checks, with
+zero accessor executions or external requests; all 17 recorded source hashes
+match the current tree. The core-only replay passes 176 tests in 27 files with
+4,565 assertions. TypeScript checks, 346 schemas and 59 extension packages pass.
+
+Regression investigation also restored 100 vendored RDF/XML and SHACL files to
+the existing pinned manifest hashes. Git attributes retain upstream line endings.
+Regenerated SHACL source exports pass 300 RDFLib 7.6.0 graph-isomorphism checks
+and 13 native path checks. The RDF/XML, SHACL, dbt freshness and acceptance-ledger
+replay passes 12 tests with 3,261 assertions. dbt Core 1.10.0 now retains the
+six native target artifacts in tracked fixtures; all 14 provenance files match
+their hashes, the independent oracle passes four comparisons, and Chromium
+passes four serialization round trips and four edits. An independent Protobuf
+7.36.2 / jsonschema 4.26.0 projection replay passes all five tests.
+
+Selection receipt compatibility across retired validator warnings remains an
+open owner decision. No receipt-verification behavior was changed by these
+repairs. Broader native qualification evidence requires separate regeneration;
+these scoped checks do not establish a passing full repository suite.
