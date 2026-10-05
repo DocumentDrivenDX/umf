@@ -73,18 +73,28 @@ discrete interval emptiness, accessor-safe identities and atomic rejection of
 malformed facet patches. A further null-bound guard covers collection literals
 that reach a malformed item Field before document validation finishes.
 
-Fresh verification with Bun 1.3.14 passes 158 core tests across 27 explicitly
-selected test files, with 4,379 assertions and zero failures. Both TypeScript
+Fresh verification with Bun 1.3.14 passes 176 core tests across 27 explicitly
+selected test files, with 4,572 assertions and zero failures. Both TypeScript
 checks, the browser build, the 346-schema audit and the 59-package audit pass.
 An initial directory-filter run unintentionally included `core-ideals` and was
 terminated; it is not a completed broader-suite result. The first expanded
 browser attempt exposed the recursive null-bound failure, which was corrected
 before the successful replay.
 
-Chromium 153.0.8010.12 passes 22 validation cases, six serialization recoveries,
+Chromium 153.0.8010.12 passes 38 validation cases, six serialization recoveries,
 nine operation refusals and six extension-callback observations across validation
 and selection. Getter executions and external requests are both zero. The
 refreshed browser record fingerprints all tested sources, including the new
 regression file, and the freshly built bundle. Python 3.9.6 again agrees with all
 58 independent integer64/decimal(20,2) probes. Broader native/conformance suites
 were not replayed to completion; native adapter admission remains unclaimed.
+
+Follow-up verification found that a single exclusive bound at a declared numeric
+domain extreme could still describe an empty interval. The corrected validator
+checks signed/unsigned integer and fixed-scale decimal extrema without expanding
+the declared width or precision. Regression coverage includes one-bit integers,
+inclusive and neighboring valid bounds, atomic authoring/receipt checks and
+maximum-safe-integer width/precision declarations. Sixteen additional Chromium
+cases cover exclusive extrema and inclusive controls. An initial worktree core
+run hit two evidence-file write permissions; the complete replay above passed
+with the required worktree write access.

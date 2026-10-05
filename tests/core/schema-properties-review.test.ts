@@ -2,6 +2,7 @@ import {test,expect} from 'bun:test';
 import {Registry,validateDocument,selectCoreElements,validateCoreFieldValue,declareCoreSchemaProperties,verifyCoreSchemaPropertyDeclaration,resolveCoreDefault} from '../../src/index';
 import {schemaPropertiesFixture} from '../../scripts/core-schema-properties-cases';
 import type {ExtensionPackage} from '../../src/model/types';
+import type {CoreLiteral} from '../../src/model/schema-literals';
 
 test('extension validators receive complete isolated 0.8.0 context at every scope',()=>{
  const doc=schemaPropertiesFixture(),id='fixture.context';doc.vocabularies[id]={version:'1.0.0'};
@@ -55,6 +56,52 @@ test('integer and fixed-scale ranges reject empty discrete intervals',()=>{
   const doc=numericDocument(scalarType,{min:token(start),max:token(start+gap),minInclusive,maxInclusive});
   const valid=start+(minInclusive?0:1)<=start+gap-(maxInclusive?0:1);
   expect(validateDocument(doc).valid).toBe(valid);
+ }
+});
+
+test('single exclusive bounds reject integer and decimal domain extrema',()=>{
+ const domains:{scalarType:string;facets:Record<string,unknown>;min:bigint;max:bigint;scale:number}[]=[];
+ for(const bits of [1,2,8,64])for(const signed of [false,true]){
+  const magnitude=1n<<BigInt(bits-(signed?1:0));
+  domains.push({scalarType:'integer',facets:{integerWidth:{bits,signed}},min:signed?-magnitude:0n,max:magnitude-1n,scale:0});
+ }
+ for(const [precision,scale] of [[1,0],[2,0],[2,2],[20,2]] as const){
+  const max=10n**BigInt(precision)-1n;
+  domains.push({scalarType:'decimal',facets:{precision,scale},min:-max,max,scale});
+ }
+ for(const domain of domains)for(const end of ['min','max'] as const){
+  const wrapper=domain.scalarType==='integer'?'integerToken':'decimalToken';
+  const token=(coefficient:bigint)=>({[wrapper]:`${coefficient}e-${domain.scale}`} as CoreLiteral);
+  const extreme=end==='min'?domain.max:domain.min,flag=end+'Inclusive';
+  const source=numericDocument(domain.scalarType);source.modules[0].elements[0].facets=domain.facets;
+  const before=JSON.stringify(source),emptyRange={[end]:token(extreme),[flag]:false};
+  const invalid=structuredClone(source);invalid.modules[0].elements[0].facets.range=emptyRange;
+  expect(validateDocument(invalid).valid).toBe(false);
+  expect(()=>declareCoreSchemaProperties(source,numericIdentity,{facets:{range:emptyRange}})).toThrow();
+  expect(JSON.stringify(source)).toBe(before);
+  for(const range of [{[end]:token(extreme),[flag]:true},{[end]:token(extreme+(end==='min'?-1n:1n)),[flag]:false}]){
+   const receipt=declareCoreSchemaProperties(source,numericIdentity,{facets:{range}});
+   expect(verifyCoreSchemaPropertyDeclaration(receipt,receipt.target)).toEqual(receipt);
+   expect(validateCoreFieldValue(receipt.target,{module:'m',element:'f'},token(extreme) as any).valid).toBe(true);
+  }
+ }
+});
+
+test('range emptiness checks do not expand enormous numeric domains',()=>{
+ const enormous=Number.MAX_SAFE_INTEGER;
+ for(const signed of [false,true])for(const end of ['min','max'] as const){
+  const bound=end==='min'?'127':signed?'-128':'1';
+  const doc=numericDocument('integer',{[end]:{integerToken:bound},[end+'Inclusive']:false});
+  doc.modules[0].elements[0].facets.integerWidth={bits:enormous,signed};
+  expect(validateDocument(doc).valid).toBe(true);
+ }
+ const unsigned=numericDocument('integer',{max:{integerToken:'0'},maxInclusive:false});
+ unsigned.modules[0].elements[0].facets.integerWidth={bits:enormous,signed:false};
+ expect(validateDocument(unsigned).valid).toBe(false);
+ for(const scale of [0,enormous])for(const end of ['min','max'] as const){
+  const doc=numericDocument('decimal',{[end]:{decimalToken:scale===0?(end==='min'?'99':'-99'):'0'},[end+'Inclusive']:false});
+  Object.assign(doc.modules[0].elements[0].facets,{precision:enormous,scale});
+  expect(validateDocument(doc).valid).toBe(true);
  }
 });
 
