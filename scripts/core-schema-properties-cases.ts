@@ -29,5 +29,9 @@ export function schemaPropertiesCases(){
  bad('collection-bound-on-scalar',d=>(d.modules[0]!.elements[4]!.facets as any)={collectionSize:{min:1}});
  bad('range-on-string',d=>(d.modules[0]!.elements[2]!.facets as any).range={min:{string:'a'}});
  bad('unknown-default-behavior',d=>(d.modules[0]!.elements[0]!.default as any).on='always');
+ bad('null-numeric-bound',d=>{const f=d.modules[0]!.elements[4]!;f.nullability='absent-allowed';f.facets={range:{min:null}};});
+ bad('unknown-facet-inverted-range',d=>d.modules[0]!.elements[4]!.facets={future:true,range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
+ bad('empty-discrete-integer-range',d=>d.modules[0]!.elements[4]!.facets={range:{min:{integerToken:'0'},max:{integerToken:'1'},minInclusive:false,maxInclusive:false}});
+ bad('empty-discrete-decimal-range',d=>{const f=d.modules[0]!.elements[1]!;delete f.examples;delete f.default;f.facets={precision:20,scale:2,range:{min:{decimalToken:'0'},max:{decimalToken:'0.01'},minInclusive:false,maxInclusive:false}};});
  return rows;
 }
