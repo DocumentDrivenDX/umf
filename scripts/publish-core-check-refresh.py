@@ -22,6 +22,7 @@ def local(p):
  return p
 def main():
  native=load(OUT/'native-browser.json');assert native['complete'] is True
+ for p,h in native['sourceInputs'].items():assert digest(p)==h,'Source changed after execution: '+p
  assert [r['command'] for r in native['runs']]==native['commands']
  aux=load(OUT/'auxiliary.json')
  runs=native['runs']+aux['runs']
