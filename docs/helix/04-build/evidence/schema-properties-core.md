@@ -156,3 +156,21 @@ An optional `bun test tests` run was stopped after 477 passing tests while it
 continued through unrelated upstream fixtures, with no failures observed at
 that point. It is not a completed full-suite result. Current native qualification
 gates were not regenerated or weakened by this amendment.
+
+## Completed pre-simplification regression run
+
+This run and its focused replays cover the implementation at `0ed68e30`,
+before the concurrent API simplification commits `5a001660` through `cdd0070c`.
+They do not verify those later changes.
+
+The complete `bun test tests` run finished in 1,911.38 seconds: 2,114 passed,
+18 failed, 130,636 assertions across 380 files. It began before the dbt repair
+and without `UMF_PYTHON_PATH`; it is not a green run of the final checkout.
+Post-fix replays clear the dbt failure, the acceptance-ledger timeout, the
+projection oracle and four Protobuf failures. The Protobuf directory passes
+10 tests and 103 assertions with its configured pinned Python runtime.
+Eleven observed qualification-gate failures remain unrepaired: cardinality
+(one), facets (four), relationship (one), key (three), field (one) and
+nullability (one). They include stale fingerprints, missing generated bundles
+and historical absolute-path handling. Native evidence regeneration and
+portable-path follow-up remain outstanding; no gate was weakened.
