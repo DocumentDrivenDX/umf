@@ -74,7 +74,7 @@ malformed facet patches. A further null-bound guard covers collection literals
 that reach a malformed item Field before document validation finishes.
 
 Fresh verification with Bun 1.3.14 passes 176 core tests across 27 explicitly
-selected test files, with 4,572 assertions and zero failures. Both TypeScript
+selected test files, with 4,565 assertions and zero failures after label removal. Both TypeScript
 checks, the browser build, the 346-schema audit and the 59-package audit pass.
 An initial directory-filter run unintentionally included `core-ideals` and was
 terminated; it is not a completed broader-suite result. The first expanded
@@ -98,3 +98,7 @@ maximum-safe-integer width/precision declarations. Sixteen additional Chromium
 cases cover exclusive extrema and inclusive controls. An initial worktree core
 run hit two evidence-file write permissions; the complete replay above passed
 with the required worktree write access.
+
+The label-removal replay refreshes the four stale source fingerprints in the
+schema-properties browser record. The schema generator now reproduces the
+checked-in schemas without restoring the removed title label.
