@@ -85,3 +85,37 @@ gates, all 174 native/browser inventory commands and 91 post-parent browser refr
 commands. The final affected API replay passes 208 tests; 48 semantic-reference
 browser checks and 14 independent shape cases pass. Native equivalence and
 publisher validator parity remain outside this claim.
+
+## Review-fix revalidation
+
+Review of the PR produced the following changes, merged with the schema-properties
+parent `d64be8c8`: a `SEMANTIC_TYPE_COMPETING_MEANING` warning when core
+`semanticTypes` and the prototype extension payload disagree, 0.9.0 diagnostics that
+no longer describe the document as 0.8.0, validator exception messages in `unknown`
+results, and a documented, tested limit that the 0.8.0 schema-properties APIs reject
+0.9.0 documents. A proposed `legacySemanticTypes` target field was added and then
+removed; upgrade collisions remain archived only in the receipt `residuals`.
+
+The [current acceptance](../../../../fixtures/validation/core-semantic-types-acceptance.json)
+records `reviewFixRevalidation` for source revision
+`6e41b2043c4d02e2dd6a1c62e9cca3a1ffcbfa4f` and supersedes the prior record, retained at
+`59c3c424`. With Bun 1.4.2, Python 3.9.6, jsonschema 4.25.1 and Chromium 153.0.8010.12:
+
+- affected API replay: 212 passed, zero failed; 5,127 assertions across 33 files.
+- `bun run typecheck`, `bun run build`: passed. Package and schema audits: 60/60 and 352/352.
+- Chromium: 48 checks, 14 Bun/browser diagnostic comparisons, zero external requests.
+- Independent Python Draft 2020-12 reference-shape oracle: 14/14 agreement.
+
+Logs are under `fixtures/validation/core-semantic-types/revalidation/`.
+
+Not re-executed: the repository-wide native/browser replay and the 17 retained
+admission gates. This machine is not the pinned replay environment (Bun 1.3.14,
+Python 3.12, Java 21, Spark 4.0.1, database containers). A gate attempt after building
+the optional runtimes passed 4 and failed 13 because specialized per-system bundles such
+as `dist/avro-facet-selection.js` are absent. A whole-suite run at `a987114a` passed
+2,133 and failed 24 (native/evidence gates plus two timing-sensitive tests that pass
+alone). These are diagnostics. The earlier published repair counts (2,136 live tests,
+17 gates, native replay) were produced at their own source revisions and are not
+re-claimed for this one; the replay in the check-repair document must be rerun in its
+pinned environment before relying on them for the final tree. No native equivalence or
+publisher validator parity is claimed.

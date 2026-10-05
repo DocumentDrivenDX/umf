@@ -749,7 +749,7 @@
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/binding/index.ts": "239e5a737a5b92edbef1e447685f75fb905cf093aa392971aadd8df2c64a050c",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/extensions/semantic-types/index.ts": "936e4ad24ad3705c422de651b2479c928891a3d42f7ad335650af7e66315070d",
+    "src/extensions/semantic-types/index.ts": "b10193e9bf582ec8b575dd0eb833f881870f6a5f10948b521200dad0296095f6",
     "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "018ec22d88de99ed75bab562985ae7c586aa0de3a141a9e55d93f58b8d84f65e",
@@ -822,9 +822,9 @@
     "src/validation/relationships.ts": "5d94c2df0847d0315b514a005407d6e95f34531d9822ae5b2db48f176673a932",
     "src/validation/schema-properties.ts": "985673b609b1a0774a8cd89ef60c7110422f5fe7d738f6c0cf55fd93aa5b2139",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
-    "src/validation/semantic-types.ts": "683e06876da44f3de7be6be66c5e40e2a9498614dd1356f72f32ec50df15b5e3",
-    "tests/semantic-types/core.test.ts": "bb114c0b86b474f0c9ce3b1919d71aeb2afe40f6e920b732ed3106fe4549ea97",
-    "tests/semantic-types/semantic-types.test.ts": "23acb010b26915b8ca0dcb7324fa38c71de763edd3f51a935399dc9333df09f1",
+    "src/validation/semantic-types.ts": "38171bb88a0144895e04886dbff35782da871d2e4e499ffc0504cb6b374a5312",
+    "tests/semantic-types/core.test.ts": "99066116d65cf1849d97db210bf5566ee440950d61bb54d541041925982c1eb2",
+    "tests/semantic-types/semantic-types.test.ts": "1ce38d023c4a206ec3a369fa7382e9255656e3d6e14921b63a2c74f48eda02a6",
     "docs/helix/04-build/evidence/core-check-repair.md": "3ef2fddf6321ae3d97e6ff2ce1c7db7647724676ec2cfe90835dd37f95980e46",
     "fixtures/validation/core-check-refresh/gates.json": "120806122969f3c94f8da97d2aa4daa1434a0c47b0e27de57088265fef69de43",
     "fixtures/validation/core-check-refresh/regression.json": "d178cbb5a0abb90e4e028da77573f257dabe1f4e2f5e766d8980b2ade4a2de73",
@@ -892,5 +892,80 @@
       "Other version-specific core authoring APIs retain earlier version limits",
       "Repository-wide native and retained evidence gates do not pass in this checkout"
     ]
+  },
+  "supersededEvidence": {
+    "revision": "59c3c424b80eeb64e5acfe53217e235e9a09286b",
+    "path": "fixtures/validation/core-semantic-types-acceptance.json",
+    "sha256": "9ce34d3d8d67b5bede15b4d375fcfcc35e64d2d2da31ff40c389a3c4d90da321",
+    "note": "Retained at that Git revision; finalChecks, exploratoryChecks and historical records above remain as published for their own source revisions."
+  },
+  "reviewFixRevalidation": {
+    "scope": "Review-driven changes to the competing-meaning warning, 0.9.0 diagnostic text, validator error detail and the 0.8.0 schema-properties limit test, after merging the schema-properties parent. Revalidates semantic-types checks only.",
+    "sourceRevision": "6e41b204587ceb722f6137dba39f30a1b1c825a2",
+    "parentRevision": "d64be8c8",
+    "runtime": {
+      "bun": "1.4.2",
+      "chromium": "153.0.8010.12",
+      "python": "3.9.6",
+      "jsonschema": "4.25.1",
+      "platform": "darwin"
+    },
+    "checks": {
+      "affected": {
+        "passed": 212,
+        "failed": 0,
+        "assertions": 5127,
+        "tests": 212,
+        "files": 33
+      },
+      "typecheck": "passed",
+      "build": "passed",
+      "packages": {
+        "passed": 60,
+        "total": 60
+      },
+      "schemas": {
+        "passed": 352,
+        "total": 352
+      },
+      "browser": {
+        "checks": 48,
+        "cases": 14,
+        "externalRequests": 0
+      },
+      "independentShapeOracle": {
+        "agreed": 14,
+        "cases": 14
+      }
+    },
+    "logs": {
+      "typecheck": "fixtures/validation/core-semantic-types/revalidation/typecheck.log",
+      "build": "fixtures/validation/core-semantic-types/revalidation/build.log",
+      "audits": "fixtures/validation/core-semantic-types/revalidation/audits.log",
+      "affected": "fixtures/validation/core-semantic-types/revalidation/affected.log",
+      "browser": "fixtures/validation/core-semantic-types/revalidation/browser.log",
+      "oracle": "fixtures/validation/core-semantic-types/revalidation/oracle.log"
+    },
+    "notRerun": {
+      "reason": "Environment differs from the pinned replay (Bun 1.3.14, Python 3.12, Java 21, Spark 4.0.1, PostgreSQL and SQL Server containers). The repository-wide native/browser replay and admission gates were not re-executed and no new admission or native-equivalence claim is made.",
+      "retainedGates": {
+        "passed": 4,
+        "failed": 13,
+        "files": 8,
+        "log": "fixtures/validation/core-semantic-types/revalidation/retained-gates-attempt.log",
+        "failure": "Missing specialized per-system bundles such as dist/avro-facet-selection.js; the native replay that produces them was not run"
+      },
+      "broadSuite": {
+        "passed": 2133,
+        "failed": 24,
+        "log": "fixtures/validation/core-semantic-types/revalidation/broad-exploratory-summary.log",
+        "scope": "Run at a987114a before optional runtimes were built; failing names are native/evidence gates and two timing-sensitive tests that pass alone. Diagnostics only."
+      }
+    },
+    "sha256": {
+      "fixtures/validation/core-semantic-types-oracle-inputs.json": "e56d1c1c00c2e87423146828339517a891acba6ab6172b0755331de16853ef20",
+      "fixtures/validation/core-semantic-types-oracle.json": "c01d3a94fdde630e1f41de9db39ed46b38e38984f506c582576c4c30eff4cdf2",
+      "fixtures/validation/core-semantic-types-browser.json": "13d7743677f253fdf3b28826c5c197e75f99ae643828825ae1b85552b83f5530"
+    }
   }
 }
