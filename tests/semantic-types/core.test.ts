@@ -158,5 +158,5 @@ test('0.9.0 diagnostics do not describe the document as 0.8.0',()=>{
 });
 
 test('0.8.0 schema-property authoring APIs reject 0.9.0 documents (documented limit)',()=>{
- expect(()=>inspectCoreSchemaProperties(core(),id)).toThrow();
+ expect(()=>inspectCoreSchemaProperties(core(),{scope:'element',...id})).toThrow('0.8.0');
 });
