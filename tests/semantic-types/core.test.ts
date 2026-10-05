@@ -119,3 +119,25 @@ test('invalid rollback sources, malformed receipts and unsafe policy inputs reje
  let invoked=false;const policy=Object.defineProperty({},'migrateExtension',{enumerable:true,get(){invoked=true;return true;}});
  expect(()=>upgradeSemanticTypesEnvelope(receipt.source,policy as any)).toThrow();expect(invoked).toBe(false);
 });
+
+test('core declarations preserve an actual pinned TableSpec source through explicit migration and native export',async()=>{
+ const u=await import('../../src/index');
+ const native=await Bun.file('native/tablespec/sources/examples/providers.yaml').text();
+ const imported=u.importTableSpec(native,{id:'provider-directory',format:'yaml'});
+ const v2=u.upgradeFieldEnvelope(imported).target;
+ const v3=u.upgradeNullabilityEnvelope(v2).target;
+ const v4=u.upgradeCardinalityEnvelope(v3).target;
+ const v5=u.upgradeFacetEnvelope(v4).target;
+ const v6=u.upgradeKeyEnvelope(v5).target;
+ const v7=u.upgradeRelationshipEnvelope(v6).target;
+ const v8=u.upgradeSchemaPropertiesEnvelope(v7).target;
+ const v9=upgradeSemanticTypesEnvelope(v8).target;
+ const provider={module:'table',element:'column:0'};
+ const authored=declareCoreSemanticTypes(v9,provider,[{vocabulary:'example.healthcare',version:'1.0.0',term:'provider_id'}]).target;
+ for(const format of ['json','yaml'] as const){
+  const restored=readDocument(writeDocument(authored,format),format);
+  expect(u.exportTableSpec(restored)).toBe(native);
+  expect(getCoreSemanticTypes(restored,provider)![0]!.term).toBe('provider_id');
+ }
+ expect(u.exportTableSpec(imported)).toBe(native);
+},30_000);
