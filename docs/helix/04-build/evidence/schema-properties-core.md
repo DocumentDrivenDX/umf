@@ -13,6 +13,8 @@ ddx:
       kind: informed_by
     - id: TP-001
       kind: informed_by
+    - id: CONTRACT-050
+      kind: informed_by
 ---
 
 # Shared schema properties
@@ -156,3 +158,40 @@ An optional `bun test tests` run was stopped after 477 passing tests while it
 continued through unrelated upstream fixtures, with no failures observed at
 that point. It is not a completed full-suite result. Current native qualification
 gates were not regenerated or weakened by this amendment.
+
+## Consolidated TableSpec format session (2026-10-05)
+
+The owner requested incorporation of the “Split TableSpec format meanings”
+session into this work and PR #1. Its design is retained as CONTRACT-050 and
+FEAT-005 IDEAL-07, with the CONTRACT-030 native-recovery boundary and the ordered
+implementation-plan work. Documentation/examples, input parsing, output
+rendering, explicit typed enumerations and dialect-qualified structural patterns
+remain distinct. No portable constraint or authored intent is inferred from a
+native format string. The recipe/runtime design is still separate follow-up work.
+
+That session’s schema-generator correction, fresh browser evidence, exact
+vendored source-byte restoration and durable dbt freshness provenance repairs
+are already included in PR #1. Its old selection-receipt compatibility decision
+is superseded by the owner-directed removal described above. Its unresolved
+full-suite/native-qualification work is continued by the current replay rather
+than treated as passing historical evidence.
+
+## Completed diagnostic regression and current replay (2026-10-05)
+
+The host `bun test tests` diagnostic run completed rather than being stopped:
+2,120 passed and 12 failed, 130,698 assertions across 380 files. It ran while
+verification tooling was being repaired, so it is not the immutable final
+acceptance run. One failure was the absent Python projection oracle; replay
+with Protobuf 7.36.2 / jsonschema 4.26.0 passed all five tests in that file.
+Eleven failures concern qualification records, missing generated bundles or
+historical browser/path assumptions. Current acceptance remains pending the
+isolated logged native/browser inventory, unchanged-source regression and gates.
+
+The native replay also identified a TableSpec source-byte mismatch. Restoring
+`native/tablespec/sources/tests/unit/test_umf_loader.py` from the pinned TableSpec
+commit restores its twelve upstream coverage annotations and the original
+manifest hash. The expected hash was not changed. The source directory now has
+Git text conversion disabled. Cardinality browser wrappers and facet conformance
+now require the exact replayed Chromium pin, with the retained 148 default for
+historical records. Current replay uses Chromium 153.0.8010.12. Failed and partial
+attempts remain separate from the passing command inventory.
