@@ -1,0 +1,415 @@
+{
+  "scope": "Exact integer64 and decimal(20,2) literal acceptance, not native storage equivalence",
+  "python": "3.9.6",
+  "probes": 58,
+  "agreed": 58,
+  "observations": [
+    {
+      "domain": "integer",
+      "token": "-9223372036854775809",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "-9223372036854775808",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "-2",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "-1",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "-0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "0.0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "0e99999999",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.20",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.001",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.5",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "2",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "2e0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e-1",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "0.01",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "0.009",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "999999999999999999.99",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1000000000000000000",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "9223372036854775807",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "9223372036854775808",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e30",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e-30",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e99999999",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "01",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "NaN",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "integer",
+      "token": "1\n",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-9223372036854775809",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-9223372036854775808",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-2",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-1",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0e99999999",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.20",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.001",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.5",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "2",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "2e0",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e-1",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.01",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.009",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "999999999999999999.99",
+      "accepted": true,
+      "pythonAccepted": true,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1000000000000000000",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "9223372036854775807",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "9223372036854775808",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e30",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e-30",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e99999999",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "01",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "NaN",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1\n",
+      "accepted": false,
+      "pythonAccepted": false,
+      "agrees": true
+    }
+  ],
+  "inputSha256": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf"
+}

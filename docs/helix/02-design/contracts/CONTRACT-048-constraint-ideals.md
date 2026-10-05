@@ -137,3 +137,12 @@ decimal scale, integer boundaries, padding and CHECK validation-state cases.
 - [ ] Two independently evidenced priority mappings for any core candidate.
 - [ ] Versioned schema, migration/rollback, native/browser oracle results and
   owner placement. These remain future work, not implied by this proposal.
+
+## Owner-directed experimental implementation
+
+On 2026-10-04 the owner authorized core implementation of allowed values, exact
+numeric bounds and minimum length. CONTRACT-049 owns their experimental 0.8.0
+surface and typed literals. This updates core-task placement only: the useful
+native mapping hypotheses, ideal-admission evidence and all-five delivery ledger
+above remain unproved. Pattern, row invariants and temporal ordering retain their
+separate proposal status.
