@@ -1,0 +1,16 @@
+13 | assert.equal(exportAvroSchema(avro),avroText);
+14 | assert.deepEqual(getAvroFieldMetadata(avro).map(row=>row.element.name),['customer_value','id','customer_id']);
+15 | for(const format of ['json','yaml'] as const)assert.equal(exportAvroSchema(readDocument(writeDocument(avro,format),format)),avroText);
+16 | assert(avro.modules.every(module=>!Object.hasOwn(module,'relationships')));
+17 | 
+18 | const python=Bun.spawn(['/home/erik/Projects/umf/.venv/bin/python','scripts/relationship/avro-parquet-native.py'],{stdout:'pipe',stderr:'pipe'});
+                      ^
+ENOENT: no such file or directory, posix_spawn '/home/erik/Projects/umf/.venv/bin/python'
+    path: "/home/erik/Projects/umf/.venv/bin/python",
+ syscall: "posix_spawn",
+   errno: -2,
+    code: "ENOENT"
+
+      at /Users/erik/.codex/worktrees/7eb8/umf/scripts/relationship/avro-parquet-oracle.ts:18:18
+
+Bun v1.3.14 (macOS arm64)

@@ -1,6 +1,6 @@
 {
   "scope": "Experimental PostgreSQL facet classification, authored projection and retained recovery in Chromium/WASM; compatibility and prior concept gates remain separate",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "bindingAccepted": false,
   "nativeEquivalence": false,
   "runs": [
@@ -51,21 +51,21 @@
   "sha256": {
     "dist/facet-node-tree.js": "bded2ed9c3a722e9845db6819b13e115c7a897098bbf3e6b9a8f86225a740b32",
     "dist/facet-resolved-predicate.js": "e275eb838a5f35f89251cb59c3e66aa08b6680b6edc77b17346917574df1945b",
-    "dist/postgresql-facet-catalog.js": "d04c6deac055a78e2aca057ad4e5413d19ad21b918ee58d29092dd399a47c09a",
+    "dist/postgresql-facet-catalog.js": "da0d5ab824457ff9ca6ec736644a1af3b483b5a50f2acccd7c3c43fb441ed457",
     "dist/postgresql-facet-predicate.js": "329736950e219dc9eb2edf94af5c2775cb0fb9d1e918391d0a50814554e07468",
     "dist/postgresql-facet-type.js": "e6f884192e45c2131cc2862933e64ba58b5edc54dc1a71b954e55302915ef3ed",
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
-    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
-    "fixtures/validation/facets-postgresql-catalog-browser.json": "61b5eaad57dca62572683528bcfa6cdb3bbec3eda6e7c45178cb50bd70c94434",
-    "fixtures/validation/facets-postgresql-classification-browser.json": "135b0794e35f47daeb0ae45cc3d706346a89c86956ce723a4ae770dd5eb1ea04",
+    "dist/postgresql/runtime.js": "c954cc1b994fa6c513d6c9281fa3139ec6358cedf924169469b90322f13ea09d",
+    "dist/umf.js": "163eff440b65da31bcb2c4d9b3aba28bd81a3a2f0f1cfc031c2c70b1fe63d0fc",
+    "fixtures/validation/facets-postgresql-catalog-browser.json": "84c5fe5100fd89bff3946a96e3e9e7e9de94cbaba7d076efbe4e70675b961dea",
+    "fixtures/validation/facets-postgresql-classification-browser.json": "c027f8afaf8464d0fa78b316498659d3a1220ce04ff13a0c952d3cb4d3c61265",
     "fixtures/validation/facets-postgresql-constraints-native.json": "32fd5b5cf6f3bfed6d9530f274c48b014879fb584bb0db0ea7461f88f761556c",
-    "fixtures/validation/facets-postgresql-discovery-browser.json": "9f70ade3bf2f3fd0b88d43c380c56752ed538b98408233427f21e154276e3541",
+    "fixtures/validation/facets-postgresql-discovery-browser.json": "30ef1287dff2e2c70cd2a65c91ba688b2d9e57bd9c415a2be2879d16f1357847",
     "fixtures/validation/facets-postgresql-discovery-native.json": "c2ae5bb2f369362bb00692dcebc3b0fc2b913dff6c7bd22c108d36b24d639f17",
-    "fixtures/validation/facets-postgresql-predicate-browser.json": "0f0ef9bed317ad46ac85ac0c29e26a0643eec2b7745cc6b3f5b04ec43f28dfba",
-    "fixtures/validation/facets-postgresql-projection-browser.json": "e5f5e5726743547a1ce205a39e5016593d7c2d4262d7c5df783eb41705445284",
+    "fixtures/validation/facets-postgresql-predicate-browser.json": "70f3bd67471fa98961951e81ffc07b1b0de03dc2462ff31b8d58b3ed01d65cc7",
+    "fixtures/validation/facets-postgresql-projection-browser.json": "557f43772ec1d352ca990c86b3572558bbb7720e95d8282f07ec8e43c4593371",
     "fixtures/validation/facets-postgresql-projection-native.json": "f07e14ec5ac8f0d80d71bf0ae1a3dc375dd2e18f17ffe90eb01d2140b554c51b",
-    "fixtures/validation/facets-postgresql-resolved-browser.json": "4268525360cae76b8efba8ea9d2fd1ec15caaa15591c52b7e86267be8ca744f1",
+    "fixtures/validation/facets-postgresql-resolved-browser.json": "18c27bfcc7367334392f3966eda54264d2658e15a8e0ad2528be51e78b2d0c60",
     "fixtures/validation/facets-postgresql-resolved-native.json": "cbca58adcb9998eca610fb190b654a3b0a4cbf304c84a4141adb1c5c60ad9b18",
     "scripts/core-ideals/facets-postgresql-browser.ts": "c6eccf0a4fe8a878e31a05634e7a8b643518cd03fdba4bf9b7960b75b1488b03",
     "scripts/core-ideals/facets-postgresql-cases.ts": "3e3e17211aec81a26e23561c583b95785e8055a130187d7d72f388968f84e4d3",
@@ -88,7 +88,7 @@
     "src/adapters/postgresql/facet-typmod.ts": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
     "src/core-ideals/facets-postgresql-projection.ts": "e625d0c583ed9451eb815a239817771bdf6987a27a4e559a2171c338264c44e8",
     "src/core-ideals/facets-postgresql.ts": "4f3176f7e17a311ddeb5637132e7dce266a17f588c0a1300153bb9b5878ec6d0",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
     "tests/core-ideals/facets-postgresql-predicate.test.ts": "fd9ed85eb49b92150502a25603f693974672159e08b33a43087c4b6a78f4e5e5"
   }
 }

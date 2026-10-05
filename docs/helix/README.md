@@ -35,7 +35,8 @@ content. Prototype extension conversion is explicit and refuses unresolved
 collisions. [CONTRACT-051](02-design/contracts/CONTRACT-051-semantic-types.md) and
 [TD-051](02-design/technical-designs/TD-051-semantic-types.md) define scope.
 [Execution evidence](04-build/evidence/core-semantic-types.md) records final checks
-and the failing repository-wide native/evidence replays.
+and historical failed attempts. The [check repair](04-build/evidence/core-check-repair.md)
+records the successful native/browser replay and final regression/gates.
 Publisher catalogs and native validator parity remain separate work; existing
 version-specific non-semantic authoring APIs retain their supported-version limits.
 
@@ -70,12 +71,14 @@ query/mutation execution, database migration or native/domain equivalence.
 | --- | --- |
 | Relationship ideal admission (two useful priority mappings) | Passed; qualified PostgreSQL and SQL Server mappings |
 | Qualified five-priority relationship delivery | Passed, with explicit target-specific residuals/refusals |
-| Fresh integrated compatibility replay | Passed; 175/175 commands |
-| Broad Bun regression (separate gates excluded) | 2055 tests, 369 files, 129660 assertions, 0 failures |
-| Typecheck, schema/package audit and browser build | Passed; 343 schemas / 59 packages |
+| Fresh integrated compatibility replay | Passed; 174-command inventory plus 91 post-parent browser refreshes |
+| Broad Bun regression (separate gates excluded) | 2136 tests, 374 files, 130804 assertions, 0 failures |
+| Typecheck, schema/package audit and browser build | Passed; 352 schemas / 60 packages |
 | Native-equivalence graduation | Not claimed |
 
-Final records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
+Current verification: [check repair](04-build/evidence/core-check-repair.md) and
+[unique gate outcomes](../../fixtures/validation/core-check-refresh/gates.json).
+Historical integrated records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
 and [integrated execution evidence](../../fixtures/validation/relationship-integrated-acceptance-evidence.json).
 The integrated record must name the tested revision, native/browser versions,
 subsets, command outcomes, source fingerprints and any failed attempts or reruns.

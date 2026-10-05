@@ -1,0 +1,119 @@
+{
+  "complete": true,
+  "sourceRevision": "074cf30f33d8eb72af44bd63f68b4c1f0a917a73",
+  "uniqueTests": 17,
+  "files": 8,
+  "failed": 0,
+  "scope": "Eight gate files completed; only the affected Field file was rerun after correcting aggregate browser metadata. Two already-passing Field cases overlap and are not counted twice. Core/native recovery implementations did not change.",
+  "runs": [
+    {
+      "log": "fixtures/validation/core-check-refresh/gates-1.log",
+      "sha256": "7eff3ccfca958ec311023f587a6199cbfd7c55a2b133ebd0621d3a20fe8fac54",
+      "results": {
+        "passed": 16,
+        "failed": 1,
+        "assertions": 204,
+        "tests": 17,
+        "files": 8
+      }
+    },
+    {
+      "log": "fixtures/validation/core-check-refresh/gates-field-final.log",
+      "sha256": "4d01015a4dda328696d6a3b65a1a11f2872891224ec0157aa00d66ed3c7e38d3",
+      "results": {
+        "passed": 3,
+        "failed": 0,
+        "assertions": 25,
+        "tests": 3,
+        "files": 1
+      }
+    }
+  ],
+  "currentTests": [
+    {
+      "file": "tests/core-ideals/cardinality-conformance.test.ts",
+      "name": "Cardinality evidence gate rejects stale, missing, unsafe and failed proof",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/cardinality-conformance.test.ts",
+      "name": "five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/facets-conformance.test.ts",
+      "name": "all five facet bindings preserve authored ideals, native refinements and explicit losses",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "name": "facet evidence refuses missing, stale, failed, unsafe and incompatible proofs",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "name": "facet evidence requires all five accepted bindings without granting ideal admission",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "name": "facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/field-conformance.test.ts",
+      "name": "all five binding contracts enforce policy and recover ideal/native representations",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/field-conformance.test.ts",
+      "name": "current native/browser evidence fingerprints pass; changed inputs and missing evidence fail",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/field-conformance.test.ts",
+      "name": "group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/key-conformance.test.ts",
+      "name": "Key ideal admission and five-system delivery retain both recovery directions without native equivalence",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/key-evidence.test.ts",
+      "name": "Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/key-evidence.test.ts",
+      "name": "Key evidence requires complete current five-system qualifications without granting admission",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/nullability-conformance.test.ts",
+      "name": "Nullability gate requires current core and five native/browser evidence records",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/nullability-conformance.test.ts",
+      "name": "five Nullability bindings preserve ideals, native payloads and explicit loss policy",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/relationship-conformance.test.ts",
+      "name": "authored shape corpus preserves unknown content, keyed association and migration rollback",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/relationship-conformance.test.ts",
+      "name": "ideal admission and qualified five-system delivery require current executable proofs",
+      "status": "pass"
+    },
+    {
+      "file": "tests/core-ideals/relationship-conformance.test.ts",
+      "name": "missing, failed, stale, tampered and version-mismatched proofs refuse admission",
+      "status": "pass"
+    }
+  ]
+}

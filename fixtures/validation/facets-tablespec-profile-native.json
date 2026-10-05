@@ -6,7 +6,7 @@
     "jsonschema": "4.25.1",
     "spark": "4.0.1",
     "greatExpectations": "1.15.1",
-    "java": "21.0.2"
+    "java": "21.0.12.1"
   },
   "declarations": [
     {
@@ -2036,55 +2036,55 @@
     {
       "case": "length-supplementary",
       "profile": "length-one",
-      "inputText": "😀",
+      "inputText": "\ud83d\ude00",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "😀",
+      "sparkValueText": "\ud83d\ude00",
       "sparkErrorType": null
     },
     {
       "case": "max-supplementary",
       "profile": "max-only",
-      "inputText": "😀",
+      "inputText": "\ud83d\ude00",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "😀",
+      "sparkValueText": "\ud83d\ude00",
       "sparkErrorType": null
     },
     {
       "case": "length-combining",
       "profile": "length-one",
-      "inputText": "é",
+      "inputText": "e\u0301",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "é",
+      "sparkValueText": "e\u0301",
       "sparkErrorType": null
     },
     {
       "case": "max-combining",
       "profile": "max-only",
-      "inputText": "é",
+      "inputText": "e\u0301",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "é",
+      "sparkValueText": "e\u0301",
       "sparkErrorType": null
     },
     {
       "case": "length-supplementary-pair",
       "profile": "length-one",
-      "inputText": "😀😀",
+      "inputText": "\ud83d\ude00\ud83d\ude00",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "😀😀",
+      "sparkValueText": "\ud83d\ude00\ud83d\ude00",
       "sparkErrorType": null
     },
     {
       "case": "max-supplementary-pair",
       "profile": "max-only",
-      "inputText": "😀😀",
+      "inputText": "\ud83d\ude00\ud83d\ude00",
       "jsonAccepted": true,
       "sparkAccepted": true,
-      "sparkValueText": "😀😀",
+      "sparkValueText": "\ud83d\ude00\ud83d\ude00",
       "sparkErrorType": null
     },
     {
@@ -2360,7 +2360,7 @@
     },
     {
       "profile": "length-one",
-      "value": "😀",
+      "value": "\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2377,7 +2377,7 @@
     },
     {
       "profile": "length-one",
-      "value": "é",
+      "value": "e\u0301",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2394,7 +2394,7 @@
     },
     {
       "profile": "length-one",
-      "value": "😀😀",
+      "value": "\ud83d\ude00\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2462,7 +2462,7 @@
     },
     {
       "profile": "max-only",
-      "value": "😀",
+      "value": "\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2479,7 +2479,7 @@
     },
     {
       "profile": "max-only",
-      "value": "é",
+      "value": "e\u0301",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2496,7 +2496,7 @@
     },
     {
       "profile": "max-only",
-      "value": "😀😀",
+      "value": "\ud83d\ude00\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2564,7 +2564,7 @@
     },
     {
       "profile": "conflict",
-      "value": "😀",
+      "value": "\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2581,7 +2581,7 @@
     },
     {
       "profile": "conflict",
-      "value": "é",
+      "value": "e\u0301",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2598,7 +2598,7 @@
     },
     {
       "profile": "conflict",
-      "value": "😀😀",
+      "value": "\ud83d\ude00\ud83d\ude00",
       "generatedRule": {
         "type": "expect_column_value_lengths_to_be_between",
         "kwargs": {
@@ -2644,7 +2644,7 @@
     "https://spark.apache.org/docs/4.0.1/sql-ref-ansi-compliance.html"
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+    "scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
     "native/tablespec/facets-runtime/casting_utils.py": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114",
@@ -2660,5 +2660,10 @@
     "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
     "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
     "scripts/core-ideals/facets-tablespec-profile-oracle.ts": "6245585de86671a7ff0cd94cb5cd2795bfec0840cb55bc4017d32774d0dfe6fb"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-tablespec-profile-oracle.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py"
+    ]
   }
 }

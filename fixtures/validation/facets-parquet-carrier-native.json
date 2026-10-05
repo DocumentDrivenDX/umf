@@ -247,7 +247,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>)]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-10-1.parquet",
@@ -262,7 +262,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC')), None]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>), None]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-11-0.parquet",
@@ -277,7 +277,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>)]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-11-1.parquet",
@@ -292,7 +292,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC')), None]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>), None]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-12-0.parquet",
@@ -668,7 +668,7 @@
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-carrier-native.py": "23f53528ff6c8dc0b02e660a6515a3536d786635623f4097b37d2480fc5311c0",
+    "scripts/core-ideals/facets-parquet-carrier-native.py": "23f53528ff6c8dc0b02e660a6515a3536d786635623f4097b37d2480fc5311c0",
     "fixtures/parquet/facets/carrier-0-0.parquet": "2ab9844a2fcaf56a36638facea12aff16005a78443a3e33eb109ab901b488db1",
     "fixtures/parquet/facets/carrier-0-1.parquet": "7dca9ced67fe2f40608336705dc1f3c4b1a96897aadb883197384741ee8ee51b",
     "fixtures/parquet/facets/carrier-1-0.parquet": "5edabd25f9d8126ac7f7a09c9d44ea2263ef5866555d11fcd597941bb441d441",
@@ -728,5 +728,10 @@
     "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-parquet-carrier-native.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-carrier-native.py"
+    ]
   }
 }

@@ -32,11 +32,13 @@ and prevent unqualified validation claims. Upgrade archives old field collisions
 rollback restores the exact source and retains the current edited envelope.
 Other version-specific core authoring APIs retain their published version limits.
 
-## Final verification
+## Original implementation verification
 
-[Machine-readable acceptance and source fingerprints](../../../../fixtures/validation/core-semantic-types-acceptance.json)
-identify source revision `02c8ee68` and the final runtime/schema/test inventory.
-Logs are under `fixtures/validation/core-semantic-types/`.
+The original acceptance at immutable revision `cc1446fdf919107ec2782d6eaa85cc8bf38fffa6`
+identifies implementation source `02c8ee68`. Original logs are under
+`fixtures/validation/core-semantic-types/`. The
+[current acceptance](../../../../fixtures/validation/core-semantic-types-acceptance.json)
+links that historical record and the subsequent check repair.
 
 With Bun 1.3.14 after parent review integration:
 
@@ -68,12 +70,18 @@ The broader exploratory suite, started before final parent integration, finished
 with 2,096 passes and 11 failures across 373 files (127,933 assertions). Failures
 involved a missing ignored dbt `graph.gpickle`, denied Go build-cache writes
 (including blocked projection compilation), absent `.venv/bin/python`, and two
-pinned SHACL source fingerprint mismatches. No full-suite success is claimed.
+pinned SHACL source fingerprint mismatches. At that point, no full-suite success
+was claimed.
 
 The retained core-ideal conformance/evidence replay finished with six passes and
 11 failures across eight files. Recorded Linux oracle paths are unsafe here;
 `dist/avro-facet-selection.js` is absent after the full public build; source
-fingerprint inventories also drifted. These historical admission gates require
-fresh native/browser replay. Their retained acceptance is not rewritten as passing.
-The PR remains draft with these repository-wide limitations visible; completed
-status here describes the bounded semantic-reference implementation evidence.
+fingerprint inventories also drifted. These results are historical. The subsequent
+[check repair](core-check-repair.md) restores pinned bytes, prepares the native
+environment and records fresh execution rather than relabeling the old attempts.
+
+Repaired verification passes 2,136 disjoint live tests, 17 unique admission/evidence
+gates, all 174 native/browser inventory commands and 91 post-parent browser refresh
+commands. The final affected API replay passes 208 tests; 48 semantic-reference
+browser checks and 14 independent shape cases pass. Native equivalence and
+publisher validator parity remain outside this claim.

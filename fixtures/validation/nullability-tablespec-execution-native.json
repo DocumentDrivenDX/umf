@@ -3,7 +3,7 @@
   "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
   "greatExpectations": "1.15.1",
   "spark": "4.0.1",
-  "java": "21.0.2",
+  "java": "21.0.12.1",
   "rows": [
     {
       "LOB": "MD",
@@ -312,6 +312,11 @@
   "sha256": {
     "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
     "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
-    "/home/erik/Projects/umf/scripts/core-ideals/nullability-tablespec-execution-oracle.py": "a75a3762870670b5bdc5b5366ac7474be148fc029466f0b488a47cdb1d349b8f"
+    "scripts/core-ideals/nullability-tablespec-execution-oracle.py": "a75a3762870670b5bdc5b5366ac7474be148fc029466f0b488a47cdb1d349b8f"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/nullability-tablespec-execution-oracle.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+    ]
   }
 }

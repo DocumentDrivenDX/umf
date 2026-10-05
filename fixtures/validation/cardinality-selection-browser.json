@@ -1,6 +1,6 @@
 {
   "scope": "0.4.0 cardinality filtering, item/generic reference traversal and verified copied reports; older item/cardinality fields remain opaque",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 12,
     "recoveries": 24,
@@ -11,9 +11,9 @@
   "fingerprints": {
     "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
     "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
-    "src/model/selection.ts": "45ad31f1805bf5287880beec63bb7f419c8aac6848ca93a7c077fced4972a1ae",
-    "src/model/selection-verification.ts": "6b582a843164284356631262cc3851aed60faca4bf7f6ae9ee90e3dd679d2b64",
+    "src/model/selection.ts": "cda847100ff5cc96334a62ae422f70a3095b1214f677a20a9182cf82149375a5",
+    "src/model/selection-verification.ts": "211d3f90736211762f30e0b8873fd5de24a7f247337cc698301e0a850ce2ee85",
     "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce"
+    "dist/umf.js": "163eff440b65da31bcb2c4d9b3aba28bd81a3a2f0f1cfc031c2c70b1fe63d0fc"
   }
 }

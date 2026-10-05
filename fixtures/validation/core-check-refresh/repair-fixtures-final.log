@@ -1,0 +1,22 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/dbt/freshness.test.ts:
+(pass) US-022-AC8: emitted and runner artifacts retain distinct outcomes and native diagnostic edits [236.09ms]
+(pass) US-022-AC8: native emitter omission cannot be mistaken for a successful source [3.89ms]
+
+tests/rdfxml/feasibility.test.ts:
+(pass) SPIKE-006: finalization rejects truncated XML without returning a partial graph [4.37ms]
+(pass) SPIKE-006: all pinned W3C sources and experimental outcomes remain reproducible [97.19ms]
+(pass) SPIKE-006: native evidence retains XML-literal discrepancies instead of claiming conformance [0.62ms]
+
+tests/shacl/paths.test.ts:
+(pass) US-028 graph preservation, all path operators and independent expected sets [6198.78ms]
+(pass) US-028 malformed paths remain recoverable but cannot be evaluated [1184.37ms]
+(pass) US-028 unknown encoding, scopes, copied values and atomic rejection [426.26ms]
+(pass) US-028 bounded recursive structure and expensive finite traversal fail without mutation [628.79ms]
+(pass) US-028 pinned official graph inventory and independent corpus evidence [1046.14ms]
+
+ 10 pass
+ 0 fail
+ 2709 expect() calls
+Ran 10 tests across 3 files. [12.96s]

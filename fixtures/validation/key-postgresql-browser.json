@@ -1,6 +1,6 @@
 {
   "scope": "PostgreSQL 17.4 captured Key classification with pinned WASM correlation, exact retained native archive recovery and deep JSON comparison regression. Also qualifies authored projection parity and retained ideal/native SQL recovery. Evidence covers only the declared PostgreSQL 17.4 binding subset; no all-five Key admission or native equivalence claim.",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "observations": 17,
     "recoveries": 2,
@@ -30,7 +30,7 @@
     "src/core-ideals/key-tablespec.ts": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
     "src/core-ideals/key-tablespec-projection.ts": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
     "tests/core/deep-json-equality.test.ts": "dc728f41eb281c755c3cdf285f7e3f3cad48bee989137b742d32dc091a75ebe4",
     "tests/core-ideals/key-postgresql.test.ts": "bc90d70ff832e181546a0e7523f7480fad1bae83f83cd8884778afbcfac8d107",
     "spec/core/postgresql-key-classification.schema.json": "f58fd86e54c54925199d014a184fc6a5c9a8a6d5f92e354f171c8b9a6b95975e",
@@ -39,8 +39,8 @@
     "fixtures/validation/key-postgresql-discovery-native.json": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9",
     "fixtures/validation/key-postgresql-catalog-capture.json": "bb0a16aabaa67ba463a4f334e13de206e833c19d0220766375f1a6c5da2e4b50",
     "native/postgresql/keys/query.sql": "9c3f20e923d6f090ef375f4cfd24af4eeb16675478e184422f98e5b001ff75d9",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
-    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/umf.js": "163eff440b65da31bcb2c4d9b3aba28bd81a3a2f0f1cfc031c2c70b1fe63d0fc",
+    "dist/postgresql/runtime.js": "c954cc1b994fa6c513d6c9281fa3139ec6358cedf924169469b90322f13ea09d",
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
   }
 }

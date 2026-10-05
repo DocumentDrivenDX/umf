@@ -3111,13 +3111,13 @@
       "arrowType": "string",
       "input": {
         "kind": "string",
-        "value": "😀é"
+        "value": "\ud83d\ude00\u00e9"
       },
       "array": {
         "accepted": true,
         "output": {
           "kind": "string",
-          "value": "😀é"
+          "value": "\ud83d\ude00\u00e9"
         }
       },
       "files": [
@@ -3125,7 +3125,7 @@
           "accepted": true,
           "output": {
             "kind": "string",
-            "value": "😀é"
+            "value": "\ud83d\ude00\u00e9"
           },
           "storeSchema": false,
           "path": "fixtures/parquet/facets/string-max1-2-plain.parquet",
@@ -3150,7 +3150,7 @@
           "accepted": true,
           "output": {
             "kind": "string",
-            "value": "😀é"
+            "value": "\ud83d\ude00\u00e9"
           },
           "storeSchema": true,
           "path": "fixtures/parquet/facets/string-max1-2-embedded.parquet",
@@ -3384,7 +3384,7 @@
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
+    "scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
     "fixtures/parquet/facets/bytes-max1-0-embedded.parquet": "023586481a6dda093ed32b66d8c8ebd089e07d895754059284ee9bb81240ffc9",
     "fixtures/parquet/facets/bytes-max1-0-plain.parquet": "2f51627b7030e833895a6a18ad45c6cebbf004e583dbc33831ef41eda2622b1f",
     "fixtures/parquet/facets/bytes-max1-1-embedded.parquet": "94c2060375c9b9ce1038093141d882f5bc36a07ea4eea1b8c5b14f5b3e9e00de",
@@ -3473,5 +3473,10 @@
     "native/parquet/sources/NOTICE": "28768ced5daf23a48a7fa7da0a16846c8c254e0a065cf29d5b17ef7fbad2e5fd",
     "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
     "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-parquet-discovery-native.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-discovery-native.py"
+    ]
   }
 }

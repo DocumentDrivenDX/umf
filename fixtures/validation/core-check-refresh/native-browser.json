@@ -1,0 +1,2346 @@
+{
+  "complete": true,
+  "baselineRevision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+  "commands": [
+    [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    [
+      "bun",
+      "run",
+      "build"
+    ],
+    [
+      "bun",
+      "run",
+      "build:postgresql"
+    ],
+    [
+      "bun",
+      "scripts/core-field-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-tablespec-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-tablespec-projection-browser.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-tablespec-oracle.py"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-tablespec-projection-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-avro-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-projection-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/avro-record-type-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/avro-record-type-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/avro-record-type-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-parquet-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-projection-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-browser.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-fastavro-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-nullability-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-selection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-field-operations-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-avro-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-cardinality-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-cardinality-operations-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-field-operations-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-selection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-facet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-facet-operations-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-avro-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-key-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-key-tuple-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-key-transition-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-key-public-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/facets-avro-exact-input-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-tablespec-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-postgresql-discovery.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-discovery.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-encoding-discovery.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-avro-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-tablespec-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-postgresql-catalog-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-encoding-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-sqlserver-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-avro-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/key-parquet-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-relationship-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-relationship-transition-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-relationship-operations-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-relationship-public-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-tablespec-discovery-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-tablespec-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-tablespec-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-tablespec-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-avro-carrier-cases.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-avro-projection-cases.ts"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/relationship-avro-discovery-native.py"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/relationship-avro-carrier-native.py"
+    ],
+    [
+      ".venv/bin/python",
+      "scripts/core-ideals/relationship-avro-projection-native.py"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-avro-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-avro-carrier-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-avro-projection-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/stable-ids-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship-postgresql-layout-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-extras-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-extras-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/postgresql-native-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/postgresql-native-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/graphql-native-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/graphql-native-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/avro-parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/avro-parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/postgresql-target-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/postgresql-target-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/postgresql-partitioned-key-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/graphql-target-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/relationship/graphql-target-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/postgresql-indexes-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/postgresql-indexes-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-indexes-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-indexes-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-tables-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-tables-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-tables-indexes-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-tables-indexes-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/delta-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/delta-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/iceberg-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/iceberg-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/parquet-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/parquet-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/multi-target-delta-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/multi-target-delta-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-indexes-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-indexes-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-graphql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-graphql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/projections/ddd-postgresql-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-oracle.ts"
+    ],
+    [
+      "bun",
+      "scripts/binding/sqlserver-browser.ts"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/relationship-conformance-browser.ts"
+    ]
+  ],
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/001.log",
+      "logSha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/002.log",
+      "logSha256": "5da8552b04a88d61cbf5f1f82d6ffc802d47b8b6a660840b9350699e70f4b6bf"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/003.log",
+      "logSha256": "77a28bae27633a9bc02aec6ac6ed8266e5234150d0b7ca64ba37f5d79dc023b1"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build:postgresql"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/004.log",
+      "logSha256": "ff57f00c9aaa6dae62bec8a6c1326f5b3a8716f4dcadfea7b58c615635dac7b7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-field-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/005.log",
+      "logSha256": "542a93e63cead8dc072a3179587838e7dfa31b2c00757be9b0255943f562a47d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/006.log",
+      "logSha256": "3debbfd63b2e8a37b15a147ba5bbe775f7f0bd3df877b4aa868d24f3b06c502e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/007.log",
+      "logSha256": "1efb81546670fe1a4a6caf28c4afbcae7a9695f4dcaf3d9cf8cdc15334780388"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-tablespec-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/008.log",
+      "logSha256": "a28b3f8f6d00bafb538256a39f6f07a3b3008e860c6f57976d29d96c9101746b"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/009.log",
+      "logSha256": "69e0eb28861ee8c274fc908fd1742ff877118bdf6ae56d538b6b6fb73f7fdabf"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/010.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/011.log",
+      "logSha256": "4cfca5bddcc965021b92a76c5ff8871feadc12b1c1419e428987e312e030641a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/012.log",
+      "logSha256": "bd9410dcba8bfe764908332fe53743555263161ff6ef416255c608bec5b86b91"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/013.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/014.log",
+      "logSha256": "b22d6597a45b385e8606156c71a3bccc78bd68958bca640ac2f460339bbdb02a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/015.log",
+      "logSha256": "559e663ac97f66e2fd8c99a0c570d4b57ece550058785fcda3bacefddc8939a2"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/016.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/avro-record-type-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/017.log",
+      "logSha256": "db8ba22b763c5ab82dfef5a157bf2389fc7bd352a66d82cc37c84af616b50bfc"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/018.log",
+      "logSha256": "73253e04a05378e48fc419e4aa6cee285c233c1f61985d4f4e0995916cdf7689"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/019.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/020.log",
+      "logSha256": "af0c206c31464fa5283e676400b6c722ac159e2bd6d073921ad28f1d0a90d852"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/021.log",
+      "logSha256": "d6dd423dfe5adecfa7fd9ee334f2b3fb44d7ee235a96a6501888239ad7552d64"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/022.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/023.log",
+      "logSha256": "4f3898221fb25032c5cec53901f318265978b10f5b089f65e3f36d195b335ca9"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/024.log",
+      "logSha256": "c33074d65808dbbd7973336b82cb57d7599e35eeb0af6acca054ac3df2d3ffab"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-fastavro-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/025.log",
+      "logSha256": "8b419c0f2a7ca355a2d8947b1fdbe4c0454899f502aca8c5db3ab149f6efe3bb"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/026.log",
+      "logSha256": "3538d7d217b72292455fb17d112ec9e1680add01b7598272312571791c32871a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/027.log",
+      "logSha256": "8f363edaa382d07546881cacb1d3cadc8b8d22dc12ea8495d3aaac5cf0e0e663"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/028.log",
+      "logSha256": "789a7ff5f6c56b63fe21b8639a35e5c3aa14cb9c5881712dbccc838afffbc2ed"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/029.log",
+      "logSha256": "765018140e459164e4ffe0039c9d6309071ebcd1812f03441484e7a20694be19"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/030.log",
+      "logSha256": "7b6cefb73610f479b4f692b3eb168fcbaec9c6a4b4c9ef36d1abf9bc62f03e61"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/031.log",
+      "logSha256": "1ca62b997bb283e3b0d1e8a1e09c32b9346386f8a74aff67fde313ddedda9a7d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/032.log",
+      "logSha256": "8d5413cdf6fc8e12dbe636637424898cc33fd7c2283486344b7294a216bd00d1"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/033.log",
+      "logSha256": "a7350da58c7ed81da7ecb60300b5b45becfc167eba9c3f357dca357a4891a2c8"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/034.log",
+      "logSha256": "8b81241379ac1002c5f738e62680b4fd9cccba4d8727e7f61cf2f452b3b9c8f5"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/035.log",
+      "logSha256": "cc38717e004c11639255c337a2da11cf971dab49fe08e03dd4ac1c1de35d2ebf"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-nullability-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/036.log",
+      "logSha256": "e6a13f0a944e7d3f9eccfa4b822d1eb3cdd0201d93408e98e46414369e62f878"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/037.log",
+      "logSha256": "d7d2fbb709916ae6b07b17073fe1c98699a89c86a57f64883aedb5072130c5cd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/038.log",
+      "logSha256": "16c2c916688618bbd1bfd6a002b820638b14837f7d885d2f9c77e8a310c7b55a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/039.log",
+      "logSha256": "fe4b2f6707c95b53ff151322bb94dfb121b2d6c9811f8d8d70ed4701d9fd40d6"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/040.log",
+      "logSha256": "773fcdd2b798df44e1292ae7f816e826498d6321593c3fa07bc87b9bb00e8cdc"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/041.log",
+      "logSha256": "e3aa9452e9de6909006c38e5dfca02da1b5c768f18f4c65c31bbb335f14b16c3"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/042.log",
+      "logSha256": "8fee1d3512e364a757af43935b6d679b411a4770d6ba0d000706debcca02d458"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/043.log",
+      "logSha256": "1b0ba034b4aff7c5e124754853e3ddd7e40767f5f77d4ff2284ac4e117dfd266"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/044.log",
+      "logSha256": "f62e6ab8b88573ce9460463d40b52254eb88f6d802c39208a368cb36447e125a"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/045.log",
+      "logSha256": "bb5c0933edbb9e38e1d1117a180d6eeb268c9cb5bc882bb1c2ba2e1d1480d2d1"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/046.log",
+      "logSha256": "b86a2c64a767a0ce837f20269f0834f96387ab9b45b012e3675142e804fddf06"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/047.log",
+      "logSha256": "4da43b825b78513e839e5c8e3f99d36ec594507c80f4a807ef98814fb84f3279"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/048.log",
+      "logSha256": "3d3d3936caf33ef01a360e9a43e03250042595f754b922675967ce9c48d81a98"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/049.log",
+      "logSha256": "5c5d8d1e419d350931e3aab07e2aa79be55436cd42cfae4295024cea70247108"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/050.log",
+      "logSha256": "e98e9031bcbb71654d4b411552c0220a752661c1b9c8a46250baecf6a6edf91b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/051.log",
+      "logSha256": "ad751c45ad4cbacab3ef88c0ad7784a697d0aaed3dd067db740e6cf97b414450"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/052.log",
+      "logSha256": "5154165df0602420b3257de17fb26ca8caec725e8787c6ae777fd91d99eb8529"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/053.log",
+      "logSha256": "50b65f82222deda59a496917a9689eea4b5accd1f81077a67e6b37e34b39ee05"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/054.log",
+      "logSha256": "4f9ac24900c96655a8aa81a0612376d2ca63fa1597f119e43a9b5ee9f43d1507"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/055.log",
+      "logSha256": "f0611b03aabcadd6cc97163ec083d4595d463b7868f044bcbbfa1731341c170b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/056.log",
+      "logSha256": "53b46f9eec3b3f998050e1225025b9506840b94a847ff9220cfe9f77f01e53fa"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/057.log",
+      "logSha256": "4189a9b1446d57bbaa550a7b9af12666f5531dd56b59a76b6e3371dd4ef14cdd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/058.log",
+      "logSha256": "1deaaf5b6c61c7dbd5e8b71b6766638e9ca0242058f503506d981c28f0656796"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/059.log",
+      "logSha256": "f35579318611621d2398eb9433d94a29fcdf8b16bdb39ae6faa6c871742802da"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/060.log",
+      "logSha256": "644a2489bb8adf1441b8b2fb65d69dd0be6cc1fe9a64b7a1d90a8f2a389a5e70"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/061.log",
+      "logSha256": "b8c2c2d5e55865a8635353fc1789aeafd6376bda0763b056f9f923eb154e0692"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/062.log",
+      "logSha256": "eb38eab70d60cb8c2bcb22ad2a95fc177b82bc032b8745720c06e3546110d896"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/063.log",
+      "logSha256": "84570ccad783f3faf6308d9423fe87eb09f8fa53c4e57255561928d431b3ee24"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/064.log",
+      "logSha256": "3982b2b247a3031418556e509ba8b88f9715cf7bfd81a4f77ceb1badc46e5eb3"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/065.log",
+      "logSha256": "ff9bb5ce38771a376ede32323afc0b2ebf8b0d5e7e2b69bf9b0a65e7bc6a04cd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/066.log",
+      "logSha256": "2ec3772dca051feced122d86485eb0099568300c45ccdb970ee905632f6514b4"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/067.log",
+      "logSha256": "9a53a3785796ec687b8de0988bea300e3dce6212dc0060b03367e976bb3cbaf9"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/068.log",
+      "logSha256": "47108b6da1704749f485e4b4143bc7727871ee8840ced8a64f310909c08a45f7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/069.log",
+      "logSha256": "2f68e95b228da8c022394bdc1db1fc117802ae50e0fe87a8b33a6197ff20fcb7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/070.log",
+      "logSha256": "3845a97a248f9fa628ef04d449bb409c4049c1707ae3761d84129d9112627cef"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/071.log",
+      "logSha256": "d1a2038b77124921d364744f33f0563ac9f42ca24ba8e6bdd5508f731bc17c1e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/072.log",
+      "logSha256": "d9bb420ed7ea86889373e30d2757332ac55ccf10327a410f4312c610d689478f"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/073.log",
+      "logSha256": "f26a528508bb56c6afdef1f3f91c38a7844fbc0d7141890f3243c4269476e7f7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/074.log",
+      "logSha256": "b2f5d233689fb6718ea6f0dcddfd109f289d4cc11937a8b7890842af3ce5a116"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/075.log",
+      "logSha256": "1ddb0566072341b09423fdaf0875c83e41598385dd91d2618c37eedad706a26f"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/076.log",
+      "logSha256": "2110d166cd2e15d5ca95edad78725ebc1ae9c0f6a40c1d93fbcd88c856284e57"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/077.log",
+      "logSha256": "b6e15d455730f0ea86101e3639f3d25265c7c81d7609564e6c8a83532ca7b3d8"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/078.log",
+      "logSha256": "1ce88971a926f6aa9cb7b2ea5f750908ff6acd0e78859f4a072397d0815a0836"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/079.log",
+      "logSha256": "3ec8b94badaa230bd39813ce697d56739395114d5cd5599226c6d1728163242a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/080.log",
+      "logSha256": "ab76468861d40e91d01142bc08bc1cd0b587dd9dcd2e9d3e4407e69e4c201f7b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/081.log",
+      "logSha256": "3020d97b9f8ea211b3a38f9c011cc5189dfd4c3d0e3c3d5a3b22773f727490b4"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/082.log",
+      "logSha256": "3776e37ef38a8a53eb1855d0835cfa9933128cb53c199651f5124ccaff2905af"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/083.log",
+      "logSha256": "bb1d382af37b2cc859280f5917c02919e98a0193ebf715fda95aff4f2afb3f85"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/084.log",
+      "logSha256": "abec90784d72c71c2eb3137877807054269225a5f1e725444735c6f16c678de6"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/085.log",
+      "logSha256": "cef0a84a8c8fd739d9031fa728e7c894cfeb1a342a6ea0a6baf1942ee5cd92bd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/086.log",
+      "logSha256": "eddafff233b8ed6b8553a771ea2e5260ffb326a58f3fff868b77c944a5efcb90"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/087.log",
+      "logSha256": "688bdbe0383afaeb0e5a7dc6462b737eeb004c7711c86d74a8b7000bcc49336d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/088.log",
+      "logSha256": "c0ea76d89835d014fbd70c07c063a5bf7b37f9774f9dbbec596c812150d17a17"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-tuple-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/089.log",
+      "logSha256": "c823977bf3f5e10aab5558281e7f288243e70c10cad7c63439a133e86171060e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-transition-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/090.log",
+      "logSha256": "133e5d055c3825955a707c40d96fae3bda2cde61e23da93194ed74a7f0760d24"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-public-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/091.log",
+      "logSha256": "0dc20ebf8c50ea7b12c3857f2ae646c72c77426f45b5c2d95aaac5c615ce9635"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-exact-input-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/092.log",
+      "logSha256": "ccd89917d20127051990345450411bf7f0c4dbfaa16a6df0586b1d4c4af14bdb"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/093.log",
+      "logSha256": "b653f8dfafc2a6a33e3b449d02b5cbb573fe7e33b341d90c74b2cfd4e4c3014c"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/094.log",
+      "logSha256": "15cb56af1180f536cfedfe5460dc616eff4ade0bf7b3c054b879c83661b6e0c6"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/095.log",
+      "logSha256": "19e22c2273e82fd32766235d184ff9e4db3fd5c13c3a6954e43508bd7605fe2a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/096.log",
+      "logSha256": "583364836ac3425aa1b7204aff6ed262f62cb15459e1eb9567fda6075dd7d754"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-encoding-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/097.log",
+      "logSha256": "66c3dbbab03490c71ef7a417882a3afcddc15d8d7ff1f51d8052d6d8426778dd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/098.log",
+      "logSha256": "76702c6f637ff21af4e793bc41fe667fddcd001cb69cd5f5f6e9b2aacc2fb75b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/099.log",
+      "logSha256": "e7ff0c3c1a895b47927354531b18f8b84a323f94e72e175eaa3f92dc29633d5a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/100.log",
+      "logSha256": "00ebf13d9e003b64d5d62af884f6e35d3851dd950d1ea86ee186e87353151e86"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/101.log",
+      "logSha256": "3b7490d101360fc0b4a972cc2e48eabe4075285fe3d68cb7cfbf929daa024b8f"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-catalog-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/102.log",
+      "logSha256": "e7673a91e71724fe1382cf437edd49af57a0def3b55c6c45cb86856484e12ade"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/103.log",
+      "logSha256": "82294d2d7c8bc49e852e618731f52bbc86c52f1c7c81f9ffe79fa81a6723a239"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/104.log",
+      "logSha256": "d09f3820304da16d72321a0d2df9baa2f6fe6c0dfd68c9b8c7a9bda597dc1ae7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-encoding-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/105.log",
+      "logSha256": "9da0695ac6d0817c79b7c5d536279453f82543bda563dcf0bdf9cdd7ed54f41e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/106.log",
+      "logSha256": "202b6705b4bacb053566b278fa8ab509e4b798fcad5957aaba93547bf68a54a9"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/107.log",
+      "logSha256": "811d9467bdcc9d18a84a7fe2866ae081bc543a44cd20ac76e806f5e2917080ef"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/108.log",
+      "logSha256": "b4192fff6733e0dd0c409b4b29ac7dbafc0259151e6eb285387ca3875e5c007b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/109.log",
+      "logSha256": "738cebad422a031c3c9f1a6a41f7f4697e3168e76c01bcbe338d3afad8f73b31"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/110.log",
+      "logSha256": "12b92c8738349bec137e44f9c76ace8c6f82cf43fa583de93a54f98ab4bd26a8"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-relationship-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/111.log",
+      "logSha256": "39998c10ab7fdad79198d916f89f014ec9d4441217eaf42797135831da9f1a70"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-relationship-transition-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/112.log",
+      "logSha256": "0a1c7bd941687e3fb80d4419f37e634145def9df1d465d9e240fe03950932df2"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-relationship-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/113.log",
+      "logSha256": "d93bb1c4f2ab5b0942adb82a3c485fa8c08b5402c9350d3ac382be51165ee3f8"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-relationship-public-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/114.log",
+      "logSha256": "34c0694dbaa1838df898406a6334479199c0e075cf79f0f72cbe3a4303d53402"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-discovery-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/115.log",
+      "logSha256": "b5a21ac9abb601374019e1d7c41bfc4643c9522bf56f9b393466516df26213e1"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/116.log",
+      "logSha256": "1e6be9471245a6b54d7f13cb611ff7e04fc51b523adb83c147aeb8d86ba8a10a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/117.log",
+      "logSha256": "b364b31b48417454e334feae72d59647b79f35d143135aa68343728442554481"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/118.log",
+      "logSha256": "1091ac71fdd10793b7c1c23c589c144fdfcc7e38bd7db9523f4e979c4578b854"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-avro-carrier-cases.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/119.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-avro-projection-cases.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/120.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/relationship-avro-discovery-native.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/121.log",
+      "logSha256": "7b70b184fe47def3a54bcd3f7119e3040388ba27b22475d75172220303200bbe"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/relationship-avro-carrier-native.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/122.log",
+      "logSha256": "3eebbb7001a4496fff8c8cf6cd5f8bca6a35908f7f9abfbd97e364e384d5bbba"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/relationship-avro-projection-native.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/123.log",
+      "logSha256": "1b324ea8efbea305811b28e7738c0880cb00f47fd1dea845b68f4e283a3d75a7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/124.log",
+      "logSha256": "2d5b1742cbbda2049dd08146e7ca0eba386d65210e98dcdd631043529509896b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-avro-carrier-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/125.log",
+      "logSha256": "0ff250ea5e3e932152abd64b1c06c75ba51b9a6657cf3eaf4819d2e5df676b5b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/126.log",
+      "logSha256": "cd5bca72e498d2da9871cc92b44e75a98c30e79153b8c01be964a6ea150f061a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/stable-ids-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/127.log",
+      "logSha256": "0030fa02be017a8495c06e4c1a31fa5e76e1d701070be642ce34c8575e7d9764"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship-postgresql-layout-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/128.log",
+      "logSha256": "8cac5354ece8a9a0fc9caa3b0f5feda3e2bcccfba841f1852e2aadae80432ab3"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/129.log",
+      "logSha256": "4f40a68dec4300c13bd7ef0f8ff88f2fb84039d40c028e87ff7bb2f3edc0f714"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/130.log",
+      "logSha256": "1e9321c7605035beede561d96f9a81fe2318a2141468e076efe707ca5b98364b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/131.log",
+      "logSha256": "297f865b561a1f0fec4797c572dc255e5272baaadd2a87d71a9de3cc82b25861"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/132.log",
+      "logSha256": "3327bbf1f565dbcab8291a724af5ea72d02169f3a4eabb7b0e3961fb9b2fadf3"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/133.log",
+      "logSha256": "639f7e2e535abd64f7b265d63f295487ab397b03254603635212288d8cdfbf1d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/134.log",
+      "logSha256": "cd5bca72e498d2da9871cc92b44e75a98c30e79153b8c01be964a6ea150f061a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-extras-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/135.log",
+      "logSha256": "2c660781cd60f8d028bc95c55cf881b7221fff8b00dadcadf8b6ac1d9a2ae65e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-extras-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/136.log",
+      "logSha256": "bd111bee2ac679206a70d85138841583f03efb9a5f7e019bcd40187640822771"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/postgresql-native-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/137.log",
+      "logSha256": "d3904fa14a97d0565e061433629551f8cdde003af92a129c1a57337ec909fe83"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/postgresql-native-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/138.log",
+      "logSha256": "d5f8d8ceb5ed56e582faedafffea2e8aae4291519e48aa1beee9fa75043b1065"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/graphql-native-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/139.log",
+      "logSha256": "48f6a1e1a72cbae115582fde52c4cfcc8d1e123b1cf392f700be131f8188166e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/graphql-native-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/140.log",
+      "logSha256": "6bd3e7570dd4d8baa5dac74fe12775abb1d65470c5a4ddb8dd364fb21d449ff6"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/avro-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/141.log",
+      "logSha256": "8622f47a5e0b5552af4e6e3149ac337a5dfd7c2e05d3e2cfa1483a6a1b803d11"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/avro-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/142.log",
+      "logSha256": "1fd9a34142e585e16228e682b719d82543bbdab7c2c8fc0efe6010baf7710e7b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/postgresql-target-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/143.log",
+      "logSha256": "060dd27984e26619472299d909ea2f7510cd17b6a442fa76830c37d318ca5f4e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/postgresql-target-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/144.log",
+      "logSha256": "30761a8b77b75e657ad23333a115e2e4500ecd3c455efbf56dd87ccad548ffbe"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/postgresql-partitioned-key-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/145.log",
+      "logSha256": "18069dedb7b1af107c5b8191c7c2fbed95b996663b36ab77dda6766ab5bcda55"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/graphql-target-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/146.log",
+      "logSha256": "a5df34fd7042fd5df35341f616dfdd6cbaf59d3579905264e2acff3101f8b753"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/graphql-target-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/147.log",
+      "logSha256": "398bc7b8c1cc0483bcbd3c9ac2750474f6a7d69234392e29a151cd60d2ea2e5a"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/postgresql-indexes-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/148.log",
+      "logSha256": "9c7b029b66d5dd195c0acabba32adb191ad889bbc4c8d4d711734b86e004ab52"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/postgresql-indexes-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/149.log",
+      "logSha256": "b48f37c77bf2ae4041ed2decb1bbf9891fb7832ce1fd52df61b92ddae1be8760"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-indexes-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/150.log",
+      "logSha256": "5fc7e20e1554c35bdc246425a6960c397dc7753d8d0155d6b9b88e4fbdf37e2b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-indexes-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/151.log",
+      "logSha256": "9a6027d7b1a5e3cdc4f50ef5869e30d0d56f67a99e584a544ebf0ef1c4de8910"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-tables-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/152.log",
+      "logSha256": "ed4c42b2a05e4b09e5437f6772fed190347da09e2a402e9d8f32e3e658743a9c"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-tables-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/153.log",
+      "logSha256": "cfad2c1a62ba5a7ad4eb66f9e120a17edf610636ee63c51fafb0fd2ab1c8b7a7"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-tables-indexes-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/154.log",
+      "logSha256": "87e654425567a19721758ecfe40b1423e0db3822443d8a8c4edebf52978024bd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-tables-indexes-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/155.log",
+      "logSha256": "ac26e894154a793643e46c93833e2715a3d4b2eec85354d622c93bd410bba041"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/delta-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/156.log",
+      "logSha256": "42f41521558790b2c7ec639721e72624b3635d81e13b8e315224b9f057ab077e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/delta-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/157.log",
+      "logSha256": "12a1696f1cde5412129bbfec06a2011154eefc1b04b31692a0aa37f60b0f3bcc"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/iceberg-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/158.log",
+      "logSha256": "efa1667b44b4865c36de5d22a933fa9d1b9b860da4f884ced3020ab43c9dd55d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/iceberg-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/159.log",
+      "logSha256": "0f2cd1dc958df21de3e0db890d6b2fccd2577afe02436a2ded1d35c45872e911"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/160.log",
+      "logSha256": "560f6f6f89b1bc781d08b4dd6809d5798b5196b223d0af726ddb60195b3cf4e9"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/161.log",
+      "logSha256": "789d1ca49f2c06a2a8f4cf00071ded10c21a4f64bdc0389b4754184963f4a3fd"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/multi-target-delta-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/162.log",
+      "logSha256": "72d544bca47d06e32e87619fea4c097d146106d9c264cba2279557ff62e6aa2b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/multi-target-delta-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/163.log",
+      "logSha256": "728810d137b401a5a5efa6261d1ded674c04b04dfaef29ab8861c5de59d5f366"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-tables-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/164.log",
+      "logSha256": "fe2be181098b6a66e87f7f2136dd7d7fd855f504991e8ad71962e574ceea1d42"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-tables-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/165.log",
+      "logSha256": "ddda5f710e389143d749fe1c52cc3913a1a5372bf91aab565149dc689b3c10b2"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-tables-indexes-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/166.log",
+      "logSha256": "d83ab5409a45a806d09b79d777a457315c575d17eedb018a5c01953335490580"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-tables-indexes-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/167.log",
+      "logSha256": "3bd357f90033691346dda6147e0d14022407da5e1eecca71c3bef50c586ddab4"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-graphql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/168.log",
+      "logSha256": "c360276590ed3ceab98ad48baf368efb841e5e21b8ab8e8a451a31f7532c0a3d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-graphql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/169.log",
+      "logSha256": "9642643f609d127cbac0da704d4a60621bb875ae4dac18b1aa3962d66e8aff47"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/170.log",
+      "logSha256": "a1e83792ae7ed6f0667e0a917ac1f67ace51414afa3af170e0506aab6958a46d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/projections/ddd-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/171.log",
+      "logSha256": "90a81e09a09a05a6df98180a7f18188375a2b5a3575cbdb0ba1ac0737f868cc6"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/172.log",
+      "logSha256": "1650cf001c9279a9381e81ab6111a2185e56842e8f7e25d1318c2f3a5b67adaf"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/binding/sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/173.log",
+      "logSha256": "8f0189eae4b20dd6385f748907f3c6753de1ec9f607e2f660b943226244d3668"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-conformance-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/174.log",
+      "logSha256": "7b63380ee19e7efa4a25801f952feb02cdaa4a814e967ef3499e4fd92959bf5e"
+    }
+  ],
+  "failedAttempts": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+      ],
+      "exitCode": 1,
+      "logPathAtExecution": "fixtures/validation/core-check-refresh/040.log",
+      "logUnretainedReason": "Initial resume replaced this failed log; recorded digest retained, bytes unavailable",
+      "recordedLogSha256": "cdb59ce9263607676d625d155d754d1e3ce567ac36afd2109148d1319b183b02"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-002.log",
+      "logSha256": "00fc0f00126f4b9cbdb8a1f28768dc4acb4428fcbfad3a49e062a416cf4d3f9c"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-browser.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-003.log",
+      "logSha256": "40cf27991302b8f23113ab32ac49d172d91ca042d096dea41d9097ba4f984714"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-browser.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-004.log",
+      "logSha256": "290d3f740d63305422e53768fefcba9105aa9a29aa6e75e604a5d9a533651b44"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-oracle.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-005.log",
+      "logSha256": "975ccc34a94369deabd968909d762b3ed80dc27f997dff295a4a5992c2258d9e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/relationship-tablespec-oracle.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-006.log",
+      "logSha256": "a70766560897a8dec2f7fddbf8d07098b55d99b2bed30fae38d3b9ce8be36019"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/relationship/avro-parquet-oracle.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/failed-007.log",
+      "logSha256": "2b3eb6de8732d823a69b7413cc540ce58e847ed1597323acc11db5eec9f201bb"
+    }
+  ],
+  "expectedBrowser": "153.0.8010.12",
+  "sourceRevision": "a52b881e3d1fa638511c6746f6767788a9a8e5a8"
+}

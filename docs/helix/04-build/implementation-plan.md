@@ -5386,7 +5386,8 @@ probes, plus typechecks, the public build and 60-package/352-schema audits.
 [Execution evidence](evidence/core-semantic-types.md) records scope, fingerprints,
 TableSpec source preservation, resolved findings and failed attempts. The broader
 exploratory run and retained admission gates have repository environment/evidence
-failures; they are recorded separately and keep the stacked PR draft. ST-05 and
+failures; they are recorded separately and were subsequently repaired by the
+execution below. ST-05 and
 other version-specific authoring API upgrades remain open.
 
 ### Semantic-reference PR check repair (2026-10-04)
@@ -5400,3 +5401,11 @@ command inventory with actual logs. Preserve previous acceptance records through
 immutable Git revision references; publish current fingerprints only after real
 execution, then run the full live regression and stale/forged-proof negative gates.
 Native equivalence claims and ideal admission thresholds remain unchanged.
+
+Check repair execution passes 2,136 disjoint live tests / 374 files / 130,804
+assertions, the 174-command native/browser inventory, 91 post-parent browser
+refreshes, and 17 unique gate tests across eight files. The parent is integrated
+through `a81e9a9c`. Corrected aggregate browser metadata passes the affected
+Field rerun; no native recovery implementation or admission floor is relaxed.
+[Repair evidence](evidence/core-check-repair.md) records runtimes, source-qualified
+reuse, raw failures/retries, pinned-byte restoration and final proof integrity.

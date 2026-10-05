@@ -1,19 +1,20 @@
 {
   "scope": "Experimental core 0.9.0 semantic references; no publisher validator or native equivalence admission",
-  "sourceRevision": "02c8ee68d80ba938413cfa9295ba33e8af6f5b54",
-  "parentRevision": "6a96f6e030feae8b54fdc3c3ef98b72bb5d8c2e2",
+  "sourceRevision": "074cf30f33d8eb72af44bd63f68b4c1f0a917a73",
+  "parentRevision": "a81e9a9c896979c2051ed1deca440ed20f4c2560",
   "runtime": {
     "bun": "1.3.14",
     "chromium": "153.0.8010.12",
-    "python": "3.9.6",
+    "python": "3.12.14",
     "jsonschema": "4.25.1"
   },
   "finalChecks": {
     "affected": {
-      "passed": 180,
+      "passed": 208,
       "failed": 0,
-      "assertions": 4770,
-      "files": 32
+      "assertions": 5118,
+      "tests": 208,
+      "files": 33
     },
     "typecheck": "passed",
     "build": "passed",
@@ -33,6 +34,17 @@
     "independentShapeOracle": {
       "agreed": 14,
       "cases": 14
+    },
+    "regression": {
+      "passed": 2136,
+      "failed": 0,
+      "assertions": 130804,
+      "files": 374
+    },
+    "uniqueGates": {
+      "passed": 17,
+      "failed": 0,
+      "files": 8
     }
   },
   "review": {
@@ -42,12 +54,12 @@
       "future-version test sentinel collisions",
       "Bun hash input representation",
       "cold public-API test timeout",
-      "parent review integration and artifact ID collision"
+      "parent review integration and artifact ID collision",
+      "Pinned bytes, native prerequisites, portable proof paths and stale aggregate browser metadata repaired"
     ],
     "remainingLimits": [
       "Publisher catalogs and TableSpec validator bindings deferred",
-      "Other version-specific core authoring APIs retain earlier version limits",
-      "Repository-wide native and retained evidence gates do not pass in this checkout"
+      "Other version-specific core authoring APIs retain earlier version limits"
     ]
   },
   "exploratoryChecks": {
@@ -757,10 +769,10 @@
     "src/model/relationship-selection.ts": "9062f11467e671363af1d7d903961787a0e9cfc3c9a5ebd483b0e0a9af7f7293",
     "src/model/relationship-transition.ts": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36",
     "src/model/relationships.ts": "d1f9e30202a7c8af1a8b7fc47d113f933775df25596f69a84d1f6a69947081eb",
-    "src/model/schema-literals.ts": "e7b79989a4fed35c518d1817953d4ecff99615b49634982a74501a1d014a1164",
+    "src/model/schema-literals.ts": "6c28d92fe726fdf6ead0d29c78bd87fa9396667cb23d61ce2758b9f4707228b1",
     "src/model/schema-properties-receipts.ts": "9dc74c6b602c4316bd07311e6490ed81646a3050c961e6446fec9b60d231d0ed",
     "src/model/schema-properties-transition.ts": "d2c598d19c62fa25cbc0cc8afd5b40a9a4415ba7fbc76b9610825ce5141aed4b",
-    "src/model/schema-properties.ts": "96cd4f41f4fd38f7402615fa82902540707a7fe4cc899963655a4f96f7b51147",
+    "src/model/schema-properties.ts": "1f4499089cc7e03417b6d2a811dd4f83cab8538fa6518edfcc37d83165305697",
     "src/model/selection-verification.ts": "211d3f90736211762f30e0b8873fd5de24a7f247337cc698301e0a850ce2ee85",
     "src/model/selection.ts": "cda847100ff5cc96334a62ae422f70a3095b1214f677a20a9182cf82149375a5",
     "src/model/semantic-types-receipts.ts": "273c2fc74d5dce211a37b2eda7b235901b177ed0aeb0a0b0c4631918811b25a2",
@@ -808,11 +820,15 @@
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
     "src/validation/relationships.ts": "5d94c2df0847d0315b514a005407d6e95f34531d9822ae5b2db48f176673a932",
-    "src/validation/schema-properties.ts": "8c849339ea0b3ed66371e0cf79880e9761fb7fb37b462536f43eadf92adb74ad",
+    "src/validation/schema-properties.ts": "985673b609b1a0774a8cd89ef60c7110422f5fe7d738f6c0cf55fd93aa5b2139",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "src/validation/semantic-types.ts": "683e06876da44f3de7be6be66c5e40e2a9498614dd1356f72f32ec50df15b5e3",
     "tests/semantic-types/core.test.ts": "bb114c0b86b474f0c9ce3b1919d71aeb2afe40f6e920b732ed3106fe4549ea97",
-    "tests/semantic-types/semantic-types.test.ts": "23acb010b26915b8ca0dcb7324fa38c71de763edd3f51a935399dc9333df09f1"
+    "tests/semantic-types/semantic-types.test.ts": "23acb010b26915b8ca0dcb7324fa38c71de763edd3f51a935399dc9333df09f1",
+    "docs/helix/04-build/evidence/core-check-repair.md": "3ef2fddf6321ae3d97e6ff2ce1c7db7647724676ec2cfe90835dd37f95980e46",
+    "fixtures/validation/core-check-refresh/gates.json": "120806122969f3c94f8da97d2aa4daa1434a0c47b0e27de57088265fef69de43",
+    "fixtures/validation/core-check-refresh/regression.json": "d178cbb5a0abb90e4e028da77573f257dabe1f4e2f5e766d8980b2ade4a2de73",
+    "fixtures/validation/core-check-refresh/auxiliary.json": "96825c695bc92bb13930fdb0a8fcaeb3beb95c0031be0ed52788c5f09cf71d3d"
   },
   "logs": {
     "affected": "fixtures/validation/core-semantic-types/affected.log",
@@ -823,5 +839,58 @@
     "oracle": "fixtures/validation/core-semantic-types/oracle.log",
     "broad-exploratory": "fixtures/validation/core-semantic-types/broad-exploratory.log",
     "retained-gates": "fixtures/validation/core-semantic-types/retained-gates.log"
+  },
+  "previousEvidence": {
+    "revision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+    "path": "fixtures/validation/core-semantic-types-acceptance.json",
+    "sha256": "c9b340e6803c1099eb11747f02e9d178da728f6862b0a5254aa97f90fb791f81"
+  },
+  "historicalFinalChecks": {
+    "affected": {
+      "passed": 180,
+      "failed": 0,
+      "assertions": 4770,
+      "files": 32
+    },
+    "typecheck": "passed",
+    "build": "passed",
+    "packages": {
+      "passed": 60,
+      "total": 60
+    },
+    "schemas": {
+      "passed": 352,
+      "total": 352
+    },
+    "browser": {
+      "checks": 48,
+      "cases": 14,
+      "externalRequests": 0
+    },
+    "independentShapeOracle": {
+      "agreed": 14,
+      "cases": 14
+    }
+  },
+  "subsequentCheckRepair": {
+    "path": "fixtures/validation/core-check-refresh/gates.json",
+    "sha256": "120806122969f3c94f8da97d2aa4daa1434a0c47b0e27de57088265fef69de43",
+    "nativeBrowserCommands": 174,
+    "postParentBrowserCommands": 91
+  },
+  "historicalReview": {
+    "kind": "manual author review",
+    "independentAgent": false,
+    "resolved": [
+      "future-version test sentinel collisions",
+      "Bun hash input representation",
+      "cold public-API test timeout",
+      "parent review integration and artifact ID collision"
+    ],
+    "remainingLimits": [
+      "Publisher catalogs and TableSpec validator bindings deferred",
+      "Other version-specific core authoring APIs retain earlier version limits",
+      "Repository-wide native and retained evidence gates do not pass in this checkout"
+    ]
   }
 }

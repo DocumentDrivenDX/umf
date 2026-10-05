@@ -27,17 +27,16 @@
     "fixtures/validation/cardinality-avro-projection-oracle.json"
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
+    "scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001",
+    "scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
     "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
-    "fixtures/validation/cardinality-avro-profile-native.json": "fb66080187cc8e83b34662e5441e21e91d7c70e6ddd44dff1974a43e016bb39e",
+    "fixtures/validation/cardinality-avro-profile-native.json": "1c5d87fa8fe90753a5d8862ed321c3e204c9407cb485becb5c320d863b62a82b",
     "fixtures/validation/cardinality-avro-projection-candidates.json": "eaf85242ca74228390ae87969810bec0d3e672a144cb3ac767e017129b0bb4bc",
-    "fixtures/validation/cardinality-avro-projection-native.json": "4671521ca86c13d4c7afad1ad9d810f7aabc19a18ca3352bfd153c051e16e124",
-    "fixtures/validation/cardinality-avro-projection-oracle.json": "4a96d0bf48e483609540c51e8512c985b40a0bf776fc307b937be4c08b9f3fdc",
+    "fixtures/validation/cardinality-avro-projection-native.json": "52fe70e2d41bfd7818fe52972dd9ac19ddc2c6c04090a435d646a245411c5bc3",
+    "fixtures/validation/cardinality-avro-projection-oracle.json": "125d3a00df012559d6c7d3fc02ecf7d2ea85cd025fa50a44264cf5220c00040f",
     "scripts/core-ideals/cardinality-avro-composition.ts": "736c487f415c0127b0be4efc07dba9b46c81247330ecffe603f98bfff0d791ac",
     "scripts/core-ideals/cardinality-avro-oracle.ts": "b94c130f71256ddc05082e02c49a94ff60345dd1fd9f23349a758202ddfd2ab4",
     "scripts/core-ideals/cardinality-avro-projection-cases.ts": "014a5deddd435b8605693003c26163f9f959291fce960fedd0ad9e8be6350f70",
-    "scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
     "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "e58653aa840d451a082a5980c608305823d217f4ccfa37a620b90c92e0c5efce",
     "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
     "spec/core/avro-cardinality-classification.schema.json": "da852a89ce4a640463260e538c2578ddde8faa7df6f7ac0215ac906b6b84f5b2",
@@ -48,5 +47,11 @@
     "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
     "src/core-ideals/cardinality-avro-projection.ts": "b092be71ebe9c0330e0ec2ef02caa08f6d1eac10b8d1d179b14215f57deedbb7",
     "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/cardinality-avro-projection-native.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/cardinality-avro-projection-native.py",
+      "scripts/core-ideals/cardinality-avro-projection-native.py"
+    ]
   }
 }

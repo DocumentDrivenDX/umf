@@ -18,12 +18,14 @@
     "packages": 33,
     "browserBuildBytes": 10205712,
     "regression": {
-      "tests": 170,
-      "assertions": 11347,
-      "files": 48,
+      "tests": 2136,
       "failures": 0,
-      "scope": "All tests/core and tests/core-ideals test files except field-conformance.test.ts, which is run separately after refreshing evidence.",
-      "log": "fixtures/validation/tablespec-nullability-field-refresh-regression.log"
+      "assertions": 130804,
+      "files": 374,
+      "execution": {
+        "path": "fixtures/validation/core-check-refresh/regression.json",
+        "sha256": "d178cbb5a0abb90e4e028da77573f257dabe1f4e2f5e766d8980b2ade4a2de73"
+      }
     },
     "fieldGateTests": {
       "tests": 3,
@@ -44,7 +46,7 @@
     "browser": {
       "classification": {
         "scope": "Selected-context classification and exact native recovery; no down-projection or row enforcement claim",
-        "browser": "148.0.7778.0",
+        "browser": "153.0.8010.12",
         "checks": {
           "cases": 504,
           "recoveries": 544,
@@ -55,7 +57,7 @@
       },
       "projection": {
         "scope": "Authored availability projection and ideal receipt recovery; no row execution claim",
-        "browser": "148.0.7778.0",
+        "browser": "153.0.8010.12",
         "checks": {
           "cases": 204,
           "recoveries": 292,
@@ -194,15 +196,15 @@
     "dist/facet-resolved-predicate.js": "e275eb838a5f35f89251cb59c3e66aa08b6680b6edc77b17346917574df1945b",
     "dist/parquet-facet-carrier.js": "b6bb90a54583dcfcc512e4acf65a2a81ab74e434690ade27d8eb3f82bd02fd57",
     "dist/parquet-facet-type.js": "253d38b194f449f66063c89c18f893d1d6a12c7ccead03cc6ce1438860624609",
-    "dist/postgresql-facet-catalog.js": "d04c6deac055a78e2aca057ad4e5413d19ad21b918ee58d29092dd399a47c09a",
+    "dist/postgresql-facet-catalog.js": "da0d5ab824457ff9ca6ec736644a1af3b483b5a50f2acccd7c3c43fb441ed457",
     "dist/postgresql-facet-predicate.js": "329736950e219dc9eb2edf94af5c2775cb0fb9d1e918391d0a50814554e07468",
     "dist/postgresql-facet-type.js": "e6f884192e45c2131cc2862933e64ba58b5edc54dc1a71b954e55302915ef3ed",
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
-    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
-    "dist/sqlserver-facet-constraints.js": "60e3d90d67598b8db760c76d5a1c049b383bde33903b1b904728f3f072211bd1",
+    "dist/postgresql/runtime.js": "c954cc1b994fa6c513d6c9281fa3139ec6358cedf924169469b90322f13ea09d",
+    "dist/sqlserver-facet-constraints.js": "8ab6d5fb826e2b2d57c22d1d9b203fa1be259219f7348f83ed9ad0101d787cc4",
     "dist/sqlserver-facet-predicate.js": "d45ce1372aba859d862644055e2039436458dc0fc003fa864180e6150699a9cc",
     "dist/sqlserver-facet-type.js": "3c1b54a847d9d9607d45eac08160a118983759b4076efd4637df3bd2d994dba5",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
+    "dist/umf.js": "163eff440b65da31bcb2c4d9b3aba28bd81a3a2f0f1cfc031c2c70b1fe63d0fc",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
     "fixtures/parquet/cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
@@ -524,101 +526,101 @@
     "fixtures/sqlserver/facets.sql": "36486033414fff768e6eef0243cfdf1de2c486170624df7ede4ca7267ceb5b59",
     "fixtures/validation/avro-facets-metadata-adjustment.json": "a9a36e50f36bc21f274f4fdb2d4804f173771567e78f7ed8b2e02998a158361b",
     "fixtures/validation/avro-facets-refresh-regression.log": "ae3abae59f331d16ff15ffdf94fc01ed25b9d2915abad0b9a7a3d5dac4370c6b",
-    "fixtures/validation/core-facet-candidate-browser.json": "34161a26c941008400ced5eae163c2a6c8ad0c2041b862bfe7648d9c587a3409",
-    "fixtures/validation/core-facet-operations-browser.json": "fb6510500ad94b28d2846b20c65faf99cbfb3e1a81da4da7398ba919555e0ae1",
-    "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
+    "fixtures/validation/core-facet-candidate-browser.json": "9c879121bd9939e6bb3d9db30c5420c34b4b404fc11f3f75fbb6b541836114c2",
+    "fixtures/validation/core-facet-operations-browser.json": "e14807a5034496194aca47fee778462a77f2062a525e36f53394db4ecdd291ae",
+    "fixtures/validation/core-nullability-browser.json": "dcf2df804dd5151347c545c8f5a1b1066dc1ca7748018ee876e462f18cded41b",
     "fixtures/validation/facet-core-refresh-regression.log": "dbf5c942f652f927a2487bcc4bd2850bbdfa7be8e82ff3e01b25cfd35e0ccf7b",
-    "fixtures/validation/facets-avro-browser.json": "c34953d4b4f2533bc791eea2581cfc1ec00311fdb7409ea162333ef665463ef7",
-    "fixtures/validation/facets-avro-classification-browser.json": "5c0ccfdb4707c0f11e2cda7f5431ff012d1100efaec764694aa2fd5ca19f819d",
-    "fixtures/validation/facets-avro-composition.json": "7278817c63d70ce6d22d1aea02dad3d8eaa6e33c11f40277d2c9efecc74677fe",
-    "fixtures/validation/facets-avro-discovery-native.json": "5ae691e1c1562de96c676168a08a0990462c96dc69c675d0f62fda9eddd2b270",
-    "fixtures/validation/facets-avro-discovery.json": "c8a0b0f87194bbe8844e89d0d44f0f274627e7265096d796f8abfd11e77938b7",
-    "fixtures/validation/facets-avro-native.json": "f6e05a00107f78dbfae6dc2ae3f7c82a8d67c3758c02fc3cf04d3aa293ae1976",
-    "fixtures/validation/facets-avro-projection-browser.json": "db2f6baeb5bca804b8e2f86d1c7ba9754c6ded850ef3cafce1ee94806310dcd8",
-    "fixtures/validation/facets-avro-projection-native.json": "edcce622cff7137470a23c0b59d625b7ed26ffaa174dd4d46f7abc60ebed5d57",
+    "fixtures/validation/facets-avro-browser.json": "d41c6a2d006d8f791d1eac91de60f4dbbb7fbe57f2471386c6a10ff7b69c8ecf",
+    "fixtures/validation/facets-avro-classification-browser.json": "3ffb65e5a322712a1b4cdd9dd64bcfcd015c7db51e7df9378b082df3f339a94c",
+    "fixtures/validation/facets-avro-composition.json": "103d7262681c685fde1492a5cdc4ae9249f1116d684340729153e9619e3b10fe",
+    "fixtures/validation/facets-avro-discovery-native.json": "7267982752aec7492411b9e99f1b69f49026738cbe5e8e88caae5e8cca47d0f7",
+    "fixtures/validation/facets-avro-discovery.json": "a00e57802579b8c0d99575e605382d7a3c47b24419adcd23aed9836d16e997eb",
+    "fixtures/validation/facets-avro-native.json": "234c5963e57d1ed1a2b22ecda398bdbb66168484b2bbdc95e0b5c42afeee939c",
+    "fixtures/validation/facets-avro-projection-browser.json": "68fd231bd8bde44a7206da3cd93c18b554e5963261578f5d470aa5aed5ab64cd",
+    "fixtures/validation/facets-avro-projection-native.json": "243ba355e9ba120f4af7a7858791ea770f305ac4104476f8e56af180024a324a",
     "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
-    "fixtures/validation/facets-avro-selection-browser.json": "82586b70f5939506c2053ea04ebcbb92eb196ca12202c046e86047bc2c9a6820",
-    "fixtures/validation/facets-avro-selection-native.json": "1d8e58c8f2d40bd947e3d8682b1e958a8c64f310293f34c53131c3da9375fe34",
-    "fixtures/validation/facets-avro-selection-oracle.json": "5c44af551d7bfe22afc8a8eed3de002376474c8cae2ececd1b00372039030df9",
-    "fixtures/validation/facets-avro-type-browser.json": "e7e977780cd971f7855786e0a1251f7287824a53a77867d0aa433787892611f9",
-    "fixtures/validation/facets-parquet-browser.json": "527b703ec1b74519490cfe0b4c43079ab1e1ab903f06663ca157b2db386dcd23",
-    "fixtures/validation/facets-parquet-carrier-browser.json": "3373fa28a08316c7251bdb81b20a997bce5452f3d36638c2a91141ba514c74a0",
+    "fixtures/validation/facets-avro-selection-browser.json": "6a9dd035b8c8c7751881cb45de2cece0e79ed33fbef7f43146261b67e4718323",
+    "fixtures/validation/facets-avro-selection-native.json": "647cba510feca669f531732df0394243a5543c77aac74e78ff7dcba1d4999aeb",
+    "fixtures/validation/facets-avro-selection-oracle.json": "0653d48cc875ff3a0f97693d8d87c269300cbf236b96d55a8181a6d9ed507d1c",
+    "fixtures/validation/facets-avro-type-browser.json": "eaae57b0eb176804ec1e4de101d310b7606d358b7441c3f52dfe0ff300bed4f4",
+    "fixtures/validation/facets-parquet-browser.json": "8ebcbeda7b0935521667a561d3a1fb0ca6b3f023e30a8de77a8fde8349d643ee",
+    "fixtures/validation/facets-parquet-carrier-browser.json": "541059f16025971e172e9224d030928bccb2d0e4bf6e46aae87135a5697849d1",
     "fixtures/validation/facets-parquet-carrier-corpus.json": "4ec421cbbc5f0fd77e9dc5282972d7c70866d28fbcf5c9e4c80a474f1e1eab41",
-    "fixtures/validation/facets-parquet-carrier-native.json": "2d3f998d5d09ab27374a409ccbcdf66e64a81a23a9f4eb48398712ab95ae1ac7",
-    "fixtures/validation/facets-parquet-classification-browser.json": "c15022f69db764b0bc38a644d5e93c436b70c8c9fd475b455ac0e4deae8da1fe",
-    "fixtures/validation/facets-parquet-composition.json": "09c791a1661896673ecb60938cb3bc6eca06ce9fc66c5eeccde405adecff2edd",
-    "fixtures/validation/facets-parquet-discovery-native.json": "c394004c2d37ecf8fa64e1e599914e14bb72c2c2928803d118492f4b2ede9e55",
-    "fixtures/validation/facets-parquet-discovery.json": "4756187491f07f797d3b6fc98d064ed71b2164912a9e5224efcf83f0158f5119",
-    "fixtures/validation/facets-parquet-native.json": "530de65b288aa6befadae5f92276ec55bea529e1d78f6227a275eb772a0bc3f5",
-    "fixtures/validation/facets-parquet-projection-browser.json": "e373a0c7bb254cceb4be93477922f2bc0f0945cbb0fad673501ed33c747248d9",
+    "fixtures/validation/facets-parquet-carrier-native.json": "bed7137d6441e7e06d07552139e4f47c3ab185fb00a3444e48dacc537afc2944",
+    "fixtures/validation/facets-parquet-classification-browser.json": "25ce3f63ee4e28cda37474faf2ac8db9a3f32d0697daddc41f59c2c6a64bdf0e",
+    "fixtures/validation/facets-parquet-composition.json": "cf3c0b24ff52efe9068437c66bf87e5642e182b61a044d651a31ff176faa5296",
+    "fixtures/validation/facets-parquet-discovery-native.json": "dae81f99a044629d8d1109f9304b1cdadc9c777c39eb34fe3a4c8fa3e76f58a7",
+    "fixtures/validation/facets-parquet-discovery.json": "02bda42ba7584a89a18be1683eee3fdac9626c161d09ce37828b2e672e860b3a",
+    "fixtures/validation/facets-parquet-native.json": "f4e21473455243193d0503c9c93499cfe96c9a3a6cfa1973e29d191fffdc910e",
+    "fixtures/validation/facets-parquet-projection-browser.json": "c834e735616897c321bba3f64e6275f60a79fee152fb10fe48f3a0b7a93a7b24",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
-    "fixtures/validation/facets-parquet-projection-native.json": "bbaafa99a6fa5ec8bb206dc04cd9efd9035157c21d80c0e94d0b4e2687c1e155",
-    "fixtures/validation/facets-parquet-type-browser.json": "1c394ba658e2f65f9bd617450e6c5edabdf5b0dd8493ef14ca104ead0844aa15",
-    "fixtures/validation/facets-postgresql-browser.json": "20da50f9bdd3f624a98e3f6f9d8473a16e7d30c2694d59e94b295c30238e9e6a",
-    "fixtures/validation/facets-postgresql-catalog-browser.json": "61b5eaad57dca62572683528bcfa6cdb3bbec3eda6e7c45178cb50bd70c94434",
-    "fixtures/validation/facets-postgresql-classification-browser.json": "135b0794e35f47daeb0ae45cc3d706346a89c86956ce723a4ae770dd5eb1ea04",
+    "fixtures/validation/facets-parquet-projection-native.json": "3f00d92023521077a7bbe1bc5cba79edd421c10e72939bf5558ba7b476d6832d",
+    "fixtures/validation/facets-parquet-type-browser.json": "0f9754f3d37187c9c4568b465287208558b9e2ab8472aa0ee851a19efd7dbf6b",
+    "fixtures/validation/facets-postgresql-browser.json": "f80fa0a8177b744b9474195974634b2cb95106ce7e89c787fc88865f8c66a053",
+    "fixtures/validation/facets-postgresql-catalog-browser.json": "84c5fe5100fd89bff3946a96e3e9e7e9de94cbaba7d076efbe4e70675b961dea",
+    "fixtures/validation/facets-postgresql-classification-browser.json": "c027f8afaf8464d0fa78b316498659d3a1220ce04ff13a0c952d3cb4d3c61265",
     "fixtures/validation/facets-postgresql-composition.json": "503099c9b7301145be9ae75bae945bac3e546f10a576b77daeb64d9fa6b0885d",
     "fixtures/validation/facets-postgresql-constraints-native.json": "32fd5b5cf6f3bfed6d9530f274c48b014879fb584bb0db0ea7461f88f761556c",
-    "fixtures/validation/facets-postgresql-discovery-browser.json": "9f70ade3bf2f3fd0b88d43c380c56752ed538b98408233427f21e154276e3541",
+    "fixtures/validation/facets-postgresql-discovery-browser.json": "30ef1287dff2e2c70cd2a65c91ba688b2d9e57bd9c415a2be2879d16f1357847",
     "fixtures/validation/facets-postgresql-discovery-native.json": "c2ae5bb2f369362bb00692dcebc3b0fc2b913dff6c7bd22c108d36b24d639f17",
     "fixtures/validation/facets-postgresql-native.json": "9091a19b249a379472488edee1dc0097ce001c1274617bca672df40f62bb115d",
-    "fixtures/validation/facets-postgresql-predicate-browser.json": "0f0ef9bed317ad46ac85ac0c29e26a0643eec2b7745cc6b3f5b04ec43f28dfba",
-    "fixtures/validation/facets-postgresql-projection-browser.json": "e5f5e5726743547a1ce205a39e5016593d7c2d4262d7c5df783eb41705445284",
+    "fixtures/validation/facets-postgresql-predicate-browser.json": "70f3bd67471fa98961951e81ffc07b1b0de03dc2462ff31b8d58b3ed01d65cc7",
+    "fixtures/validation/facets-postgresql-projection-browser.json": "557f43772ec1d352ca990c86b3572558bbb7720e95d8282f07ec8e43c4593371",
     "fixtures/validation/facets-postgresql-projection-native.json": "f07e14ec5ac8f0d80d71bf0ae1a3dc375dd2e18f17ffe90eb01d2140b554c51b",
-    "fixtures/validation/facets-postgresql-resolved-browser.json": "4268525360cae76b8efba8ea9d2fd1ec15caaa15591c52b7e86267be8ca744f1",
+    "fixtures/validation/facets-postgresql-resolved-browser.json": "18c27bfcc7367334392f3966eda54264d2658e15a8e0ad2528be51e78b2d0c60",
     "fixtures/validation/facets-postgresql-resolved-native.json": "cbca58adcb9998eca610fb190b654a3b0a4cbf304c84a4141adb1c5c60ad9b18",
     "fixtures/validation/facets-sqlserver-association-native.json": "9eaf9e227fb0310dfe7c9b303e9ddcf87ab043a27a1c03ab828a465a4e790d04",
-    "fixtures/validation/facets-sqlserver-browser.json": "e6b6da5b2e1dd532111d788845b1322e93e64d41a0b025361ea81ef8a96b38ea",
-    "fixtures/validation/facets-sqlserver-classification-browser.json": "64a4f62e4b46362b766a9d541b65aa9bdfd2eede549d2d7ded3652b4916c9b44",
-    "fixtures/validation/facets-sqlserver-composition-browser.json": "c5194763e79fc9be203f910af6e55ff2a73afada8c9997e05b6142ffe9a19ffb",
+    "fixtures/validation/facets-sqlserver-browser.json": "cabb6633b2e17aba83f5c5d52cf978fe7c73ecb732ff0f51213c70cb53997ac3",
+    "fixtures/validation/facets-sqlserver-classification-browser.json": "7fde954f1250a791dbf6263d220b03cd178e201dd9224491ba9be416a8211b11",
+    "fixtures/validation/facets-sqlserver-composition-browser.json": "8f3b3a6db8287aa63bb8cbdb3ae6ec2429117be3e6e6e5bfb6fed1bb77a531ac",
     "fixtures/validation/facets-sqlserver-composition.json": "c7129bb6e073b6dd068aa4989f7424857c91a01dc535c68e3a551dc8c51df0ce",
-    "fixtures/validation/facets-sqlserver-constraints-browser.json": "eba65617da9a76d24cb7630041b87dec95cde1e1227abbe21d8edf4ebd16f2fc",
-    "fixtures/validation/facets-sqlserver-discovery-browser.json": "049a649084ef37f9de3f99f815e3577b46296c6b06a717e01e58e86f3c750a34",
+    "fixtures/validation/facets-sqlserver-constraints-browser.json": "2edbfaa7e350315e3a68bf55ce4138b29ce7535784cbb01b6a0899118f004fe1",
+    "fixtures/validation/facets-sqlserver-discovery-browser.json": "5a663b5456ae3244f78d471fb5cbfb829079dbf7bdd37784f1dd07e0b4ae5963",
     "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
     "fixtures/validation/facets-sqlserver-native.json": "76252aa70e4c9db5eed90861e884bc83bc3b5a16bb9bf41f64865c7479ee4e33",
-    "fixtures/validation/facets-sqlserver-predicate-browser.json": "aeccba2a4b10f1ff3fd000b4348ca61ffc06d30b674943aff2efb0e1f67b8ee9",
-    "fixtures/validation/facets-sqlserver-projection-browser.json": "f60eb531642d7134f2cd8ebc8dda558b8772ef6e64be2e61360f7f9e13798d35",
+    "fixtures/validation/facets-sqlserver-predicate-browser.json": "bd427e7b888e2b1be170cd378093ce86db842539181040bcef0210f2d7b23bb0",
+    "fixtures/validation/facets-sqlserver-projection-browser.json": "78d9fb22cf7aefae506ef2eb2f1c2b41c21d92ea7ddc4620343db7f03778797d",
     "fixtures/validation/facets-sqlserver-projection-native.json": "a390ce31928959a8485d783d3cd735aba2f9d8b1978017c8aae0333290c949ce",
-    "fixtures/validation/facets-tablespec-browser.json": "fe98937a5fbdbcac52bab6fe7329e8e01200a8cbd1d292c25e46bfa7b5b49a8c",
-    "fixtures/validation/facets-tablespec-classification-browser.json": "f6394949593c56b933a149820b9e210742b76a279165a7167d37a42db278fd68",
-    "fixtures/validation/facets-tablespec-classification-native.json": "5c76e6e925a91932e2657a8318628a62e9b1d5744ff51890e8a70784e4a64abb",
+    "fixtures/validation/facets-tablespec-browser.json": "29ef65f7f887e92fdd20c8e059aebfd096af7b24c8363e3083c5920c245b1b3b",
+    "fixtures/validation/facets-tablespec-classification-browser.json": "1154fbf2d3e5e7603aeb4cafb7d4d36b0445a175a132ddd6b94cf0108581f9a8",
+    "fixtures/validation/facets-tablespec-classification-native.json": "66fcec90ee5935c6ff8d9df9e87e251f4ee515fef06876c9830965e92093f486",
     "fixtures/validation/facets-tablespec-classification.json": "0ef5c6aef6e357cf255d2104f7cf016e35b2bb9a2718c19bdd0fbc9820cd0014",
-    "fixtures/validation/facets-tablespec-native.json": "bcaa2f6aaed04a16141a50802be17da87736535d46d3bdc0109cf0b3b6b5e134",
-    "fixtures/validation/facets-tablespec-profile-native.json": "0ed2e93c5627a3e168e031cefc947e9b62203de5095255f70dc1969843092a38",
-    "fixtures/validation/facets-tablespec-projection-browser.json": "5046a6edc17c27b497d2fed701758e3dd482cad741b018246e27a1902f1a7850",
-    "fixtures/validation/facets-tablespec-projection-native.json": "c7ae6d13e53f50a959e052ae54f2609bf2a179d05555fab148f3aacf92381d9f",
-    "fixtures/validation/facets-tablespec-projection-values-native.json": "9759a732fc373af011e66c893deb025196c7aa15c0ed43b94f46be50b87e2e96",
+    "fixtures/validation/facets-tablespec-native.json": "2320021ceef4b1ce0667e641b55a4b811fc883b8be5cd365906525e9cc0071c4",
+    "fixtures/validation/facets-tablespec-profile-native.json": "4a9ef0a96363741a750e3fd99c80a778579b80061a6b8687876c7341ef8d3815",
+    "fixtures/validation/facets-tablespec-projection-browser.json": "93c5cb55382a2ff5eddb600e29e3c3cab960e8a15d03c96c30cca1d6d128c5c6",
+    "fixtures/validation/facets-tablespec-projection-native.json": "e25860361836cd14190d2b9b78ebe0572935982fc787f6fa83163faa063d95d1",
+    "fixtures/validation/facets-tablespec-projection-values-native.json": "81c4618a0834148af03e22586b87af6d003b8cc5cb1ff1811d6b997419483c95",
     "fixtures/validation/facets-tablespec-projection.json": "f0eb7903035d56f550ab2f15d6011ed0dfe43f267bddec0c1ea375b2b136b06a",
-    "fixtures/validation/facets-tablespec-suite-browser.json": "db1df3754d925612f67fd53d74b645efdbf7b049dc4cc70e9b4d090208fec6a7",
-    "fixtures/validation/facets-tablespec-suite-native.json": "66a715042311351c9bd1e0cd299b35ecc5838b2d8e7bfc3682294fa20dc69dcf",
+    "fixtures/validation/facets-tablespec-suite-browser.json": "abcf0b326eff82eef39165fae9dab7637989dc4ed1a595268e3959fbfb2fe7c7",
+    "fixtures/validation/facets-tablespec-suite-native.json": "a5e7950d2eb8c70b77f6afd8146760d817e7c42353987d7a63b357b705567ba9",
     "fixtures/validation/field-conformance.json": "370bae1ea9f66ff435762e00044c2479a29129af3451a17451599ccc134b2141",
-    "fixtures/validation/field-gate-refresh-evidence.json": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab",
+    "fixtures/validation/field-gate-refresh-evidence.json": "3b0c6090bd6acaa6f8b23c78cf2abe6a5bd3cd188757633f1749cb11b1bd58c8",
     "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
-    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
+    "fixtures/validation/field-postgresql-browser.json": "cd44a25bd88ea0c8f7473be31b1671a43f56dc3b1402182eb8c590175ab4a99e",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
-    "fixtures/validation/field-postgresql-projection-browser.json": "e369a0ed2da32f30ec9ae8f3c523c0ed25e54c3d418d15b51ef2f04f97bd7863",
+    "fixtures/validation/field-postgresql-projection-browser.json": "61d0772279a68f6d85bfe2af770badaa334933e11857350cc25baa048001a0a7",
     "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd",
-    "fixtures/validation/field-sqlserver-browser.json": "902d5e6dc609e9d203ab725072d01712bc504e7b9a495feb22350392fb96822d",
+    "fixtures/validation/field-sqlserver-browser.json": "d5e657dc8dc51ee25ecc8f0315613376ba166ef912b4d6cb10e2e67e062de604",
     "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
-    "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "30bd647cc17b58d626ddd959932b8f944121a83f40c6c10ce5b8077ccffd7a63",
     "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
-    "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
+    "fixtures/validation/nullability-field-operations-browser.json": "b441685e8657331f540752db1303b20604fbf190671ad30b8dfffd835f439d12",
     "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
-    "fixtures/validation/nullability-selection-browser.json": "66519fb54b027dc7b91e46b6947ee154ae05863407a1f16c3c2fd35c475f6a10",
-    "fixtures/validation/nullability-tablespec-classification-browser.json": "ba55f6f340186fd8227abb57c3284d0731b9027deaec50c87bb9944d3924cab6",
-    "fixtures/validation/nullability-tablespec-classification-native.json": "4311389c103b2938c50260936b9d2b8bee8815cd8e7a330c427c6d3e4c1c28f9",
+    "fixtures/validation/nullability-selection-browser.json": "f21d9f298c4a4e63c55b8050f21bec0bf2afdd526c85b50bbb5a30671deb1dc2",
+    "fixtures/validation/nullability-tablespec-classification-browser.json": "4c2a90801fb2738271a41e3a7b26080f67560e87e0f4b31daf8441eb4558ee57",
+    "fixtures/validation/nullability-tablespec-classification-native.json": "fb305ebae7313e26162d10eb005443264b4e38de4df224b11fd3b6b6e62455d4",
     "fixtures/validation/nullability-tablespec-classification.json": "0ea253630dc06294eba8339a6a4bf6a5e003092fc9628bce0e6cf9d59c2a631e",
-    "fixtures/validation/nullability-tablespec-execution-native.json": "34c7f746796249f316b37225168714c5e6e886e61625c5961a826337e8031274",
+    "fixtures/validation/nullability-tablespec-execution-native.json": "0bd42e358c44a83411e9bc9fb8ea65b29f6e046cfbde89ab6f6643e2e4b10323",
     "fixtures/validation/nullability-tablespec-execution.log": "db0adb4a560edf37c5c9946ae195558bf9f513e969df67028bacc331894db61f",
     "fixtures/validation/nullability-tablespec-profile-browser.json": "c640cc5da2b9ebce45fcbbe29c2feb9366672a174aba5c8b25eedaa282f64375",
     "fixtures/validation/nullability-tablespec-profile-native.json": "85b10f5808262587c8847bcf6551a41de08c91f0590410b4119b5dffc3522fc4",
     "fixtures/validation/nullability-tablespec-profile.json": "a84e6b6408aee4c6c84e7f902f94014153684a9fddfdfb06a0b243c353e21a25",
-    "fixtures/validation/nullability-tablespec-projection-browser.json": "260c6cdc54eea23e946b5be35cc0484c0532e26296cf464f400cccb3444f7224",
-    "fixtures/validation/nullability-tablespec-projection-native.json": "946bb05a637b855f032daa1d388bb927819c7283fa0b9ef6d2d4d5aad2b0e483",
+    "fixtures/validation/nullability-tablespec-projection-browser.json": "d926227a53f77997be3c466fbd29a3497e4e974b64273b38c0ca41b6ca827cf8",
+    "fixtures/validation/nullability-tablespec-projection-native.json": "48d1148f226bbd1ca6501a4e4ee23892b117c344efec1fb0fa8dfb1943f92360",
     "fixtures/validation/nullability-tablespec-projection-tests.log": "c2bb971a0e7c2df46022542acbf1dec616e8b659abe93bea87076b5a20861cab",
     "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
     "fixtures/validation/parquet-facets-refresh-regression.log": "51713b3215b240bfafdf88513d4f42354bae2fb0ddf3a09cad3a834f94eeae45",
-    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "4d8a2679a175b9ecd4cb06c8c81fa5397327258033b439db06f7da483f2548d8",
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
     "fixtures/validation/postgresql-facets-refresh-adjustment.json": "2d08ac953612b847db6a650ffc3169f5a66d797678b0b839b772a8970e6d23c7",
     "fixtures/validation/postgresql-facets-refresh-failed-attempt.json": "98688de5b2b69024992397adf2fea851b39bd30d92f1e777dec9273b00cfb29f",
@@ -753,7 +755,7 @@
     "scripts/core-ideals/facets-tablespec-schema.ts": "b3b82ece0697b44b4fc41aee30a3cca864b94533ba4e5bcaed8b81706646ec0a",
     "scripts/core-ideals/facets-tablespec-suite-browser.ts": "11ac6078f9ad1398cd68d70235ba4e8dc9fc9f71bcbba4b2c43a235e2120c090",
     "scripts/core-ideals/facets-tablespec-suite-oracle.py": "f8ef9d32a016285db11673ba7a466dce1b25489b840081d23c3f0393f184f771",
-    "scripts/core-ideals/field-conformance.ts": "d287eaf0eaa5a00cbde3808c45cc3cea26097aa5cb70c2aaaab222344cc19c94",
+    "scripts/core-ideals/field-conformance.ts": "ebb65035d6599f73adbaf09d2267d289c88d8343487f712b38a85c2ee9a9d29c",
     "scripts/core-ideals/nullability-tablespec-cases.ts": "20c1955abb3157a9593be8d1b871f7886f236df2652867d04fd79ac3ec59eaf7",
     "scripts/core-ideals/nullability-tablespec-classification-browser.ts": "cedba5e53f3d057c75792e4e9232300036a97e118663a161ab067251b85ebb82",
     "scripts/core-ideals/nullability-tablespec-classification-oracle.py": "432428e2be1024e48f8a0ff61ff43a1b815976e0e3b2df0893ddafd42e62a2ad",
@@ -891,7 +893,7 @@
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
     "src/core-ideals/sqlserver-syntax.ts": "5099fb29ea4672e70f155cb3e999f8c6eaa9a914831dc9c042e6887134a97ef9",
     "src/core-ideals/tablespec-facet-suite.ts": "95f2d4b35276c7832d8fa9ef6108a526eddfc545efbbf9e205231264c7730744",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "018ec22d88de99ed75bab562985ae7c586aa0de3a141a9e55d93f58b8d84f65e",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -903,11 +905,11 @@
     "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
     "src/model/nullability.ts": "32c862d926df9e05ace077b9310a5152c7ef3f251e27c56a8f14a7fc396724eb",
     "src/model/record-type.ts": "f414e2f30c864c740322493e3c7a108fb2fcddacf4b49980a90d9d863fff6b08",
-    "src/model/selection-verification.ts": "6b582a843164284356631262cc3851aed60faca4bf7f6ae9ee90e3dd679d2b64",
+    "src/model/selection-verification.ts": "211d3f90736211762f30e0b8873fd5de24a7f247337cc698301e0a850ce2ee85",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/registry/registry.ts": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/validation/document.ts": "d49d3c8b4d30db243a228707596b515210375cf1eb5d51253a81b783cd638d47",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "tests/core-ideals/facet-operations.test.ts": "b61476163115d9ba018c61ffe9db08a64c0788b1179df68634c560ad673e25da",
@@ -934,7 +936,7 @@
     "tests/core-ideals/facets-sqlserver-projection-native.test.ts": "26c8b0c7fbad1da819d8635e90cf554c8ebe4126375cd825c48e42c686ff53a3",
     "tests/core-ideals/facets-sqlserver-projection.test.ts": "bddd7c0e3ea2361c0143cf9ff61533cdb85e1e1121acc1a123356e2a886fe4a8",
     "tests/core-ideals/facets-sqlserver.test.ts": "e290bfc67ea9e8004f2098201933cc632cc5c3abde065c72c35c88db4730be32",
-    "tests/core-ideals/facets-tablespec-discovery.test.ts": "303f88a248d156758d46c113d0ed65d27d97801514b594c3b430fa5c63f788f6",
+    "tests/core-ideals/facets-tablespec-discovery.test.ts": "f61a7ca6e97783202cc5a79014ba5ab5067fce485ce6dc77da5a7216cf95af20",
     "tests/core-ideals/facets-tablespec-projection.test.ts": "938c8d0050b9eb7735b4cd9ffac026a523ad897b9532eb2c2df9b3f9e8370d4a",
     "tests/core-ideals/facets-tablespec-suite.test.ts": "ad55601d8b95eaa6f6cf786ed7b229e80a2ba95c93cd5675dbfad0d49247bf65",
     "tests/core-ideals/facets-tablespec.test.ts": "2f592094e308f92589e415353bd5b69b171f660a432b89d6d8867c345e4115a2",
@@ -1436,5 +1438,177 @@
     "baselinePath": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/tablespec-nullability-acceptance-evidence.json",
     "baselineSha256": "5e49d2668b8f0d7708b10e3c2d0b6b237738a183dd835f52277aa9a9f849d9a5",
     "scope": "Evidence hash closure only; semantic results and original execution logs retained"
+  },
+  "previousEvidence": {
+    "revision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+    "path": "fixtures/validation/tablespec-nullability-acceptance-evidence.json",
+    "sha256": "a3cf036d569098b46432375e3ed61bd8743334a6f754051700fadba75d47ae00"
+  },
+  "currentReplay": {
+    "path": "fixtures/validation/core-check-refresh/native-browser.json",
+    "sha256": "f32bfcba61127aba6c1ee0a8fa5103184ab519ea7790a4d275c69590a457b8df"
+  },
+  "currentBrowserReplay": {
+    "path": "fixtures/validation/core-check-refresh/auxiliary.json",
+    "sha256": "96825c695bc92bb13930fdb0a8fcaeb3beb95c0031be0ed52788c5f09cf71d3d"
+  },
+  "historicalResults": {
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 217,
+    "packages": 33,
+    "browserBuildBytes": 10205712,
+    "regression": {
+      "tests": 170,
+      "assertions": 11347,
+      "files": 48,
+      "failures": 0,
+      "scope": "All tests/core and tests/core-ideals test files except field-conformance.test.ts, which is run separately after refreshing evidence.",
+      "log": "fixtures/validation/tablespec-nullability-field-refresh-regression.log"
+    },
+    "fieldGateTests": {
+      "tests": 3,
+      "assertions": 24,
+      "failures": 0
+    },
+    "classification": {
+      "cases": 504,
+      "declared": 40,
+      "nativeRecoveries": 544
+    },
+    "projection": {
+      "cases": 204,
+      "nativeTargets": 146,
+      "idealRecoveries": 292,
+      "scalarBooleanDisagreements": 26
+    },
+    "browser": {
+      "classification": {
+        "scope": "Selected-context classification and exact native recovery; no down-projection or row enforcement claim",
+        "browser": "148.0.7778.0",
+        "checks": {
+          "cases": 504,
+          "recoveries": 544,
+          "blocks": 232,
+          "tampered": 272
+        },
+        "externalRequests": []
+      },
+      "projection": {
+        "scope": "Authored availability projection and ideal receipt recovery; no row execution claim",
+        "browser": "148.0.7778.0",
+        "checks": {
+          "cases": 204,
+          "recoveries": 292,
+          "blocks": 58,
+          "tampered": 146
+        },
+        "externalRequests": []
+      }
+    },
+    "nativeExecution": {
+      "greatExpectations": "1.15.1",
+      "spark": "4.0.1",
+      "java": "21.0.2",
+      "cases": 10,
+      "executed": 5,
+      "noAvailabilityConstraint": 4,
+      "nativeRefusals": 1
+    },
+    "fieldGate": {
+      "scope": "Qualified Field ideal gate; native evidence retained and fingerprint-checked, not rerun by this command",
+      "idealAdmission": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "usefulBindings": 5,
+        "meaning": "CONTRACT-040 / Element.kind",
+        "nativeEquivalence": false
+      },
+      "delivery": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "scope": "Published Field binding subsets only; not general native-language conformance"
+      },
+      "evidence": {
+        "records": [
+          {
+            "path": "fixtures/validation/field-core-acceptance-evidence.json",
+            "sha256": "29f27f67f60149d5f03b0f2fdf6d71aaae5a51889f4208b4148123e9a8c44258"
+          },
+          {
+            "path": "fixtures/validation/field-tablespec-acceptance-evidence.json",
+            "sha256": "0728fa3309f69a1e71de16c87fa8da76a10d1bad3334f7b34226af675944b7ae"
+          },
+          {
+            "path": "fixtures/validation/field-postgresql-acceptance-evidence.json",
+            "sha256": "db07fc4f43ac14c0a056efa1612a0adb775cfa1265a8125891d2b34447d5d87f"
+          },
+          {
+            "path": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+            "sha256": "154d8ad284d80415aa52af78bdf1561e221bf9886251cbd875cc24dd84bd09a6"
+          }
+        ],
+        "fingerprints": 2469,
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ]
+      },
+      "roundTrips": {
+        "tablespec": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "postgresql": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "sqlserver": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "avro": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "parquet": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        }
+      }
+    }
   }
 }

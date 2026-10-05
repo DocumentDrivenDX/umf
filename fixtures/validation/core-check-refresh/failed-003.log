@@ -1,0 +1,21 @@
+{"cases":336,"recoveries":452,"blocks":110,"tampered":226}
+3 | import {createHash} from 'node:crypto';
+4 | const runs=[],checks:Record<string,unknown>={},paths=['scripts/core-ideals/cardinality-tablespec-browser.ts','dist/umf.js'];let browser='';
+5 | for(const part of ['classification','projection']){
+6 |  const script=`scripts/core-ideals/cardinality-tablespec-${part}-browser.ts`,command=['bun',script];
+7 |  const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit',env:process.env}),exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`${part} browser failed`);
+8 |  const path=`fixtures/validation/cardinality-tablespec-${part}-browser.json`,proof=await Bun.file(path).json();assert.deepEqual(proof.externalRequests,[]);assert.match(proof.browser,/^148\./);if(browser)assert.equal(proof.browser,browser);browser=proof.browser;checks[part]=proof.checks;paths.push(script,path);
+                                                                                                                                                                      ^
+AssertionError: The input did not match the regular expression /^148\./. Input:
+
+'153.0.8010.12'
+
+ generatedMessage: true,
+     actual: "153.0.8010.12",
+   expected: /^148\./,
+   operator: "match",
+       code: "ERR_ASSERTION"
+
+      at /Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/cardinality-tablespec-browser.ts:8:163
+
+Bun v1.3.14 (macOS arm64)

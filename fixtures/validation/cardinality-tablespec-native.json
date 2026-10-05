@@ -19,7 +19,7 @@
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/cardinality-tablespec-classification-oracle.py"
       ],
       "exitCode": 0
@@ -33,7 +33,7 @@
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/cardinality-tablespec-projection-oracle.py"
       ],
       "exitCode": 0
@@ -45,13 +45,13 @@
     "fixtures/validation/cardinality-tablespec-projection-native.json"
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-classification-oracle.py": "299dc5cf30e5cb2d96d6e75a54f4e3eac9189e7e6633fc9d00481271900d571d",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-projection-oracle.py": "faedbb760a14e911c8ef331127c05c39913f6e8bd92a581d4ef39d1f0900f559",
-    "fixtures/validation/cardinality-tablespec-classification-native.json": "12133a64a1da65cc4d9ab32f5a230db6f40e12b15f4e84d2f8cf72cbe3a87135",
+    "scripts/core-ideals/cardinality-tablespec-classification-oracle.py": "299dc5cf30e5cb2d96d6e75a54f4e3eac9189e7e6633fc9d00481271900d571d",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
+    "scripts/core-ideals/cardinality-tablespec-projection-oracle.py": "faedbb760a14e911c8ef331127c05c39913f6e8bd92a581d4ef39d1f0900f559",
+    "fixtures/validation/cardinality-tablespec-classification-native.json": "792efc8908fe42915ee53fd5bf236ed0ccf88c505bfa1bcaf50f7b51c41dc5ae",
     "fixtures/validation/cardinality-tablespec-classification.json": "552e692b95a3313024c02e1e243ec178716f9e4863d695fa5a284d71d12492a8",
-    "fixtures/validation/cardinality-tablespec-profile-native.json": "eb7ba215dfbed905d254ce85e1b35254ee4553f930c1de4f1256038153adcf67",
-    "fixtures/validation/cardinality-tablespec-projection-native.json": "7605ee8e747b45717ac35caa75da3fed420ea5c3cf6ba37ae0073bf88c06a101",
+    "fixtures/validation/cardinality-tablespec-profile-native.json": "3648199866263d80c448904fcefc80fc948a44630ca56b44d5750254d1cc76d9",
+    "fixtures/validation/cardinality-tablespec-projection-native.json": "f2b9efa342d00a273fe5320559cf0f3d1b6d2e4dc674ee77f4d0693fd0932153",
     "fixtures/validation/cardinality-tablespec-projection.json": "b7ab2ca735ad656e7460ba114bc09bd3a360e444e4f5cae297ae5072cf138098",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",

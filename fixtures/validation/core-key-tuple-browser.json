@@ -1,6 +1,6 @@
 {
   "scope": "Exact experimental Key tuple encoding and receipt verification through a focused browser bundle; no native binding or author-provenance claim",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 58,
     "encoded": 26,
@@ -12,18 +12,18 @@
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "ca656149bedb34de0752c9c13a02a744962be1fc10e80737ae4bdf7b329c8f5f",
+  "bundleSha256": "a0686c9d0c9aed04fafe7b6ccc595a6ce68efe72b99625f30a148eedfd642f7c",
   "sha256": {
     "scripts/core-key-tuple-browser.ts": "576306797f7013a247b7633d4112f049bb280f4335efcfa4c8f161681b44b33f",
     "scripts/core-key-tuple-cases.ts": "af9b6adce395673f00c868c94056feb50a4192012a4003bcdfee2ed23db87883",
     "scripts/core-key-tuple-schema.ts": "906c2f7885bd2ca3ae89f3c988c867c3113bc1aec16775e00b2b75007c2b377c",
     "src/model/key-tuple.ts": "cc394192441c55844de777413adb2dfdf5dac84b0c6a90e520fb713dc2673d4b",
     "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/validation/document.ts": "d49d3c8b4d30db243a228707596b515210375cf1eb5d51253a81b783cd638d47",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
     "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
     "spec/core/key-tuple-operation.schema.json": "1bbe9cece10ca98e602917b119df5198a9bfde11366f9a26dfab43878f2ee1ab",

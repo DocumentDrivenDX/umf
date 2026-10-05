@@ -5735,11 +5735,16 @@
   ],
   "sha256": {
     "fixtures/validation/facets-tablespec-projection.json": "f0eb7903035d56f550ab2f15d6011ed0dfe43f267bddec0c1ea375b2b136b06a",
-    "fixtures/validation/facets-tablespec-suite-native.json": "66a715042311351c9bd1e0cd299b35ecc5838b2d8e7bfc3682294fa20dc69dcf",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
+    "fixtures/validation/facets-tablespec-suite-native.json": "a5e7950d2eb8c70b77f6afd8146760d817e7c42353987d7a63b357b705567ba9",
+    "scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
     "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
     "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-tablespec-projection-oracle.py": [
+      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-tablespec-projection-oracle.py"
+    ]
   }
 }
