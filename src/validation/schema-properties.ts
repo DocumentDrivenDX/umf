@@ -50,7 +50,7 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
     if(e.kind!=='field'||!['integer','decimal'].includes(e.scalarType!))add('Range requires integer/decimal Field',path+'/facets/range');
     else attempt(()=>{
      const unbounded={...e,facets:{...f}} as Element;delete (unbounded.facets as Record<string,unknown>).range;delete unbounded.allowedValues;delete unbounded.default;
-     for(const end of ['min','max']){if(r[end]!==undefined)checkSchemaLiteral(doc,unbounded,r[end]);else if(r[end+'Inclusive']!==undefined)add('Inclusive flag requires its bound',path+'/facets/range/'+end+'Inclusive');}
+     for(const end of ['min','max']){if(r[end]!==undefined){if(r[end]===null)throw new UmfError('CORE_SCHEMA_PROPERTIES','Numeric bounds cannot be null','/'+end);checkSchemaLiteral(doc,unbounded,r[end]);}else if(r[end+'Inclusive']!==undefined)add('Inclusive flag requires its bound',path+'/facets/range/'+end+'Inclusive');}
      if(r.min!==undefined&&r.max!==undefined){const wrapper=e.scalarType==='integer'?'integerToken':'decimalToken',scale=e.scalarType==='integer'?0:f.scale,min=schemaCoefficient(r.min[wrapper],scale,f.precision),max=schemaCoefficient(r.max[wrapper],scale,f.precision);if(min>max||min===max&&(r.minInclusive===false||r.maxInclusive===false))add('Empty or inverted numeric interval',path+'/facets/range');}
     },path+'/facets/range');
    }
