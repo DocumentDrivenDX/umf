@@ -25,7 +25,7 @@ ddx:
 
 **Type:** proposed core schema/library successor to CONTRACT-001's local reference
 surface. **Status:** design proposal; no core schema, public API or migration is
-implemented. **Version:** a new experimental envelope version, assigned only
+implemented. **Version:** a new envelope version, assigned only
 after the owner places this work and collision tests pass.
 
 ## Purpose

@@ -21,8 +21,7 @@ ddx:
 
 Implement US-043 under CONTRACT-040. Architecture is the direct parent; no
 separate solution design exists for this core slice. Field, Nullability and Cardinality
-have passed their qualified five-system gates. Implementation starts from experimental
-core 0.4.0 with explicit item/value Field references. Experimental 0.5.0 facet
+have passed their qualified five-system gates. Implementation starts from core 0.4.0 with explicit item/value Field references. 0.5.0 facet
 validation, authoring, migration and metadata selection now pass core-task
 acceptance. Native facet bindings and the separate admission/delivery gate now pass qualified acceptance; see the final checkpoint below.
 
@@ -78,7 +77,7 @@ Consumer selection must preserve source identity and source paths, not merge nam
 
 ## Data Model Changes
 
-Reserve `Element.facets` only in experimental core 0.5.0. Keep the 0.1–0.4
+Reserve `Element.facets` only in core 0.5.0. Keep the 0.1–0.4
 schemas and receipts immutable. The normative representation and transition are
 specified in CONTRACT-040's facet decision below. Existing unknown facet-shaped
 content is never reinterpreted by changing a schema registry entry. Native DDL
@@ -380,7 +379,7 @@ all three previously qualified concept gates. No native-equivalence claim change
 
 ### Qualified TableSpec facet binding
 
-The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers core 0.5.0 TableSpec facet
 classification, authored projection, strict/report loss handling and verified
 native/ideal recovery. It supersedes the earlier classification/projection
 checkpoints' full-refresh limitation; their original evidence remains historical.
@@ -463,7 +462,7 @@ strict/report behavior and both retained round trips still gate acceptance.
 
 ### PostgreSQL classification implementation
 
-The experimental public classifier, operation schema and `umf.postgresql.facets`
+The public classifier, operation schema and `umf.postgresql.facets`
 package now implement the preceding discovery rules. Scope is explicit:
 non-null stored or new values, value-domain or exact-input obligation, and
 strict/report handling. Native catalog/SQL/analyzed-tree consistency precedes
@@ -514,7 +513,7 @@ compatibility refresh and prior concept gates.
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.
@@ -610,7 +609,7 @@ complete inventory remain unverified. This is implementation groundwork for the
 public receipt/schema design, not public binding acceptance; see the
 [catalog interpretation checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#catalog-check-interpretation-checkpoint).
 
-### Experimental SQL Server facet classification API
+### SQL Server facet classification API
 
 `classifySqlServerFacets` consumes core 0.5.0, the original captured v3 native
 text at 16.0.4295.3, a physical column path and a separately selected logical Field
@@ -644,7 +643,7 @@ The projection checkpoint below records emitted-target native qualification;
 capture/classification composition and full binding acceptance remain unfinished. Earlier binding gates retain their prior evidence snapshots until the
 scheduled full compatibility refresh.
 
-### Experimental SQL Server authored facet projection
+### SQL Server authored facet projection
 
 `projectFacetsToSqlServer` now consumes a verified core 0.5.0 facet declaration or
 Field-kind declaration and emits a closed `sqlserver-ddl` target plus its receipt.
@@ -713,7 +712,7 @@ residuals, rather than disappearing from native metadata.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.
@@ -805,7 +804,7 @@ The [selection evidence](../../04-build/evidence/avro-facet-discovery.md#native-
 records a duplicate-union parser disagreement, so structural selection is not
 described as universal native parser agreement or full schema validity.
 
-### Experimental Avro facet classification API
+### Avro facet classification API
 
 `classifyAvroFacets` now consumes core 0.5.0, exact original schema/dependency texts,
 an explicit native type location and a separate scalar logical Field identity.
@@ -839,7 +838,7 @@ dependency texts, including whitespace and numeric spellings. This is retained
 archive recovery, not original-text reconstruction or source authentication.
 
 Authored Avro projection, emitted-target composition and final binding acceptance
-remain required. The [classification checkpoint](../../04-build/evidence/avro-facet-discovery.md#experimental-classification-checkpoint)
+remain required. The [classification checkpoint](../../04-build/evidence/avro-facet-discovery.md#classification-checkpoint)
 records scoped tests and Chromium evidence, not facet admission or equivalence.
 
 ### Authored Avro facet projection decisions

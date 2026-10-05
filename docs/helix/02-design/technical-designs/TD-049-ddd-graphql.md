@@ -129,7 +129,7 @@ relationship intent.
 SDL fields can be computed, and a valid AST can fail complete schema
 validation. Require explicit root policy and schema-mode oracle acceptance.
 
-### Complete experimental 0.7.0 projection
+### Complete 0.7.0 projection
 
 `projectDddToGraphql` implements the complete schema-only profile. Its policy
 extends the existing core-ideal entity policy with explicit one-to-one

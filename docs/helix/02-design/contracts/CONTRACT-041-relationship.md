@@ -24,7 +24,7 @@ ddx:
 # CONTRACT-041: Authored relationship ideal
 
 **Type:** core schema/library. **Status:** draft semantic authority before a
-core schema change. **Version:** experimental 0.7.0, following the accepted 0.6.0 Key envelope.
+core schema change. **Version:** 0.7.0, following the accepted 0.6.0 Key envelope.
 Schema/validator staging does not itself establish public operation support or
 relationship ideal admission.
 
@@ -85,7 +85,7 @@ containing module ID plus exact `id`; cross-document stability and revision
 pinning await the separate CONTRACT-001 successor. The current resolver stays
 within one document.
 
-The experimental Key 0.6.0 candidate makes `Record.members` the explicit
+The Key 0.6.0 candidate makes `Record.members` the explicit
 ownership list for Key component Fields. Relationship publication waits for
 that candidate's acceptance. Endpoint validation MUST use the accepted
 authored membership and named Key, not a DDD field map, an unowned or shared
@@ -264,7 +264,8 @@ assertion. An unnamed reverse on an undirected assertion has a null name. The
 sets are not expanded into instance edges or a Cartesian product. Selection
 performs no data query, inference or transitive traversal and cannot claim
 referential enforcement. Existing element selection keeps its declared traversal
-scope. Recomputing the selection verifies current retained consistency.
+scope. Results are copied metadata snapshots, not persistent proof records.
+Re-run selection to obtain current metadata and diagnostics.
 
 ### Qualified PostgreSQL binding implementation (2026-10-01)
 

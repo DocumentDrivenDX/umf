@@ -28,10 +28,6 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
   const doc = value as Document;
   const relationshipProfile=doc.umf==='0.7.0',keyProfile=doc.umf==='0.6.0'||relationshipProfile,facets=doc.umf==='0.5.0'||keyProfile,containers=doc.umf==='0.4.0'||facets;
   const availability=doc.umf==='0.3.0'||containers;
-  if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; kind labels alone establish neither author provenance nor native equivalence','warning');
-  if(availability)add('EXPERIMENTAL_CORE_NULLABILITY','/umf','Nullability envelope is experimental; no native absence encoding or default execution is implied','warning');
-  if(containers)add('EXPERIMENTAL_CORE_CARDINALITY','/umf','Cardinality envelope is experimental; native shape and item semantics require explicit bindings','warning');
-  if(facets)add('EXPERIMENTAL_CORE_FACETS','/umf','Facet envelope is experimental; bounds do not establish native enforcement or value conversion','warning');
   const unknown = (obj: object, known: string[], path: string) => {
     for (const key of Object.keys(obj)) if (!known.includes(key)) add('UNKNOWN_CORE_FIELD', `${path}/${pointer(key)}`, 'Field retained without interpretation', 'warning');
   };

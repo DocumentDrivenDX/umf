@@ -51,12 +51,12 @@ try {
   prototype.vocabularies['umf.semantic-types']={version:'0.1.0'};prototype.modules[0].elements[0].extensions['umf.semantic-types']={types:[ref]};
   const converted=u.upgradeSemanticTypesEnvelope(prototype,{migrateExtension:true});same(u.getCoreSemanticTypes(converted.target,identity),[ref],'opt-in-conversion');same(converted.target.modules[0].elements[0].extensions,prototype.modules[0].elements[0].extensions,'prototype-retained');
   prototype.modules[0].elements[0].extensions['umf.semantic-types'].future=true;refuses(()=>u.upgradeSemanticTypesEnvelope(prototype,{migrateExtension:true}),'unknown-annotation-conversion');
-  const selection=u.selectCoreElements(fixture,{references:'transitive',identities:[identity]});same(selection.selection.length,1,'external-reference-not-traversed');same(u.verifyCoreElementSelection(selection),selection,'selection-verification');
+  const selection=u.selectCoreElements(fixture,{references:'transitive',identities:[identity]});same(selection.selection.length,1,'external-reference-not-traversed');same(selection.source,fixture,'selection-source-copy');
   for(const format of ['json','yaml']){
    same(u.readDocument(u.writeDocument(fixture,format),format),fixture,'document:'+format);
    const receipt=u.readJsonValue(u.writeJsonValue(rollback,format),format);same(u.verifySemanticTypesTransition(receipt),rollback,'rollback:'+format);
    const authored=u.readJsonValue(u.writeJsonValue(declaration,format),format);same(u.verifyCoreSemanticTypeDeclaration(authored,authored.target),declaration,'declaration:'+format);
-   const selected=u.readJsonValue(u.writeJsonValue(selection,format),format);same(u.verifyCoreElementSelection(selected),selection,'selection:'+format);
+   const selected=u.readJsonValue(u.writeJsonValue(selection,format),format);same(selected,selection,'selection:'+format);
   }
   let invoked=false;const getter=u.copyJson(fixture);Object.defineProperty(getter.modules[0].elements[0],'semanticTypes',{enumerable:true,get(){invoked=true;return [ref];}});same(u.validateDocument(getter).valid,false,'getter-refusal');same(invoked,false,'getter-not-invoked');
   return {cases:cases.length,checks};

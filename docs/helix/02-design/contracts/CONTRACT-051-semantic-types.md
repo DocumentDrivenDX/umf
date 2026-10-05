@@ -176,8 +176,7 @@ version-specific authoring APIs retain their supported envelope limits; read/wri
 validation, element selection and semantic-type operations support 0.9.0.
 
 Known limit: the 0.8.0 schema-properties APIs (`inspectCoreSchemaProperties`,
-`declareCoreSchemaProperties`, `verifyCoreSchemaPropertyDeclaration`,
-`validateCoreFieldValue`, `resolveCoreDefault` and the schema-properties
+`declareCoreSchemaProperties`, `validateCoreFieldValue`, `resolveCoreDefault` and the schema-properties
 upgrade/rollback functions) require an exact 0.8.0 envelope and reject 0.9.0
 documents. After upgrading, schema-property authoring is unavailable until a
 0.9.0-aware revision exists; roll back or edit schema properties before upgrading.
@@ -200,3 +199,11 @@ profile version. These APIs MUST keep their wrapper signatures and MUST NOT be
 used as the core pointing API. `semanticTypesRegistry()` registers the prototype
 schema and incomplete semantic inspection. It is independent of
 `SemanticTypeRegistry` and is never required for core 0.9.0 references.
+
+## Parent API integration (2026-10-05)
+
+Element selection is a copied metadata snapshot, consistent with the amended
+upstream contracts. No persistent selection verifier is exposed. Structural
+selection schemas and JSON/YAML snapshot recovery remain supported. Semantic-type
+declaration and migration records retain their CONTRACT-051 verification behavior;
+the removed schema-property declaration receipt is not reintroduced.

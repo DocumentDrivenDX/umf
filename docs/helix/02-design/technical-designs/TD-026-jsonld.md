@@ -127,7 +127,7 @@ The native framing implementation ignored frameDefault; patch jsonld.js to suppr
 framing when that option is true. Patch frame.js value-pattern matching to use the shared exact
 comparison instead of wrapper identity, retaining false/zero patterns via own-property lookup.
 The public embed option accepts standard booleans and normalizes them in the report. Legacy
-@first/@last remain subject to native mode validation; experimental cyclic @link is not a public
+@first/@last remain subject to native mode validation; cyclic @link is not a public
 embed option. Framed output is copied back to NativeJson; no linked runtime object escapes.
 The blocked legacy t0010 source/frame IRI collision is retained as an explicit compatibility gap.
 

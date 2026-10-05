@@ -1,6 +1,6 @@
 # TableSpec authored facet projection
 
-This experimental checkpoint implements the authored projection portion of
+This checkpoint implements the authored projection portion of
 CONTRACT-040 and TD-043. Full binding acceptance, five-system facet ideal
 admission and native equivalence remain unproven.
 

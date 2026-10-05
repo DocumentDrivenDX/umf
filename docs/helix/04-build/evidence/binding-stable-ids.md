@@ -18,7 +18,7 @@ ddx:
 # Stable-ID physical relationship binding transition
 
 The `umf.binding` 0.2.0 package uses exact `{module,id}` relationship
-references against experimental core 0.7.0. The original 0.1.0 package remains
+references against core 0.7.0. The original 0.1.0 package remains
 published and readable. This change supplies binding metadata validation and
 explicit migration/rollback only; it generates no relationship storage and
 claims no native enforcement or relationship ideal admission.

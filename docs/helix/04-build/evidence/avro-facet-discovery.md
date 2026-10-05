@@ -121,7 +121,7 @@ Next author complete public operation/extension schemas, then implement core
 residuals and retained original-text/ideal recovery. This checkpoint does not
 close the Avro facet binding or qualify native enforcement.
 
-## Experimental classification checkpoint
+## Classification checkpoint
 
 The public classifier and retained-source verifier/recovery operations now have a
 closed operation schema and `umf.avro.facets` 1.0.0 package. They distinguish
@@ -184,7 +184,7 @@ acceptance, facet admission and native equivalence remain unclaimed.
 
 The public entrypoint now exports `projectFacetsToAvro`,
 `recoverFacetsFromAvro`, their request/result types and the closed operation
-schema. The extension package declares experimental import/export capability.
+schema. The extension package declares import/export capability.
 This does not mark the binding accepted.
 
 All 388 emitted schemas compose with native re-import and profile-qualified
@@ -231,7 +231,7 @@ commit checkpoints work and does not claim binding acceptance or native equivale
 ## Qualified Avro facet binding (2026-09-24)
 
 The [acceptance record](../../../../fixtures/validation/avro-facets-acceptance-evidence.json)
-qualifies the experimental core 0.5.0 Avro facet binding for Apache Avro 1.12.0,
+qualifies the core 0.5.0 Avro facet binding for Apache Avro 1.12.0,
 fastavro 1.12.2 and Chromium 148 within the profiles and limits above. It
 supersedes earlier pending checkpoints without widening their native scope.
 

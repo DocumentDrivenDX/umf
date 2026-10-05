@@ -8,7 +8,7 @@ test('SPIKE-006: finalization rejects truncated XML without returning a partial 
   const r=await probeRdfXml(c.input,c.baseIRI,'finalized');expect(r.accepted).toBe(false);expect(r.nquads).toBeUndefined();expect(r.error).toBe(c.error);
  }
 });
-test('SPIKE-006: all pinned W3C sources and experimental outcomes remain reproducible',async()=>{
+test('SPIKE-006: all pinned W3C sources and outcomes remain reproducible',async()=>{
  const manifest=await Bun.file('native/rdfxml/sources/sources.json').json();expect(manifest.cases).toHaveLength(166);
  for(const f of manifest.files)expect(new Bun.CryptoHasher('sha256').update(await Bun.file(f.path).arrayBuffer()).digest('hex')).toBe(f.sha256);
  const rows=(await Bun.file('fixtures/rdfxml/corpus.json').json()).results;expect(rows).toHaveLength(498);

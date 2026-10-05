@@ -182,7 +182,7 @@ The next binding work is scoped core facet classification, source-bound recovery
 authored projection and its operation/package schemas, followed by the full
 native/browser compatibility acceptance. The facet admission gate remains open.
 
-## Experimental public facet classification
+## Public facet classification
 
 `classifyPostgresqlFacets` now classifies explicitly selected PostgreSQL 17.4,
 UTF8 catalog columns in core 0.5.0. The caller selects stored/new-value scope,
@@ -298,7 +298,7 @@ before PostgreSQL facet binding acceptance. See
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.

@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {Registry,validateDocument,selectCoreElements,validateCoreFieldValue,declareCoreSchemaProperties,verifyCoreSchemaPropertyDeclaration,resolveCoreDefault} from '../../src/index';
+import {Registry,editExtension,validateDocument,selectCoreElements,validateCoreFieldValue,declareCoreSchemaProperties,resolveCoreDefault} from '../../src/index';
 import {schemaPropertiesFixture} from '../../scripts/core-schema-properties-cases';
 import type {ExtensionPackage} from '../../src/model/types';
 import type {CoreLiteral} from '../../src/model/schema-literals';
@@ -37,16 +37,16 @@ function numericDocument(scalarType='integer',range:Record<string,unknown>={min:
  return {umf:'0.8.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...(scalarType==='decimal'?{precision:20,scale:2}:{}),range}}]}]};
 }
 const numericIdentity={scope:'element' as const,module:'m',element:'f'};
-test('unknown facets cannot bypass known range validation or receipt verification',()=>{
+test('unknown facets cannot bypass known range validation',()=>{
  for(const unknown of [{future:true},{integerWidth:{bits:8,signed:true,future:true}}]){
   const bad=numericDocument();Object.assign(bad.modules[0].elements[0].facets,unknown,{range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
   expect(validateDocument(bad).valid).toBe(false);
   expect(()=>declareCoreSchemaProperties(bad,numericIdentity,{title:'Invalid'})).toThrow();
   const good=numericDocument();good.modules[0].elements[0].facets.future=true;
-  const receipt=declareCoreSchemaProperties(good,numericIdentity,{title:'Good'});
-  expect((receipt.target.modules[0]!.elements[0]!.facets as any).future).toBe(true);
-  const forged=structuredClone(receipt);Object.assign((forged.target.modules[0]!.elements[0]!.facets as any),unknown,{range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
-  expect(()=>verifyCoreSchemaPropertyDeclaration(forged,forged.target)).toThrow();
+  const authored=declareCoreSchemaProperties(good,numericIdentity,{title:'Good'});
+  expect((authored.modules[0]!.elements[0]!.facets as any).future).toBe(true);
+  const invalid=structuredClone(authored);Object.assign((invalid.modules[0]!.elements[0]!.facets as any),unknown,{range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
+  expect(validateDocument(invalid).valid).toBe(false);
  }
 });
 
@@ -81,8 +81,8 @@ test('single exclusive bounds reject integer and decimal domain extrema',()=>{
   expect(JSON.stringify(source)).toBe(before);
   for(const range of [{[end]:token(extreme),[flag]:true},{[end]:token(extreme+(end==='min'?-1n:1n)),[flag]:false}]){
    const receipt=declareCoreSchemaProperties(source,numericIdentity,{facets:{range}});
-   expect(verifyCoreSchemaPropertyDeclaration(receipt,receipt.target)).toEqual(receipt);
-   expect(validateCoreFieldValue(receipt.target,{module:'m',element:'f'},token(extreme) as any).valid).toBe(true);
+   expect(validateDocument(receipt).valid).toBe(true);
+   expect(validateCoreFieldValue(receipt,{module:'m',element:'f'},token(extreme) as any).valid).toBe(true);
   }
  }
 });
@@ -122,5 +122,22 @@ test('explicit malformed facet patches reject atomically',()=>{
   expect(JSON.stringify(doc)).toBe(before);
  }
  const receipt=declareCoreSchemaProperties(doc,{scope:'element',module:'m',element:'quantity'},{facets:{range:{min:{integerToken:'1'},max:{integerToken:'2'}}}});
- expect(verifyCoreSchemaPropertyDeclaration(receipt,receipt.target)).toEqual(receipt);
+ expect(validateDocument(receipt).valid).toBe(true);
+});
+
+
+test('unknown length units remain incomplete and block extension edits for every bound shape',()=>{
+ const id='fixture.length-unit';
+ const registry=new Registry().register({id,version:'1.0.0',coreVersion:'0.1.0',description:'Length unit regression',schema:{type:'object'},semantics:'Accept extension payload',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[]);
+ for(const bounds of [{min:1},{max:0},{min:0,max:0},{max:1}]){
+  const doc={umf:'0.8.0',id:'unknown-unit',vocabularies:{[id]:{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType:'string',extensions:{[id]:{}},facets:{length:{...bounds,unit:'future-unit'}}}]}]} as any;
+  const before=JSON.stringify(doc),result=validateDocument(doc,registry);
+  expect(result.valid).toBe(true);expect(result.complete).toBe(false);
+  expect(result.diagnostics.filter(d=>d.code==='UNKNOWN_FACET_UNIT')).toEqual([{code:'UNKNOWN_FACET_UNIT',path:'/modules/0/elements/0/facets/length/unit',message:'Length unit retained without interpretation',severity:'warning'}]);
+  expect(()=>editExtension(doc,registry,'m','f',id,()=>({changed:true}))).toThrow('All present semantics must be validated before editing');
+  expect(JSON.stringify(doc)).toBe(before);
+  doc.modules[0].elements[0].facets.length.unit='unicode-scalar';
+  expect(validateDocument(doc,registry).complete).toBe(true);
+  expect(editExtension(doc,registry,'m','f',id,()=>({changed:true})).modules[0]!.elements[0]!.extensions[id]).toEqual({changed:true});
+ }
 });

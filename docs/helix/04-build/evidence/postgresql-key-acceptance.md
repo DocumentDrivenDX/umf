@@ -30,7 +30,7 @@ targets cannot claim recovery.
 
 ## Authored projection and ideal recovery
 
-`projectKeysToPostgresql` consumes experimental core 0.6.0 Record membership and a
+`projectKeysToPostgresql` consumes core 0.6.0 Record membership and a
 verified declaration for each named key. Explicit bindings map stable key IDs to
 native constraint names and owned Fields to columns. Key-list order changes and
 verified renames preserve identity; changed component order, ownership or meaning

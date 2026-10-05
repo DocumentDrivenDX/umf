@@ -83,7 +83,7 @@ Public classification, author projection, both facet-level round trips and full
 binding qualification remain unfinished.
 
 
-## Experimental public classification checkpoint
+## Public classification checkpoint
 
 The public API now exposes `classifyParquetFacets`,
 `verifyParquetFacetClassification` and `recoverParquetFacetSource`, with a closed
@@ -120,7 +120,7 @@ The public Chromium classification matrix passes 180 cases: 101 classified,
 getter calls and external requests are zero. The
 [classification browser record](../../../../fixtures/validation/facets-parquet-classification-browser.json)
 contains current source/schema/bundle fingerprints and the selected native cases.
-This completes the experimental classification checkpoint only. Authored
+This completes the classification checkpoint only. Authored
 projection, ideal recovery, composed native/ideal evidence and full compatibility
 acceptance remain required.
 
@@ -160,7 +160,7 @@ is claimed by this checkpoint.
 ## Public authored projection and composition checkpoint
 
 `projectFacetsToParquet` and `recoverFacetsFromParquet` are now public, with a
-closed projection schema and experimental import/export package capability.
+closed projection schema and import/export package capability.
 This supersedes the earlier internal-emitter and import-only checkpoints.
 The author must supply a verified core 0.5.0 facet or Field-kind declaration.
 A Field-kind receipt does not prove authorship of existing facet members.

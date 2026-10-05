@@ -51,7 +51,6 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
   }
  };
  diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),extensionRegistry).diagnostics);
- add('Experimental 0.8.0 properties; native enforcement/admission not implied','/umf','warning','EXPERIMENTAL_CORE_SCHEMA_PROPERTIES');
  const unknown=(v:Record<string,unknown>,known:string[],path:string)=>{for(const key of Object.keys(v))if(!known.includes(key))add('Qualifier retained without interpretation',path+'/'+pointer(key),'warning','UNKNOWN_SCHEMA_PROPERTY');};
  doc.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
   const path=`/modules/${mi}/elements/${ei}`,f=e.facets as Record<string,any>|undefined;
@@ -60,6 +59,8 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
    if(['array','map'].includes(e.cardinality as string))unknown(f,['length','precision','scale','integerWidth','collectionSize','range'],path+'/facets');
    for(const group of ['length','collectionSize'] as const)if(f[group]){
     const b=f[group];unknown(b,group==='length'?['min','max','unit']:['min','max'],path+'/facets/'+group);
+    const unitPath=path+'/facets/length/unit';
+    if(group==='length'&&!['unicode-scalar','byte'].includes(b.unit)&&!diagnostics.some(d=>d.code==='UNKNOWN_FACET_UNIT'&&d.path===unitPath))add('Length unit retained without interpretation',unitPath,'warning','UNKNOWN_FACET_UNIT');
     if(b.min!==undefined&&b.max!==undefined&&b.min>b.max)add('Minimum exceeds maximum',path+'/facets/'+group);
     if(group==='collectionSize'&&(e.kind!=='field'||!['array','map'].includes(e.cardinality as string)))add('Collection bounds require array/map Field',path+'/facets/'+group);
    }

@@ -4,7 +4,6 @@ import {readDocument,writeDocument} from '../../src/model/document';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
 import {selectCoreElements} from '../../src/model/selection';
-import {verifyCoreElementSelection} from '../../src/model/selection-verification';
 import {Registry} from '../../src/registry/registry';
 import {SemanticTypeRegistry} from '../../src/extensions/semantic-types';
 import {inspectCoreSchemaProperties} from '../../src/model/schema-properties';
@@ -42,8 +41,8 @@ test('declared references, native metadata and unknown qualifiers survive both f
  for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(doc,format),format);expect(restored).toEqual(doc);const got=getCoreSemanticTypes(restored,id)!;got[0]!.term='changed';expect(getCoreSemanticTypes(restored,id)![0]!.term).toBe('email');}
  const validation=validateDocument(doc);expect(validation.diagnostics.some(d=>d.code==='UNKNOWN_SEMANTIC_TYPE_QUALIFIER')).toBe(true);
  expect(validation.diagnostics.some(d=>d.code==='UNKNOWN_CORE_FIELD'&&d.path==='/semanticTypes')).toBe(true);
- const selection=selectCoreElements(doc,{references:'transitive',identities:[id]});expect(selection.selection).toHaveLength(1);expect(selection.selection[0]!.element.semanticTypes).toEqual(doc.modules[0]!.elements[0]!.semanticTypes);expect(verifyCoreElementSelection(selection)).toEqual(selection);
- const forged=clone(selection);(forged.selection[0]!.element.semanticTypes as any)[0].term='changed';expect(()=>verifyCoreElementSelection(forged)).toThrow();
+ const selection=selectCoreElements(doc,{references:'transitive',identities:[id]});expect(selection.selection).toHaveLength(1);expect(selection.selection[0]!.element.semanticTypes).toEqual(doc.modules[0]!.elements[0]!.semanticTypes);expect(selection.source).toEqual(doc);
+ (selection.selection[0]!.element.semanticTypes as any)[0].term='changed';expect(doc.modules[0]!.elements[0]!.semanticTypes![0]!.term).toBe('email');expect(selection.source.modules[0]!.elements[0]!.semanticTypes![0]!.term).toBe('email');
 });
 test('extension semantic validators observe the complete 0.9.0 source',()=>{
  const doc=core();doc.vocabularies={probe:{version:'0.1.0'}};doc.modules[0]!.elements[0]!.extensions={probe:{}};
@@ -154,7 +153,7 @@ test('core and prototype extension meanings that disagree are reported, agreeing
 test('0.9.0 diagnostics do not describe the document as 0.8.0',()=>{
  const messages=validateDocument(core()).diagnostics.map(d=>d.message);
  expect(messages.some(m=>m.includes('Experimental 0.8.0'))).toBe(false);
- expect(messages.some(m=>m.includes('inherited from 0.8.0'))).toBe(true);
+ expect(messages.some(m=>m.includes('inherited from 0.8.0'))).toBe(false);expect(messages.some(m=>m.includes('Experimental semantic references'))).toBe(true);
 });
 
 test('0.8.0 schema-property authoring APIs reject 0.9.0 documents (documented limit)',()=>{

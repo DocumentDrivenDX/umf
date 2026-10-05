@@ -79,7 +79,7 @@ and the manifest's unenforced decimal(18,2) declaration are preserved separately
 edits are candidate artifacts, not changed run outcomes or warehouse state.
 
 
-Freshness fixtures deliberately include stale and broken queries:
+Freshness fixtures deliberately include stale and broken queries. The generator retains native target artifacts under `fixtures/dbt/freshness/native-target/` and fingerprints those tracked files, excluding ignored project caches so evidence survives a clean checkout:
 
 ```sh
 .cache/dbt-venv/bin/python scripts/dbt-freshness-fixtures.py

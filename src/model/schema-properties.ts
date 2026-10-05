@@ -1,20 +1,14 @@
-import {checkSchemaPropertyReceipt} from './schema-properties-receipts';
 import {copyJson} from './json';
 import {type Document,type Json,type Element,UmfError,type Validation} from './types';
 import {validateDocument} from '../validation/document';
 import {checkCoreLiteral} from '../validation/schema-properties';
-import {checkSchemaLiteral,type CoreLiteral,schemaPropertyNames,canonicalSchemaJson,knownSchemaMembers,schemaError} from './schema-literals';
+import {checkSchemaLiteral,type CoreLiteral,schemaPropertyNames,knownSchemaMembers,schemaError} from './schema-literals';
 
 export type CoreSchemaPropertyIdentity={scope:'document'}|{scope:'module';module:string}|{scope:'element';module:string;element:string};
 export interface CoreSchemaPropertyPatch {
  title?:string;aliases?:string[];examples?:CoreLiteral[];allowedValues?:CoreLiteral[];
  default?:{value:CoreLiteral;on:'missing'|'null'|'missing-or-null'};
  facets?:{length?:{min?:number;max?:number;unit:'unicode-scalar'|'byte'};collectionSize?:{min?:number;max?:number};range?:{min?:CoreLiteral;max?:CoreLiteral;minInclusive?:boolean;maxInclusive?:boolean}};
-}
-export interface CoreSchemaPropertyDeclaration {
- operation:'declare-core-schema-properties';version:'1.0.0';source:Document;target:Document;
- identity:CoreSchemaPropertyIdentity;request:CoreSchemaPropertyPatch;
- provenance:{origin:'authored';path:string;basis:'explicit-author-declaration'};
 }
 function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreSchemaPropertyIdentity;
@@ -34,7 +28,7 @@ export function inspectCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  for(const key of [...schemaPropertyNames,'facets'])if(Object.hasOwn(located.node,key))properties[key]=copyJson(located.node[key]);
  return {operation:'inspect-core-schema-properties' as const,version:'1.0.0' as const,source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
 }
-export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity,patch:CoreSchemaPropertyPatch):CoreSchemaPropertyDeclaration {
+export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity,patch:CoreSchemaPropertyPatch):Document {
  const request=copyJson(patch) as unknown as CoreSchemaPropertyPatch;
  knownSchemaMembers(request,[...schemaPropertyNames,'facets'],'/request');if(!Object.keys(request).length)schemaError('Empty declaration');
  const located=locate(input,identity),targetLocated=locate(located.source,located.identity),target=targetLocated.source,node=targetLocated.node;
@@ -59,14 +53,7 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  if(request.allowedValues)for(const value of request.allowedValues)checkSchemaLiteral(target,node as unknown as Element,value);
  if(request.default)checkSchemaLiteral(target,node as unknown as Element,request.default.value);
  const validation=validateDocument(target);if(!validation.valid)schemaError(JSON.stringify(validation.diagnostics));
- return copyJson({operation:'declare-core-schema-properties',version:'1.0.0',source:located.source,target,identity:located.identity,request,provenance:{origin:'authored',path:located.path,basis:'explicit-author-declaration'}}) as unknown as CoreSchemaPropertyDeclaration;
-}
-export function verifyCoreSchemaPropertyDeclaration(input:CoreSchemaPropertyDeclaration,current:Document):CoreSchemaPropertyDeclaration {
- const receipt=copyJson(input) as unknown as CoreSchemaPropertyDeclaration;
- if(!checkSchemaPropertyReceipt(receipt))schemaError('Invalid declaration receipt structure');
- if(receipt?.operation!=='declare-core-schema-properties'||receipt.version!=='1.0.0')schemaError('Invalid declaration receipt');
- const expected=declareCoreSchemaProperties(receipt.source,receipt.identity,receipt.request);
- if(canonicalSchemaJson(expected)!==canonicalSchemaJson(receipt)||canonicalSchemaJson(copyJson(current))!==canonicalSchemaJson(expected.target))schemaError('Forged or stale declaration receipt');return expected;
+ return copyJson(target) as unknown as Document;
 }
 export function validateCoreFieldValue(input:Document,fieldInput:{module:string;element:string},valueInput:CoreLiteral):Validation {
  const diagnostics:Validation['diagnostics']=[];

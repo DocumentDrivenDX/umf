@@ -22,7 +22,7 @@ ddx:
 Implement US-041 under CONTRACT-040. Architecture is the direct parent; no
 separate solution design exists for this core slice. Core 0.2.0 implements the
 admitted Field ideal and scalar-family metadata. Nullability remains a new
-experimental slice; its five-system admission is not established.
+slice; its five-system admission is not established.
 
 ## Technical Approach
 
@@ -221,10 +221,10 @@ Nullability core bead closes. All five native Nullability bindings remain pendin
 ### Nullability selection report integration
 
 Core 0.3.0 now uses `urn:umf:core:element-selection:0.3.0`, exported as
-`coreNullabilitySelectionSchema`. `verifyCoreElementSelection` selects the report
-schema from the retained source version, then recomputes the query, selected
-metadata, validation diagnostics and reference boundaries with the caller registry.
-The previous 0.1.0/0.2.0 schemas and their interpretation remain unchanged.
+`coreNullabilitySelectionSchema`. Current selection results are copied metadata snapshots with structural schemas.
+Persistent selection verification has been removed by owner direction. Re-run
+selection with the desired registry to obtain current diagnostics; historical
+verification evidence below describes the former API, not current guarantees.
 
 The five scenarios cover known/missing/unknown availability, same-named fields in
 different namespaces, recursive explicit links, selection boundaries and native
@@ -668,7 +668,7 @@ content and both receipt recovery directions have explicit checks. Unspecified
 author intent remains distinct from native permission to store NULL.
 
 TableSpec and PostgreSQL now have qualified Nullability bindings. SQL Server,
-Avro and Parquet remain ready, and the experimental concept's delivery gate stays
+Avro and Parquet remain ready, and the concept's delivery gate stays
 open. This acceptance neither replaces native concepts nor completes US-041 or
 the overall extension goal.
 
@@ -833,7 +833,7 @@ pending.
 The [qualified acceptance record](../../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json)
 closes the SQL Server binding's implementation criteria and supersedes its pending
 acceptance status above. It covers SQL Server 2022 build 16.0.4295.3, captured
-catalog-v3 plus supplement v2, experimental core 0.3.0 Fields, and explicit
+catalog-v3 plus supplement v2, core 0.3.0 Fields, and explicit
 stored-relation/SQL-NULL policy. Authored single-column projection covers 14
 existing scalar carriers. Unknown native refinements remain attached; unresolved
 constraints, rules, triggers and computed/generated interactions do not become

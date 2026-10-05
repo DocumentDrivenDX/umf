@@ -21,7 +21,7 @@ ddx:
 
 Implement US-042 under CONTRACT-040. Architecture is the direct parent; no
 separate solution design exists for this core slice. Field and Nullability have passed their qualified five-system gates. Cardinality
-implementation started from core 0.3.0 and now publishes experimental 0.4.0.
+implementation started from core 0.3.0 and now publishes 0.4.0.
 The five qualified native bindings and separate admission/delivery gate pass;
 see the Cardinality gate checkpoint below. Native equivalence remains unclaimed.
 
@@ -290,7 +290,7 @@ browser probes, and a priority regression of 358 tests / 31,542 assertions
 across 117 files. The Field and Nullability conformance tests pass separately
 after evidence publication; each now rejects missing 0.4.0 dependency fingerprints.
 
-This accepts the experimental core representation, authoring, migration, inspection,
+This accepts the core representation, authoring, migration, inspection,
 versioned operation integration and metadata selection. It does not admit Cardinality
 as a useful cross-system ideal yet. TableSpec, PostgreSQL, SQL Server, Avro and
 Parquet Cardinality bindings remain pending, with strict/report loss handling,

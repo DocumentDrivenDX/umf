@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute} from 'node:path';
+import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
@@ -23,10 +24,10 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   assert.ok(Object.keys(record.sha256??{}).length>0,`${label}: missing fingerprints`);
   for(const [path,expected] of Object.entries(record.sha256)){
    // Earlier native records contain __file__ absolute paths; permit only this repository.
-   const local=relative(process.cwd(),resolve(path));
-   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!path.split('/').includes('..'),`${label}: unsafe evidence path`);
+   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel));
+   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
    assert.match(String(expected),/^[0-9a-f]{64}$/);
-   assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
+   assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
  const refresh=await load('fixtures/validation/field-gate-refresh-evidence.json');

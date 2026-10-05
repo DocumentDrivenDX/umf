@@ -21,7 +21,7 @@ Owner-directed implementation on 2026-10-04 adds title, examples, aliases,
 collection size, allowed values, numeric range, minimum length and explicit
 literal defaults in core 0.8.0. Existing schemas remain published.
 The public API supplies copied declarations and inspection, field-value checks,
-default resolution, receipt verification, retained migration and rollback.
+default resolution, retained migration and rollback.
 JSON/YAML document operations and metadata selection accept the new version.
 
 Defaults require an explicit `missing`, `null` or `missing-or-null` trigger.
@@ -74,7 +74,7 @@ malformed facet patches. A further null-bound guard covers collection literals
 that reach a malformed item Field before document validation finishes.
 
 Fresh verification with Bun 1.3.14 passes 176 core tests across 27 explicitly
-selected test files, with 4,572 assertions and zero failures. Both TypeScript
+selected test files, with 4,565 assertions and zero failures after label removal. Both TypeScript
 checks, the browser build, the 346-schema audit and the 59-package audit pass.
 An initial directory-filter run unintentionally included `core-ideals` and was
 terminated; it is not a completed broader-suite result. The first expanded
@@ -98,3 +98,84 @@ maximum-safe-integer width/precision declarations. Sixteen additional Chromium
 cases cover exclusive extrema and inclusive controls. An initial worktree core
 run hit two evidence-file write permissions; the complete replay above passed
 with the required worktree write access.
+
+The label-removal replay refreshes the four stale source fingerprints in the
+schema-properties browser record. The schema generator now reproduces the
+checked-in schemas without restoring the removed title label.
+
+## Post-sweep evidence repair (2026-10-05)
+
+The schema generator now reproduces the published title. A fresh Chromium replay
+passes 38 cases, six recoveries, nine refusals and six extension checks, with
+zero accessor executions or external requests; all 17 recorded source hashes
+match the current tree. The core-only replay passes 176 tests in 27 files with
+4,565 assertions. TypeScript checks, 346 schemas and 59 extension packages pass.
+
+Regression investigation also restored 100 vendored RDF/XML and SHACL files to
+the existing pinned manifest hashes. Git attributes retain upstream line endings.
+Regenerated SHACL source exports pass 300 RDFLib 7.6.0 graph-isomorphism checks
+and 13 native path checks. The RDF/XML, SHACL, dbt freshness and acceptance-ledger
+replay passes 12 tests with 3,261 assertions. dbt Core 1.10.0 now retains the
+six native target artifacts in tracked fixtures; all 14 provenance files match
+their hashes, the independent oracle passes four comparisons, and Chromium
+passes four serialization round trips and four edits. An independent Protobuf
+7.36.2 / jsonschema 4.26.0 projection replay passes all five tests.
+
+At this repair checkpoint, selection receipt compatibility remained an open
+owner decision; the subsequent amendment below resolves it. Broader native
+qualification evidence requires separate regeneration; these scoped checks
+do not establish a passing full repository suite.
+
+## Owner-directed routine API simplification (2026-10-05)
+
+Routine selection results are metadata snapshots; element and relationship
+selection verifiers have been removed. Schema-property authoring returns a
+copied validated Document directly, without a declaration receipt or verifier.
+Structural selection schemas remain available. Upgrade/rollback archives and
+native-conversion preservation records retain their existing checks. Historical
+receipt-verification and source-fingerprint evidence above describes the old API;
+it is not a fresh integrated native compatibility claim for this revision.
+
+The unknown-length-unit regression is fixed for minimum-only, zero-maximum,
+combined zero bounds and positive-maximum cases. Each produces one warning and
+incomplete validation, preserving the unit and refusing extension edits. Known
+unicode-scalar units remain complete and editable.
+
+Bun 1.3.14: 186 affected tests across 30 files, 4,830 assertions, no failures.
+Chromium 153.0.8010.12: 38 validation cases, four serialization recoveries,
+12 refusals and four unknown-unit checks; no getter execution or external requests.
+The browser record fingerprints the current implementation and transition schema.
+
+All six affected metadata browser harnesses also replay successfully in Chromium
+153: relationship (28 selection recoveries), key (4), facets (4), cardinality
+(24), nullability (10) and record type (12). Their committed browser records
+contain refreshed fingerprints from the actual replays. Schema generation is
+deterministic; final source/tool typechecks and all 346 schemas / 59 packages pass.
+
+An optional `bun test tests` run was stopped after 477 passing tests while it
+continued through unrelated upstream fixtures, with no failures observed at
+that point. It is not a completed full-suite result. Current native qualification
+gates were not regenerated or weakened by this amendment.
+
+## Completed pre-simplification regression run
+
+This run and its focused replays cover the implementation at `0ed68e30`,
+before the concurrent API simplification commits `5a001660` through `cdd0070c`.
+They do not verify those later changes.
+
+The complete `bun test tests` run finished in 1,911.38 seconds: 2,114 passed,
+18 failed, 130,636 assertions across 380 files. It began before the dbt repair
+and without `UMF_PYTHON_PATH`; it is not a green run of the final checkout.
+Post-fix replays clear the dbt failure, the acceptance-ledger timeout, the
+projection oracle and four Protobuf failures. The Protobuf directory passes
+10 tests and 103 assertions with its configured pinned Python runtime.
+Eleven observed qualification-gate failures remain unrepaired: cardinality
+(one), facets (four), relationship (one), key (three), field (one) and
+nullability (one). They include stale fingerprints, missing generated bundles
+and historical absolute-path handling. Native evidence regeneration and
+portable-path follow-up remain outstanding; no gate was weakened.
+
+After integrating the concurrent upstream changes through `cdd0070c`, a fresh
+core-only replay passes 177 tests across 27 files with 4,586 assertions; both
+source and tool TypeScript checks pass. This verifies the simplified core API,
+not a fresh full repository or integrated native qualification run.

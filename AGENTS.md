@@ -12,7 +12,7 @@ This repository uses HELIX. Read `.helix.yml` and engage the installed
 
 Start with `docs/helix/README.md`. Product direction, functional requirements,
 and cross-cutting requirements are captured separately. Architecture and the
-project test plan target a JSON Schema + Protobuf spike. The experimental core
+project test plan target a JSON Schema + Protobuf spike. The core
 envelope and JSON Schema Draft 2020-12 adapter have Bun, Chromium and scoped
 independent native-oracle evidence. A Protobuf descriptor foundation also has
 compiler and browser evidence, optional WASM source import and native behavior

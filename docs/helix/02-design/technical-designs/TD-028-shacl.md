@@ -97,7 +97,7 @@ disagreements; see CONTRACT-028 for their interpretation and limits. Chromium pa
 external requests or Node globals. Reproduce with `bun scripts/shacl-strings.ts`,
 `.cache/shacl-venv/bin/python scripts/shacl-string-oracle.py`, and
 `bun scripts/shacl-string-browser.ts` (set UMF_CHROMIUM_PATH when needed).
-This remains experimental engine evidence, not complete SHACL conformance.
+This remains engine evidence, not complete SHACL conformance.
 
 ### Constraint list structure
 

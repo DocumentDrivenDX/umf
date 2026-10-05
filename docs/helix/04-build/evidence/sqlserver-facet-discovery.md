@@ -130,7 +130,7 @@ Next: public classification/projection schemas and API implementation, broader
 native qualification for emitted targets and table-level CHECKs, retained recovery,
 and full binding acceptance. SQL Server facet delivery remains in progress.
 
-## Experimental public classification checkpoint
+## Public classification checkpoint
 
 The public `classifySqlServerFacets` API, operation schema and
 `umf.sqlserver.facets` package now expose profile-qualified facet observations on
@@ -249,7 +249,7 @@ explain the distinctions and guided the probes; they do not substitute for them.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.

@@ -117,7 +117,7 @@ and unknown numeric tokens must stay attached to any classification/projection.
 
 ### Qualified TableSpec facet binding
 
-The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+The [acceptance record](../../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers core 0.5.0 TableSpec facet
 classification, authored projection, strict/report loss handling and verified
 native/ideal recovery. It supersedes the earlier classification/projection
 checkpoints' full-refresh limitation; their original evidence remains historical.
@@ -152,7 +152,7 @@ gate, and Key remain required. Native-equivalence graduation is not claimed.
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.
@@ -200,7 +200,7 @@ remain required. No native-equivalence graduation is claimed.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.

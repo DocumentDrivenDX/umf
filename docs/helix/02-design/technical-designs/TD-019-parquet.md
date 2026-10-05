@@ -172,8 +172,7 @@ JSON scanner replaces object parsing so duplicate keys and number text remain un
 Unsupported known annotations remain opaque with their physical representation; warnings are
 deduplicated per schema field. Projection budgets bound decimal work and total text. Native
 INT96-to-timestamp behavior is recorded as a projection difference rather than adopted without
-a governing semantic decision. The public typed path no longer depends on the experimental
-hyparquet decoder; it remains available as earlier evidence only.
+a governing semantic decision. The public typed path no longer depends on the hyparquet decoder; it remains available as earlier evidence only.
 
 AC20 implements an explicit footer correction over the existing bounded Compact Protocol and
 IDL readers. It identifies only dictionary-at-data-offset columns without dictionary offsets,
