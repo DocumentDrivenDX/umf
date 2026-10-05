@@ -32,8 +32,8 @@ release and term identities. Definitions and explicitly installed value validato
 remain extensible. Read/write, structural validation, copied inspection/authoring,
 metadata selection and verified upgrade/rollback preserve native and unknown
 content. Prototype extension conversion is explicit and refuses unresolved
-collisions. [CONTRACT-050](02-design/contracts/CONTRACT-050-semantic-types.md) and
-[TD-050](02-design/technical-designs/TD-050-semantic-types.md) define scope.
+collisions. [CONTRACT-051](02-design/contracts/CONTRACT-051-semantic-types.md) and
+[TD-051](02-design/technical-designs/TD-051-semantic-types.md) define scope.
 Publisher catalogs and native validator parity remain separate work; existing
 version-specific non-semantic authoring APIs retain their supported-version limits.
 

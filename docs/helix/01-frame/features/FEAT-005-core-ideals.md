@@ -38,11 +38,6 @@ projections rather than prohibit UMF from defining author intent.
 
 ## Requirements
 
-- IDEAL-06 (owner direction, 2026-10-04): Implement CONTRACT-049 shared titles,
-  examples, aliases, collection bounds, allowed values, exact numeric ranges,
-  minimum length and explicit literal defaults with migration/rollback and
-  unknown preservation. Native admission remains separately evidenced.
-
 - IDEAL-01: Define one concept at a time in order: field, nullability,
   cardinality, author-stated facets, key, relationship. CONTRACT-040 owns the
   first five meanings; CONTRACT-041 owns relationship meaning.
@@ -53,6 +48,14 @@ projections rather than prohibit UMF from defining author intent.
 - IDEAL-04: Verify both ideal/native/ideal and native/ideal/native recovery.
 - IDEAL-05: Separate at-least-two-system ideal admission from all-five delivery
   and from native-replacement equivalence with migration and rollback.
+- IDEAL-06 (owner direction, 2026-10-04, recorded in CONTRACT-049): Implement CONTRACT-049 shared titles,
+  examples, aliases, collection bounds, allowed values, exact numeric ranges,
+  minimum length and explicit literal defaults with migration/rollback and
+  unknown preservation. Native admission remains separately evidenced.
+- IDEAL-07: Separate source format documentation, input parsing, output rendering,
+  allowed-value assertions and structural constraints. Legacy format text must
+  remain recoverable; interpretation requires explicit provenance and must not
+  invent authored constraints. CONTRACT-050 defines the separation boundary.
 
 ## User Stories
 
@@ -109,3 +112,16 @@ experimental core implementation on 2026-10-04 through CONTRACT-049, together
 with descriptive metadata, collection size and literal defaults. This placement
 supersedes their unplaced core-task status; two-priority ideal admission and
 all-five native delivery remain open and must not be inferred from core tests.
+
+## Format separation
+
+[CONTRACT-050](../../02-design/contracts/CONTRACT-050-format-separation.md)
+separates the meanings carried by TableSpec's unstructured format text. Source
+documentation and examples remain informational. Directional parsing and
+rendering recipes remain versioned extension concerns; allowed-value assertions
+follow CONTRACT-048 and, for the experimental core 0.8.0 surface, CONTRACT-049
+(allowed values must still be authored explicitly, never split from format
+text; ideal admission and all-five delivery stay open), and temporal value meaning follows CONTRACT-047. Structural
+patterns require a declared language and interpretation status. The overloaded
+source field has no direct core-promotion path. This requirement does not place
+new concepts into IDEAL-01's ordered delivery or admit a new core version.

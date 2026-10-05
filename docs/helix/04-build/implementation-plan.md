@@ -37,6 +37,24 @@ ddx:
 
 ## Scope
 
+### Format separation follow-on
+
+FEAT-005 IDEAL-07 and [CONTRACT-050](../02-design/contracts/CONTRACT-050-format-separation.md)
+govern this work independently of direct TableSpec/core field parity. Do not add
+an overloaded core `format` or heuristically convert native text into assertions.
+
+| Slice | Dependency | Required result and verification |
+| --- | --- | --- |
+| Native usage qualification | Retained TableSpec baseline and CONTRACT-030 | Pin model, ingest cast, flexible parser and output renderer separately; record positive/negative behavior, fallback order, environment and presence-based domain/type exceptions. Source inspection supplies hypotheses, not native execution evidence. |
+| Interpretation and recipe design | CONTRACT-051; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
+| Extension implementation | Reviewed design and test plan | Versioned schemas/APIs, Bun and real Chromium parity, both retained recoveries, simultaneous meanings, source edits, monolithic/split archives and migration/rollback. Preserve all native text. |
+| Allowed-value binding | CONTRACT-048 admission and equality decisions | Reuse typed allowed-value meaning; never split legacy enumeration prose. Two useful priority mappings and all-five delivery remain separate gates. |
+
+Package selection and recipe environment binding remain design decisions. This
+section schedules preparation dependencies, not core admission or delivered
+behavior. Record native versions, exact subsets and evidence before claiming any
+parser, renderer or constraint support.
+
 ### Proposed alignment: authored relationships and physical bindings
 
 This section is the work plan for the Hohfeld-driven amendment. It proposes
@@ -5281,7 +5299,7 @@ revalidation ledger.
 
 ## Execution Evidence: Semantic type references (2026-10-04)
 
-The initial prototype for [CONTRACT-050](../02-design/contracts/CONTRACT-050-semantic-types.md) implements
+The initial prototype for [CONTRACT-050](../02-design/contracts/CONTRACT-051-semantic-types.md) implements
 an experimental `umf.semantic-types` 0.1.0 element annotation independently of
 core schema evolution. Exact vocabulary/version/term lookup, copied definitions,
 copy-on-write authoring and explicit caller-installed value validators preserve
@@ -5321,7 +5339,7 @@ registration is required to carry the core reference.
 
 | Slice | Work | Dependency / completion evidence |
 | --- | --- | --- |
-| ST-01 | Allocate a core revision and settle typed API and migration receipt contracts with concurrent core work | CONTRACT-050; retain older schema behavior; document unknowns before implementation |
+| ST-01 | Allocate a core revision and settle typed API and migration receipt contracts with concurrent core work | CONTRACT-051; retain older schema behavior; document unknowns before implementation |
 | ST-02 | Add core schema/type validation, copied inspection and authoring, plus unknown-reference diagnostics | ST-01; absent/empty/malformed fields, exact version/namespace identity, unknown qualifiers, browser-compatible API |
 | ST-03 | Implement explicit upgrade/rollback and interim extension migration | ST-02; archive opaque field collisions, preserve original extension and unknown qualifiers, refuse unresolved conflicts, verify forged/stale receipts and edited rollback |
 | ST-04 | Verify core references with metadata consumers and retained native payloads | ST-03; Bun and Chromium, both serializations, core/package/schema audits and applicable existing gates; publish new acceptance evidence |
@@ -5349,10 +5367,13 @@ TableSpec integration remain outside this experimental implementation.
 
 Core 0.8.0 is allocated by PR #1 (`codex/core-schema-properties`). This work
 stacks core 0.9.0 on that branch; it does not modify the 0.8.0 contract.
-CONTRACT-050 and [TD-050](../02-design/technical-designs/TD-050-semantic-types.md)
+CONTRACT-051 and [TD-051](../02-design/technical-designs/TD-051-semantic-types.md)
 settle APIs, reference structure, source-retaining declaration and transition
-receipts, opt-in prototype conversion and rollback verification. CONTRACT-050
+receipts, opt-in prototype conversion and rollback verification. CONTRACT-051
 replaces this chat's uncommitted CONTRACT-049 ID to avoid concurrent allocation.
 ST-02–ST-04 are the requested implementation scope; ST-05 catalog/native bindings
 remain subsequent independently evidenced work. Existing version-specific
 non-semantic authoring APIs retain their explicit supported-version limits.
+
+Parent review integration also reserves CONTRACT-050 for format separation;
+semantic references are finally allocated CONTRACT-051 and TD-051.

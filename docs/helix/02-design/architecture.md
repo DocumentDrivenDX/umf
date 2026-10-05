@@ -141,7 +141,7 @@ belongs in core. The element field `semanticTypes` in experimental core 0.9.0 co
 `{vocabulary, version, term}` references; vocabulary publishers own the meanings
 and validators. Core validates reference structure and preserves unknown terms
 without interpreting them as scalar families or loading executable code.
-[CONTRACT-050](contracts/CONTRACT-050-semantic-types.md) governs this boundary.
+[CONTRACT-051](contracts/CONTRACT-051-semantic-types.md) governs this boundary.
 The existing `umf.semantic-types` 0.1.0 extension is an interim prototype;
 its original tests establish prototype behavior; separate core tests and public
 browser evidence qualify 0.9.0 delivery.

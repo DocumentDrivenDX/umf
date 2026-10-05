@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: TD-050
+  id: TD-051
   type: technical-design
   activity: design
   status: draft
@@ -9,18 +9,18 @@ ddx:
   links:
     - id: umf.architecture
       kind: informed_by
-    - id: CONTRACT-050
+    - id: CONTRACT-051
       kind: informed_by
 ---
 
-# TD-050: Core semantic type references
+# TD-051: Core semantic type references
 
 ## Scope
 
 Implement the owner's generic pointing capability in experimental core 0.9.0
 on the 0.8.0 schema-properties branch (PR #1). Domain definitions, validator
 algorithms and TableSpec inference remain publisher-owned follow-up work.
-CONTRACT-050 replaces this chat's uncommitted CONTRACT-049 allocation because
+CONTRACT-051 replaces this chat's uncommitted CONTRACT-049 allocation because
 concurrent work already used that ID. Architecture is the parent design.
 
 ## Technical Approach
@@ -50,7 +50,7 @@ terms as module/element references. Publish a version-specific selection schema.
 
 ## API/Interface Design
 
-CONTRACT-050 owns exact signatures and receipt shapes. Inspection reads older
+CONTRACT-051 owns exact signatures and receipt shapes. Inspection reads older
 opaque fields as legacy, never as interpreted semantic declarations. Authoring
 is limited to 0.9.0 and requires explicit identities. Existing version-specific
 kind/nullability/cardinality/facet/key/relationship and 0.8.0 property operations

@@ -1,5 +1,6 @@
 import schema from '../../spec/core/schema-properties-document.schema.json';
 import {createValidator} from './schema';
+// Intentional, known import cycle with ./document (CONTRACT-049); both sides only use the other inside functions.
 import {validateDocument} from './document';
 import {Registry} from '../registry/registry';
 import {copyJson} from '../model/json';

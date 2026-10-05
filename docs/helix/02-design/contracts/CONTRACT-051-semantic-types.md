@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: CONTRACT-050
+  id: CONTRACT-051
   type: contract
   activity: design
   status: draft
@@ -13,7 +13,7 @@ ddx:
       kind: informed_by
 ---
 
-# CONTRACT-050: Versioned semantic types
+# CONTRACT-051: Versioned semantic types
 
 **Type:** core library/schema. **Version:** experimental core 0.9.0, layered on core 0.8.0.
 The existing `umf.semantic-types` 0.1.0 implementation is an interim prototype.

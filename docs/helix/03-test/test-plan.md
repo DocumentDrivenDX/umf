@@ -556,7 +556,7 @@ broader ecosystem demonstrations happen later.
 US-050 is the next governed product slice after the completed relationship and
 binding queue. Test implementation does not begin until CONTRACT-045 settles the
 public package API, package and traversal bounds, revision/digest rules and
-permitted crossing members, and TD-050 translates those decisions into an
+permitted crossing members, and TD-051 translates those decisions into an
 implementable design. TP-001 must then allocate US-050-AC1 through US-050-AC10
 to concrete contract, integration, migration/rollback and actual-browser cases
 before source implementation is authorized.
@@ -3138,9 +3138,9 @@ and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
 API parity. Run existing core regressions, typecheck, schema audit and browser
 build. These gates establish experimental core behavior, not native enforcement.
 
-## Core semantic references: CONTRACT-050
+## Core semantic references: CONTRACT-051
 
-[TD-050](../02-design/technical-designs/TD-050-semantic-types.md) implements
+[TD-051](../02-design/technical-designs/TD-051-semantic-types.md) implements
 experimental core 0.9.0 on the 0.8.0 property envelope. Core owns exact pointing
 structure; publishers own domain meaning and explicitly supplied value validators.
 `tests/semantic-types/core.test.ts` covers structure, absence, opaque old fields,

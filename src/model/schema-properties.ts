@@ -39,6 +39,7 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  knownSchemaMembers(request,[...schemaPropertyNames,'facets'],'/request');if(!Object.keys(request).length)schemaError('Empty declaration');
  const located=locate(input,identity),targetLocated=locate(located.source,located.identity),target=targetLocated.source,node=targetLocated.node;
  if(identity.scope!=='element'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
+ if(identity.scope==='element'&&node.kind!=='field'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
  for(const key of schemaPropertyNames)if(Object.hasOwn(request,key)){
   if(key==='default'&&node.default)knownSchemaMembers(node.default,['value','on'],located.path+'/default');
   node[key]=copyJson(request[key]);

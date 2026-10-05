@@ -79,6 +79,13 @@ Invalid shapes, roles, bounds, duplicate equal values, incompatible literals and
 invalid defaults reject atomically. Unknown relevant meaning refuses operations.
 Forged/stale receipts reject. Common JSON resource, copy and accessor limits apply.
 
+Value properties (examples, allowedValues, default, facets) are refused unless
+the target element has kind 'field'; only title and aliases apply elsewhere.
+Facet patches merge into the existing group and cannot clear an existing bound;
+clearing a bound requires re-declaring the group through a future explicit
+operation (current limitation). The validation/document.ts and
+validation/schema-properties.ts import cycle is intentional and known.
+
 ## Examples
 
 ```json
