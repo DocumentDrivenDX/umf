@@ -48,6 +48,10 @@ projections rather than prohibit UMF from defining author intent.
 - IDEAL-04: Verify both ideal/native/ideal and native/ideal/native recovery.
 - IDEAL-05: Separate at-least-two-system ideal admission from all-five delivery
   and from native-replacement equivalence with migration and rollback.
+- IDEAL-06: Separate source format documentation, input parsing, output rendering,
+  allowed-value assertions and structural constraints. Legacy format text must
+  remain recoverable; interpretation requires explicit provenance and must not
+  invent authored constraints. CONTRACT-049 defines the separation boundary.
 
 ## User Stories
 
@@ -96,3 +100,14 @@ meaning and a separate ordering decision. None enters IDEAL-01's ordered
 delivery or `spec/core/` without owner placement, FR-3 evidence, a versioned
 migration and rollback; native CHECK or enum observations do not imply authored
 intent or enforcement of existing rows.
+
+## Format separation
+
+[CONTRACT-049](../../02-design/contracts/CONTRACT-049-format-separation.md)
+separates the meanings carried by TableSpec's unstructured format text. Source
+documentation and examples remain informational. Directional parsing and
+rendering recipes remain versioned extension concerns; allowed-value assertions
+follow CONTRACT-048, and temporal value meaning follows CONTRACT-047. Structural
+patterns require a declared language and interpretation status. The overloaded
+source field has no direct core-promotion path. This requirement does not place
+new concepts into IDEAL-01's ordered delivery or admit a new core version.
