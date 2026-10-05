@@ -3136,4 +3136,4 @@ Unicode/byte units, null versus missing defaults, container item references,
 contradictory bounds, unknown qualifier refusals, migration collisions, forged
 and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
 API parity. Run existing core regressions, typecheck, schema audit and browser
-build. These gates establish experimental core behavior, not native enforcement.
+build. These gates establish core behavior, not native enforcement.
