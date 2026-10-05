@@ -31,6 +31,10 @@ out.mkdir(parents=True, exist_ok=True)
 python = '.venv/bin/python'
 stages = ['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal'] if args.stage == 'all' else [args.stage]
 for stage in stages:
+    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    if stage != 'prepare' or args.resume:
+        assert json.loads((out / 'container-runtime.json').read_text())['sourceRevision'] == revision, 'Replay source revision changed; start a fresh execution'
+    subprocess.run(['git', 'diff', '--exit-code', 'HEAD', '--', 'src', 'scripts', 'spec', 'tests', 'native', 'package.json', 'bun.lock'], check=True)
     if stage == 'prepare':
         if not Path('.venv').exists(): Path('.venv').symlink_to('/opt/venv', target_is_directory=True)
         revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
