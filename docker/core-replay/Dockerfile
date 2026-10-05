@@ -38,3 +38,5 @@ ENV GOCACHE=/tmp/go-cache UMF_EXPECTED_CHROMIUM_VERSION=153.0.8010.12 \
 COPY replay.py seal.py /opt/
 ENTRYPOINT ["/opt/venv/bin/python", "/opt/replay.py"]
 CMD ["all"]
+# The multi-target Delta probe explicitly launches uv.
+RUN pip install --no-cache-dir uv==0.12.23
