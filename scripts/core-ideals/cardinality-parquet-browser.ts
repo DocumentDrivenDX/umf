@@ -7,7 +7,7 @@ for(const part of parts){const command=['bun',`scripts/core-ideals/cardinality-p
 const paths=['scripts/core-ideals/cardinality-parquet-browser.ts'],checks:Record<string,unknown>={},browsers=new Set<string>();
 for(const part of parts){
  const path=`fixtures/validation/cardinality-parquet-${part}-browser.json`,proof=await Bun.file(path).json();
- assert.ok(proof.browser.startsWith('148.'));assert.deepEqual(proof.externalRequests,[]);browsers.add(proof.browser);checks[part]=proof.checks;
+ assert.equal(proof.browser,process.env.UMF_EXPECTED_CHROMIUM_VERSION??'148.0.7778.0');assert.deepEqual(proof.externalRequests,[]);browsers.add(proof.browser);checks[part]=proof.checks;
  for(const [file,expected] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex'),expected,`Stale proof: ${file}`);
  paths.push(path,...Object.keys(proof.sha256));
 }
