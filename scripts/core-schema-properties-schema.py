@@ -31,13 +31,6 @@ selection['$defs']=s['$defs']
 Path('spec/core/schema-properties-selection.schema.json').write_text(json.dumps(selection,indent=2)+'\n')
 def shape(properties,required=None): return {'type':'object','properties':properties,'required':list(properties) if required is None else required,'additionalProperties':False}
 ref08={'$ref':'urn:umf:core:0.8.0'}; ref07={'$ref':'urn:umf:core:0.7.0'}
-identity={'oneOf':[shape({'scope':{'const':'document'}}),shape({'scope':{'const':'module'},'module':{'type':'string','minLength':1}}),shape({'scope':{'const':'element'},'module':{'type':'string','minLength':1},'element':{'type':'string','minLength':1}})]}
-def external(value): return json.loads(json.dumps(value).replace('#/$defs/literal','urn:umf:core:0.8.0#/$defs/literal'))
-patch=shape({**{k:external(e[k]) for k in ['title','aliases','examples','allowedValues','default']},'facets':shape({k:external(f[k]) for k in ['length','collectionSize','range']},[])},[])
-patch['minProperties']=1
-for group in patch['properties']['facets']['properties'].values(): group.pop('anyOf',None)
-provenance=shape({'origin':{'const':'authored'},'path':{'type':'string'},'basis':{'const':'explicit-author-declaration'}})
-declaration=shape({'operation':{'const':'declare-core-schema-properties'},'version':{'const':'1.0.0'},'source':ref08,'target':ref08,'identity':identity,'request':patch,'provenance':provenance})
 upgrade=shape({'operation':{'const':'upgrade-schema-properties-envelope'},'version':{'const':'1.0.0'},'source':ref07,'target':ref08,'residuals':{'type':'array','items':shape({'path':{'type':'string'},'value':{},'reason':{'const':'Legacy content retained without reinterpretation'}})}})
-operation={'$schema':'https://json-schema.org/draft/2020-12/schema','$id':'urn:umf:core:schema-properties-receipt:1.0.0','title':'Schema property authoring and transition receipts','$defs':{'identity':identity,'patch':patch,'declaration':declaration,'upgrade':upgrade},'oneOf':[{'$ref':'#/$defs/declaration'},{'$ref':'#/$defs/upgrade'},shape({'operation':{'const':'rollback-schema-properties-envelope'},'version':{'const':'1.0.0'},'source':ref08,'target':ref07,'receipt':{'$ref':'#/$defs/upgrade'},'reason':{'const':'Original envelope restored; subsequent content retained in source'}})]}
-Path('spec/core/schema-properties-receipt.schema.json').write_text(json.dumps(operation,indent=2)+'\n')
+operation={'$schema':'https://json-schema.org/draft/2020-12/schema','$id':'urn:umf:core:schema-properties-transition:1.0.0','title':'Schema property preservation records for upgrade and rollback','$defs':{'upgrade':upgrade},'oneOf':[{'$ref':'#/$defs/upgrade'},shape({'operation':{'const':'rollback-schema-properties-envelope'},'version':{'const':'1.0.0'},'source':ref08,'target':ref07,'receipt':{'$ref':'#/$defs/upgrade'},'reason':{'const':'Original envelope restored; subsequent content retained in source'}})]}
+Path('spec/core/schema-properties-transition.schema.json').write_text(json.dumps(operation,indent=2)+'\n')

@@ -512,3 +512,13 @@ Document read/write and element selection recognize 0.8.0; previous versioned
 native bindings and authoring APIs keep their scoped versions and refusal rules.
 This is a core task, not a native-admission or TableSpec-port claim.
 See [the execution evidence](../04-build/evidence/schema-properties-core.md).
+
+### Routine metadata API amendment (2026-10-05)
+
+Owner direction removes persistent element/relationship selection verification
+and schema-property declaration receipts. Selection returns copied snapshots;
+`declareCoreSchemaProperties` returns the copied validated Document. Migration
+and native-conversion preservation records remain. Unknown length units make
+validation incomplete even with minimum-only or zero-maximum bounds, so
+extension editing refuses. Current scoped evidence and historical qualifications
+are recorded in [schema-property execution evidence](../04-build/evidence/schema-properties-core.md).

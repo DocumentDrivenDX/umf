@@ -1100,3 +1100,13 @@ test literal, not library, adapter, schema or native behavior. The
 preserves the original snapshots, failed attempt, exact test/document deltas and
 corrected test evidence; the original native commands were not rerun against
 that test edit.
+
+### Routine metadata API amendment (2026-10-05)
+
+Owner direction removes persistent element/relationship selection verification
+and schema-property declaration receipts. Selection returns copied snapshots;
+`declareCoreSchemaProperties` returns the copied validated Document. Migration
+and native-conversion preservation records remain. Unknown length units make
+validation incomplete even with minimum-only or zero-maximum bounds, so
+extension editing refuses. Current scoped evidence and historical qualifications
+are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).

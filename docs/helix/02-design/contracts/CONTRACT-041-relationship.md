@@ -264,7 +264,8 @@ assertion. An unnamed reverse on an undirected assertion has a null name. The
 sets are not expanded into instance edges or a Cartesian product. Selection
 performs no data query, inference or transitive traversal and cannot claim
 referential enforcement. Existing element selection keeps its declared traversal
-scope. Recomputing the selection verifies current retained consistency.
+scope. Results are copied metadata snapshots, not persistent proof records.
+Re-run selection to obtain current metadata and diagnostics.
 
 ### Qualified PostgreSQL binding implementation (2026-10-01)
 

@@ -221,10 +221,10 @@ Nullability core bead closes. All five native Nullability bindings remain pendin
 ### Nullability selection report integration
 
 Core 0.3.0 now uses `urn:umf:core:element-selection:0.3.0`, exported as
-`coreNullabilitySelectionSchema`. `verifyCoreElementSelection` selects the report
-schema from the retained source version, then recomputes the query, selected
-metadata, validation diagnostics and reference boundaries with the caller registry.
-The previous 0.1.0/0.2.0 schemas and their interpretation remain unchanged.
+`coreNullabilitySelectionSchema`. Current selection results are copied metadata snapshots with structural schemas.
+Persistent selection verification has been removed by owner direction. Re-run
+selection with the desired registry to obtain current diagnostics; historical
+verification evidence below describes the former API, not current guarantees.
 
 The five scenarios cover known/missing/unknown availability, same-named fields in
 different namespaces, recursive explicit links, selection boundaries and native

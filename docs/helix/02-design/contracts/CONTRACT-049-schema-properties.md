@@ -57,12 +57,11 @@ qualifiers refuse value/default evaluation; unknown unrelated meaning survives.
 
 Public operations: declareCoreSchemaProperties(source,identity,patch),
 inspectCoreSchemaProperties(source,identity), validateCoreFieldValue(source,field,value),
-resolveCoreDefault(source,field,{state:missing|present,value?}), and
-verifyCoreSchemaPropertyDeclaration(receipt,current). Identity explicitly selects
-scope document/module/element with exact IDs. Authoring returns copied source,
-target, request and provenance; inspection preserves full source. Facet patches
+resolveCoreDefault(source,field,{state:missing|present,value?}). Identity explicitly
+selects scope document/module/element with exact IDs. Authoring returns the copied,
+validated Document directly; inspection preserves full source. Facet patches
 merge known groups without deleting omitted/unknown siblings; edits to a group
-with unknown qualifiers refuse. Receipt checks recompute the full operation.
+with unknown qualifiers refuse. Routine authoring and selection do not issue or verify persistent receipts.
 
 ## Precedence and Compatibility
 
@@ -77,7 +76,9 @@ version-specific authoring APIs refuse 0.8.0 unless independently extended.
 
 Invalid shapes, roles, bounds, duplicate equal values, incompatible literals and
 invalid defaults reject atomically. Unknown relevant meaning refuses operations.
-Forged/stale receipts reject. Common JSON resource, copy and accessor limits apply.
+Forged/stale migration records reject. Common JSON resource, copy and accessor limits apply.
+Unknown length units remain preserved and valid but make validation incomplete,
+including minimum-only and zero-maximum bounds; extension editing therefore refuses.
 
 Value properties (examples, allowedValues, default, facets) are refused unless
 the target element has kind 'field'; only title and aliases apply elsewhere.

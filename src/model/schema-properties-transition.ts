@@ -1,4 +1,4 @@
-import {checkSchemaPropertyReceipt} from './schema-properties-receipts';
+import {checkSchemaPropertyTransition} from './schema-properties-transition-schema';
 import {copyJson} from './json';
 import {type Document,type Json} from './types';
 import {validateDocument} from '../validation/document';
@@ -15,7 +15,7 @@ export function upgradeSchemaPropertiesEnvelope(input:Document):SchemaProperties
 }
 export function verifySchemaPropertiesUpgrade(input:SchemaPropertiesUpgradeReceipt):SchemaPropertiesUpgradeReceipt {
  const receipt=copyJson(input) as unknown as SchemaPropertiesUpgradeReceipt;
- if(!checkSchemaPropertyReceipt(receipt)||receipt.operation!=='upgrade-schema-properties-envelope')schemaError('Invalid upgrade receipt structure');
+ if(!checkSchemaPropertyTransition(receipt)||receipt.operation!=='upgrade-schema-properties-envelope')schemaError('Invalid upgrade receipt structure');
  const expected=upgradeSchemaPropertiesEnvelope(receipt.source);
  if(canonicalSchemaJson(receipt)!==canonicalSchemaJson(expected))schemaError('Forged upgrade receipt');return expected;
 }

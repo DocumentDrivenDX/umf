@@ -5309,3 +5309,13 @@ The slice is implemented. [Execution evidence](evidence/schema-properties-core.m
 records core regression, Chromium public-API behavior, independent exact-number
 probes, typechecks and schema/package audits. Native adapter admission and
 TableSpec integration remain outside this implementation.
+
+### Routine metadata API amendment (2026-10-05)
+
+Owner direction removes persistent element/relationship selection verification
+and schema-property declaration receipts. Selection returns copied snapshots;
+`declareCoreSchemaProperties` returns the copied validated Document. Migration
+and native-conversion preservation records remain. Unknown length units make
+validation incomplete even with minimum-only or zero-maximum bounds, so
+extension editing refuses. Current scoped evidence and historical qualifications
+are recorded in [schema-property execution evidence](evidence/schema-properties-core.md).

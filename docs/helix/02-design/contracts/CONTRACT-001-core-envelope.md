@@ -53,6 +53,10 @@ stale classification rather than overwrite author intent.
 
 ### Portable element selection
 
+Selection returns copied metadata snapshots. Structural schemas describe their
+shape; no persistent receipt verifier is exposed. Re-run selection with the
+caller registry to obtain current validation diagnostics.
+
 `selectCoreElements(source,query,registry?)` supports exact module-ID, namespace,
 element-name, scalar-family and module/element identity filters. Filter categories
 combine with AND, values within a category with OR; an empty array matches nothing.

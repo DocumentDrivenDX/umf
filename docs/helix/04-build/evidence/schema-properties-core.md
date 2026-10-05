@@ -21,7 +21,7 @@ Owner-directed implementation on 2026-10-04 adds title, examples, aliases,
 collection size, allowed values, numeric range, minimum length and explicit
 literal defaults in core 0.8.0. Existing schemas remain published.
 The public API supplies copied declarations and inspection, field-value checks,
-default resolution, receipt verification, retained migration and rollback.
+default resolution, retained migration and rollback.
 JSON/YAML document operations and metadata selection accept the new version.
 
 Defaults require an explicit `missing`, `null` or `missing-or-null` trigger.
@@ -121,7 +121,27 @@ their hashes, the independent oracle passes four comparisons, and Chromium
 passes four serialization round trips and four edits. An independent Protobuf
 7.36.2 / jsonschema 4.26.0 projection replay passes all five tests.
 
-Selection receipt compatibility across retired validator warnings remains an
-open owner decision. No receipt-verification behavior was changed by these
-repairs. Broader native qualification evidence requires separate regeneration;
-these scoped checks do not establish a passing full repository suite.
+At this repair checkpoint, selection receipt compatibility remained an open
+owner decision; the subsequent amendment below resolves it. Broader native
+qualification evidence requires separate regeneration; these scoped checks
+do not establish a passing full repository suite.
+
+## Owner-directed routine API simplification (2026-10-05)
+
+Routine selection results are metadata snapshots; element and relationship
+selection verifiers have been removed. Schema-property authoring returns a
+copied validated Document directly, without a declaration receipt or verifier.
+Structural selection schemas remain available. Upgrade/rollback archives and
+native-conversion preservation records retain their existing checks. Historical
+receipt-verification and source-fingerprint evidence above describes the old API;
+it is not a fresh integrated native compatibility claim for this revision.
+
+The unknown-length-unit regression is fixed for minimum-only, zero-maximum,
+combined zero bounds and positive-maximum cases. Each produces one warning and
+incomplete validation, preserving the unit and refusing extension edits. Known
+unicode-scalar units remain complete and editable.
+
+Bun 1.3.14: 186 affected tests across 30 files, 4,830 assertions, no failures.
+Chromium 153.0.8010.12: 38 validation cases, four serialization recoveries,
+12 refusals and four unknown-unit checks; no getter execution or external requests.
+The browser record fingerprints the current implementation and transition schema.

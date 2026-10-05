@@ -1121,10 +1121,10 @@ The selection-schema gap above is resolved by a separate
 `urn:umf:core:element-selection:0.2.0` schema. It checks source and selected elements
 against the Field envelope. The existing 0.1 schema is unchanged,
 including its opaque legacy kind semantics. Both schemas are exported for consumers.
-`verifyCoreElementSelection` validates the appropriate schema and recomputes the
-report from its retained source/query and caller-supplied registry. Changed paths,
-selected elements, boundary references, queries or diagnostics are rejected.
-This checks consistency, not source authenticity or the meaning of unknown roles.
+Current selection results are copied metadata snapshots with structural schemas.
+Persistent selection verification has been removed by owner direction. Re-run
+selection with the desired registry to obtain current diagnostics; historical
+verification evidence below describes the former API, not current guarantees.
 
 Five record-type/selection tests pass 68 assertions. Four existing selector tests
 pass 63 assertions, including retained-source recovery across all five priority

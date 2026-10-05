@@ -3137,3 +3137,13 @@ contradictory bounds, unknown qualifier refusals, migration collisions, forged
 and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
 API parity. Run existing core regressions, typecheck, schema audit and browser
 build. These gates establish core behavior, not native enforcement.
+
+### Routine API amendment coverage (2026-10-05)
+
+Selection snapshot structure, serialization, registry diagnostics and reference
+traversal remain tested after removing persistent selection verifiers. Core 0.8
+authoring tests use the copied Document directly; upgrade/rollback record checks
+remain. Unknown length units cover minimum-only, maximum zero, both zero bounds
+and positive maxima in Bun and Chromium, with incomplete validation, refused
+extension edits and recognized-unit controls. See the
+[current scoped evidence](../04-build/evidence/schema-properties-core.md).

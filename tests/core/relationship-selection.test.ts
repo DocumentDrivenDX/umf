@@ -13,7 +13,7 @@ test('authored relationship selection resolves exact endpoint and alternate-key 
    for(const target of entry.targets)expect(resolve(r.source,target.keyPath).id).toBe(target.reference.key);
    if(entry.associationRecord)expect(resolve(r.source,entry.associationRecord.recordPath).keys.length).toBeGreaterThan(0);
   }
-  for(const format of ['json','yaml'] as const){const stored=u.readJsonValue(u.writeJsonValue(r,format),format) as unknown as typeof r;expect(u.verifyCoreRelationshipSelection(stored)).toEqual(r);}
+  for(const format of ['json','yaml'] as const){const stored=u.readJsonValue(u.writeJsonValue(r,format),format) as unknown as typeof r;expect(stored).toEqual(r);}
  }
 });
 // @covers US-045-AC1 (stable relationship identity and selection filters)
@@ -37,8 +37,8 @@ test('navigation is presentation metadata and retains undirected, inverse and as
  r.inverse='back';r.future='keep';const next=u.selectCoreRelationships(doc,{});expect(next.selection[0]!.navigation.reverse!.name).toBe('back');expect(next.selection[0]!.uninterpretedPaths).toContain('/modules/0/relationships/0/future');
  expect(next.navigationScope).toBe('authored-presentation-only');
 });
-test('selection refuses legacy inputs, invalid filters and forged paths without executing getters',()=>{
- const doc=relationshipCandidate(),r=u.selectCoreRelationships(doc,{}),forged=structuredClone(r);forged.selection[0]!.targets[0]!.keyPath='/forged';expect(()=>u.verifyCoreRelationshipSelection(forged)).toThrow();
+test('selection refuses legacy inputs and invalid filters without executing getters',()=>{
+ const doc=relationshipCandidate();
  doc.umf='0.6.0';expect(()=>u.selectCoreRelationships(doc,{})).toThrow();
  let calls=0;expect(()=>u.selectCoreRelationships(relationshipCandidate(),{get modules(){calls++;return ['m'];}})).toThrow();expect(calls).toBe(0);
  expect(()=>u.selectCoreRelationships(relationshipCandidate(),{sources:[{module:'m',element:'Order',future:true}]})).toThrow();
