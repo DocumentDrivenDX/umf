@@ -1,27 +1,43 @@
-18:10:54  Running with dbt=1.10.0
-18:10:54  Registered adapter: duckdb=1.9.3
-18:10:54  Found 4 sources, 429 macros
-18:10:54  
-18:10:54  Concurrency: 1 threads (target='dev')
-18:10:54  
-18:10:54  1 of 4 START freshness of synthetic.broken ..................................... [RUN]
-18:10:54  1 of 4 ERROR freshness of synthetic.broken ..................................... [ERROR in 0.04s]
-18:10:54  2 of 4 START freshness of synthetic.expired .................................... [RUN]
-18:10:54  2 of 4 ERROR STALE freshness of synthetic.expired .............................. [ERROR STALE in 0.01s]
-18:10:54  3 of 4 START freshness of synthetic.recent ..................................... [RUN]
-18:10:54  3 of 4 PASS freshness of synthetic.recent ...................................... [PASS in 0.01s]
-18:10:54  4 of 4 START freshness of synthetic.stale ...................................... [RUN]
-18:10:54  4 of 4 WARN freshness of synthetic.stale ....................................... [WARN in 0.01s]
-18:10:54  
-18:10:54  Finished running 4 sources in 0 hours 0 minutes and 0.08 seconds (0.08s).
-18:10:54  
-18:10:54    Runtime Error in source broken (models/sources.yml)
+18:47:29  Running with dbt=1.10.0
+18:47:29  Registered adapter: duckdb=1.9.3
+18:47:29  Unable to do partial parsing because saved manifest not found. Starting full parse.
+18:47:30  [WARNING][PropertyMovedToConfigDeprecation]: Deprecated functionality
+Found `freshness` as a top-level property of `synthetic` in file
+`models/sources.yml`. The `freshness` top-level property should be moved into
+the `config` of `synthetic`.
+18:47:30  The configured adapter does not support metadata-based freshness. A loaded_at_field must be specified for source 'synthetic.recent'.
+18:47:30  The configured adapter does not support metadata-based freshness. A loaded_at_field must be specified for source 'synthetic.stale'.
+18:47:30  The configured adapter does not support metadata-based freshness. A loaded_at_field must be specified for source 'synthetic.expired'.
+18:47:30  The configured adapter does not support metadata-based freshness. A loaded_at_field must be specified for source 'synthetic.broken'.
+18:47:30  Found 4 sources, 429 macros
+18:47:30  
+18:47:30  Concurrency: 1 threads (target='dev')
+18:47:30  
+18:47:30  1 of 4 START freshness of synthetic.broken ..................................... [RUN]
+18:47:31  1 of 4 ERROR freshness of synthetic.broken ..................................... [ERROR in 0.97s]
+18:47:31  2 of 4 START freshness of synthetic.expired .................................... [RUN]
+18:47:31  2 of 4 ERROR STALE freshness of synthetic.expired .............................. [ERROR STALE in 0.01s]
+18:47:31  3 of 4 START freshness of synthetic.recent ..................................... [RUN]
+18:47:31  3 of 4 PASS freshness of synthetic.recent ...................................... [PASS in 0.01s]
+18:47:31  4 of 4 START freshness of synthetic.stale ...................................... [RUN]
+18:47:31  4 of 4 WARN freshness of synthetic.stale ....................................... [WARN in 0.01s]
+18:47:31  
+18:47:31  Finished running 4 sources in 0 hours 0 minutes and 1.05 seconds (1.05s).
+18:47:31  
+18:47:31    Runtime Error in source broken (models/sources.yml)
   Catalog Error: Scalar Function with name umf_missing_fixture_function does not exist!
   Did you mean "isfinite"?
   
   LINE 3:     select umf_missing_fixture_function()
                      ^
-18:10:54  
-18:10:54  Failure in source expired (models/sources.yml)
-18:10:54    Status: error
-18:10:54  Done.
+18:47:31  
+18:47:31  Failure in source expired (models/sources.yml)
+18:47:31    Status: error
+18:47:31  Done.
+18:47:31  [WARNING][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- PropertyMovedToConfigDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
