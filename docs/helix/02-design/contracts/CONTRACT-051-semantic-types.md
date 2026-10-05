@@ -97,11 +97,8 @@ system enforcement. `null` MUST be passed unchanged to the supplied validator.
 valid 0.8.0 and return `upgrade-semantic-types-envelope` 1.0.0 with copied
 `source`, 0.9.0 `target`, exact `request`, and ordered `residuals` of
 `{path,value,reason:"Legacy semanticTypes content retained without reinterpretation"}`.
-Default policy is false. It MUST archive every old element `semanticTypes`
-field, including well-shaped lookalikes, in `residuals` and move its exact value
-to the element's opaque `legacySemanticTypes` field in the target, so discarding
-the receipt does not lose it. An already-present `legacySemanticTypes` field MUST
-refuse the upgrade. Root/module fields remain opaque.
+Default policy is false. It MUST archive/remove every old element `semanticTypes`
+field, including well-shaped lookalikes. Root/module fields remain opaque.
 With `migrateExtension:true`, selected element `umf.semantic-types` payloads MUST
 have profile 0.1.0 and valid nonempty `types`. Unknown annotation-level keys,
 opaque-field collisions or unsupported profiles MUST refuse conversion. Reference

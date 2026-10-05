@@ -73,12 +73,11 @@ test('value evaluation requires explicit exact implementations and combines all 
 });
 test('upgrade archives every legacy collision, keeps native context, and verifies both formats',()=>{
  const source=document('0.8.0');source.modules[0]!.elements[0]!.semanticTypes=[ref];(source.modules[0]!.elements[1]! as any).semanticTypes={future:'opaque'};source.semanticTypes={root:'opaque'};
- const receipt=upgradeSemanticTypesEnvelope(source);expect(receipt.target.umf).toBe('0.9.0');expect(receipt.residuals).toHaveLength(2);expect(receipt.target.modules[0]!.elements[0]!.semanticTypes).toBeUndefined();expect(receipt.target.modules[0]!.elements[0]!.legacySemanticTypes).toEqual([ref]);expect(receipt.target.modules[0]!.elements[1]!.legacySemanticTypes).toEqual({future:'opaque'});expect(receipt.target.semanticTypes).toEqual(source.semanticTypes);expect(receipt.source).toEqual(source);
+ const receipt=upgradeSemanticTypesEnvelope(source);expect(receipt.target.umf).toBe('0.9.0');expect(receipt.residuals).toHaveLength(2);expect(receipt.target.modules[0]!.elements[0]!.semanticTypes).toBeUndefined();expect(receipt.target.semanticTypes).toEqual(source.semanticTypes);expect(receipt.source).toEqual(source);
  for(const format of ['json','yaml'] as const){const restored=readJsonValue(writeJsonValue(receipt as any,format),format) as any;expect(verifySemanticTypesTransition(restored)).toEqual(receipt);}
  const forged=clone(receipt);forged.residuals=[];expect(()=>verifySemanticTypesTransition(forged)).toThrow();
  const current=clone(receipt.target);current.modules[0]!.elements[0]!.extensions.future={edited:true};current.modules[0]!.elements[0]!.semanticTypes=[ref];
  const rollback=rollbackSemanticTypesEnvelope(receipt,current);expect(rollback.target).toEqual(source);expect(rollback.source).toEqual(current);expect(verifySemanticTypesTransition(rollback)).toEqual(rollback);
- const occupied=document('0.8.0');occupied.modules[0]!.elements[0]!.semanticTypes=[ref];(occupied.modules[0]!.elements[0]! as any).legacySemanticTypes=1;expect(()=>upgradeSemanticTypesEnvelope(occupied)).toThrow();
  const invalid=clone(current);invalid.id='different';expect(()=>rollbackSemanticTypesEnvelope(receipt,invalid)).toThrow();
  const forgedRollback=clone(rollback);forgedRollback.target.id='forged';expect(()=>verifySemanticTypesTransition(forgedRollback)).toThrow();
  expect(()=>upgradeSemanticTypesEnvelope(document('0.7.0'))).toThrow();
