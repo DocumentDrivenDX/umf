@@ -23,7 +23,7 @@ docker run --name umf-core-replay-run --shm-size=1g \
 The entrypoint installs the frozen Bun dependencies, prepares the vendored Python
 namespaces and Protobuf WASM compiler, runs the retained native/browser inventory,
 auxiliary checks and disjoint regression shards, then publishes fingerprints and
-runs all admission gates plus proof-integrity checks, then seals the semantic acceptance and final replay records. It stops on failure. Logs
+runs all admission gates plus proof-integrity checks, then seals the semantic acceptance and final replay records. Failed regression shards receive one serial retry, preserving the failed logs and existing test limits. Other failures stop execution. Logs
 and command hashes are written under `fixtures/validation/core-check-refresh/`.
 Review and copy generated artifacts back to the source checkout after success.
 

@@ -1,5 +1,5 @@
 """Run the retained acceptance inventory in a disposable, committed checkout."""
-import argparse, hashlib, importlib.metadata, json, os, platform, subprocess
+import argparse, hashlib, importlib.metadata, json, os, platform, shutil, subprocess
 from pathlib import Path
 
 out = Path('fixtures/validation/core-check-refresh')
@@ -22,6 +22,27 @@ def run(command, name=None):
             raise SystemExit(result.returncode)
     else:
         subprocess.run(command, check=True)
+
+def retry_regression_serially():
+    manifest = out / 'regression.json'
+    record = json.loads(manifest.read_text())
+    for index, row in enumerate(record['runs']):
+        if row['exitCode'] == 0:
+            assert hashlib.sha256(Path(row['log']).read_bytes()).hexdigest() == row['logSha256']
+            continue
+        original = Path(row['log'])
+        attempt = len(record.setdefault('failedAttempts', [])) + 1
+        retained = out / f'regression-serial-failed-{index + 1}-{attempt}.log'
+        shutil.copyfile(original, retained)
+        record['failedAttempts'].append({**row, 'log': str(retained), 'logSha256': hashlib.sha256(retained.read_bytes()).hexdigest()})
+        print(json.dumps({'serialRetry': index + 1, 'command': row['command']}), flush=True)
+        with original.open('wb') as stream:
+            result = subprocess.run(row['command'], stdout=stream, stderr=subprocess.STDOUT)
+        row.update(exitCode=result.returncode, logSha256=hashlib.sha256(original.read_bytes()).hexdigest())
+        manifest.write_text(json.dumps(record, indent=2) + '\n')
+        if result.returncode:
+            raise SystemExit('Sequential regression retry failed; inspect ' + str(original))
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('stage', choices=['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal', 'all'])
@@ -53,7 +74,13 @@ for stage in stages:
         command = [python, 'scripts/refresh-core-checks.py']
         if stage != 'native': command.append('--' + stage)
         if args.resume and stage in ['native', 'regression']: command.append('--resume')
-        run(command)
+        if stage == 'regression':
+            if not args.resume or not (out / 'regression.json').exists():
+                result = subprocess.run(command)
+                if result.returncode == 0: continue
+            retry_regression_serially()
+        else:
+            run(command)
     elif stage == 'publish':
         run(['bun', 'scripts/core-semantic-types-oracle-inputs.ts'], 'container-semantic-inputs')
         run([python, 'scripts/core-semantic-types-oracle.py'], 'container-semantic-oracle')
