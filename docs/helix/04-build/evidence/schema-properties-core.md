@@ -55,10 +55,46 @@ native gate/evidence suites) was stopped during its lengthy TableSpec corpus,
 after reaching 151 files. It is incomplete and is not a passing full-suite
 claim. Its three observed failures were the historical Linux path references
 described above, subsequently corrected and replayed successfully. That initial
-run also predates the final unknown-qualifier guard; the complete core and
-Chromium checks above were replayed after the final implementation changes.
+run also predates the final unknown-qualifier guard. Review found that three
+browser-record fingerprints were stale despite the previous final-replay claim;
+the fresh correction replay below supersedes that record.
 
 No new native adapter, physical default execution, native equivalence or ideal
 admission is claimed. Existing version-specific authoring and native-binding
 operations retain their previous version bounds; they have not all been ported
 to 0.8.0. TableSpec integration remains a subsequent implementation task.
+
+## Review correction replay
+
+The six combined-review findings have regression coverage in
+`tests/core/schema-properties-review.test.ts`: full isolated extension context,
+non-null numeric bounds, independent known-range checks alongside unknown facets,
+discrete interval emptiness, accessor-safe identities and atomic rejection of
+malformed facet patches. A further null-bound guard covers collection literals
+that reach a malformed item Field before document validation finishes.
+
+Fresh verification with Bun 1.3.14 passes 176 core tests across 27 explicitly
+selected test files, with 4,572 assertions and zero failures. Both TypeScript
+checks, the browser build, the 346-schema audit and the 59-package audit pass.
+An initial directory-filter run unintentionally included `core-ideals` and was
+terminated; it is not a completed broader-suite result. The first expanded
+browser attempt exposed the recursive null-bound failure, which was corrected
+before the successful replay.
+
+Chromium 153.0.8010.12 passes 38 validation cases, six serialization recoveries,
+nine operation refusals and six extension-callback observations across validation
+and selection. Getter executions and external requests are both zero. The
+refreshed browser record fingerprints all tested sources, including the new
+regression file, and the freshly built bundle. Python 3.9.6 again agrees with all
+58 independent integer64/decimal(20,2) probes. Broader native/conformance suites
+were not replayed to completion; native adapter admission remains unclaimed.
+
+Follow-up verification found that a single exclusive bound at a declared numeric
+domain extreme could still describe an empty interval. The corrected validator
+checks signed/unsigned integer and fixed-scale decimal extrema without expanding
+the declared width or precision. Regression coverage includes one-bit integers,
+inclusive and neighboring valid bounds, atomic authoring/receipt checks and
+maximum-safe-integer width/precision declarations. Sixteen additional Chromium
+cases cover exclusive extrema and inclusive controls. An initial worktree core
+run hit two evidence-file write permissions; the complete replay above passed
+with the required worktree write access.

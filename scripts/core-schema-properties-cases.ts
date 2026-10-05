@@ -29,5 +29,18 @@ export function schemaPropertiesCases(){
  bad('collection-bound-on-scalar',d=>(d.modules[0]!.elements[4]!.facets as any)={collectionSize:{min:1}});
  bad('range-on-string',d=>(d.modules[0]!.elements[2]!.facets as any).range={min:{string:'a'}});
  bad('unknown-default-behavior',d=>(d.modules[0]!.elements[0]!.default as any).on='always');
+ bad('null-numeric-bound',d=>{const f=d.modules[0]!.elements[4]!;f.nullability='absent-allowed';f.facets={range:{min:null}};});
+ bad('unknown-facet-inverted-range',d=>d.modules[0]!.elements[4]!.facets={future:true,range:{min:{integerToken:'10'},max:{integerToken:'1'}}});
+ bad('empty-discrete-integer-range',d=>d.modules[0]!.elements[4]!.facets={range:{min:{integerToken:'0'},max:{integerToken:'1'},minInclusive:false,maxInclusive:false}});
+ bad('empty-discrete-decimal-range',d=>{const f=d.modules[0]!.elements[1]!;delete f.examples;delete f.default;f.facets={precision:20,scale:2,range:{min:{decimalToken:'0'},max:{decimalToken:'0.01'},minInclusive:false,maxInclusive:false}};});
+ for(const [profile,scalarType,facets,min,max] of [
+  ['signed8','integer',{integerWidth:{bits:8,signed:true}},'-128','127'],
+  ['unsigned8','integer',{integerWidth:{bits:8,signed:false}},'0','255'],
+  ['decimal-scale0','decimal',{precision:2,scale:0},'-99','99'],
+  ['decimal-scale2','decimal',{precision:2,scale:2},'-0.99','0.99'],
+ ] as const)for(const end of ['min','max'] as const)for(const inclusive of [false,true]){
+  const wrapper=scalarType==='integer'?'integerToken':'decimalToken';
+  rows.push({id:`${profile}-${end}-domain-extreme-${inclusive?'inclusive':'exclusive'}`,valid:inclusive,document:{umf:'0.8.0',id:'numeric-boundary',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...facets,range:{[end]:{[wrapper]:end==='min'?max:min},[end+'Inclusive']:inclusive}}}]}]}});
+ }
  return rows;
 }

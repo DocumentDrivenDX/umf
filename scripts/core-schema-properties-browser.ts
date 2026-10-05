@@ -35,11 +35,26 @@ try{
   const current=u.declareCoreSchemaProperties(upgrade.target,{scope:'element',module:'m',element:'f'},{title:'New'}).target,rollback=u.rollbackSchemaPropertiesEnvelope(upgrade,current);same(rollback.target,old);same(rollback.source,current);
   for(const format of ['json','yaml']){same(u.verifySchemaPropertiesUpgrade(u.readJsonValue(u.writeJsonValue(upgrade,format),format)),upgrade);recoveries++;}
   let getterCalls=0;const request={};Object.defineProperty(request,'title',{enumerable:true,get(){getterCalls++;return 'bad';}});refuses(()=>u.declareCoreSchemaProperties(fixture,{scope:'document'},request));
+  const hostileIdentity={module:'m',element:'quantity'};
+  Object.defineProperty(hostileIdentity,'module',{enumerable:true,get(){getterCalls++;return 'm';}});
+  if(u.validateCoreFieldValue(fixture,hostileIdentity,{integerToken:'1'}).valid)throw Error('Identity accessor accepted');
+  refuses(()=>u.resolveCoreDefault(fixture,hostileIdentity,{state:'missing'}));
+  for(const facets of [null,false,0,''])refuses(()=>u.declareCoreSchemaProperties(fixture,identity,{facets}));
+  const extensionDoc=structuredClone(fixture),id='fixture.context';extensionDoc.vocabularies[id]={version:'1.0.0'};
+  extensionDoc.extensions={[id]:{}};extensionDoc.modules[0].extensions={[id]:{}};extensionDoc.modules[0].elements[1].extensions={[id]:{}};
+  let extensionChecks=0;
+  const registry=new u.Registry().register({id,version:'1.0.0',coreVersion:'0.1.0',description:'Context regression',schema:{type:'object'},semantics:'Synthetic context check',scopes:['document','module','element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},(_payload:any,context:any)=>{
+   if(context.document.umf!=='0.8.0'||context.document.title!=='Orders'||!context.document.modules[0].elements[1].facets.range)throw Error('Stripped extension context');
+   extensionChecks++;context.document.title='private copy';return [{code:'RANGE_POLICY',path:context.path,message:'Declared range refused',severity:'error'}];
+  });
+  const validation=u.validateDocument(extensionDoc,registry);
+  if(validation.valid||validation.diagnostics.filter((d:any)=>d.code==='RANGE_POLICY').length!==3||extensionChecks!==3||extensionDoc.title!=='Orders')throw Error('Extension policy/copy failure');
+  refuses(()=>u.selectCoreElements(extensionDoc,{references:'none',identities:[]},registry));
   if(getterCalls||'Bun'in globalThis||'process'in globalThis)throw Error('Host/getter leak');
-  return {cases:cases.length,recoveries,refusals,getterCalls};
+  return {cases:cases.length,recoveries,refusals,getterCalls,extensionChecks};
  });
  assert.equal(checks.cases,cases.length);assert.equal(checks.recoveries,6);assert.deepEqual(externalRequests,[]);
- const paths=['src/model/selection.ts','src/model/selection-verification.ts','src/model/schema-properties-receipts.ts','spec/core/schema-properties-receipt.schema.json','spec/core/schema-properties-selection.schema.json','src/model/schema-literals.ts','src/model/schema-properties.ts','src/model/schema-properties-transition.ts','src/validation/schema-properties.ts','src/validation/document.ts','src/model/types.ts','src/index.ts','spec/core/schema-properties-document.schema.json','scripts/core-schema-properties-browser.ts','scripts/core-schema-properties-cases.ts','tests/core/schema-properties.test.ts'];
+ const paths=['src/model/selection.ts','src/model/selection-verification.ts','src/model/schema-properties-receipts.ts','spec/core/schema-properties-receipt.schema.json','spec/core/schema-properties-selection.schema.json','src/model/schema-literals.ts','src/model/schema-properties.ts','src/model/schema-properties-transition.ts','src/validation/schema-properties.ts','src/validation/document.ts','src/model/types.ts','src/index.ts','spec/core/schema-properties-document.schema.json','scripts/core-schema-properties-browser.ts','scripts/core-schema-properties-cases.ts','tests/core/schema-properties.test.ts','tests/core/schema-properties-review.test.ts'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/core-schema-properties-browser.json',JSON.stringify({scope:'Experimental core 0.8.0 validation, public authoring/default operations and retained migration; native bindings/admission not claimed',browser:browser.version(),checks,externalRequests,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

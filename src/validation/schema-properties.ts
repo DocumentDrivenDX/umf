@@ -2,7 +2,7 @@ import schema from '../../spec/core/schema-properties-document.schema.json';
 import {createValidator} from './schema';
 // Intentional, known import cycle with ./document (CONTRACT-049); both sides only use the other inside functions.
 import {validateDocument} from './document';
-import {Registry} from '../registry/registry';
+import {Registry,type Registration} from '../registry/registry';
 import {copyJson} from '../model/json';
 import {type Document,type Diagnostic,type Validation,type Element,UmfError,pointer} from '../model/types';
 import {checkSchemaLiteral,literalIdentity,schemaCoefficient,type CoreLiteral,schemaPropertyNames,newFacetNames} from '../model/schema-literals';
@@ -18,12 +18,39 @@ export function schemaPropertiesLegacyView(input:Document):Document {
  for(const m of base.modules)for(const e of m.elements){const f=e.facets as Record<string,any>|undefined;if(!f)continue;for(const key of newFacetNames)delete f[key];if(f.length){delete f.length.min;if(f.length.max===undefined||f.length.max===0)delete f.length;}if(['array','map'].includes(e.cardinality as string))delete e.facets;}
  return base;
 }
+/** Compare against declared domain extrema without expanding the width/precision. */
+function atNumericDomainExtreme(field:Element,value:bigint,end:'min'|'max'):boolean {
+ const facets=field.facets as Record<string,any>;
+ if(field.scalarType==='decimal'){
+  if(end==='min'?value>=0n:value<=0n)return false;
+  const digits=(value<0n?-value:value).toString();
+  return digits.length===facets.precision&&/^9+$/.test(digits);
+ }
+ const width=facets.integerWidth;if(!width)return false;
+ if(end==='min'){
+  if(!width.signed)return value===0n;
+  const magnitude=-value;
+  return value<0n&&magnitude.toString(2).length===width.bits&&(magnitude&(magnitude-1n))===0n;
+ }
+ if(value<0n)return false;
+ const bits=value===0n?0:value.toString(2).length;
+ return bits===width.bits-(width.signed?1:0)&&(value&(value+1n))===0n;
+}
 export function validateSchemaPropertiesDocument(input:unknown,registry=new Registry()):Validation {
  const diagnostics:Diagnostic[]=[];
  const add=(message:string,path:string,severity:'error'|'warning'='error',code='CORE_SCHEMA_PROPERTIES')=>diagnostics.push({code,path,message,severity});
  let doc:Document;try{doc=copyJson(input) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;add(error.message,error.path);return {valid:false,complete:false,diagnostics};}
  if(!checkSchemaProperties(doc)){for(const e of checkSchemaProperties.errors??[])add(e.message??'Invalid schema properties',e.instancePath);return {valid:false,complete:false,diagnostics};}
- diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),registry).diagnostics);
+ // Only core validation uses the compatibility view. Extension validators must
+ // inspect an isolated copy of the complete document and its actual version.
+ const extensionRegistry=new class extends Registry {
+  override get(id:string,version:string):Registration|undefined {
+   const entry=registry.get(id,version);if(!entry?.semantics)return entry;
+   const semantics=entry.semantics;
+   return {...entry,semantics:(payload,context)=>semantics(payload,{...context,document:copyJson(doc) as unknown as Document})};
+  }
+ };
+ diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),extensionRegistry).diagnostics);
  add('Experimental 0.8.0 properties; native enforcement/admission not implied','/umf','warning','EXPERIMENTAL_CORE_SCHEMA_PROPERTIES');
  const unknown=(v:Record<string,unknown>,known:string[],path:string)=>{for(const key of Object.keys(v))if(!known.includes(key))add('Qualifier retained without interpretation',path+'/'+pointer(key),'warning','UNKNOWN_SCHEMA_PROPERTY');};
  doc.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
@@ -40,9 +67,18 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
     const r=f.range;unknown(r,['min','max','minInclusive','maxInclusive'],path+'/facets/range');
     if(e.kind!=='field'||!['integer','decimal'].includes(e.scalarType!))add('Range requires integer/decimal Field',path+'/facets/range');
     else attempt(()=>{
-     const unbounded={...e,facets:{...f}} as Element;delete (unbounded.facets as Record<string,unknown>).range;delete unbounded.allowedValues;delete unbounded.default;
-     for(const end of ['min','max']){if(r[end]!==undefined)checkSchemaLiteral(doc,unbounded,r[end]);else if(r[end+'Inclusive']!==undefined)add('Inclusive flag requires its bound',path+'/facets/range/'+end+'Inclusive');}
-     if(r.min!==undefined&&r.max!==undefined){const wrapper=e.scalarType==='integer'?'integerToken':'decimalToken',scale=e.scalarType==='integer'?0:f.scale,min=schemaCoefficient(r.min[wrapper],scale,f.precision),max=schemaCoefficient(r.max[wrapper],scale,f.precision);if(min>max||min===max&&(r.minInclusive===false||r.maxInclusive===false))add('Empty or inverted numeric interval',path+'/facets/range');}
+     // Check known numeric obligations independently of preserved unknown siblings.
+     const numericFacets:Record<string,unknown>={};
+     for(const key of ['precision','scale'])if(Object.hasOwn(f,key))numericFacets[key]=f[key];
+     if(f.integerWidth)numericFacets.integerWidth={bits:f.integerWidth.bits,signed:f.integerWidth.signed};
+     const unbounded={...e,facets:numericFacets} as Element;delete unbounded.allowedValues;delete unbounded.default;
+     for(const end of ['min','max']){if(r[end]!==undefined){if(r[end]===null)throw new UmfError('CORE_SCHEMA_PROPERTIES','Numeric bounds cannot be null','/'+end);checkSchemaLiteral(doc,unbounded,r[end]);}else if(r[end+'Inclusive']!==undefined)add('Inclusive flag requires its bound',path+'/facets/range/'+end+'Inclusive');}
+     const wrapper=e.scalarType==='integer'?'integerToken':'decimalToken',scale=e.scalarType==='integer'?0:f.scale;
+     const min=r.min===undefined?undefined:schemaCoefficient(r.min[wrapper],scale,f.precision);
+     const max=r.max===undefined?undefined:schemaCoefficient(r.max[wrapper],scale,f.precision);
+     if(min!==undefined&&max!==undefined&&min+(r.minInclusive===false?1n:0n)>max-(r.maxInclusive===false?1n:0n)
+       ||min!==undefined&&r.minInclusive===false&&atNumericDomainExtreme(e,min,'max')
+       ||max!==undefined&&r.maxInclusive===false&&atNumericDomainExtreme(e,max,'min'))add('Empty or inverted numeric interval',path+'/facets/range');
     },path+'/facets/range');
    }
   }

@@ -44,10 +44,10 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
   if(key==='default'&&node.default)knownSchemaMembers(node.default,['value','on'],located.path+'/default');
   node[key]=copyJson(request[key]);
  }
- if(request.facets){
+ if(Object.hasOwn(request,'facets')){
   knownSchemaMembers(request.facets,['length','collectionSize','range'],'/request/facets');
   const facets=copyJson(node.facets??{}) as Record<string,Json>;
-  for(const [group,changes] of Object.entries(request.facets)){
+  for(const [group,changes] of Object.entries(request.facets!)){
    const keys=group==='length'?['min','max','unit']:group==='range'?['min','max','minInclusive','maxInclusive']:['min','max'];
    knownSchemaMembers(changes,keys,'/request/facets/'+group);
    if(facets[group])knownSchemaMembers(facets[group],keys,located.path+'/facets/'+group);
@@ -68,9 +68,10 @@ export function verifyCoreSchemaPropertyDeclaration(input:CoreSchemaPropertyDecl
  const expected=declareCoreSchemaProperties(receipt.source,receipt.identity,receipt.request);
  if(canonicalSchemaJson(expected)!==canonicalSchemaJson(receipt)||canonicalSchemaJson(copyJson(current))!==canonicalSchemaJson(expected.target))schemaError('Forged or stale declaration receipt');return expected;
 }
-export function validateCoreFieldValue(input:Document,field:{module:string;element:string},valueInput:CoreLiteral):Validation {
+export function validateCoreFieldValue(input:Document,fieldInput:{module:string;element:string},valueInput:CoreLiteral):Validation {
  const diagnostics:Validation['diagnostics']=[];
  try{
+  const field=copyJson(fieldInput) as unknown as {module:string;element:string};
   const value=copyJson(valueInput) as unknown as CoreLiteral;
   if(!checkCoreLiteral(value))schemaError('Invalid typed literal');
   knownSchemaMembers(field,['module','element'],'/identity');
@@ -79,7 +80,8 @@ export function validateCoreFieldValue(input:Document,field:{module:string;eleme
  return {valid:diagnostics.length===0,complete:diagnostics.length===0,diagnostics};
 }
 export type CoreDefaultInput={state:'missing'}|{state:'present';value:CoreLiteral};
-export function resolveCoreDefault(input:Document,field:{module:string;element:string},stateInput:CoreDefaultInput){
+export function resolveCoreDefault(input:Document,fieldInput:{module:string;element:string},stateInput:CoreDefaultInput){
+ const field=copyJson(fieldInput) as unknown as {module:string;element:string};
  const state=copyJson(stateInput) as unknown as CoreDefaultInput;
  knownSchemaMembers(state,state?.state==='missing'?['state']:['state','value'],'/state');
  if(state.state!=='missing'&&state.state!=='present'||state.state==='present'&&!Object.hasOwn(state,'value'))schemaError('Explicit missing/present state required');
