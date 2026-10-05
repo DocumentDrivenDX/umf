@@ -83,7 +83,7 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
    for (const p of ['spec/core/facet-transition.schema.json', 'spec/core/facet-selection.schema.json']) required(r, p);
    for (const name of ['core-facet-candidate-browser', 'core-facet-operations-browser']) {
     const p = file(name); required(r, p); const browser = await load(p);
-    assert.match(browser.browser, /^148\./); assert.deepEqual(browser.externalRequests, []);
+    assert.equal(browser.browser, refresh.browser ?? '148.0.7778.0'); assert.deepEqual(browser.externalRequests, []);
     assert.ok(Object.keys(browser.checks).length); queue(p, browser);
    }
   } else {
@@ -107,7 +107,7 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
      if (system === 'avro') assert.deepEqual(proof.versions, {apache: '1.12.0', fastavro: '1.12.2'});
      if (system === 'parquet') assert.equal(proof.runtime, 'PyArrow 21.0.0');
     } else {
-     assert.match(proof.browser, /^148\./); assert.deepEqual(proof.externalRequests, [], `${p}: external browser requests`);
+     assert.equal(proof.browser, refresh.browser ?? '148.0.7778.0'); assert.deepEqual(proof.externalRequests, [], `${p}: external browser requests`);
      const children = Object.keys(proof.sha256).filter(p => p.endsWith('-browser.json'));
      assert.ok(children.length, `${p}: missing browser children`);
      for (const child of children) {
