@@ -52,10 +52,10 @@ projections rather than prohibit UMF from defining author intent.
   examples, aliases, collection bounds, allowed values, exact numeric ranges,
   minimum length and explicit literal defaults with migration/rollback and
   unknown preservation. Native admission remains separately evidenced.
-- IDEAL-06: Separate source format documentation, input parsing, output rendering,
+- IDEAL-07: Separate source format documentation, input parsing, output rendering,
   allowed-value assertions and structural constraints. Legacy format text must
   remain recoverable; interpretation requires explicit provenance and must not
-  invent authored constraints. CONTRACT-049 defines the separation boundary.
+  invent authored constraints. CONTRACT-050 defines the separation boundary.
 
 ## User Stories
 
@@ -115,11 +115,13 @@ all-five native delivery remain open and must not be inferred from core tests.
 
 ## Format separation
 
-[CONTRACT-049](../../02-design/contracts/CONTRACT-049-format-separation.md)
+[CONTRACT-050](../../02-design/contracts/CONTRACT-050-format-separation.md)
 separates the meanings carried by TableSpec's unstructured format text. Source
 documentation and examples remain informational. Directional parsing and
 rendering recipes remain versioned extension concerns; allowed-value assertions
-follow CONTRACT-048, and temporal value meaning follows CONTRACT-047. Structural
+follow CONTRACT-048 and, for the experimental core 0.8.0 surface, CONTRACT-049
+(allowed values must still be authored explicitly, never split from format
+text; ideal admission and all-five delivery stay open), and temporal value meaning follows CONTRACT-047. Structural
 patterns require a declared language and interpretation status. The overloaded
 source field has no direct core-promotion path. This requirement does not place
 new concepts into IDEAL-01's ordered delivery or admit a new core version.

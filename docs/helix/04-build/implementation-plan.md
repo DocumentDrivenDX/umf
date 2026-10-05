@@ -39,14 +39,14 @@ ddx:
 
 ### Format separation follow-on
 
-FEAT-005 IDEAL-06 and [CONTRACT-049](../02-design/contracts/CONTRACT-049-format-separation.md)
+FEAT-005 IDEAL-07 and [CONTRACT-050](../02-design/contracts/CONTRACT-050-format-separation.md)
 govern this work independently of direct TableSpec/core field parity. Do not add
 an overloaded core `format` or heuristically convert native text into assertions.
 
 | Slice | Dependency | Required result and verification |
 | --- | --- | --- |
 | Native usage qualification | Retained TableSpec baseline and CONTRACT-030 | Pin model, ingest cast, flexible parser and output renderer separately; record positive/negative behavior, fallback order, environment and presence-based domain/type exceptions. Source inspection supplies hypotheses, not native execution evidence. |
-| Interpretation and recipe design | CONTRACT-049; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
+| Interpretation and recipe design | CONTRACT-050; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
 | Extension implementation | Reviewed design and test plan | Versioned schemas/APIs, Bun and real Chromium parity, both retained recoveries, simultaneous meanings, source edits, monolithic/split archives and migration/rollback. Preserve all native text. |
 | Allowed-value binding | CONTRACT-048 admission and equality decisions | Reuse typed allowed-value meaning; never split legacy enumeration prose. Two useful priority mappings and all-five delivery remain separate gates. |
 
