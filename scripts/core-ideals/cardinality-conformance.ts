@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {isAbsolute,relative,resolve} from 'node:path';
+import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {cardinalityTableSpecCases,tableSpecCardinalitySource} from './cardinality-tablespec-cases';
@@ -26,9 +27,9 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
  async function verify(record:any,label:string){
   assert.ok(record.sha256&&Object.keys(record.sha256).length,`${label}: missing fingerprints`);
   for(const [path,expected] of Object.entries(record.sha256)){
-   const local=relative(process.cwd(),resolve(path));
-   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!path.split('/').includes('..'),`${label}: unsafe evidence path`);
-   assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
+   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel));
+   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
+   assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
  const required=(record:any,path:string)=>assert.ok(Object.hasOwn(record.sha256??{},path),`missing required proof ${path}`);
@@ -61,9 +62,9 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
    if(Object.hasOwn(r,'externalRequests'))assert.deepEqual(r.externalRequests,[]);
    const children=Object.keys(r.sha256??{}).filter(p=>p.endsWith('-browser.json'));assert.ok(children.length);
    for(const child of children){
-    const local=relative(process.cwd(),resolve(child));
-    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!child.split('/').includes('..'),`${path}: unsafe evidence path`);
-    const browser=await load(child);assert.equal(browser.browser,r.browser);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
+    const rel=recordedRepositoryPath(child),local=relative(process.cwd(),resolve(rel));
+    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${path}: unsafe evidence path`);
+    const browser=await load(rel);assert.equal(browser.browser,r.browser);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
    }
   }
   else {
