@@ -7,6 +7,7 @@ import {selectCoreElements} from '../../src/model/selection';
 import {verifyCoreElementSelection} from '../../src/model/selection-verification';
 import {Registry} from '../../src/registry/registry';
 import {SemanticTypeRegistry} from '../../src/extensions/semantic-types';
+import {inspectCoreSchemaProperties} from '../../src/model/schema-properties';
 import {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,validateCoreSemanticTypeValue} from '../../src/model/semantic-types';
 import {upgradeSemanticTypesEnvelope,rollbackSemanticTypesEnvelope,verifySemanticTypesTransition} from '../../src/model/semantic-types-transition';
 import type {Document,JsonObject,ExtensionPackage} from '../../src/model/types';
@@ -155,4 +156,8 @@ test('0.9.0 diagnostics do not describe the document as 0.8.0',()=>{
  const messages=validateDocument(core()).diagnostics.map(d=>d.message);
  expect(messages.some(m=>m.includes('Experimental 0.8.0'))).toBe(false);
  expect(messages.some(m=>m.includes('inherited from 0.8.0'))).toBe(true);
+});
+
+test('0.8.0 schema-property authoring APIs reject 0.9.0 documents (documented limit)',()=>{
+ expect(()=>inspectCoreSchemaProperties(core(),id)).toThrow();
 });
