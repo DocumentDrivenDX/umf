@@ -174,3 +174,8 @@ Eleven observed qualification-gate failures remain unrepaired: cardinality
 nullability (one). They include stale fingerprints, missing generated bundles
 and historical absolute-path handling. Native evidence regeneration and
 portable-path follow-up remain outstanding; no gate was weakened.
+
+After integrating the concurrent upstream changes through `cdd0070c`, a fresh
+core-only replay passes 177 tests across 27 files with 4,586 assertions; both
+source and tool TypeScript checks pass. This verifies the simplified core API,
+not a fresh full repository or integrated native qualification run.
