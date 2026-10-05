@@ -4,6 +4,9 @@ import {validateDocument} from '../validation/document';
 import {checkSemanticTypeReferences} from '../validation/semantic-types';
 import {checkSemanticTypeRequest,checkSemanticTypeTransition,semanticTypesCanonical} from './semantic-types-receipts';
 import {SEMANTIC_TYPES_EXTENSION} from '../extensions/semantic-types';
+/** Opaque element field keeping pre-0.9.0 `semanticTypes` content in the target, so the receipt is not its only copy. */
+export const LEGACY_SEMANTIC_TYPES_FIELD='legacySemanticTypes';
+const legacyField=LEGACY_SEMANTIC_TYPES_FIELD;
 const collisionReason='Legacy semanticTypes content retained without reinterpretation' as const;
 export interface SemanticTypesUpgradeRequest {migrateExtension:boolean}
 export interface SemanticTypesUpgradeReceipt {operation:'upgrade-semantic-types-envelope';version:'1.0.0';source:Document;target:Document;request:SemanticTypesUpgradeRequest;residuals:{path:string;value:Json;reason:typeof collisionReason}[]}
@@ -16,7 +19,7 @@ export function upgradeSemanticTypesEnvelope(input:Document,requestInput:Semanti
  const target=copyJson(source) as unknown as Document;target.umf='0.9.0';const residuals:SemanticTypesUpgradeReceipt['residuals']=[];
  target.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
   const path=`/modules/${mi}/elements/${ei}/semanticTypes`,collision=Object.hasOwn(e,'semanticTypes');
-  if(collision){residuals.push({path,value:copyJson(e.semanticTypes),reason:collisionReason});delete e.semanticTypes;}
+  if(collision){if(Object.hasOwn(e,legacyField))throw new UmfError('SEMANTIC_TYPE_TRANSITION_CONFLICT',`Cannot preserve legacy semanticTypes: ${legacyField} already present`,path.replace(/semanticTypes$/,legacyField));residuals.push({path,value:copyJson(e.semanticTypes),reason:collisionReason});e[legacyField]=copyJson(e.semanticTypes);delete e.semanticTypes;}
   if(!request.migrateExtension||!Object.hasOwn(e.extensions,SEMANTIC_TYPES_EXTENSION))return;
   if(collision)throw new UmfError('SEMANTIC_TYPE_TRANSITION_CONFLICT','Opaque core field conflicts with requested extension migration',path);
   if(source.vocabularies[SEMANTIC_TYPES_EXTENSION]?.version!=='0.1.0')throw new UmfError('SEMANTIC_TYPE_PROFILE','Only prototype 0.1.0 can be migrated');
