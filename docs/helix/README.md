@@ -52,6 +52,15 @@ query/mutation execution, database migration or native/domain equivalence.
 
 ## Integrated verification status
 
+The table records the earlier relationship/binding acceptance checkpoint. It
+qualifies the source and versions in its linked records. Subsequent core 0.8.0
+API simplification and the 2026-10-06 current-only Key tuple correction have
+[scoped passing evidence](04-build/evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06),
+but fresh repository regression and native qualification remain incomplete.
+The evidence record preserves the observed qualification failures and required
+replays. Current release acceptance is open; the earlier green totals below
+must not be reused as verification of the later API revision.
+
 | Separate claim | Final recorded result |
 | --- | --- |
 | Relationship ideal admission (two useful priority mappings) | Passed; qualified PostgreSQL and SQL Server mappings |
@@ -1087,8 +1096,11 @@ migration/rollback and versioned earlier operations have Bun and Chromium
 evidence. The compatibility refresh passed 114 commands; all 352 test files
 passed 1,494 tests with zero failures. See the
 [core acceptance record](../../fixtures/validation/relationship-core-acceptance-evidence.json).
-Native relationship bindings and their separate admission/delivery gates remain
-unfinished. TableSpec is the next priority binding.
+At this historical core checkpoint, native relationship bindings and their
+separate admission/delivery gates remained unfinished, with TableSpec next.
+Later integrated acceptance recorded qualified five-priority delivery; see
+[the integrated verification status](#integrated-verification-status) for its
+source boundary and the current requalification gap.
 
 
 **Gate-test-only qualification:** The integrated 175-command native/browser replay

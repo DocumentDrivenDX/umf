@@ -40,6 +40,11 @@ entire implemented scope.
 
 This inventory describes the implementation merged through `0f20d2e4` and cites scoped feature evidence.
 The [integrated acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json) records the fresh native/browser replay, repository regression and six separate concept gates. Relationship ideal admission and qualified five-system delivery pass independently; native equivalence remains unclaimed.
+Subsequent core 0.8.0 changes have separate
+[scoped execution evidence](../04-build/evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
+The earlier integrated acceptance qualifies its recorded source; fresh repository
+regression and native qualification after API simplification and the current-only
+Key tuple correction remain incomplete.
 Package presence, structural validation, target generation and native equivalence
 remain different claims.
 
