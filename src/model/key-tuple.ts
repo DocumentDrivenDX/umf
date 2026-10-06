@@ -1,18 +1,16 @@
-import relationshipSchema from '../../spec/core/relationship-document.schema.json';
-import schemaV2 from '../../spec/core/key-tuple-operation-v2.schema.json';
-import {validateRelationshipCandidate} from '../validation/relationships';
 import {copyJson,LIMITS} from './json';
-import {UmfError,type Json,type Module,type Element} from './types';
-import {validateKeyCandidate,type CoreKeyDefinition,type CoreKeyFieldReference} from '../validation/keys';
+import {UmfError,type Json,type Module,type Element,type Document} from './types';
+import {type CoreKeyDefinition,type CoreKeyFieldReference} from '../validation/keys';
 import {createValidator} from '../validation/schema';
-import documentSchema from '../../spec/core/key-document.schema.json';
-import schema from '../../spec/core/key-tuple-operation.schema.json';
+import documentSchema from '../../spec/core/schema-properties-document.schema.json';
+import schema from '../../spec/core/key-tuple-operation-v3.schema.json';
+import {validateDocument} from '../validation/document';
+import {checkSchemaLiteral} from './schema-literals';
 export interface CoreKeyIdentity {module:string;element:string;key:string}
 export type CoreKeyTupleValue={boolean:boolean}|{integerToken:string}|{decimalToken:string}|{string:string}|{binaryHex:string};
-export interface CoreKeyTupleReceipt {operation:'encode-core-key-tuple';version:'1.0.0'|'2.0.0';profile:'umf-key-tuple-v1';source:Json;identity:CoreKeyIdentity;values:CoreKeyTupleValue[];keyPath:string;bytesHex:string}
-const validator=createValidator();validator.addSchema(documentSchema);validator.addSchema(relationshipSchema);
-const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkIdentity=validator.compile(schema.$defs.identity);
-const checker=(version:unknown)=>version==='2.0.0'?checkV2:checkV1;
+export interface CoreKeyTupleReceipt {operation:'encode-core-key-tuple';version:'3.0.0';profile:'umf-key-tuple-v1';source:Json;identity:CoreKeyIdentity;values:CoreKeyTupleValue[];keyPath:string;bytesHex:string}
+const validator=createValidator();validator.addSchema(documentSchema);
+const check=validator.compile(schema),checkIdentity=validator.compile(schema.$defs.identity);
 const encoder=new TextEncoder(),limit=LIMITS.maxTextLength;
 function fail(code:string,message:string,path:string):never{throw new UmfError(code,message,path);}
 const id=(r:CoreKeyFieldReference)=>JSON.stringify([r.module,r.element]);
@@ -86,12 +84,12 @@ function payload(field:Element,value:CoreKeyTupleValue,path:string):{tag:number;
  const bytes=new Uint8Array(v.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=parseInt(v.slice(i*2,i*2+2),16);
  return {tag:5,bytes};
 }
-/** Exact candidate encoding; no native uniqueness or author provenance is inferred. */
+/** Exact current-core encoding; no native uniqueness or author provenance is inferred. */
 export function encodeCoreKeyTuple(input:unknown,identityInput:CoreKeyIdentity,valuesInput:CoreKeyTupleValue[]):CoreKeyTupleReceipt{
  const source=copyJson(input),identity=copyJson(identityInput) as unknown as CoreKeyIdentity,values=copyJson(valuesInput) as unknown as CoreKeyTupleValue[];
  if(!checkIdentity(identity))fail('KEY_TUPLE_IDENTITY','Explicit Record and stable Key identities are required','/identity');
- const isRelationship=source!==null&&typeof source==='object'&&!Array.isArray(source)&&source.umf==='0.7.0';
- const validation=isRelationship?validateRelationshipCandidate(source):validateKeyCandidate(source);
+ if(source===null||typeof source!=='object'||Array.isArray(source)||source.umf!=='0.8.0')fail('KEY_TUPLE_SOURCE','Expected current core 0.8.0 document','/source/umf');
+ const validation=validateDocument(source);
  if(!validation.valid)fail(validation.diagnostics.some(d=>d.code==='KEY_EQUALITY')?'KEY_TUPLE_EQUALITY':'KEY_TUPLE_SOURCE',JSON.stringify(validation.diagnostics),'/source');
  const modules=(source as unknown as {modules:Module[]}).modules,mi=modules.findIndex(m=>m.id===identity.module),ei=modules[mi]?.elements.findIndex(e=>e.id===identity.element)??-1;
  const record=modules[mi]?.elements[ei],keys=record?.keys as CoreKeyDefinition[]|undefined,ki=keys?.findIndex(k=>k.id===identity.key)??-1;
@@ -109,19 +107,21 @@ export function encodeCoreKeyTuple(input:unknown,identityInput:CoreKeyIdentity,v
  for(const d of validation.diagnostics)if(d.severity==='warning'&&['UNKNOWN_KEY_QUALIFIER','UNKNOWN_FACET','UNKNOWN_FACET_UNIT'].includes(d.code)&&relevant.some(p=>d.path===p||d.path.startsWith(p+'/')))fail('KEY_TUPLE_UNKNOWN','Relevant qualifier has no defined encoding meaning',d.path);
  const parts:Uint8Array[]=[encoder.encode('UMFK1'),new Uint8Array(leb(values.length))];let length=parts.reduce((n,p)=>n+p.length,0);
  fields.forEach(({field},i)=>{
-  const p=payload(field,values[i]!,`/values/${i}`),header=new Uint8Array([p.tag,...leb(p.bytes.length)]);
+  const p=payload(field,values[i]!,`/values/${i}`);
+  checkSchemaLiteral(source as unknown as Document,field,values[i]!);
+  const header=new Uint8Array([p.tag,...leb(p.bytes.length)]);
   length+=header.length+p.bytes.length;if(length>limit)fail('LIMIT','Encoded tuple exceeds limit','/values');parts.push(header,p.bytes);
  });
  const bytes=new Uint8Array(length);let offset=0;for(const p of parts){bytes.set(p,offset);offset+=p.length;}
  // Chunking avoids quadratic concatenation and argument-count limits on large tuples.
  const chunks:string[]=[];for(let start=0;start<bytes.length;start+=4096)chunks.push(Array.from(bytes.subarray(start,start+4096),b=>b.toString(16).padStart(2,'0')).join(''));
- const receipt={operation:'encode-core-key-tuple',version:isRelationship?'2.0.0':'1.0.0',profile:'umf-key-tuple-v1',source,identity,values,keyPath,bytesHex:chunks.join('')};
- const check=checker(receipt.version);if(!check(receipt))fail('KEY_TUPLE_RESULT',JSON.stringify(check.errors),'');
+ const receipt={operation:'encode-core-key-tuple',version:'3.0.0',profile:'umf-key-tuple-v1',source,identity,values,keyPath,bytesHex:chunks.join('')};
+ if(!check(receipt))fail('KEY_TUPLE_RESULT',JSON.stringify(check.errors),'');
  return copyJson(receipt) as unknown as CoreKeyTupleReceipt;
 }
 export function verifyCoreKeyTuple(input:CoreKeyTupleReceipt,current:unknown):CoreKeyTupleReceipt{
  const receipt=copyJson(input) as unknown as CoreKeyTupleReceipt;
- const check=checker(receipt.version);if(!check(receipt))fail('KEY_TUPLE_RECEIPT','Malformed encoding receipt','');
+ if(!check(receipt))fail('KEY_TUPLE_RECEIPT','Malformed encoding receipt','');
  const expected=encodeCoreKeyTuple(receipt.source,receipt.identity,receipt.values);
  if(canonical(copyJson(expected))!==canonical(copyJson(receipt)))fail('KEY_TUPLE_RECEIPT','Receipt differs from exact recomputation','');
  if(canonical(copyJson(current))!==canonical(receipt.source))fail('KEY_TUPLE_STALE','Current document differs from retained context','/source');

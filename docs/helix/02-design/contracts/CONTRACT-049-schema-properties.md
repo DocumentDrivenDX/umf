@@ -72,6 +72,22 @@ subsequent changes in its receipt. Native aliases/defaults/constraints remain
 independent; no native semantics are inferred from shared declarations. Older
 version-specific authoring APIs refuse 0.8.0 unless independently extended.
 
+### Current-document key tuple encoding
+
+Owner clarification on 2026-10-06 removes prior-document support from
+`encodeCoreKeyTuple`, `verifyCoreKeyTuple` and `readCoreKeyTupleBytes`. These
+operations require a validated core 0.8.0 document; they neither dispatch to older
+validators nor silently migrate/downgrade source. Encoding retains the exact
+current context in operation version 3.0.0. Historical operation schemas remain
+archived, but the runtime refuses their earlier document/result versions.
+
+The `umf-key-tuple-v1` byte/equality profile is unchanged. Every supplied component
+must also satisfy current allowed values, exact numeric ranges and both length
+bounds. Missing components remain errors; a default never supplies a key value
+implicitly. Unknown relevant qualifiers still refuse encoding; unrelated native
+and extension content remains retained. Previous version-specific authoring and
+migration operations retain their separate historical contracts.
+
 ## Error Semantics
 
 Invalid shapes, roles, bounds, duplicate equal values, incompatible literals and

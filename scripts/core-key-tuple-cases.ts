@@ -2,7 +2,7 @@ import vectors from '../fixtures/key/tuple-encoding-v1.json';
 export const tupleIdentity={module:'m',element:'record',key:'stable-key'};
 export function tupleDocument(fields:readonly any[]):any{
  const elements=fields.map(f=>{const e:any={...f,kind:'field',nullability:'required',cardinality:'one',extensions:{}};delete e.precision;delete e.scale;if(f.precision!==undefined)e.facets={...f.facets,precision:f.precision,scale:f.scale};return e;});
- return {umf:'0.6.0',id:'tuple',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{native:['retained',null]}},modules:[{id:'m',namespace:'',elements:[{id:'record',kind:'record',members:fields.map(f=>({module:'m',element:f.id})),keys:[{id:'stable-key',name:'Key',fields:fields.map(f=>({module:'m',element:f.id}))}],extensions:{}},...elements]}]};
+ return {umf:'0.8.0',id:'tuple',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{native:['retained',null]}},modules:[{id:'m',namespace:'',elements:[{id:'record',kind:'record',members:fields.map(f=>({module:'m',element:f.id})),keys:[{id:'stable-key',name:'Key',fields:fields.map(f=>({module:'m',element:f.id}))}],extensions:{}},...elements]}]};
 }
 export function tupleCases(){
  const rows:any[]=[...vectors.vectors.map(v=>({id:v.id,document:tupleDocument(v.fields),values:v.values,hex:v.expectedHex})),...vectors.refusals.map(v=>({id:v.id,document:tupleDocument(v.fields),values:v.values,error:true}))];
@@ -41,5 +41,13 @@ export function tupleCases(){
  for(const token of ['128','-129'])add('signed-overflow-'+token,{...int,facets:{integerWidth:{bits:8,signed:true}}},{integerToken:token});
  add('unsigned-max',{...int,facets:{integerWidth:{bits:8,signed:false}}},{integerToken:'255'},'554d464b31010203323535');
  for(const token of ['256','-1'])add('unsigned-overflow-'+token,{...int,facets:{integerWidth:{bits:8,signed:false}}},{integerToken:token});
+ const bounded={...int,allowedValues:[{integerToken:'7'}],facets:{range:{min:{integerToken:'6'},minInclusive:false,max:{integerToken:'8'}}}};
+ add('current-allowed-range',bounded,{integerToken:'7'},'554d464b3101020137');
+ add('current-allowed-refusal',bounded,{integerToken:'8'});
+ add('current-range-refusal',bounded,{integerToken:'6'});
+ add('current-minimum-length',{...str,facets:{length:{min:2,unit:'unicode-scalar'}}},{string:'ab'},'554d464b310104026162');
+ add('current-minimum-length-refusal',{...str,facets:{length:{min:2,unit:'unicode-scalar'}}},{string:'😀'});
+ add('current-zero-maximum',{...str,facets:{length:{max:0,unit:'unicode-scalar'}}},{string:''},'554d464b31010400');
+ add('current-zero-maximum-refusal',{...str,facets:{length:{max:0,unit:'unicode-scalar'}}},{string:'x'});
  return rows;
 }

@@ -34,7 +34,7 @@ try{
   }
   const receipt=u.upgradeKeyEnvelope(cases[0].source),current=structuredClone(receipt.target),r=current.modules[0].elements[0];
   r.members=[{module:'m',element:'id'}];r.keys=[{id:'new-key',name:'Authored',fields:[{module:'m',element:'id'}]}];current.extensions.future={newMeaning:true};
-  if(u.encodeCoreKeyTuple(current,{module:'m',element:'record',key:'new-key'},[{integerToken:'42'}]).bytesHex!=='554d464b310102023432')throw Error('Migrated tuple mismatch');
+  fails(()=>u.encodeCoreKeyTuple(current,{module:'m',element:'record',key:'new-key'},[{integerToken:'42'}]));
   const rollback=u.rollbackKeyEnvelope(receipt,current);same(rollback.target,cases[0].source);same(rollback.source,current);
   for(const format of ['json','yaml']){const saved=u.readJsonValue(u.writeJsonValue(rollback,format),format);same(saved.source,current);same(saved.target,cases[0].source);}
   for(const edit of [(r:any)=>r.residuals.pop(),(r:any)=>r.residuals.reverse(),(r:any)=>r.residuals[0].value=true,(r:any)=>r.target.modules[0].elements[0].name='changed',(r:any)=>r.source.modules[0].elements[0].key=true]){const forged=structuredClone(receipt);edit(forged);fails(()=>u.rollbackKeyEnvelope(forged,current));}

@@ -39,7 +39,7 @@ try{
   const kind=u.declareCoreElementKind(doc,field,'field'),nullable=u.declareCoreNullability(doc,field,'required'),cardinality=u.declareCoreCardinality(doc,field,{cardinality:'one'}),facets=u.declareCoreFacets(doc,field,{integerWidth:{bits:32,signed:true}});
   same([kind.version,nullable.version,cardinality.version,facets.version],['6.0.0','5.0.0','4.0.0','3.0.0']);
   const key=u.declareCoreKey(doc,record,{id:'identity',name:'Renamed',fields:[field]});same(u.verifyCoreKeyOperation(key,key.target),key);
-  const tuple=u.encodeCoreKeyTuple(doc,{...record,key:'identity'},[{integerToken:'1'}]);if(tuple.version!=='2.0.0')throw Error('Tuple receipt version');same(u.verifyCoreKeyTuple(tuple,doc),tuple);
+  refuses(()=>u.encodeCoreKeyTuple(doc,{...record,key:'identity'},[{integerToken:'1'}]));
   for(const [r,verify] of [[kind,u.verifyCoreKindDeclaration],[nullable,u.verifyCoreNullabilityDeclaration],[cardinality,u.verifyCoreCardinalityDeclaration],[facets,u.verifyCoreFacetDeclaration]])for(const format of ['json','yaml'])same(verify(u.readJsonValue(u.writeJsonValue(r,format),format),r.target),r);
   const selected=u.selectCoreElements(doc,{references:'transitive',identities:[record]});
   const relationships=u.selectCoreRelationships(doc,{identities:[{module:'m',id:cases[0].request.id}]});

@@ -24,7 +24,7 @@ test('key updates retain identity and unknowns, reject tuple changes and implici
  const next=u.declareCoreKey(doc,record,{id:'pk',name:'Renamed',fields:[field]});
  const key=u.lookupCoreKey(next.target,{...record,key:'pk'}).key;expect(key.primary).toBe(true);expect(key.future).toEqual({opaque:true});expect(key.fields[0]!.future).toBe(false);
  expect(u.inspectCoreKeys(next.target,record).meaning.state).toBe('partial');
- expect(()=>u.encodeCoreKeyTuple(next.target,{...record,key:'pk'},[{integerToken:'1'}])).toThrow('Relevant qualifier');
+ expect(()=>u.encodeCoreKeyTuple({...next.target,umf:'0.8.0'},{...record,key:'pk'},[{integerToken:'1'}])).toThrow('Relevant qualifier');
  expect(()=>u.declareCoreRecordMembers(doc,record,[])).toThrow('unknown qualifiers');
  expect((u.declareCoreRecordMembers(doc,record,[field]).target.modules[0]!.elements[0]!.members as any[])[0].future).toBe('retain');
  const clean=authored().target;clean.modules[0]!.elements.push({id:'other',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}});

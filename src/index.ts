@@ -329,7 +329,7 @@ export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
 export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
 export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
 export {default as coreKeyTransitionSchema} from '../spec/core/key-transition.schema.json';
-export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation.schema.json';
+export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation-v3.schema.json';
 
 export * from './core-ideals/key-tablespec';
 
