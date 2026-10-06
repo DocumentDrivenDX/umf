@@ -53,6 +53,10 @@ stale classification rather than overwrite author intent.
 
 ### Portable element selection
 
+Selection returns copied metadata snapshots. Structural schemas describe their
+shape; no persistent receipt verifier is exposed. Re-run selection with the
+caller registry to obtain current validation diagnostics.
+
 `selectCoreElements(source,query,registry?)` supports exact module-ID, namespace,
 element-name, scalar-family and module/element identity filters. Filter categories
 combine with AND, values within a category with OR; an empty array matches nothing.
@@ -99,7 +103,7 @@ An absent field makes no scalar claim. An unfamiliar nonempty string survives wi
 `UNKNOWN_SCALAR_TYPE` and incomplete semantic validation. Empty or non-string values
 are structurally invalid. The JSON Schema exposes known values in `knownScalarType`
 and a forward-compatible string branch in `scalarType`; TypeScript exports
-`SCALAR_TYPES` and `ScalarType`. This is an additive experimental 0.1.0 authoring
+`SCALAR_TYPES` and `ScalarType`. This is an additive 0.1.0 authoring
 revision: documents without the field remain unchanged, unknown string families
 remain portable, and `scalarType` is now a reserved string-valued field. It does
 not certify arbitrary preexisting non-string uses of that formerly unknown key.

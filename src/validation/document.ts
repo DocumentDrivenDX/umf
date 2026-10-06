@@ -1,3 +1,4 @@
+import {validateSchemaPropertiesDocument} from './schema-properties';
 import {validateRelationshipCandidate} from './relationships';
 import {validateKeyCandidate} from './keys';
 import { checkCore, checkCoreFields, checkCoreNullability, checkCoreCardinality, checkCoreFacets, checkCoreKeys, checkCoreRelationships } from './schema';
@@ -16,6 +17,7 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     return {valid: false, complete: false, diagnostics};
   }
   const version=(value as {umf?:unknown}|null)?.umf;
+  if(version==='0.8.0')return validateSchemaPropertiesDocument(value,registry);
   const check=version==='0.7.0'?checkCoreRelationships:version==='0.6.0'?checkCoreKeys:version==='0.5.0'?checkCoreFacets:version==='0.4.0'?checkCoreCardinality:version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
   if (!check(value)) {
     for (const error of check.errors || []) add('STRUCTURE', error.instancePath, error.message || 'Invalid structure');
@@ -24,10 +26,6 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
   const doc = value as Document;
   const relationshipProfile=doc.umf==='0.7.0',keyProfile=doc.umf==='0.6.0'||relationshipProfile,facets=doc.umf==='0.5.0'||keyProfile,containers=doc.umf==='0.4.0'||facets;
   const availability=doc.umf==='0.3.0'||containers;
-  if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; kind labels alone establish neither author provenance nor native equivalence','warning');
-  if(availability)add('EXPERIMENTAL_CORE_NULLABILITY','/umf','Nullability envelope is experimental; no native absence encoding or default execution is implied','warning');
-  if(containers)add('EXPERIMENTAL_CORE_CARDINALITY','/umf','Cardinality envelope is experimental; native shape and item semantics require explicit bindings','warning');
-  if(facets)add('EXPERIMENTAL_CORE_FACETS','/umf','Facet envelope is experimental; bounds do not establish native enforcement or value conversion','warning');
   const unknown = (obj: object, known: string[], path: string) => {
     for (const key of Object.keys(obj)) if (!known.includes(key)) add('UNKNOWN_CORE_FIELD', `${path}/${pointer(key)}`, 'Field retained without interpretation', 'warning');
   };

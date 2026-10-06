@@ -118,7 +118,7 @@ export async function verifyKeyEvidence(reader: KeyEvidenceReader = read) {
  assert.equal(encoding.serverVersion, '16.0.4295.3', 'incompatible encoding proof');
  for (const [name, expected] of Object.entries(browsers)) {
   const p = await proof(`key-${name}-browser`);
-  assert.match(p.browser, /^148\./, 'incompatible browser');
+  assert.equal(p.browser, refresh.browser ?? '148.0.7778.0', 'incompatible browser');
   assert.deepEqual(p.externalRequests, [], 'external browser requests');
   for (const [key, value] of Object.entries(expected)) assert.equal(p.checks?.[key], value, `incomplete browser coverage: ${name}/${key}`);
  }

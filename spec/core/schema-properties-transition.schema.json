@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:schema-properties-transition:1.0.0",
+  "title": "Schema property preservation records for upgrade and rollback",
+  "$defs": {
+    "upgrade": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "upgrade-schema-properties-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "value": {},
+              "reason": {
+                "const": "Legacy content retained without reinterpretation"
+              }
+            },
+            "required": [
+              "path",
+              "value",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "residuals"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/upgrade"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "rollback-schema-properties-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "receipt": {
+          "$ref": "#/$defs/upgrade"
+        },
+        "reason": {
+          "const": "Original envelope restored; subsequent content retained in source"
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "receipt",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

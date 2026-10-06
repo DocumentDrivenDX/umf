@@ -426,7 +426,7 @@ resource limits and transparent expensive operations remain required.
 | --- | --- | --- | --- |
 | Browser execution; TypeScript compiled to JavaScript by default | Browser target required by owner on 2026-09-20; TypeScript preferred | Simple implementation; high performance is not a primary driver | Pin browser/tool versions; verify browser round trips; consider WASM per adapter |
 | Bun development and testing runtime | Accepted in ADR-002 | Explicit owner direction | Pin Bun and dependencies; retain independent browser/type-check gates |
-| Small core plus versioned semantic vocabularies | Implemented experimental envelopes and packages | Preserve multiple native semantic systems | Retain distinct admission, delivery and equivalence gates |
+| Small core plus versioned semantic vocabularies | Implemented envelopes and packages | Preserve multiple native semantic systems | Retain distinct admission, delivery and equivalence gates |
 | YAML-first, JSON-compatible bootstrap | Accepted direction in ADR-001 | Preserve human interchange and existing approach | Specify serialization edge cases |
 | Native-semantic round-trip oracles | Owner-directed | Text equality is insufficient | TP-001 defines bounded oracle claims |
 | Native libraries before new parsers | Preferred direction | Reuse ecosystem interpretation | Select versions and verify browser compatibility; keep independent native oracles in the harness |
@@ -499,3 +499,26 @@ is built and loaded separately. Assembly returns source, exact native model JSON
 UMF AST model and native diagnostics with locations. Failures expose no partial model.
 Runtime limitations and mixin normalization remain explicit; asynchronous typing alone
 does not provide worker isolation or cancellation (CONTRACT-014, SPIKE-002).
+
+## Shared schema properties (core 0.8.0)
+
+CONTRACT-049 extends authored metadata with title, aliases, typed examples,
+allowed-value sets, exact integer/decimal ranges, collection size, minimum
+string/binary length and literal defaults with explicit missing/null triggers.
+A separate portable literal validator checks understood values; an explicit
+resolver performs copied literal substitution without storage or I/O.
+Older envelopes require collision-archiving upgrade and retained rollback.
+Document read/write and element selection recognize 0.8.0; previous versioned
+native bindings and authoring APIs keep their scoped versions and refusal rules.
+This is a core task, not a native-admission or TableSpec-port claim.
+See [the execution evidence](../04-build/evidence/schema-properties-core.md).
+
+### Routine metadata API amendment (2026-10-05)
+
+Owner direction removes persistent element/relationship selection verification
+and schema-property declaration receipts. Selection returns copied snapshots;
+`declareCoreSchemaProperties` returns the copied validated Document. Migration
+and native-conversion preservation records remain. Unknown length units make
+validation incomplete even with minimum-only or zero-maximum bounds, so
+extension editing refuses. Current scoped evidence and historical qualifications
+are recorded in [schema-property execution evidence](../04-build/evidence/schema-properties-core.md).

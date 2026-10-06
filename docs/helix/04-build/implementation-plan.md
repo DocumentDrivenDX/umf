@@ -37,6 +37,24 @@ ddx:
 
 ## Scope
 
+### Format separation follow-on
+
+FEAT-005 IDEAL-07 and [CONTRACT-050](../02-design/contracts/CONTRACT-050-format-separation.md)
+govern this work independently of direct TableSpec/core field parity. Do not add
+an overloaded core `format` or heuristically convert native text into assertions.
+
+| Slice | Dependency | Required result and verification |
+| --- | --- | --- |
+| Native usage qualification | Retained TableSpec baseline and CONTRACT-030 | Pin model, ingest cast, flexible parser and output renderer separately; record positive/negative behavior, fallback order, environment and presence-based domain/type exceptions. Source inspection supplies hypotheses, not native execution evidence. |
+| Interpretation and recipe design | CONTRACT-050; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
+| Extension implementation | Reviewed design and test plan | Versioned schemas/APIs, Bun and real Chromium parity, both retained recoveries, simultaneous meanings, source edits, monolithic/split archives and migration/rollback. Preserve all native text. |
+| Allowed-value binding | CONTRACT-048 admission and equality decisions | Reuse typed allowed-value meaning; never split legacy enumeration prose. Two useful priority mappings and all-five delivery remain separate gates. |
+
+Package selection and recipe environment binding remain design decisions. This
+section schedules preparation dependencies, not core admission or delivered
+behavior. Record native versions, exact subsets and evidence before claiming any
+parser, renderer or constraint support.
+
 ### Proposed alignment: authored relationships and physical bindings
 
 This section is the work plan for the Hohfeld-driven amendment. It proposes
@@ -73,7 +91,7 @@ browser in validation.
 | US-044 defines the acceptance pattern ([US-044, Acceptance Criteria](../01-frame/user-stories/US-044-core-key.md)); US-045–049 do not exist | needs-new-artifact | Create US-045 relationship, US-046 binding, US-047 indexes, US-048 DDD→PostgreSQL, US-049 DDD→GraphQL. Give each stable Given/When/Then ACs and test traceability. | Frame before design; each story covers strict block, report residual, both retained recovery directions, migration/rollback and version/subset evidence, adapted to its actual direction. |
 | CONTRACT-040's semantic table and five-system mappings end at key ([CONTRACT-040, Normative Surface](../02-design/contracts/CONTRACT-040-core-ideals.md)); current DDD references are storage-neutral ([CONTRACT-005, Fields, Equality and Relationships](../02-design/contracts/CONTRACT-005-ddd-profile.md)) | split | Create CONTRACT-041 for relationship meaning and all-five bindings; CONTRACT-042 for the versioned `umf.binding` document/module and index rule; CONTRACT-043/044 for DDD+binding→PostgreSQL and DDD+relationship→GraphQL. Add only narrow cross-references to CONTRACT-040/005/006 after the new contracts settle. | Design; contracts precede every schema edit. Reject core promotion if the admission record lacks a useful down-projection in two priority systems. |
 | TD-040–044 and TP-001 describe the first five ideals ([TD-044](../02-design/technical-designs/TD-044-core-key.md); [TP-001](../03-test/test-plan.md)) | needs-new-artifact | Create TD-045–049 in the TD-040 pattern, then extend TP-001 or add story test plans mapping every new AC to an exercising test and pinned native/browser oracle. | Design then Test; implementation issues are not ready until these exist. |
-| Architecture phase table still names relationships/indexes as future pressure ([architecture, Proposed ecosystem expansion](../02-design/architecture.md)) | move | After implementation evidence, list relationship as delivered experimental core and indexes as delivered `umf.binding` capability, with version/subset/evidence. Explain DDD concept references as a qualified binding, never a merge. Until then describe them as planned. | Evolve architecture only when evidence supports “delivered”; retain historical phase table meaning. |
+| Architecture phase table still names relationships/indexes as future pressure ([architecture, Proposed ecosystem expansion](../02-design/architecture.md)) | move | After implementation evidence, list relationship as delivered core and indexes as delivered `umf.binding` capability, with version/subset/evidence. Explain DDD concept references as a qualified binding, never a merge. Until then describe them as planned. | Evolve architecture only when evidence supports “delivered”; retain historical phase table meaning. |
 
 The alignment classifications above are source-to-destination handoffs. No
 source content is removed before the destination exists. The feature/stories
@@ -172,7 +190,7 @@ an explicit version/profile transition and reversible receipt; unsafe
 interpretation blocks. Physical path/index semantics can drift by engine
 version, so each binding pins syntax, subset and oracle and reports unsupported
 claims. Generated DDL/SDL and test-only native execution are reviewable outputs,
-not deployed changes. Reverting an experimental capability retains the original
+not deployed changes. Reverting an capability retains the original
 logical model, binding document, residuals and native source archive; it never
 silently discards new assertions or rewrites preexisting `references`.
 
@@ -201,7 +219,7 @@ amendment; the envelope schema and runtime are unchanged.
 For each concept: implement schema/types/validation only after its contract, then
 five independently scoped binding/evidence tasks, then an all-five gate. Complete
 one concept before starting the next. At-least-two-system admission is an interim
-claim, not permission to drop the other three binding tasks. Experimental model
+claim, not permission to drop the other three binding tasks. Model
 implementation may precede admission evidence but must not be described as admitted
 or complete. Each binding includes authored down-projection, native up-classification,
 strict/report, explicit residuals, both round trips, Bun/native/Chromium evidence,
@@ -235,7 +253,7 @@ queue is `.ddx/beads.jsonl`.
 
 Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
 `ddx bead status` to inspect execution state. Nullability core implementation
-has passed acceptance with the experimental 0.3.0 envelope, typed authoring,
+has passed acceptance with the 0.3.0 envelope, typed authoring,
 migration/rollback, selection and versioned Field kind/record-type receipts.
 The TableSpec Nullability binding has passed its expanded acceptance, with
 selected-context classification, authored strict/report projection, retained
@@ -1401,7 +1419,7 @@ requirement or establish a conformant alternative; normalized editable models, c
 trait/selector interpretation and projections also remain open. Source archival alone
 does not finish Smithy or reduce the remaining extension/system scope.
 
-## Execution Evidence: experimental Smithy JavaScript assembler (2026-09-20)
+## Execution Evidence: Smithy JavaScript assembler (2026-09-20)
 
 SPIKE-002 now has a successful patched runtime. `bun run build:smithy-experiment`
 verifies pinned upstream source hashes, regenerates thirteen compatibility patches
@@ -1415,7 +1433,7 @@ hashes agree in Bun and Chromium. Browser checks reject three invalid models, pr
 exact unsafe-integer metadata and require no process/Bun globals. Twenty-six JVM
 compatibility-helper comparisons/guards and TypeScript type checking pass. A clean Bun
 build reproduced the identical runtime SHA-256 recorded in both corpus reports. This
-is separate experimental evidence; the public library's existing 159-test/43-browser
+is separate evidence; the public library's existing 159-test/43-browser
 source/archive baseline was not replaced or reclassified as native assembly support.
 
 Next: integrate the optional runtime behind a typed, source-retaining public assembly
@@ -2004,7 +2022,7 @@ hash agreement. Embedded schema metadata and name-sensitive legacy layout change
 explicitly. Remaining Parquet work includes embedded metadata rewrite policies, other schema
 transforms, typed value decoding, broader logical semantics and Delta sidecar integration.
 
-US-019-AC12 advances typed decoding with an experimental schema-driven physical assembly
+US-019-AC12 advances typed decoding with an schema-driven physical assembly
 path. Four native/browser fixtures preserve nested decimals, ordered duplicate/non-string
 map keys, JavaScript-hostile names, null/empty containers and temporal meaning across page
 versions and dictionary settings. The trial remains a development-only dependency path.
@@ -3070,7 +3088,7 @@ RDF/XML cases and ten authored boundaries in three configurations. Source files,
 expected graphs, license and SHA-256 inventory are retained. All official syntax
 outcomes agree; the baseline/default-literal profile matches official graphs but
 accepts three malformed authored XML inputs and corrupts an authored XML literal.
-An experimental finalizer fixes document completion only. Namespace inclusion
+An finalizer fixes document completion only. Namespace inclusion
 introduces two official graph differences and does not resolve escaping.
 
 The browser experiment initially failed on a Node process entry point. A scoped
@@ -3084,7 +3102,7 @@ edited round trips under complete schemas; do not count the spike as syntax supp
 
 ### RDF/XML literal repair experiment
 
-Added an explicit experimental literal serializer over the pinned parser. It fixes
+Added an explicit literal serializer over the pinned parser. It fixes
 text/attribute escaping, required namespace bindings, sibling/nested binding scope,
 comment/PI retention and ordinary text accumulation across CDATA events. Historical
 baseline evidence remains intact. Fourteen authored XML-literal cases plus an
@@ -4175,7 +4193,7 @@ and unknown numeric tokens must stay attached to any classification/projection.
 
 ### Qualified TableSpec facet binding
 
-The [acceptance record](../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+The [acceptance record](../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers core 0.5.0 TableSpec facet
 classification, authored projection, strict/report loss handling and verified
 native/ideal recovery. It supersedes the earlier classification/projection
 checkpoints' full-refresh limitation; their original evidence remains historical.
@@ -4207,7 +4225,7 @@ This closes the TableSpec facet binding only. PostgreSQL, SQL Server, Avro and
 Parquet facet bindings, the distinct facet ideal admission/five-system delivery
 gate, and Key remain required. Native-equivalence graduation is not claimed.
 
-### Experimental PostgreSQL facet classification
+### PostgreSQL facet classification
 
 The public PostgreSQL facet classifier and source-recovery API now have operation
 and extension-package schemas. Qualified non-null stored/new-value profiles keep
@@ -4265,7 +4283,7 @@ is claimed.
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.
@@ -4363,7 +4381,7 @@ required. This checkpoint does not grant native equivalence.
 
 ### SQL Server public facet classification checkpoint
 
-Experimental core 0.5.0 now exports `classifySqlServerFacets`, its verification and
+Core 0.5.0 now exports `classifySqlServerFacets`, its verification and
 native-text recovery APIs, a closed operation schema and `umf.sqlserver.facets`
 extension package. An explicit logical Field receives scoped integer-width,
 decimal coefficient and binary-byte observations. Native columns remain unchanged;
@@ -4428,7 +4446,7 @@ is claimed; cross-column expression semantics remain explicit native residuals.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.
@@ -4503,7 +4521,7 @@ is preserved, not described as native parser consensus. See the
 Public schemas/classification/projection, both retained recovery directions and
 full binding acceptance remain next; the Avro facet bead stays in progress.
 
-Experimental Avro classification now has complete operation/extension schemas and
+Avro classification now has complete operation/extension schemas and
 public classify/verify/recover APIs. It separates declared domains from native
 writer profiles, requires explicit logical scalar identity and verified authored
 provenance, and retains branch/dependency distinctions plus strict/report losses.
@@ -4511,7 +4529,7 @@ Chromium passes 148 cases (100 classified, 48 blocked), 200 original native-text
 recoveries and forged/getter refusals. Schema audits pass 273 schemas / 46 packages;
 the public and optional PostgreSQL browser builds pass. Scoped test/typecheck
 logs and native-evidence limits are linked from the
-[classification checkpoint](evidence/avro-facet-discovery.md#experimental-classification-checkpoint).
+[classification checkpoint](evidence/avro-facet-discovery.md#classification-checkpoint).
 Next authored projection, native target/composition and ideal recovery, then full
 compatibility refresh and binding acceptance. Earlier gates remain historical
 snapshots after this public-bundle change. No ideal admission or native equivalence
@@ -4525,7 +4543,7 @@ remain explicit, including Apache's ignored local-timestamp annotation. See the
 Composition, public integration and full compatibility acceptance remain next;
 the Avro bead stays in progress and package export support is not yet claimed.
 
-Avro facet projection is now public and its package declares experimental export
+Avro facet projection is now public and its package declares export
 support. Native re-import/classification composition passes for 388 targets:
 776 ideal and 776 native-text recoveries, 76 directly recovered nonempty authored
 facet sets, 150 explicit residual cases and 162 facetless controls. Public
@@ -4553,7 +4571,7 @@ failures and scope limits. Earlier pending checkpoints above remain historical.
 ## Core Key candidate checkpoint
 
 Facet admission/delivery has passed. The integrated plural-key plan now governs
-Key. Experimental 0.6.0 candidate schema and portable validation define explicit
+Key. 0.6.0 candidate schema and portable validation define explicit
 Record membership, primary/alternate key identity and required singular equality
 components. Bun and Chromium cover 54 candidate cases and metadata recovery;
 public APIs, tuple encoding, migration and native bindings remain pending. See the
@@ -4589,7 +4607,7 @@ remain required before core-task acceptance. All five Key bindings and their
 separate ideal-admission gate remain unfinished; no native equivalence is claimed.
 
 
-Core Key task acceptance now passes for experimental 0.6.0 after the complete
+Core Key task acceptance now passes for 0.6.0 after the complete
 native/browser compatibility refresh and all four prior concept gates. The full
 repository test inventory contains 329 files: 324 regression files passed 1,213
 tests / 113,170 assertions; five separately executed gate/evidence files passed
@@ -4799,7 +4817,7 @@ relationship binding admission remain unclaimed.
 
 ### Relationship core implementation acceptance
 
-The experimental 0.7.0 core implementation task `umf-a8beb12a` is accepted.
+The 0.7.0 core implementation task `umf-a8beb12a` is accepted.
 The fresh compatibility replay passed all 114 commands, including typechecking,
 the browser build and the 318-schema / 53-package audit. The full regression
 passed 1,481 tests and 116,628 assertions across 345 files. All five existing
@@ -5278,3 +5296,26 @@ the retained facet-evidence gate and whitespace validation pass; the broad live
 suite traversed only root tests and exposed one governed-document fingerprint
 drift from acceptance-ID normalization, now recorded in the existing explicit
 revalidation ledger.
+
+## Shared schema properties: owner-directed core slice (2026-10-04)
+
+Implement CONTRACT-049 as 0.8.0 without changing old schemas:
+versioned schema, portable semantic validator/literal domain, copied authoring
+and inspection, explicit defaults, migration/rollback, public export and tests.
+TP-001 owns acceptance coverage. Record actual checks after execution. Existing
+native bindings and ideal-admission gates retain their qualified scope.
+
+The slice is implemented. [Execution evidence](evidence/schema-properties-core.md)
+records core regression, Chromium public-API behavior, independent exact-number
+probes, typechecks and schema/package audits. Native adapter admission and
+TableSpec integration remain outside this implementation.
+
+### Routine metadata API amendment (2026-10-05)
+
+Owner direction removes persistent element/relationship selection verification
+and schema-property declaration receipts. Selection returns copied snapshots;
+`declareCoreSchemaProperties` returns the copied validated Document. Migration
+and native-conversion preservation records remain. Unknown length units make
+validation incomplete even with minimum-only or zero-maximum bounds, so
+extension editing refuses. Current scoped evidence and historical qualifications
+are recorded in [schema-property execution evidence](evidence/schema-properties-core.md).

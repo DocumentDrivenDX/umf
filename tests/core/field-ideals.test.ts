@@ -7,7 +7,6 @@ test('field kinds are explicit; missing kind is never inferred from scalar famil
  for(const kind of ['field','record','group',undefined]){
   const doc=document('0.2.0',kind===undefined?{scalarType:'string'}:{kind});
   const result=validateDocument(doc);expect(result.valid).toBe(true);expect(result.complete).toBe(false);
-  expect(result.diagnostics.some(d=>d.code==='EXPERIMENTAL_CORE_FIELDS')).toBe(true);
   for(const format of ['json','yaml'] as const){const back=readDocument(writeDocument(doc,format),format);expect(back).toEqual(doc);if(kind===undefined)expect(Object.hasOwn(back.modules[0]!.elements[0]!,'kind')).toBe(false);}
  }
 });
@@ -33,7 +32,7 @@ test('unknown future kind and other open metadata survive without semantic compl
  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(doc,format),format)).toEqual(doc);
 });
 test('future envelope versions and unsafe getter inputs cannot be interpreted',()=>{
- const doc=document('0.2.0',{});expect(validateDocument({...doc,umf:'0.8.0'}).valid).toBe(false);
+ const doc=document('0.2.0',{});expect(validateDocument({...doc,umf:'0.9.0'}).valid).toBe(false);
  let calls=0;Object.defineProperty(doc.modules[0]!.elements[0]!,'kind',{enumerable:true,get(){calls++;return 'field';}});
  expect(validateDocument(doc).valid).toBe(false);expect(calls).toBe(0);
 });

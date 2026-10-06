@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:umf:core:nullability-transition:1.0.0",
-  "title": "Explicit experimental Nullability envelope transition receipts",
+  "title": "Explicit Nullability envelope transition receipts",
   "$defs": {
     "legacy": {
-      "title": "UMF 0.2.0 experimental field envelope",
+      "title": "UMF 0.2.0 field envelope",
       "type": "object",
       "required": [
         "umf",
@@ -203,7 +203,7 @@
       "description": "Opt-in field/record/group roles. No implicit upgrade from 0.1.0. Provenance, migration and binding evidence remain required."
     },
     "field": {
-      "title": "UMF 0.3.0 experimental nullability envelope",
+      "title": "UMF 0.3.0 nullability envelope",
       "type": "object",
       "required": [
         "umf",

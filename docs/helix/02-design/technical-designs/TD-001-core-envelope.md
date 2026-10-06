@@ -60,7 +60,7 @@ limitation; no strict-CSP compatibility claim. No throughput target is asserted.
 
 ## Migration and Rollback
 
-Version 0.1.0 is a new experimental envelope. There is no inspected legacy baseline;
+Version 0.1.0 is a new envelope. There is no inspected legacy baseline;
 do not claim TableSpec compatibility. Preserve source artifacts across changes;
 new semantics require explicit version/migration design rather than overwriting data.
 

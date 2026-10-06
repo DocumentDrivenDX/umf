@@ -101,7 +101,7 @@ All named subjects are tested, including empty sets, to avoid selecting evidence
 on UMF's computed result. Full official validation-report execution remains open.
 
 
-## Experimental constraint-engine proposal
+## Constraint-engine proposal
 
 `proposeShaclEngineValidation(shapes, data, {id, blankNodePolicy})` runs pinned
 `rdf-validate-shacl@0.6.5`. It returns the copied source graphs, diagnostics, engine/version,
@@ -141,7 +141,7 @@ its differences remain recorded, not treated as proof that either engine is auth
 
 Required follow-up: source-anchored report identity, messages/details, malformed-shape
 validation, exact native datatype ordering, recursion/limits, and cross-system consumers.
-This experimental proposal does not close AC3 or the overall SHACL support claim.
+This proposal does not close AC3 or the overall SHACL support claim.
 
 
 ## Exact integer/decimal profile
@@ -208,7 +208,7 @@ establish complete SHACL report, recursion, datetime or string semantics.
 
 ## String interpretation (umf-string-1)
 
-The experimental engine report records `stringProfile: umf-string-1`. Length
+The engine report records `stringProfile: umf-string-1`. Length
 constraints count Unicode code points in the RDF lexical form, including IRIs;
 blank nodes violate both length constraints. Combining characters and joiners count
 individually. Six ordering constraints compare xsd:string operands by Unicode code

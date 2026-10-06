@@ -71,7 +71,7 @@ integer metadata remains intact. Both reports record the generated runtime hash.
 These compare different runtimes of largely the same native implementation, not two
 independently authored language implementations.
 
-The result establishes a viable experimental browser runtime under these patches. It
+The result establishes a viable browser runtime under these patches. It
 does not establish all reflective/custom-validator behavior or complete language
 coverage. Next: integrate the optional module behind a typed, source-retaining public
 assembly API; expand negative corpus coverage; isolate synchronous compilation in a

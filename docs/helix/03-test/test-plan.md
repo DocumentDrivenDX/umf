@@ -1507,9 +1507,9 @@ AC11 additionally reverses every successful rename. The native oracle compares r
 full wire trees and tables (including schema metadata) to the originals; Bun and Chromium
 compare all 48 restored hashes. These inverse cases supplement the one-way 384 row reads.
 
-US-019-AC12 experimental evidence: parquet-values-fixtures.py creates four native files and
+US-019-AC12 evidence: parquet-values-fixtures.py creates four native files and
 expected typed values using PyArrow scalar inspection, covering page versions 1/2 and dictionary
-on/off. parquet-values-trial-schema.ts defines the experimental output shape. parquet-values-trial.ts,
+on/off. parquet-values-trial-schema.ts defines the output shape. parquet-values-trial.ts,
 parquet-values-browser.ts and tests/parquet/values-trial.test.ts compare full typed views,
 duplicate/integer map keys, nested decimal strings, unsigned extremes, null/empty structures,
 name preservation and timestamp semantics. Source buffers must remain unchanged. Files live
@@ -1525,7 +1525,7 @@ parquet-pages-negative.py creates 18 controls/mutations; tests/parquet/pages.tes
 budgets, bounds, source retention and explicit payload-validation limits. The overlap fixture
 has valid two-column schema metadata so it reaches the page-range check. Chromium repeats
 65 cases via parquet-pages-browser.ts. Full Parquet regression tests cover extraction of the
-shared wire parser/IDL mapper. No allocation-safety claim extends to the experimental value
+shared wire parser/IDL mapper. No allocation-safety claim extends to the value
 decoder until it validates actual page bodies under resource limits.
 
 US-019-AC14: parquet-bodies-schema.ts, parquet-bodies.ts and parquet-bodies-oracle.py compare
@@ -2471,7 +2471,7 @@ disagreements; see CONTRACT-028 for their interpretation and limits. Chromium pa
 external requests or Node globals. Reproduce with `bun scripts/shacl-strings.ts`,
 `.cache/shacl-venv/bin/python scripts/shacl-string-oracle.py`, and
 `bun scripts/shacl-string-browser.ts` (set UMF_CHROMIUM_PATH when needed).
-This remains experimental engine evidence, not complete SHACL conformance.
+This remains engine evidence, not complete SHACL conformance.
 
 ### SHACL malformed constraint lists
 
@@ -2995,7 +2995,7 @@ and unknown numeric tokens must stay attached to any classification/projection.
 
 ### Qualified TableSpec facet binding
 
-The [acceptance record](../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+The [acceptance record](../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers core 0.5.0 TableSpec facet
 classification, authored projection, strict/report loss handling and verified
 native/ideal recovery. It supersedes the earlier classification/projection
 checkpoints' full-refresh limitation; their original evidence remains historical.
@@ -3030,7 +3030,7 @@ gate, and Key remain required. Native-equivalence graduation is not claimed.
 
 ### Qualified PostgreSQL facet binding
 
-The [acceptance record](../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+The [acceptance record](../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies core 0.5.0 PostgreSQL
 facet classification, authored projection, strict/report residuals and retained
 native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
 limitation; their original counts and fingerprints remain historical.
@@ -3078,7 +3078,7 @@ remain required. No native-equivalence graduation is claimed.
 
 ### Qualified SQL Server facet binding
 
-The [acceptance record](../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+The [acceptance record](../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies core 0.5.0 SQL Server
 2022 16.0.4295.3 facet classification, authored projection, strict/report losses
 and both retained recovery directions. It supersedes earlier checkpoints' pending
 refresh status; their counts and fingerprints remain historical.
@@ -3128,3 +3128,22 @@ Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+
+## Shared schema properties: CONTRACT-049
+
+Exercise all eight additions, exact integer/decimal equality and ordering,
+Unicode/byte units, null versus missing defaults, container item references,
+contradictory bounds, unknown qualifier refusals, migration collisions, forged
+and stale receipts, copy/accessor safety, JSON/YAML recovery and Chromium public
+API parity. Run existing core regressions, typecheck, schema audit and browser
+build. These gates establish core behavior, not native enforcement.
+
+### Routine API amendment coverage (2026-10-05)
+
+Selection snapshot structure, serialization, registry diagnostics and reference
+traversal remain tested after removing persistent selection verifiers. Core 0.8
+authoring tests use the copied Document directly; upgrade/rollback record checks
+remain. Unknown length units cover minimum-only, maximum zero, both zero bounds
+and positive maxima in Bun and Chromium, with incomplete validation, refused
+extension edits and recognized-unit controls. See the
+[current scoped evidence](../04-build/evidence/schema-properties-core.md).

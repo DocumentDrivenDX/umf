@@ -24,7 +24,7 @@ test('key updates retain identity and unknowns, reject tuple changes and implici
  const next=u.declareCoreKey(doc,record,{id:'pk',name:'Renamed',fields:[field]});
  const key=u.lookupCoreKey(next.target,{...record,key:'pk'}).key;expect(key.primary).toBe(true);expect(key.future).toEqual({opaque:true});expect(key.fields[0]!.future).toBe(false);
  expect(u.inspectCoreKeys(next.target,record).meaning.state).toBe('partial');
- expect(()=>u.encodeCoreKeyTuple(next.target,{...record,key:'pk'},[{integerToken:'1'}])).toThrow('Relevant qualifier');
+ expect(()=>u.encodeCoreKeyTuple({...next.target,umf:'0.8.0'},{...record,key:'pk'},[{integerToken:'1'}])).toThrow('Relevant qualifier');
  expect(()=>u.declareCoreRecordMembers(doc,record,[])).toThrow('unknown qualifiers');
  expect((u.declareCoreRecordMembers(doc,record,[field]).target.modules[0]!.elements[0]!.members as any[])[0].future).toBe('retain');
  const clean=authored().target;clean.modules[0]!.elements.push({id:'other',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}});
@@ -57,8 +57,7 @@ test('Key selection reports explicit member/component boundaries and traverses b
  const doc=authored().target;doc.modules[0]!.elements[0]!.references=[];
  const direct=u.selectCoreElements(doc,{references:'none',identities:[record]});expect(direct.referenceScope).toBe('explicit-core-references-item-types-members-and-keys');expect(direct.selection).toHaveLength(1);expect(direct.boundaryMembers).toHaveLength(1);expect(direct.boundaryKeyFields?.[0]?.key).toBe('pk');
  const transitive=u.selectCoreElements(doc,{references:'transitive',identities:[record]});expect(transitive.selection).toHaveLength(2);expect(transitive.boundaryMembers).toEqual([]);expect(transitive.boundaryKeyFields).toEqual([]);
- for(const selection of [direct,transitive])for(const format of ['json','yaml'] as const){const saved=u.readJsonValue(u.writeJsonValue(selection,format),format);expect(u.verifyCoreElementSelection(saved as any)).toEqual(selection);}
- const forged=structuredClone(direct);forged.boundaryKeyFields![0]!.key='name';expect(()=>u.verifyCoreElementSelection(forged)).toThrow();
+ for(const selection of [direct,transitive])for(const format of ['json','yaml'] as const){const saved=u.readJsonValue(u.writeJsonValue(selection,format),format);expect(saved as any).toEqual(selection);}
 });
 
 test('0.6.0 extension validators receive the actual key-bearing document and can reject it',()=>{

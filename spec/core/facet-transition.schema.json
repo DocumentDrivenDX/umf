@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:umf:core:facet-transition:1.0.0",
-  "title": "Explicit experimental Facet envelope transition receipts",
+  "title": "Explicit Facet envelope transition receipts",
   "$defs": {
     "legacy": {
-      "title": "UMF 0.4.0 experimental cardinality envelope",
+      "title": "UMF 0.4.0 cardinality envelope",
       "type": "object",
       "required": [
         "umf",
@@ -335,7 +335,7 @@
       "description": "Explicit Field shape and optional array-item/map-value Field reference; no native repetition, dimension or physical encoding inference."
     },
     "field": {
-      "title": "UMF 0.5.0 experimental facet envelope",
+      "title": "UMF 0.5.0 facet envelope",
       "type": "object",
       "required": [
         "umf",

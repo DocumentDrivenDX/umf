@@ -89,7 +89,7 @@ metadata editing/re-encoding and cross-system projections remain required subseq
   legacy LIST/MAP interpretation. Verify nested schemas and values with a native reader,
   including page checksums, and repeat the transform in Chromium.
 
-- **US-019-AC12 (experimental evidence; public decoder pending):** Preserve exact decimal
+- **US-019-AC12 (evidence; public decoder pending):** Preserve exact decimal
   values inside nested containers, ordered map entries including duplicate/non-string keys,
   native field names that conflict with JavaScript objects, and temporal unit/UTC-local
   meaning. Compare page versions and dictionary/plain encodings independently. Define the

@@ -1,5 +1,5 @@
 import {copyJson} from './json';
-import {UmfError,type Document,type Diagnostic,type Json} from './types';
+import {UmfError,type Document,type Diagnostic} from './types';
 import type {CoreRelationshipIdentity} from './relationships';
 import type {CoreRelationship,RelationshipEndpoint,RelationshipTarget,RelationshipCandidate} from '../validation/relationships';
 import {validateDocument} from '../validation/document';
@@ -13,7 +13,6 @@ export interface CoreRelationshipSelectionEntry {identity:CoreRelationshipIdenti
 export interface CoreRelationshipSelection {operation:'select-core-relationships';version:'1.0.0';source:RelationshipCandidate;query:CoreRelationshipQuery;selection:CoreRelationshipSelectionEntry[];diagnostics:Diagnostic[];residuals:[];provenance:'unverified';navigationScope:'authored-presentation-only'}
 const validator=createValidator();validator.addSchema(core);const check=validator.compile(schema),queryCheck=validator.compile(schema.$defs.query);
 const refId=(r:RelationshipEndpoint)=>JSON.stringify([r.module,r.element]);
-const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 
 export function selectCoreRelationships(input:Document,queryInput:CoreRelationshipQuery,registry=new Registry()):CoreRelationshipSelection {
  const source=copyJson(input) as unknown as RelationshipCandidate,query=copyJson(queryInput) as unknown as CoreRelationshipQuery;
@@ -36,9 +35,4 @@ export function selectCoreRelationships(input:Document,queryInput:CoreRelationsh
  }));
  const result=copyJson({operation:'select-core-relationships',version:'1.0.0',source,query,selection,diagnostics:validation.diagnostics,residuals:[],provenance:'unverified',navigationScope:'authored-presentation-only'});
  if(!check(result))throw new UmfError('RELATIONSHIP_SELECTION_RESULT',JSON.stringify(check.errors));return result as unknown as CoreRelationshipSelection;
-}
-export function verifyCoreRelationshipSelection(input:CoreRelationshipSelection,registry=new Registry()):CoreRelationshipSelection {
- const receipt=copyJson(input) as unknown as CoreRelationshipSelection;if(!check(receipt))throw new UmfError('RELATIONSHIP_SELECTION_RECEIPT','Malformed relationship selection');
- const expected=selectCoreRelationships(receipt.source,receipt.query,registry);
- if(canonical(copyJson(expected))!==canonical(copyJson(receipt)))throw new UmfError('RELATIONSHIP_SELECTION_RECEIPT','Selection differs from retained context');return expected;
 }

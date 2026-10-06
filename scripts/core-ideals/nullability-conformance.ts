@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute} from 'node:path';
+import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
@@ -23,10 +24,10 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   assert.ok(Object.keys(record.sha256??{}).length>0,`${label}: missing fingerprints`);
   for(const [path,expected] of Object.entries(record.sha256)){
    // Earlier native records contain __file__ absolute paths; permit only this repository.
-   const local=relative(process.cwd(),resolve(path));
-   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!path.split('/').includes('..'),`${label}: unsafe evidence path`);
+   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel));
+   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
    assert.match(String(expected),/^[0-9a-f]{64}$/);
-   assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
+   assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
  const records=[];
@@ -52,7 +53,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   for(const suffix of system==='tablespec'?['classification-browser','projection-browser']:['browser','projection-browser']){
    const file=`fixtures/validation/nullability-${system}-${suffix}.json`;
    assert.ok(Object.hasOwn(refresh.sha256,file),`Missing browser proof ${file}`);
-   const browser=await load(file);assert.match(browser.browser,/^148\./);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
+   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
   }
  }
  for(const script of ['nullability-tablespec-classification-oracle.py','nullability-tablespec-projection-oracle.py','nullability-tablespec-execution-oracle.py'])assert.ok(refresh.runs.some((r:any)=>r.command.includes('scripts/core-ideals/'+script)),`Missing native command ${script}`);

@@ -67,8 +67,8 @@ export async function verifyFieldEvidence(reader:Reader=read){
  }
  for(const record of [ts.results.browser,...Object.values(pg.results.browser),...Object.values(remaining.systems).flatMap((s:any)=>Object.values(s.browser))]){
   // TableSpec records browser version and its checks separately.
-  if(typeof record==='string'){assert.match(record,/^148\./);continue;}
-  const browser=record as any;assert.match(browser.browser,/^148\./);assert.deepEqual(browser.externalRequests,[]);
+  if(typeof record==='string'){assert.equal(record,refreshed.browser??'148.0.7778.0');continue;}
+  const browser=record as any;assert.equal(browser.browser,refreshed.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);
   assert.ok(Object.keys(browser.checks).length>0);
  }
  return {records:records.map(({path,sha256})=>({path,sha256})),fingerprints,systems:[...fieldSystems]};

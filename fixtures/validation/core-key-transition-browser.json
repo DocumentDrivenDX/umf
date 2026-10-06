@@ -1,6 +1,6 @@
 {
   "scope": "Explicit experimental Key 0.5.0-to-0.6.0 migration/rollback through a focused browser bundle; public entry-point integration is checked separately, with no native binding or author-provenance claim",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "collisionCases": 10,
     "archivedMembers": 90,
@@ -13,24 +13,24 @@
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "489779e9e2a01f5ce2348930d32b0bca17cfe30351a8ab94a1948118d3263d6e",
+  "bundleSha256": "995fa1ad8d74ce45cfb4a8bd3f43f90c0f04990d01d73c79732fadfd83cb09bc",
   "sha256": {
-    "scripts/core-key-transition-browser.ts": "89adf428f9d86606f7f8e9a1f2e1ccddeec7c33b37b28543fe3db65cfc92ddb8",
+    "scripts/core-key-transition-browser.ts": "8674dce38020c123f1b1b278462ab94b59ecd3d93ff7d534b23a657c72d698a8",
     "scripts/core-key-transition-cases.ts": "c01109abb6f6caa9ef6e9e84f7bf9583568ea6813d7ea51780d0e717e0ac5f39",
     "scripts/core-key-transition-schema.ts": "801a207087e41bb3bc421cc8a80f886795e9bf1b1faf6c074b29bd13a13a7f66",
     "src/model/key-transition.ts": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172",
-    "src/model/key-tuple.ts": "cc394192441c55844de777413adb2dfdf5dac84b0c6a90e520fb713dc2673d4b",
-    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/model/key-tuple.ts": "a59ca480ffa394d30228660bbecf485c736a62111d97a99f01ff8598174bb1e2",
+    "src/validation/keys.ts": "78d90a75119d16c87c890c3f84e0bab4db2a3e811d103984a735d0904d03a71a",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "spec/core/facet-document.schema.json": "7ef36fb7461411dad2f7354b7eb50a760d397d3b67cc500eddf2a806a80820cb",
-    "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
-    "spec/core/key-transition.schema.json": "d4138209dd97af29b09dd383300ce3a62795ba67d2e36cc788ce4b966326d6d2",
+    "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
+    "spec/core/key-document.schema.json": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
+    "spec/core/key-transition.schema.json": "2b6b920fdb1cb78933947a81b730c776ac0f5bceee95c533a96d0e7a2e9ee192",
     "spec/core/key-tuple-operation.schema.json": "1bbe9cece10ca98e602917b119df5198a9bfde11366f9a26dfab43878f2ee1ab",
-    "tests/core/key-transition.test.ts": "a00f8fd648e6d4668873f9ebdd169031e0270732246352bf970284f82c977a57"
+    "tests/core/key-transition.test.ts": "a35701d3631548c8e8bc588c9c072ef7ab563f8ebad611cc95fc74070d70f2b6"
   }
 }

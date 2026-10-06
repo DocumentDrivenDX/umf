@@ -62,7 +62,7 @@ no failed or reduced-validation port is shipped as browser assembly support.
 
 The optional native runtime now compiles to JavaScript through the compatibility
 patches recorded in SPIKE-002. All 144 existing JVM corpus outcomes/events/model hashes
-agree in Bun and Chromium. This is experimental evidence; public archive APIs continue
+agree in Bun and Chromium. This is evidence; public archive APIs continue
 to report unvalidated status. A typed assembly operation must retain source and report
 unsupported reflection/runtime failures explicitly before exposing assembled models.
 

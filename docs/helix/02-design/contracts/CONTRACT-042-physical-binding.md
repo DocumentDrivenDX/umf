@@ -214,7 +214,7 @@ metadata, not a UMF query-planning or performance guarantee.
 `spec/extensions/binding-stable/` publishes package 0.2.0, its payload schema
 and the complete migration/receipt/rollback schema. `inspectBinding` and copied
 `getBinding` support both versions. Profile 2 resolves `{module,id}` only against
-experimental core 0.7.0 authored relationships; a display-name rename leaves the
+core 0.7.0 authored relationships; a display-name rename leaves the
 reference intact. Missing or duplicate IDs and mismatched package/profile pairs
 are invalid. Existing 0.1.0 fixtures and schema remain unchanged.
 

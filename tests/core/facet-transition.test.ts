@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {upgradeFacetEnvelope,rollbackFacetEnvelope,validateDocument,readDocument,writeDocument,readJsonValue,writeJsonValue,copyJson,selectCoreElements,verifyCoreElementSelection,type Document} from '../../src';
+import {upgradeFacetEnvelope,rollbackFacetEnvelope,validateDocument,readDocument,writeDocument,readJsonValue,writeJsonValue,copyJson,selectCoreElements,type Document} from '../../src';
 const model=(facets:unknown):Document=>({umf:'0.4.0',id:'bounds',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{raw:'9007199254740993'}},modules:[{id:'m',namespace:'sales',elements:[{id:'v',kind:'field',scalarType:'integer',facets,extensions:{future:{native:{width:'unknown'}}}},{id:'list',kind:'field',cardinality:'array',itemType:{module:'m',element:'v',future:{meaning:'retain'}},facets,extensions:{}},{id:'record',kind:'record',facets,extensions:{}}]}]});
 test('explicit facet migration archives every legacy collision and recovers it through both serializations',()=>{
  for(const value of [null,false,0,'',[],{},'future',{integerWidth:{bits:8,signed:true}},{precision:3,scale:4}]){
@@ -32,8 +32,7 @@ test('0.5.0 document validation and selection preserve item facets, availability
   const selection=selectCoreElements(doc,{references,identities:[{module:'m',element:'list'}],cardinalities:['array']});
   expect(selection.selection).toHaveLength(references==='none'?1:2);expect(selection.referenceScope).toBe('explicit-core-references-and-item-types');
   expect(selection.boundaryItemTypes).toHaveLength(references==='none'?1:0);
-  for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(selection,format),format) as unknown as typeof selection;expect(verifyCoreElementSelection(saved)).toEqual(selection);}
+  for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(selection,format),format) as unknown as typeof selection;expect(saved).toEqual(selection);}
  }
- const forged=selectCoreElements(doc,{references:'transitive',identities:[{module:'m',element:'list'}]});forged.selection[0]!.element.facets={integerWidth:{bits:8,signed:true}};expect(()=>verifyCoreElementSelection(forged)).toThrow();
  doc.modules[0]!.elements[1]!.itemType={module:'m',element:'missing'};expect(validateDocument(doc).diagnostics.some(d=>d.code==='UNRESOLVED_ITEM_TYPE')).toBe(true);
 });

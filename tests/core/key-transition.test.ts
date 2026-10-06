@@ -29,7 +29,7 @@ test('rollback restores exact old content and separately retains later key asser
  const source=keyTransitionSource(false),receipt=upgradeKeyEnvelope(source),current=structuredClone(receipt.target),r=current.modules[0]!.elements[0]!;
  r.members=[{module:'m',element:'id'}];r.keys=[{id:'new-key',name:'Authored',primary:true,fields:[{module:'m',element:'id'}]}];
  current.extensions!.future={newNativeMeaning:['retained',true]};
- expect(encodeCoreKeyTuple(current,{module:'m',element:'record',key:'new-key'},[{integerToken:'42'}]).bytesHex).toBe('554d464b310102023432');
+ expect(()=>encodeCoreKeyTuple(current,{module:'m',element:'record',key:'new-key'},[{integerToken:'42'}])).toThrow('Expected current core 0.8.0');
  const result=rollbackKeyEnvelope(receipt,current);expect(result.target).toEqual(source);expect(result.source).toEqual(current);
  expect(result.target.modules[0]!.elements[0]!.keys).toBe(false);expect(validateDocument(result.target).valid).toBe(true);
  for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(result,format),format) as any;expect(saved.target).toEqual(source);expect(saved.source).toEqual(current);expect(rollbackKeyEnvelope(saved.receipt,saved.source)).toEqual(result);}

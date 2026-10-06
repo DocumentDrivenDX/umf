@@ -264,7 +264,7 @@ export * from './core-ideals/parquet-record';
 export * from './core-ideals/field-parquet-projection';
 export * from './core-ideals/record-parquet-projection';
 export * from './model/record-type';
-export * from './model/selection-verification';
+export * from './model/selection-schemas';
 export * from './core-ideals/avro-record-type';
 export * from './core-ideals/parquet-record-type';
 export * from './core-ideals/field-report';
@@ -329,7 +329,7 @@ export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
 export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
 export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
 export {default as coreKeyTransitionSchema} from '../spec/core/key-transition.schema.json';
-export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation.schema.json';
+export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation-v3.schema.json';
 
 export * from './core-ideals/key-tablespec';
 
@@ -358,7 +358,7 @@ export {default as coreRelationshipOperationSchema} from '../spec/core/relations
 export {default as coreRelationshipTransitionSchema} from '../spec/core/relationship-transition.schema.json';
 export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
 export {default as coreKeyTupleOperationV2Schema} from '../spec/core/key-tuple-operation-v2.schema.json';
-export {selectCoreRelationships,verifyCoreRelationshipSelection} from './model/relationship-selection';
+export {selectCoreRelationships} from './model/relationship-selection';
 export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection';
 export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection.schema.json';
 export * from './core-ideals/relationship-tablespec';
@@ -375,3 +375,9 @@ export * from './core-ideals/relationship-extras';
 export * from './projections/binding-sqlserver';
 export * from './projections/binding-sqlserver/relationship-layout';
 export * from './projections/ddd-postgresql';
+
+export * from './model/schema-properties';
+export * from './model/schema-properties-transition';
+export {type CoreLiteral} from './model/schema-literals';
+export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
+export {coreSchemaPropertiesTransitionSchema} from './model/schema-properties-transition-schema';

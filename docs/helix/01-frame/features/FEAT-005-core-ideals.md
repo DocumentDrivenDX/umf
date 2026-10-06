@@ -48,6 +48,14 @@ projections rather than prohibit UMF from defining author intent.
 - IDEAL-04: Verify both ideal/native/ideal and native/ideal/native recovery.
 - IDEAL-05: Separate at-least-two-system ideal admission from all-five delivery
   and from native-replacement equivalence with migration and rollback.
+- IDEAL-06 (owner direction, 2026-10-04, recorded in CONTRACT-049): Implement CONTRACT-049 shared titles,
+  examples, aliases, collection bounds, allowed values, exact numeric ranges,
+  minimum length and explicit literal defaults with migration/rollback and
+  unknown preservation. Native admission remains separately evidenced.
+- IDEAL-07: Separate source format documentation, input parsing, output rendering,
+  allowed-value assertions and structural constraints. Legacy format text must
+  remain recoverable; interpretation requires explicit provenance and must not
+  invent authored constraints. CONTRACT-050 defines the separation boundary.
 
 ## User Stories
 
@@ -69,7 +77,9 @@ remain failing exact projections. Native support versions and evidence are publi
 
 ## Out of Scope
 
-OWL, DDD lifecycle, physical encoding and default execution stay in extensions.
+OWL, DDD lifecycle, physical encoding, computed defaults and native default
+execution stay in extensions. CONTRACT-049 defines explicit literal substitution
+as a pure consumer operation; it never mutates stored rows.
 This authoring change does not modify the current envelope or claim implementation.
 
 ## Unplaced temporal-facet proposal
@@ -84,7 +94,7 @@ systems; otherwise the semantics stay in a published extension with fidelity
 reports. Neither the existing facet implementation nor Key equality gains
 temporal meaning from this framing alone.
 
-## Unplaced constraint-ideal proposal
+## Constraint-ideal proposal and core-task placement
 
 [US-053](../user-stories/US-053-constraint-ideals.md) and
 [CONTRACT-048](../../02-design/contracts/CONTRACT-048-constraint-ideals.md)
@@ -96,3 +106,22 @@ meaning and a separate ordering decision. None enters IDEAL-01's ordered
 delivery or `spec/core/` without owner placement, FR-3 evidence, a versioned
 migration and rollback; native CHECK or enum observations do not imply authored
 intent or enforcement of existing rows.
+
+The owner selected allowed values, exact numeric bounds and minimum length for
+core implementation on 2026-10-04 through CONTRACT-049, together
+with descriptive metadata, collection size and literal defaults. This placement
+supersedes their unplaced core-task status; two-priority ideal admission and
+all-five native delivery remain open and must not be inferred from core tests.
+
+## Format separation
+
+[CONTRACT-050](../../02-design/contracts/CONTRACT-050-format-separation.md)
+separates the meanings carried by TableSpec's unstructured format text. Source
+documentation and examples remain informational. Directional parsing and
+rendering recipes remain versioned extension concerns; allowed-value assertions
+follow CONTRACT-048 and, for the core 0.8.0 surface, CONTRACT-049
+(allowed values must still be authored explicitly, never split from format
+text; ideal admission and all-five delivery stay open), and temporal value meaning follows CONTRACT-047. Structural
+patterns require a declared language and interpretation status. The overloaded
+source field has no direct core-promotion path. This requirement does not place
+new concepts into IDEAL-01's ordered delivery or admit a new core version.

@@ -61,3 +61,12 @@ test('resource bounds and a bad later component refuse the whole tuple',()=>{
  const single=tupleDocument([{id:'x',scalarType:'string'}]);
  expect(()=>encodeCoreKeyTuple(single,tupleIdentity,[{string:'\u0800'.repeat(1333334)}])).toThrow('UTF-8 payload');
 });
+
+test('current document context and result schema reject prior versions without downgrading',()=>{
+ const d=tupleDocument([{id:'x',scalarType:'integer',title:'Identifier',aliases:['legacy'],examples:[{integerToken:'7'}],default:{on:'missing',value:{integerToken:'7'}}}]);
+ const before=copyJson(d),receipt=encodeCoreKeyTuple(d,tupleIdentity,[{integerToken:'7'}]);
+ expect(receipt.version).toBe('3.0.0');expect(receipt.source).toEqual(before);expect(d).toEqual(before);
+ expect(()=>encodeCoreKeyTuple(d,tupleIdentity,[])).toThrow('one value per key component');
+ for(const version of ['0.6.0','0.7.0'])expect(()=>encodeCoreKeyTuple({...d,umf:version},tupleIdentity,[{integerToken:'7'}])).toThrow('Expected current core 0.8.0');
+ for(const version of ['1.0.0','2.0.0'])expect(()=>verifyCoreKeyTuple({...receipt,version} as any,d)).toThrow('Malformed encoding receipt');
+});

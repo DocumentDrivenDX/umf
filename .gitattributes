@@ -1,0 +1,5 @@
+# Preserve pinned native test-source bytes, including mixed upstream line endings.
+native/rdfxml/sources/** -text
+native/shacl/sources/** -text
+fixtures/shacl/corpus/** -text
+native/tablespec/sources/** -text
