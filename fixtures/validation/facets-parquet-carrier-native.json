@@ -247,7 +247,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>)]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-10-1.parquet",
@@ -262,7 +262,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>), None]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC')), None]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-11-0.parquet",
@@ -277,7 +277,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>)]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC'))]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-11-1.parquet",
@@ -292,7 +292,7 @@
         "force_set_converted_type": false
       },
       "sample": "datetime.datetime(2020, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
-      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=<UTC>), None]"
+      "decoded": "[datetime.datetime(2020, 1, 2, 0, 0, tzinfo=zoneinfo.ZoneInfo(key='UTC')), None]"
     },
     {
       "path": "fixtures/parquet/facets/carrier-12-0.parquet",
@@ -731,7 +731,7 @@
   },
   "normalizedFingerprintAliases": {
     "scripts/core-ideals/facets-parquet-carrier-native.py": [
-      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-carrier-native.py"
+      "/work/scripts/core-ideals/facets-parquet-carrier-native.py"
     ]
   }
 }

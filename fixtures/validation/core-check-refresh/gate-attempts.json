@@ -1,0 +1,26 @@
+{
+  "sourceRevision": "d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242",
+  "failedAttempts": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/cardinality-conformance.test.ts",
+        "tests/core-ideals/facets-conformance.test.ts",
+        "tests/core-ideals/facets-evidence.test.ts",
+        "tests/core-ideals/field-conformance.test.ts",
+        "tests/core-ideals/key-conformance.test.ts",
+        "tests/core-ideals/key-evidence.test.ts",
+        "tests/core-ideals/nullability-conformance.test.ts",
+        "tests/core-ideals/relationship-conformance.test.ts"
+      ],
+      "exitCode": 1,
+      "log": "fixtures/validation/core-check-refresh/container-gates-attempt-1.log",
+      "logSha256": "cfad9c6fd74154e5c5b2c70b6d82226ee38f590802dd134d90e7e3d031f1d7fc",
+      "container": "umf-core-integrated-gates-retry",
+      "scope": "Interrupted run: 16 passed, 1 Cardinality timeout; Docker container exit 1 independently observed."
+    }
+  ],
+  "successfulContainer": "umf-core-gates-resumed-20261006",
+  "successfulExitCode": 0
+}

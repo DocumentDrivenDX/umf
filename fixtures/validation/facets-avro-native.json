@@ -44,13 +44,13 @@
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
-    "fixtures/validation/facets-avro-composition.json": "103d7262681c685fde1492a5cdc4ae9249f1116d684340729153e9619e3b10fe",
-    "fixtures/validation/facets-avro-discovery-native.json": "7267982752aec7492411b9e99f1b69f49026738cbe5e8e88caae5e8cca47d0f7",
-    "fixtures/validation/facets-avro-discovery.json": "a00e57802579b8c0d99575e605382d7a3c47b24419adcd23aed9836d16e997eb",
-    "fixtures/validation/facets-avro-projection-native.json": "243ba355e9ba120f4af7a7858791ea770f305ac4104476f8e56af180024a324a",
+    "fixtures/validation/facets-avro-composition.json": "19d1fc1b6da8a5a9dd7264ea6b37d5d95093c936377215f21313784ebd222cbf",
+    "fixtures/validation/facets-avro-discovery-native.json": "b9103219c3f7eaedcd5484a4d9f48225db4af63948766e88d5d306901d944621",
+    "fixtures/validation/facets-avro-discovery.json": "3fdc05c8dc2bea56ae46f4b09c10b8b3495daaf43616dc16b0377aaeb0ebb9a4",
+    "fixtures/validation/facets-avro-projection-native.json": "067b041fd9b4e6372b14a98a1715ec7a4016e4d762f46c5421a28fd3e601e37c",
     "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
-    "fixtures/validation/facets-avro-selection-native.json": "647cba510feca669f531732df0394243a5543c77aac74e78ff7dcba1d4999aeb",
-    "fixtures/validation/facets-avro-selection-oracle.json": "0653d48cc875ff3a0f97693d8d87c269300cbf236b96d55a8181a6d9ed507d1c",
+    "fixtures/validation/facets-avro-selection-native.json": "372fb180bc8e21b4809d3494848a4a97b9395f5830b67d72f6c207a165186121",
+    "fixtures/validation/facets-avro-selection-oracle.json": "f20f35c6f29d1ff65dfdc2c5cd78a0683de0ca900ac3fe8f4db6f3699b29c82c",
     "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
     "scripts/core-ideals/facets-avro-cases.ts": "3d461a5175c61bbd5b41842457f07e5b8a8a7cc358f28061e12bcb0e7fe5a0ee",
     "scripts/core-ideals/facets-avro-composition.ts": "54403fa75904c0bbd3b9f01a7a2fd56fabdce3879539eda3bc8e44ff0b5afce3",
@@ -71,14 +71,25 @@
     "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
     "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
     "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
-    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
+    "src/index.ts": "83d52f0f389f1ba44275e45f20db64a1c4074a8cdca2af28ff8ac08d3575712c",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
     "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
     "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/registry/registry.ts": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6",
-    "src/validation/document.ts": "d49d3c8b4d30db243a228707596b515210375cf1eb5d51253a81b783cd638d47",
+    "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-avro-discovery-native.py": [
+      "/work/scripts/core-ideals/facets-avro-discovery-native.py"
+    ],
+    "scripts/core-ideals/facets-avro-projection-native.py": [
+      "/work/scripts/core-ideals/facets-avro-projection-native.py"
+    ],
+    "scripts/core-ideals/facets-avro-selection-native.py": [
+      "/work/scripts/core-ideals/facets-avro-selection-native.py"
+    ]
   }
 }

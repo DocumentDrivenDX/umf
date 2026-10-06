@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bun",
+    "scripts/verify-current-core-evidence.ts"
+  ],
+  "exitCode": 0,
+  "log": "fixtures/validation/core-check-refresh/container-integrity.log",
+  "logSha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+}

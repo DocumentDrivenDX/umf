@@ -352,12 +352,12 @@
     "fixtures/parquet/facets/uint8-min-embedded.parquet": "48bc5fdc8c5bcf6ce1a89d21ea000128744e351a1aa2b100a3b001eb1b4b4742",
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
     "fixtures/validation/facets-parquet-carrier-corpus.json": "4ec421cbbc5f0fd77e9dc5282972d7c70866d28fbcf5c9e4c80a474f1e1eab41",
-    "fixtures/validation/facets-parquet-carrier-native.json": "bed7137d6441e7e06d07552139e4f47c3ab185fb00a3444e48dacc537afc2944",
-    "fixtures/validation/facets-parquet-composition.json": "cf3c0b24ff52efe9068437c66bf87e5642e182b61a044d651a31ff176faa5296",
-    "fixtures/validation/facets-parquet-discovery-native.json": "dae81f99a044629d8d1109f9304b1cdadc9c777c39eb34fe3a4c8fa3e76f58a7",
-    "fixtures/validation/facets-parquet-discovery.json": "02bda42ba7584a89a18be1683eee3fdac9626c161d09ce37828b2e672e860b3a",
+    "fixtures/validation/facets-parquet-carrier-native.json": "37ca8648cbaab232fae245c39bf22a1edc230f875cb43551223008d9fc323e7b",
+    "fixtures/validation/facets-parquet-composition.json": "7d180775c5c068e56bf867dce5c16549420f2f12aaa49c1684ab672c840f37a5",
+    "fixtures/validation/facets-parquet-discovery-native.json": "fd0327d502aaa14619d8d514910ac91ce14921a9d3afe87147b3a1ea82b0c478",
+    "fixtures/validation/facets-parquet-discovery.json": "a58a4f90c3a09aac66ecfca277c0817cf30243a70b416d34e651bfe1ba8c0448",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
-    "fixtures/validation/facets-parquet-projection-native.json": "3f00d92023521077a7bbe1bc5cba79edd421c10e72939bf5558ba7b476d6832d",
+    "fixtures/validation/facets-parquet-projection-native.json": "adeca19c9e8a9897adcecdfe21a8944ac3d5e915e7f4adccd67158ec0f1df6fc",
     "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
     "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
     "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
@@ -384,20 +384,20 @@
     "src/core-ideals/facets-parquet.ts": "68b0538bf077d339024f1cb10eb8a739643afdbbff44bf899bd95fdb21d35dcb",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
-    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
+    "src/index.ts": "83d52f0f389f1ba44275e45f20db64a1c4074a8cdca2af28ff8ac08d3575712c",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "src/validation/document.ts": "d49d3c8b4d30db243a228707596b515210375cf1eb5d51253a81b783cd638d47"
+    "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62"
   },
   "normalizedFingerprintAliases": {
     "scripts/core-ideals/facets-parquet-carrier-native.py": [
-      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-carrier-native.py"
+      "/work/scripts/core-ideals/facets-parquet-carrier-native.py"
     ],
     "scripts/core-ideals/facets-parquet-discovery-native.py": [
-      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-discovery-native.py"
+      "/work/scripts/core-ideals/facets-parquet-discovery-native.py"
     ],
     "scripts/core-ideals/facets-parquet-projection-native.py": [
-      "/Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/facets-parquet-projection-native.py"
+      "/work/scripts/core-ideals/facets-parquet-projection-native.py"
     ]
   }
 }

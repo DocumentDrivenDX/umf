@@ -119,3 +119,21 @@ alone). These are diagnostics. The earlier published repair counts (2,136 live t
 re-claimed for this one; the replay in the check-repair document must be rerun in its
 pinned environment before relying on them for the final tree. No native equivalence or
 publisher validator parity is claimed.
+
+## Fresh container acceptance (2026-10-06)
+
+The [integrated replay](core-check-repair.md#integrated-container-replay-2026-10-05)
+supersedes the preceding pending replay limitation. Library/native/test source
+`d05d9ec8` includes parent `ac800eed`; finalization tooling is separately
+fingerprinted. Bun 1.3.14 / Python 3.12.3 / jsonschema 4.25.1 / Chromium
+153.0.8010.12 provide fresh execution: 174 native/browser inventory commands,
+2,140 disjoint regression tests, 17 complete admission/evidence gates, all six
+proof closures, and 213 affected API tests. The unique union is 2,157 tests across
+382 files. Package/schema audits pass 60/60 and 352/352; the semantic browser
+passes 48 checks and 14 diagnostic comparisons with zero external requests;
+the independent reference-shape oracle agrees on 14/14 cases.
+
+Failed timing attempts and the interrupted gate run remain distinct from the
+successful executions. These counts establish only the qualified subsets in
+CONTRACT-051 and the existing binding contracts. Publisher catalogs, TableSpec
+validator bindings, domain-algorithm parity and native equivalence remain open.

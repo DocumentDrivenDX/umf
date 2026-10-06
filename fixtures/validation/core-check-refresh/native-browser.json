@@ -1,6 +1,7 @@
 {
   "complete": true,
   "baselineRevision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+  "expectedBrowser": "153.0.8010.12",
   "commands": [
     [
       "bun",
@@ -732,7 +733,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/003.log",
-      "logSha256": "77a28bae27633a9bc02aec6ac6ed8266e5234150d0b7ca64ba37f5d79dc023b1"
+      "logSha256": "e9fbf8fcd5a5ec5673fbb259ffedeaedd48c651aaf9658c2020ef08ddd5c65e6"
     },
     {
       "command": [
@@ -805,7 +806,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/011.log",
-      "logSha256": "4cfca5bddcc965021b92a76c5ff8871feadc12b1c1419e428987e312e030641a"
+      "logSha256": "a31c82bbff63a33cbcaf76e20ea31e3dec90d8612eb367aa926890e9a6e94215"
     },
     {
       "command": [
@@ -832,7 +833,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/014.log",
-      "logSha256": "b22d6597a45b385e8606156c71a3bccc78bd68958bca640ac2f460339bbdb02a"
+      "logSha256": "9001eb91aa581e2a6d8a3540711fd6fb0e0104d9d2a4b041817e43f961732d4e"
     },
     {
       "command": [
@@ -859,7 +860,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/017.log",
-      "logSha256": "db8ba22b763c5ab82dfef5a157bf2389fc7bd352a66d82cc37c84af616b50bfc"
+      "logSha256": "94d39627b9441cc20d9d2e8039b000bb01794d3134f112cd8dc8108495172b54"
     },
     {
       "command": [
@@ -931,7 +932,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/025.log",
-      "logSha256": "8b419c0f2a7ca355a2d8947b1fdbe4c0454899f502aca8c5db3ab149f6efe3bb"
+      "logSha256": "74731b2d49784e70b88dc3d2d15300f9b22c53b1b7132342cad82005adbc323a"
     },
     {
       "command": [
@@ -1039,7 +1040,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/037.log",
-      "logSha256": "d7d2fbb709916ae6b07b17073fe1c98699a89c86a57f64883aedb5072130c5cd"
+      "logSha256": "e596527523ef0766936a31cd12acc23cdcbb236e1e7369fa60cf18e6a512ac92"
     },
     {
       "command": [
@@ -1111,7 +1112,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/045.log",
-      "logSha256": "bb5c0933edbb9e38e1d1117a180d6eeb268c9cb5bc882bb1c2ba2e1d1480d2d1"
+      "logSha256": "dfb3dc1186e38e4701e48d487841eb6584e3fc3b9201a20dbecdc77054226ee4"
     },
     {
       "command": [
@@ -1291,7 +1292,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/065.log",
-      "logSha256": "ff9bb5ce38771a376ede32323afc0b2ebf8b0d5e7e2b69bf9b0a65e7bc6a04cd"
+      "logSha256": "d98095223dd6126e4ebb89cc0cd0fd1af9cff2c66f7f4d1c012a3dd368901b85"
     },
     {
       "command": [
@@ -1300,7 +1301,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/066.log",
-      "logSha256": "2ec3772dca051feced122d86485eb0099568300c45ccdb970ee905632f6514b4"
+      "logSha256": "13b233ce3d4d57728bc4a6ea2c272a7abd87861aba77fb45729e26ae7af622c7"
     },
     {
       "command": [
@@ -1408,7 +1409,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/078.log",
-      "logSha256": "1ce88971a926f6aa9cb7b2ea5f750908ff6acd0e78859f4a072397d0815a0836"
+      "logSha256": "2f7ea7fe6139c8b04ea4480303263231eb9b9a64d8fb5713c5347a0640ff6970"
     },
     {
       "command": [
@@ -1732,7 +1733,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/114.log",
-      "logSha256": "34c0694dbaa1838df898406a6334479199c0e075cf79f0f72cbe3a4303d53402"
+      "logSha256": "0974fddf75252d0a293afc81135ba9a6e47cd464cb5ccf40f48de6825b1d9d2e"
     },
     {
       "command": [
@@ -2275,72 +2276,5 @@
       "logSha256": "7b63380ee19e7efa4a25801f952feb02cdaa4a814e967ef3499e4fd92959bf5e"
     }
   ],
-  "failedAttempts": [
-    {
-      "command": [
-        ".venv/bin/python",
-        "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
-      ],
-      "exitCode": 1,
-      "logPathAtExecution": "fixtures/validation/core-check-refresh/040.log",
-      "logUnretainedReason": "Initial resume replaced this failed log; recorded digest retained, bytes unavailable",
-      "recordedLogSha256": "cdb59ce9263607676d625d155d754d1e3ce567ac36afd2109148d1319b183b02"
-    },
-    {
-      "command": [
-        ".venv/bin/python",
-        "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-002.log",
-      "logSha256": "00fc0f00126f4b9cbdb8a1f28768dc4acb4428fcbfad3a49e062a416cf4d3f9c"
-    },
-    {
-      "command": [
-        "bun",
-        "scripts/core-ideals/cardinality-tablespec-browser.ts"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-003.log",
-      "logSha256": "40cf27991302b8f23113ab32ac49d172d91ca042d096dea41d9097ba4f984714"
-    },
-    {
-      "command": [
-        "bun",
-        "scripts/core-ideals/cardinality-parquet-browser.ts"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-004.log",
-      "logSha256": "290d3f740d63305422e53768fefcba9105aa9a29aa6e75e604a5d9a533651b44"
-    },
-    {
-      "command": [
-        "bun",
-        "scripts/core-ideals/relationship-tablespec-oracle.ts"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-005.log",
-      "logSha256": "975ccc34a94369deabd968909d762b3ed80dc27f997dff295a4a5992c2258d9e"
-    },
-    {
-      "command": [
-        "bun",
-        "scripts/core-ideals/relationship-tablespec-oracle.ts"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-006.log",
-      "logSha256": "a70766560897a8dec2f7fddbf8d07098b55d99b2bed30fae38d3b9ce8be36019"
-    },
-    {
-      "command": [
-        "bun",
-        "scripts/relationship/avro-parquet-oracle.ts"
-      ],
-      "exitCode": 1,
-      "log": "fixtures/validation/core-check-refresh/failed-007.log",
-      "logSha256": "2b3eb6de8732d823a69b7413cc540ce58e847ed1597323acc11db5eec9f201bb"
-    }
-  ],
-  "expectedBrowser": "153.0.8010.12",
-  "sourceRevision": "a52b881e3d1fa638511c6746f6767788a9a8e5a8"
+  "failedAttempts": []
 }

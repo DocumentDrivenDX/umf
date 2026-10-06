@@ -71,8 +71,9 @@ query/mutation execution, database migration or native/domain equivalence.
 | --- | --- |
 | Relationship ideal admission (two useful priority mappings) | Passed; qualified PostgreSQL and SQL Server mappings |
 | Qualified five-priority relationship delivery | Passed, with explicit target-specific residuals/refusals |
-| Fresh integrated compatibility replay | Passed; 174-command inventory plus 91 post-parent browser refreshes |
-| Broad Bun regression (separate gates excluded) | 2136 tests, 374 files, 130804 assertions, 0 failures |
+| Fresh integrated compatibility replay | Passed; fresh 174-command container inventory at `d05d9ec8` |
+| Broad Bun regression (separate gates excluded) | 2140 tests, 374 files, 130811 assertions, 0 failures |
+| Complete admission/evidence gates and final proof closures | 17 tests across 8 files; all 6 closures verified |
 | Typecheck, schema/package audit and browser build | Passed; 352 schemas / 60 packages |
 | Native-equivalence graduation | Not claimed |
 

@@ -15,7 +15,7 @@
     "scripts/core-ideals/facets-avro-discovery-native.py": "20e4c51560e00dee6f4a0beba207e2a80f974237a9598625aca9bfd12bb56f40",
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
-    "fixtures/validation/facets-avro-discovery-native.json": "7267982752aec7492411b9e99f1b69f49026738cbe5e8e88caae5e8cca47d0f7",
+    "fixtures/validation/facets-avro-discovery-native.json": "b9103219c3f7eaedcd5484a4d9f48225db4af63948766e88d5d306901d944621",
     "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
     "scripts/core-ideals/facets-avro-discovery.ts": "590cb1eb470037dea01a1fd1d47667b39158e16abfa30639ca6819f5fbc2e471",
     "spec/core/schema.json": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19",
@@ -23,13 +23,18 @@
     "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
     "src/adapters/avro/metadata.ts": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775",
     "src/adapters/json-schema/tree.ts": "e1b4756e9d37d681f0cc0a4e722dff7ebfb23e8b6b444a0f0f4463cfa766fc28",
-    "src/index.ts": "030c9559576cd92d1d906ba0dca622ebf28d786f99df718a256fe65957636e15",
+    "src/index.ts": "83d52f0f389f1ba44275e45f20db64a1c4074a8cdca2af28ff8ac08d3575712c",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
     "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/registry/registry.ts": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6",
-    "src/validation/document.ts": "d49d3c8b4d30db243a228707596b515210375cf1eb5d51253a81b783cd638d47",
+    "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-avro-discovery-native.py": [
+      "/work/scripts/core-ideals/facets-avro-discovery-native.py"
+    ]
   }
 }

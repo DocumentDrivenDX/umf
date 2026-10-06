@@ -141,3 +141,48 @@ are distinct from successful final execution.
 closures without repeating their unchanged, already-passing recovery matrices.
 Final publication, raw logs, source qualifications and unique gate outcomes are
 under `fixtures/validation/core-check-refresh/`.
+
+## Integrated container replay (2026-10-05)
+
+The replay checkout is `d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242`, including
+parent `ac800eed03cddcbdcf9bd320dec7a15ecc360d96`. The initial image is
+`sha256:9e4901ea04216fc96e005c61be7ca4444e26ad270a1d8aca13a7de18a1b8b586`.
+Actual runtimes are Bun 1.3.14, Python 3.12.3, jsonschema 4.25.1,
+Chromium 153.0.8010.12, protoc 36.2 and Go 1.27.1 on Linux aarch64.
+
+All 174 retained native/browser commands and six auxiliary commands have
+passed on that source. The auxiliary relationship suite passes 408 tests across
+nine files; package and schema audits pass 60/60 and 352/352. The semantic browser
+replay passes 48 checks and 14 diagnostic comparisons with zero external requests.
+The disjoint regression passes 2,140 tests across 374 files with 130,811
+assertions and zero failures. Two initial shards failed three five-second tests;
+all three pass on bounded serial retry with the original limits. Both failed
+shard logs are retained. Publication passes for all 24 proof roots. The resumed 2026-10-06 admission
+run passes all 17 tests across eight files (211 assertions), and the container
+verifies all six current proof closures. The affected API replay passes 213 tests
+across 33 files (5,143 assertions). The sealed unique union is 2,157 tests across
+382 files; auxiliary and affected overlaps are excluded.
+
+The interrupted gate attempt passed 16 tests and failed Cardinality after
+46,285,174 ms against its 600,000 ms limit. Its log remains at
+`container-gates-attempt-1.log`; it does not count toward acceptance. The resumed
+complete run passes in 1,032.85 seconds with unchanged test limits.
+
+Serial regression retry uses image
+`sha256:71fe0ad6ae856e01c98ee2ae1837052249b1645ffe27acda8aded1fde4776743`;
+publication and finalization use
+`sha256:b3d0d4a17ca61cabdd3647c804b6b3a4d63735c4f13fef73888395b5702ce4a7`.
+The latter retires only the three deleted parent API paths, retains their old
+digests, and records the exact publication-tool digest. Library/native/test
+source remains `d05d9ec8`; Docker-only runner changes and publication-only tooling
+are qualified separately. Build logs, image identities, failed attempts and
+execution manifests remain under `fixtures/validation/core-check-refresh/`.
+
+Final documentation publication refreshes fingerprints without replaying
+unchanged native or recovery matrices; a subsequent container integrity check
+verifies all six final closures before sealing. Native equivalence, publisher
+validator parity and broader adapter support remain unclaimed.
+
+The superseded `3a601c45` attempt is an archived changed-file overlay under
+`fixtures/validation/core-check-refresh/history/`; unchanged bytes remain at its
+Git revision. It does not establish verification of the integrated source.

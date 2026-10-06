@@ -4,97 +4,97 @@
   "cases": [
     {
       "name": "one-or-more-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x109085680>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff59f8dd80>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "boolean-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13db553c0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required boolean field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff52bda0c0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required boolean field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "binary-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x109f00b40>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required binary field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff59fa4ec0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required binary field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "int32-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x109172640>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int32 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff52950680>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int32 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "many-to-one-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x12b22a680>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff59f94580>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "one-to-one-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e177fc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff531407c0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "many-to-many-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e1769c0>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbc40>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "bounded-required-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194380>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbdc0>\nrequired group field_id=-1 Source {\n  required group field_id=-1 reference (List) {\n    repeated group field_id=-1 list {\n      required group field_id=1 element {\n        required int64 field_id=2 key_0;\n      }\n    }\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "owned-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194580>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbcc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "undirected-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e1942c0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbbc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "self-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e177f00>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff52e8a280>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "alternate-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194880>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required binary field_id=2 key_0 (String);\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff59fa4f40>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required binary field_id=2 key_0 (String);\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "composite-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194c80>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n    required binary field_id=3 key_1 (String);\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbfc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n    required binary field_id=3 key_1 (String);\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "unknown-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194bc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fba00>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "nullable-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194e00>\nrequired group field_id=-1 Source {\n  optional group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff525fbf40>\nrequired group field_id=-1 Source {\n  optional group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     },
     {
       "name": "facet-report",
-      "schema": "<pyarrow._parquet.ParquetSchema object at 0x13e194cc0>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
+      "schema": "<pyarrow._parquet.ParquetSchema object at 0xffff52610500>\nrequired group field_id=-1 Source {\n  required group field_id=1 reference {\n    required int64 field_id=2 key_0;\n  }\n}\n",
       "rows": 2,
       "graphEnforcement": false
     }

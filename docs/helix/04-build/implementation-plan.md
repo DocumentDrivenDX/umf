@@ -5438,3 +5438,15 @@ The parent advanced to `ac800eed` during the container replay and amended routin
 metadata APIs and inherited validators. Integrate that revision, preserve the
 completed `3a601c45` native/auxiliary replay as historical execution, and rerun the
 full inventory and regression on the integrated source before final publication.
+
+Container repair completed on 2026-10-06. The integrated source `d05d9ec8`
+passes the complete 174-command native/browser inventory, six auxiliary commands,
+2,140 disjoint regression tests and all 17 admission/evidence gates. All six
+proof closures verify; the affected API replay passes 213 tests. The sealed
+unique union is 2,157 tests across 382 files. Failed timing attempts and the
+interrupted gate run are retained separately. Publication retires the three
+deleted parent API fingerprints explicitly and qualifies publication-only
+tooling separately from the unchanged execution source. Final documentation
+fingerprints and proof integrity are refreshed before final sealing. See
+[repair evidence](evidence/core-check-repair.md); native equivalence and publisher
+validator parity remain unclaimed.

@@ -1,0 +1,38 @@
+{
+  "sourceRevision": "d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242",
+  "imageId": "sha256:9e4901ea04216fc96e005c61be7ca4444e26ad270a1d8aca13a7de18a1b8b586",
+  "build": {
+    "command": [
+      "docker",
+      "build",
+      "-t",
+      "umf-core-replay",
+      "docker/core-replay"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-check-refresh/docker-build.log",
+    "logSha256": "6a0d01aafb663c30dee46146e700f3be06b45e34e274935951c53827581e53dd"
+  },
+  "supersededAttempt": {
+    "path": "fixtures/validation/core-check-refresh/history/3a601c45-container-attempt.tar.gz",
+    "sha256": "dc3996f87cda6db860802224eba8ab00fd4d53a619929e3e7633046440b38fff",
+    "sourceRevision": "3a601c45",
+    "scope": "Overlay on Git source 3a601c45; unchanged bytes remain at that revision. Native/auxiliary replay completed; regression stopped when parent APIs advanced. Historical only."
+  },
+  "serialRetryRunner": {
+    "revision": "385ef3dbac98b5beeefe5b8f8f28ccbad51f6b3e",
+    "imageId": "sha256:71fe0ad6ae856e01c98ee2ae1837052249b1645ffe27acda8aded1fde4776743",
+    "buildExitCode": 0,
+    "buildLog": "fixtures/validation/core-check-refresh/docker-serial-build.log",
+    "buildLogSha256": "7f72e2637b6ba667d79eef3a505dbd7d30301c3dc921c792784c20b8e3f90da0",
+    "scope": "Docker-only bounded serial retry and finalization; library source remains d05d9ec8."
+  },
+  "publicationRunner": {
+    "revision": "ae4a4be9",
+    "imageId": "sha256:b3d0d4a17ca61cabdd3647c804b6b3a4d63735c4f13fef73888395b5702ce4a7",
+    "buildExitCode": 0,
+    "buildLog": "fixtures/validation/core-check-refresh/docker-publication-build.log",
+    "buildLogSha256": "679d193dd3b2646b00fe586d9a9404ce50283f2d779978cb8faae65956dab7c7",
+    "scope": "Publication-only retirement of three deleted parent API paths and finalization."
+  }
+}

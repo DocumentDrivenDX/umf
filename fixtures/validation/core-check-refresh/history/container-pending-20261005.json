@@ -1,0 +1,46 @@
+{
+  "complete": false,
+  "sourceRevision": "d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242",
+  "finalizationRevision": "ae4a4be9",
+  "completed": [
+    "174 native/browser commands",
+    "six auxiliary commands",
+    "2140 disjoint regression tests",
+    "publication of 24 proof roots"
+  ],
+  "pending": [
+    "full Docker admission gates",
+    "container proof-integrity record",
+    "affected API replay and final seal"
+  ],
+  "blocker": "Shared OrbStack Docker engine stopped responding during Cardinality admission matrix; no runtime restart attempted because another agent replay shares the engine.",
+  "hostChecks": {
+    "typecheck": "passed",
+    "focused": {
+      "command": [
+        "bun",
+        "test",
+        "tests/semantic-types/core.test.ts",
+        "tests/core/selection.test.ts",
+        "tests/core/schema-properties.test.ts"
+      ],
+      "passed": 70,
+      "failed": 0,
+      "assertions": 299,
+      "files": 3,
+      "log": "fixtures/validation/core-check-refresh/host-focused.log",
+      "sha256": "200b41616ebff84c784bd3ee5f0f2016e918a68334d39eb6384961f21a660503"
+    },
+    "proofIntegrity": {
+      "command": [
+        "bun",
+        "scripts/verify-current-core-evidence.ts"
+      ],
+      "exitCode": 0,
+      "concepts": 6,
+      "log": "fixtures/validation/core-check-refresh/host-integrity.log",
+      "sha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+    }
+  },
+  "scope": "Intermediate execution status only; previous final acceptance and gate totals remain historical."
+}
