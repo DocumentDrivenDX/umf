@@ -1,0 +1,25 @@
+{
+  "sourceRevision": "be6509ec",
+  "scope": "Current-only core 0.8 key tuple fix; repository-wide native admission remains pending",
+  "browser": "153.0.8010.12",
+  "bun": "1.3.14",
+  "imageId": "sha256:0f7123c9c2d452a083b503ca06b73a17fec6725563a8771923b0be94d212ff7d",
+  "core": {
+    "passed": 178,
+    "failed": 0,
+    "assertions": 4616,
+    "files": 27
+  },
+  "focused": {
+    "passed": 84,
+    "failed": 0,
+    "assertions": 1435,
+    "files": 7
+  },
+  "browserHarnesses": 6,
+  "logs": {
+    "fixtures/validation/current-key-tuple-fix/chromium.log": "9f11edde8992a0417472f03031141a4e76e3086cdd4f86f10b753476bd3bdd04",
+    "fixtures/validation/current-key-tuple-fix/core-regression.log": "11b544220256d58e531d2e05e72874be87085217d6bcd1428014f12c51d46195",
+    "fixtures/validation/current-key-tuple-fix/focused-regression.log": "7a28c96460e1514cec56426e150ba17baac4d5d9769e77c92153ee943e614fb2"
+  }
+}

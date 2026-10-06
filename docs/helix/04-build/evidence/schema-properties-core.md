@@ -218,3 +218,28 @@ After integrating the concurrent upstream changes through `cdd0070c`, a fresh
 core-only replay passes 177 tests across 27 files with 4,586 assertions; both
 source and tool TypeScript checks pass. This verifies the simplified core API,
 not a fresh full repository or integrated native qualification run.
+
+## Current-only key tuple correction (2026-10-06)
+
+The owner explicitly removed previous-document support from the tuple operation.
+`encodeCoreKeyTuple` now validates the actual core 0.8.0 document rather than
+dispatching to 0.6.0/0.7.0 validators. The exported current operation schema and
+result version 3.0.0 retain that exact source; older documents and result versions
+refuse. The `umf-key-tuple-v1` byte/equality profile remains unchanged. Allowed
+values, numeric ranges and both length bounds are checked for every component;
+defaults never supply a missing key component.
+
+The exact-file core run passes 178 tests / 4,616 assertions across 27 files. A
+non-overlapping affected-file run passes 84 tests / 1,435 assertions across seven
+files; these counts overlap the core run and must not be added. Typechecking and
+all 347 schemas / 59 packages pass. Six harnesses pass in Chromium 153.0.8010.12:
+tuple encoding, Key transition, public Key operations, public Relationship
+operations, SQL Server encoding examples and schema properties. The tuple matrix
+has 65 cases, 29 encodings, 36 refusals and 58 serialization recoveries, with no
+getter execution or external requests. Actual logs and runtime pins are retained
+in `fixtures/validation/current-key-tuple-fix/`.
+
+The prior 174-command native replay qualifies its recorded earlier source only.
+It does not establish current native admission after this correction. Repository
+regression/evidence gates and publication still need fresh completion; system
+sleep interrupted the earlier retry and caused a long elapsed-time timeout.
