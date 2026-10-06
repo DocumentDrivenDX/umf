@@ -7,3 +7,4 @@ export {default as coreCardinalitySelectionSchema} from '../../spec/core/cardina
 export {default as coreElementSelectionSchema} from '../../spec/core/element-selection.schema.json';
 export {default as coreFieldSelectionSchema} from '../../spec/core/field-selection.schema.json';
 export {default as coreNullabilitySelectionSchema} from '../../spec/core/nullability-selection.schema.json';
+export {default as coreSemanticTypesSelectionSchema} from '../../spec/core/semantic-types-selection.schema.json';

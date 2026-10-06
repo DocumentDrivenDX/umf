@@ -19,8 +19,8 @@ for(const proposal of graph.relationshipProposals){
  const inverse=proposal.assertion.inverse,targetType=schema.getType(proposal.assertion.target[0].element) as any;
  if(inverse)assert(targetType?.getFields()[inverse]);
 }
-const process=Bun.spawn(['/home/erik/Projects/umf/.venv/bin/python','scripts/relationship/graphql-target-native.py'],{stdout:'pipe',stderr:'pipe'});
-const [stdout,stderr,code]=await Promise.all([new Response(process.stdout).text(),new Response(process.stderr).text(),process.exited]);
+const child=Bun.spawn([process.env.UMF_PYTHON_PATH??'.venv/bin/python','scripts/relationship/graphql-target-native.py'],{stdout:'pipe',stderr:'pipe'});
+const [stdout,stderr,code]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
 assert.equal(code,0,stderr||stdout);
 const native=JSON.parse(stdout);
 const files=[base+'expected-relationships.graphql',base+'base.json','scripts/relationship/graphql-target-native.py'];

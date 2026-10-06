@@ -1,0 +1,65 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.14kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [ 1/10] FROM docker.io/library/ubuntu:24.04@sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55
+#4 resolve docker.io/library/ubuntu:24.04@sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 6.97kB done
+#5 DONE 0.0s
+
+#6 [ 4/10] COPY oracle-requirements.txt shacl-requirements.txt /tmp/req/
+#6 CACHED
+
+#7 [ 7/10] RUN set -eux; arch="$(dpkg --print-architecture)"; case "$arch" in arm64) protoarch=aarch_64;; amd64) protoarch=x86_64;; esac;     curl -fsSL -o /tmp/protoc.zip "https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-${protoarch}.zip";     unzip -q /tmp/protoc.zip -d /usr/local; rm /tmp/protoc.zip
+#7 CACHED
+
+#8 [ 5/10] RUN python3.12 -m venv /opt/venv     && pip install --no-cache-dir -r /tmp/req/oracle-requirements.txt -r /tmp/req/shacl-requirements.txt     && pip install --no-cache-dir pydantic==2.11.10 jsonschema==4.25.1 great-expectations==1.15.1 rdflib==7.6.0 linkml-runtime==1.11.0rc2
+#8 CACHED
+
+#9 [ 6/10] RUN bun x playwright@1.63.0 install --with-deps chromium && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [ 3/10] RUN set -eux; arch="$(dpkg --print-architecture)";     case "$arch" in arm64) bunarch=aarch64; goarch=arm64; dockarch=aarch64;; amd64) bunarch=x64; goarch=amd64; dockarch=x86_64;; esac;     curl -fsSL -o /tmp/bun.zip "https://github.com/oven-sh/bun/releases/download/bun-v1.3.14/bun-linux-${bunarch}.zip";     unzip -q /tmp/bun.zip -d /tmp/bun; mkdir -p /opt/bun/bin; mv /tmp/bun/bun-linux-${bunarch}/bun /opt/bun/bin/bun; ln -s bun /opt/bun/bin/bunx; rm -rf /tmp/bun /tmp/bun.zip;     curl -fsSL "https://go.dev/dl/go1.27.1.linux-${goarch}.tar.gz" | tar -C /usr/local -xz;     curl -fsSL "https://download.docker.com/linux/static/stable/${dockarch}/docker-29.4.0.tgz" | tar -xz -C /tmp;     mv /tmp/docker/docker /usr/local/bin/docker; rm -rf /tmp/docker;     ln -s "$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")" /usr/lib/jvm/umf-java-21
+#10 CACHED
+
+#11 [ 2/10] RUN apt-get update && apt-get install -y --no-install-recommends       ca-certificates curl unzip git xz-utils build-essential pkg-config       python3.12 python3.12-venv python3.12-dev openjdk-21-jdk-headless flatbuffers-compiler ripgrep     && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [ 8/10] WORKDIR /work
+#12 CACHED
+
+#13 [ 9/10] COPY replay.py seal.py /opt/
+#13 DONE 0.0s
+
+#14 [10/10] RUN pip install --no-cache-dir uv==0.12.23
+#14 0.422 Collecting uv==0.12.23
+#14 0.473   Downloading uv-0.12.23-py3-none-manylinux_2_28_aarch64.whl.metadata (11 kB)
+#14 0.481 Downloading uv-0.12.23-py3-none-manylinux_2_28_aarch64.whl (19.9 MB)
+#14 0.796    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.9/19.9 MB 60.0 MB/s eta 0:00:00
+#14 0.972 Installing collected packages: uv
+#14 1.115 Successfully installed uv-0.12.23
+#14 DONE 1.2s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 0.7s done
+#15 exporting manifest sha256:46c942d16919d2e09d97ae2ddddd551961b3be42434d4db17e6333bd0de771f3 0.0s done
+#15 exporting config sha256:7e83f83c3862b17bb71eb2b974c6f1e27f566a15c6d6558aad11cbfdc52d9439 done
+#15 exporting attestation manifest sha256:7ac5348950e34daefd7804d190813ba213f68539b9447230635ec130bc99bcbf 0.0s done
+#15 exporting manifest list sha256:b3d0d4a17ca61cabdd3647c804b6b3a4d63735c4f13fef73888395b5702ce4a7 done
+#15 naming to docker.io/library/umf-core-replay:latest done
+#15 unpacking to docker.io/library/umf-core-replay:latest
+#15 unpacking to docker.io/library/umf-core-replay:latest 0.2s done
+#15 DONE 0.9s

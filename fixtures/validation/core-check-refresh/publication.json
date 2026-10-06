@@ -1,0 +1,43 @@
+{
+  "complete": true,
+  "baselineRevision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+  "nativeBrowserCommands": 174,
+  "regression": {
+    "passed": 2140,
+    "failed": 0,
+    "assertions": 130811,
+    "files": 374
+  },
+  "browser": "153.0.8010.12",
+  "normalizedProofPaths": [],
+  "publishedRoots": [
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json",
+    "fixtures/validation/avro-facets-acceptance-evidence.json",
+    "fixtures/validation/avro-nullability-acceptance-evidence.json",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json",
+    "fixtures/validation/facet-core-acceptance-evidence.json",
+    "fixtures/validation/field-core-acceptance-evidence.json",
+    "fixtures/validation/field-gate-refresh-evidence.json",
+    "fixtures/validation/field-postgresql-acceptance-evidence.json",
+    "fixtures/validation/field-tablespec-acceptance-evidence.json",
+    "fixtures/validation/key-gate-refresh-evidence.json",
+    "fixtures/validation/nullability-core-acceptance-evidence.json",
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
+    "fixtures/validation/parquet-facets-acceptance-evidence.json",
+    "fixtures/validation/parquet-nullability-acceptance-evidence.json",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json",
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json",
+    "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json",
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json",
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json"
+  ],
+  "execution": {
+    "path": "fixtures/validation/core-check-refresh/native-browser.json",
+    "sha256": "42acc23c6a6a53ba89e677b623f44def4cd9ea7d27b9fa1e9e495b3e1e26eb6c"
+  }
+}

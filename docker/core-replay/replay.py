@@ -1,5 +1,5 @@
 """Run the retained acceptance inventory in a disposable, committed checkout."""
-import argparse, hashlib, importlib.metadata, json, os, platform, subprocess
+import argparse, hashlib, importlib.metadata, json, os, platform, shutil, subprocess
 from pathlib import Path
 
 out = Path('fixtures/validation/core-check-refresh')
@@ -23,18 +23,50 @@ def run(command, name=None):
     else:
         subprocess.run(command, check=True)
 
+def retry_regression_serially():
+    manifest = out / 'regression.json'
+    record = json.loads(manifest.read_text())
+    for index, row in enumerate(record['runs']):
+        if row['exitCode'] == 0:
+            assert hashlib.sha256(Path(row['log']).read_bytes()).hexdigest() == row['logSha256']
+            continue
+        original = Path(row['log'])
+        attempt = len(record.setdefault('failedAttempts', [])) + 1
+        retained = out / f'regression-serial-failed-{index + 1}-{attempt}.log'
+        shutil.copyfile(original, retained)
+        record['failedAttempts'].append({**row, 'log': str(retained), 'logSha256': hashlib.sha256(retained.read_bytes()).hexdigest()})
+        print(json.dumps({'serialRetry': index + 1, 'command': row['command']}), flush=True)
+        with original.open('wb') as stream:
+            result = subprocess.run(row['command'], stdout=stream, stderr=subprocess.STDOUT)
+        row.update(exitCode=result.returncode, logSha256=hashlib.sha256(original.read_bytes()).hexdigest())
+        manifest.write_text(json.dumps(record, indent=2) + '\n')
+        if result.returncode:
+            raise SystemExit('Sequential regression retry failed; inspect ' + str(original))
+
+
 parser = argparse.ArgumentParser()
-parser.add_argument('stage', choices=['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'all'])
+parser.add_argument('stage', choices=['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal', 'all'])
 parser.add_argument('--resume', action='store_true')
 args = parser.parse_args()
 out.mkdir(parents=True, exist_ok=True)
 python = '.venv/bin/python'
-stages = ['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates'] if args.stage == 'all' else [args.stage]
+stages = ['prepare', 'native', 'auxiliary', 'regression', 'publish', 'gates', 'seal'] if args.stage == 'all' else [args.stage]
 for stage in stages:
+    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    if stage != 'prepare' or args.resume:
+        assert json.loads((out / 'container-runtime.json').read_text())['sourceRevision'] == revision, 'Replay source revision changed; start a fresh execution'
+    guarded = ['src', 'scripts', 'spec', 'tests', 'native', 'package.json', 'bun.lock']
+    if stage in ['publish', 'gates', 'seal']:
+        guarded.append(':(exclude)scripts/publish-core-check-refresh.py')
+        runtime = json.loads((out / 'container-runtime.json').read_text())
+        runtime['finalizationPublisher'] = {'path': 'scripts/publish-core-check-refresh.py', 'sha256': hashlib.sha256(Path('scripts/publish-core-check-refresh.py').read_bytes()).hexdigest(), 'scope': 'Publication-only tooling; native, auxiliary and regression execution source remains sourceRevision.'}
+        (out / 'container-runtime.json').write_text(json.dumps(runtime, indent=2) + '\n')
+    subprocess.run(['git', 'diff', '--exit-code', 'HEAD', '--', *guarded], check=True)
     if stage == 'prepare':
         if not Path('.venv').exists(): Path('.venv').symlink_to('/opt/venv', target_is_directory=True)
         revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-        runtime = {'sourceRevision': revision, 'imageId': os.environ.get('UMF_REPLAY_IMAGE_ID'),
+        parents = subprocess.check_output(['git', 'log', '-1', '--merges', '--format=%P'], text=True).split()
+        runtime = {'sourceRevision': revision, 'parentRevision': parents[1] if len(parents) == 2 else None, 'imageId': os.environ.get('UMF_REPLAY_IMAGE_ID'),
                    'platform': platform.platform(), 'python': platform.python_version(),
                    'jsonschema': importlib.metadata.version('jsonschema'),
                    'bun': subprocess.check_output(['bun', '--version'], text=True).strip(),
@@ -48,12 +80,24 @@ for stage in stages:
         command = [python, 'scripts/refresh-core-checks.py']
         if stage != 'native': command.append('--' + stage)
         if args.resume and stage in ['native', 'regression']: command.append('--resume')
-        run(command)
+        if stage == 'regression':
+            if not args.resume or not (out / 'regression.json').exists():
+                result = subprocess.run(command)
+                if result.returncode == 0: continue
+            retry_regression_serially()
+        else:
+            run(command)
     elif stage == 'publish':
         run(['bun', 'scripts/core-schema-properties-oracle-inputs.ts'], 'container-schema-properties-inputs')
         run([python, 'scripts/core-schema-properties-oracle.py'], 'container-schema-properties-oracle')
+        run(['bun', 'scripts/core-semantic-types-oracle-inputs.ts'], 'container-semantic-inputs')
+        run([python, 'scripts/core-semantic-types-oracle.py'], 'container-semantic-oracle')
         run(['bun', '-e', "import {relationshipSourceHashes} from './scripts/core-ideals/relationship-gate-inputs'; await Bun.write('fixtures/validation/core-check-refresh/relationship-source-hashes.json', JSON.stringify(await relationshipSourceHashes(), null, 2));"])
         run([python, 'scripts/publish-core-check-refresh.py'], 'container-publication')
+    elif stage == 'seal':
+        historical = json.loads(subprocess.check_output(['git', 'show', '59c3c424:fixtures/validation/core-check-refresh/finalization.json']))
+        run(historical['runs'][0]['command'], 'container-affected')
+        run([python, '/opt/seal.py'])
     elif stage == 'gates':
         gates = sorted(str(p) for p in Path('tests/core-ideals').glob('*.test.ts') if p.name.endswith(('conformance.test.ts', 'evidence.test.ts')))
         run(['bun', 'test', *gates], 'container-gates')

@@ -30,6 +30,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
    assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
   }
  }
+ const refresh=await load('fixtures/validation/field-gate-refresh-evidence.json');
  const records=[];
  for(const name of ['nullability-core-acceptance-evidence',...nullabilitySystems.map(s=>s+'-nullability-acceptance-evidence')]){
   const path=`fixtures/validation/${name}.json`,record=await load(path);
@@ -44,7 +45,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   }
   await verify(record,name);records.push({path,sha256:await hash(path)});
  }
- const refresh=await load('fixtures/validation/field-gate-refresh-evidence.json');
+
  assert.equal(refresh.regression.failures,0);assert.ok(refresh.regression.tests>=340);
  for(const run of refresh.runs)assert.equal(run.exitCode,0,`Failed command ${run.command}`);
  for(const system of nullabilitySystems){

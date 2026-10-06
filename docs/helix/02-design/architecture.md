@@ -125,6 +125,8 @@ encoding or temporal behavior. The versioned envelope inventory is:
 | 0.5.0 | Author-stated facets | Constraints retain explicit domains and unsupported/native-only refinements |
 | 0.6.0 | Named stable Key identities and ordered Field components | Native indexes, comparison and NULL semantics remain qualified |
 | 0.7.0 | Stable authored relationships between independently keyed Records | Target Key, participation, lifecycle, inverse and association Record intent do not imply physical enforcement |
+| 0.8.0 | Shared schema properties and explicit literal defaults | Value constraints and default substitution retain qualified domains |
+| 0.9.0 | Exact semantic-type references | Vocabulary publishers own definitions and explicitly installed validators |
 
 The schemas in [spec/core](../../../spec/core/) and operations preserve older
 versions through explicit migration/rollback receipts rather than silently
@@ -133,6 +135,19 @@ through Key have dated admission/five-system evidence, including the
 [Key admission record](../04-build/evidence/key-gate-admission.md).
 Relationship [core acceptance](../../../fixtures/validation/relationship-core-acceptance-evidence.json)
 and individual bindings are delivered. The separate [relationship gate](../../../fixtures/validation/relationship-conformance.json) admits the authored ideal and qualified five-priority delivery with explicit residuals and refusals.
+
+The owner clarified on 2026-10-04 that the ability to point to semantic types
+belongs in core. The element field `semanticTypes` in experimental core 0.9.0 contains exact
+`{vocabulary, version, term}` references; vocabulary publishers own the meanings
+and validators. Core validates reference structure and preserves unknown terms
+without interpreting them as scalar families or loading executable code.
+[CONTRACT-051](contracts/CONTRACT-051-semantic-types.md) governs this boundary.
+The existing `umf.semantic-types` 0.1.0 extension is an interim prototype;
+its original tests establish prototype behavior; separate core tests and public
+browser evidence qualify 0.9.0 delivery.
+Core 0.9.0 layers the reference surface on the concurrent core 0.8.0 schema
+properties revision. Explicit migration and rollback must preserve existing extension
+annotations and collisions with previously opaque `semanticTypes` content.
 
 Core has two distinct gates. **Ideal admission** defines UMF meaning: a written
 meaning, counterexamples, down-projections to at least two of the five priority

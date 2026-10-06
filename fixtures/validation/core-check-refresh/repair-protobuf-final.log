@@ -1,0 +1,31 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/protobuf/behavior.test.ts:
+(pass) US-003-AC6: independent native runtime behavior survives and detects semantic mutations [650.94ms]
+
+tests/protobuf/descriptor.test.ts:
+(pass) US-003-AC1: descriptor presence, source metadata, options and exact defaults survive JSON/YAML [641.87ms]
+(pass) US-003-AC2: typed candidate edit changes independent native compiler output [562.16ms]
+(pass) US-003-AC3: invalid values and unknown representation fields fail without source mutation [210.29ms]
+(pass) US-003-AC1: unknown descriptor wire fields survive and explicit defaults retain presence [0.09ms]
+(pass) US-003-AC4: independent compiler decodes identical descriptors across authored and standard corpus [706.29ms]
+
+tests/protobuf/emission.test.ts:
+(pass) US-003-AC8: native source emission recompiles without semantic loss and reflects edits [1236.13ms]
+(pass) US-003-AC8: source emission refuses unknown semantics with no source representation [742.91ms]
+(pass) US-003-AC8: standard corpus emission reports each native root and unsupported Editions [6720.62ms]
+
+tests/protobuf/source.test.ts:
+(pass) US-003-AC7: native source bundle compiles into editable descriptors with source archive [898.60ms]
+
+tests/projections/json-schema-protobuf.test.ts:
+(pass) US-004-AC1: explicit mapping reports every unsupported constraint and retains exact source [295.40ms]
+(pass) US-004-AC2: strict policy, missing/conflicting bindings and ambiguous shapes block explicitly [113.65ms]
+(pass) US-004-AC3: nested referenced objects compile without merging native identity [436.02ms]
+(pass) US-004-AC4: independent target compiler/runtime demonstrates reported source-to-target mismatches [535.20ms]
+(pass) US-004-AC2: unknown dialect and nested resource scope cannot be guessed away [26.06ms]
+
+ 15 pass
+ 0 fail
+ 146 expect() calls
+Ran 15 tests across 5 files. [17.39s]

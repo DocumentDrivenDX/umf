@@ -2,10 +2,14 @@ import {expect,test} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import {classifyPostgresqlRelationships,copyJson,getPostgresqlSource,importPostgresqlSql,projectRelationshipsToPostgresql,recoverPostgresqlRelationshipSource,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative,readDocument,writeDocument,Registry,postgresqlRelationshipsPackage} from '../../src';
 import {postgresqlRelationshipCases} from '../../scripts/core-ideals/relationship-postgresql-cases';
+// Build the authored matrix once; each test still receives isolated JSON copies.
+const authoredCases=postgresqlRelationshipCases();
+const cases=()=>copyJson(authoredCases) as unknown as typeof authoredCases;
+const firstCase=()=>copyJson(authoredCases[0]!) as unknown as typeof authoredCases[number];
 
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 test('qualified PostgreSQL FK/junction projection matrix retains authored meaning in both modes',async()=>{
- for(const c of postgresqlRelationshipCases()){
+ for(const c of cases()){
   const before=copyJson(c),r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);
   expect(r.status,c.id+JSON.stringify(r.diagnostics)).toBe(c.expected);expect(copyJson(c)).toEqual(before);
   expect(r.source).toEqual(c.source);expect(r.physicalBinding).toEqual(c.binding);
@@ -30,13 +34,13 @@ test('raw native NOT VALID, MATCH and actions stay observations with exact unkno
  const changed=copyJson(r) as unknown as typeof r;changed.observations[0]!.onDelete='cascade';await expect(recoverPostgresqlRelationshipSource(changed,r.target!,backend)).rejects.toThrow();
 });
 test('sequential declarations remain valid while stale endpoint components and native edits refuse',async()=>{
- const c=postgresqlRelationshipCases()[0]!;expect(c.authors[0]!.target.modules[0]!.relationships).toHaveLength(1);expect(c.source.modules[0]!.relationships).toHaveLength(2);
+ const c=firstCase();expect(c.authors[0]!.target.modules[0]!.relationships).toHaveLength(1);expect(c.source.modules[0]!.relationships).toHaveLength(2);
  const r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);expect(r.status).toBe('projected');
  const altered=await importPostgresqlSql(r.nativeSql!+'\n-- edit',backend,{id:'changed'});await expect(recoverRelationshipPostgresqlIdeal(r,altered,backend)).rejects.toThrow();
  const field=c.source.modules[0]!.elements.find(e=>e.id==='field_Customer_id')!;field.description='changed since authoring';await expect(projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend)).rejects.toThrow();
 });
 test('public classification and projection do not invoke getters',async()=>{
- const c=postgresqlRelationshipCases()[0]!;let called=0;Object.defineProperty(c.request,'mode',{enumerable:true,get(){called++;return 'report';}});
+ const c=firstCase();let called=0;Object.defineProperty(c.request,'mode',{enumerable:true,get(){called++;return 'report';}});
  await expect(projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend)).rejects.toThrow();expect(called).toBe(0);
 });
 
@@ -57,6 +61,6 @@ test('unqualified native target remains explicitly unresolved, never missing',as
 });
 
 test('anonymous junction system-column names refuse before native emission',async()=>{
- const c=postgresqlRelationshipCases().find(c=>c.id==='anonymous-junction')!;c.request.policy.relationshipLayouts[1]!.sourceComponents![0]!.carrierColumn='xmin';
+ const c=cases().find(c=>c.id==='anonymous-junction')!;c.request.policy.relationshipLayouts[1]!.sourceComponents![0]!.carrierColumn='xmin';
  const r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);expect(r.status).toBe('blocked');expect(r.nativeSql).toBeUndefined();expect(r.residuals.some(x=>x.reason.includes('system column'))).toBe(true);
 });

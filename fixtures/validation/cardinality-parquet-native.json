@@ -33,9 +33,9 @@
     "fixtures/validation/cardinality-parquet-projection-native.json"
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-parquet-carrier-native.py": "d3c725eacc47d1e6467d41aea1d992dec8410b09bba06283a3bc54b587b51cc2",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-parquet-native.py": "620186388cd69b608162ba183c4276b8e20485fb5561181785b27698743f05d6",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-parquet-projection-native.py": "f7794b19cc9ff3566d743405fa18cc337f920c1d0f41a79c77cfadc8e651bc80",
+    "scripts/core-ideals/cardinality-parquet-carrier-native.py": "d3c725eacc47d1e6467d41aea1d992dec8410b09bba06283a3bc54b587b51cc2",
+    "scripts/core-ideals/cardinality-parquet-native.py": "620186388cd69b608162ba183c4276b8e20485fb5561181785b27698743f05d6",
+    "scripts/core-ideals/cardinality-parquet-projection-native.py": "f7794b19cc9ff3566d743405fa18cc337f920c1d0f41a79c77cfadc8e651bc80",
     "fixtures/parquet/cardinality-carriers/array-binary-0.parquet": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe",
     "fixtures/parquet/cardinality-carriers/array-binary-1.parquet": "457aa2f7b2d061de096160e17683cf8d644a52bcac8e206727eb2483d5ac43c4",
     "fixtures/parquet/cardinality-carriers/array-boolean-0.parquet": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d",
@@ -279,10 +279,10 @@
     "fixtures/parquet/cardinality/scalar-0.parquet": "2e87a420a6cbb818e2e736a4949280fa3d64e1a302112b58780cc4f57cc69589",
     "fixtures/parquet/cardinality/scalar-1.parquet": "9f24ac313b18efca4eb1c6d257260d1a89511148bca3c311097be137d6d75490",
     "fixtures/validation/cardinality-parquet-carrier-corpus.json": "90c4e50745d86560822d1b219e4843bb931dbef36e1788270ef83d0f46a722e7",
-    "fixtures/validation/cardinality-parquet-carrier-native.json": "322b43d38d68191fdd07a13b49d572e550628f5bb5f7cc29f951d933ecc74b27",
-    "fixtures/validation/cardinality-parquet-profile-native.json": "99d2631a03970579c9a562017152305eefb7190e68d86241cde209546afa08ec",
+    "fixtures/validation/cardinality-parquet-carrier-native.json": "91c2ec67e0954416d61910c45939e1d742609f75fadad969ca7bcfbb5913d343",
+    "fixtures/validation/cardinality-parquet-profile-native.json": "beac292561f5f189f1d81b2d77f080d323e37fa25424a5880e72d273ebbc9e34",
     "fixtures/validation/cardinality-parquet-projection-corpus.json": "49fb56593eca9bd9681ed8c2819f3a9e223139c2a9c7d4e097e83ad49307e4cc",
-    "fixtures/validation/cardinality-parquet-projection-native.json": "f4bf961b8fd90b7f45de0c645e94dddb65f2aeb0482d42561694b7504b13d571",
+    "fixtures/validation/cardinality-parquet-projection-native.json": "f0b1322186ca51f37fd0addcbbeae8898d767d8fa712479b5e6e24bce9a2d6ac",
     "scripts/core-ideals/cardinality-parquet-carrier-cases.ts": "90a1b830710f64477e3f84309c6f1a52f96dfa240219e8e591231dee34af73cc",
     "scripts/core-ideals/cardinality-parquet-carrier-oracle.ts": "7000e291b51be988b4976c85ca6ceb1687e8e291c299358aafe788b8db03eee8",
     "scripts/core-ideals/cardinality-parquet-composition.ts": "3c581ee25df0bc4063d02f73bcfdf249c14d82ada79fe948d2b2bebd9ef53a01",
@@ -296,5 +296,16 @@
     "src/core-ideals/cardinality-parquet-projection.ts": "b9ef913c65c4a71c50a6cbcfc1581fb3054f1d9c5b8ee2101e7dcda7d39b12df",
     "src/core-ideals/cardinality-parquet.ts": "23cda37ec621cc6f67e456ceff1b57a7f7b0201f5a1dd74a9be7638a74b09b8f",
     "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/cardinality-parquet-carrier-native.py": [
+      "/work/scripts/core-ideals/cardinality-parquet-carrier-native.py"
+    ],
+    "scripts/core-ideals/cardinality-parquet-native.py": [
+      "/work/scripts/core-ideals/cardinality-parquet-native.py"
+    ],
+    "scripts/core-ideals/cardinality-parquet-projection-native.py": [
+      "/work/scripts/core-ideals/cardinality-parquet-projection-native.py"
+    ]
   }
 }

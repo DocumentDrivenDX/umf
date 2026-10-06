@@ -1,5 +1,5 @@
 # Pinned replay environment for the core native/browser checks
-# (docs/helix/04-build/evidence/schema-properties-core.md). Build from the repository root:
+# (docs/helix/04-build/evidence/core-check-repair.md). Build from the repository root:
 #   docker build -t umf-core-replay docker/core-replay
 # Sibling oracle containers (PostgreSQL, SQL Server) are started through the host Docker socket.
 FROM ubuntu:24.04
@@ -35,6 +35,8 @@ WORKDIR /work
 
 ENV GOCACHE=/tmp/go-cache UMF_EXPECTED_CHROMIUM_VERSION=153.0.8010.12 \
     UMF_TABLESPEC_PYTHON=.venv/bin/python PYTHONPATH=native/tablespec/sources/src:.cache/tablespec-python
-COPY replay.py /opt/replay.py
+COPY replay.py seal.py /opt/
 ENTRYPOINT ["/opt/venv/bin/python", "/opt/replay.py"]
 CMD ["all"]
+# The multi-target Delta probe explicitly launches uv.
+RUN pip install --no-cache-dir uv==0.12.23

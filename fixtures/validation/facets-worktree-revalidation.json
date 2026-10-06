@@ -2,56 +2,9 @@
   "profile": "facet-worktree-revalidation-1",
   "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
   "historicalIndexCommit": "4b0922f500087d6dbc9797bf80e937a0ace10bee",
-  "scope": "Current facet proof matrix after fresh integrated native/browser replay and full regression. The current exceptions record governed acceptance-ID normalization and the repository test-boundary clarification; native proof content is unchanged.",
-  "driftGroups": {
-    "normalized governed acceptance identifiers": [
-      "docs/helix/01-frame/user-stories/US-043-core-facets.md"
-    ],
-    "clarified canonical live-test discovery": [
-      "docs/helix/03-test/test-plan.md",
-      "docs/helix/04-build/implementation-plan.md"
-    ],
-    "kept synthetic revalidation coverage compatible with current exceptions": [
-      "tests/core-ideals/facets-evidence.test.ts"
-    ],
-    "removed non-exercising vendored citations": [
-      "native/tablespec/sources/tests/unit/test_umf_loader.py"
-    ],
-    "refreshed bounded Protobuf source evidence fields": [
-      "tests/protobuf/descriptor.test.ts",
-      "tests/protobuf/source.test.ts"
-    ]
-  },
-  "changes": {
-    "docs/helix/01-frame/user-stories/US-043-core-facets.md": {
-      "historicalSha256": "6fd9c2ba73fe13454f35d7954a8fdb34e6ed06c207e597af1883413480502244",
-      "currentSha256": "5fa46fdd1dd0c834cb87a66b1d3f186ca543ddf27a1409788a0facca775f6515"
-    },
-    "docs/helix/03-test/test-plan.md": {
-      "historicalSha256": "2d4dc7ec7bb2a997e1231bb34364a9ef37baa795d042864f58374a55d15a5277",
-      "currentSha256": "98bb6f1c5b2ffd591b05cfb9642e2d9c528409e17bdf02a0305c44f43722e8f6"
-    },
-    "docs/helix/04-build/implementation-plan.md": {
-      "historicalSha256": "1dae5e58cc83b0fda7f175285c557ae18eb25f717b9755cae1e575e9fe030945",
-      "currentSha256": "71894767c51ae116adfcf7f89ae0a6a8b1c9262faf30f597ab8d0b49f164d432"
-    },
-    "tests/core-ideals/facets-evidence.test.ts": {
-      "historicalSha256": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
-      "currentSha256": "535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66"
-    },
-    "native/tablespec/sources/tests/unit/test_umf_loader.py": {
-      "historicalSha256": "9f39055e7fcf46a37011e6a1cf0178a28b747bef55f58d7a92a422d3d2f90fc6",
-      "currentSha256": "88944e41ec005412667504bc92f182d2c15f00b9cf83951aca1d091e2f8c0c98"
-    },
-    "tests/protobuf/descriptor.test.ts": {
-      "historicalSha256": "a6d7c37b05e2fcbf8e0b8686ddb18e49ff44f6856de20662fc765806e1a13697",
-      "currentSha256": "f07ad9a6900275beac86b9f1aa50e63e958cf4aec69d25f320e64aa1bdaf76aa"
-    },
-    "tests/protobuf/source.test.ts": {
-      "historicalSha256": "ed2a6963822e6241fbed667356b63310287a471e9dfba3238617055bcba53d9c",
-      "currentSha256": "1b97bc54311c57075fafd9ef73f133a1086ae311845aefb25deb067441fdecfb"
-    }
-  },
+  "scope": "Fresh logged native/browser replay and counted live regression; historical exceptions no longer substitute for current execution",
+  "driftGroups": {},
+  "changes": {},
   "historicalRevalidation": {
     "profile": "facet-worktree-revalidation-1",
     "admissionCommit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
@@ -120,5 +73,14 @@
       }
     }
   },
-  "executionEvidence": "fixtures/validation/field-gate-refresh-evidence.json"
+  "executionEvidence": "fixtures/validation/field-gate-refresh-evidence.json",
+  "previousEvidence": {
+    "revision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
+    "path": "fixtures/validation/facets-worktree-revalidation.json",
+    "sha256": "1865ee28bb9e21726a2b441c49ee0f92b7bb7871939d3f4892266fb03abd363f"
+  },
+  "currentReplay": {
+    "path": "fixtures/validation/core-check-refresh/native-browser.json",
+    "sha256": "42acc23c6a6a53ba89e677b623f44def4cd9ea7d27b9fa1e9e495b3e1e26eb6c"
+  }
 }

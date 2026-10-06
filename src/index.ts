@@ -375,9 +375,17 @@ export * from './core-ideals/relationship-extras';
 export * from './projections/binding-sqlserver';
 export * from './projections/binding-sqlserver/relationship-layout';
 export * from './projections/ddd-postgresql';
+export * from './extensions/semantic-types';
+
 
 export * from './model/schema-properties';
 export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
 export {coreSchemaPropertiesTransitionSchema} from './model/schema-properties-transition-schema';
+export * from './model/semantic-types';
+export * from './model/semantic-types-transition';
+export {default as coreSemanticTypesDocumentSchema} from '../spec/core/semantic-types-document.schema.json';
+export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
+export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
+export {default as coreSemanticTypesTransitionSchema} from '../spec/core/semantic-types-transition.schema.json';

@@ -1,3 +1,4 @@
+import {validateSemanticTypesDocument} from './semantic-types';
 import {validateSchemaPropertiesDocument} from './schema-properties';
 import {validateRelationshipCandidate} from './relationships';
 import {validateKeyCandidate} from './keys';
@@ -17,6 +18,7 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     return {valid: false, complete: false, diagnostics};
   }
   const version=(value as {umf?:unknown}|null)?.umf;
+  if(version==='0.9.0')return validateSemanticTypesDocument(value,registry);
   if(version==='0.8.0')return validateSchemaPropertiesDocument(value,registry);
   const check=version==='0.7.0'?checkCoreRelationships:version==='0.6.0'?checkCoreKeys:version==='0.5.0'?checkCoreFacets:version==='0.4.0'?checkCoreCardinality:version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
   if (!check(value)) {

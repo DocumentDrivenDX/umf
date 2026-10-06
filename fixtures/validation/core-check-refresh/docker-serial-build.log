@@ -1,0 +1,67 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.13kB 0.1s
+#1 transferring dockerfile: 3.14kB 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.4s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [ 1/10] FROM docker.io/library/ubuntu:24.04@sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55
+#4 resolve docker.io/library/ubuntu:24.04@sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 6.36kB done
+#5 DONE 0.0s
+
+#6 [ 3/10] RUN set -eux; arch="$(dpkg --print-architecture)";     case "$arch" in arm64) bunarch=aarch64; goarch=arm64; dockarch=aarch64;; amd64) bunarch=x64; goarch=amd64; dockarch=x86_64;; esac;     curl -fsSL -o /tmp/bun.zip "https://github.com/oven-sh/bun/releases/download/bun-v1.3.14/bun-linux-${bunarch}.zip";     unzip -q /tmp/bun.zip -d /tmp/bun; mkdir -p /opt/bun/bin; mv /tmp/bun/bun-linux-${bunarch}/bun /opt/bun/bin/bun; ln -s bun /opt/bun/bin/bunx; rm -rf /tmp/bun /tmp/bun.zip;     curl -fsSL "https://go.dev/dl/go1.27.1.linux-${goarch}.tar.gz" | tar -C /usr/local -xz;     curl -fsSL "https://download.docker.com/linux/static/stable/${dockarch}/docker-29.4.0.tgz" | tar -xz -C /tmp;     mv /tmp/docker/docker /usr/local/bin/docker; rm -rf /tmp/docker;     ln -s "$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")" /usr/lib/jvm/umf-java-21
+#6 CACHED
+
+#7 [ 5/10] RUN python3.12 -m venv /opt/venv     && pip install --no-cache-dir -r /tmp/req/oracle-requirements.txt -r /tmp/req/shacl-requirements.txt     && pip install --no-cache-dir pydantic==2.11.10 jsonschema==4.25.1 great-expectations==1.15.1 rdflib==7.6.0 linkml-runtime==1.11.0rc2
+#7 CACHED
+
+#8 [ 6/10] RUN bun x playwright@1.63.0 install --with-deps chromium && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [ 7/10] RUN set -eux; arch="$(dpkg --print-architecture)"; case "$arch" in arm64) protoarch=aarch_64;; amd64) protoarch=x86_64;; esac;     curl -fsSL -o /tmp/protoc.zip "https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-${protoarch}.zip";     unzip -q /tmp/protoc.zip -d /usr/local; rm /tmp/protoc.zip
+#9 CACHED
+
+#10 [ 2/10] RUN apt-get update && apt-get install -y --no-install-recommends       ca-certificates curl unzip git xz-utils build-essential pkg-config       python3.12 python3.12-venv python3.12-dev openjdk-21-jdk-headless flatbuffers-compiler ripgrep     && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [ 4/10] COPY oracle-requirements.txt shacl-requirements.txt /tmp/req/
+#11 CACHED
+
+#12 [ 8/10] WORKDIR /work
+#12 CACHED
+
+#13 [ 9/10] COPY replay.py seal.py /opt/
+#13 DONE 0.1s
+
+#14 [10/10] RUN pip install --no-cache-dir uv==0.12.23
+#14 0.631 Collecting uv==0.12.23
+#14 0.688   Downloading uv-0.12.23-py3-none-manylinux_2_28_aarch64.whl.metadata (11 kB)
+#14 0.701 Downloading uv-0.12.23-py3-none-manylinux_2_28_aarch64.whl (19.9 MB)
+#14 1.050    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.9/19.9 MB 53.7 MB/s eta 0:00:00
+#14 1.333 Installing collected packages: uv
+#14 1.505 Successfully installed uv-0.12.23
+#14 DONE 1.6s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 0.9s done
+#15 exporting manifest sha256:2e3a04e85012f2957dc4ef30b24fcfeb13240c857e5a08171fa2df0d38c691c2
+#15 exporting manifest sha256:2e3a04e85012f2957dc4ef30b24fcfeb13240c857e5a08171fa2df0d38c691c2 0.0s done
+#15 exporting config sha256:1ecca741d4e07c37e3a231cd76cf0685cca15059aef10bd2a8c78ea2f21f1ac0 0.0s done
+#15 exporting attestation manifest sha256:db7ad67e26f24a81047a10007c98b9be00fa854de425d62286fcafe555552cf6 0.0s done
+#15 exporting manifest list sha256:71fe0ad6ae856e01c98ee2ae1837052249b1645ffe27acda8aded1fde4776743 0.0s done
+#15 naming to docker.io/library/umf-core-replay:latest done
+#15 unpacking to docker.io/library/umf-core-replay:latest
+#15 unpacking to docker.io/library/umf-core-replay:latest 0.2s done
+#15 DONE 1.2s

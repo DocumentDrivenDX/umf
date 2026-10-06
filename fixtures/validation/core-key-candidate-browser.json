@@ -1,6 +1,6 @@
 {
   "scope": "Experimental 0.6.0 key/membership structural and semantic validation with JSON/YAML metadata recovery; this check does not qualify public entry-point integration, native bindings or ideal admission",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 54,
     "accepted": 15,
@@ -9,19 +9,19 @@
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "89830fece51acd8e55ac4aa6446eb0e714ba3715fdbe14ab37c356a9d8488a85",
+  "bundleSha256": "dfc43ade1b5e46f59e86ebfb421a4b94c943c6589f24e739f80e8ca1d01adfe1",
   "sha256": {
     "scripts/core-key-browser.ts": "f4c3c20cbc18e21f57133ca9268f126031409a02b626d3f41ff9c873c36b7265",
     "scripts/core-key-cases.ts": "83c1391c09e3a6aa7c56c2242de213ee199c4a0019a4d10703a861bd283e4461",
     "scripts/core-key-schema.ts": "88c547e101b4a65147439adf1d494b2156242077a1dcb90337f2f408d87eef48",
-    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/validation/keys.ts": "78d90a75119d16c87c890c3f84e0bab4db2a3e811d103984a735d0904d03a71a",
+    "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
+    "spec/core/key-document.schema.json": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
     "tests/core/key-ideals.test.ts": "88a72ac12b3cd348649347ec0358a7a204c888b1ac2282777ad6ea3ceca4de0a"
   }
 }

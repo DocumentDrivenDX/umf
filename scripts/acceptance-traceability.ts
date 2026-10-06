@@ -41,12 +41,18 @@ function add(index: Map<string, Set<string>>, id: string, path: string, line: nu
 async function indexFiles(paths: string[]) {
   const citations = new Map<string, Set<string>>();
   const mentions = new Map<string, Set<string>>();
-  for (const path of paths) {
-    const lines = (await Bun.file(path).text()).split('\n');
-    lines.forEach((line, offset) => {
-      for (const match of line.matchAll(citationPattern)) add(citations, match[1]!, path, offset + 1);
-      for (const id of line.match(mentionPattern) ?? []) add(mentions, id, path, offset + 1);
-    });
+  // Bounded parallel I/O keeps large ledgers responsive without exhausting
+  // file descriptors. Promise.all preserves the deterministic path order.
+  for (let start = 0; start < paths.length; start += 32) {
+    const batch = paths.slice(start, start + 32);
+    const contents = await Promise.all(batch.map(path => Bun.file(path).text()));
+    for (const [index, path] of batch.entries()) {
+      const lines = contents[index]!.split('\n');
+      lines.forEach((line, offset) => {
+        for (const match of line.matchAll(citationPattern)) add(citations, match[1]!, path, offset + 1);
+        for (const id of line.match(mentionPattern) ?? []) add(mentions, id, path, offset + 1);
+      });
+    }
   }
   return { citations, mentions };
 }

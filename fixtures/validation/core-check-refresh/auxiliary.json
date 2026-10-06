@@ -1,0 +1,69 @@
+{
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core/relationship-ideal.test.ts",
+        "tests/core/relationship-transition.test.ts",
+        "tests/core/relationship-operations.test.ts",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts",
+        "tests/core-ideals/relationship-avro-projection.test.ts",
+        "tests/core-ideals/relationship-parquet.test.ts",
+        "tests/core-ideals/relationship-sqlserver.test.ts",
+        "tests/core-ideals/relationship-postgresql.test.ts",
+        "tests/core-ideals/relationship-extras.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-1.log",
+      "logSha256": "0f8783fd8fe0b085fd573854264e9dc80054baf2a7ddad425d790f94a22e424c"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-tablespec-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-2.log",
+      "logSha256": "a28b3f8f6d00bafb538256a39f6f07a3b3008e860c6f57976d29d96c9101746b"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-3.log",
+      "logSha256": "69e0eb28861ee8c274fc908fd1742ff877118bdf6ae56d538b6b6fb73f7fdabf"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-semantic-types-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-4.log",
+      "logSha256": "e8a13522e2f32d1bd488c9149c5e1b0d913c32e72b8273956465335ae5434c27"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-5.log",
+      "logSha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/auxiliary-6.log",
+      "logSha256": "5da8552b04a88d61cbf5f1f82d6ffc802d47b8b6a660840b9350699e70f4b6bf"
+    }
+  ]
+}

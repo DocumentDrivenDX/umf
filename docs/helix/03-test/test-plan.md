@@ -556,7 +556,7 @@ broader ecosystem demonstrations happen later.
 US-050 is the next governed product slice after the completed relationship and
 binding queue. Test implementation does not begin until CONTRACT-045 settles the
 public package API, package and traversal bounds, revision/digest rules and
-permitted crossing members, and TD-050 translates those decisions into an
+permitted crossing members, and TD-051 translates those decisions into an
 implementable design. TP-001 must then allocate US-050-AC1 through US-050-AC10
 to concrete contract, integration, migration/rollback and actual-browser cases
 before source implementation is authorized.
@@ -3147,3 +3147,23 @@ remain. Unknown length units cover minimum-only, maximum zero, both zero bounds
 and positive maxima in Bun and Chromium, with incomplete validation, refused
 extension edits and recognized-unit controls. See the
 [current scoped evidence](../04-build/evidence/schema-properties-core.md).
+
+## Core semantic references: CONTRACT-051
+
+[TD-051](../02-design/technical-designs/TD-051-semantic-types.md) implements
+experimental core 0.9.0 on the 0.8.0 property envelope. Core owns exact pointing
+structure; publishers own domain meaning and explicitly supplied value validators.
+`tests/semantic-types/core.test.ts` covers structure, absence, opaque old fields,
+copy-on-write declarations, exact identities, unknown qualifiers, conjunction,
+source retention, opt-in extension conversion and verified migration/rollback.
+The earlier extension tests remain compatibility tests for the prototype API.
+
+`core-semantic-types-cases.ts` supplies authored positive/negative boundaries;
+Python jsonschema independently validates the published schema and exact reference
+resource. Structural agreement does not establish inherited semantic correctness
+or native domain equivalence. `core-semantic-types-browser.ts` executes the public
+bundle, compares Bun diagnostics and verifies serialized declarations, selections,
+upgrade/rollback, unknown handling and refusals in Chromium without external fetch.
+Required checks include pinned Bun, TypeScript, package/schema audits, public browser
+build and affected regressions. Historical fingerprint-gate drift is reported
+separately; it must not be rewritten into a passed acceptance claim.

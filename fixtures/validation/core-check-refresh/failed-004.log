@@ -1,0 +1,21 @@
+{"files":30,"columns":44,"containers":34,"embeddedSchemas":15,"recoveries":60}
+{"files":80,"recoveries":160}
+{"cases":120,"classified":76,"blocked":44,"recoveries":152,"forgedRefusals":76}
+{"cases":160,"projected":132,"blocked":28,"recoveries":264,"nativeRecoveries":264,"forgedRefusals":132}
+ 5 | const runs=[];
+ 6 | for(const part of parts){const command=['bun',`scripts/core-ideals/cardinality-parquet-${part}-browser.ts`];const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit',env:process.env});const exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,command.join(' '));}
+ 7 | const paths=['scripts/core-ideals/cardinality-parquet-browser.ts'],checks:Record<string,unknown>={},browsers=new Set<string>();
+ 8 | for(const part of parts){
+ 9 |  const path=`fixtures/validation/cardinality-parquet-${part}-browser.json`,proof=await Bun.file(path).json();
+10 |  assert.ok(proof.browser.startsWith('148.'));assert.deepEqual(proof.externalRequests,[]);browsers.add(proof.browser);checks[part]=proof.checks;
+             ^
+AssertionError: false == true
+ generatedMessage: true,
+     actual: false,
+   expected: true,
+   operator: "==",
+       code: "ERR_ASSERTION"
+
+      at /Users/erik/.codex/worktrees/7eb8/umf/scripts/core-ideals/cardinality-parquet-browser.ts:10:9
+
+Bun v1.3.14 (macOS arm64)

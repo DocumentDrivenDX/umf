@@ -1,6 +1,6 @@
 {
   "scope": "Internal isolated Parquet declaration interpretation; no public facet classification, projection or binding acceptance",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 90,
     "declared": 80,
@@ -11,10 +11,10 @@
   "externalRequests": [],
   "bindingAccepted": false,
   "sha256": {
-    "fixtures/validation/facets-parquet-discovery.json": "4756187491f07f797d3b6fc98d064ed71b2164912a9e5224efcf83f0158f5119",
+    "fixtures/validation/facets-parquet-discovery.json": "a58a4f90c3a09aac66ecfca277c0817cf30243a70b416d34e651bfe1ba8c0448",
     "src/adapters/parquet/facet-type.ts": "b634636284065f305ba10f49de55be46c0d36deda6ffbfa9748274903fdf7ecd",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "scripts/core-ideals/facets-parquet-type-browser.ts": "6b4f0c9689deb88e4c071bfad081911691ad13a101608edc7e3d49a09af833f6",
     "dist/parquet-facet-type.js": "253d38b194f449f66063c89c18f893d1d6a12c7ccead03cc6ce1438860624609"
   }

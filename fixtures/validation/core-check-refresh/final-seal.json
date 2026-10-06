@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "sourceRevision": "d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242",
+  "uniqueTests": 2157,
+  "uniqueTestFiles": 382,
+  "regressionTests": 2140,
+  "gateTests": 17,
+  "nativeBrowserInventoryCommands": 174,
+  "currentProofConcepts": 6,
+  "sealingRuntime": {
+    "imageId": "sha256:b3d0d4a17ca61cabdd3647c804b6b3a4d63735c4f13fef73888395b5702ce4a7",
+    "replayScriptSha256": "424d93df65690e22762ead83ee05adc03451161191173ba18d1e2b6b2d87b283",
+    "sealScriptSha256": "0e89a0088e7de8288870fb0a5b9b9306c61baca4cfe84ee979d54a82caf4dda8"
+  },
+  "previousEvidence": {
+    "revision": "d05d9ec8a8e0ef5456e3ba37357ebe7b86b69242",
+    "path": "fixtures/validation/core-check-refresh/final-seal.json",
+    "sha256": "e3cc7caa17d263a152aff76af16d74b871e13ef9a516c06b67f490d9616c52c0"
+  },
+  "scope": "Fresh container native/browser inventory, disjoint regression and complete gates; affected and auxiliary overlaps excluded. No native-equivalence or publisher-validator-parity claim.",
+  "sha256": {
+    "fixtures/validation/core-check-refresh/native-browser.json": "42acc23c6a6a53ba89e677b623f44def4cd9ea7d27b9fa1e9e495b3e1e26eb6c",
+    "fixtures/validation/core-check-refresh/auxiliary.json": "86321b1408ade0d9f05451a2b97bc19579a683b5cff194152fb8ffaea958bbd4",
+    "fixtures/validation/core-check-refresh/regression.json": "9e79b7c04b933dbd9a1f317ccc3f8565f10f292ecddcac048e5cc3a82f88fa08",
+    "fixtures/validation/core-check-refresh/publication.json": "91753e0adadc5dc76ad4dd0d8616ceee6c716a275a08e7d98179c77f66487c00",
+    "fixtures/validation/core-check-refresh/gates.json": "dfafba89c9a3d90e433d27c31962ddeebe88eeb3d4cb681ec6d1bd9f579ab83e",
+    "fixtures/validation/core-check-refresh/container-runtime.json": "779e60a93c078e9b8b017a2036d7e0bf2c072df9a629baf65e455e7979759c59",
+    "fixtures/validation/core-check-refresh/container-gates.json": "e468fd56d1eece6a3be786571c9259dc4d59baa6009c350a69fcea5f846129b2",
+    "fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2",
+    "fixtures/validation/core-check-refresh/container-affected.json": "7018274f136f39fa23f13ec81198ff13b11e17a251c21bc9dbde994451323d6c",
+    "fixtures/validation/core-check-refresh/container-gates.log": "6fdd438fe9d3894ebe9907c1d36381116a1728108598b3657da984ef415af7d8",
+    "fixtures/validation/core-check-refresh/container-integrity.log": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa",
+    "fixtures/validation/core-check-refresh/container-affected.log": "a02a869582c95865d3e71d08b77dbe49ce15802ff7397d343edd0b9034ce3579",
+    "fixtures/validation/core-semantic-types-acceptance.json": "201cc5f84be87a8d961bb47ae503e0317be9f0db739189c53fa34bca95efc763"
+  }
+}

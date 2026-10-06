@@ -1,6 +1,6 @@
 {
   "scope": "Experimental 0.7.0 relationship structural and semantic validation with JSON/YAML metadata recovery; this check does not qualify public entry-point integration, native bindings or ideal admission",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 37,
     "accepted": 16,
@@ -9,20 +9,20 @@
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "4097b30b63d94595bd171eff7940f0eaf60ae40668fae78f9e178634cf80a896",
+  "bundleSha256": "4c009df79c607873a385fde956740d6ffc459a482318211c9b4d9221cf7d00a5",
   "sha256": {
     "scripts/core-relationship-browser.ts": "35ab19479ebaafc812b04af855c3651baee959359dfa1ca2b37c734034c42559",
     "scripts/core-relationship-cases.ts": "53c70e52f9f0780f8e25d967fe1d056e64423aac24063eada41967fd820e7809",
     "scripts/core-relationship-schema.ts": "471d0f3fe5accbcf7b75d25cf5131ac08cc16919f1fdf520df6c78cf10e50653",
-    "src/validation/relationships.ts": "5d94c2df0847d0315b514a005407d6e95f34531d9822ae5b2db48f176673a932",
-    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/validation/relationships.ts": "6e2d48d4978361cf78b9535958f3f6ac85008c3707b051021255e6bf36d5aba3",
+    "src/validation/keys.ts": "78d90a75119d16c87c890c3f84e0bab4db2a3e811d103984a735d0904d03a71a",
+    "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "spec/core/relationship-document.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "spec/core/relationship-document.schema.json": "1ba5a38f95e135c3d4e6757259e6c7c75edb9aaa3fff98931f92e1890ded450d",
     "tests/core/relationship-ideal.test.ts": "132320dd68ff577d82e6dc922b26defa4af9fcf41e24f37b8601c2b50b39f896"
   }
 }

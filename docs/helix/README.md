@@ -25,6 +25,21 @@ bounded API; [execution evidence](04-build/evidence/schema-properties-core.md)
 qualifies checks and limitations. Native bindings/admission and the TableSpec
 native port remain separate work.
 
+## Experimental semantic type references
+
+Core 0.9.0 adds optional element `semanticTypes` references with exact vocabulary,
+release and term identities. Definitions and explicitly installed value validators
+remain extensible. Read/write, structural validation, copied inspection/authoring,
+metadata selection and verified upgrade/rollback preserve native and unknown
+content. Prototype extension conversion is explicit and refuses unresolved
+collisions. [CONTRACT-051](02-design/contracts/CONTRACT-051-semantic-types.md) and
+[TD-051](02-design/technical-designs/TD-051-semantic-types.md) define scope.
+[Execution evidence](04-build/evidence/core-semantic-types.md) records final checks
+and historical failed attempts. The [check repair](04-build/evidence/core-check-repair.md)
+records the successful native/browser replay and final regression/gates.
+Publisher catalogs and native validator parity remain separate work; existing
+version-specific non-semantic authoring APIs retain their supported-version limits.
+
 ## Current delivered scope
 
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
@@ -50,18 +65,21 @@ They generate reviewable schemas and complete retained receipts, with strict
 refusal or source-qualified report losses. They do not implement downstream
 query/mutation execution, database migration or native/domain equivalence.
 
-## Integrated verification status
+## Recorded integrated verification at `d05d9ec8`
 
 | Separate claim | Final recorded result |
 | --- | --- |
 | Relationship ideal admission (two useful priority mappings) | Passed; qualified PostgreSQL and SQL Server mappings |
 | Qualified five-priority relationship delivery | Passed, with explicit target-specific residuals/refusals |
-| Fresh integrated compatibility replay | Passed; 175/175 commands |
-| Broad Bun regression (separate gates excluded) | 2055 tests, 369 files, 129660 assertions, 0 failures |
-| Typecheck, schema/package audit and browser build | Passed; 343 schemas / 59 packages |
+| Fresh integrated compatibility replay | Passed; fresh 174-command container inventory at `d05d9ec8` |
+| Broad Bun regression (separate gates excluded) | 2140 tests, 374 files, 130811 assertions, 0 failures |
+| Complete admission/evidence gates and final proof closures | 17 tests across 8 files; all 6 closures verified |
+| Typecheck, schema/package audit and browser build | Passed; 352 schemas / 60 packages |
 | Native-equivalence graduation | Not claimed |
 
-Final records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
+Full recorded verification: [check repair](04-build/evidence/core-check-repair.md) and
+[unique gate outcomes](../../fixtures/validation/core-check-refresh/gates.json).
+Historical integrated records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
 and [integrated execution evidence](../../fixtures/validation/relationship-integrated-acceptance-evidence.json).
 The integrated record must name the tested revision, native/browser versions,
 subsets, command outcomes, source fingerprints and any failed attempts or reruns.
@@ -1110,3 +1128,7 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
+
+The subsequent `d0e1c7a0` base integration has bounded merge revalidation in
+[semantic-reference evidence](04-build/evidence/core-semantic-types.md#stacked-base-conflict-resolution-2026-10-06). The full replay table above remains
+qualified to `d05d9ec8`, before the current-only Key tuple API amendment.

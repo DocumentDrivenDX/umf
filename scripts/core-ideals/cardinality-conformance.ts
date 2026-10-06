@@ -50,6 +50,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   }
   pending.push({record:r,name});records.push({path,sha256:await hash(path)});
  }
+
  assert.equal(refresh.regression.failures,0);assert.ok(refresh.regression.tests>=407);assert.equal(refresh.typecheck,'passed');
  for(const run of refresh.runs)assert.equal(run.exitCode,0,`Failed command ${run.command}`);
  for(const system of cardinalitySystems)for(const part of ['native','browser']){

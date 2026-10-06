@@ -95,7 +95,7 @@ def auxiliary():
     plan=[c for c in relationship if c[:2]==['bun','test']]+[
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-oracle.py'],
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-projection-oracle.py'],
-        ['bun','scripts/core-schema-properties-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]
+        ['bun','scripts/core-schema-properties-browser.ts'],['bun','scripts/core-semantic-types-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]
     record={'runs':[]}
     for i,c in enumerate(plan):
         log=OUT/f'auxiliary-{i+1}.log'

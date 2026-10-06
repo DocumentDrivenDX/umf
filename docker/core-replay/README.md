@@ -14,7 +14,7 @@ Do not mount the working repository or host dependency directories as `/work`.
 git clone --no-hardlinks /path/to/umf /tmp/umf-replay
 cd /tmp/umf-replay
 git checkout <source-commit>
-docker run --name umf-pr1-final-replay --shm-size=1g \
+docker run --name umf-core-replay-run --shm-size=1g \
   -v "$PWD:/work" -v /var/run/docker.sock:/var/run/docker.sock \
   -e UMF_REPLAY_IMAGE_ID="$(docker image inspect --format '{{.Id}}' umf-core-replay)" \
   umf-core-replay all
@@ -23,16 +23,19 @@ docker run --name umf-pr1-final-replay --shm-size=1g \
 The entrypoint installs the frozen Bun dependencies, prepares the vendored Python
 namespaces and Protobuf WASM compiler, runs the retained native/browser inventory,
 auxiliary checks and disjoint regression shards, then publishes fingerprints and
-runs all admission gates plus proof-integrity checks. It stops on failure. Logs
+runs all admission gates plus proof-integrity checks, then seals the semantic acceptance and final replay records. Failed regression shards receive one serial retry, preserving the failed logs and existing test limits. Other failures stop execution. Logs
 and command hashes are written under `fixtures/validation/core-check-refresh/`.
 Review and copy generated artifacts back to the source checkout after success.
 
 Stages can also run individually: `prepare`, `native`, `auxiliary`, `regression`,
-`publish`, `gates`. Use `native --resume` or `regression --resume` to retain completed
+`publish`, `gates`, `seal`. Use `native --resume` or `regression --resume` to retain completed
 runs and archive failed attempts. Resume only within the same checkout and source
 revision. Publication requires successful logs; it cannot substitute for execution.
+Publication-only changes to `scripts/publish-core-check-refresh.py` may be applied
+after execution; the runtime records its exact finalization digest. All other
+implementation, test, native and manifest changes reject source reuse.
 
-The image installs Bun 1.3.14, Go 1.27.1, protoc 36.2, Playwright 1.63.0 with
+The image installs Bun 1.3.14, Go 1.27.1, protoc 36.2, uv 0.12.23, Playwright 1.63.0 with
 Chromium 153.0.8010.12, Python 3.12 and OpenJDK 21. Ubuntu package patch versions
 are recorded by the execution environment rather than claimed as immutable.
 Python oracle versions are pinned in the requirements and Dockerfile; jsonschema

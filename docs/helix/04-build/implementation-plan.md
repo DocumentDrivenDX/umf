@@ -46,7 +46,7 @@ an overloaded core `format` or heuristically convert native text into assertions
 | Slice | Dependency | Required result and verification |
 | --- | --- | --- |
 | Native usage qualification | Retained TableSpec baseline and CONTRACT-030 | Pin model, ingest cast, flexible parser and output renderer separately; record positive/negative behavior, fallback order, environment and presence-based domain/type exceptions. Source inspection supplies hypotheses, not native execution evidence. |
-| Interpretation and recipe design | CONTRACT-050; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
+| Interpretation and recipe design | CONTRACT-051; package ownership/schema decision | Story, technical design and exercising test plan for source-linked interpretation, directional recipes, unknown/stale handling, copy isolation and explicit legacy-slot selection. Keep libraries browser-compatible. |
 | Extension implementation | Reviewed design and test plan | Versioned schemas/APIs, Bun and real Chromium parity, both retained recoveries, simultaneous meanings, source edits, monolithic/split archives and migration/rollback. Preserve all native text. |
 | Allowed-value binding | CONTRACT-048 admission and equality decisions | Reuse typed allowed-value meaning; never split legacy enumeration prose. Two useful priority mappings and all-five delivery remain separate gates. |
 
@@ -5297,6 +5297,59 @@ suite traversed only root tests and exposed one governed-document fingerprint
 drift from acceptance-ID normalization, now recorded in the existing explicit
 revalidation ledger.
 
+## Execution Evidence: Semantic type references (2026-10-04)
+
+The initial prototype for [CONTRACT-051](../02-design/contracts/CONTRACT-051-semantic-types.md) implements
+an experimental `umf.semantic-types` 0.1.0 element annotation independently of
+core schema evolution. Exact vocabulary/version/term lookup, copied definitions,
+copy-on-write authoring and explicit caller-installed value validators preserve
+native and unknown metadata. Unknown terms, qualifiers, absent validators and
+validator failures report unknown/incomplete. This does not execute TableSpec
+expectation recipes or publish universal email/telephone/industry validators.
+
+Verification on Bun 1.4.2: 8 focused tests, 40 assertions, zero failures;
+`typecheck` passes. Package audit passes 60/60; schema audit passes 344/344.
+`scripts/semantic-types-browser.ts` passes seven checks in Chromium 153.0.8010.12
+for explicit valid/invalid/unknown results, copy-on-write and both serializations.
+The initial browser attempt could not bind localhost inside the sandbox; the
+permitted rerun passed. This is authored API evidence; independent native
+validator parity and cross-system enforcement remain unclaimed. Bun 1.4.2 differs
+from the package's development pin 1.3.14 and is named here deliberately.
+
+Next slices: publisher-owned catalog releases; explicit TableSpec catalog/recipe
+import with retained detection, validation, generator and conversion distinctions;
+qualified native validator evidence; loss-aware target bindings. No fallback by
+term spelling or silent conversion is permitted. Rollback removes this additive
+profile/API while existing core and native payloads remain unchanged.
+
+Additional regression: explicit file paths for core, consumers, DDD and semantic
+annotations pass 137 tests across 30 files, 4,560 assertions, zero failures.
+An earlier directory-filter run also selected `core-ideals`; it was interrupted
+following existing Avro prototype-equality and cardinality evidence-path failures.
+That interrupted run is not a passed conformance gate or a full-suite result.
+
+## Planned Amendment: Core semantic type references (2026-10-04)
+
+Owner direction supersedes the prototype's placement: generic references belong
+in core; referenced meanings and validators remain independently extensible.
+FR-4, architecture and CONTRACT-051 now specify optional element `semanticTypes`
+as a nonempty array of `{vocabulary, version, term}` references. Email, telephone
+and industry identifiers do not become built-in scalar types. No extension
+registration is required to carry the core reference.
+
+| Slice | Work | Dependency / completion evidence |
+| --- | --- | --- |
+| ST-01 | Allocate a core revision and settle typed API and migration receipt contracts with concurrent core work | CONTRACT-051; retain older schema behavior; document unknowns before implementation |
+| ST-02 | Add core schema/type validation, copied inspection and authoring, plus unknown-reference diagnostics | ST-01; absent/empty/malformed fields, exact version/namespace identity, unknown qualifiers, browser-compatible API |
+| ST-03 | Implement explicit upgrade/rollback and interim extension migration | ST-02; archive opaque field collisions, preserve original extension and unknown qualifiers, refuse unresolved conflicts, verify forged/stale receipts and edited rollback |
+| ST-04 | Verify core references with metadata consumers and retained native payloads | ST-03; Bun and Chromium, both serializations, core/package/schema audits and applicable existing gates; publish new acceptance evidence |
+| ST-05 | Add publisher-owned catalog releases and explicit TableSpec catalog/validator bindings | ST-04; retain detection, expectation, generator and conversion distinctions; independent native evidence and target loss/refusal reporting |
+
+The prototype's 8 focused tests and seven browser checks remain historical
+extension evidence. They do not establish core delivery. The implementation
+uses core 0.9.0 and the API/receipt contracts settled below; core acceptance is
+recorded separately from the prototype results.
+
 ## Shared schema properties: owner-directed core slice (2026-10-04)
 
 Implement CONTRACT-049 as 0.8.0 without changing old schemas:
@@ -5319,3 +5372,81 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](evidence/schema-properties-core.md).
+
+### ST-01 execution-ready decisions
+
+Core 0.8.0 is allocated by PR #1 (`codex/core-schema-properties`). This work
+stacks core 0.9.0 on that branch; it does not modify the 0.8.0 contract.
+CONTRACT-051 and [TD-051](../02-design/technical-designs/TD-051-semantic-types.md)
+settle APIs, reference structure, source-retaining declaration and transition
+receipts, opt-in prototype conversion and rollback verification. CONTRACT-051
+replaces this chat's uncommitted CONTRACT-049 ID to avoid concurrent allocation.
+ST-02–ST-04 are the requested implementation scope; ST-05 catalog/native bindings
+remain subsequent independently evidenced work. Existing version-specific
+non-semantic authoring APIs retain their explicit supported-version limits.
+
+Parent review integration also reserves CONTRACT-050 for format separation;
+semantic references are finally allocated CONTRACT-051 and TD-051.
+
+### ST-02–ST-04 execution evidence
+
+Core 0.9.0 is implemented and manually reviewed. The final parent-integrated
+run passed 180 affected tests, 48 Chromium checks and 14 independent shape
+probes, plus typechecks, the public build and 60-package/352-schema audits.
+[Execution evidence](evidence/core-semantic-types.md) records scope, fingerprints,
+TableSpec source preservation, resolved findings and failed attempts. The broader
+exploratory run and retained admission gates have repository environment/evidence
+failures; they are recorded separately and were subsequently repaired by the
+execution below. ST-05 and
+other version-specific authoring API upgrades remain open.
+
+### Semantic-reference PR check repair (2026-10-04)
+
+The owner requests repair and replay of the failing repository checks. Restore
+pinned W3C fixture bytes and exact SHACL exports without changing their recorded
+upstream digests; prevent checkout line-ending normalization. Separate unarchived
+dbt caches from verifiable retained provenance and keep their historical hashes.
+Prepare pinned local native environments and replay the retained native/browser
+command inventory with actual logs. Preserve previous acceptance records through
+immutable Git revision references; publish current fingerprints only after real
+execution, then run the full live regression and stale/forged-proof negative gates.
+Native equivalence claims and ideal admission thresholds remain unchanged.
+
+Check repair execution passes 2,136 disjoint live tests / 374 files / 130,804
+assertions, the 174-command native/browser inventory, 91 post-parent browser
+refreshes, and 17 unique gate tests across eight files. The parent is integrated
+through `a81e9a9c`. Corrected aggregate browser metadata passes the affected
+Field rerun; no native recovery implementation or admission floor is relaxed.
+[Repair evidence](evidence/core-check-repair.md) records runtimes, source-qualified
+reuse, raw failures/retries, pinned-byte restoration and final proof integrity.
+
+### Container replay repair (2026-10-05)
+
+The owner requests completion of the Docker scaffold and regeneration of the
+latest branch's evidence. Finish a portable replay image and staged entrypoint,
+then execute in a disposable checkout with pinned native/browser prerequisites.
+Run the full retained native/browser inventory, auxiliary checks and disjoint
+regression before publishing fresh proof fingerprints. Run all retained admission
+gates and the six proof-integrity closures after publication. Preserve failed
+attempts and qualify the source revision and actual container runtimes. Correct
+the semantic evidence revision typo and update acceptance and PR claims only
+from successful execution. Current status: execution pending; prior counts remain
+historical until this replay completes. CONTRACT-051 and TP-001 govern scope;
+no validator-parity, admission-floor or native-equivalence claim is widened.
+
+The parent advanced to `ac800eed` during the container replay and amended routine
+metadata APIs and inherited validators. Integrate that revision, preserve the
+completed `3a601c45` native/auxiliary replay as historical execution, and rerun the
+full inventory and regression on the integrated source before final publication.
+
+Container repair completed on 2026-10-06. The integrated source `d05d9ec8`
+passes the complete 174-command native/browser inventory, six auxiliary commands,
+2,140 disjoint regression tests and all 17 admission/evidence gates. All six
+proof closures verify; the affected API replay passes 213 tests. The sealed
+unique union is 2,157 tests across 382 files. Failed timing attempts and the
+interrupted gate run are retained separately. Publication retires the three
+deleted parent API fingerprints explicitly and qualifies publication-only
+tooling separately from the unchanged execution source. Final documentation
+fingerprints and proof integrity are refreshed before final sealing. See
+[repair evidence](evidence/core-check-repair.md); native equivalence and publisher
+validator parity remain unclaimed.

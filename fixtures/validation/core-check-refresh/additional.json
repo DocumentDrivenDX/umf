@@ -1,0 +1,54 @@
+{
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-semantic-types-oracle-inputs.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/parent-shape-inputs.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-semantic-types-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/parent-shape-oracle.log",
+      "logSha256": "05d22ef0b827e8d5ac395afb3c85fdebd4554e558ba8c4645c3d7695720f3e78"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/relationship-postgresql.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/relationship-fixture-repair.log",
+      "logSha256": "3155b39b14f0d6ed0a3d0ac828f442b230ce3276320ae159fbb5b6a8fb66bdb6"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/final-typecheck.log",
+      "logSha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/final-audits.log",
+      "logSha256": "5da8552b04a88d61cbf5f1f82d6ffc802d47b8b6a660840b9350699e70f4b6bf"
+    }
+  ],
+  "scope": "Separately observed successful oracle and focused repair commands; not added to disjoint regression counts",
+  "sourceRevision": "4942d340d28070af4037eec134e04f1d10f1e4d7"
+}

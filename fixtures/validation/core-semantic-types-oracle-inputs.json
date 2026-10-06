@@ -1,0 +1,1634 @@
+{
+  "scope": "0.9.0 core reference shape; inherited semantic checks recorded separately; no external domain validator parity",
+  "cases": [
+    {
+      "id": "declared",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "namespace-and-release",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email"
+                  },
+                  {
+                    "vocabulary": "other",
+                    "version": "next",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unknown-qualifier",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email",
+                    "future": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/0/semanticTypes/0/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "empty",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "must NOT have fewer than 1 items",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "null",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": null,
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "must be array",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "string",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": "email",
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "must be array",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "emptyReference",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {}
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes/0",
+            "message": "must have required property 'vocabulary'",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes/0",
+            "message": "must have required property 'version'",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes/0",
+            "message": "must have required property 'term'",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "emptyTerm",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "v",
+                    "version": "1",
+                    "term": ""
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes/0/term",
+            "message": "must NOT have fewer than 1 characters",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "numericVersion",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "v",
+                    "version": 1,
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": false,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0/semanticTypes/0/version",
+            "message": "must be string",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rangeVersion",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "v",
+                    "version": "^1.0.0",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "root-is-opaque",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ],
+        "semanticTypes": {
+          "future": true
+        }
+      },
+      "valid": true,
+      "structureValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/semanticTypes",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-reference-broken",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                },
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "missing",
+                    "element": "missing"
+                  }
+                ]
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": true,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNRESOLVED_REFERENCE",
+            "path": "/modules/0/elements/0/references/0",
+            "message": "Target element does not exist in supplied document",
+            "severity": "error"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/examples/0",
+            "message": "Record-valued literals require a separate contract",
+            "severity": "error"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "inherited-property-invalid",
+      "document": {
+        "umf": "0.9.0",
+        "id": "contact-semantic-types",
+        "title": "Contact metadata",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "contacts",
+            "namespace": "example.contact",
+            "elements": [
+              {
+                "id": "email",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "cardinality": "one",
+                "examples": [
+                  {
+                    "string": "sample@example.invalid"
+                  }
+                ],
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "email"
+                  }
+                ],
+                "extensions": {
+                  "future.native": {
+                    "domain_type": "email",
+                    "detection": {
+                      "pattern": "publisher-owned"
+                    },
+                    "validations": [
+                      {
+                        "type": "publisher-expectation",
+                        "severity": "warning"
+                      }
+                    ]
+                  }
+                },
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing"
+                }
+              },
+              {
+                "id": "phone",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.contact",
+                    "version": "2026-01",
+                    "term": "phone_number"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "provider",
+                "kind": "field",
+                "scalarType": "string",
+                "semanticTypes": [
+                  {
+                    "vocabulary": "example.healthcare",
+                    "version": "1.0.0",
+                    "term": "provider_id",
+                    "futureQualifier": {
+                      "retained": true
+                    }
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "valid": false,
+      "structureValid": true,
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.native",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "/modules/0/elements/0/default/value",
+            "message": "Literal does not match scalar family",
+            "severity": "error"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/1/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/2/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/2/semanticTypes/0/futureQualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import hashlib, json, subprocess, re, posixpath
 from pathlib import Path
 BASE='cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 OUT=Path('fixtures/validation/core-check-refresh')
+RETIRED_PATHS={'src/model/selection-verification.ts','src/model/schema-properties-receipts.ts','spec/core/schema-properties-receipt.schema.json'}
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def load(p):return json.loads(Path(p).read_text())
 def save(p,r):Path(p).write_text(json.dumps(r,indent=2)+'\n')
@@ -13,7 +14,6 @@ def check_run(r):
  assert r['exitCode']==0, f"Failed command: {r['command']}"
  assert digest(r['log'])==r['logSha256'],f"Changed log: {r['log']}"
 def local(p):
- if p=='src/model/selection-verification.ts':return 'src/model/selection-schemas.ts'  # owner removed the verifier; current replay uses structural schemas
  prefix=str(Path.cwd())+'/'
  if p.startswith(prefix):p=p[len(prefix):]
  original=p;p=posixpath.normpath(p)
@@ -22,7 +22,11 @@ def local(p):
  return p
 def main():
  native=load(OUT/'native-browser.json');assert native['complete'] is True
- for p,h in native['sourceInputs'].items():assert digest(p)==h,'Source changed after execution: '+p
+ if 'sourceInputs' in native:
+  for p,h in native['sourceInputs'].items():assert digest(p)==h,'Source changed after execution: '+p
+ else:
+  runtime=load(OUT/'container-runtime.json')
+  assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==runtime['sourceRevision'],'Historical replay source cannot qualify the current tree'
  assert [r['command'] for r in native['runs']]==native['commands']
  aux=load(OUT/'auxiliary.json')
  runs=native['runs']+aux['runs']
@@ -106,6 +110,10 @@ def main():
   active.add(p)
   r=records[p] if p in records else load(p)
   mapping={local(k):v for k,v in r.get('sha256',{}).items()}
+  retired={k:v for k,v in mapping.items() if k in RETIRED_PATHS and not Path(k).is_file()}
+  if retired:
+   r.setdefault('retiredFingerprints',{'reason':'Parent API amendment removed these paths; historical digests are retained without current validation.','sha256':{}})['sha256'].update(retired)
+   mapping={k:v for k,v in mapping.items() if k not in retired}
   for child in mapping:
    if child in records or child in changed and child.startswith('fixtures/validation/') and child.endswith('.json') and isinstance(load(child),dict) and isinstance(load(child).get('sha256'),dict):publish(child)
   r['sha256']={k:digest(k) for k in mapping}

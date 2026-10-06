@@ -1,6 +1,6 @@
 {
   "scope": "Native container inspection, level parity and source-byte recovery; no core Cardinality classification/projection acceptance",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "files": 30,
     "columns": 44,
@@ -9,9 +9,9 @@
     "recoveries": 60
   },
   "externalRequests": [],
-  "bundleSha256": "1265f0397e35d156ed8bc9bddd76bfb50ec5f021a496d09dd1854f194e8df8cf",
+  "bundleSha256": "5bb9e9b0aecb6e40380c4dd8da86dfdc5253f14d2f1d0b79cb1c3e2f32674952",
   "sha256": {
-    "fixtures/validation/cardinality-parquet-profile-native.json": "99d2631a03970579c9a562017152305eefb7190e68d86241cde209546afa08ec",
+    "fixtures/validation/cardinality-parquet-profile-native.json": "beac292561f5f189f1d81b2d77f080d323e37fa25424a5880e72d273ebbc9e34",
     "scripts/core-ideals/cardinality-parquet-native.py": "620186388cd69b608162ba183c4276b8e20485fb5561181785b27698743f05d6",
     "scripts/core-ideals/cardinality-parquet-profile-browser.ts": "8612f8ae20400d50314a8ec72f242d26ae0eeb8eb5d69d7d48d31d2e1ad2578d",
     "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",

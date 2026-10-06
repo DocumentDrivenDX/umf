@@ -1,0 +1,15 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/relationship-postgresql.test.ts:
+(pass) qualified PostgreSQL FK/junction projection matrix retains authored meaning in both modes [12745.94ms]
+(pass) raw native NOT VALID, MATCH and actions stay observations with exact unknown/context recovery [748.48ms]
+(pass) sequential declarations remain valid while stale endpoint components and native edits refuse [1280.74ms]
+(pass) public classification and projection do not invoke getters [6.12ms]
+(pass) captured native FK actions, alternate UNIQUE candidates and exact unknown numbers survive classification [1763.12ms]
+(pass) unqualified native target remains explicitly unresolved, never missing [109.53ms]
+(pass) anonymous junction system-column names refuse before native emission [295.61ms]
+
+ 7 pass
+ 0 fail
+ 127 expect() calls
+Ran 7 tests across 1 file. [37.48s]

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:semantic-types-operation:1.0.0",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "urn:umf:core:semantic-type-reference:1.0.0"
+      }
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "types": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/types"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "types"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "1.0.0"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "operation": {
+          "const": "inspect-core-semantic-types"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "urn:umf:core:0.1.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.2.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.3.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.4.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.5.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.6.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.7.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.8.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.9.0"
+            }
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "missing"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "legacy"
+                },
+                "value": {}
+              },
+              "required": [
+                "state",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "declared"
+                },
+                "types": {
+                  "$ref": "#/$defs/types"
+                }
+              },
+              "required": [
+                "state",
+                "types"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "identity",
+        "diagnostics",
+        "operation",
+        "source",
+        "path",
+        "meaning"
+      ],
+      "additionalProperties": false
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "1.0.0"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "operation": {
+          "const": "declare-core-semantic-types"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.9.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.9.0"
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "path": {
+              "type": "string"
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            }
+          },
+          "required": [
+            "origin",
+            "path",
+            "basis"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "version",
+        "identity",
+        "diagnostics",
+        "operation",
+        "source",
+        "target",
+        "request",
+        "provenance"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/inspection"
+    },
+    {
+      "$ref": "#/$defs/declaration"
+    }
+  ]
+}

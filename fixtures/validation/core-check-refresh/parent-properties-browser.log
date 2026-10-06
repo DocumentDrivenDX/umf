@@ -1,0 +1,15 @@
+4 | import {schemaPropertiesCases,schemaPropertiesFixture} from './core-schema-properties-cases';
+5 | import {validateDocument} from '../src/index';
+6 | const bundle=await Bun.file('dist/umf.js').text();
+7 | const cases=schemaPropertiesCases().map(row=>({...row,expected:validateDocument(row.document)}));
+8 | const fixture=schemaPropertiesFixture();
+9 | const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(bundle,{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json({cases,fixture});return new Response('<!doctype html><html><body>Core schema properties</body></html>',{headers:{'content-type':'text/html'}});}});
+                     ^
+error: Failed to start server. Is port 0 in use?
+ syscall: "listen",
+   errno: 0,
+    code: "EADDRINUSE"
+
+      at /Users/erik/.codex/worktrees/7eb8/umf/scripts/core-schema-properties-browser.ts:9:18
+
+Bun v1.3.14 (macOS arm64)

@@ -9,7 +9,7 @@ if (import.meta.main) {
  assert.deepEqual(await verifyFacetEvidence(), evidence, 'Qualification evidence changed during conformance');
  const exactInputPath = 'fixtures/validation/facets-avro-exact-input-browser.json';
  const exactInput = await Bun.file(exactInputPath).json();
- assert.equal(exactInput.browser,(await Bun.file('fixtures/validation/field-gate-refresh-evidence.json').json()).browser??'148.0.7778.0'); assert.deepEqual(exactInput.externalRequests, []);
+ assert.equal(exactInput.browser, (await Bun.file('fixtures/validation/field-gate-refresh-evidence.json').json()).browser ?? '148.0.7778.0'); assert.deepEqual(exactInput.externalRequests, []);
  assert.deepEqual(exactInput.checks, {cases:18,projected:9,blocked:9,idealRecoveries:18,nativeRecoveries:18,exactFacetRecoveries:9,explicitResiduals:0,forgedRejected:true,getterCalls:0});
  for (const [p, h] of Object.entries(exactInput.sha256)) assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex'), h, `Stale additional browser proof: ${p}`);
  const usefulSystems = facetSystems.filter(s => coverage[s].usefulExactMappings > 0);
