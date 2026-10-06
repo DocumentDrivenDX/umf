@@ -37,6 +37,26 @@ ddx:
 
 ## Scope
 
+### Current alignment and execution priorities
+
+The relationship/binding amendment below is historical preparation. Its scoped
+implementation and integrated acceptance are recorded under “Integrated
+relationship and binding acceptance”; those results qualify their recorded
+source, versions and subsets. The core 0.8.0 API simplification and current-only
+Key tuple correction have later scoped evidence in
+[schema-property execution evidence](evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
+Fresh repository regression and native qualification remain incomplete for that
+revision; earlier green acceptance must not be presented as current acceptance.
+
+| Next work | Governing input | Completion boundary |
+| --- | --- | --- |
+| Restore current acceptance evidence | TP-001 and schema-property execution evidence | Repair recorded qualification failures, regenerate affected native/browser proofs and complete logged unchanged-source regression and gates; retain failed/partial attempts and versions/subsets. |
+| Frame the TableSpec finalization gate | PRD first ecosystem integration goal and owner clarification | Define semantic coverage, migration/recovery, stable API, Python consumption and native pipeline acceptance; identify US-050 prerequisites before implementation planning. |
+| Prepare offline composition | FEAT-007, US-050 and CONTRACT-045 | Settle the public package API, bounds and crossing members; publish TD-050 and allocate all ten ACs in TP-001. Its dependency relationship to TableSpec finalization remains open. |
+
+These are preparation and verification obligations. They do not select a new
+finalization subset or waive the remaining product requirements.
+
 ### Format separation follow-on
 
 FEAT-005 IDEAL-07 and [CONTRACT-050](../02-design/contracts/CONTRACT-050-format-separation.md)
@@ -55,11 +75,15 @@ section schedules preparation dependencies, not core admission or delivered
 behavior. Record native versions, exact subsets and evidence before claiming any
 parser, renderer or constraint support.
 
-### Proposed alignment: authored relationships and physical bindings
+### Historical alignment proposal: authored relationships and physical bindings
 
-This section is the work plan for the Hohfeld-driven amendment. It proposes
-changes to the governed artifacts; it does not claim that the artifacts, schemas,
-projections or native evidence already exist. Continue the ordered core backlog
+This section retains the original preparation plan for the Hohfeld-driven
+amendment. Its “current” gaps, missing-artifact statements and instructions
+describe that checkpoint. FR-42–44, FEAT-006, US-045–049, CONTRACT-041–044 and
+TD-045–049 now exist; later scoped execution records document their delivery.
+Use the current priorities above for remaining work. The original proposal follows.
+
+Continue the ordered core backlog
 with relationship **after key**. Key's five-system gate remains the prerequisite
 for relationship implementation. Drafting the upstream documents may proceed
 while that gate is open. Keep the PRD, feature and story language about product

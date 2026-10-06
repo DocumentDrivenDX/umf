@@ -67,7 +67,7 @@ RDF/ontology integrations remain in the broader inventory but do not precede thi
 tabular ingestion work. Core promotion must make the metamodel useful to consumers;
 preserving only opaque native envelopes is insufficient.
 
-**Next governed slice (owner direction, 2026-10-02):** FR-15–FR-17 proceed
+**Offline composition slice (owner direction, 2026-10-02):** FR-15–FR-17 proceed
 through FEAT-007 and US-050 as an offline, revision-pinned cross-document
 reference slice. CONTRACT-045 must first settle the public package API, bounds,
 and permitted crossing members; TD-050 and AC-level test allocation must then
@@ -89,6 +89,13 @@ sinks for mutable Truss and immutable Ashlar graphs and shared query generation
 for those engines and ordinary Delta tables. Reconcile the US-050 prerequisites
 when defining the finalization gate. Query execution remains consumer-owned.
 See the [owner clarification](../00-discover/vision-input.md#owner-clarification-tablespec-becomes-umf-native-first).
+
+The next planning action is to frame the TableSpec finalization gate and map its
+semantic coverage, migration/recovery, stable API, Python consumption and native
+pipeline acceptance needs. That framing must identify which US-050 capabilities
+are prerequisites and which can remain separate. The dependency decision remains
+open; neither the native port nor US-050 gains implementation authorization from
+this sequencing clarification. US-051 retains its dependency on US-050.
 
 1. Users retain native meaning when moving supported schemas through UMF.
 2. Users translate where mappings exist and can inspect every semantic limit.
