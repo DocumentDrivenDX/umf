@@ -7,7 +7,7 @@ import {classifySqlServerKeys,recoverSqlServerKeySource} from '../../src/core-id
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {encodeCoreKeyTuple} from '../../src/model/key-tuple';
 import type {Document} from '../../src/model/types';
-function ideal(family:'string'|'binary'):Document{return {umf:'0.6.0',id:'encoding',vocabularies:{},modules:[{id:'m',namespace:'encoding',elements:[{id:'record',kind:'record',members:[{module:'m',element:'value'}],keys:[{id:'identity',name:'Identity',fields:[{module:'m',element:'value'}]}],extensions:{}},{id:'value',kind:'field',scalarType:family,cardinality:'one',nullability:'required',extensions:{}}]}]};}
+function ideal(family:'string'|'binary'):Document{return {umf:'0.8.0',id:'encoding',vocabularies:{},modules:[{id:'m',namespace:'encoding',elements:[{id:'record',kind:'record',members:[{module:'m',element:'value'}],keys:[{id:'identity',name:'Identity',fields:[{module:'m',element:'value'}]}],extensions:{}},{id:'value',kind:'field',scalarType:family,cardinality:'one',nullability:'required',extensions:{}}]}]};}
 const identity={module:'m',element:'record',key:'identity'};
 test('native encoding evidence asserts actual values, failures and pinned source fingerprints',async()=>{
  expect(proof.observational).toBe(false);expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.cases).toHaveLength(73);

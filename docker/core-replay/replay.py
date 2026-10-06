@@ -88,6 +88,8 @@ for stage in stages:
         else:
             run(command)
     elif stage == 'publish':
+        run(['bun', 'scripts/core-schema-properties-oracle-inputs.ts'], 'container-schema-properties-inputs')
+        run([python, 'scripts/core-schema-properties-oracle.py'], 'container-schema-properties-oracle')
         run(['bun', 'scripts/core-semantic-types-oracle-inputs.ts'], 'container-semantic-inputs')
         run([python, 'scripts/core-semantic-types-oracle.py'], 'container-semantic-oracle')
         run(['bun', '-e', "import {relationshipSourceHashes} from './scripts/core-ideals/relationship-gate-inputs'; await Bun.write('fixtures/validation/core-check-refresh/relationship-source-hashes.json', JSON.stringify(await relationshipSourceHashes(), null, 2));"])

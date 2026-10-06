@@ -137,3 +137,21 @@ Failed timing attempts and the interrupted gate run remain distinct from the
 successful executions. These counts establish only the qualified subsets in
 CONTRACT-051 and the existing binding contracts. Publisher catalogs, TableSpec
 validator bindings, domain-algorithm parity and native equivalence remain open.
+
+## Stacked-base conflict resolution (2026-10-06)
+
+Integrate parent `d0e1c7a0`, retaining its current-only 0.8.0 Key tuple API and
+source-input replay guards. Preserve the completed Docker runner, sealing,
+bounded retries and explicit retired fingerprints. Auxiliary and publication
+stages now cover both schema-properties and semantic-reference probes.
+
+Bounded revalidation passes typechecking, the browser build, 88 focused tests
+across six files (877 assertions), and five Chromium 153.0.8010.12 probes for
+Key tuple/public/transition, Relationship public and SQL Server tuple encoding.
+Package/schema audits pass 60/60 and 353/353. Fresh browser records resolve the
+conflicting generated evidence. Execution
+logs and merged-worktree source fingerprints are under
+`fixtures/validation/core-merge-revalidation/`. The earlier full Docker replay
+and its 2,157-test union remain historical at `d05d9ec8`; they are not re-claimed
+for the changed Key tuple implementation. The Key tuple API supports 0.8.0
+documents; 0.9.0 support remains outside that API's version-specific scope.

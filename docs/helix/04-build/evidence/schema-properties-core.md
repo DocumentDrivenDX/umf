@@ -13,6 +13,8 @@ ddx:
       kind: informed_by
     - id: TP-001
       kind: informed_by
+    - id: CONTRACT-050
+      kind: informed_by
 ---
 
 # Shared schema properties
@@ -157,6 +159,43 @@ continued through unrelated upstream fixtures, with no failures observed at
 that point. It is not a completed full-suite result. Current native qualification
 gates were not regenerated or weakened by this amendment.
 
+## Consolidated TableSpec format session (2026-10-05)
+
+The owner requested incorporation of the “Split TableSpec format meanings”
+session into this work and PR #1. Its design is retained as CONTRACT-050 and
+FEAT-005 IDEAL-07, with the CONTRACT-030 native-recovery boundary and the ordered
+implementation-plan work. Documentation/examples, input parsing, output
+rendering, explicit typed enumerations and dialect-qualified structural patterns
+remain distinct. No portable constraint or authored intent is inferred from a
+native format string. The recipe/runtime design is still separate follow-up work.
+
+That session’s schema-generator correction, fresh browser evidence, exact
+vendored source-byte restoration and durable dbt freshness provenance repairs
+are already included in PR #1. Its old selection-receipt compatibility decision
+is superseded by the owner-directed removal described above. Its unresolved
+full-suite/native-qualification work is continued by the current replay rather
+than treated as passing historical evidence.
+
+## Completed diagnostic regression and current replay (2026-10-05)
+
+The host `bun test tests` diagnostic run completed rather than being stopped:
+2,120 passed and 12 failed, 130,698 assertions across 380 files. It ran while
+verification tooling was being repaired, so it is not the immutable final
+acceptance run. One failure was the absent Python projection oracle; replay
+with Protobuf 7.36.2 / jsonschema 4.26.0 passed all five tests in that file.
+Eleven failures concern qualification records, missing generated bundles or
+historical browser/path assumptions. Current acceptance remains pending the
+isolated logged native/browser inventory, unchanged-source regression and gates.
+
+The native replay also identified a TableSpec source-byte mismatch. Restoring
+`native/tablespec/sources/tests/unit/test_umf_loader.py` from the pinned TableSpec
+commit restores its twelve upstream coverage annotations and the original
+manifest hash. The expected hash was not changed. The source directory now has
+Git text conversion disabled. Cardinality browser wrappers and facet conformance
+now require the exact replayed Chromium pin, with the retained 148 default for
+historical records. Current replay uses Chromium 153.0.8010.12. Failed and partial
+attempts remain separate from the passing command inventory.
+
 ## Completed pre-simplification regression run
 
 This run and its focused replays cover the implementation at `0ed68e30`,
@@ -179,3 +218,28 @@ After integrating the concurrent upstream changes through `cdd0070c`, a fresh
 core-only replay passes 177 tests across 27 files with 4,586 assertions; both
 source and tool TypeScript checks pass. This verifies the simplified core API,
 not a fresh full repository or integrated native qualification run.
+
+## Current-only key tuple correction (2026-10-06)
+
+The owner explicitly removed previous-document support from the tuple operation.
+`encodeCoreKeyTuple` now validates the actual core 0.8.0 document rather than
+dispatching to 0.6.0/0.7.0 validators. The exported current operation schema and
+result version 3.0.0 retain that exact source; older documents and result versions
+refuse. The `umf-key-tuple-v1` byte/equality profile remains unchanged. Allowed
+values, numeric ranges and both length bounds are checked for every component;
+defaults never supply a missing key component.
+
+The exact-file core run passes 178 tests / 4,616 assertions across 27 files. A
+non-overlapping affected-file run passes 84 tests / 1,435 assertions across seven
+files; these counts overlap the core run and must not be added. Typechecking and
+all 347 schemas / 59 packages pass. Six harnesses pass in Chromium 153.0.8010.12:
+tuple encoding, Key transition, public Key operations, public Relationship
+operations, SQL Server encoding examples and schema properties. The tuple matrix
+has 65 cases, 29 encodings, 36 refusals and 58 serialization recoveries, with no
+getter execution or external requests. Actual logs and runtime pins are retained
+in `fixtures/validation/current-key-tuple-fix/`.
+
+The prior 174-command native replay qualifies its recorded earlier source only.
+It does not establish current native admission after this correction. Repository
+regression/evidence gates and publication still need fresh completion; system
+sleep interrupted the earlier retry and caused a long elapsed-time timeout.

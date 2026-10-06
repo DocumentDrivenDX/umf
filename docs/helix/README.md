@@ -65,7 +65,7 @@ They generate reviewable schemas and complete retained receipts, with strict
 refusal or source-qualified report losses. They do not implement downstream
 query/mutation execution, database migration or native/domain equivalence.
 
-## Integrated verification status
+## Recorded integrated verification at `d05d9ec8`
 
 | Separate claim | Final recorded result |
 | --- | --- |
@@ -77,7 +77,7 @@ query/mutation execution, database migration or native/domain equivalence.
 | Typecheck, schema/package audit and browser build | Passed; 352 schemas / 60 packages |
 | Native-equivalence graduation | Not claimed |
 
-Current verification: [check repair](04-build/evidence/core-check-repair.md) and
+Full recorded verification: [check repair](04-build/evidence/core-check-repair.md) and
 [unique gate outcomes](../../fixtures/validation/core-check-refresh/gates.json).
 Historical integrated records: [relationship gate](../../fixtures/validation/relationship-conformance.json)
 and [integrated execution evidence](../../fixtures/validation/relationship-integrated-acceptance-evidence.json).
@@ -1128,3 +1128,7 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
+
+The subsequent `d0e1c7a0` base integration has bounded merge revalidation in
+[semantic-reference evidence](04-build/evidence/core-semantic-types.md#stacked-base-conflict-resolution-2026-10-06). The full replay table above remains
+qualified to `d05d9ec8`, before the current-only Key tuple API amendment.

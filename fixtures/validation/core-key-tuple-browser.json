@@ -1,23 +1,25 @@
 {
-  "scope": "Exact experimental Key tuple encoding and receipt verification through a focused browser bundle; no native binding or author-provenance claim",
+  "scope": "Exact current core Key tuple encoding and receipt verification through a focused browser bundle; no native binding or author-provenance claim",
   "browser": "153.0.8010.12",
   "checks": {
-    "cases": 58,
-    "encoded": 26,
-    "refused": 32,
-    "recoveries": 52,
+    "cases": 65,
+    "encoded": 29,
+    "refused": 36,
+    "recoveries": 58,
     "forgedFramesRefused": 2,
     "staleContextRefused": true,
     "framingChecks": 2,
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "709a16fc73e34aea416efc4ff101c14bc088bc60e3fb9e48f8ee459177199f79",
+  "bundleSha256": "27b61b328a5d3daef76697186bc7844bd7f5ec3978fde0be20f2f96a429bf577",
   "sha256": {
-    "scripts/core-key-tuple-browser.ts": "576306797f7013a247b7633d4112f049bb280f4335efcfa4c8f161681b44b33f",
-    "scripts/core-key-tuple-cases.ts": "af9b6adce395673f00c868c94056feb50a4192012a4003bcdfee2ed23db87883",
-    "scripts/core-key-tuple-schema.ts": "906c2f7885bd2ca3ae89f3c988c867c3113bc1aec16775e00b2b75007c2b377c",
-    "src/model/key-tuple.ts": "cc394192441c55844de777413adb2dfdf5dac84b0c6a90e520fb713dc2673d4b",
+    "scripts/core-key-tuple-browser.ts": "a74a405bc16bb1d5920c6b089e758ad2cad33e106d6d6fd8ecc8d88f3549ea62",
+    "scripts/core-key-tuple-cases.ts": "075687df8702aed938f424f9b903c8ee9ec31f0d92f429a12bce961d153c40a5",
+    "scripts/core-key-tuple-schema.ts": "5d313cf39d28ed887add416423d289e2b1b36671f30e87c4d78745d61c98ff6d",
+    "src/model/key-tuple.ts": "a59ca480ffa394d30228660bbecf485c736a62111d97a99f01ff8598174bb1e2",
+    "src/model/schema-literals.ts": "6c28d92fe726fdf6ead0d29c78bd87fa9396667cb23d61ce2758b9f4707228b1",
+    "src/validation/schema-properties.ts": "c09523e523969cbda7eac3bad6a9678c5c25ac093095dd653c8b1c04dfd1daab",
     "src/validation/keys.ts": "78d90a75119d16c87c890c3f84e0bab4db2a3e811d103984a735d0904d03a71a",
     "src/validation/document.ts": "ff09527c79611d2a238cfc0fa148fbe5a17a82e8947fe49ca026160cf4766b62",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
@@ -25,9 +27,9 @@
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
     "src/model/types.ts": "68da72949270f06ec3eeb6143b5a31a8ed4289630bf6efcf3ae5b8c63217d741",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "spec/core/key-document.schema.json": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
-    "spec/core/key-tuple-operation.schema.json": "1bbe9cece10ca98e602917b119df5198a9bfde11366f9a26dfab43878f2ee1ab",
-    "tests/core/key-tuple.test.ts": "01da922c12d2281d49bf0f9bfd67ec8a51548949f1936c6093a6e8d86b570c7b",
+    "spec/core/schema-properties-document.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "spec/core/key-tuple-operation-v3.schema.json": "58ed38d2f1d96f745902813884cc5bd2438b366e951c246e9147eb584d2d8ced",
+    "tests/core/key-tuple.test.ts": "6f59bc90364f4bed6f20402cda96749189eea078146a5229bfca30390ef836d1",
     "fixtures/key/tuple-encoding-v1.json": "160310faa99e5337157cab9f77afedfb3385c937f3f2683d8a15e2c5d906b80b"
   }
 }

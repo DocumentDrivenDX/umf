@@ -11,7 +11,7 @@ const identity={module:'m',element:'record',key:'identity'};
 const examples:{id:string;source:Document;value:{binaryHex:string}|{string:string};expected:string}[]=[];
 for(const c of proof.cases.filter((c:any)=>c.id.endsWith('-stored-bytes'))){
  const family=c.id.startsWith('binary-')?'binary':'string',[hex]=c.actual.value.split(':');
- const source:Document={umf:'0.6.0',id:'encoding',vocabularies:{},modules:[{id:'m',namespace:'encoding',elements:[{id:'record',kind:'record',members:[{module:'m',element:'value'}],keys:[{id:'identity',name:'Identity',fields:[{module:'m',element:'value'}]}],extensions:{}},{id:'value',kind:'field',scalarType:family,cardinality:'one',nullability:'required',extensions:{}}]}]};
+ const source:Document={umf:'0.8.0',id:'encoding',vocabularies:{},modules:[{id:'m',namespace:'encoding',elements:[{id:'record',kind:'record',members:[{module:'m',element:'value'}],keys:[{id:'identity',name:'Identity',fields:[{module:'m',element:'value'}]}],extensions:{}},{id:'value',kind:'field',scalarType:family,cardinality:'one',nullability:'required',extensions:{}}]}]};
  const value=family==='binary'?{binaryHex:hex}:{string:Array.from({length:hex.length/4},(_,i)=>String.fromCharCode(parseInt(hex.slice(i*4+2,i*4+4)+hex.slice(i*4,i*4+2),16))).join('')};
  examples.push({id:c.id,source,value,expected:encodeCoreKeyTuple(source,identity,[value]).bytesHex});
 }

@@ -5,6 +5,9 @@ ROOT = Path.cwd()
 OUT = Path('fixtures/validation/core-check-refresh')
 BASE = 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def source_inputs():
+    paths=subprocess.check_output(['git','ls-files','src','scripts','spec','tests','native','package.json','bun.lock'],text=True).splitlines()
+    return {p:digest(p) for p in paths}
 def inventory(name):
     return json.loads(subprocess.check_output(['git','show',f'{BASE}:fixtures/validation/{name}.json']))
 def commands():
@@ -29,6 +32,9 @@ def run(resume):
     OUT.mkdir(parents=True,exist_ok=True)
     plan=commands();manifest=OUT/'native-browser.json'
     record=json.loads(manifest.read_text()) if resume and manifest.exists() else {'complete':False,'baselineRevision':BASE,'expectedBrowser':os.environ.get('UMF_EXPECTED_CHROMIUM_VERSION','148.0.7778.0'),'commands':plan,'runs':[],'failedAttempts':[]}
+    inputs=source_inputs()
+    if record['runs']:assert record['sourceInputs']==inputs,'Source inputs changed; start a new replay'
+    else:record.update(sourceRevision=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),sourceInputs=inputs)
     assert record['commands']==plan,'Command inventory changed; start a new replay'
     while record['runs'] and record['runs'][-1]['exitCode']!=0:
         failed=record['runs'].pop()
@@ -43,6 +49,7 @@ def run(resume):
         record['runs'].append({'command':c,'exitCode':p.returncode,'log':str(log),'logSha256':digest(log)})
         manifest.write_text(json.dumps(record,indent=2)+'\n')
         if p.returncode: raise SystemExit(f'Failed {c}; inspect {log}')
+    assert source_inputs()==record['sourceInputs'],'Source inputs changed during replay'
     record['complete']=True
     manifest.write_text(json.dumps(record,indent=2)+'\n')
     print(json.dumps({'complete':True,'commands':len(plan)}),flush=True)
@@ -88,7 +95,7 @@ def auxiliary():
     plan=[c for c in relationship if c[:2]==['bun','test']]+[
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-oracle.py'],
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-projection-oracle.py'],
-        ['bun','scripts/core-semantic-types-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]
+        ['bun','scripts/core-schema-properties-browser.ts'],['bun','scripts/core-semantic-types-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]
     record={'runs':[]}
     for i,c in enumerate(plan):
         log=OUT/f'auxiliary-{i+1}.log'

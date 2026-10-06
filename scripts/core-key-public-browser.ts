@@ -37,7 +37,7 @@ try{
   fails(()=>u.declareCoreKey(doc,record,{id:'pk',name:'Retuple',fields:[{module:'m',element:'group'}]}));
   const renamed=u.declareCoreKey(doc,record,{id:'pk',name:'Renamed',fields:[field]});if(!u.lookupCoreKey(renamed.target,{...record,key:'pk'}).key.primary)throw Error('Primary lost');
   fails(()=>u.verifyCoreKeyOperation(key,renamed.target));const forged=structuredClone(key);forged.target.modules[0].elements[0].keys[0].name='forged';fails(()=>u.verifyCoreKeyOperation(forged,doc));
-  const tuple=u.encodeCoreKeyTuple(doc,{...record,key:'pk'},[{integerToken:'42'}]);if(tuple.bytesHex!=='554d464b310102023432'||u.readCoreKeyTupleBytes(tuple,doc).length!==10)throw Error('Public tuple mismatch');
+  const tupleSource={...doc,umf:'0.8.0'},tuple=u.encodeCoreKeyTuple(tupleSource,{...record,key:'pk'},[{integerToken:'42'}]);if(tuple.version!=='3.0.0'||tuple.bytesHex!=='554d464b310102023432'||u.readCoreKeyTupleBytes(tuple,tupleSource).length!==10)throw Error('Public tuple mismatch');
   same(u.rollbackKeyEnvelope(upgraded,doc).target,source);
   const selectionSource=structuredClone(doc);selectionSource.modules[0].elements[0].references=[];selectionSource.modules[0].elements[1].references=[{role:'owner-link',...record}];
   const direct=u.selectCoreElements(selectionSource,{references:'none',identities:[record]}),transitive=u.selectCoreElements(selectionSource,{references:'transitive',identities:[record]});

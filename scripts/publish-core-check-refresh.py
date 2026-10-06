@@ -22,6 +22,11 @@ def local(p):
  return p
 def main():
  native=load(OUT/'native-browser.json');assert native['complete'] is True
+ if 'sourceInputs' in native:
+  for p,h in native['sourceInputs'].items():assert digest(p)==h,'Source changed after execution: '+p
+ else:
+  runtime=load(OUT/'container-runtime.json')
+  assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==runtime['sourceRevision'],'Historical replay source cannot qualify the current tree'
  assert [r['command'] for r in native['runs']]==native['commands']
  aux=load(OUT/'auxiliary.json')
  runs=native['runs']+aux['runs']

@@ -1,0 +1,8 @@
+$ bun scripts/build.ts
+Browser ESM built: 12252506 bytes; declarations emitted.
+{"cases":65,"encoded":29,"refused":36,"recoveries":58,"forgedFramesRefused":2,"staleContextRefused":true,"framingChecks":2,"getterCalls":0}
+{"collisionCases":10,"archivedMembers":90,"upgradeRecoveries":20,"rollbackRecoveries":20,"laterAssertionRecoveries":2,"forgedRefusals":5,"wrongVersionRefusals":5,"wrongIdentityRefused":true,"getterCalls":0}
+{"operationRecoveries":8,"documentRecoveries":8,"versionedRecoveries":10,"selectionRecoveries":4,"registryCalls":2,"getterCalls":0,"legacyPreserved":true,"unknownQualifiersPreserved":true,"stableIdConflictRefused":true,"tupleVerified":true,"rollbackVerified":true,"forgedAndStaleRefused":true}
+{"cases":14,"recoveries":84,"selectionRecoveries":28,"refusals":47,"getterCalls":0}
+{"observations":7,"computedKeys":4,"recoveries":2,"distinctCoreExamples":19,"invalidUnicodeRefused":true,"forgedRefused":true}
+{"cases":38,"recoveries":4,"refusals":12,"getterCalls":0,"extensionChecks":6,"unknownUnitChecks":4}
