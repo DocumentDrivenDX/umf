@@ -121,3 +121,17 @@ client macro interpretation. Other metadata keys still block generation; this
 interpretation does not admit column mapping, defaults or generated expressions.
 The [STRING literal reference](https://learn.microsoft.com/en-us/azure/databricks/sql/language-manual/data-types/string-type)
 was inspected 2026-10-08. Native SQL execution remains unverified.
+
+
+### Complete table bundles
+
+`generateDeltaDDLBundle(documents)` accepts a nonempty ordered array of table
+documents and returns concatenated `sql`, ordered `tables` (documentId and each
+single-table result), and a qualification. Every table MUST pass the existing
+single-table contract before any bundle is returned. Every name MUST explicitly
+specify catalog, schema and table; session-context resolution is not inferred.
+Duplicate qualified names ignoring ASCII case and duplicate document IDs MUST
+refuse. Source documents MUST remain unchanged and returned definitions detached.
+Unknown meaning in any member blocks the complete proposal. Order is caller-owned;
+no dependency ordering, foreign-key enforcement, migration or database transaction
+is inferred. All-or-nothing generation does not mean atomic SQL application.

@@ -133,3 +133,24 @@ export function generateDeltaDDL(input:Document):{sql:string;definition:DeltaDef
   if(values.length)sql+='\nTBLPROPERTIES ('+values.join(',\n')+')';
   return {sql:sql+';\n',definition,schemaJson,qualification:'Proposed managed Databricks Delta CREATE; no application, migration, protocol/permission/retention admission, predictive optimization change or relationship enforcement. Native target acceptance requires separate evidence.'};
 }
+
+/** Complete ordered proposal; no partial bundle escapes a failed table export. */
+export function generateDeltaDDLBundle(inputs:readonly Document[]):{
+  sql:string;
+  tables:{documentId:string;sql:string;definition:DeltaDefinition;schemaJson:string;qualification:string}[];
+  qualification:string;
+} {
+  if(!Array.isArray(inputs)||inputs.length===0)fail('Nonempty table document bundle required');
+  const ids=new Set<string>(),names=new Set<string>();
+  const tables=inputs.map(input=>{
+    const result=generateDeltaDDL(input);
+    if(result.definition.name.length!==3)fail('Bundle tables require explicit catalog, schema and table names');
+    const name=result.definition.name.map(part=>part.toLowerCase()).join('.');
+    if(names.has(name))fail('Duplicate qualified table name in bundle');
+    if(ids.has(input.id))fail('Duplicate document identity in bundle');
+    names.add(name);ids.add(input.id);
+    return {documentId:input.id,...result};
+  });
+  return {sql:tables.map(table=>table.sql).join('\n'),tables,
+    qualification:'Complete ordered managed Delta CREATE proposal; generation is all-or-nothing, database application is not atomic. No application, migration, dependency ordering, relationship enforcement or native admission.'};
+}

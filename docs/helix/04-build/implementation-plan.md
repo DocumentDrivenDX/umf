@@ -5355,3 +5355,22 @@ bind the browser server; the focused localhost check passed outside it.
 No native SQL, cloud compute, migration or protocol admission is claimed.
 Logical-core-to-physical mapping, richer metadata and wider DDL targets remain
 separate increments.
+
+### Delta DDL complete-bundle iteration — 2026-10-08
+
+Reusable multi-table generation now belongs to UMF through
+`generateDeltaDDLBundle`, governed by CONTRACT-050. The browser-compatible API
+retains caller order, exact per-table schemas, copied physical definitions and
+source document IDs. It requires explicit catalog/schema/table names and refuses
+empty bundles, duplicate document IDs, case-insensitive qualified-name collisions
+and unsupported meaning in any member. No partial proposal is returned; database
+application is not claimed atomic. Dependency ordering and relationships remain
+consumer-owned explicit requirements.
+
+Thirteen focused Bun tests pass (106 assertions), and library TypeScript checking
+passes. Chromium verifies ordered JSON/YAML bundle recovery and whole-bundle
+refusal alongside previous single-table evidence in
+`fixtures/delta/ddl-browser-results.json`. Sandbox localhost binding failed; the
+same focused browser check was rerun outside the sandbox. No native SQL, cloud
+compute, migration or protocol admission is claimed. Ashlar's existing pinned
+single-table generator remains compatible; consumer repinning is separate work.

@@ -30,13 +30,22 @@ try {
       const result=u.generateDeltaDDL(u.readDocument(u.writeDocument(comments,format),format));
       if(result.schemaJson!==commentSchema||!result.sql.includes("COMMENT 'Owner\\'s description 雪'"))throw Error('Comment recovery mismatch');
     }
+    const bundleDocs=['first','second'].map(id=>u.defineDeltaTable(schema,{profile:'databricks-managed-delta/0.1',name:['catalog','schema',id],clusterBy:[],partitionBy:[],properties:{}},{id}));
+    const before=JSON.stringify(bundleDocs);
+    for(const format of ['json','yaml']){
+      const result=u.generateDeltaDDLBundle(bundleDocs.map(doc=>u.readDocument(u.writeDocument(doc,format),format)));
+      if(result.tables.map(table=>table.documentId).join(',')!=='first,second'||result.sql!==bundleDocs.map(doc=>u.generateDeltaDDL(doc).sql).join('\n'))throw Error('Bundle recovery mismatch');
+    }
+    if(JSON.stringify(bundleDocs)!==before)throw Error('Bundle source mutated');
+    bundleDocs[1].extensions['umf.delta.definition'].future=true;
+    let bundleRefused=false;try{u.generateDeltaDDLBundle(bundleDocs);}catch{bundleRefused=true;}if(!bundleRefused)throw Error('Partial bundle exported');
     doc.extensions['umf.delta.definition'].future={opaque:'18446744073709551615'};
     const restored=u.readDocument(u.writeDocument(doc,'yaml'),'yaml');
     if(restored.extensions['umf.delta.definition'].future.opaque!=='18446744073709551615')throw Error('Unknown content lost');
     let refused=false;try{u.generateDeltaDDL(restored);}catch{refused=true;}if(!refused)throw Error('Unknown meaning exported');
     if('process' in globalThis||'Buffer' in globalThis)throw Error('Node globals available');
-    return {commentJsonYamlDDL:true,nestedJsonYamlDDL:true,decimalJsonYamlDDL:true,jsonYamlDDL:true,unknownPreserved:true,unknownDDLRefused:true,nodeGlobalsAbsent:true};
+    return {bundleJsonYamlDDL:true,bundleUnsupportedRefused:true,commentJsonYamlDDL:true,nestedJsonYamlDDL:true,decimalJsonYamlDDL:true,jsonYamlDDL:true,unknownPreserved:true,unknownDDLRefused:true,nodeGlobalsAbsent:true};
   });
-  await Bun.write('fixtures/delta/ddl-browser-results.json',JSON.stringify({...result,browser:browser.version(),qualification:'Atomic, decimal, nested and commented managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution.'},null,2)+'\n');
+  await Bun.write('fixtures/delta/ddl-browser-results.json',JSON.stringify({...result,browser:browser.version(),qualification:'Ordered complete bundles, atomic, decimal, nested and commented managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution.'},null,2)+'\n');
   console.log(result);
 } finally {await browser?.close();server.stop(true);}

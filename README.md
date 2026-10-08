@@ -232,3 +232,25 @@ outcomes; native discrepancies and exact-number policy are recorded in CONTRACT-
 Generalized JSON-LD datasets use `umf.generalized-rdf` to retain blank predicates and local
 blank identity. Select `produceGeneralizedRdf: true` on a JSON-LD-to-RDF proposal; use the
 generalized JSON export API for its candidate. See [evidence and limits](native/generalized-rdf/README.md).
+
+### Experimental managed Delta DDL
+
+UMF owns the reusable Delta generator used by Ashlar. Physical choices live in
+`umf.delta.definition` and exact schemas in `umf.delta`; unsupported meaning stays
+serializable and blocks generation. See
+[CONTRACT-050](docs/helix/02-design/contracts/CONTRACT-050-delta-ddl.md).
+
+```typescript
+import {defineDeltaTable, generateDeltaDDLBundle} from '@umf/core';
+const table = defineDeltaTable(schemaJson, {
+  profile: 'databricks-managed-delta/0.1',
+  name: ['catalog', 'schema', 'items'],
+  clusterBy: ['id'], partitionBy: [], properties: {}
+}, {id: 'items'});
+const proposal = generateDeltaDDLBundle([table]);
+// proposal.sql is reviewable CREATE SQL; proposal.tables retains each schema.
+```
+
+Bundle generation preserves caller order and refuses the entire proposal on an
+unsupported member or duplicate identity/name. It generates SQL without applying
+it; native acceptance, migrations and logical-to-physical mapping remain separate.

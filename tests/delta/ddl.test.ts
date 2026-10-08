@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {defineDeltaTable,generateDeltaDDL,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
+import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {exportDeltaSchema} from '../../src/adapters/delta';
 
@@ -125,4 +125,32 @@ test('comment metadata refuses unknown meaning, controls and client macros',()=>
     const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:true,metadata}]});
     expect(()=>defineDeltaTable(text,definition,{id:'bad-comment'})).toThrow();
   }
+});
+
+test('bundle preserves ordered complete proposals and detached source recovery',()=>{
+  const inputs=['second','first'].map(id=>defineDeltaTable(schema,{...definition,name:['catalog','schema',id]},{id}));
+  const original=JSON.stringify(inputs);
+  const result=generateDeltaDDLBundle(inputs);
+  expect(result.tables.map(table=>table.documentId)).toEqual(['second','first']);
+  expect(result.sql).toBe(inputs.map(doc=>generateDeltaDDL(doc).sql).join('\n'));
+  for(const table of result.tables)expect(table.schemaJson).toBe(schema);
+  result.tables[0]!.definition.name[0]='changed';
+  expect(JSON.stringify(inputs)).toBe(original);
+  for(const format of ['json','yaml'] as const){
+    expect(generateDeltaDDLBundle(inputs.map(doc=>readDocument(writeDocument(doc,format),format))).sql).toBe(result.sql);
+  }
+});
+
+test('bundle refuses partial export, ambiguous context and identity collisions',()=>{
+  const first=defineDeltaTable(schema,definition,{id:'first'});
+  const second=defineDeltaTable(schema,{...definition,name:['catalog','schema','other']},{id:'second'});
+  const unsupported=readDocument(writeDocument(second,'json'),'json');
+  (unsupported.extensions![DELTA_DEFINITION_EXTENSION] as Record<string,any>).future=true;
+  const original=JSON.stringify([first,unsupported]);
+  expect(()=>generateDeltaDDLBundle([first,unsupported])).toThrow();
+  expect(JSON.stringify([first,unsupported])).toBe(original);
+  expect(()=>generateDeltaDDLBundle([])).toThrow();
+  expect(()=>generateDeltaDDLBundle([first,defineDeltaTable(schema,{...definition,name:['CATALOG','SCHEMA','ITEMS']},{id:'other'})])).toThrow();
+  expect(()=>generateDeltaDDLBundle([first,defineDeltaTable(schema,{...definition,name:['catalog','schema','other']},{id:'first'})])).toThrow();
+  expect(()=>generateDeltaDDLBundle([defineDeltaTable(schema,{...definition,name:['items']},{id:'short'})])).toThrow();
 });

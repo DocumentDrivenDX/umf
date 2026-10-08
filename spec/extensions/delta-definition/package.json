@@ -65,7 +65,7 @@
     "native": {
       "system": "Azure Databricks SQL",
       "version": "Documentation inspected 2026-10-08; native execution not yet verified",
-      "subset": "Managed CREATE, atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP Delta types, explicit nullability, clustering or partitioning, five selected properties; no execution, migration, keys, column metadata, unknown types or arbitrary properties"
+      "subset": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties"
     }
   }
 }
