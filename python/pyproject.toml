@@ -18,6 +18,8 @@ packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
 "../spec/core" = "spec/core"
+"../spec/extensions/domain-pack" = "spec/extensions/domain-pack"
+"../spec/extensions/dataset-source" = "spec/extensions/dataset-source"
 "../fixtures/python" = "fixtures/python"
 "../fixtures/core/schema-properties.json" = "fixtures/core/schema-properties.json"
 

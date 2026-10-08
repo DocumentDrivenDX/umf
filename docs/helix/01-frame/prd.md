@@ -348,6 +348,14 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   its source and reports missing target semantics. Query execution, resolvers,
   pagination and business-system behavior remain outside UMF.
 
+- **FR-45** — **Portable domain packs.** UMF owns declarative domain-pack
+  schemas and tooling that generates them. Packs retain versioned generator and
+  schema artifact references, domain-type metadata, scale declarations and
+  synthetic/external source provenance without authorizing code
+  execution or network fetching. TableSpec owns fabricated tabular data
+  generation, CSV pack export, ingestion and data testing. Ontological sample
+  data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
+
 ### Subsystem: Translation and Fidelity
 
 - **FR-7** — **Cross-system translation.** UMF must enable `S → UMF → T` where

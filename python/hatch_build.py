@@ -13,3 +13,17 @@ class CustomBuildHook(BuildHookInterface):
             if not source.is_dir():
                 raise FileNotFoundError("Canonical UMF schemas are missing")
             build_data["force_include"][str(source)] = "umf/spec/core"
+
+            extension = source.parent / "extensions/domain-pack"
+            if not extension.is_dir():
+                raise FileNotFoundError("Canonical domain-pack schema is missing")
+            build_data["force_include"][str(extension)] = (
+                "umf/spec/extensions/domain-pack"
+            )
+
+            data_source = source.parent / "extensions/dataset-source"
+            if not data_source.is_dir():
+                raise FileNotFoundError("Canonical dataset-source schema is missing")
+            build_data["force_include"][str(data_source)] = (
+                "umf/spec/extensions/dataset-source"
+            )

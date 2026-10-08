@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 59,
-  "passed": 59,
+  "packages": 61,
+  "passed": 61,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -139,6 +139,15 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/dataset-source/package.json",
+      "id": "umf.dataset-source",
+      "version": "1.0.0",
+      "native": null,
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/dbt-artifact/package.json",
       "id": "umf.dbt.artifact",
       "version": "0.1.0",
@@ -226,6 +235,15 @@
         "subset": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate."
       },
       "evidenceCount": 7,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/domain-pack/package.json",
+      "id": "umf.domain-pack",
+      "version": "1.0.0",
+      "native": null,
+      "evidenceCount": 1,
       "passed": true,
       "failures": []
     },

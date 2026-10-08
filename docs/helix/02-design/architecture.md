@@ -561,3 +561,23 @@ TableSpec retains its extension and pipeline models in its own repository. Its
 legacy compiler view is derived from the current shared document, with explicit
 refusal for unsupported core semantics. Legacy files remain a compatibility
 surface; UMF-native files are read and written without stripping unknown content.
+
+### Portable domain-pack ownership
+
+Owner direction on 2026-10-08 assigns portable pack schemas and schema-generation
+tooling to UMF. CONTRACT-052 defines versioned declarative metadata. The
+browser library emits the Draft 2020-12 schema; a development script publishes
+its canonical standalone and extension-package forms. Python packages the same
+schema resource. Generator references are opaque metadata, resolved only by an
+explicitly installed consumer registry. No artifact imports code or fetches its
+schema references. TableSpec owns tabular data generation, CSV ZIP output,
+ingestion and data testing; Truss/Ashlar own ontological sample data. Consumer
+schema snapshots are generated artifacts, not competing structural authorities.
+
+Dataset source references form a reusable document-scoped extension with separate
+origin and data-kind declarations. Packs can reference published synthetic fixtures,
+observed data or mixed sources without conflating origin with privacy/realism.
+Revision/checksum, rights notices and transformation provenance remain metadata.
+Consumers explicitly bind local files or install retrieval adapters; metadata never
+imports a downloader. The initial legal pack and its native TableSpec schema
+artifacts live in UMF; consumer copies are exported and checked from that source.
