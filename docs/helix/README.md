@@ -27,6 +27,16 @@ native port remain separate work.
 
 ## Current delivered scope
 
+The shared [JavaScript numeric adapter](02-design/contracts/CONTRACT-049-schema-properties.md#shared-javascript-numeric-adapter-api-100)
+uses existing integer/decimal carriers for safe number admission, bigint
+conversion, exact decimal spelling and explicit lossless number conversion.
+[US-054](01-frame/user-stories/US-054-javascript-numeric.md),
+[TD-054](02-design/technical-designs/TD-054-javascript-numeric.md) and
+[STP-054](03-test/test-plans/STP-054-javascript-numeric.md) provide the governed
+slice; [scoped execution evidence](04-build/implementation-plan.md#shared-javascript-numeric-policy-2026-10-07)
+qualifies Bun/Chromium checks. Downstream adoption and float instance semantics
+remain separate; no core scalar type or database codec is added.
+
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
 schema ingestion and shared authored metadata. The browser-compatible library
 now includes core 0.2.0 Field, 0.3.0 Nullability, 0.4.0 Cardinality,
@@ -51,6 +61,15 @@ refusal or source-qualified report losses. They do not implement downstream
 query/mutation execution, database migration or native/domain equivalence.
 
 ## Integrated verification status
+
+The table records the earlier relationship/binding acceptance checkpoint. It
+qualifies the source and versions in its linked records. Subsequent core 0.8.0
+API simplification and the 2026-10-06 current-only Key tuple correction have
+[scoped passing evidence](04-build/evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06),
+but fresh repository regression and native qualification remain incomplete.
+The evidence record preserves the observed qualification failures and required
+replays. Current release acceptance is open; the earlier green totals below
+must not be reused as verification of the later API revision.
 
 | Separate claim | Final recorded result |
 | --- | --- |
@@ -1087,8 +1106,11 @@ migration/rollback and versioned earlier operations have Bun and Chromium
 evidence. The compatibility refresh passed 114 commands; all 352 test files
 passed 1,494 tests with zero failures. See the
 [core acceptance record](../../fixtures/validation/relationship-core-acceptance-evidence.json).
-Native relationship bindings and their separate admission/delivery gates remain
-unfinished. TableSpec is the next priority binding.
+At this historical core checkpoint, native relationship bindings and their
+separate admission/delivery gates remained unfinished, with TableSpec next.
+Later integrated acceptance recorded qualified five-priority delivery; see
+[the integrated verification status](#integrated-verification-status) for its
+source boundary and the current requalification gap.
 
 
 **Gate-test-only qualification:** The integrated 175-command native/browser replay

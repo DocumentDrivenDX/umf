@@ -27,6 +27,10 @@ ddx:
       kind: informed_by
     - id: CONTRACT-044
       kind: informed_by
+    - id: US-054
+      kind: informed_by
+    - id: TD-054
+      kind: informed_by
 ---
 
 # UMF Test Plan
@@ -551,10 +555,17 @@ broader ecosystem demonstrations happen later.
 | Review and tool composition | NFR-28, NFR-29, NFR-30, NFR-35, NFR-36, NFR-37 | Diff/merge checks, inspectability review, and unattended multi-tool workflows |
 | Ecosystem durability and boundary | NFR-48, NFR-49, NFR-50 | Independent recovery demonstration, license review, architecture scope review |
 
-## Next Governed Slice: US-050
+## Offline Composition Slice: US-050
 
-US-050 is the next governed product slice after the completed relationship and
-binding queue. Test implementation does not begin until CONTRACT-045 settles the
+The PRD selects UMF-native TableSpec as the first ecosystem integration goal.
+Frame its finalization gate before choosing the next implementation slice: map
+the required semantic coverage, legacy migration/rollback, authored pipeline
+outputs, Python/TypeScript parity and native acceptance corpus, then identify
+which US-050 capabilities are prerequisites. The dependency decision and
+concrete test allocation remain open; the port has no delivered acceptance claim.
+
+US-050 remains the governed offline-composition slice. Its test implementation
+does not begin until CONTRACT-045 settles the
 public package API, package and traversal bounds, revision/digest rules and
 permitted crossing members, and TD-050 translates those decisions into an
 implementable design. TP-001 must then allocate US-050-AC1 through US-050-AC10
@@ -3130,6 +3141,24 @@ unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
 
 ## Shared schema properties: CONTRACT-049
+
+### Shared JavaScript numeric adapter
+
+US-054 and TD-054 realize FEAT-005 IDEAL-08 under FR-8/39/41.
+[STP-054](test-plans/STP-054-javascript-numeric.md) owns the per-criterion
+assertion/citation matrix. Allocate numeric admission, spelling, exact recovery
+and hostile-input criteria to contract tests; Field constraint/source-preservation
+criteria to integration tests; portable execution to actual-browser checks.
+All nine P0 criteria require exercised passing evidence and canonical citations.
+
+Use Bun focused regression, strict portable/tooling typechecks, a fresh browser
+bundle and real Chromium public API checks. Record tested runtime versions and
+retain environment failures separately. These checks qualify the shared
+integer/decimal runtime adapter only; schema audits and native replay retain
+their independent gates because this slice adds no schema/vocabulary/native
+binding. It does not claim independent native equivalence or downstream adoption.
+
+### Shared property coverage
 
 Exercise all eight additions, exact integer/decimal equality and ordering,
 Unicode/byte units, null versus missing defaults, container item references,

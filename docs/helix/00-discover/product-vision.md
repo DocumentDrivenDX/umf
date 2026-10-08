@@ -34,7 +34,7 @@ The product promise has two distinct parts:
 
 Universality comes through extensibility. A deliberately small core defines useful UMF ideals as well as concepts with demonstrated native equivalence. Versioned extension vocabularies preserve system-specific meaning and carry defined schemas, validation rules, translators, and fidelity guarantees. A consumer uses what it understands and preserves the rest.
 
-Preserve native semantics first. UMF may define an ideal before any native system matches it: its meaning, counterexamples, qualified projections and retained native refinements must be explicit. Admitting an ideal does not replace a native concept. Only demonstrated bidirectional equivalence, with migration and rollback, can justify that separate replacement claim. The ordered next ideals are field, nullability, cardinality, author-stated facets and key.
+Preserve native semantics first. UMF may define an ideal before any native system matches it: its meaning, counterexamples, qualified projections and retained native refinements must be explicit. Admitting an ideal does not replace a native concept. Only demonstrated bidirectional equivalence, with migration and rollback, can justify that separate replacement claim. The ordered ideal sequence is field, nullability, cardinality, author-stated facets, key and relationship. The PRD governs this sequence and its separate admission and delivery obligations.
 
 **North Star:** Teams drive multiple tools from one durable model across their chosen systems, with every declared supported round trip backed by semantic evidence and every interpretation or translation limit visible.
 

@@ -377,6 +377,7 @@ export * from './projections/binding-sqlserver/relationship-layout';
 export * from './projections/ddd-postgresql';
 
 export * from './model/schema-properties';
+export * from './adapters/javascript-numeric';
 export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';

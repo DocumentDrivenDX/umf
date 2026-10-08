@@ -5,13 +5,13 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 433,
+  "total": 442,
   "counts": {
-    "SATISFIED": 55,
+    "SATISFIED": 63,
     "UNTESTED": 155,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
-    "REVIEWED_EXCEPTION": 2
+    "REVIEWED_EXCEPTION": 3
   },
   "danglingCitations": [],
   "criteria": [
@@ -4001,6 +4001,90 @@
       "status": "UNTESTED",
       "evidence": [],
       "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-054-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:19",
+        "tests/core/javascript-numeric.test.ts:31"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:20"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:21",
+        "tests/core/javascript-numeric.test.ts:6"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:42",
+        "tests/core/javascript-numeric.test.ts:7"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:43"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/core/javascript-numeric.test.ts:32"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-054-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/javascript-numeric-browser.ts:3"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     }
   ]
 }

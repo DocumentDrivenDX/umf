@@ -124,10 +124,14 @@ must not be classified by its spelling; Avro nullable unions and Parquet physica
 carriers require native interpretation. The new field establishes shared family
 metadata, not full cross-system scalar equivalence or a conversion guarantee.
 
-This first implementation uses a bounded JSON-compatible numeric/serialization
-profile. Larger/exact native numeric domains need an explicit extension encoding
-or a later lossless number API; rejection is mandatory until then. This profile
-cannot substantiate full JSON Schema/native numeric fidelity.
+The ordinary JSON envelope uses the bounded numeric/serialization profile
+below. Larger/exact values require explicit token carriers or native extension
+encodings; raw bigint and unsafe integer numbers remain rejected. CONTRACT-049
+defines shared JavaScript admission/conversion over existing integer/decimal
+literals, including optional current-Field validation, without expanding this
+envelope profile or adding scalar families. Exact native JSON trees retain their
+separate representation contract. None of these surfaces establishes full
+JSON Schema/native numeric fidelity or core float instance semantics.
 
 ## Normative Surface
 

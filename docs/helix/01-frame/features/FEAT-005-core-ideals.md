@@ -15,7 +15,7 @@ ddx:
 
 **Priority:** P0.
 **Covered PRD Subsystem(s)**: Semantic Representation and Core
-**Covered PRD Requirements**: FR-2, FR-3, FR-20, FR-21, FR-28, FR-35, FR-42
+**Covered PRD Requirements**: FR-2, FR-3, FR-8, FR-20, FR-21, FR-28, FR-35, FR-39, FR-41, FR-42
 **Cross-Subsystem Rationale**: FR-42 adds relationship authoring to the core ideal gate; FEAT-006 covers its physical bindings and generators.
 
 ## Overview
@@ -56,12 +56,22 @@ projections rather than prohibit UMF from defining author intent.
   allowed-value assertions and structural constraints. Legacy format text must
   remain recoverable; interpretation requires explicit provenance and must not
   invent authored constraints. CONTRACT-050 defines the separation boundary.
+- IDEAL-08 (owner direction, 2026-10-07): Share browser-compatible JavaScript
+  numeric admission and lossless value conversion for Truss, Ashlar and TableSpec.
+  Retain exact decimal spelling and convert bigint through integer tokens, checking
+  declared Field constraints when supplied. JavaScript number/bigint are runtime
+  representations, not additional core scalar families. Database transport and
+  storage codecs remain in Truss/Weft. CONTRACT-049 defines the bounded API.
 
 ## User Stories
 
 US-040 field, US-041 nullability, US-042 cardinality, US-043 facets, US-044 key
 and US-045 relationship provide the ordered vertical slices. Each has its own
 technical design. Relationship implementation follows the key five-system gate.
+
+[US-054](../user-stories/US-054-javascript-numeric.md) exercises IDEAL-08's
+numeric consumer journey under FR-8/39/41. It adapts runtime values to existing
+literal carriers without entering IDEAL-01's semantic-promotion sequence.
 
 ## Edge Cases and Error Handling
 
@@ -74,6 +84,11 @@ report mode exposes each loss without certifying enforcement or equivalence.
 Every requested ideal assertion has a qualified outcome in each priority target;
 all supported native archives remain recoverable; all permanent counterexamples
 remain failing exact projections. Native support versions and evidence are published.
+
+For IDEAL-08, every admitted value must retain its exact mathematical value,
+every refused conversion must be observable, and all nine US-054 acceptance
+criteria must have executable traceability. Exact token spelling survives
+serialization; successful value conversion does not promise lexical recovery.
 
 ## Out of Scope
 

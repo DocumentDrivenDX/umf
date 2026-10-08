@@ -13,6 +13,8 @@ ddx:
       kind: informed_by
     - id: FEAT-006
       kind: informed_by
+    - id: FEAT-005
+      kind: informed_by
 ---
 
 # UMF Architecture
@@ -40,6 +42,11 @@ entire implemented scope.
 
 This inventory describes the implementation merged through `0f20d2e4` and cites scoped feature evidence.
 The [integrated acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json) records the fresh native/browser replay, repository regression and six separate concept gates. Relationship ideal admission and qualified five-system delivery pass independently; native equivalence remains unclaimed.
+Subsequent core 0.8.0 changes have separate
+[scoped execution evidence](../04-build/evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
+The earlier integrated acceptance qualifies its recorded source; fresh repository
+regression and native qualification after API simplification and the current-only
+Key tuple correction remain incomplete.
 Package presence, structural validation, target generation and native equivalence
 remain different claims.
 
@@ -97,6 +104,26 @@ flowchart LR
 ```
 
 ## Level 3: Component Diagram
+
+### Shared JavaScript numeric boundary
+
+FR-8/39/41 and FEAT-005 IDEAL-08 place runtime numeric policy in a portable
+library adapter over existing integer/decimal literals. CONTRACT-049 owns its
+interface; [TD-054](technical-designs/TD-054-javascript-numeric.md) realizes the
+bounded [US-054](../01-frame/user-stories/US-054-javascript-numeric.md) slice.
+JavaScript number and bigint remain consumer representations. The adapter
+checks exact binary64 value equality, safe integer admission and optional
+current-Field constraints; it adds no vocabulary, scalar family, persistence
+service or runtime dependency. Database transport/storage codecs stay in
+Truss/Weft, with adoption by Truss, Ashlar and TableSpec evidenced separately.
+
+The ordinary JSON envelope retains CONTRACT-001's existing numeric profile.
+Exact values travel through string token carriers, never raw bigint. The shared
+adapter's strict decimal admission is separate from generic programmatic JSON
+number copying: the latter cannot recover precision lost before invocation.
+Unknown extension/native meaning remains attached; relevant unknown qualifiers
+block conversion instead of authorizing normalization. Core float instance
+semantics and native binary32 narrowing remain separate policies.
 
 | Component | Responsibility | Failure Boundary |
 | --- | --- | --- |

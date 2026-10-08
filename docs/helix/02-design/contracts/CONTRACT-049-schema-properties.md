@@ -24,11 +24,14 @@ ddx:
 
 Define titles, examples, aliases, collection size, allowed values, exact numeric
 ranges, minimum length and explicit literal defaults for native TableSpec use.
+Also define IDEAL-08's shared JavaScript numeric admission and conversion over
+these existing integer/decimal literals for Truss, Ashlar and TableSpec consumers.
 
 ## Scope and Boundaries
 
-Metadata authoring, validation, inspection and collision-preserving migration
-are in scope. Native enforcement/conversion, temporal comparison, computed
+Metadata authoring, validation, inspection, collision-preserving migration and
+the bounded JavaScript numeric adapter are in scope. Database/native transport
+and storage conversion, native enforcement, temporal comparison, computed
 expressions and automatic alias resolution remain outside this contract.
 
 ## Normative Surface
@@ -62,6 +65,58 @@ selects scope document/module/element with exact IDs. Authoring returns the copi
 validated Document directly; inspection preserves full source. Facet patches
 merge known groups without deleting omitted/unknown siblings; edits to a group
 with unknown qualifiers refuse. Routine authoring and selection do not issue or verify persistent receipts.
+
+### Shared JavaScript numeric adapter (API 1.0.0)
+
+IDEAL-08 adds a dependency-free numeric policy module using existing typed
+literals. It MUST NOT add core scalar families or database codecs. All operations
+accept an optional `JavascriptNumericContext` containing `document` and
+`field:{module,element}`. When supplied, the context MUST validate the value
+against the current 0.8.0 Field, including signedness/width, precision/scale,
+inclusive/exclusive ranges and allowed values. Unknown relevant qualifiers and
+invalid documents MUST refuse. Without context, conversion makes no declared
+schema-domain claim. Inputs MUST remain unchanged.
+
+| Operation | Surface and rules |
+| --- | --- |
+| `admitJavascriptNumber(value,scalarType,context?)` | Explicit integer/decimal family; finite number without negative zero. Integer requires safe integer. Decimal uses the shortest number spelling only when its exact decimal value equals the binary64 value. Returns integerToken/decimalToken. |
+| `integerFromBigInt(value,context?)` | bigint to base-ten integerToken without rounding. |
+| `integerToBigInt(literal,context?)` | integerToken to bigint; exact integral exponent/fraction spellings accepted. Negative zero refuses because bigint loses its sign. |
+| `exactDecimal(token,context?)` | JSON numeric token grammar; preserves the complete spelling, including exponent, trailing zeros and negative zero. |
+| `numericToNumberLossless(literal,context?)` | integerToken/decimalToken to finite number only when exact binary64 equality holds; integer additionally requires safe integer. Negative zero refuses in this admitted number profile. Lexical recovery is not promised; the input carrier remains intact. |
+
+`JavascriptNumericLiteral` is `{integerToken:string}|{decimalToken:string}`.
+Token text is bounded to 4,000,000 UTF-16 code units and exponent text to 32
+characters; expanded integer coefficients inherit the existing literal resource
+limit. Malformed values and value-changing conversions throw `UmfError` with
+`JAVASCRIPT_NUMERIC`; resource errors use `LIMIT`. Existing core errors can also
+propagate for malformed JSON carriers or integer coefficients. Extra carrier
+members refuse rather than disappear; copying MUST NOT invoke accessors.
+
+For example, `admitJavascriptNumber(0.5,'decimal')` returns
+`{decimalToken:'0.5'}`. Admission of `0.1` as a decimal refuses;
+`exactDecimal('0.1000')` retains that spelling, and lossless conversion of it
+to number also refuses. The full exact binary64 decimal
+`0.1000000000000000055511151231257827021181583404541015625` converts to `0.1`.
+An integer outside safe-number range remains serializable as an integerToken
+and convertible to bigint within its declared range.
+
+Carriers MUST serialize through existing Document JSON/YAML operations;
+bigint itself MUST NOT enter the JSON envelope. Float tokens, NaN/infinity and
+binary32 narrowing remain governed by separate native/value policies: this API
+does not define the currently unspecified core float instance semantics or
+recover precision already lost before a number was passed in. Sharing the API
+does not establish adoption in the three downstream projects.
+
+Standalone token construction validates numeric representation only; decimal
+precision/scale become required when a decimal Field context is supplied.
+This adapter is additive: it changes neither the core 0.8.0 schema nor ordinary
+JSON-envelope number copying/parsing in CONTRACT-001. Native JSON number-tree
+carriers and native float policies retain their distinct contracts.
+
+US-054 owns the consumer acceptance criteria, TD-054 the implementation approach
+and STP-054 their executable traceability. No new semantic concept is proposed
+for the two-priority-system admission or native-equivalence gates.
 
 ## Precedence and Compatibility
 

@@ -289,3 +289,17 @@ semantic coverage matrix, migration contract and acceptance plan. Truss must fra
 implementation. Ashlar must reconcile immutable publication with PRD Q2/Q3/Q7
 and its existing schema/query milestone. TableSpec needs tracked native-port and
 later sink work under its DDx Beads process before runtime changes.
+
+## Owner direction: shared JavaScript numeric adapter (2026-10-07)
+
+The owner requests shared JavaScript number/bigint admission and conversion for
+Truss, Ashlar and TableSpec, using existing integer/decimal token carriers.
+Preserve exact decimal spelling, require explicit lossless number conversion,
+validate supplied declared ranges and serialize through existing JSON-safe
+carriers. JavaScript representations do not become language-independent schema
+types. Database transport/storage codecs stay in Truss/Weft; the shared adapter
+must remain browser-compatible and add no runtime dependencies.
+
+FR-8/39/41, FEAT-005 IDEAL-08, US-054, CONTRACT-049, TD-054 and STP-054 carry
+the governed requirement and checks. Numeric admission does not imply consumer
+adoption, new core ideal admission, native database equivalence or float semantics.
