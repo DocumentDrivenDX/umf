@@ -5278,3 +5278,23 @@ the retained facet-evidence gate and whitespace validation pass; the broad live
 suite traversed only root tests and exposed one governed-document fingerprint
 drift from acceptance-ID normalization, now recorded in the existing explicit
 revalidation ledger.
+
+
+### Ashlar-driven Delta DDL generation — 2026-10-08
+
+Owner direction places the reusable Delta DDL generator in UMF.
+[CONTRACT-050](../02-design/contracts/CONTRACT-050-delta-ddl.md) defines
+`umf.delta.definition` 0.1.0 alongside existing exact `umf.delta` schemas.
+The pure TypeScript API generates proposed managed CREATE statements with
+explicit nullability, clustering/partitioning and five selected table properties.
+Unknown meaning remains serializable and blocks generation. No native UUID,
+protocol compatibility, migration, relationship enforcement or predictive
+optimization change is inferred.
+
+Eight focused Bun tests (151 assertions, including existing schema recovery)
+and library typecheck pass. The initial tests could not resolve dependencies
+in this worktree; linking the existing project dependency installation resolved
+that environment issue. Browser evidence is scoped in
+`fixtures/delta/ddl-browser-results.json`; native DDL execution remains separate.
+Ashlar must independently compare its model-generated carriers with its existing
+layout before replacing installation input.

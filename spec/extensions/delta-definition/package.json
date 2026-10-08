@@ -1,0 +1,71 @@
+{
+  "id": "umf.delta.definition",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Authored managed Databricks Delta table definitions and strict CREATE generation",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:delta-definition:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "databricks-managed-delta/0.1"
+      },
+      "name": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "clusterBy": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "partitionBy": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "properties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "profile",
+      "name",
+      "clusterBy",
+      "partitionBy",
+      "properties"
+    ],
+    "additionalProperties": true
+  },
+  "semantics": "CONTRACT-050. Exact Delta schema remains in umf.delta; definition stores authored name, clustering/partitioning and properties independently of observed native table UUID/protocol. Unknown meaning is preserved and blocks DDL.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "evidence": [
+      "tests/delta/ddl.test.ts",
+      "fixtures/delta/ddl-browser-results.json"
+    ],
+    "native": {
+      "system": "Azure Databricks SQL",
+      "version": "Documentation inspected 2026-10-08; native execution not yet verified",
+      "subset": "Managed CREATE, atomic Delta types, explicit nullability, clustering or partitioning, five selected properties; no execution, migration, keys, column metadata, unknown types or arbitrary properties"
+    }
+  }
+}

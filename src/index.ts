@@ -124,6 +124,7 @@ export * from "./projections/arrow-spark";
 export {default as arrowSparkProjectionSchema} from "../spec/projections/arrow-spark.schema.json";
 
 export * from "./adapters/delta";
+export * from "./adapters/delta/ddl";
 export {default as deltaDataTypeSchema} from "../spec/extensions/delta/datatype-schema.json";
 
 export * from "./adapters/delta/table";
