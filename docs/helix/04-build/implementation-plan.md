@@ -5314,3 +5314,25 @@ retention/refusal and absence of Node globals. Browser evidence is retained in
 slow; a redundant broader test process was stopped. No new cloud jobs or native
 SQL execution occurred. Nested types, logical-core-to-physical mapping and wider
 dialects remain subsequent explicit work, not claimed support.
+
+
+### Delta DDL recursive type iteration — 2026-10-08
+
+Owner direction grows the reusable generator in UMF. CONTRACT-050 now permits
+recursive STRUCT/ARRAY/MAP and explicit TIMESTAMP_NTZ without changing the
+preserved schema envelope or definition vocabulary shape. Ordered struct fields,
+quoted names, decimal parameters and nullability remain explicit. Non-null array
+elements/map values, absent map nullability, required fields below collections,
+unknown recursive properties, nested metadata and complex layout keys refuse.
+The emitter never silently relaxes these meanings or asserts native protocol admission.
+
+Nine focused Bun tests pass (81 assertions), including exact JSON/YAML recovery,
+full nested type expectations and refusal cases. Library TypeScript checking
+passes. Chromium 153.0.8010.12 verifies nested nullable arrays of TIMESTAMP_NTZ,
+atomic/decimal definitions, source recovery and unknown-content refusal in the
+browser library. Browser evidence is fixtures/delta/ddl-browser-results.json;
+STRUCT/MAP execution is covered by Bun generation tests, not native SQL.
+Initial sandbox browser startup failed to listen on localhost; the same focused
+check passed outside the sandbox. No cloud runs or SQL applications occurred.
+Native target execution, migrations, richer metadata interpretation and logical
+core-to-physical projection remain separate work.

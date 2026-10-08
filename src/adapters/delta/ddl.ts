@@ -20,8 +20,36 @@ const identifier=(s:string)=>{
   return '`'+s+'`';
 };
 const exact=(value:object,keys:string[])=>{if(Object.keys(value).some(k=>!keys.includes(k)))fail('Unknown content must remain in UMF; generation would discard it');};
-const types:Record<string,string>={string:'STRING',long:'BIGINT',integer:'INT',short:'SMALLINT',byte:'TINYINT',float:'FLOAT',double:'DOUBLE',boolean:'BOOLEAN',binary:'BINARY',date:'DATE',timestamp:'TIMESTAMP'};
-const ddlType=(type:unknown):string=>{
+const types:Record<string,string>={string:'STRING',long:'BIGINT',integer:'INT',short:'SMALLINT',byte:'TINYINT',float:'FLOAT',double:'DOUBLE',boolean:'BOOLEAN',binary:'BINARY',date:'DATE',timestamp:'TIMESTAMP',timestamp_ntz:'TIMESTAMP_NTZ'};
+const ddlType=(type:unknown,inCollection=false):string=>{
+  if(typeof type==='object'&&type!==null&&!Array.isArray(type)){
+    const node=type as Record<string,any>;
+    if(node.type==='struct'){
+      exact(node,['type','fields']);
+      if(!Array.isArray(node.fields)||!node.fields.length)fail('Nonempty nested struct required');
+      const names=new Set<string>();
+      return 'STRUCT<'+node.fields.map((field:Record<string,any>)=>{
+        exact(field,['name','type','nullable','metadata']);
+        const name=identifier(field.name),normalized=field.name.toLowerCase();
+        if(names.has(normalized))fail('Duplicate nested column');names.add(normalized);
+        if(Object.keys(field.metadata).length)fail('Nested metadata requires an explicit DDL interpretation');
+        if(inCollection&&!field.nullable)fail('Required fields inside collections cannot be preserved by this DDL profile');
+        return name+': '+ddlType(field.type,inCollection)+(field.nullable?'':' NOT NULL');
+      }).join(', ')+ '>';
+    }
+    if(node.type==='array'){
+      exact(node,['type','elementType','containsNull']);
+      if(node.containsNull!==true)fail('Nonnullable array elements cannot be preserved by SQL type syntax');
+      return 'ARRAY<'+ddlType(node.elementType,true)+'>';
+    }
+    if(node.type==='map'){
+      exact(node,['type','keyType','valueType','valueContainsNull']);
+      if(node.valueContainsNull!==true)fail('Map value nullability must be explicitly true');
+      if(typeof node.keyType!=='string')fail('This profile supports atomic map keys only');
+      return 'MAP<'+ddlType(node.keyType,true)+', '+ddlType(node.valueType,true)+'>';
+    }
+    return fail('Object type has no supported DDL mapping');
+  }
   if(typeof type!=='string')return fail('Type has no supported DDL mapping');
   if(Object.hasOwn(types,type))return types[type]!;
   const decimal=/^decimal\(([1-9][0-9]?),([0-9]|[1-9][0-9])\)$/.exec(type);
@@ -77,7 +105,11 @@ export function generateDeltaDDL(input:Document):{sql:string;definition:DeltaDef
   });
   for(const list of [definition.clusterBy,definition.partitionBy]){
     if(new Set(list.map(n=>n.toLowerCase())).size!==list.length)fail('Duplicate layout column');
-    for(const name of list)if(!names.has(name.toLowerCase()))fail('Layout column absent from schema');
+    for(const name of list){
+      if(!names.has(name.toLowerCase()))fail('Layout column absent from schema');
+      const field=schema.fields.find((f:{name:string})=>f.name.toLowerCase()===name.toLowerCase());
+      if(typeof field.type!=='string')fail('Complex layout columns require a separately qualified profile');
+    }
   }
   const values=Object.entries(definition.properties).map(([key,value])=>{
     if(!properties.has(key)||!/^[A-Za-z0-9_,. -]+$/.test(value))fail('Property has no supported literal interpretation');

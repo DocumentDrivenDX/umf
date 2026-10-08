@@ -66,3 +66,42 @@ test('decimal precision and scale remain exact through recovery and DDL',()=>{
     expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:true,metadata:{}}]}),definition,{id:'refuse'})).toThrow();
   }
 });
+
+
+test('nested types preserve order, nullability and exact schema through both formats',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'payload',nullable:true,metadata:{},type:{type:'struct',fields:[
+    {name:'at',type:'timestamp_ntz',nullable:false,metadata:{}},
+    {name:'tags',type:{type:'array',elementType:'string',containsNull:true},nullable:true,metadata:{}},
+    {name:'amounts',type:{type:'map',keyType:'string',valueType:'decimal(19,4)',valueContainsNull:true},nullable:true,metadata:{}}
+  ]}}]});
+  const doc=defineDeltaTable(text,definition,{id:'nested'}),original=JSON.stringify(doc);
+  for(const format of ['json','yaml'] as const){
+    const result=generateDeltaDDL(readDocument(writeDocument(doc,format),format));
+    expect(result.schemaJson).toBe(text);
+    expect(result.sql).toContain('`payload` STRUCT<`at`: TIMESTAMP_NTZ NOT NULL, `tags`: ARRAY<STRING>, `amounts`: MAP<STRING, DECIMAL(19,4)>>');
+  }
+  expect(JSON.stringify(doc)).toBe(original);
+});
+test('nested unsupported meaning and collection nullability refuse without source mutation',()=>{
+  for(const type of [
+    {type:'array',elementType:'long',containsNull:false},
+    {type:'array',elementType:'long',containsNull:true,future:true},
+    {type:'map',keyType:'string',valueType:'long'},
+    {type:'map',keyType:'string',valueType:'long',valueContainsNull:false},
+    {type:'struct',fields:[{name:'x',type:'long',nullable:true,metadata:{future:true}}]},
+    {type:'struct',fields:[{name:'x',type:'long',nullable:true,metadata:{}},{name:'X',type:'string',nullable:true,metadata:{}}]},
+    {type:'array',containsNull:true,elementType:{type:'struct',fields:[{name:'x',type:'long',nullable:false,metadata:{}}]}},
+  ]){
+    const doc=defineDeltaTable(schema,definition,{id:'refusal'});
+    // Retain the unsupported schema independently; no failed export may mutate it.
+    const retained=JSON.stringify(type);
+    expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:true,metadata:{}}]}),definition,{id:'refusal'})).toThrow();
+    expect(JSON.stringify(type)).toBe(retained);
+    expect(generateDeltaDDL(doc).schemaJson).toBe(schema);
+  }
+});
+
+test('complex columns cannot accidentally become partition or clustering keys',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:{type:'array',elementType:'string',containsNull:true},nullable:true,metadata:{}}]});
+  for(const layout of [{clusterBy:['id'],partitionBy:[]},{clusterBy:[],partitionBy:['id']}])expect(()=>defineDeltaTable(text,{...definition,...layout},{id:'complex-layout'})).toThrow();
+});

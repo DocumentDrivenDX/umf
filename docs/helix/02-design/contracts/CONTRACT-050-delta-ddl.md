@@ -49,13 +49,23 @@ The first emitter supports Delta atomic string, long, integer, short, byte,
 float, double, boolean, binary, date and timestamp types. Required fields emit
 NOT NULL; nullable fields omit it. Empty metadata is required. Canonical `decimal(p,s)` emits DECIMAL(p,s), with precision 1–38 and scale
 0–precision; neither precision nor scale is defaulted or rounded. Noncanonical
-spellings and unsupported bounds MUST refuse. Nested types,
-variant, timestamp_ntz, defaults, identity, generated expressions and
+spellings and unsupported bounds MUST refuse. TIMESTAMP_NTZ emits explicitly,
+without inferring native timestampNtz protocol admission. Recursive STRUCT, ARRAY
+and MAP are supported under the following preservation rules. STRUCT fields
+retain order, quoted names and explicit nullability; case collisions, empty
+structs and nonempty metadata refuse at every depth. ARRAY requires
+containsNull:true; MAP requires explicit valueContainsNull:true and atomic keys.
+False or absent collection nullability MUST refuse rather than default or relax.
+Required STRUCT fields anywhere inside a collection MUST refuse because this
+SQL profile cannot preserve their constraint. Unknown recursive content refuses.
+
+Variant, defaults, identity, generated expressions and
 column-mapping metadata require subsequent explicit interpretations.
 
 Names MUST use ASCII letters/underscores followed by letters/digits/underscores;
 the emitter MUST quote each identifier. Duplicate names ignoring case, missing
-layout columns and duplicate layout columns MUST refuse. Liquid clustering and
+layout columns and duplicate layout columns MUST refuse. Complex layout columns
+require a separately qualified profile and MUST refuse here. Liquid clustering and
 partitioning MUST NOT coexist; at most four clustering columns are supported.
 
 Properties supported here are `delta.dataSkippingStatsColumns` (existing
@@ -101,3 +111,5 @@ and [table properties reference](https://learn.microsoft.com/en-us/azure/databri
 were inspected 2026-10-08. Syntax generation is not native execution evidence.
 Tests cover retained JSON/YAML recovery, complete expected SQL and refusals;
 browser and native evidence must identify their actual tested subsets.
+
+Nested syntax is qualified against the [STRUCT reference](https://learn.microsoft.com/en-us/azure/databricks/sql/language-manual/data-types/struct-type) and [constraint limitations](https://learn.microsoft.com/en-us/azure/databricks/tables/constraints), inspected 2026-10-08. Native execution remains unverified.
