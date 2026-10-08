@@ -24,3 +24,16 @@ after a deployment. No repository secret or separate hosting token is required.
 
 The [microsite evidence](microsite-evidence.json) records earlier browser checks
 and private-preview deployments. These do not qualify a library release.
+
+## Page signatures
+
+The four HTML pages carry Innsigle signatures using the approved
+[colophon](../../../.innsigle/colo.json). The private signing key is in
+1Password's Employee vault, in `Innsigle UMF signing key`. Repository files
+contain public keys, attestations and a secret reference, not the private key.
+
+After changing HTML, review any changes to the colophon and re-seal the edited
+pages with Innsigle before pushing. Use `.innsigle/AGENTS.md` for the commands.
+Actions verifies the signatures and copies the public keys and attestations
+into `.well-known/innsigle/` in the published site. Stale or missing signatures
+block publication. CI does not receive the signing key.

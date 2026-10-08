@@ -11,6 +11,7 @@ on:
       - 'patches/**'
       - 'package.json'
       - 'bun.lock'
+      - '.innsigle/**'
   pull_request:
     branches: [master]
     paths:
@@ -21,6 +22,7 @@ on:
       - 'patches/**'
       - 'package.json'
       - 'bun.lock'
+      - '.innsigle/**'
   workflow_dispatch:
 
 permissions:
@@ -42,6 +44,16 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
+      - name: Get Innsigle verifier
+        uses: actions/checkout@v4
+        with:
+          repository: DocumentDrivenDX/innsigle
+          ref: 4185eb56beb7b52beaa4a00c2fc897f93d44b939
+          path: .tools/innsigle
+      - name: Verify page signatures
+        run: node .tools/innsigle/src/cli.mjs verify --all
+      - name: Include public keys and attestations
+        run: node .tools/innsigle/src/cli.mjs publish docs/helix/05-deploy/microsite/dist
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

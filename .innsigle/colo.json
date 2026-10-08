@@ -1,0 +1,10 @@
+{
+  "schema_version": "1",
+  "composition": "model-primary",
+  "ingredients": [
+    { "kind": "model", "name": "OpenAI Codex", "role": "draft and rewrite" },
+    { "kind": "human", "name": "Erik Labianca", "role": "direction and review" },
+    { "kind": "tool", "name": "innsigle-seal", "role": "colophon preparation and sealing" }
+  ],
+  "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+}
