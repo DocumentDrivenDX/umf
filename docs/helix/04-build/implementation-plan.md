@@ -5448,3 +5448,23 @@ compiler snapshots, unsupported-property refusal and the existing compiler path
 are consumer-owned. Broader core-property execution bindings and full native-port
 acceptance remain distinct from package delivery. Scoped Python/package/browser
 evidence is recorded in [python-consumers.md](evidence/python-consumers.md).
+
+### Portable domain packs and dataset sources (2026-10-08)
+
+Owner direction assigns all pack metadata, tabular schemas and schema tooling to
+UMF, with generation, CSV output, ingestion and data testing in TableSpec.
+CONTRACT-052 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
+provenance and explicit execution boundaries. The legal source pack lives under
+`spec/domain-packs/legal/`; generated consumer snapshots preserve compatibility.
+
+Implement portable schema generation and registration, local native-schema
+export/check, Python resources and Chromium metadata checks. TableSpec consumes
+versioned references through trusted factory registration, retaining external
+source declarations while refusing fabricated substitution for external row
+inputs. Retrieval adapters and general mixed-source transformation remain open;
+no workspace or source dataset is fetched during this implementation.
+
+Scoped implementation evidence is recorded in
+[domain-packs.md](evidence/domain-packs.md). The portable metadata subset has
+TypeScript, Bun, Python, canonical-audit and real-browser evidence. Broader native
+adapter qualification remains distinct and its failing gates are retained.

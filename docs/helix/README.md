@@ -1132,3 +1132,10 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
+
+Portable tabular domain packs are governed by
+[CONTRACT-052](02-design/contracts/CONTRACT-052-domain-packs.md). UMF owns pack
+metadata, table schemas and schema export tooling; TableSpec owns executable
+sample-data generation, CSV packaging and ingestion tests. Dataset-source
+metadata distinguishes origin from data nature and retains licensing and
+provenance. Referenced datasets are not implicitly fetched.

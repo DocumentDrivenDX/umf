@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 346,
-  "passed": 346,
+  "schemas": 349,
+  "passed": 349,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -377,6 +377,13 @@
     {
       "path": "spec/core/key-tuple-operation-v2.schema.json",
       "id": "urn:umf:core:key-tuple-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/key-tuple-operation-v3.schema.json",
+      "id": "urn:umf:core:key-tuple-operation:3.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1103,6 +1110,13 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/dataset-source/schema.json",
+      "id": "urn:umf:dataset-source:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/dbt-artifact/catalog-v1-schema.json",
       "id": "https://schemas.getdbt.com/dbt/catalog/v1.json",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -1273,6 +1287,13 @@
     {
       "path": "spec/extensions/delta/schema.json",
       "id": "urn:umf:delta:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/domain-pack/schema.json",
+      "id": "urn:umf:domain-pack:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

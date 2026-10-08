@@ -382,3 +382,11 @@ export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
 export {coreSchemaPropertiesTransitionSchema} from './model/schema-properties-transition-schema';
+
+export {generateDomainPackSchema} from './domain-packs/schema';
+export {default as domainPackSchema} from '../spec/extensions/domain-pack/schema.json';
+export {default as domainPackPackage} from '../spec/extensions/domain-pack/package.json';
+
+export {generateDatasetSourceSchema} from './domain-packs/source-schema';
+export {default as datasetSourceSchema} from '../spec/extensions/dataset-source/schema.json';
+export {default as datasetSourcePackage} from '../spec/extensions/dataset-source/package.json';

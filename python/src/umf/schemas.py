@@ -80,3 +80,33 @@ def local_references(node):
     elif isinstance(node, list):
         for value in node:
             local_references(value)
+
+
+def domain_pack_schema(version: str = "1.0.0") -> dict:
+    """Return canonical portable domain-pack structure, never executable code."""
+    if version != "1.0.0":
+        raise ValueError("Unsupported UMF domain-pack version")
+    relative = "spec/extensions/domain-pack/schema.json"
+    resource = files("umf").joinpath(relative)
+    if resource.is_file():
+        return json.loads(resource.read_text(encoding="utf-8"))
+    package_root = Path(__file__).resolve().parents[2]
+    source = package_root / relative
+    if not source.is_file():
+        source = package_root.parent / relative
+    return json.loads(source.read_text(encoding="utf-8"))
+
+
+def dataset_source_schema(version: str = "1.0.0") -> dict:
+    """Return declarative source/provenance structure, without fetching data."""
+    if version != "1.0.0":
+        raise ValueError("Unsupported UMF dataset-source version")
+    relative = "spec/extensions/dataset-source/schema.json"
+    resource = files("umf").joinpath(relative)
+    if resource.is_file():
+        return json.loads(resource.read_text(encoding="utf-8"))
+    package_root = Path(__file__).resolve().parents[2]
+    source = package_root / relative
+    if not source.is_file():
+        source = package_root.parent / relative
+    return json.loads(source.read_text(encoding="utf-8"))
