@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "umf-core"
+version = "0.8.0"
+description = "Official Python document models and extension machinery for UMF"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.11,<3", "jsonschema>=4.25,<5", "ruamel.yaml>=0.18,<1"]
+
+[project.urls]
+Repository = "https://github.com/DocumentDrivenDX/umf"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/umf"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../spec/core" = "spec/core"
+"../fixtures/python" = "fixtures/python"
+"../fixtures/core/schema-properties.json" = "fixtures/core/schema-properties.json"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<10", "ruff>=0.13"]
+
+[tool.hatch.build.hooks.custom]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

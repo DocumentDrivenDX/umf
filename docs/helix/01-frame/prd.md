@@ -578,3 +578,13 @@ be inspected.
 - [ ] Derive feature specs and user stories with traceable acceptance criteria.
 - [ ] Define native equivalence rules and execute conformance tests.
 - [ ] Obtain product review; this document remains a draft.
+
+### Official Python consumer support
+
+Owner direction (2026-10-07) realizes host-language independence through an
+official Python distribution owned by UMF. Shared document models, canonical
+schemas, serialization and extension-registration machinery belong to UMF.
+Consumer-specific extension models and execution semantics remain in their
+consumer repositories. Python MUST preserve unknown content and distinguish
+structural validity from semantic completeness. TableSpec MUST derive its
+compiler view from the shared document and refuse unsupported execution meaning.

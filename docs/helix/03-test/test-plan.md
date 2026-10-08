@@ -3176,3 +3176,16 @@ remain. Unknown length units cover minimum-only, maximum zero, both zero bounds
 and positive maxima in Bun and Chromium, with incomplete validation, refused
 extension edits and recognized-unit controls. See the
 [current scoped evidence](../04-build/evidence/schema-properties-core.md).
+
+### Official Python consumer package
+
+CONTRACT-051 requires canonical schema equality for core 0.1.0–0.8.0, isolated
+Pydantic access models, exact field-presence and unknown-content recovery,
+portable numeric admission, explicit registry versions/scopes, callback failure
+diagnostics and self-contained source/wheel builds. `python/tests/test_core.py`
+is the Python gate. `fixtures/python/core-conformance.json` and
+`scripts/python-conformance.ts` replay the qualified structural/identity/reference
+subset in real Chromium; advanced-property cases qualify preservation only.
+Installed-wheel and extracted-sdist checks MUST run without relying on checkout
+resource paths. Full JavaScript semantic API parity and all native pipeline
+mappings remain outside this bounded package acceptance claim.

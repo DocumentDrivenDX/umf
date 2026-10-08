@@ -1,0 +1,109 @@
+{
+  "profile": "python-core-structure-identity-references-1",
+  "versions": {
+    "python": "3.12.15",
+    "pydantic": "2.11.10",
+    "jsonschema": "4.26.0",
+    "ruamel.yaml": "0.19.1",
+    "umf-core": "0.8.0"
+  },
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "fingerprints": {
+    "python/src/umf/models.py": "36fc40f3d03f0066f97077d03917069a6305deaa437e676eda8a25b121ee578d",
+    "python/src/umf/registry.py": "79c4e701debcd664477b5fb3a41b25fbd4ed35be03d4b228445cabfc224b2d99",
+    "python/src/umf/__init__.py": "559ef75129039b00dfcc405103148aae764f0f581881382a8e9da3b87be98e65",
+    "python/src/umf/schemas.py": "4f6410f636db1dcae56a968b3b79198bc7f0f9d7d58471359b91f090e285575e",
+    "python/src/umf/json.py": "8ce0f0d261f507a51d4dfd28859f2e5a8d3f1e8a309f834c55852cf46f658678",
+    "python/src/umf/serialization.py": "6c002e3b637e622321b9eb74d5106ac223f6de9de22e2656264beff73d404ead",
+    "python/src/umf/validation.py": "05256dc8a7a66288827b4b02588132943256faa14817d97c27b62cab8070527d",
+    "fixtures/python/core-conformance.json": "99b69d284c8ce021fc11058e936a03ded8e817969c635c6868940c4c308156b0",
+    "fixtures/core/schema-properties.json": "6167aa09f8de98ed33c2a870f91db213c231d2803f0a622b33b799ba743de76b"
+  },
+  "results": [
+    {
+      "name": "basic",
+      "valid": true,
+      "complete": true,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "unknown-content",
+      "valid": true,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "unknown-extension",
+      "valid": true,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "unknown-scalar",
+      "valid": true,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "duplicate-module",
+      "valid": false,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "duplicate-element",
+      "valid": false,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "unresolved-reference",
+      "valid": false,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "undeclared-extension",
+      "valid": false,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "record-type",
+      "valid": true,
+      "complete": true,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "string-number-no-coercion",
+      "valid": false,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 0
+    },
+    {
+      "name": "older-version-future-properties",
+      "valid": true,
+      "complete": false,
+      "comparison": "qualified-subset",
+      "recoveries": 2
+    },
+    {
+      "name": "advanced-properties-preservation-only",
+      "valid": true,
+      "complete": true,
+      "comparison": "preservation-only",
+      "recoveries": 2
+    }
+  ]
+}
