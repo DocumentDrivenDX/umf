@@ -1,0 +1,393 @@
+[
+  {
+    "name": "basic",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": true,
+    "complete": true
+  },
+  {
+    "name": "unknown-content",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ],
+      "x-future": {
+        "null": null,
+        "decimalToken": "9007199254740993.01"
+      }
+    },
+    "valid": true,
+    "complete": false
+  },
+  {
+    "name": "unknown-extension",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ],
+      "extensions": {
+        "future": {
+          "anything": [
+            null,
+            "exact"
+          ]
+        }
+      }
+    },
+    "valid": true,
+    "complete": false
+  },
+  {
+    "name": "unknown-scalar",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "future-number",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": true,
+    "complete": false
+  },
+  {
+    "name": "duplicate-module",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        },
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": false,
+    "complete": false
+  },
+  {
+    "name": "duplicate-element",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": false,
+    "complete": false
+  },
+  {
+    "name": "unresolved-reference",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {},
+              "references": [
+                {
+                  "role": "custom",
+                  "module": "m",
+                  "element": "missing"
+                }
+              ]
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": false,
+    "complete": false
+  },
+  {
+    "name": "undeclared-extension",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {
+                "future": {}
+              }
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": false,
+    "complete": false
+  },
+  {
+    "name": "record-type",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": "id",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "rfield",
+              "kind": "field",
+              "extensions": {},
+              "references": [
+                {
+                  "role": "record-type",
+                  "module": "m",
+                  "element": "record"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "valid": true,
+    "complete": true
+  },
+  {
+    "name": "string-number-no-coercion",
+    "document": {
+      "umf": "0.8.0",
+      "id": "parity",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "orders",
+          "elements": [
+            {
+              "id": "id",
+              "name": 17,
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "valid": false,
+    "complete": false
+  },
+  {
+    "name": "older-version-future-properties",
+    "document": {
+      "umf": "0.1.0",
+      "id": "older",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "older",
+          "elements": [
+            {
+              "id": "e",
+              "extensions": {},
+              "scalar_type": {
+                "future": null
+              },
+              "facets": "uninterpreted",
+              "kind": [
+                "future"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "valid": true,
+    "complete": false
+  }
+]

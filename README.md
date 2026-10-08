@@ -232,3 +232,12 @@ outcomes; native discrepancies and exact-number policy are recorded in CONTRACT-
 Generalized JSON-LD datasets use `umf.generalized-rdf` to retain blank predicates and local
 blank identity. Select `produceGeneralizedRdf: true` on a JSON-LD-to-RDF proposal; use the
 generalized JSON export API for its candidate. See [evidence and limits](native/generalized-rdf/README.md).
+
+## Official Python support
+
+The Python distribution `umf-core` lives under [python/](python/README.md). It
+packages the canonical core schemas and provides Pydantic document access models,
+portable serialization and explicit extension registration. Consumer extension
+definitions stay in consumer repositories. Semantic support is qualified by
+[CONTRACT-051](docs/helix/02-design/contracts/CONTRACT-051-python-consumers.md);
+package presence does not establish full JavaScript or native-adapter parity.

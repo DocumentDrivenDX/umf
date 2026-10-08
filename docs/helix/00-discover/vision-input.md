@@ -303,3 +303,16 @@ must remain browser-compatible and add no runtime dependencies.
 FR-8/39/41, FEAT-005 IDEAL-08, US-054, CONTRACT-049, TD-054 and STP-054 carry
 the governed requirement and checks. Numeric admission does not imply consumer
 adoption, new core ideal admission, native database equivalence or float semantics.
+
+### Owner direction: official Python support (2026-10-07)
+
+The owner approves a Python package in DocumentDrivenDX/umf containing shared
+Pydantic models and reusable schema validation, extension registration and
+serialization. Canonical JSON Schemas remain owned by UMF. TableSpec owns its
+extension models, schemas and execution policy in its own repository; those
+must not be moved into UMF core. Python and JavaScript share versioned structural
+contracts and conformance cases. TableSpec consumes the official Python package
+and derives its compiler view from shared documents, retaining legacy I/O for
+explicit compatibility and migration. Unknown content survives; execution of
+uninterpreted relevant semantics refuses. Package publication requires a concrete
+release decision and must not be inferred from a format version.

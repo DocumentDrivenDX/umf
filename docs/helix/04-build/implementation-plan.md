@@ -5433,3 +5433,18 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](evidence/schema-properties-core.md).
+
+### Official Python consumer package (2026-10-07)
+
+Owner direction places reusable Python models, canonical schema resources,
+validation, serialization and extension-registration machinery in UMF, while
+TableSpec owns its pipeline extension. CONTRACT-051 defines the bounded package
+surface. Package build resources copy canonical schemas, preserving their version
+identities; no JavaScript runtime or TableSpec dependency is introduced.
+
+The initial TableSpec binding consumes shared names and scalar families with
+explicit native refinements. Legacy migration and retained source archives,
+compiler snapshots, unsupported-property refusal and the existing compiler path
+are consumer-owned. Broader core-property execution bindings and full native-port
+acceptance remain distinct from package delivery. Scoped Python/package/browser
+evidence is recorded in [python-consumers.md](evidence/python-consumers.md).

@@ -549,3 +549,15 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](../04-build/evidence/schema-properties-core.md).
+
+### Official Python package and consumer extensions
+
+The owner selects a Python package under `python/` beside the browser library.
+Pydantic supplies ergonomic models; versioned `spec/core` JSON Schemas are the
+structural authority and are copied into wheel resources at build time. Python
+MUST NOT depend on TableSpec or a JavaScript runtime. Extension schemas and
+validators are supplied explicitly by consumers, never loaded from document data.
+TableSpec retains its extension and pipeline models in its own repository. Its
+legacy compiler view is derived from the current shared document, with explicit
+refusal for unsupported core semantics. Legacy files remain a compatibility
+surface; UMF-native files are read and written without stripping unknown content.
