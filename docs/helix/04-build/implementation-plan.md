@@ -5336,3 +5336,22 @@ Initial sandbox browser startup failed to listen on localhost; the same focused
 check passed outside the sandbox. No cloud runs or SQL applications occurred.
 Native target execution, migrations, richer metadata interpretation and logical
 core-to-physical projection remain separate work.
+
+
+### Delta DDL column-description iteration — 2026-10-08
+
+Reusable generation remains UMF-owned. CONTRACT-050 now interprets only the
+Delta field metadata key `comment`, at top-level and nested STRUCT fields.
+Empty/Unicode descriptions and apostrophes/backslashes retain exact source
+schema and emit escaped Databricks literals. Other metadata, nonstring comments,
+controls and client dollar macros refuse without relaxing preservation.
+
+Eleven focused Bun tests pass (93 assertions); library TypeScript checking
+passes. Chromium verifies comment JSON/YAML recovery and SQL generation alongside
+previous atomic/decimal/nested checks; evidence is
+`fixtures/delta/ddl-browser-results.json`. Initial typecheck exposed an object
+annotation mismatch, corrected before the passing check. The sandbox could not
+bind the browser server; the focused localhost check passed outside it.
+No native SQL, cloud compute, migration or protocol admission is claimed.
+Logical-core-to-physical mapping, richer metadata and wider DDL targets remain
+separate increments.

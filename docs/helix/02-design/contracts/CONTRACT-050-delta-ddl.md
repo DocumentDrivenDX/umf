@@ -47,13 +47,13 @@ remain serializable and MUST block DDL generation. Unknown versions MUST refuse.
 
 The first emitter supports Delta atomic string, long, integer, short, byte,
 float, double, boolean, binary, date and timestamp types. Required fields emit
-NOT NULL; nullable fields omit it. Empty metadata is required. Canonical `decimal(p,s)` emits DECIMAL(p,s), with precision 1–38 and scale
+NOT NULL; nullable fields omit it. Metadata may be empty or contain only a string `comment`. Canonical `decimal(p,s)` emits DECIMAL(p,s), with precision 1–38 and scale
 0–precision; neither precision nor scale is defaulted or rounded. Noncanonical
 spellings and unsupported bounds MUST refuse. TIMESTAMP_NTZ emits explicitly,
 without inferring native timestampNtz protocol admission. Recursive STRUCT, ARRAY
 and MAP are supported under the following preservation rules. STRUCT fields
 retain order, quoted names and explicit nullability; case collisions, empty
-structs and nonempty metadata refuse at every depth. ARRAY requires
+structs and uninterpreted metadata refuse at every depth. ARRAY requires
 containsNull:true; MAP requires explicit valueContainsNull:true and atomic keys.
 False or absent collection nullability MUST refuse rather than default or relax.
 Required STRUCT fields anywhere inside a collection MUST refuse because this
@@ -113,3 +113,11 @@ Tests cover retained JSON/YAML recovery, complete expected SQL and refusals;
 browser and native evidence must identify their actual tested subsets.
 
 Nested syntax is qualified against the [STRUCT reference](https://learn.microsoft.com/en-us/azure/databricks/sql/language-manual/data-types/struct-type) and [constraint limitations](https://learn.microsoft.com/en-us/azure/databricks/tables/constraints), inspected 2026-10-08. Native execution remains unverified.
+
+Column metadata `comment` emits COMMENT at the corresponding top-level or STRUCT
+field. Empty comments and Unicode remain exact. Regular Databricks literals escape
+backslashes and apostrophes; control characters and dollar signs refuse to avoid
+client macro interpretation. Other metadata keys still block generation; this
+interpretation does not admit column mapping, defaults or generated expressions.
+The [STRING literal reference](https://learn.microsoft.com/en-us/azure/databricks/sql/language-manual/data-types/string-type)
+was inspected 2026-10-08. Native SQL execution remains unverified.

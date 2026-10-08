@@ -1,4 +1,5 @@
 {
+  "commentJsonYamlDDL": true,
   "nestedJsonYamlDDL": true,
   "decimalJsonYamlDDL": true,
   "jsonYamlDDL": true,
@@ -6,5 +7,5 @@
   "unknownDDLRefused": true,
   "nodeGlobalsAbsent": true,
   "browser": "153.0.8010.12",
-  "qualification": "Atomic, decimal and nested managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution."
+  "qualification": "Atomic, decimal, nested and commented managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution."
 }

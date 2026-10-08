@@ -24,13 +24,19 @@ try {
       const result=u.generateDeltaDDL(u.readDocument(u.writeDocument(nested,format),format));
       if(result.schemaJson!==nestedSchema||!result.sql.includes('ARRAY<TIMESTAMP_NTZ>'))throw Error('Nested recovery mismatch');
     }
+    const commentSchema=JSON.stringify({type:'struct',fields:[{name:'caption',type:'string',nullable:true,metadata:{comment:"Owner's description 雪"}}]});
+    const comments=u.defineDeltaTable(commentSchema,{profile:'databricks-managed-delta/0.1',name:['comments'],clusterBy:[],partitionBy:[],properties:{}},{id:'comment-browser'});
+    for(const format of ['json','yaml']){
+      const result=u.generateDeltaDDL(u.readDocument(u.writeDocument(comments,format),format));
+      if(result.schemaJson!==commentSchema||!result.sql.includes("COMMENT 'Owner\\'s description 雪'"))throw Error('Comment recovery mismatch');
+    }
     doc.extensions['umf.delta.definition'].future={opaque:'18446744073709551615'};
     const restored=u.readDocument(u.writeDocument(doc,'yaml'),'yaml');
     if(restored.extensions['umf.delta.definition'].future.opaque!=='18446744073709551615')throw Error('Unknown content lost');
     let refused=false;try{u.generateDeltaDDL(restored);}catch{refused=true;}if(!refused)throw Error('Unknown meaning exported');
     if('process' in globalThis||'Buffer' in globalThis)throw Error('Node globals available');
-    return {nestedJsonYamlDDL:true,decimalJsonYamlDDL:true,jsonYamlDDL:true,unknownPreserved:true,unknownDDLRefused:true,nodeGlobalsAbsent:true};
+    return {commentJsonYamlDDL:true,nestedJsonYamlDDL:true,decimalJsonYamlDDL:true,jsonYamlDDL:true,unknownPreserved:true,unknownDDLRefused:true,nodeGlobalsAbsent:true};
   });
-  await Bun.write('fixtures/delta/ddl-browser-results.json',JSON.stringify({...result,browser:browser.version(),qualification:'Atomic, decimal and nested managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution.'},null,2)+'\n');
+  await Bun.write('fixtures/delta/ddl-browser-results.json',JSON.stringify({...result,browser:browser.version(),qualification:'Atomic, decimal, nested and commented managed-table definitions, JSON/YAML recovery and unknown-content refusal in real Chromium; no native SQL execution.'},null,2)+'\n');
   console.log(result);
 } finally {await browser?.close();server.stop(true);}

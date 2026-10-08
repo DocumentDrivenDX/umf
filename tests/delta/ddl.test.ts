@@ -105,3 +105,24 @@ test('complex columns cannot accidentally become partition or clustering keys',(
   const text=JSON.stringify({type:'struct',fields:[{name:'id',type:{type:'array',elementType:'string',containsNull:true},nullable:true,metadata:{}}]});
   for(const layout of [{clusterBy:['id'],partitionBy:[]},{clusterBy:[],partitionBy:['id']}])expect(()=>defineDeltaTable(text,{...definition,...layout},{id:'complex-layout'})).toThrow();
 });
+
+
+test('column comments preserve exact schema, Unicode and escaped literals at both depths',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{comment: "Owner's \\ path 雪"}},
+    {name:'payload',nullable:true,metadata:{comment:''},type:{type:'struct',fields:[{name:'label',type:'string',nullable:true,metadata:{comment:'Nested label'}}]}}]});
+  const doc=defineDeltaTable(text,definition,{id:'comments'}),original=JSON.stringify(doc);
+  for(const format of ['json','yaml'] as const){
+    const result=generateDeltaDDL(readDocument(writeDocument(doc,format),format));
+    expect(result.schemaJson).toBe(text);
+    expect(result.sql).toContain("BIGINT NOT NULL COMMENT 'Owner\\'s \\\\ path 雪'");
+    expect(result.sql).toContain("STRUCT<`label`: STRING COMMENT 'Nested label'> COMMENT ''");
+  }
+  expect(JSON.stringify(doc)).toBe(original);
+});
+
+test('comment metadata refuses unknown meaning, controls and client macros',()=>{
+  for(const metadata of [{comment:1},{comment:null},{comment:'unsafe\ntext'},{comment:'$widget'},{comment:'ok',future:true}]){
+    const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:true,metadata}]});
+    expect(()=>defineDeltaTable(text,definition,{id:'bad-comment'})).toThrow();
+  }
+});

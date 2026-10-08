@@ -20,6 +20,14 @@ const identifier=(s:string)=>{
   return '`'+s+'`';
 };
 const exact=(value:object,keys:string[])=>{if(Object.keys(value).some(k=>!keys.includes(k)))fail('Unknown content must remain in UMF; generation would discard it');};
+const columnComment=(metadata:object):string=>{
+  exact(metadata,['comment']);
+  if(!Object.hasOwn(metadata,'comment'))return '';
+  const value=(metadata as Record<string,unknown>).comment;
+  if(typeof value!=='string'||/[\u0000-\u001f\u007f$]/.test(value))fail('Comment requires text without controls or client macro substitution');
+  // Databricks regular literals: escape backslashes before single quotes.
+  return " COMMENT '"+(value as string).replaceAll('\\','\\\\').replaceAll("'","\\'")+"'";
+};
 const types:Record<string,string>={string:'STRING',long:'BIGINT',integer:'INT',short:'SMALLINT',byte:'TINYINT',float:'FLOAT',double:'DOUBLE',boolean:'BOOLEAN',binary:'BINARY',date:'DATE',timestamp:'TIMESTAMP',timestamp_ntz:'TIMESTAMP_NTZ'};
 const ddlType=(type:unknown,inCollection=false):string=>{
   if(typeof type==='object'&&type!==null&&!Array.isArray(type)){
@@ -32,9 +40,9 @@ const ddlType=(type:unknown,inCollection=false):string=>{
         exact(field,['name','type','nullable','metadata']);
         const name=identifier(field.name),normalized=field.name.toLowerCase();
         if(names.has(normalized))fail('Duplicate nested column');names.add(normalized);
-        if(Object.keys(field.metadata).length)fail('Nested metadata requires an explicit DDL interpretation');
+        const comment=columnComment(field.metadata);
         if(inCollection&&!field.nullable)fail('Required fields inside collections cannot be preserved by this DDL profile');
-        return name+': '+ddlType(field.type,inCollection)+(field.nullable?'':' NOT NULL');
+        return name+': '+ddlType(field.type,inCollection)+(field.nullable?'':' NOT NULL')+comment;
       }).join(', ')+ '>';
     }
     if(node.type==='array'){
@@ -100,8 +108,8 @@ export function generateDeltaDDL(input:Document):{sql:string;definition:DeltaDef
     exact(field,['name','type','nullable','metadata']);
     const name=identifier(field.name),normalized=field.name.toLowerCase();
     if(names.has(normalized))fail('Duplicate column');names.add(normalized);
-    if(Object.keys(field.metadata).length)fail('Column metadata requires an explicit DDL interpretation');
-    return '  '+name+' '+ddlType(field.type)+(field.nullable?'':' NOT NULL');
+    const comment=columnComment(field.metadata);
+    return '  '+name+' '+ddlType(field.type)+(field.nullable?'':' NOT NULL')+comment;
   });
   for(const list of [definition.clusterBy,definition.partitionBy]){
     if(new Set(list.map(n=>n.toLowerCase())).size!==list.length)fail('Duplicate layout column');
