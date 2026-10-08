@@ -12,6 +12,7 @@
   "checks": [
     "Pack catalog and linked schemas",
     "Native foreign-key navigation",
+    "Pack hierarchy, breadcrumbs and domain-type ownership",
     "Field detail and history navigation",
     "Search and empty state",
     "Core definition and exact decimal inspection",
@@ -19,6 +20,7 @@
     "Original source download",
     "Invalid and unresolved sources refuse visibly",
     "Deep links and missing selection",
+    "Same-named domain types stay within their pack version",
     "Malformed and duplicate-key JSON refuse",
     "Mobile layout and navigation",
     "Existing routes expose the explorer"

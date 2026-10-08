@@ -37,6 +37,9 @@ planned packs are not represented as delivered content.
 
 ## Inspection contract
 
+- Each pack/version owns its Overview, Schemas and Domain types in the catalog.
+  Examples and local files remain separate. Breadcrumbs identify the selected
+  pack/schema/type, and column domain-type links resolve only inside that pack/version.
 - Search pack/schema names, IDs, descriptions and retained source content.
 - Deep links identify catalog entries and definitions; browser history works.
 - UMF inspection uses the existing document reader and validator. Core references,

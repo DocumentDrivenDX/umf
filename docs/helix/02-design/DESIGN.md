@@ -96,8 +96,11 @@ The logo links home. Small screens wrap navigation without hiding destinations.
   navigation and horizontal scrolling inside reference tables.
 
 The schema explorer pairs a searchable catalog with a definition inspector.
-On small screens, the catalog becomes a horizontally scrolling row above the
-inspector. Native declarations, retained extensions and original source use
+The catalog groups each pack/version into Overview, Schemas and Domain types.
+Examples and local files have separate groups. The detail pane shows pack
+breadcrumbs, and column domain-type links resolve within the owning pack/version.
+On small screens, the catalog becomes a bounded, vertically scrolling tree
+above the inspector. Native declarations, retained extensions and original source use
 expandable sections; interpretation limits remain beside the schema title.
 
 ## Interaction States
