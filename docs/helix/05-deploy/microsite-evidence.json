@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-07",
+  "scope": "UMF microsite only; no new library or native-support qualification",
+  "site": {
+    "url": "https://umf-schema-fabric.quickeagle.chatgpt.site",
+    "audience": "private",
+    "project_id": "appgprj_6ac70bf40b848191ad778fbf610bd87a",
+    "version_id": "appgprj_6ac70bf40b848191ad778fbf610bd87a~appgver_6ab0e42d8ff881918a1e23971256b130",
+    "deployment_id": "appgdep_6ac70cb3fa8c81918564894f2c93e004",
+    "status": "succeeded",
+    "source_commit": "5f841c5997088e93e76d14971d4257e950196f41"
+  },
+  "source": "docs/helix/05-deploy/microsite",
+  "design": "docs/helix/02-design/DESIGN.md",
+  "build_command": "bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js",
+  "runtime": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "verification": {
+    "routes": [
+      "index.html",
+      "docs.html",
+      "demo.html",
+      "ecosystem.html"
+    ],
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "passed": [
+      "unknown extension warning and content retention",
+      "JSON and YAML serialization",
+      "minimal envelope complete interpretation",
+      "unsupported core version refusal",
+      "malformed JSON refusal",
+      "reset behavior",
+      "one primary heading per route",
+      "UMF source-document links resolve locally",
+      "no horizontal page overflow on mobile",
+      "no browser page errors",
+      "JavaScript syntax check",
+      "desktop and mobile screenshots inspected"
+    ],
+    "not_claimed": [
+      "full repository regression",
+      "fresh native oracle replay",
+      "public sharing",
+      "ecosystem integration delivery",
+      "trademark clearance",
+      "complete accessibility audit"
+    ]
+  },
+  "ecosystem": {
+    "public_repositories": [
+      "DocumentDrivenDX/tablespec",
+      "DocumentDrivenDX/truss",
+      "DocumentDrivenDX/ashlar"
+    ],
+    "readme_blob_shas": {
+      "tablespec": "ab9b166f8c71b07dcd4a2a17b851dfcaf761a9fa",
+      "truss": "7cdfed317bac3a249a4a535c045f514be702e638",
+      "ashlar": "8fc47d3f1c0440a016f8e4f511e295a7d37d031e"
+    }
+  },
+  "notes": [
+    "Static dist files are intentionally retained for buildless publishing. The directory-local .gitignore makes them reviewable in UMF.",
+    "Sites source Git metadata is retained in a separate temporary checkout to avoid an embedded repository inside UMF.",
+    "Brand identity remains draft for human review."
+  ],
+  "revisions": [
+    {
+      "date": "2026-10-07",
+      "source_commit": "e16e6a7e60d36038b3f596fa0850fb79a438fbc6",
+      "deployment_id": "appgdep_6ac70db7a754819180572cd8fa0466d3",
+      "version_id": "appgprj_6ac70bf40b848191ad778fbf610bd87a~appgver_e28ddbb6110481918e14d136b611ac3e",
+      "url": "https://umf-schema-fabric.quickeagle.chatgpt.site",
+      "status": "succeeded",
+      "changes": [
+        "Rewrote all four pages around visitor tasks and concrete explanations",
+        "Removed numbered manifesto, repeated slogans and internal acceptance language",
+        "Shortened ecosystem descriptions and kept planned status",
+        "Simplified playground messages",
+        "Updated brand voice guidance"
+      ],
+      "checks": [
+        "Four Chromium routes and mobile overflow checks passed",
+        "Unknown extension retention, JSON/YAML, minimal document, version refusal and malformed JSON checks passed",
+        "Desktop rendering inspected",
+        "JavaScript syntax and whitespace checks passed"
+      ]
+    }
+  ]
+}
