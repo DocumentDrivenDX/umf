@@ -15,7 +15,7 @@ ddx:
 
 # UMF interface and brand system
 
-Scope: the UMF microsite, developer guide, browser playground and ecosystem
+Scope: the UMF microsite, developer guide, browser playground, schema explorer and ecosystem
 page. Owner direction on 2026-10-07 requests a themed, attractive site with
 design language, brand voice and a logo. This first visual identity is draft
 pending human review; no trademark exclusivity or external brand research is
@@ -67,7 +67,7 @@ small-size variant. No raster generation is required for this geometric logo.
 
 ## Navigation and Active State
 
-Use one top navigation on every page: Overview, Developers, Playground,
+Use one top navigation on every page: Overview, Developers, Playground, Schemas,
 Ecosystem and the external GitHub repository. The current internal route has
 `aria-current="page"`. Its visible forest underline is derived directly
 from `nav a[aria-current]`; it is not a separately assigned visual class.
@@ -76,6 +76,8 @@ The logo links home. Small screens wrap navigation without hiding destinations.
 | Surface | Component | Active cue | Semantic |
 | --- | --- | --- | --- |
 | Primary navigation | Internal route link | 2px forest underline | aria-current="page" |
+| Schema catalog | Selected schema button | Olive panel and border | aria-current="true" |
+| Schema definitions | Selected definition link | Forest fill and paper text | aria-current="true" |
 
 ## Visual Hierarchy
 
@@ -92,6 +94,11 @@ The logo links home. Small screens wrap navigation without hiding destinations.
   crossing motif rather than unrelated decoration.
 - Responsive: collapse grids to one column below 800px; preserve editable text,
   navigation and horizontal scrolling inside reference tables.
+
+The schema explorer pairs a searchable catalog with a definition inspector.
+On small screens, the catalog becomes a horizontally scrolling row above the
+inspector. Native declarations, retained extensions and original source use
+expandable sections; interpretation limits remain beside the schema title.
 
 ## Interaction States
 

@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-08",
+  "scope": "Microsite schema explorer; no new core/native support or data generation claims",
+  "runtime": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "catalog": {
+    "packs": 1,
+    "entries": 10
+  },
+  "checks": [
+    "Pack catalog and linked schemas",
+    "Native foreign-key navigation",
+    "Field detail and history navigation",
+    "Search and empty state",
+    "Core definition and exact decimal inspection",
+    "Local upload, unknown retention, and inert text",
+    "Original source download",
+    "Invalid and unresolved sources refuse visibly",
+    "Deep links and missing selection",
+    "Malformed and duplicate-key JSON refuse",
+    "Mobile layout and navigation",
+    "Existing routes expose the explorer"
+  ],
+  "status": "passed",
+  "site": {
+    "url": "https://umf-schema-fabric.quickeagle.chatgpt.site",
+    "route": "explorer.html",
+    "audience": "private",
+    "source_commit": "a597e2c7a7437ab946b1e04bef0344b4accb4e80",
+    "version_id": "appgprj_6ac70bf40b848191ad778fbf610bd87a~appgver_3218083a2bdc81919155844b82c484ee",
+    "deployment_id": "appgdep_6ac7fada9e9881918368ab8ec6d40d6d",
+    "status": "succeeded"
+  },
+  "tested_assets": {
+    "explorer.html": "309c572d5d31885f8c59399f116673335bda53c59723173d8ba1caff5c333510",
+    "explorer.js": "d90e822aa7d6948c9b54c38f186776df000b982a9a20edf2ba39be5f5e19aeab",
+    "explorer.css": "12ada1c9e1a349da5eee1f610a8761156a9ccabfa32135c4b4cba58155deb51a",
+    "schema-catalog.json": "4d5e7ced3341c3f1113146428d069cb091f6e8552b9434c3b202e929d2c36626"
+  },
+  "additional_checks": [
+    "Scoped TypeScript strict check passed",
+    "git diff --check passed",
+    "Desktop and mobile screenshots inspected"
+  ],
+  "limitations": [
+    "Legal pack working-tree snapshot only; medical and other pack schema files were not available",
+    "Pack metadata inspection does not install canonical domain-pack validation",
+    "No new library/native qualification or data generation",
+    "Historical signed-page seals removed after navigation changes"
+  ],
+  "revisions": [
+    {
+      "date": "2026-10-08",
+      "changes": [
+        "Homepage explorer action and domain-pack section",
+        "Developer-guide inspection section",
+        "Ecosystem legal-pack entry point"
+      ],
+      "checks": [
+        "All three body entry points reach explorer at 1440x1000 and 390x844",
+        "Correct active navigation",
+        "No horizontal overflow or browser page errors",
+        "git diff --check passed"
+      ],
+      "source_commit": "9f233bdc3d42a775d62d7a025bf2d8f9624deab7",
+      "deployment_id": "appgdep_6ac81e1ad75c819190e6f1dd15d66bb3",
+      "version_id": "appgprj_6ac70bf40b848191ad778fbf610bd87a~appgver_1deb4da88fc881918d7e9a83b113bff3",
+      "status": "succeeded",
+      "url": "https://umf-schema-fabric.quickeagle.chatgpt.site"
+    }
+  ]
+}
