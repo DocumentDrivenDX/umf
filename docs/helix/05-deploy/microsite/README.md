@@ -62,5 +62,6 @@ navigation on existing routes. Scoped results live in
 `../schema-explorer-evidence.json`. These checks do not refresh library/native
 conformance, certify all possible packs, or qualify data generation.
 
-The original site pages had signed declarations for their prior bytes. Navigation
-changes remove those visible seals; retained declaration files are historical.
+The publishing workflow rebuilds the explorer catalog from canonical pack files.
+Page signatures must be renewed after published HTML changes; CI verifies them
+and copies the public attestations into the site artifact.
