@@ -47,8 +47,10 @@ remain serializable and MUST block DDL generation. Unknown versions MUST refuse.
 
 The first emitter supports Delta atomic string, long, integer, short, byte,
 float, double, boolean, binary, date and timestamp types. Required fields emit
-NOT NULL; nullable fields omit it. Empty metadata is required. Nested types,
-decimal, variant, timestamp_ntz, defaults, identity, generated expressions and
+NOT NULL; nullable fields omit it. Empty metadata is required. Canonical `decimal(p,s)` emits DECIMAL(p,s), with precision 1–38 and scale
+0–precision; neither precision nor scale is defaulted or rounded. Noncanonical
+spellings and unsupported bounds MUST refuse. Nested types,
+variant, timestamp_ntz, defaults, identity, generated expressions and
 column-mapping metadata require subsequent explicit interpretations.
 
 Names MUST use ASCII letters/underscores followed by letters/digits/underscores;

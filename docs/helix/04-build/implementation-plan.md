@@ -5298,3 +5298,19 @@ that environment issue. Browser evidence is scoped in
 `fixtures/delta/ddl-browser-results.json`; native DDL execution remains separate.
 Ashlar must independently compare its model-generated carriers with its existing
 layout before replacing installation input.
+
+
+### Delta DDL decimal iteration — 2026-10-08
+
+CONTRACT-050 now covers canonical decimal(p,s) declarations with precision 1–38
+and scale 0–precision. The emitter preserves both authored integers without
+rounding/defaulting; unsupported bounds, noncanonical spellings and SQL-like
+content refuse. Exact original schema recovery remains required.
+
+Six focused DDL tests pass (53 assertions), library TypeScript checking passes,
+and real Chromium verifies atomic/decimal JSON and YAML recovery, unknown-content
+retention/refusal and absence of Node globals. Browser evidence is retained in
+`fixtures/delta/ddl-browser-results.json`. Initial local startup was unusually
+slow; a redundant broader test process was stopped. No new cloud jobs or native
+SQL execution occurred. Nested types, logical-core-to-physical mapping and wider
+dialects remain subsequent explicit work, not claimed support.

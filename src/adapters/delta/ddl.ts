@@ -21,6 +21,14 @@ const identifier=(s:string)=>{
 };
 const exact=(value:object,keys:string[])=>{if(Object.keys(value).some(k=>!keys.includes(k)))fail('Unknown content must remain in UMF; generation would discard it');};
 const types:Record<string,string>={string:'STRING',long:'BIGINT',integer:'INT',short:'SMALLINT',byte:'TINYINT',float:'FLOAT',double:'DOUBLE',boolean:'BOOLEAN',binary:'BINARY',date:'DATE',timestamp:'TIMESTAMP'};
+const ddlType=(type:unknown):string=>{
+  if(typeof type!=='string')return fail('Type has no supported DDL mapping');
+  if(Object.hasOwn(types,type))return types[type]!;
+  const decimal=/^decimal\(([1-9][0-9]?),([0-9]|[1-9][0-9])\)$/.exec(type);
+  if(decimal&&Number(decimal[1])<=38&&Number(decimal[2])<=Number(decimal[1]))
+    return 'DECIMAL('+decimal[1]+','+decimal[2]+')';
+  return fail('Type has no supported DDL mapping');
+};
 const properties=new Set(['delta.dataSkippingStatsColumns','delta.targetFileSize','delta.parquet.compression.codec','delta.deletedFileRetentionDuration','delta.logRetentionDuration']);
 
 /** Author a definition using the existing exact Delta schema profile. No native UUID is invented. */
@@ -65,8 +73,7 @@ export function generateDeltaDDL(input:Document):{sql:string;definition:DeltaDef
     const name=identifier(field.name),normalized=field.name.toLowerCase();
     if(names.has(normalized))fail('Duplicate column');names.add(normalized);
     if(Object.keys(field.metadata).length)fail('Column metadata requires an explicit DDL interpretation');
-    if(typeof field.type!=='string'||!Object.hasOwn(types,field.type))fail('Type has no supported DDL mapping');
-    return '  '+name+' '+types[String(field.type)]+(field.nullable?'':' NOT NULL');
+    return '  '+name+' '+ddlType(field.type)+(field.nullable?'':' NOT NULL');
   });
   for(const list of [definition.clusterBy,definition.partitionBy]){
     if(new Set(list.map(n=>n.toLowerCase())).size!==list.length)fail('Duplicate layout column');

@@ -51,3 +51,18 @@ test('explicit partitioning and retention settings do not force maintenance off'
   expect(sql).toContain('PARTITIONED BY (`id`)');expect(sql).toContain('interval 14 days');
   expect(sql).not.toContain('DISABLE');expect(sql).not.toContain('LOCATION');expect(sql).not.toContain('IF NOT EXISTS');
 });
+
+test('decimal precision and scale remain exact through recovery and DDL',()=>{
+  for(const type of ['decimal(1,0)','decimal(38,0)','decimal(38,38)','decimal(19,4)']){
+    const text=JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:false,metadata:{}}]});
+    const doc=defineDeltaTable(text,definition,{id:'decimal'});
+    for(const format of ['json','yaml'] as const){
+      const recovered=readDocument(writeDocument(doc,format),format);
+      expect(generateDeltaDDL(recovered).schemaJson).toBe(text);
+      expect(generateDeltaDDL(recovered).sql).toContain(type.toUpperCase()+' NOT NULL');
+    }
+  }
+  for(const type of ['decimal(0,0)','decimal(39,0)','decimal(2,3)','decimal(19,-1)','decimal(019,4)','decimal(19,04)','decimal(19, 4)','decimal(19,4); DROP TABLE items']){
+    expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:true,metadata:{}}]}),definition,{id:'refuse'})).toThrow();
+  }
+});
