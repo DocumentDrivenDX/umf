@@ -83,9 +83,12 @@ pack metadata. Retrieval, local source binding, integrity verification, format
 conversion and redistribution decisions are explicit consumer operations. Known
 structural validation does not certify scientific comparability or reuse rights.
 The initial TableSpec reader retains external/mixed declarations but refuses
-synthetic generation for external row bindings; its explicit local CSV reader
-performs typed ingestion without a fabricated fallback. Arbitrary retrieval and
-mixed-data transformation are not part of this first execution subset.
+synthetic generation for external row bindings; its explicit local CSV ingestion path
+performs typed ingestion into the shared disk-backed spool without a fabricated
+fallback. Before redistribution, that consumer requires pinned SHA-256 bytes
+and explicit `redistribution: allowed` for every included local source. This is
+an authored rights gate, not an independent legal certification. Arbitrary
+retrieval and mixed-data transformation remain outside this execution subset.
 
 ## Precedence and Compatibility
 
@@ -126,3 +129,23 @@ refuse. Dataset references remain opaque. The first native profile is TableSpec
 1.0 JSON, using the existing import/export adapter to check exact recovery.
 Other format labels are preserved without claiming their compilation support.
 TableSpec's bundled snapshots and examples are generated consumers of this source.
+
+
+### Medical source pack and explicit local-source export
+
+`spec/domain-packs/medical/pack.json` uses the same 1.0.0 metadata contract and
+TableSpec schema profile as legal. It declares externally published example
+rows without a generator. Exact source files, projected CSV rows, source hashes,
+rights notices and unresolved native references remain distinct. FHIR date/time
+and decimal spellings that cannot be represented without changing meaning remain
+text; full original resource bytes are retained.
+
+`export-domain-pack.ts --include-sources` explicitly copies local external
+sources only when checksum-pinned and declared redistributable. Remote references
+remain metadata. Source path traversal, escaping symlinks, duplicate destination
+paths, stale checksums and uncleared rights refuse. The default schema-only export
+remains unchanged. No new domain-pack schema version is needed for this execution
+subset. TableSpec archive manifests map original source references to `inputs/`
+archive members and schema references to `schemas/` members, separate from
+standardized `data/` output; source metadata is
+preserved without rewriting its checksums to describe derivative bytes.

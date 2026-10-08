@@ -1139,3 +1139,13 @@ metadata, table schemas and schema export tooling; TableSpec owns executable
 sample-data generation, CSV packaging and ingestion tests. Dataset-source
 metadata distinguishes origin from data nature and retains licensing and
 provenance. Referenced datasets are not implicitly fetched.
+
+
+## Medical sample pack
+
+The [medical pack evidence and usage](04-build/evidence/medical-domain-pack.md)
+describe a curated HL7 FHIR R4 4.0.1 example corpus and eight tabular schemas,
+using the same portable pack contract as legal. Official source JSON is retained
+alongside CSV derivatives, pinned checksums and license notices. CMS candidates
+remain references only while redistribution is unresolved. TableSpec owns local
+CSV ingestion, ZIP export and Sail/Spark execution tests.

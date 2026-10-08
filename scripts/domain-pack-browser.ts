@@ -1,5 +1,6 @@
 import {chromium} from 'playwright';
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(request){
+ if(new URL(request.url).pathname==='/medical-pack.json')return new Response(Bun.file('spec/domain-packs/medical/pack.json'),{headers:{'content-type':'application/json'}});
  return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>UMF pack schema verification</title>',{headers:{'content-type':'text/html'}});
 }});
 const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
@@ -20,6 +21,10 @@ try {
   const sourceDocument={umf:'0.8.0',id:'source-browser',modules:[],vocabularies:{'umf.dataset-source':{version:'1.0.0'}},extensions:{'umf.dataset-source':source}};
   check(u.validateDocument(sourceDocument,sourceRegistry).valid);
   for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(sourceDocument,format),format))===JSON.stringify(sourceDocument));
+  const medical=await (await fetch('/medical-pack.json')).json();
+  const medicalDocument={...document,id:'medical-browser',extensions:{'umf.domain-pack':medical}};
+  check(u.validateDocument(medicalDocument,registry).valid);
+  for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(medicalDocument,format),format))===JSON.stringify(medicalDocument));
   check(typeof (globalThis as any).Bun==='undefined'&&typeof (globalThis as any).process==='undefined');
   return {checks};
  });console.log(JSON.stringify({browser:browser.version(),...result}));

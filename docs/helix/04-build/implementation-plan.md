@@ -5468,3 +5468,14 @@ Scoped implementation evidence is recorded in
 [domain-packs.md](evidence/domain-packs.md). The portable metadata subset has
 TypeScript, Bun, Python, canonical-audit and real-browser evidence. Broader native
 adapter qualification remains distinct and its failing gates are retained.
+
+### Official medical fixture consumption (2026-10-08)
+
+The medical corpus extends the legal domain-pack system without another metadata
+version or generator framework. Explicit local-source export verifies rights,
+checksums and path boundaries. TableSpec consumes external CSV bindings through
+its shared validation, ZIP archive and ingestion paths; generation still refuses
+external bindings. The bounded FHIR R4 corpus preserves original resources,
+clinical literals and terminology notices. CMS samples remain references pending
+specific redistribution clearance. Scoped evidence:
+[medical-domain-pack.md](evidence/medical-domain-pack.md).

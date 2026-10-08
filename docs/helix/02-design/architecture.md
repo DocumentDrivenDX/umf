@@ -581,3 +581,13 @@ Revision/checksum, rights notices and transformation provenance remain metadata.
 Consumers explicitly bind local files or install retrieval adapters; metadata never
 imports a downloader. The initial legal pack and its native TableSpec schema
 artifacts live in UMF; consumer copies are exported and checked from that source.
+
+
+The medical pack extends the same source model with curated official Health Level
+Seven (HL7) Fast Healthcare Interoperability Resources (FHIR) R4 4.0.1 examples.
+Source-scoped native keys, original JSON bytes and partial temporal/exact decimal
+text prevent a scalar table projection from silently losing source meaning.
+Unresolved native references are explicit rows, not fabricated entities. TableSpec
+shares its spool, constraint checks, CSV ZIP exporter, SQL loader and Sail/Spark
+test lanes across generated legal and externally sourced medical data. Archive
+input snapshots retain source hashes independently of standardized CSV output.

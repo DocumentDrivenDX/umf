@@ -353,7 +353,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   schema artifact references, domain-type metadata, scale declarations and
   synthetic/external source provenance without authorizing code
   execution or network fetching. TableSpec owns fabricated tabular data
-  generation, CSV pack export, ingestion and data testing. Ontological sample
+  generation, CSV pack export, explicit ingestion of pinned local source rows,
+  and data testing. Published medical examples must retain original meaning,
+  source identity, unresolved references and source-specific redistribution
+  conditions; generated supplements must remain distinguishable. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
 
 ### Subsystem: Translation and Fidelity
