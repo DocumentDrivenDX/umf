@@ -6,10 +6,10 @@ const supplied=process.argv.slice(2),roots=supplied.length?supplied.map(p=>resol
 async function files(root:string):Promise<string[]>{try{const items=await readdir(root,{withFileTypes:true});return (await Promise.all(items.filter(i=>!i.name.startsWith('.')&&i.name!=='node_modules').map(i=>i.isDirectory()?files(join(root,i.name)):Promise.resolve(/\.(json|ya?ml)$/i.test(i.name)?[join(root,i.name)]:[])))).flat().sort();}catch(error:any){if(error.code==='ENOENT'&&!supplied.length)return [];throw error;}}
 const entries:Entry[]=[],seen=new Set<string>();
 for(const root of roots){const paths=await files(root);
- const manifestPaths:string[]=[];for(const candidate of paths.filter(p=>p.endsWith('.json'))){const data=JSON.parse(await Bun.file(candidate).text());if(data&&typeof data.id==='string'&&data.generator&&data.domain_types)manifestPaths.push(candidate);}
+ const manifestPaths:string[]=[];for(const candidate of paths.filter(p=>p.endsWith('.json'))){const data=JSON.parse(await Bun.file(candidate).text());if(data&&typeof data.id==='string'&&data.domain_types)manifestPaths.push(candidate);}
  for(const path of manifestPaths){
   const text=await Bun.file(path).text(),pack=JSON.parse(text);parseEntry({id:path,title:pack.id,category:'domain',path,text,format:'json'});
-  if(typeof pack.version!=='string'||!pack.generator||!pack.domain_types)throw new Error(`Incomplete pack manifest: ${path}`);
+  if(typeof pack.version!=='string'||!pack.domain_types)throw new Error(`Incomplete pack manifest: ${path}`);
   const identity=`${pack.id}@${pack.version}`;if(seen.has(identity)){if(root===join(import.meta.dir,'catalog-sources'))continue;throw new Error(`Duplicate pack identity: ${identity}`);}seen.add(identity);
   entries.push({id:`pack:${identity}`,title:pack.id,category:'domain',path:'domain-pack.json',pack:pack.id,packVersion:pack.version,text,format:'json',description:pack.description});
   const schemaIds=new Set<string>();for(const declaration of pack.schemas??[]){if(schemaIds.has(declaration.id))throw new Error(`Duplicate schema ID in ${identity}: ${declaration.id}`);schemaIds.add(declaration.id);

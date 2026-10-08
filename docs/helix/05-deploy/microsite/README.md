@@ -25,15 +25,17 @@ roots may be supplied as positional arguments, replacing default roots.
 The build copies selected original sources into `dist/schema-catalog.json`;
 browsing performs no source-directory access or external reference fetching.
 
-Each JSON manifest with pack identity, generator and domain types contributes
+Each JSON manifest with pack identity and domain types (with an optional generator) contributes
 its metadata and every declared
 local schema reference. Canonical source roots take precedence over the same
 pack/version in retained snapshots. References escaping the pack directory refuse the
 build. Missing or unsupported referenced schemas fail explicitly. UMF documents
 are also discovered directly. The legal snapshot contains one pack and eight
 TableSpec schemas; `provenance.json` records source identity and fingerprints.
-Medical and other packs must be added when their schema files are available;
-planned packs are not represented as delivered content.
+The canonical medical pack contributes eight TableSpec schemas and three domain
+types. Its fixed official fixtures use source bindings and fixture counts without
+a generator. These declarations remain visible in the pack overview; the browser
+inspects schemas and does not load patient rows.
 
 ## Inspection contract
 

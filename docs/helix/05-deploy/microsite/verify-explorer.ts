@@ -18,6 +18,29 @@ try{
   if(await pack.locator('button[aria-current="true"]').innerText().then(t=>!t.startsWith('invoice_number')))throw new Error('Wrong current domain type');
   await crumbs.getByRole('link',{name:'Legal · 1.0.0',exact:true}).click();await page.getByRole('heading',{name:'Schemas in this pack',exact:true}).waitFor();
  });
+ await check('Medical fixed-source pack and all eight schemas',async()=>{
+  const pack=page.locator('[data-pack="pack:medical@1.0.0"]');
+  await pack.getByRole('button',{name:/^Overview /}).click();await page.getByRole('heading',{name:'medical',exact:true}).waitFor();await page.getByRole('heading',{name:'Schemas in this pack',exact:true}).waitFor();
+  const href=await page.getByRole('link',{name:'Download source'}).getAttribute('href');const source=await page.evaluate(async href=>await(await fetch(href!)).text(),href);
+  if(source!==await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs/medical/pack.json')).text())throw new Error('Medical manifest download changed');
+  const manifest=JSON.parse(source);if(manifest.generator||!manifest.fixture_counts||!manifest.source_bindings)throw new Error('Fixed-source declarations lost');
+  for(const name of ['resources','organizations','patients','practitioners','encounters','observations','medications','resource_references']){
+   await pack.getByRole('button',{name:new RegExp('^'+name+' ')}).click();await page.getByRole('heading',{name,exact:true}).waitFor();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+   if(await pack.locator('button[aria-current="true"]').innerText().then(t=>!t.startsWith(name)))throw new Error('Wrong medical schema selected');
+  }
+ });
+ await check('Medical domain types, foreign keys and deep links',async()=>{
+  const pack=page.locator('[data-pack="pack:medical@1.0.0"]');
+  await pack.locator('summary').filter({hasText:/^Domain types$/}).click();
+  for(const name of ['fhir_resource_key','fhir_temporal_literal','exact_decimal_text']){await pack.getByRole('button',{name:new RegExp('^'+name+' ')}).click();await page.getByRole('heading',{name,exact:true}).waitFor();}
+  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'schema:medical@1.0.0:observations'}));await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+  await page.locator('#inspector').getByRole('link',{name:'patients.resource_key',exact:true}).first().click();await page.getByRole('heading',{name:'patients',exact:true}).waitFor();
+  if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!=='schema:medical@1.0.0:patients')throw new Error('Medical reference escaped its pack');
+  await page.screenshot({path:'/private/tmp/umf-medical-explorer-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
+  if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw new Error('Medical mobile overflow');
+  await page.screenshot({path:'/private/tmp/umf-medical-explorer-mobile.png',fullPage:true});await page.setViewportSize({width:1440,height:1000});
+ });
  await check('Field detail and history navigation',async()=>{await page.getByRole('button',{name:/^time_entries /}).click();await page.locator('.definition-list').getByRole('link',{name:'billing_rate',exact:true}).click();await page.getByRole('heading',{name:'billing_rate',exact:true}).waitFor();if(!(await page.locator('#inspector').innerText()).includes('numberToken'))throw new Error('Lost numeric token carrier');await page.goBack();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();});
  await check('Search and empty state',async()=>{await page.getByRole('searchbox').fill('does-not-exist');await page.getByText('No matching schemas. Try another search.').waitFor();await page.getByRole('searchbox').fill('billing_rate');if(await page.locator('.catalog-item').count()<1)throw new Error('Content search failed');await page.getByRole('searchbox').fill('');});
  await check('Core definition and exact decimal inspection',async()=>{await page.getByRole('button',{name:/Orders · core/}).click();await page.locator('.definition-list').getByRole('link',{name:'price',exact:true}).click();await page.getByRole('heading',{name:'price',exact:true}).waitFor();if(!(await page.locator('#inspector').innerText()).includes('999999999999999999.99'))throw new Error('Decimal changed');});

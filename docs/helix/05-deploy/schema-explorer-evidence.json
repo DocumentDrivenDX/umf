@@ -6,13 +6,15 @@
     "chromium": "153.0.8010.12"
   },
   "catalog": {
-    "packs": 1,
-    "entries": 10
+    "packs": 2,
+    "entries": 19
   },
   "checks": [
     "Pack catalog and linked schemas",
     "Native foreign-key navigation",
     "Pack hierarchy, breadcrumbs and domain-type ownership",
+    "Medical fixed-source pack and all eight schemas",
+    "Medical domain types, foreign keys and deep links",
     "Field detail and history navigation",
     "Search and empty state",
     "Core definition and exact decimal inspection",
