@@ -381,3 +381,5 @@ export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
 export {coreSchemaPropertiesReceiptSchema} from './model/schema-properties-receipts';
+export {validateCoreRecordValues} from './model/record-values';
+export type {CoreRecordValueIdentity,CoreRecordFieldValue,CoreRecordValueCheck} from './model/record-values';

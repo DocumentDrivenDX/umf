@@ -93,3 +93,40 @@ Forged/stale receipts reject. Common JSON resource, copy and accessor limits app
 This is a bounded literal API, not a converter for TableSpec rows. Admission and
 five-system native bindings remain separate. SQL insert and Avro reader defaults
 retain their own contracts.
+
+## Logical Record value checks — experimental operation 1.0.0
+
+`validateCoreRecordValues(source, {module,element}, values)` MUST require a valid
+core 0.8.0 source and an explicit Record identity. Values MUST be an array of
+`{field:{module,element},state:"absent"}` or
+`{field:{module,element},state:"present",value:CoreLiteral}`. Unknown input members,
+accessors, malformed identities and implicit version changes MUST refuse. The
+operation MUST copy original source, identity and input. No alias lookup, default
+insertion, conversion, SQL or native resource acquisition is performed.
+
+The result has operation/version, source, identity, values, original
+`documentValidation`, selected `validation`, and ordered `fields` results. Each
+field result retains qualified identity, absent/present state and Validation.
+The original document result MUST remain unchanged even when selected logical
+checks are complete. Complete logical checking requires an explicit member
+inventory, known availability/cardinality, exact membership and successful actual
+`validateCoreFieldValue` results for every present member. Unlisted members are
+logically absent. Required absence, duplicate input identities, undeclared values
+and invalid literals MUST fail. Explicit absent-allowed absence/null are distinct
+logical inputs; native representations need separate bindings.
+
+Unknown source meaning MUST remain retained and prevent completeness; conservative
+source-wide dependency scope is used here. Known experimental envelope diagnostics
+remain in documentValidation and do not become native guarantees. Missing member
+inventory or unsupported member interpretation MUST be incomplete. Declared keys
+and relationships MUST report unresolved dataset-context obligations; single-record
+checking cannot prove dataset equality, uniqueness, endpoints or graph invariants.
+No complete result authorizes Truss acceptance, accepted IDs or source ACK. Invalid
+selected results have valid=false/complete=false; unresolved known-valid results
+have valid=true/complete=false. Larger native/validator isolation claims remain open.
+
+The seed fixture is the exact original Ashlar core0.7 schema-v3 example; explicit
+upgrade precedes value checking. Focused Bun tests and real Chromium verify logical
+presence/membership/value checks, retained envelope warnings, unknown scope, key
+context and old-version refusal. This is a new operation on 0.8, not a mutation of
+older envelope semantics or replacement of native enforcement.

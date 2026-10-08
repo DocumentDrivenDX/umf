@@ -5291,3 +5291,21 @@ The slice is implemented. [Execution evidence](evidence/schema-properties-core.m
 records core regression, Chromium public-API behavior, independent exact-number
 probes, typechecks and schema/package audits. Native adapter admission and
 TableSpec integration remain outside this experimental implementation.
+
+### Logical Record value checker for UMF consumers (2026-10-08)
+
+CONTRACT-049 now adds validateCoreRecordValues, composing actual existing Field
+value checks with explicit Record membership and availability. Original document
+validation/warnings remain separate from selected logical results. Required absence,
+duplicate/unregistered values and invalid literals fail; unknown scope/availability,
+missing member declarations and dataset key/relationship obligations remain incomplete.
+Defaults are never applied and old source versions refuse without explicit upgrade.
+The exact Ashlar v3 original schema is retained as a self-contained governed seed.
+Four focused tests/28 assertions and library typecheck pass. Real Chromium 153.0.8010.12
+verifies the public browser API and retained scope/results. These checks do not
+qualify native enforcement, validator isolation, dataset uniqueness or Truss acceptance.
+The local dependency ignore now includes symlinks as well as installed directories.
+
+Combined focused regression against the existing schema-property suite passes:
+33 tests/97 assertions. This supplements the four new checks and typecheck; it
+does not substitute for the project's full integrated acceptance or native gates.
