@@ -314,6 +314,14 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   semantics when shapes are incomplete. New vocabularies must coexist with earlier
   consumers without losing uninterpreted content. Generated consumer artifacts
   must expose unsupported semantics rather than imply validation or enforcement.
+  Owner direction on 2026-10-07 adds shared JavaScript numeric admission and
+  explicit lossless value conversion for Truss, Ashlar and TableSpec consumers.
+  Consumers must be able to retain exact decimal spelling, use bigint for large
+  integers and validate supplied Field constraints before conversion. Unsafe
+  integers, decimal rounding and unsupported value conversions must refuse
+  visibly under FR-8. JavaScript runtime representations do not create core
+  scalar types; database transport/storage codecs remain in Truss/Weft. This
+  bounded library capability follows FR-39 and does not assert downstream adoption.
 - **FR-42** — **Authored relationships.** Model authors must be able to state
   named associations between identified element types, including direction,
   endpoint multiplicity and an optional inverse presentation, without asserting

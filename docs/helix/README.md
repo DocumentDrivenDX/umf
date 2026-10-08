@@ -27,6 +27,16 @@ native port remain separate work.
 
 ## Current delivered scope
 
+The shared [JavaScript numeric adapter](02-design/contracts/CONTRACT-049-schema-properties.md#shared-javascript-numeric-adapter-api-100)
+uses existing integer/decimal carriers for safe number admission, bigint
+conversion, exact decimal spelling and explicit lossless number conversion.
+[US-054](01-frame/user-stories/US-054-javascript-numeric.md),
+[TD-054](02-design/technical-designs/TD-054-javascript-numeric.md) and
+[STP-054](03-test/test-plans/STP-054-javascript-numeric.md) provide the governed
+slice; [scoped execution evidence](04-build/implementation-plan.md#shared-javascript-numeric-policy-2026-10-07)
+qualifies Bun/Chromium checks. Downstream adoption and float instance semantics
+remain separate; no core scalar type or database codec is added.
+
 The owner priority remains TableSpec, PostgreSQL, SQL Server, Avro and Parquet
 schema ingestion and shared authored metadata. The browser-compatible library
 now includes core 0.2.0 Field, 0.3.0 Nullability, 0.4.0 Cardinality,

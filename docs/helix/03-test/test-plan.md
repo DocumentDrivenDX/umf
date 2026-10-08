@@ -27,6 +27,10 @@ ddx:
       kind: informed_by
     - id: CONTRACT-044
       kind: informed_by
+    - id: US-054
+      kind: informed_by
+    - id: TD-054
+      kind: informed_by
 ---
 
 # UMF Test Plan
@@ -3137,6 +3141,24 @@ unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
 
 ## Shared schema properties: CONTRACT-049
+
+### Shared JavaScript numeric adapter
+
+US-054 and TD-054 realize FEAT-005 IDEAL-08 under FR-8/39/41.
+[STP-054](test-plans/STP-054-javascript-numeric.md) owns the per-criterion
+assertion/citation matrix. Allocate numeric admission, spelling, exact recovery
+and hostile-input criteria to contract tests; Field constraint/source-preservation
+criteria to integration tests; portable execution to actual-browser checks.
+All nine P0 criteria require exercised passing evidence and canonical citations.
+
+Use Bun focused regression, strict portable/tooling typechecks, a fresh browser
+bundle and real Chromium public API checks. Record tested runtime versions and
+retain environment failures separately. These checks qualify the shared
+integer/decimal runtime adapter only; schema audits and native replay retain
+their independent gates because this slice adds no schema/vocabulary/native
+binding. It does not claim independent native equivalence or downstream adoption.
+
+### Shared property coverage
 
 Exercise all eight additions, exact integer/decimal equality and ordering,
 Unicode/byte units, null versus missing defaults, container item references,

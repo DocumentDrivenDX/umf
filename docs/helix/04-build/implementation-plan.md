@@ -31,6 +31,12 @@ ddx:
       kind: informed_by
     - id: CONTRACT-044
       kind: informed_by
+    - id: US-054
+      kind: informed_by
+    - id: TD-054
+      kind: informed_by
+    - id: STP-054
+      kind: informed_by
 ---
 
 # UMF Implementation Plan
@@ -5322,6 +5328,90 @@ drift from acceptance-ID normalization, now recorded in the existing explicit
 revalidation ledger.
 
 ## Shared schema properties: owner-directed core slice (2026-10-04)
+
+### Shared JavaScript numeric policy (2026-10-07)
+
+FEAT-005 IDEAL-08, US-054, TD-054, STP-054 and CONTRACT-049 govern a bounded adapter over existing
+integer/decimal tokens. Implement exact binary64 comparison, safe integer
+admission, bigint conversion, spelling-preserving decimal construction and
+optional current-Field validation without runtime dependencies. Verify boundary
+values, subnormals, overflow/underflow, signed zero, malformed/unknown carriers,
+declared domains and JSON/YAML recovery with Bun and real Chromium. The slice
+does not alter schemas or native bindings; downstream adoption and float instance
+semantics remain separate. Earlier integrated acceptance does not cover this slice.
+
+| Slice | Dependency | Validation gate |
+| --- | --- | --- |
+| US-054 numeric carrier conversion | Existing CONTRACT-001 carriers and CONTRACT-049 core 0.8.0 literal validation | STP-054 contract/integration assertions and existing schema-property/key regression |
+| US-054 public browser qualification | Numeric module/public export and fresh build | Portable/tooling typechecks, Chromium harness and resolved AC citations |
+
+Rollback removes the additive module/export and consumer calls; existing token
+artifacts remain readable. No schema migration or native-binding gate is added.
+
+Scoped execution on 2026-10-07 used Bun 1.4.2 (43848b5a7), rather than the
+manifest's Bun 1.3.14, with frozen-lockfile dependencies and TypeScript 7.0.2:
+
+- `bun test tests/core/javascript-numeric.test.ts tests/core/schema-properties.test.ts tests/core/schema-properties-review.test.ts tests/core/key-tuple.test.ts`:
+  70 tests, 769 assertions, zero failures across four files.
+- `bun run typecheck` and `bun run build`: passed portable/tooling type checks
+  and browser ESM/declaration build (11,499,396-byte bundle).
+- `bun scripts/javascript-numeric-browser.ts`: Chromium 153.0.8010.12 passed
+  26 checks for admission/refusal, exact binary64/subnormal values, bigint,
+  declared integer/decimal domains, JSON/YAML recovery, unknown-content retention
+  and absence of Bun/process globals.
+- `git diff --check`: passed. No full repository/native replay or downstream
+  Truss/Ashlar/TableSpec adoption is claimed.
+
+Initial tests/typechecking could not load missing dependencies; installation
+then passed with `bun install --frozen-lockfile` after sandbox temp-directory
+refusals. The first browser launch could not bind the sandboxed loopback server;
+the authorized local-server/browser run passed. These environment failures are
+retained separately from successful verification. The final rerun followed an
+accessor guard correction and additional decimal browser checks.
+
+SHA-256 of the tested adapter:
+`3d38e52cc878910509e8e277f671ff304707db37633f4f7c39082eb943618fdc`;
+numeric test:
+`7faaa2b0784040334ed43ead4c280a68a1126912a9cb0d2526e557bc431d5757`;
+browser script:
+`26a743f202c450afd0042ff93117dc09405ba9266a08748da1ef49a222607b6f`.
+
+### Numeric specification evolution qualification
+
+The owner requested complete HELIX evolution on 2026-10-07. The source direction,
+FR-41 scope, FEAT-005 IDEAL-08, US-054, architecture, CONTRACT-001/049,
+TD-054, TP-001 and STP-054 now carry the bounded requirement, design and gates.
+Existing artifact IDs/frontmatter entries are retained; TP-001 and this plan
+gain explicit downstream traceability links. ADR-002 and the cross-cutting
+requirements remain applicable without a new runtime decision or constraint.
+
+Only canonical citation comments changed in the numeric test/browser files;
+the adapter fingerprint and built library behavior above are unchanged.
+The cited Bun file passed again: 4 tests, 77 assertions, zero failures.
+The cited Chromium harness passed again: 26 checks on Chromium 153.0.8010.12.
+`bun scripts/acceptance-traceability.ts --check` passes with 442 criteria and no
+dangling citations. US-054 has eight Bun-cited rows and one browser-harness
+`REVIEWED_EXCEPTION` row; all 433 prior rows retain their earlier status.
+Ledger classifications establish citation traceability, not independent proof
+of execution or full repository acceptance.
+
+Catalog-derived structural checks passed for all three new artifacts: required
+sections, frontmatter, ten resolved governing links, local Markdown file links
+and all nine criterion/matrix references. The installed Python validator could
+not run because PyYAML is absent; equivalent scoped structural checks used the
+repository YAML parser. TD-054 explicitly inherits architecture directly,
+following existing bounded core-design practice; the catalog's separate
+solution-design wiki-link pattern is inapplicable to this slice. No fictitious
+solution design or automatic approval is asserted.
+
+SHA-256 after citation-only edits: numeric test
+`6f898c3731b59c0080f2279c71cbc862a3e1decbacd262c2631ca4a5955cc9a2`;
+browser harness
+`64a7be5ef51ddb287c9bce2788229917e9e693138cf253087fce62794b65da1e`.
+Full repository/native requalification and downstream consumer adoption remain
+separate work. Float semantics, codecs and core schema versions remain unchanged.
+
+### Shared property implementation
 
 Implement CONTRACT-049 as 0.8.0 without changing old schemas:
 versioned schema, portable semantic validator/literal domain, copied authoring
