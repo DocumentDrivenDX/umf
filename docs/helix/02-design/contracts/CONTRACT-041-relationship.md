@@ -93,7 +93,7 @@ Field, or native uniqueness evidence. The relationship envelope follows the
 accepted Key version; it does not reinterpret older documents lacking explicit
 membership as keyed Records.
 
-Multiplicity counts distinct associated record instances, not field values,
+Multiplicity counts distinct associated endpoint Record instances, not field values,
 container items or stored rows. It does not assert existing data satisfy a
 minimum, even when `min > 0`; that requires a separate data check. For `Order`
 → `Line` with each Order having at least one Line and each Line having one
@@ -104,6 +104,15 @@ referential enforcement or a physical join layout. An owned target is a logical
 lifecycle assertion only. A foreign key, including `ON DELETE CASCADE`, does
 not establish it, and a DDD aggregate remains governed by `umf.ddd`.
 
+When an `associationRecord` is present, multiple association instances connecting
+the same source and target contribute one distinct endpoint at each end. For
+Person→Organization, `targetMultiplicity={min:0,max:1}` permits at most one
+distinct Organization per Person; it does not limit the number of Employment
+instances with that Organization. Endpoint-pair uniqueness requires an explicit
+association Record key identifying that pair. Association-instance count limits
+and temporal rules such as non-overlapping employment periods MUST NOT be
+inferred from endpoint multiplicity.
+
 An association Record such as `Enrollment` can have `grade` and its own named
 key, with `associationRecord` pointing to it while Student and Course remain
 the endpoint types. The association key identifies an Enrollment, not
@@ -111,6 +120,15 @@ necessarily a unique Student/Course pair. Projection MUST report any inability
 to carry that identity or attributes; it may not reduce Enrollment to a bare
 junction row silently. A model may instead express two ordinary relationships
 from Enrollment to Student and Course; those are distinct authored assertions.
+
+An association Record uses the ordinary Record Field and Key model for business
+attributes and identity. It does not prescribe a graph node, table or edge.
+A target binding MAY represent those attributes as edge properties, as an
+association node's fields or as association-table columns. The binding MUST
+retain the association identity, attributes and correspondence to both endpoints,
+or report/refuse unsupported obligations under the outcome rules below. Edge
+properties are not restricted to operational metadata. This semantic permission
+does not establish that any particular target profile supports the mapping.
 
 Every operation MUST retain copied authored source, mapping/provenance,
 diagnostics, source-qualified residuals and an optional complete candidate,
@@ -197,6 +215,24 @@ unknown member. Older documents remain readable without gaining associations.
 
 ## Examples
 
+### Business association independent of storage
+
+A Person has an Employment with an Organization. Employment has its own
+`employmentId` key and `startDate`, `role` and `allocation` Fields. The
+Person→Organization relationship names Employment through `associationRecord`.
+These attributes describe the employment, and the domain author need not choose
+where they are stored. Two Employment instances with different keys may connect
+the same Person and Organization, for example after a person leaves and returns.
+They count as one distinct Organization for that Person's target multiplicity.
+
+A qualified graph binding may represent each Employment as an edge carrying its
+identity and attributes; another binding may use an association node or table.
+Each mapping must preserve endpoint correspondence and report unsupported meaning.
+The example illustrates the existing logical model, not delivered graph-binding
+support or a rule about overlapping employment periods.
+
+### Other relationship examples
+
 An authored `Order.customer` relationship may use target multiplicity `{1,1}`
 and source multiplicity `{0,*}`, naming Customer's alternate `account_number`
 key; a PostgreSQL FK can represent selected target-key columns under a compatible
@@ -214,6 +250,10 @@ published name-based profile. Neither decision asserts that the Key delivery
 gate has passed.
 
 ## Open Decisions Before Core Publication
+
+- Define any future association-instance count and temporal constraint surface
+  separately from endpoint participation. Core 0.7.0 relationship multiplicity
+  does not express those rules; this clarification introduces no new syntax.
 
 - Reconcile `(module.id,id)` relationship lineage with the revision-qualified
   identity proposed by CONTRACT-045 before cross-document references ship.

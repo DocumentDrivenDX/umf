@@ -42,6 +42,24 @@ physical filter/sort capability from the selected binding, not a logical field.
 The PostgreSQL and GraphQL generators produce reviewable schemas and precise
 residuals for meaning their targets cannot express.
 
+A domain author can describe Employment between Person and Organization with
+its own identity, start date, role and allocation. These are business attributes
+of the association. The author names Employment as the relationship's
+`associationRecord` and defines its fields and key using the ordinary Record
+model. A Record describes logical data; it does not require a graph node or a
+table. A qualified target binding may carry Employment as edge properties, an
+association node or an association table while preserving its identity,
+attributes and endpoint correspondence. Choosing storage does not change the
+business model. Operational metadata is not the only permitted edge content;
+target support and any loss must be explicit.
+
+Participation bounds count distinct endpoint records. A limit of one employer
+does not limit how many Employment instances connect a Person to that employer.
+Association identity and endpoint-pair uniqueness come from the association
+Record's declared key. Further rules about association-instance counts or
+overlapping employment periods require separately defined constraints; the
+relationship bounds do not imply them.
+
 ## Problem Statement
 
 Core references name schema elements and opaque roles but do not assert record
