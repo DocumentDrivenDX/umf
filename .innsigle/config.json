@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "issuer": {
+    "id": "documentdrivendx-umf",
+    "name": "DocumentDrivenDX UMF",
+    "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+    "key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json",
+    "public_key": "QIXX1JgtijcPMwefd1fzTP9fYCI6ftoWD3JjiCn9ucM"
+  },
+  "paths": {
+    "public": ".innsigle/public",
+    "keys": ".innsigle/public/keys.json",
+    "claims_dir": ".innsigle/public/claims"
+  },
+  "publish": {
+    "site_keys_path": "/.well-known/innsigle/keys.json",
+    "copy": {
+      "from": ".innsigle/public",
+      "to": ".well-known/innsigle"
+    }
+  },
+  "onepassword": {
+    "vault": "Employee",
+    "item_title": "Innsigle UMF signing key",
+    "item_id": "647wnkd5rvxutqy4g7vr4ksaqe",
+    "private_key_ref": "op://Employee/Innsigle UMF signing key/private key"
+  },
+  "content_root": "docs/helix/05-deploy/microsite/dist",
+  "content_globs": [
+    "docs/helix/05-deploy/microsite/dist/*.html"
+  ],
+  "kind_from_frontmatter": true
+}
