@@ -140,3 +140,6 @@ Native recovery is separately available for recognized retained adapter payloads
 adapter validation guards emission. Recovery does not create a new target from
 arbitrary UMF. Retain the source companion for dependencies and other vocabularies.
 Binary descriptor downloads do not imply Protobuf source generation.
+
+Domain packs start collapsed. Selecting a schema opens its owning pack; search
+opens matching packs. Explicit expansion state is retained during navigation.

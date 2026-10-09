@@ -4,9 +4,11 @@ import {parseEntry} from './explorer-model';
 const origin=process.env.UMF_EXPLORER_URL??'http://127.0.0.1:4178',checks:string[]=[];
 const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
-async function check(name:string,fn:()=>Promise<void>){await fn();checks.push(name);}
+async function check(name:string,fn:()=>Promise<void>){for(const pack of await page.locator('details[data-pack]').all()){if(!await pack.evaluate(el=>(el as HTMLDetailsElement).open))await pack.locator(':scope > summary').click();}await fn();checks.push(name);}
 try{
  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
+ if(await page.locator('details[data-pack][open]').count()>1)throw Error('Unselected domain packs start expanded');
+ checks.push('Domain packs start collapsed except the selected pack');
  await check('Download target preview, review gate and SQL download',async()=>{
   await page.goto(origin+'/explorer.html#schema='+encodeURIComponent('schema:ecology@1.0.0:sampling_events'));
   const panel=page.locator('details').filter({has:page.locator('summary').filter({hasText:'Download as…'})});
