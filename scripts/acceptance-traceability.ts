@@ -1,5 +1,5 @@
 import { readdir } from 'node:fs/promises';
-import { relative } from 'node:path';
+import { relative, sep } from 'node:path';
 
 export type AcceptanceStatus =
   | 'SATISFIED'
@@ -23,6 +23,11 @@ const criterionPattern = /US-\d{3}-AC\d+/g;
 const citationPattern = /@covers\s+(US-\d{3}-AC\d+)/g;
 const mentionPattern = /US-\d{3}-AC\d+/g;
 
+// relative() yields native separators; the ledger records repository paths with '/'.
+function repositoryPath(path: string): string {
+  return relative(root, path).split(sep).join('/');
+}
+
 async function filesBelow(path: string): Promise<string[]> {
   const entries = await readdir(path, { withFileTypes: true });
   const files = await Promise.all(entries.map(entry => {
@@ -34,7 +39,7 @@ async function filesBelow(path: string): Promise<string[]> {
 
 function add(index: Map<string, Set<string>>, id: string, path: string, line: number) {
   const evidence = index.get(id) ?? new Set<string>();
-  evidence.add(`${relative(root, path)}:${line}`);
+  evidence.add(`${repositoryPath(path)}:${line}`);
   index.set(id, evidence);
 }
 
@@ -58,7 +63,7 @@ export async function buildAcceptanceLedger() {
     const text = await Bun.file(path).text();
     for (const match of text.matchAll(criterionPattern)) {
       const id = match[0];
-      const story = relative(root, path);
+      const story = repositoryPath(path);
       if (criteria.has(id) && criteria.get(id) !== story) throw new Error(`Duplicate acceptance criterion ${id}`);
       criteria.set(id, story);
     }

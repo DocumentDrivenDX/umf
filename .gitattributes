@@ -1,3 +1,6 @@
+# Check out text as LF everywhere: fixtures, hashes and byte comparisons assume LF,
+# so a Windows core.autocrlf=true checkout must not rewrite them to CRLF.
+* text=auto eol=lf
 # Preserve pinned native test-source bytes, including mixed upstream line endings.
 native/rdfxml/sources/** -text
 native/shacl/sources/** -text

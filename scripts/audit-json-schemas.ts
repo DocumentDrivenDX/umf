@@ -12,7 +12,8 @@ const validators=new Map([
  ['http://json-schema.org/draft-04/schema#',legacy as any],
 ]);
 const rows:{path:string;id:string|null;dialect:string;passed:boolean;failures:string[]}[]=[];
-const paths=(await Array.fromAsync(new Bun.Glob('spec/**/*.json').scan())).sort();
+// Glob yields native separators; record repository paths with '/' on every platform.
+const paths=(await Array.fromAsync(new Bun.Glob('spec/**/*.json').scan())).map(path=>path.replaceAll('\\','/')).sort();
 for(const path of paths){
  const schema=await Bun.file(path).json();if(!schema||typeof schema!=='object'||Array.isArray(schema)||!schema.$schema)continue;
  const row={path,id:typeof schema.$id==='string'?schema.$id:typeof schema.id==='string'?schema.id:null,dialect:schema.$schema,passed:false,failures:[] as string[]};rows.push(row);
