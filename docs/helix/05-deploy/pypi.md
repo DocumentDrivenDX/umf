@@ -35,3 +35,12 @@ Twine. Clean environments install both wheels and import UMF models/schema
 helpers and the TableSpec CLI. UMF has 42 passing Python tests; the three
 TableSpec feature suites have 63 passing tests. TableSpec 0.0.7 still installs
 its pinned UMF 0.8.0 Git dependency, not the new public PyPI candidate.
+
+Publication evidence (2026-10-08): UMF commit `827285a1` published the YAML
+website; GitHub Pages workflow `37878855747` passed and all 23 Chromium checks
+passed again against the public URL. GitHub releases
+[UMF Python 0.8.1](https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.8.1)
+and [TableSpec 0.0.7](https://github.com/DocumentDrivenDX/tablespec/releases/tag/v0.0.7)
+contain wheel/sdist artifacts. The `umf` repository now has the `pypi` GitHub
+environment matching its manual publishing workflow. PyPI-side configuration
+and uploads remain separate.
