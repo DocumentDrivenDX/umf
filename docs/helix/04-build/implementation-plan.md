@@ -5479,3 +5479,14 @@ external bindings. The bounded FHIR R4 corpus preserves original resources,
 clinical literals and terminology notices. CMS samples remain references pending
 specific redistribution clearance. Scoped evidence:
 [medical-domain-pack.md](evidence/medical-domain-pack.md).
+
+## Full domain catalog first release
+
+Astra ultra reviewed SD-026 and CONTRACT-053. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
+
+### Domain catalog first release
+
+The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and graph
+companions are implemented under SD-026/CONTRACT-053. See
+[evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
+review corrections, executable results and remaining qualification boundaries.

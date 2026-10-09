@@ -1,5 +1,18 @@
 # UMF project documentation
 
+## Domain-pack planning
+
+The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
+16 domains, including ecology/water management. UMF owns schemas and schema
+tooling; TableSpec owns dataset generation, CSV ZIP output, loading and data
+tests. FEAT-009 defines catalog behavior; separate features/stories define each
+domain outcome. [SD-024](02-design/solution-designs/SD-024-ecology-domain-pack.md)
+proposes an ecology model with explicit scientific comparability boundaries.
+[SD-025](02-design/solution-designs/SD-025-archaeology-domain-pack.md) proposes
+context-linked archaeological evidence and specialist analyses grounded in
+Madaba Plains Project source candidates. These draft plans do not claim
+delivered packs or native equivalence.
+
 ## Ecosystem integration direction
 
 The owner's 2026-10-04 goal is shared UMF schemas feeding TableSpec pipelines,
@@ -1149,3 +1162,13 @@ using the same portable pack contract as legal. Official source JSON is retained
 alongside CSV derivatives, pinned checksums and license notices. CMS candidates
 remain references only while redistribution is unresolved. TableSpec owns local
 CSV ingestion, ZIP export and Sail/Spark execution tests.
+
+## Domain catalog and ontology targets
+
+All sixteen packs and their ontology schemas are discoverable in the schema explorer.
+[Catalog build evidence](04-build/evidence/domain-pack-catalog.md) records the shared
+profile, bounded small/demo/large replay, graph companion format and source custody.
+[SD-026](02-design/solution-designs/SD-026-domain-pack-platform.md) and
+[CONTRACT-053](02-design/contracts/CONTRACT-053-domain-pack-profiles.md) govern the
+platform; native graph intake, independent scaling axes and third-party source
+coverage remain explicitly qualified.

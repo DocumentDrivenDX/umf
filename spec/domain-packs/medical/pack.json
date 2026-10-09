@@ -53,6 +53,11 @@
       "id": "resource_references",
       "format": "tablespec",
       "reference": "umf/resource_references.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
     }
   ],
   "sources": {
@@ -1078,5 +1083,54 @@
     "subset": "17 selected resources; scalar observation quantities; locally resolved resource references",
     "clinical_representativeness": "not established",
     "source_bundle_validity": "not claimed; the corpus is not packaged or validated as a FHIR Bundle"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "resources",
+        "organizations",
+        "patients",
+        "practitioners",
+        "encounters",
+        "observations",
+        "medications",
+        "resource_references"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "patient-example",
+      "patient-example-f001-pieter",
+      "practitioner-example",
+      "practitioner-example-f005-al",
+      "organization-example-gastro",
+      "organization-example-f001-burgers",
+      "organization-example-f002-burgers-card",
+      "encounter-example",
+      "observation-example-f001-glucose",
+      "observation-example-f002-excess",
+      "observation-example-f003-co2",
+      "observation-example-f004-erythrocyte",
+      "observation-example-f005-hemoglobin",
+      "observation-example-body-height",
+      "observation-example-heart-rate",
+      "observation-example-respiratory-rate",
+      "medicationexample1",
+      "csv_resources",
+      "csv_organizations",
+      "csv_patients",
+      "csv_practitioners",
+      "csv_encounters",
+      "csv_observations",
+      "csv_medications",
+      "csv_resource_references",
+      "notices",
+      "loinc_short_notice"
+    ],
+    "qualification": "Delivered tabular behavior unchanged. Graph schema candidate only; no graph storage acceptance."
   }
 }

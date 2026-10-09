@@ -11,7 +11,7 @@ test('medical pack shares canonical structure, pins original bytes and retains e
  const pack=await Bun.file(root+'/pack.json').json();
  expect(createValidator().compile(generateDomainPackSchema())(pack)).toBe(true);
  expect(pack.generator).toBeUndefined();
- for(const entry of pack.schemas){
+ for(const entry of pack.schemas.filter((s:any)=>s.format==='tablespec')){
   const text=await Bun.file(root+'/'+entry.reference).text();
   expect(exportTableSpec(importTableSpec(text,{id:entry.id,format:'json'}))).toBe(text);
  }
