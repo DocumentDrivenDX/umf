@@ -5616,3 +5616,15 @@ declarations and are not flattened into binary arrows. No data-instance
 graph, ontology inference or native backend acceptance is added. Rebuild the
 previous viewer to roll back; pack schemas are unaffected. Results live in
 `../05-deploy/schema-explorer-evidence.json` and microsite build notes.
+
+## Browser schema downloads — 2026-10-08
+
+CONTRACT-054 records the owner-requested consumer profile. The explorer now
+previews nine generated scalar targets, blocks unsupported members, requires
+review of limitations and downloads a source-retaining report bundle. Native
+adapter payloads expose separate recovery downloads with source companions.
+Bun checks fields, exact source retention, rejected types/nullability, SQL
+quoting, GraphQL parsing, Avro parsing and JSON Schema compilation. Chromium
+checks all nine previews, review gating and an actual SQL download alongside
+all catalog navigation checks. No DDL execution or native-equivalence claim.
+Rollback removes the download widget and rebuilds the microsite.

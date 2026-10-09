@@ -1,0 +1,15 @@
+import {nativeDownloads} from './download-native';
+import {generateDownload,targets,type Target} from './download-model';
+import type {Entry,Parsed} from './explorer-model';
+let urls:string[]=[];
+export function clearDownloads(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];}
+export function renderDownloads(parent:HTMLElement,entry:Entry,parsed:Parsed){
+ const panel=document.createElement('details');panel.className='detail-block';const title=document.createElement('summary');title.textContent='Download as…';panel.append(title);
+ const note=document.createElement('p');note.textContent='Generate scalar schemas for the whole source. Review mappings and limits before downloading. The companion bundle retains the original source.';panel.append(note);
+ const native=nativeDownloads(parsed);if(native.length){const p=document.createElement('p');p.textContent='Native recovery uses the retained adapter payload. Download the source companion too: dependencies and unrelated metadata may be required.';panel.append(p);native.push({name:'source-companion.'+entry.format,content:entry.text});}
+ for(const file of native){const a=document.createElement('a');a.textContent='Recover native '+file.name;a.download=file.name;const data=typeof file.content==='string'?file.content:new Uint8Array(file.content).buffer;a.href=URL.createObjectURL(new Blob([data],{type:'application/octet-stream'}));urls.push(a.href);a.className='button secondary';panel.append(a);}
+ const select=document.createElement('select');select.setAttribute('aria-label','Download target');for(const [value,label] of Object.entries(targets)){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option);}panel.append(select);
+ const result=document.createElement('div');panel.append(result);
+ const update=()=>{result.replaceChildren();try{const output=generateDownload(entry,parsed,select.value as Target);const warnings=document.createElement('ul');output.report.issues.forEach(issue=>{const li=document.createElement('li');li.textContent=issue;warnings.append(li);});const pre=document.createElement('pre');pre.textContent=output.content;const label=document.createElement('label'),check=document.createElement('input');check.type='checkbox';label.append(check,document.createTextNode(' I reviewed the mappings and limitations.'));const links=document.createElement('p');const make=(name:string,content:string)=>{const a=document.createElement('a');a.textContent='Download '+name;a.download=name;a.href=URL.createObjectURL(new Blob([content],{type:'text/plain'}));urls.push(a.href);a.className='button secondary';return a;};links.append(make(output.filename,output.content),document.createTextNode(' '),make('schema-export-bundle.json',JSON.stringify(output.report,null,2)));links.hidden=true;check.onchange=()=>links.hidden=!check.checked;result.append(warnings,pre,label,links);}catch(error){const p=document.createElement('p');p.className='callout';p.textContent='Export unavailable: '+String(error instanceof Error?error.message:error);result.append(p);}};
+ select.onchange=update;update();parent.append(panel);
+}

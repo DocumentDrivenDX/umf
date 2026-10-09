@@ -118,3 +118,25 @@ tests / 1,530 assertions, both TypeScript configurations and all 20 Chromium
 explorer checks pass. The legal navigation assertions now use 1.1.0; initial
 integration verification exposed their stale 1.0.0 assumption. Earlier
 20-pack totals describe the preceding checkpoint.
+
+### Schema downloads
+
+The explorer's **Download as…** panel implements `umf-browser-scalar-export-1`
+for TableSpec 1.0 tables and core records with resolved scalar, single-valued
+members and explicit nullability. Nine targets are available: PostgreSQL DDL,
+SQL Server DDL, Spark/Delta DDL, JSON Schema 2020-12, Avro, GraphQL SDL,
+Protobuf proto3, OpenAPI 3.1 components and Spark StructType JSON.
+
+This is a schema scaffold, not a certified execution binding. Integers use
+signed 64-bit carriers (decimal strings in JSON Schema/OpenAPI); float uses
+double; decimal/timestamp use text. Keys, relationships, defaults, constraints,
+formats and extensions remain in the exact source companion. Requiredness is
+not enforced by GraphQL type declarations or Protobuf presence. Avro returns
+a union of records; Spark returns a table-name map. Unsupported fields block
+the entire generated export. Preview and explicit review precede downloading.
+The JSON export bundle contains output, diagnostics, profile and exact source.
+
+Native recovery is separately available for recognized retained adapter payloads;
+adapter validation guards emission. Recovery does not create a new target from
+arbitrary UMF. Retain the source companion for dependencies and other vocabularies.
+Binary descriptor downloads do not imply Protobuf source generation.

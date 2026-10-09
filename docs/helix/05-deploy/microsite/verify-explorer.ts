@@ -7,6 +7,16 @@ const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:str
 async function check(name:string,fn:()=>Promise<void>){await fn();checks.push(name);}
 try{
  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
+ await check('Download target preview, review gate and SQL download',async()=>{
+  await page.goto(origin+'/explorer.html#schema='+encodeURIComponent('schema:ecology@1.0.0:sampling_events'));
+  const panel=page.locator('details').filter({has:page.locator('summary').filter({hasText:'Download as…'})});
+  await panel.locator('summary').click();await panel.getByLabel('Download target').waitFor();
+  for(const target of ['postgresql','sqlserver','delta','json-schema','avro','graphql','protobuf','openapi','spark']){await panel.getByLabel('Download target').selectOption(target);await panel.locator('pre').waitFor();if(!await panel.locator('pre').textContent().then(t=>t?.includes('site_id')))throw Error('Missing generated field');}
+  await panel.getByLabel('Download target').selectOption('postgresql');
+  if(await panel.getByRole('link',{name:'Download schema.sql',exact:true}).isVisible())throw Error('Review gate bypassed');
+  await panel.getByRole('checkbox').check();const pending=page.waitForEvent('download');await panel.getByRole('link',{name:'Download schema.sql',exact:true}).click();const download=await pending;if(download.suggestedFilename()!=='schema.sql')throw Error('Wrong filename');
+ });
+ await page.goto(origin+'/explorer.html');
  // @covers US-055-AC6
  await check('Medical subpacks expose all eighteen source-qualified schemas',async()=>{
   for(const id of ['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology']){

@@ -1,3 +1,4 @@
+import {clearDownloads,renderDownloads} from './download-view';
 import {ontologyModel,renderOntology} from './ontology-view';
 import {parseEntry,key,matches,type Entry,type Parsed,type Definition} from './explorer-model';
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
@@ -52,8 +53,8 @@ function breadcrumbs(){
 function domainTypeLink(type:string){const pack=selected&&packFor(selected);const def=pack&&packView(pack).definitions.find(d=>d.id===type);return pack&&def?definitionLink(pack,def):node('span',`${type} · not declared in this pack`,'unresolved');}
 
 function render(){
- if(downloadUrl)URL.revokeObjectURL(downloadUrl);
- inspector.replaceChildren();if(!selected||!parsed)return;breadcrumbs();
+ clearDownloads();if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+ inspector.replaceChildren();if(!selected||!parsed)return;breadcrumbs();renderDownloads(inspector,selected,parsed);
  if(parsed.native){renderNative();return;}
  const doc=parsed.document!,top=node('div',undefined,'detail-top'),title=node('div');title.append(node('span',selected.category==='domain'?'Domain pack':'Example','tag'),node('h2',selected.title),node('p',doc.id,'schema-id'));top.append(title);
  const download=node('a','Download source','button secondary') as HTMLAnchorElement;download.href=downloadUrl=URL.createObjectURL(new Blob([selected.text],{type:'text/plain'}));download.download=selected.path.split('/').pop()??'schema.json';download.onclick=()=>setTimeout(()=>URL.revokeObjectURL(download.href),1000);top.append(download);inspector.append(top);
