@@ -412,3 +412,13 @@ material/sample provenance, evidence associations and competing interpretations.
 Open Context project metadata, the project manual and publication inventory
 provide source candidates; exact downloadable record/media coverage remains
 explicitly unverified until a bounded fixture inventory is completed.
+
+### Owner direction: public-dataset schema packs (2026-10-08)
+
+The owner accepts the recommended first wave: NYC TLC yellow taxis, MovieLens,
+NOAA GHCN Daily and GTFS Schedule. UMF owns the schema packs under FR-45 and
+CONTRACT-052. Select bounded, documented profiles and preserve native codes,
+missing-value conventions, units, temporal meanings and source provenance.
+The schema explorer must discover them through its existing catalog path.
+Dataset ingestion and generators remain consumer-owned. An agency feed for
+GTFS, checksum-pinned row snapshots and additional TLC trip families remain open.

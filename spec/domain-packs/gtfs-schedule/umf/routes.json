@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "table_name": "routes",
+  "description": "Selected routes.txt fields; at least one route name required by source rules.",
+  "columns": [
+    {
+      "name": "route_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "agency_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "agency_id"
+    },
+    {
+      "name": "route_short_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "route_short_name"
+    },
+    {
+      "name": "route_long_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "route_long_name"
+    },
+    {
+      "name": "route_type",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Transit mode code."
+    }
+  ],
+  "primary_key": [
+    "route_id"
+  ]
+}

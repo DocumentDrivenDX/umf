@@ -5490,3 +5490,19 @@ The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and gra
 companions are implemented under SD-026/CONTRACT-053. See
 [evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
 review corrections, executable results and remaining qualification boundaries.
+
+### Public dataset schema packs (2026-10-08)
+
+FR-45 and CONTRACT-052 govern the owner's selected NYC TLC, MovieLens,
+NOAA GHCN Daily and GTFS Schedule profiles. Generate 16 authored TableSpec
+schemas and four external-source manifests with distinct documentation pins.
+Preserve native missing/time/code semantics and explicit unresolved row inputs.
+The existing microsite catalog discovers the canonical pack directory.
+
+Verification requires deterministic regeneration, pack/source/schema/domain
+reference consistency, exact TableSpec adapter recovery, native consumer model
+admission, export/check and real Chromium inspection of all sixteen schemas.
+Record scoped results in [domain-pack evidence](evidence/domain-packs.md).
+Rollback removes the four packs and generator and rebuilds the catalog.
+No row ingestion, full native replay, source equivalence, public deployment or
+new TableSpec generator is claimed.

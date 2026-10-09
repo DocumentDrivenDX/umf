@@ -37,6 +37,12 @@ types. Its fixed official fixtures use source bindings and fixture counts withou
 a generator. These declarations remain visible in the pack overview; the browser
 inspects schemas and does not load patient rows.
 
+The canonical NYC TLC, MovieLens 32M, NOAA GHCN Daily and GTFS Schedule packs
+add 16 schemas. The current catalog contains 20 packs and 256 entries, including
+the existing core example. External source profiles, documentation fingerprints
+and unresolved dataset choices remain visible as metadata. Browsing does not
+fetch the datasets or certify their schema profiles as instance validators.
+
 ## Inspection contract
 
 - Each pack/version owns its Overview, Schemas and Domain types in the catalog.

@@ -4,7 +4,6 @@ import {inspectDomainPack} from '../../src/domain-packs/profile';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
-import {readdir} from 'node:fs/promises';
 import {join} from 'node:path';
 for(const domain of domains){
  // Domain-specific schema/inventory assertions. AC5/7 explicitly partial in STPs.
@@ -25,7 +24,7 @@ for(const domain of domains){
  });
 }
 test('all sixteen packs declare graph schemas without replacing baseline source rows',async()=>{
- for(const id of await readdir('spec/domain-packs')){const root='spec/domain-packs/'+id,pack=await Bun.file(root+'/pack.json').json();expect(inspectDomainPack(pack).valid,id).toBe(true);expect(pack.execution_profile.targets.graph).toEqual(['ontology']);expect(validateDocument(readDocument(await Bun.file(root+'/ontology.json').text(),'json')).valid,id).toBe(true);}
+ for(const id of ['legal','medical',...domains.map(domain=>domain.id)]){const root='spec/domain-packs/'+id,pack=await Bun.file(root+'/pack.json').json();expect(inspectDomainPack(pack).valid,id).toBe(true);expect(pack.execution_profile.targets.graph).toEqual(['ontology']);expect(validateDocument(readDocument(await Bun.file(root+'/ontology.json').text(),'json')).valid,id).toBe(true);}
  const medical=await Bun.file('spec/domain-packs/medical/pack.json').json();expect(medical.generator).toBeUndefined();expect(medical.execution_profile.mode).toBe('fixed');expect(medical.fixture_counts.resources).toBe(17);
 });
 test('@covers US-060-AC3 @covers US-060-AC7 invalid target, profile, inclusion and source identities refuse admission',async()=>{

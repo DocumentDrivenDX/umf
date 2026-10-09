@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "table_name": "inventory",
+  "description": "ghcnd-inventory.txt fixed-width field projection.",
+  "columns": [
+    {
+      "name": "ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Station code.",
+      "domain_type": "ghcn_station"
+    },
+    {
+      "name": "LATITUDE",
+      "data_type": "FLOAT",
+      "nullable": false,
+      "description": "Latitude degrees."
+    },
+    {
+      "name": "LONGITUDE",
+      "data_type": "FLOAT",
+      "nullable": false,
+      "description": "Longitude degrees."
+    },
+    {
+      "name": "ELEMENT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Element code.",
+      "domain_type": "ghcn_element"
+    },
+    {
+      "name": "FIRSTYEAR",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "First available year."
+    },
+    {
+      "name": "LASTYEAR",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Last available year."
+    }
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "ID",
+        "references_table": "stations",
+        "references_column": "ID"
+      }
+    ]
+  }
+}

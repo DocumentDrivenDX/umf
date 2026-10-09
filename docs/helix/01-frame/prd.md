@@ -360,6 +360,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   source identity, unresolved references and source-specific redistribution
   conditions; generated supplements must remain distinguishable. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
+  The first public-dataset schema packs cover NYC TLC yellow taxis, MovieLens
+  32M, NOAA GHCN Daily and a basic GTFS Schedule profile. These are bounded
+  source-qualified schemas; external row references do not establish a pinned
+  data snapshot, ingestion support or redistribution clearance.
 
   Owner-selected planning scope includes the [domain-pack catalog and roadmap](domain-pack-roadmap.md).
   FEAT-009 governs shared catalog qualification; FEAT-010–FEAT-025 and
