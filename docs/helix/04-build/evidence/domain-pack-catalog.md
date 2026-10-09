@@ -104,6 +104,18 @@ contracts, fixtures and producer/consumer boundaries. Findings and corrections a
 recorded in SD-026. Broader repository failures outside the domain-pack scope are
 reported separately; scoped passing checks do not imply global conformance.
 
+The full UMF Bun run completed with **2136 passed and 25 failed** (2161 tests).
+Failures were outside the domain-pack tests, in source-to-target mapping,
+Protobuf source operations, native evidence fingerprints and the Cardinality,
+Facet, Key and Nullability evidence/admission gates. This release does not claim
+that the complete repository suite passes.
+
+UMF PR #9 merged at `53049c712cdb4377b95950454b355b1066b4b094`.
+GitHub Pages deployment run `37866865323` succeeded. The public explorer at
+`https://documentdrivendx.github.io/umf/explorer.html` then passed all 17 Chromium
+checks, including navigation of every schema and ontology target in all sixteen
+packs (236 entries).
+
 ## Remaining qualifications
 
 Component replay scales counts, not independent topology, time span, scientific
