@@ -402,3 +402,5 @@ export type {CoreDatasetInput,CoreDatasetRecord,CoreDatasetRelationship,CoreData
 
 export {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,coreDatasetValueCompactOperationSchema} from './model/dataset-values-compact';
 export type {CoreCompactRecordValueCheck,CoreCompactKeyTupleReceipt,CoreDatasetCompactValueCheck} from './model/dataset-values-compact';
+
+export * from './model/csv-boolean-lexical';
