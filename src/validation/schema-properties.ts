@@ -1,3 +1,4 @@
+import {snapshotSchema} from './internal-schema';
 import schema from '../../spec/core/schema-properties-document.schema.json';
 import {createValidator} from './schema';
 // Intentional, known import cycle with ./document (CONTRACT-049); both sides only use the other inside functions.
@@ -7,8 +8,8 @@ import {copyJson} from '../model/json';
 import {type Document,type Diagnostic,type Validation,type Element,UmfError,pointer} from '../model/types';
 import {checkSchemaLiteral,literalIdentity,schemaCoefficient,type CoreLiteral,schemaPropertyNames,newFacetNames} from '../model/schema-literals';
 const validator=createValidator();
-export const checkSchemaProperties=validator.compile(schema);
-export const checkCoreLiteral=validator.compile({$defs:schema.$defs,$ref:'#/$defs/literal'});
+export const checkSchemaProperties=validator.compile(snapshotSchema(schema));
+export const checkCoreLiteral=validator.compile(snapshotSchema({$defs:schema.$defs,$ref:'#/$defs/literal'}));
 export {default as coreSchemaPropertiesDocumentSchema} from '../../spec/core/schema-properties-document.schema.json';
 /** Private validation view only. It must never be used as a native downgrade. */
 export function schemaPropertiesLegacyView(input:Document):Document {
@@ -51,6 +52,8 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
   }
  };
  diagnostics.push(...validateDocument(schemaPropertiesLegacyView(doc),extensionRegistry).diagnostics);
+ // Preserve legacy diagnostic order while avoiding a repeated full-array scan.
+ const unknownUnitPaths=new Set(diagnostics.filter(d=>d.code==='UNKNOWN_FACET_UNIT').map(d=>d.path));
  const unknown=(v:Record<string,unknown>,known:string[],path:string)=>{for(const key of Object.keys(v))if(!known.includes(key))add('Qualifier retained without interpretation',path+'/'+pointer(key),'warning','UNKNOWN_SCHEMA_PROPERTY');};
  doc.modules.forEach((m,mi)=>m.elements.forEach((e,ei)=>{
   const path=`/modules/${mi}/elements/${ei}`,f=e.facets as Record<string,any>|undefined;
@@ -60,7 +63,7 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
    for(const group of ['length','collectionSize'] as const)if(f[group]){
     const b=f[group];unknown(b,group==='length'?['min','max','unit']:['min','max'],path+'/facets/'+group);
     const unitPath=path+'/facets/length/unit';
-    if(group==='length'&&!['unicode-scalar','byte'].includes(b.unit)&&!diagnostics.some(d=>d.code==='UNKNOWN_FACET_UNIT'&&d.path===unitPath))add('Length unit retained without interpretation',unitPath,'warning','UNKNOWN_FACET_UNIT');
+    if(group==='length'&&!['unicode-scalar','byte'].includes(b.unit)&&!unknownUnitPaths.has(unitPath)){add('Length unit retained without interpretation',unitPath,'warning','UNKNOWN_FACET_UNIT');unknownUnitPaths.add(unitPath);}
     if(b.min!==undefined&&b.max!==undefined&&b.min>b.max)add('Minimum exceeds maximum',path+'/facets/'+group);
     if(group==='collectionSize'&&(e.kind!=='field'||!['array','map'].includes(e.cardinality as string)))add('Collection bounds require array/map Field',path+'/facets/'+group);
    }

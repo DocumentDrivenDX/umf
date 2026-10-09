@@ -1,0 +1,81 @@
+{
+  "format": "umf-core-dataset-compact-custody/0.1",
+  "sourceBase": "fc78a6d48f08b3640748ccac0fc4a9ee06fc61e3",
+  "sourceFingerprintManifestSha256": "34a4d333b1878fe734217821940280df748bc4996af1788aa28a9eba55f9e73d",
+  "runtime": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "files": {
+    "archaeology-receipt.json": {
+      "sha256": "1fbda737e78205701158b5a1904bb5e8317321d38f4bbfb48cf3429d5a0f408d",
+      "bytes": 253008
+    },
+    "commerce-receipt.json": {
+      "sha256": "e1687e9854b246faef3f3746580df82d30819562207f79fcc67ed1121339bc1e",
+      "bytes": 58054
+    },
+    "consumer.js": {
+      "sha256": "bede63988654711dc5ece8dbbc1b667e16a7f71e240d1a484ae218ae9de35e62",
+      "bytes": 2472
+    },
+    "ecology-receipt.json": {
+      "sha256": "3784e82741555a099e45601f1fa0c61e3e1ed351af4307f99c963a5f97a803f7",
+      "bytes": 238036
+    },
+    "full-api-byte-parity.jsonl": {
+      "sha256": "13119b01c73f31f84348eca35281dc7f0d283fe99c0f7b9ee6255546d2711432",
+      "bytes": 269
+    },
+    "report.json": {
+      "sha256": "e1883af0fbf48abba2418555ec4407e5cd0d91fa3ed29f0fd61423ab9e5be280",
+      "bytes": 1774
+    },
+    "review-frozen.json": {
+      "sha256": "34a4d333b1878fe734217821940280df748bc4996af1788aa28a9eba55f9e73d",
+      "bytes": 7947
+    },
+    "schema-audit.log": {
+      "sha256": "ceb8f153f0a03432eaefc66c1560a76f624be6dca814ce04fd077d428c6b4770",
+      "bytes": 56
+    },
+    "supply-chain-receipt.json": {
+      "sha256": "310a62e4648a2e082d21cba84c885c3d57299792cb41a4db3a47605b52b366a6",
+      "bytes": 106148
+    },
+    "tests.log": {
+      "sha256": "8d02b3b1f02ecd26d7f09ef5f1b5d6ea88d85515251374eb81ec489fc0c80b02",
+      "bytes": 9745
+    },
+    "unknown-unit-byte-parity.json": {
+      "sha256": "4a82866b75fdf3255559ecdd27107734bf290bfa183343643de4f993aa29e966",
+      "bytes": 130
+    },
+    "work.jsonl": {
+      "sha256": "3fc2041964e9ebee72b65c55a508ad8c93218f8654fdf39292eb605e1ebdcde0",
+      "bytes": 15392
+    }
+  },
+  "generatedBrowserBundle": {
+    "sha256": "65cdc139bbc4c564902da1a2a02ffef500ed6f2fbebfd5cc7869f7a69267b6f0",
+    "bytes": 11672682,
+    "retention": "Generated bundle is not checked in; rebuild using the retained script, frozen source and base dependency lock. Browser receipts, report and consumer bytes are retained."
+  },
+  "checks": {
+    "relatedTests": 100,
+    "assertions": 1466,
+    "sourceTypecheck": "pass",
+    "toolsTypecheck": "pass",
+    "schemaAudit": "pass",
+    "fullApiByteParity": "commerce and supply-chain exact clean-base receipts; 71 original unknown-unit/qualifier diagnostics exact",
+    "browser": "four original finite datasets, complete public Record/Key expansion and verifier, 12 refusal controls, byte-identical Bun receipts"
+  },
+  "commands": [
+    "bun test tests/core-dataset-compact.test.ts tests/core-dataset-values.test.ts tests/core-dataset-supply-chain.test.ts tests/core-record-values.test.ts tests/core/schema-properties.test.ts tests/core/schema-properties-review.test.ts tests/core/key-tuple.test.ts",
+    "bunx tsc --noEmit",
+    "bunx tsc --noEmit -p tsconfig.tools.json",
+    "bun scripts/audit-json-schemas.ts",
+    "bun scripts/browser-core-dataset-compact.ts FRESH_OUTPUT_DIRECTORY"
+  ],
+  "qualification": "Additive compact API for original UMF0.8 supplied finite datasets only. Old full API unchanged normal/unknown diagnostic bytes and guards. Original pack source/graph bytes unchanged. This evidence establishes neither native ingestion nor storage IDs, producer authority, publication, ACK, Weft or graph engine acceptance."
+}

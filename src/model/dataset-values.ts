@@ -1,3 +1,4 @@
+import {snapshotSchema} from '../validation/internal-schema';
 import {copyJson,LIMITS} from './json';
 import {UmfError,type Document,type Diagnostic,type Validation,type Json} from './types';
 import {knownSchemaMembers} from './schema-literals';
@@ -9,8 +10,8 @@ import {createValidator} from '../validation/schema';
 import coreSchema from '../../spec/core/schema-properties-document.schema.json';
 import keySchema from '../../spec/core/key-tuple-operation-v3.schema.json';
 import operationSchema from '../../spec/core/dataset-value-operation.schema.json';
-const validator=createValidator();validator.addSchema(coreSchema);validator.addSchema(keySchema);
-const checkReceipt=validator.compile(operationSchema),checkInput=validator.compile({$schema:operationSchema.$schema,$id:operationSchema.$id+':input',$ref:'#/$defs/input',$defs:operationSchema.$defs});
+const validator=createValidator();validator.addSchema(snapshotSchema(coreSchema));validator.addSchema(snapshotSchema(keySchema));
+const checkReceipt=validator.compile(snapshotSchema(operationSchema)),checkInput=validator.compile(snapshotSchema({$schema:operationSchema.$schema,$id:operationSchema.$id+':input',$ref:'#/$defs/input',$defs:operationSchema.$defs}));
 export {operationSchema as coreDatasetValueOperationSchema};
 
 export interface CoreDatasetRecord {instanceId:string;identity:CoreRecordValueIdentity;values:CoreRecordFieldValue[]}
@@ -31,10 +32,14 @@ const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')
 const fail=(message:string):never=>{throw new UmfError('CORE_DATASET_INPUT',message);};
 function identity(value:any,keys:string[]){knownSchemaMembers(value,keys,'/input');if(Object.keys(value).length!==keys.length||keys.some(k=>typeof value[k]!=='string'||!value[k]))fail('Exact nonempty qualified identity required');}
 /** Finite supplied dataset only; no global/native coverage or execution authority. */
-export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDatasetInput):CoreDatasetValueCheck{
- const source=copyJson(sourceInput) as unknown as Document,input=copyJson(inputInput) as unknown as CoreDatasetInput;
+export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDatasetInput):CoreDatasetValueCheck{return composeCoreDatasetValues(sourceInput,inputInput) as CoreDatasetValueCheck;}
+/** Internal shared composition; not exported from the package API. */
+export function composeCoreDatasetValues(sourceInput:Document,inputInput:CoreDatasetInput,compact?:ReturnType<typeof import('./internal/value-context').createValueContext>):any{
+ const copy=compact?.copy??copyJson;
+ const source=(compact?.source??copy(sourceInput)) as unknown as Document,input=(compact?.input??copy(inputInput)) as unknown as CoreDatasetInput;
+ compact?.reserveInput();
  if(!checkInput(input))fail('Dataset request violates its versioned operation schema');
- const documentValidation=validateDocument(source);
+ const documentValidation=compact?.documentValidation??validateDocument(source);
  if(source.umf!=='0.8.0'||!documentValidation.valid)throw new UmfError('CORE_DATASET_SOURCE','Original valid core0.8 source required');
  knownSchemaMembers(input,['scope','records','relationships','context'],'/input');
  knownSchemaMembers(input.scope,['id','closure'],'/input/scope');
@@ -43,7 +48,7 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
  // Bound repeated full-source receipts and semantic work before composing any
  // per-record/field/key operation. Original source copies are never truncated.
  const count=(value:any):number=>1+(Array.isArray(value)?value.reduce((n,v)=>n+count(v),0):value!==null&&typeof value==='object'?Object.values(value).reduce<number>((n,v)=>n+count(v),0):0);
- const elements=source.modules.flatMap(m=>m.elements),sourceValues=count(source),inputValues=count(input);
+ const elements=source.modules.flatMap((m:Document['modules'][number])=>m.elements),sourceValues=compact?0:count(source),inputValues=compact?0:count(input);
  const maxKeys=Math.max(0,...elements.map(e=>Array.isArray(e.keys)?e.keys.length:0));
  const maxMembers=Math.max(0,...elements.map(e=>Array.isArray(e.members)?e.members.length:0));
  const declarations=source.modules.reduce((n,m)=>n+(Array.isArray(m.relationships)?m.relationships.length:0),0);
@@ -54,31 +59,33 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
  const bytes=(value:any):number=>{
   let size=0;const add=(n:number)=>{size+=n;if(size>4_000_000)throw new UmfError('LIMIT','Aggregate dataset source/input bytes exceeded');};
   const visit=(v:any)=>{
+   compact?.work.charge('aggregate-byte-traversal',1);
    if(v===null||typeof v!=='object'){add(new TextEncoder().encode(JSON.stringify(v)).length);return;}
    if(Array.isArray(v)){add(2+Math.max(0,v.length-1));for(const child of v)visit(child);return;}
    const entries=Object.entries(v);add(2+Math.max(0,entries.length-1));
    for(const [key,child] of entries){add(new TextEncoder().encode(JSON.stringify(key)).length+1);visit(child);}
   };visit(value);return size;
  };
- if(sourceValues*copies+inputValues*8>LIMITS.maxValues||bytes(source)*copies+bytes(input)*8>4_000_000||sourceValues*(input.records.length*(1+maxMembers+maxKeys)+input.relationships.length*2)>1_000_000)throw new UmfError('LIMIT','Dataset work/retained receipt budget exceeded');
+ if(!compact&&(sourceValues*copies+inputValues*8>LIMITS.maxValues||bytes(source)*copies+bytes(input)*8>4_000_000||sourceValues*(input.records.length*(1+maxMembers+maxKeys)+input.relationships.length*2)>1_000_000))throw new UmfError('LIMIT','Dataset work/retained receipt budget exceeded');
+ if(compact){compact.work.walk('dataset-source-composition',source,4);compact.work.walk('dataset-input-composition',input,8);}
  let retainedBytes=bytes(source)+bytes(input)+bytes(documentValidation)+512;
  const retainBudget=(value:any)=>{retainedBytes+=bytes(value)+2;if(retainedBytes>4_000_000)throw new UmfError('LIMIT','Actual aggregate dataset receipt-byte budget exceeded');};
  const diagnostics:Diagnostic[]=[],residuals:CoreDatasetValueCheck['residuals']=[];
  const add=(code:string,path:string,message:string,severity:'error'|'warning'='error')=>{const diagnostic={code,path,message,severity};retainBudget(diagnostic);diagnostics.push(diagnostic);};
- const retain=(path:string,value:any,reason:string)=>{const residual={path,value:copyJson(value),reason};retainBudget(residual);residuals.push(residual);add('DATASET_UNRESOLVED',path,reason,'warning');};
+ const retain=(path:string,value:any,reason:string)=>{const residual={path,value:copy(value),reason};retainBudget(residual);residuals.push(residual);add('DATASET_UNRESOLVED',path,reason,'warning');};
  const unresolvedDocument=documentValidation.diagnostics.filter(d=>d.severity==='warning'&&!d.code.startsWith('EXPERIMENTAL_'));
  for(const d of unresolvedDocument){
   retainBudget(d);diagnostics.push({...d});let value:any=source;
   for(const segment of d.path.split('/').slice(1)){const key=segment.replace(/~1/g,'/').replace(/~0/g,'~');value=value!==null&&typeof value==='object'&&Object.hasOwn(value,key)?value[key]:null;}
-  const residual={path:d.path,value:copyJson(value),reason:d.message};retainBudget(residual);residuals.push(residual);
+  const residual={path:d.path,value:copy(value),reason:d.message};retainBudget(residual);residuals.push(residual);
  }
 
  const declared=new Map<string,{record:any;path:string}>();source.modules.forEach((m,mi)=>m.elements.forEach((record,ei)=>declared.set(qualified({module:m.id,element:record.id}),{record,path:`/modules/${mi}/elements/${ei}`})));
- const recordResults:CoreDatasetValueCheck['records']=[],keys:CoreDatasetValueCheck['keys']=[],relationships:CoreDatasetValueCheck['relationships']=[];
+ const recordResults:({instanceId:string;result:CoreRecordValueCheck|import('./dataset-values-compact').CoreCompactRecordValueCheck})[]=[],keys:({instanceId:string;result:CoreKeyTupleReceipt|import('./dataset-values-compact').CoreCompactKeyTupleReceipt})[]=[],relationships:(Omit<CoreDatasetValueCheck['relationships'][number],'targetKey'>&{targetKey:CoreKeyTupleReceipt|import('./dataset-values-compact').CoreCompactKeyTupleReceipt})[]=[];
  const instances=new Map<string,CoreDatasetRecord>(),tuples=new Map<string,string[]>();let keyInvalid=false,keyUnresolved=unresolvedDocument.length>0,relationshipInvalid=false,relationshipUnresolved=unresolvedDocument.length>0;
  const unresolvedKeys=new Set<string>();
- const encode=(id:CoreKeyIdentity,values:CoreKeyTupleValue[],path:string):CoreKeyTupleReceipt|undefined=>{
-  try{return encodeCoreKeyTuple(source,id,values);}catch(error){
+ const encode=(id:CoreKeyIdentity,values:CoreKeyTupleValue[],path:string):CoreKeyTupleReceipt|import('./dataset-values-compact').CoreCompactKeyTupleReceipt|undefined=>{
+  try{return compact?compact.key(id,values):encodeCoreKeyTuple(source,id,values);}catch(error){
    if(!(error instanceof UmfError)||error.code==='LIMIT')throw error;
    const unknown=error.code==='KEY_TUPLE_UNKNOWN';add(error.code,path,error.message,unknown?'warning':'error');
    if(unknown){keyUnresolved=true;unresolvedKeys.add(JSON.stringify([id.module,id.element,id.key]));retain(path,values,error.message);}else keyInvalid=true;
@@ -88,17 +95,20 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
   knownSchemaMembers(instance,['instanceId','identity','values'],'/input/records/'+index);
   if(Object.keys(instance).length!==3||typeof instance.instanceId!=='string'||!instance.instanceId)fail('Exact record locator required');identity(instance.identity,['module','element']);
   if(instances.has(instance.instanceId)){add('DUPLICATE_DATASET_INSTANCE','/input/records/'+index,'Duplicate record instance locator');keyInvalid=true;}else instances.set(instance.instanceId,instance);
-  const result=validateCoreRecordValues(source,instance.identity,instance.values);const recordReceipt={instanceId:instance.instanceId,result};retainBudget(recordReceipt);recordResults.push(recordReceipt);
+  const result=compact?compact.record(instance.identity,instance.values):validateCoreRecordValues(source,instance.identity,instance.values);const recordReceipt={instanceId:instance.instanceId,result};retainBudget(recordReceipt);recordResults.push(recordReceipt);
   for(const d of result.validation.diagnostics)if(!['RECORD_KEY_CONTEXT_REQUIRED','RECORD_RELATIONSHIP_CONTEXT_REQUIRED'].includes(d.code)){const diagnostic={...d,path:'/input/records/'+index+d.path};retainBudget(diagnostic);diagnostics.push(diagnostic);}
   const owner=declared.get(qualified(instance.identity))!;
+  const firstFields=new Map<string,CoreRecordFieldValue>();
+  if(compact)for(const supplied of instance.values){compact.work.walk('dataset-field-index',supplied.field);const id=qualified(supplied.field);if(!firstFields.has(id))firstFields.set(id,supplied);}
   for(const key of owner.record.keys??[]){
-   const values=key.fields.map((ref:CoreRecordValueIdentity)=>instance.values.find(v=>qualified(v.field)===qualified(ref))).map((v:CoreRecordFieldValue|undefined)=>v?.state==='present'?v.value:null);
+   const values=key.fields.map((ref:CoreRecordValueIdentity)=>compact?(compact.work.walk('dataset-key-component',ref),firstFields.get(qualified(ref))):instance.values.find(v=>qualified(v.field)===qualified(ref))).map((v:CoreRecordFieldValue|undefined)=>v?.state==='present'?v.value:null);
    const id={...instance.identity,key:key.id},receipt=encode(id,values,'/input/records/'+index);
    if(!receipt)continue;const keyReceipt={instanceId:instance.instanceId,result:receipt};retainBudget(keyReceipt);keys.push(keyReceipt);
    const k=tupleId(id,receipt.bytesHex),previous=tuples.get(k)??[];previous.push(instance.instanceId);tuples.set(k,previous);
    if(previous.length>1){keyInvalid=true;add('DUPLICATE_DATASET_KEY',owner.path+'/keys','Declared Key tuple duplicates within supplied Record collection');}
   }
  });
+ compact?.work.charge('dataset-relationship-diagnostic-scans',3*declarations*documentValidation.diagnostics.length);
  const relations=new Map<string,{value:any;path:string;supported:boolean}>();
  source.modules.forEach((m,mi)=>((m.relationships??[]) as any[]).forEach((r:any,ri:number)=>{
   const path=`/modules/${mi}/relationships/${ri}`;
@@ -129,6 +139,9 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
   const resolved={instanceId:link.instanceId,identity:link.identity,sourceInstanceId:link.sourceInstanceId,targetInstanceId:target,targetKey:receipt};retainBudget(resolved);relationships.push(resolved);
   for(const [map,a,b] of [[outgoing,link.sourceInstanceId,target],[incoming,target,link.sourceInstanceId]] as const){const k=JSON.stringify([relationId,a]),set=map.get(k)??new Set<string>();set.add(b);map.set(k,set);}
  });
+ // Two directional participation passes read at most eight identity/key
+ // carrier values per original record and supported declaration.
+ compact?.work.charge('dataset-multiplicity-scans',16*[...relations.values()].filter(d=>d.supported).length*input.records.length);
  for(const [relationId,declaration] of relations){if(!declaration.supported)continue;const r=declaration.value;
   if(unresolvedKeys.has(JSON.stringify([r.target[0].module,r.target[0].element,r.target[0].key]))){relationshipUnresolved=true;retain(declaration.path,r,'Target Key equality is unresolved; missing participation cannot be inferred');continue;}
   for(const [map,endpoint,bounds] of [[outgoing,r.source[0],r.targetMultiplicity],[incoming,r.target[0],r.sourceMultiplicity]] as const){
@@ -140,9 +153,9 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
  }
  const valid=!diagnostics.some(d=>d.severity==='error'),complete=diagnostics.length===0&&residuals.length===0;
  const state=(invalid:boolean,unresolved:boolean)=>invalid?'invalid' as const:unresolved?'unresolved' as const:'satisfied' as const;
- const result=copyJson({operation:'validate-core-dataset-values',version:'1.0.0',scope:'supplied-dataset-only',provenance:'unverified',source,input,documentValidation,records:recordResults,keys,relationships,datasetValidation:{valid,complete,diagnostics},obligations:[{id:'dataset.keys',state:state(keyInvalid,keyUnresolved),scope:'supplied-dataset-only'},{id:'dataset.relationships',state:state(relationshipInvalid,relationshipUnresolved),scope:'supplied-dataset-only'}],residuals}) as unknown as CoreDatasetValueCheck;
+ const result=copy({operation:compact?'validate-core-dataset-values-compact':'validate-core-dataset-values',version:'1.0.0',scope:'supplied-dataset-only',provenance:'unverified',source,input,documentValidation,records:recordResults,keys,relationships,datasetValidation:{valid,complete,diagnostics},obligations:[{id:'dataset.keys',state:state(keyInvalid,keyUnresolved),scope:'supplied-dataset-only'},{id:'dataset.relationships',state:state(relationshipInvalid,relationshipUnresolved),scope:'supplied-dataset-only'}],residuals}) as unknown as CoreDatasetValueCheck;
  bytes(result); // Exact final serialized-byte check also covers all envelope overhead.
- if(!checkReceipt(result))throw new UmfError('CORE_DATASET_RESULT',JSON.stringify(checkReceipt.errors));return result;
+ if(!compact&&!checkReceipt(result))throw new UmfError('CORE_DATASET_RESULT',JSON.stringify(checkReceipt.errors));return result;
 }
 export function verifyCoreDatasetValues(receiptInput:CoreDatasetValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetValueCheck{
  const receipt=copyJson(receiptInput) as unknown as CoreDatasetValueCheck;

@@ -1,0 +1,199 @@
+{
+  "format": "umf-compact-review-custody/0.1",
+  "root": "/private/tmp/ashlar-umf-dataset-compact-fc78",
+  "base": "fc78a6d48f08b3640748ccac0fc4a9ee06fc61e3",
+  "files": {
+    "docs/helix/02-design/contracts/CONTRACT-056-core-dataset-compact.md": {
+      "sha256": "80942e98ec279870d2e0b664e2dbf92e8817d941d0201efe326d6a902079ef2f",
+      "bytes": 10768
+    },
+    "fixtures/json-schema-audit.json": {
+      "sha256": "2b5a52471594d732ab3c78bc3971b981ad34a893b90fac00f093b84e957f690f",
+      "bytes": 84331
+    },
+    "scripts/browser-core-dataset-compact.ts": {
+      "sha256": "b969f25dc216a56fa100c0de6c49188643a30bb1eb7a2d952fe58fc301e03b65",
+      "bytes": 6373
+    },
+    "spec/core/dataset-value-compact-operation.schema.json": {
+      "sha256": "b113553c04e1c25eeb5f19da0879d8273c1e34ed515126d751bc812424843caf",
+      "bytes": 13919
+    },
+    "src/index.ts": {
+      "sha256": "5a55af99809bc8d3ed793130826bcbe3e737b5f661cc8c510e1991e54a872055",
+      "bytes": 22578
+    },
+    "src/model/dataset-values-compact.ts": {
+      "sha256": "98d4e3b287ba593ee8e079feb64bc6094bf5de79f28fae3019533d515777b83a",
+      "bytes": 5054
+    },
+    "src/model/dataset-values.ts": {
+      "sha256": "7c19229f3e238b37e05a14715db829d809ff37272e812eb04a50d3ad8ea2c308",
+      "bytes": 18686
+    },
+    "src/model/internal/field-body.ts": {
+      "sha256": "c9e97998991e5eaacc397139ab41a2300af9481f9940878838a7c89e14a6e6e9",
+      "bytes": 1301
+    },
+    "src/model/internal/record-body.ts": {
+      "sha256": "896037e74d548e2345a8e605bb40b903b7beacfb5551c544b7a7c76e2d01d890",
+      "bytes": 5335
+    },
+    "src/model/internal/schema-work.ts": {
+      "sha256": "98e4714709743ff1488e3eacc91ca225800f7358eae0567abf32ddfbbe96a80f",
+      "bytes": 4343
+    },
+    "src/model/internal/value-context.ts": {
+      "sha256": "1576d94b175692373dbb0fa324a4c8e73a6560a9ad4d6c58c7cc0a2de9cca1e3",
+      "bytes": 9565
+    },
+    "src/model/json.ts": {
+      "sha256": "3f1348c5e8e9d340c301611e607919b420b034fb777ef6817adf2b8f8450e020",
+      "bytes": 2712
+    },
+    "src/model/key-tuple.ts": {
+      "sha256": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+      "bytes": 11608
+    },
+    "src/model/record-values.ts": {
+      "sha256": "2fd3c112a27917ad4f193ec2de3f37faca05a5eef65fa98db925283a3315ce99",
+      "bytes": 1875
+    },
+    "src/model/schema-literals.ts": {
+      "sha256": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+      "bytes": 9310
+    },
+    "src/model/schema-properties.ts": {
+      "sha256": "1bb9c41b8a904b09d679e6231a2af7b3c425e9d4d93e97a0700d296eed4773e2",
+      "bytes": 7098
+    },
+    "src/validation/internal-schema.ts": {
+      "sha256": "a027a6dcadc37ca0f6c137b87bce9f39e7a16765e633a35555e32c7680a51ad4",
+      "bytes": 411
+    },
+    "src/validation/keys.ts": {
+      "sha256": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb",
+      "bytes": 5518
+    },
+    "src/validation/relationships.ts": {
+      "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8",
+      "bytes": 6188
+    },
+    "src/validation/schema-properties.ts": {
+      "sha256": "db5e4a0cbb2de5fc1dd5b5720c03ec36470739deb0b81522036f5171614588bd",
+      "bytes": 8209
+    },
+    "src/validation/schema.ts": {
+      "sha256": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+      "bytes": 2609
+    },
+    "tests/core-dataset-compact.test.ts": {
+      "sha256": "510e54741af16d7911a9d47e847ee24c429db29979b4095fd3adbe7f6d2dbc1e",
+      "bytes": 15235
+    }
+  },
+  "evidence": {
+    "/private/tmp/ashlar-umf-compact-finalwork.jsonl": {
+      "sha256": "3fc2041964e9ebee72b65c55a508ad8c93218f8654fdf39292eb605e1ebdcde0",
+      "bytes": 15392
+    },
+    "/private/tmp/ashlar-umf-compact-frozen-tests-b.log": {
+      "sha256": "8d02b3b1f02ecd26d7f09ef5f1b5d6ea88d85515251374eb81ec489fc0c80b02",
+      "bytes": 9745
+    },
+    "/private/tmp/ashlar-umf-compact-finaltypecheck.jsonlog": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/private/tmp/ashlar-umf-compact-frozen-tools-typecheck.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/private/tmp/ashlar-umf-compact-frozen-schema-audit.log": {
+      "sha256": "ceb8f153f0a03432eaefc66c1560a76f624be6dca814ce04fd077d428c6b4770",
+      "bytes": 56
+    },
+    "/private/tmp/ashlar-full-api-parity-compact-frozen.jsonl": {
+      "sha256": "13119b01c73f31f84348eca35281dc7f0d283fe99c0f7b9ee6255546d2711432",
+      "bytes": 269
+    },
+    "/private/tmp/ashlar-umf-diag-parity-frozen.json": {
+      "sha256": "4a82866b75fdf3255559ecdd27107734bf290bfa183343643de4f993aa29e966",
+      "bytes": 130
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/report.json": {
+      "sha256": "e1883af0fbf48abba2418555ec4407e5cd0d91fa3ed29f0fd61423ab9e5be280",
+      "bytes": 1774
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/archaeology-receipt.json": {
+      "sha256": "1fbda737e78205701158b5a1904bb5e8317321d38f4bbfb48cf3429d5a0f408d",
+      "bytes": 253008
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/commerce-receipt.json": {
+      "sha256": "e1687e9854b246faef3f3746580df82d30819562207f79fcc67ed1121339bc1e",
+      "bytes": 58054
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/consumer.js": {
+      "sha256": "bede63988654711dc5ece8dbbc1b667e16a7f71e240d1a484ae218ae9de35e62",
+      "bytes": 2472
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/ecology-receipt.json": {
+      "sha256": "3784e82741555a099e45601f1fa0c61e3e1ed351af4307f99c963a5f97a803f7",
+      "bytes": 238036
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/supply-chain-receipt.json": {
+      "sha256": "310a62e4648a2e082d21cba84c885c3d57299792cb41a4db3a47605b52b366a6",
+      "bytes": 106148
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c/umf.js": {
+      "sha256": "65cdc139bbc4c564902da1a2a02ffef500ed6f2fbebfd5cc7869f7a69267b6f0",
+      "bytes": 11672682
+    },
+    "/private/tmp/ashlar-umf-compact-browser-fc78-20261009-c.log": {
+      "sha256": "e1883af0fbf48abba2418555ec4407e5cd0d91fa3ed29f0fd61423ab9e5be280",
+      "bytes": 1774
+    }
+  },
+  "originals": {
+    "spec/domain-packs/commerce/ontology.json": {
+      "sha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a",
+      "bytes": 27544,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/commerce/graph/fixture.json": {
+      "sha256": "8052dbcf2cf48a5e344c492d661872bc0a3f80a5c7be033ab5008dea9c86119e",
+      "bytes": 23078,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/supply-chain/ontology.json": {
+      "sha256": "53ae68617d313548bf6c4b3c507c5fc33632c2e8527f88c310927652f635fe9a",
+      "bytes": 34293,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/supply-chain/graph/fixture.json": {
+      "sha256": "2c79e403545766dc7c221d6a6c8ff184ea852a8ecf8ef7f00e26c7f2ffc68e13",
+      "bytes": 38541,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/archaeology/ontology.json": {
+      "sha256": "dc0e075208922c928c6144d3efcc23235735f01aeb70bcf66f96080f1301ca5a",
+      "bytes": 83068,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/archaeology/graph/fixture.json": {
+      "sha256": "d30006199d1a464827194a24e5cd87f8d5b2f073917a3e8253fc95a778adcc52",
+      "bytes": 81564,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/ecology/ontology.json": {
+      "sha256": "299e6f3e96bbfb149e593484e1ded655378aa9adf272cdc1ffc9d8706d3244ee",
+      "bytes": 62701,
+      "byteIdenticalToBase": true
+    },
+    "spec/domain-packs/ecology/graph/fixture.json": {
+      "sha256": "cd601e5eff6868def9e5ad06d53e6a067cc140eadbc29855a46bba548b78d668",
+      "bytes": 77070,
+      "byteIdenticalToBase": true
+    }
+  }
+}

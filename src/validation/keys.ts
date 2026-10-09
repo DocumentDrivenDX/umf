@@ -1,3 +1,4 @@
+import {snapshotSchema} from './internal-schema';
 import schema from '../../spec/core/key-document.schema.json';
 import {createValidator} from './schema';
 import {validateDocument} from './document';
@@ -7,7 +8,7 @@ import {UmfError,pointer,type Document,type Element,type Diagnostic,type Validat
 export interface CoreKeyFieldReference {module:string;element:string;[key:string]:unknown}
 export interface CoreKeyDefinition {id:string;name:string;fields:CoreKeyFieldReference[];primary?:boolean;[key:string]:unknown}
 interface Candidate {umf:'0.6.0';modules:{id:string;elements:Element[]}[];[key:string]:unknown}
-const check = createValidator().compile(schema);
+const check = createValidator().compile(snapshotSchema(schema));
 const identity = (ref:CoreKeyFieldReference) => JSON.stringify([ref.module,ref.element]);
 
 /** Candidate-only 0.6.0 validation. No author provenance, migration or native enforcement is inferred. */
