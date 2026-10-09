@@ -47,7 +47,10 @@ export function validateCoreDatasetValues(sourceInput:Document,inputInput:CoreDa
  const maxKeys=Math.max(0,...elements.map(e=>Array.isArray(e.keys)?e.keys.length:0));
  const maxMembers=Math.max(0,...elements.map(e=>Array.isArray(e.members)?e.members.length:0));
  const declarations=source.modules.reduce((n,m)=>n+(Array.isArray(m.relationships)?m.relationships.length:0),0);
- const copies=3+input.records.length*(2+maxKeys)+2*input.relationships.length+2*declarations;
+ // Each retained Record result and Key/relationship target-Key receipt
+ // embeds source once. Temporary validation copies belong to the independent
+ // semantic-work guard; they are not duplicated in the retained JSON output.
+ const copies=3+input.records.length*(1+maxKeys)+input.relationships.length+2*declarations;
  const bytes=(value:any):number=>{
   let size=0;const add=(n:number)=>{size+=n;if(size>4_000_000)throw new UmfError('LIMIT','Aggregate dataset source/input bytes exceeded');};
   const visit=(v:any)=>{
