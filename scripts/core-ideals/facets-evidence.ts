@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {isAbsolute, relative, resolve} from 'node:path';
+import {isAbsolute, relative, resolve, sep} from 'node:path';
 
 export const facetSystems = ['tablespec', 'postgresql', 'sqlserver', 'avro', 'parquet'] as const;
 export type FacetSystem = typeof facetSystems[number];
@@ -23,7 +23,7 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
   // those proof names against this worktree only; never read the old checkout.
   const legacy = '/home/erik/Projects/umf/';
   const source = path.startsWith(legacy) ? path.slice(legacy.length) : path;
-  const p = relative(process.cwd(), resolve(source));
+  const p = relative(process.cwd(), resolve(source)).split(sep).join('/');
   if (isAbsolute(source)) assert.fail(`unsafe evidence path: ${path}`);
   assert.ok(path && !isAbsolute(p) && !p.split('/').includes('..'), `unsafe evidence path: ${path}`);
   return p;

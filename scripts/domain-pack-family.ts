@@ -1,4 +1,4 @@
-import {resolve,dirname,relative,isAbsolute} from 'node:path';
+import {resolve,dirname,relative,isAbsolute,sep} from 'node:path';
 import {realpath} from 'node:fs/promises';
 import {readJsonValue} from '../src/model/serialization';
 import {requireDomainPackProfile} from '../src/domain-packs/profile';
@@ -10,7 +10,7 @@ export async function resolveDomainFamily(input:string){
  const familyRoot=await realpath(resolve(dirname(input),'..'));
  const members=[root];
  for(const component of root.pack.composition.components){
-  const path=await realpath(resolve(familyRoot,component.id,'pack.json')),inside=relative(familyRoot,path);
+  const path=await realpath(resolve(familyRoot,component.id,'pack.json')),inside=relative(familyRoot,path).split(sep).join('/');
   if(inside==='..'||inside.startsWith('../')||isAbsolute(inside))throw Error('Component symlink leaves family directory');
   const member=await read(path);
   if(member.pack.id!==component.id||member.pack.version!==component.version)throw Error('Component identity/version differs');
