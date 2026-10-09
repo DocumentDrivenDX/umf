@@ -83,9 +83,9 @@ not a researched completeness claim or a list of mandatory core primitives.
 a proposed independently versioned `umf.actions` extension. The feature-level
 [SD-008](solution-designs/SD-008-declarative-actions.md) separates declaration
 validation/inspection and profile comparison from consumer-owned execution.
-[CONTRACT-056](contracts/CONTRACT-056-declarative-actions.md) owns exact action
+[CONTRACT-900](contracts/CONTRACT-900-declarative-actions.md) owns exact action
 semantics; [TD-078](technical-designs/TD-078-declarative-actions.md) describes the
-bounded library slice. [CONTRACT-057](contracts/CONTRACT-057-transactional-action-profile.md)
+bounded library slice. [CONTRACT-901](contracts/CONTRACT-901-transactional-action-profile.md)
 adds a proposed bounded executable consumer profile, revision/protocol and
 handler-access/audit requirements. These are design proposals, not delivered architecture.
 
