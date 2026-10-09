@@ -172,3 +172,103 @@ validation/schema-properties.ts import cycle is intentional and known.
 This is a bounded literal API, not a converter for TableSpec rows. Admission and
 five-system native bindings remain separate. SQL insert and Avro reader defaults
 retain their own contracts.
+
+## Logical Record value checks — experimental operation 1.0.0
+
+`validateCoreRecordValues(source, {module,element}, values)` MUST require a valid
+core 0.8.0 source and an explicit Record identity. Values MUST be an array of
+`{field:{module,element},state:"absent"}` or
+`{field:{module,element},state:"present",value:CoreLiteral}`. Unknown input members,
+accessors, malformed identities and implicit version changes MUST refuse. The
+operation MUST copy original source, identity and input. No alias lookup, default
+insertion, conversion, SQL or native resource acquisition is performed.
+
+The result has operation/version, source, identity, values, original
+`documentValidation`, selected `validation`, and ordered `fields` results. Each
+field result retains qualified identity, absent/present state and Validation.
+The original document result MUST remain unchanged even when selected logical
+checks are complete. Complete logical checking requires an explicit member
+inventory, known availability/cardinality, exact membership and successful actual
+`validateCoreFieldValue` results for every present member. Unlisted members are
+logically absent. Required absence, duplicate input identities, undeclared values
+and invalid literals MUST fail. Explicit absent-allowed absence/null are distinct
+logical inputs; native representations need separate bindings.
+
+Unknown source meaning MUST remain retained and prevent completeness; conservative
+source-wide dependency scope is used here. Known experimental envelope diagnostics
+remain in documentValidation and do not become native guarantees. Missing member
+inventory or unsupported member interpretation MUST be incomplete. Declared keys
+and relationships MUST report unresolved dataset-context obligations; single-record
+checking cannot prove dataset equality, uniqueness, endpoints or graph invariants.
+No complete result authorizes Truss acceptance, accepted IDs or source ACK. Invalid
+selected results have valid=false/complete=false; unresolved known-valid results
+have valid=true/complete=false. Larger native/validator isolation claims remain open.
+
+Acceptance coverage must include the exact original Ashlar core0.7 schema-v3 example;
+explicit upgrade must precede value checking. Bun tests and real Chromium must verify logical
+presence/membership/value checks, original document diagnostics/results, unknown scope, key
+context and old-version refusal. This is a new operation on 0.8, not a mutation of
+older envelope semantics or replacement of native enforcement.
+
+## Supplied dataset context checks — experimental operation 1.0.0
+
+`validateCoreDatasetValues(source, input)` requires the original valid core0.8
+source, explicit `scope:{id,closure:"supplied-dataset-only"}` and finite
+`records` and `relationships` arrays. Scope ID is caller provenance, not proof
+of physical coverage; closure means only these supplied arrays are checked.
+Omitted partitions cannot establish global constraints. A record has
+`instanceId`, qualified Record `identity` and the existing explicit field-state
+`values`. A relationship occurrence has `instanceId`, qualified relationship
+`identity`, `sourceInstanceId` and `target:{identity:{module,element,key},values}`.
+Target values are ordered existing public CoreKeyTupleValue literals. Instance
+IDs are exact caller-supplied locators within this dataset, never native IDs or
+proof of authority. Unknown input execution members refuse; optional `context`
+JSON remains copied uninterpreted metadata. Bounds are 1000 records and 10000
+relationship occurrences. Conservative preflight budgets bound repeated full-source
+receipt nodes to the common100000-value limit and semantic work to1000000
+source-value visits. Actual aggregate receipt bytes are bounded to4000000 while
+retaining each original public result/diagnostic/residual, then checked again on
+the full output. Repeated Key input values and encoded hex payloads count each
+time they occur. Exceeding a budget refuses; no source or receipt is truncated.
+Source unknown meaning remains preserved.
+
+The operation composes original `validateCoreRecordValues` and current
+`encodeCoreKeyTuple` v3 receipts without changing either operation. It checks
+declared-key uniqueness per Record collection, resolves relationship targets
+using the explicitly declared target Key, verifies exact endpoint types and
+checks multiplicity over distinct associated record instances. Parallel
+occurrences remain separate input/receipt entries and do not inflate endpoint
+participation counts. A missing target, ambiguous key, wrong endpoint, duplicate
+instance locator or violated multiplicity is invalid. Required Fields/defaults,
+scalar domains and exact Key equality remain owned by those public operations.
+No integer width is inferred when the original Field has none.
+
+The first relationship subset is directed, monomorphic, independent lifecycle
+without an association Record. Unsupported lifecycle, association, undirected
+or heterogeneous declarations produce source-qualified residuals and incomplete
+dataset validation; they are never silently removed or approximated. Relevant
+unknown qualifiers and unresolved source meaning likewise prevent completeness.
+Original document and per-record validation remain unchanged, including their
+unresolved dataset-context diagnostics. A separate `datasetValidation` may
+discharge exactly the declared key/relationship context obligations; all other
+original diagnostics remain errors or explicit incompleteness. Key and
+relationship obligations have separate satisfied/invalid/unresolved states.
+
+The versioned structural authority is
+`spec/core/dataset-value-operation.schema.json`, exposed as
+`coreDatasetValueOperationSchema`; request and output checks run against it.
+The receipt contains operation/version, copied full source/input, original
+documentValidation, ordered original Record/Key receipts, resolved relationship
+observations, datasetValidation, obligations and source-qualified residuals.
+Its scope is `supplied-dataset-only`, provenance `unverified`; completeness does
+not prove that hidden or external rows are absent, native uniqueness, caller
+authorization, lifecycle execution, transaction isolation, publication or ACK.
+`verifyCoreDatasetValues(receipt,current,expectedInput)` recomputes the complete operation and
+requires independently retained exact current source and expected input, including
+opaque scope/context metadata; forged, re-scoped or stale receipts refuse.
+Copied source/input are exact JSON data, not an attestation of original wire
+bytes; consumers separately retain original request/schema bytes and producer
+identity. Unresolved target Key equality cannot become a missing-endpoint or
+minimum-participation failure; those dependent checks remain unresolved.
+CSV interpretation and domain-graph lexical conversion are explicit consumer
+operations retaining original bytes and remain outside this library operation.
