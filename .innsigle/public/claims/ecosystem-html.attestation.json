@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-08T22:52:11Z",
+    "issued_at": "2026-10-09T04:10:03Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -14,31 +14,31 @@
         "uri": "https://documentdrivendx.github.io/umf/ecosystem.html/",
         "digest": {
           "alg": "sha256",
-          "value": "63347f073f6bb8edd2819f0365462e8f529e4e7022416aec1fb841add8247eb4"
+          "value": "4ef5ac55b02125dcc66a652bb6daae92c9cbafa80fd2d644f43bcb5f6cc60eb2"
         }
       }
     ],
     "colophon": {
       "schema_version": "1",
-      "composition": "mixed",
+      "composition": "model-primary",
       "ingredients": [
         {
-          "kind": "human",
-          "name": "operator",
-          "role": "outline"
-        },
-        {
           "kind": "model",
-          "name": "Claude",
-          "role": "expand"
+          "name": "OpenAI Codex",
+          "role": "draft and rewrite"
         },
         {
           "kind": "human",
-          "name": "operator",
-          "role": "final-edit"
+          "name": "Erik Labianca",
+          "role": "direction and review"
+        },
+        {
+          "kind": "tool",
+          "name": "innsigle-seal",
+          "role": "colophon preparation and sealing"
         }
       ],
-      "notes": null
+      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
     }
   },
   "payload_encoding": "json",
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "VQTaY75kERkYo_uautwvOyO17okvG5O4pateceZRiW1SbVvFN5lWy9i5AFJTlv1xETRNr1lZm1G16Ayp6_-vCg",
-      "signed_at": "2026-10-08T22:52:11Z"
+      "sig": "Z2VDyonkuN6Vj3CJlzHjk2LSdSzepVE1oxYsKRr-WkaJqA9mFdcEWXzl7vXT9PN2PkuTIo30gpGXsFZFFFJDBw",
+      "signed_at": "2026-10-09T04:10:03Z"
     }
   ]
 }
