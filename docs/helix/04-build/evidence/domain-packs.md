@@ -179,8 +179,9 @@ the pre-integration checkpoint.
 The legal mixed branch reconciles the later catalog work on master rather than
 replacing it. The existing ontology target remains a fabricated-operations schema
 candidate; the execution profile selects all eleven tabular tables. The merged
-UMF check passes 29 domain-pack tests / 1,243 assertions, typechecking and browser
-build. Chromium 153.0.8010.12 passes 44 combined metadata/native-schema checks.
+UMF check after both catalog and medical merge reconciliations passes 35
+domain-pack tests / 1,520 assertions, typechecking and browser build. Chromium
+153.0.8010.12 passes 64 combined metadata/native-schema checks.
 
 TableSpec's explicit `MixedDataset` and `ingest --mixed` generate only synthetic
 row bindings and ingest observed CSVs unchanged. `--source-policy local-use`
@@ -195,4 +196,10 @@ The first local Sail mixed-load run exposed binary-float expansion caused by
 using the imported Decimal reader for generated rows. The corrected assembler
 retains each subset's native numeric carriers. Sail's isolated mixed-load check
 then passes replacement, counts/FKs/legal audits and exact multiline-text readback.
-Classic Spark and wheel verification are recorded in the consumer evidence.
+Classic Spark 4.0.1 / Delta 4.0.0 also passes the isolated two-load test in
+241.09 seconds with a controlled temporary directory, after an earlier local
+filesystem write failure. TableSpec records 131 focused unit passes, lint,
+formatting, scoped Pyright and a built wheel containing the mixed assembly/API.
+Consumer evidence and Databricks notebook instructions are in
+[TableSpec sample-data guide](https://github.com/DocumentDrivenDX/tablespec/blob/c69d939/docs/guide/sample-data.md).
+These small-corpus native checks do not establish live Databricks acceptance.
