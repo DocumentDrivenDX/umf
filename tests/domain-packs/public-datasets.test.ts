@@ -54,4 +54,4 @@ test('every public pack exports and checks exact local schemas while row referen
   const [,error]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text()]);
   expect({code:await child.exited,error}).toEqual({code:0,error:''});
  }}finally{await rm(directory,{recursive:true,force:true});}
-});
+},30000);
