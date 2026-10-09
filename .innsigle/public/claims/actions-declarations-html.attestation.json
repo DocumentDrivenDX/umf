@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-09T21:01:39Z",
+    "issued_at": "2026-10-09T21:25:05Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -11,7 +11,7 @@
     },
     "subjects": [
       {
-        "uri": "https://documentdrivendx.github.io/umf/actions/declarations.html/",
+        "uri": "https://documentdrivendx.github.io/umf/actions/declarations.html",
         "digest": {
           "alg": "sha256",
           "value": "0dde8aa32511c7ea6aaa6a3d4b1642fa92713c01b78e170f21e43ba65311e623"
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "rZCoEUmzFSNipl7g7-adhozHREcdx3SBRt6_HVCD5Gv6Vx5Z6AVRzolZUKrYkgxZaYzbFaBkHBQyaIHTexNHCw",
-      "signed_at": "2026-10-09T21:01:39Z"
+      "sig": "4rl8WTpKc2lkBdOHvZamCljT-G25crRbZfrEvrtNOsrmSMNpWaFVd82xBUYERCGkRz-q1hU77eYVBBP4nBpVCg",
+      "signed_at": "2026-10-09T21:25:05Z"
     }
   ]
 }
