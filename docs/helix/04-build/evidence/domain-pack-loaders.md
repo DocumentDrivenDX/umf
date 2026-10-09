@@ -59,7 +59,8 @@ without an inventory and a medical pack with a loader, exposing only actual asse
 
 A full repository regression was also attempted at an earlier implementation
 checkpoint. It has unrelated JSON Schema-to-Protobuf failures: a 5-second compiler
-timeout and a missing `.venv/bin/python` independent oracle. Its stale acceptance
+timeout a missing `.venv/bin/python` independent oracle, and a retained Cardinality
+browser evidence version mismatch (153.0.8010.12 versus 148.0.7778.0). Its stale acceptance
 ledger failure was introduced by this slice and is resolved by the final gate.
 The full repository run is not claimed clean; slice acceptance rests on the final
 scoped checks above.
@@ -78,9 +79,26 @@ Implemented a shared bounded reader/export CLI, release instructions and explici
 session verified exact selected bytes through its company projector and reported
 eight focused tests, typechecks, schema audits, DuckDB readback and Chromium passing.
 It explicitly has not qualified live SEC acquisition through the companion.
-Both sessions were instructed to refresh the final five-artifact closure and use
-this mechanism, with further material feedback incorporated before closeout.
+Both sessions refreshed the final five-artifact closure. The appellate session
+verified all 34 PDFs through the reader with matching hashes, docket metadata and
+rights; focused tests and native TableSpec checks passed with no integration issue.
+The SEC session refreshed its portable pack and reported archive, typecheck and
+Chromium checks passing. Both received deployment links and instructions to use
+the canonical companion for refresh/replay and domain projection.
 
 ## Publication
 
-Pending the authorized master deployment and public-download smoke below.
+Release commit `b6db84abb9f9dc635deeb23e0d8e9de2c5bec705` was pushed to master.
+[Pages workflow 38004618749](https://github.com/DocumentDrivenDX/umf/actions/runs/38004618749)
+passed all build, domain-pack, deterministic companion, signature and deployment
+steps. Public release artifacts match the canonical five-artifact closure. Both
+ZIPs were downloaded, digest checked, extracted to a clean temp directory and ran
+standalone empty-inventory backfill, committed offline replay and the publication
+reader successfully under Bun 1.3.14. These public smoke checks establish install
+integrity; they do not qualify live source discovery. Every one of the 14 catalog
+assets exists publicly and matches its published digest.
+
+- [Operator guide](https://documentdrivendx.github.io/umf/loaders/README.md)
+- [Court companion](https://documentdrivendx.github.io/umf/loaders/court-documents-loader-demo.zip): `055ff77c3284f97bd1d17cee7023081d1a8a078a8c2926fe259499660372524b`
+- [SEC companion](https://documentdrivendx.github.io/umf/loaders/sec-filings-loader-demo.zip): `c9953943bccb9e79965018c1758f203e81d53444606a038795bb5beb9e1f506a`
+- [Release inventory](https://documentdrivendx.github.io/umf/loaders/release.json)
