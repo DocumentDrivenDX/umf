@@ -1,0 +1,17 @@
+{
+  "disposition": "approved",
+  "independent_reviewer": "root",
+  "scope": "Original domain-graph candidate provenance and declaration coverage; no source/graph/archive/ontology content changes.",
+  "checks": [
+    "7 Python mutation/coverage regressions pass",
+    "16 original graph candidates and complete existing refusal verifier pass",
+    "1 Bun wrapper test pass",
+    "Legal/medical retained pack1.0 byte equality against b36c504b130932987efaaa377cdeecc633a745d3 verified",
+    "Existing spec/domain-packs and ZIP artifacts unchanged",
+    "Host-only scripts; no browser/library/publicAPI compatibility change"
+  ],
+  "limitations": [
+    "Historical candidates do not prove current1.1 pack compatibility",
+    "Eight packs without graph fixtures reported explicitly; schema-only graph targets not negated"
+  ]
+}

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {assertNativeRepresentationEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
-import {isAbsolute,relative,resolve} from 'node:path';
+import {isAbsolute,relative,resolve,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
@@ -28,7 +28,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
  async function verify(record:any,label:string){
   assert.ok(record.sha256&&Object.keys(record.sha256).length,`${label}: missing fingerprints`);
   for(const [path,expected] of Object.entries(record.sha256)){
-   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel));
+   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
    assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
   }
@@ -63,7 +63,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
    if(Object.hasOwn(r,'externalRequests'))assertNativeRepresentationEqual(r.externalRequests,[]);
    const children=Object.keys(r.sha256??{}).filter(p=>p.endsWith('-browser.json'));assert.ok(children.length);
    for(const child of children){
-    const rel=recordedRepositoryPath(child),local=relative(process.cwd(),resolve(rel));
+    const rel=recordedRepositoryPath(child),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
     assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${path}: unsafe evidence path`);
     const browser=await load(rel);assert.equal(browser.browser,r.browser);assertNativeRepresentationEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
    }

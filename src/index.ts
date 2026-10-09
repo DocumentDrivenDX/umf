@@ -24,6 +24,7 @@ export * from './adapters/protobuf';
 export * from './projections/json-schema-protobuf';
 export { default as jsonSchemaProtobufProjectionSchema } from '../spec/projections/json-schema-protobuf.schema.json';
 export * from './extensions/ddd';
+export * from './extensions/dashboard';
 export * from './extensions/binding';
 export * from './projections/binding-parquet';
 export * from './projections/binding-delta';
@@ -402,3 +403,8 @@ export * from './domain-packs/medical';
 export {default as datasetSourceSchema} from '../spec/extensions/dataset-source/schema.json';
 export {default as datasetSourcePackage} from '../spec/extensions/dataset-source/package.json';
 export {inspectDomainPack,requireDomainPackProfile} from './domain-packs/profile';
+
+export {validateCoreRecordValues} from './model/record-values';
+export type {CoreRecordValueIdentity,CoreRecordFieldValue,CoreRecordValueCheck} from './model/record-values';
+export {validateCoreDatasetValues,verifyCoreDatasetValues,coreDatasetValueOperationSchema} from './model/dataset-values';
+export type {CoreDatasetInput,CoreDatasetRecord,CoreDatasetRelationship,CoreDatasetValueCheck} from './model/dataset-values';

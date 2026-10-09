@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 62,
-  "passed": 62,
+  "packages": 63,
+  "passed": 63,
   "results": [
     {
       "path": "spec/extensions/actions/package.json",
@@ -143,6 +143,19 @@
       "id": "umf.binding",
       "version": "0.1.0",
       "native": null,
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dashboard/package.json",
+      "id": "umf.dashboard",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF-authored dashboard profile",
+        "version": "0.1.0",
+        "subset": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed"
+      },
       "evidenceCount": 1,
       "passed": true,
       "failures": []

@@ -10,7 +10,7 @@ Docker must be running, and the local runtime must be Bun 1.4.2. This command st
 bun run docs:example:native
 ```
 
-The full executable source is scripts/actions-docs/native-example.ts. It copies approve.json and explicitly changes its opaque authorization profile to umf.actions.roles/1. That copy is a new declaration retained as tutorial-r1. It provisions current approver membership and a separate replay-discovery policy. Neither role is granted by the document itself.
+The full executable source is scripts/actions-docs/native-example.ts. It copies approve.json and explicitly changes its opaque authorization profile to umf.actions.roles/1. That copy is a new declaration retained as tutorial-r1. It provisions current approver membership and a separate replay-discovery policy. Neither role is granted by the document itself. The walkthrough makes two real approvals, replays an original result, observes a fresh-token no-op, and checks a tentative SET rolls back after a false postcondition. A false precondition instead creates a durable rejection that replays. It delivers projection event 2 before event 1, observes pending visibility, closes the gap, and compares the visible graph against independently queried PostgreSQL rows. Final counts are four outcomes and two outbox facts.
 
 The example verifies committed approval, one original-token replay, a fresh-key no-op, unchanged business version for that no-op and denial after role revocation. It independently reads the native order and control tables. It uses only synthetic credentials and localhost; never point it at a user database. The harness throws on readiness/version failure and removes only its own UUID-named container. It does not install a hosted executor.
 
