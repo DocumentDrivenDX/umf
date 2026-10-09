@@ -47,8 +47,8 @@ await withReferenceStore(async(store,version,container)=>{
  equal(await projection.deliver('tutorial-store','orders',{epoch:'tutorial-epoch',sequence:'1'}),{status:'delivered',prefix:'2'});
  const visible=await projection.readAtLeast('tutorial-store',credential,{projection:'orders',receipt:second.receipt});assert.equal(visible.status,'visible');
  if(visible.status!=='visible')throw Error('Projection did not become visible');
- const native=await store.sql`select fields from action_entity order by id`;equal(visible.content.entities.map(entity=>entity.fields),native.map(row=>decodeReferenceJson(row.fields)));
- // A tentative SET to pending fails its false postcondition and must roll back.
+ const native=await store.sql`select fields from action_entity order by id`;equal(visible.content.entities.map(entity=>entity.fields),native.map((row:{fields:string})=>decodeReferenceJson(row.fields)));
+ // A tentative SET to pending fails its false postcondition before SQL persistence.
  const broken=structuredClone(source),brokenAction=(broken.modules[0]!.extensions!['umf.actions'] as unknown as {actions:Action[]}).actions[0]!;
  brokenAction.binding={kind:'recipe',profile:{id:'graph-write',version:'1'},effects:[{id:'rollback-status',kind:'set',entity:{parameter:'order'},values:[{field:{module:'sales',element:'status'},value:{literal:{string:'pending'}}}]}]};
  const failure={code:'DEMO_REFUSAL',message:'Demonstration refusal'};brokenAction.failures=[{...failure,retryable:false}];
@@ -56,11 +56,24 @@ await withReferenceStore(async(store,version,container)=>{
  brokenAction.postconditions=[condition];const rollbackTarget={...target,revision:'tutorial-rollback'};await executor.admission.revisions.retain('tutorial-store',rollbackTarget,broken);
  equal(await executor.invoke('tutorial-store',credential,{...request,target:rollbackTarget,key:'rollback-demo'}),{status:'failed',code:'POSTCONDITION'});
  equal(await store.sql`select fields from action_entity order by id`,native);assert.equal((await store.sql`select * from action_outcome`).length,3);assert.equal((await store.sql`select * from action_outbox`).length,2);
+ // Force a SQL failure after business writes: PostgreSQL must roll back the whole transaction.
+ brokenAction.postconditions=[];brokenAction.preconditions=[];
+ const databaseRollbackTarget={...target,revision:'tutorial-database-rollback'};
+ await executor.admission.revisions.retain('tutorial-store',databaseRollbackTarget,broken);
+ const receiptsBefore=await store.sql`select * from action_receipt order by sequence`;
+ const sequenceBefore=await store.sql`select business_sequence::text from action_store`;
+ await store.sql.unsafe('alter table action_audit add constraint demo_audit_fail check(false) not valid').simple();
+ try{await assert.rejects(executor.invoke('tutorial-store',credential,{...request,target:databaseRollbackTarget,key:'database-rollback-demo'}),/demo_audit_fail/);}
+ finally{await store.sql.unsafe('alter table action_audit drop constraint demo_audit_fail').simple();}
+ equal(await store.sql`select fields from action_entity order by id`,native);
+ equal(await store.sql`select * from action_receipt order by sequence`,receiptsBefore);
+ equal(await store.sql`select business_sequence::text from action_store`,sequenceBefore);
+ assert.equal((await store.sql`select * from action_outcome`).length,3);assert.equal((await store.sql`select * from action_outbox`).length,2);
  // A false precondition is instead a durable rejection, replayable under its original token.
  brokenAction.postconditions=[];brokenAction.preconditions=[condition];const rejectedTarget={...target,revision:'tutorial-rejection'};await executor.admission.revisions.retain('tutorial-store',rejectedTarget,broken);
  const rejectedRequest={...request,target:rejectedTarget,key:'rejection-demo'};equal(await executor.invoke('tutorial-store',credential,rejectedRequest),{status:'rejected',code:'DEMO_REFUSAL'});equal(await executor.invoke('tutorial-store',credential,rejectedRequest),{status:'rejected',code:'DEMO_REFUSAL'});
  equal(await store.sql`select fields from action_entity order by id`,native);assert.equal((await store.sql`select * from action_outcome`).length,4);assert.equal((await store.sql`select * from action_outbox`).length,2);
  await policy.membership('tutorial-store','tutorial-person','approver',false);
  equal(await executor.invoke('tutorial-store',credential,request),{status:'denied',code:'AUTHORIZATION'});
- console.log(JSON.stringify({postgres:version,bun:Bun.version,ownedContainer:container,committed:true,replayMatches:true,freshNoOp:true,terminalOutcomes:4,outboxFacts:2,rollbackPreservedNativeState:true,durableRejectionReplayed:true,reorderedDeliveryPendingUntilGapClosed:true,visibleProjectionMatchesNativeRows:true,revokedReplayDenied:true,cleanup:'finally: close store and remove owned container'}));
+ console.log(JSON.stringify({postgres:version,bun:Bun.version,ownedContainer:container,committed:true,replayMatches:true,freshNoOp:true,terminalOutcomes:4,outboxFacts:2,postconditionCandidateDiscarded:true,databaseFailureRolledBack:true,rollbackPreservedNativeState:true,durableRejectionReplayed:true,reorderedDeliveryPendingUntilGapClosed:true,visibleProjectionMatchesNativeRows:true,revokedReplayDenied:true,cleanup:'finally: close store and remove owned container'}));
 });

@@ -63,7 +63,7 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - SelectedActionIdentity
 <!-- generated:public-types:end -->
 
-The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-056/053 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
+The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-056/057 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
 
 ## Errors and diagnostics
 

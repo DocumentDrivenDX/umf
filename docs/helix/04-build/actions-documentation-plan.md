@@ -102,7 +102,7 @@ Commands prefixed **proposed** below do not exist yet. Existing qualification co
 
 | Slice | Outputs and governing references | Depends on | Completion gate |
 | --- | --- | --- | --- |
-| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-056/053, TD-078, STP-078 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
+| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-056/057, TD-078, STP-078 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
 | DOC-02 — Beginner portable journey | Concepts/glossary/getting started/declarations; fixture README; runnable examples from actual fixtures | DOC-01 | **proposed** `bun run test:docs:examples`: exercise actual exported APIs, unchanged source, diagnostic/result assertions and known-error/unknown-preservation cases; run the portable examples in Chromium |
 | DOC-03 — Consumer and reference | Execution/receipts/API/support chapters; consumer README; stable setup/reproduction entry points | DOC-01, DOC-02 | Inventory all public action exports/types and logical consumer operations; match bounded native outcomes to recorded exercising witnesses; mandatory fresh validation of exact published native setup/walkthrough/cleanup commands in an isolated store, with explicit environment/logs; otherwise ship only a labelled recorded walkthrough and keep runnable acceptance pending |
 | DOC-04 — Formal teaching and visuals | Formal chapter and V1–V8; editable sources, SVGs and accessible descriptions | DOC-02, DOC-03 | All eight semantic gates plus screenshot/accessibility review; pinned reproducers replace ephemeral path assumptions; glossary/prediction exercises checked |
@@ -143,7 +143,8 @@ DOC-01–07 are reviewable work packages, with the blockers above. No external w
 | Status corrections invalidate a source-bound current claim | High: classify changes first; additive lineage report or required fresh qualification | Retain certified snapshot and point to dated evidence; withdraw unqualified current-source claims |
 | Generated pages drift or erase authored pages | High: explicit ownership, staging comparison and no broad `dist` cleanup | Revert source/build/output as one change |
 | Attractive diagrams hide concurrency or receipt holes | High: named negative cases, captions and readable sequential panels | Replace offending figure with verified text until corrected |
-| Signing or novice validation unavailable | Gate remains pending, not silently passed | Keep reviewed local build; do not claim publication/readability acceptance |
+| Signing unavailable | Publication gate remains pending | Keep reviewed local build; do not claim verified publication |
+| Beginner reader sessions unavailable | Usability follow-up remains open | Release requires executable walkthroughs; reader comprehension is not yet independently established |
 | Deployment introduces broken nested routes or assets | Preview base-path/browser gates; verify actual published routes after authorized deployment | Revert site commit through existing master workflow; preserve action evidence |
 
 ## Exit Criteria

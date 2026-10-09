@@ -60,3 +60,8 @@ This is scoped implementation review, not current-source action certification or
 ## Continuation verification
 
 Astra Ultra approved the isolated malformed-source/output controls, exact ten-chapter inventory and TypeScript configuration input coverage. The untouched copy passes before fault injection; all seven controls require their intended refusal and preserve malformed bytes. Both workflow filters cover the declared build inputs. Fresh integrated compilation/manifest audits pass for 353 schemas and 62 packages; certified old audit bytes were archived and hash-verified before regeneration. These checks add no integrated-native qualification or release claim.
+
+
+## Final native demonstration and identity corrections — Astra Ultra, 2026-10-09
+
+Astra Ultra approved the reviewed documentation/native-demonstration scope with no substantive remaining finding. Review distinguished postcondition candidate discard from real PostgreSQL rollback: the injected audit constraint fails after business SQL updates, sequence/outbox writes, receipt retention and outcome insertion, and native queries verify rollback. Two actual approvals, replay, no-op, durable rejection, reordered query visibility and revoked replay are asserted. The retained fresh PostgreSQL 17.9/Bun 1.4.2 log matches the cache log. API references use CONTRACT-056/057; reader sessions remain usability follow-up. Archived governing hashes and historical certificate are unchanged. This review inspected source and recorded execution; it did not independently rerun PostgreSQL or recertify integrated sources.
