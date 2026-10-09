@@ -5,9 +5,9 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 580,
+  "total": 586,
   "counts": {
-    "SATISFIED": 68,
+    "SATISFIED": 74,
     "UNTESTED": 288,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
@@ -4087,6 +4087,64 @@
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
     {
+      "id": "US-055-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:17"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:17",
+        "tests/domain-packs/medical-subpacks.test.ts:66"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:55"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:66"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:113",
+        "tests/domain-packs/medical-subpacks.test.ts:81",
+        "tests/domain-packs/medical-subpacks.test.ts:97"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:113",
+        "tests/domain-packs/medical-subpacks.test.ts:97"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
       "id": "US-060-AC1",
       "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
       "status": "UNTESTED",
@@ -4105,7 +4163,7 @@
       "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/domain-packs/catalog.test.ts:31"
+        "tests/domain-packs/catalog.test.ts:30"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -4135,7 +4193,7 @@
       "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/domain-packs/catalog.test.ts:31"
+        "tests/domain-packs/catalog.test.ts:30"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -5040,7 +5098,7 @@
       "story": "docs/helix/01-frame/user-stories/US-076-archaeology-domain-pack.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/domain-packs/catalog.test.ts:44"
+        "tests/domain-packs/catalog.test.ts:43"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -5049,7 +5107,7 @@
       "story": "docs/helix/01-frame/user-stories/US-076-archaeology-domain-pack.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/domain-packs/catalog.test.ts:44"
+        "tests/domain-packs/catalog.test.ts:43"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -5058,7 +5116,7 @@
       "story": "docs/helix/01-frame/user-stories/US-076-archaeology-domain-pack.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/domain-packs/catalog.test.ts:44"
+        "tests/domain-packs/catalog.test.ts:43"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     }

@@ -1175,6 +1175,14 @@ Real evidence has separate case keys and no invented client relationships.
 Unknown third-party reuse rights block full source export. See
 [scoped evidence](04-build/evidence/domain-packs.md#mixed-legal-corpus-110).
 
+
+Four [medical subpacks](04-build/evidence/medical-subpacks.md) now add carrier
+workflows, epidemiological aggregates, imaging/PACS metadata and terminology
+references: 18 tabular schemas and 363 source-qualified rows. They retain official
+HL7/CDC sources separately from fabricated supplements, exact literals and native
+DICOM bytes. The explorer discovers these alongside the clinical, legal and broader catalog packs.
+SNOMED CT/CPT dictionaries remain consumer-local licensed inputs; CMS claims,
+TCIA images and live services remain separately qualified work.
 ## Domain catalog and ontology targets
 
 All sixteen packs and their ontology schemas are discoverable in the schema explorer.

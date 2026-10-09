@@ -40,3 +40,14 @@ This material contains content from LOINC (http://loinc.org). LOINC is copyright
 Codes (LOINC) Committee and is available at no cost under the license at
 http://loinc.org/license. LOINC® is a registered United States trademark of
 Regenstrief Institute, Inc.
+
+## Composable medical subpacks
+
+The clinical corpus remains medical 1.0.0. Independently versioned siblings add
+[carrier workflows](../medical-carrier/README.md),
+[epidemiological aggregates](../medical-epidemiology/README.md),
+[imaging/PACS metadata](../medical-imaging/README.md) and
+[terminology references](../medical-terminology/README.md).
+Each has its own pack metadata, local source pins, schemas, row bindings and rights
+notices. Select/export each explicitly; this list does not authorize automatic
+retrieval, patient matching or merging population records with individuals.

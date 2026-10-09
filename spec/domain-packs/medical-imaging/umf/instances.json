@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "table_name": "instances",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence.",
+  "columns": [
+    {
+      "name": "instance_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "instance key"
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source id"
+    },
+    {
+      "name": "study_uid",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "study uid"
+    },
+    {
+      "name": "series_uid",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "series uid"
+    },
+    {
+      "name": "sop_instance_uid",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "sop instance uid"
+    },
+    {
+      "name": "sop_class_uid",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "sop class uid"
+    },
+    {
+      "name": "modality",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "modality"
+    },
+    {
+      "name": "metadata_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "metadata json"
+    },
+    {
+      "name": "binary_reference",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "binary reference"
+    },
+    {
+      "name": "binary_sha256",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "binary sha256"
+    },
+    {
+      "name": "transfer_syntax",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "transfer syntax"
+    }
+  ],
+  "primary_key": [
+    "instance_key"
+  ]
+}

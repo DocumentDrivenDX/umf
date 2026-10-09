@@ -5492,6 +5492,87 @@ redistribution. Schema-only exports can refresh consumer/catalog metadata.
 Scoped checks and limitations are recorded in
 [evidence/domain-packs.md](evidence/domain-packs.md#mixed-legal-corpus-110).
 
+
+### Medical carrier and terminology expansion — pending (2026-10-08)
+
+Authority: FR-45 and CONTRACT-052. This is a dependency sequence for the expanded
+requirement, not execution evidence or an implementation-ready schema design.
+The clinical 1.0.0 checks remain scoped to their existing corpus.
+
+1. Inventory exact CMS synthetic RIF, DE-SynPUF, Blue Button and official FHIR
+   candidate files against every carrier area in CONTRACT-052. Record versions,
+   coverage gaps, download/access requirements and embedded terminology rights.
+   Select the smallest useful enrollment/claim source subset; keep historical
+   ICD-9 claims separate. Exit: source/rights manifest and explicit gap matrix.
+2. Frame linked carrier stories, technical design and story tests before code.
+   Define keys and relationships, temporal/event handling, money/currency,
+   lossless native retention and pack version compatibility. Model eligibility,
+   authorization, adjudication and payment separately. Exit: concrete approved
+   surfaces and acceptance scenarios; missing public examples stay named gaps.
+3. Define version-pinned terminology/reference bindings and consumer-local
+   licensed inputs. Start with official ICD-10-CM/PCS and HCPCS Level II files;
+   support SNOMED CT and CPT without requiring their redistribution. Define
+   qualified directional maps for Truss/Ashlar independently of tabular rows.
+   Exit: exact release/rights decisions and tests for ambiguous, retired,
+   unavailable and unknown codes; no inferred clinical/billing equivalence.
+4. After those prerequisites, implement UMF pack schemas and export fixtures,
+   TableSpec local ingestion/archive/readback and separately qualified graph
+   consumption. Exit: Bun metadata/hash/recovery checks, real Chromium checks,
+   source-inclusive rights refusal checks, TableSpec native ingestion/readback,
+   and graph preservation evidence within declared subsets. Include active and
+   inactive coverage, positive/negative eligibility, authorized/denied services,
+   multi-line paid/denied claims, adjustments, multiple coverages and appeals.
+   Supplemental fabricated scenarios carry separate provenance; they cannot
+   substitute for public-source coverage claims.
+
+No new pack version, terminology release or source redistribution entitlement is
+chosen by this amendment. Full carrier support remains pending until its
+coverage matrix and the separate consumer gates pass.
+
+
+### Epidemiology and imaging subpacks — pending (2026-10-08)
+
+Authority: FR-45 and CONTRACT-052. Keep these independent of carrier delivery,
+while sharing the versioned terminology/source-binding work above.
+
+- Epidemiology: select a bounded CDC WONDER export and pin query, release,
+  original bytes and use conditions. Design population/geography/time/measure
+  schemas and tests for denominators, adjusted rates, suppression versus zero,
+  incompatible cohorts and revisions. Acceptance requires exact source recovery
+  and preserved aggregate meaning in TableSpec and separately qualified graphs.
+- Imaging/PACS: select a rights-qualified small TCIA collection subset and pin
+  its DICOM edition, native objects and collection terms. Design study/series/
+  instance metadata and binary-reference handling before adding fixtures.
+  Acceptance requires independent native metadata inspection, exact original
+  byte recovery, nested/private-tag preservation, unresolved-link handling and
+  Bun/Chromium metadata checks. Pixel decoding and live PACS/DICOMweb operations
+  require their own future designs and evidence.
+
+Frame linked stories/designs/tests for each subpack before implementation.
+Cross-subpack tests must reject fabricated patient links and population-to-patient
+promotion. Record source coverage and rights gaps without inventing source facts.
+
+### Medical subpack implementation — US-055 (2026-10-08)
+
+US-055 / TD-055 / STP-055 implement a bounded first delivery of the carrier,
+epidemiology, imaging and terminology requirements above. Four independent
+1.0.0 packs use CONTRACT-052 and the unchanged shared source exporter and TableSpec
+local ingestion/archive paths. Browser-compatible projections retain original
+text and exact native fragments; the host builder produces deterministic source
+manifests, native TableSpec schemas and CSV rows without fetching.
+
+The carrier subset contains nine official HL7 R4 resources, nineteen authored
+FHIR-shaped supplements and four workflow events. Epidemiology includes twelve
+CDC/NCHS observed aggregate rows and two separate authored edge cases. Imaging
+includes one synthetic DICOM binary/JSON object with private tags and a sequence.
+Terminology includes twelve historical official ICD-10-CM order-file records
+and separate source/system descriptors; SNOMED CT and CPT use caller-local record
+lookup without bundled vocabularies. This is not full carrier or native support.
+
+[medical-subpacks.md](evidence/medical-subpacks.md) records executed gates and
+residuals. The previous pending sections remain the broader delivery sequence:
+CMS/TCIA source qualification, full dictionaries/maps, richer native-conformance
+profiles and Truss/Ashlar engine adoption still require separate execution evidence.
 ## Full domain catalog first release
 
 Astra ultra reviewed SD-026 and CONTRACT-053. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.

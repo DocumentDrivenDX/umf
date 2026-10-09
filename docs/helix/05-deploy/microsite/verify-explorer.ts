@@ -7,6 +7,19 @@ const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:str
 async function check(name:string,fn:()=>Promise<void>){await fn();checks.push(name);}
 try{
  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
+ // @covers US-055-AC6
+ await check('Medical subpacks expose all eighteen source-qualified schemas',async()=>{
+  for(const id of ['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology']){
+   const metadata=await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs',id,'pack.json')).json();
+   const pack=page.locator(`[data-pack="pack:${id}@1.0.0"]`);
+   await pack.getByRole('button',{name:/^Overview /}).click();await page.getByRole('heading',{name:id,exact:true}).waitFor();
+   for(const schema of metadata.schemas){
+    await pack.getByRole('button',{name:new RegExp('^'+schema.id+' ')}).click();
+    await page.getByRole('heading',{name:schema.id,exact:true}).waitFor();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+    if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!==`schema:${id}@1.0.0:${schema.id}`)throw Error('Subpack selection escaped identity');
+   }
+  }
+ });
  await check('Pack catalog and linked schemas',async()=>{await page.locator('[data-pack="pack:legal@1.0.0"]').getByRole('button',{name:/^Overview /}).click();await page.locator('#inspector').getByRole('link',{name:'clients',exact:true}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();if(!await page.locator('#inspector').textContent().then(t=>t?.includes('client_name')))throw new Error('Missing client field');});
  await check('Public dataset packs, source downloads and all sixteen schemas',async()=>{
   for(const id of ['nyc-tlc','movielens','noaa-ghcn-daily','gtfs-schedule']){
@@ -77,10 +90,10 @@ try{
  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'pack:legal@1.0.0'}));await page.getByRole('heading',{name:'legal',exact:true}).waitFor();await page.screenshot({path:'/private/tmp/umf-explorer-desktop.png',fullPage:true});
  await check('Mobile layout and navigation',async()=>{await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:/^clients /}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw new Error('Mobile overflow');await page.screenshot({path:'/private/tmp/umf-explorer-mobile.png',fullPage:true});});
  await check('Existing routes expose the explorer',async()=>{for(const route of ['index.html','docs.html','demo.html','ecosystem.html']){await page.goto(origin+'/'+route);if(await page.locator('nav a[href="explorer.html"]').count()!==1)throw new Error('Missing nav: '+route);}});
- await check('All twenty packs, every declared schema and ontology target navigate',async()=>{
+ await check('All twenty-four packs, every declared schema and ontology target navigate',async()=>{
   const catalog=await Bun.file(join(import.meta.dir,'dist/schema-catalog.json')).json();
   const packs=catalog.entries.filter((e:any)=>e.id.startsWith('pack:'));
-  if(packs.length!==20)throw new Error('Expected twenty packs');
+  if(packs.length!==24)throw new Error('Expected twenty-four packs');
   await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
   for(const entry of catalog.entries.filter((e:any)=>e.pack)){
    await page.evaluate(id=>{location.hash=new URLSearchParams({schema:id}).toString();},entry.id);

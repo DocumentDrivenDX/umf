@@ -36,6 +36,10 @@ The canonical medical pack contributes eight TableSpec schemas and three domain
 types. Its fixed official fixtures use source bindings and fixture counts without
 a generator. These declarations remain visible in the pack overview; the browser
 inspects schemas and does not load patient rows.
+The four medical-family subpacks add eighteen TableSpec schemas. Their independent
+pack/version namespaces keep same-named resources and fields distinct. The catalog
+includes source/rights metadata and qualification; it does not retrieve dataset
+rows, licensed dictionaries or DICOM pixel objects.
 
 The canonical NYC TLC, MovieLens 32M, NOAA GHCN Daily and GTFS Schedule packs
 add 16 schemas. The current catalog contains 20 packs and 256 entries, including

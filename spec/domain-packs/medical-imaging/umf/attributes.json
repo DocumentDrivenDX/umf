@@ -1,0 +1,73 @@
+{
+  "version": "1.0",
+  "table_name": "attributes",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence.",
+  "columns": [
+    {
+      "name": "attribute_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "attribute key"
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source id"
+    },
+    {
+      "name": "native_path",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native path"
+    },
+    {
+      "name": "tag",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "tag"
+    },
+    {
+      "name": "vr",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "vr"
+    },
+    {
+      "name": "value_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "value json"
+    },
+    {
+      "name": "bulk_data_uri",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "bulk data uri"
+    },
+    {
+      "name": "inline_binary",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "inline binary"
+    },
+    {
+      "name": "native_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "native json"
+    }
+  ],
+  "primary_key": [
+    "attribute_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "source_id",
+        "references_table": "instances",
+        "references_column": "source_id"
+      }
+    ]
+  }
+}

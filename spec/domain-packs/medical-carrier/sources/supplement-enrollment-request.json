@@ -1,0 +1,12 @@
+{
+  "resourceType": "EnrollmentRequest",
+  "id": "enroll",
+  "status": "active",
+  "created": "2026-01-01",
+  "candidate": {
+    "reference": "Patient/member"
+  },
+  "coverage": {
+    "reference": "Coverage/active"
+  }
+}

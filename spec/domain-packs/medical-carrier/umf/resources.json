@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "resources",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events.",
+  "columns": [
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source id"
+    },
+    {
+      "name": "resource_type",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource type"
+    },
+    {
+      "name": "native_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native id"
+    },
+    {
+      "name": "resource_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "resource json"
+    }
+  ],
+  "primary_key": [
+    "resource_key"
+  ]
+}

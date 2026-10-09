@@ -6,10 +6,11 @@
     "chromium": "153.0.8010.12"
   },
   "catalog": {
-    "packs": 20,
-    "entries": 256
+    "packs": 24,
+    "entries": 278
   },
   "checks": [
+    "Medical subpacks expose all eighteen source-qualified schemas",
     "Pack catalog and linked schemas",
     "Public dataset packs, source downloads and all sixteen schemas",
     "Native foreign-key navigation",
@@ -27,7 +28,7 @@
     "Malformed and duplicate-key JSON refuse",
     "Mobile layout and navigation",
     "Existing routes expose the explorer",
-    "All twenty packs, every declared schema and ontology target navigate"
+    "All twenty-four packs, every declared schema and ontology target navigate"
   ],
   "status": "passed"
 }

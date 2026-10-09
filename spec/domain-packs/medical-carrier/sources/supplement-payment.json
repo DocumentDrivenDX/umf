@@ -1,0 +1,36 @@
+{
+  "resourceType": "PaymentReconciliation",
+  "id": "remit",
+  "status": "active",
+  "created": "2026-01-04",
+  "paymentDate": "2026-01-04",
+  "paymentAmount": {
+    "value": 80,
+    "currency": "USD"
+  },
+  "detail": [
+    {
+      "identifier": {
+        "value": "allocation-1"
+      },
+      "request": {
+        "reference": "Claim/paid-denied"
+      },
+      "response": {
+        "reference": "ClaimResponse/paid-denied"
+      },
+      "amount": {
+        "value": 80,
+        "currency": "USD"
+      },
+      "type": {
+        "coding": [
+          {
+            "system": "urn:umf:medical:synthetic-codes",
+            "code": "payment"
+          }
+        ]
+      }
+    }
+  ]
+}
