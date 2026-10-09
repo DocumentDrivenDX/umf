@@ -62,8 +62,9 @@ checkpoint. It has unrelated JSON Schema-to-Protobuf failures: a 5-second compil
 timeout a missing `.venv/bin/python` independent oracle, and a retained Cardinality
 browser evidence version mismatch (153.0.8010.12 versus 148.0.7778.0). Its stale acceptance
 ledger failure was introduced by this slice and is resolved by the final gate.
-The full repository run is not claimed clean; slice acceptance rests on the final
-scoped checks above.
+The broad run was stopped after more than 1,000 passes and four failures; it is
+not claimed complete or clean. Slice acceptance rests on the final scoped checks
+above.
 
 ## Consumer feedback and adoption
 
