@@ -24,6 +24,7 @@ export * from './adapters/protobuf';
 export * from './projections/json-schema-protobuf';
 export { default as jsonSchemaProtobufProjectionSchema } from '../spec/projections/json-schema-protobuf.schema.json';
 export * from './extensions/ddd';
+export * from './extensions/dashboard';
 export * from './extensions/binding';
 export * from './projections/binding-parquet';
 export * from './projections/binding-delta';
