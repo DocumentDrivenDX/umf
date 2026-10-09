@@ -87,7 +87,7 @@ consumer schemas with `scripts/export-domain-pack.ts --pack ... --output ...
 ...zip` use the existing packaging path.
 
 Scoped results: 26 Bun domain/traceability tests; 61 extension-package and 349
-canonical-schema audits; TypeScript check; all sixteen graph companions and refusal
+canonical-schema audits; TypeScript/build and 42 Python package tests; all sixteen graph companions and refusal
 controls; 17 Chromium checks across all sixteen packs and 236 explorer entries.
 TableSpec broader no_spark unit selection passes **2029 tests** (1118 deselected), including all fixture fields,
 small/demo/large counts, deterministic archives, source/schema custody, typed
