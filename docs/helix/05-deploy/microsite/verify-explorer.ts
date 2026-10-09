@@ -47,7 +47,7 @@ try{
  const local={umf:'0.8.0',id:'browser-unknown',vocabularies:{'example.unknown':{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'r',kind:'record',members:[{module:'m',element:'f'}],extensions:{}},{id:'f',kind:'field',scalarType:'string',description:'<img src=x onerror=alert(1)>',extensions:{'example.unknown':{keep:'opaque',future:true}}}]}]};
  const text=JSON.stringify(local);
  await check('Local upload, unknown retention, and inert text',async()=>{await page.locator('#file').setInputFiles({name:'unknown.json',mimeType:'application/json',buffer:Buffer.from(text)});await page.getByRole('heading',{name:'unknown.json',exact:true}).waitFor();await page.locator('.definition-list').getByRole('link',{name:'f',exact:true}).click();await page.getByRole('heading',{name:'f',exact:true}).waitFor();if(!(await page.locator('#inspector').innerText()).includes('opaque'))throw new Error('Unknown content lost');if(await page.locator('#inspector img').count())throw new Error('Source interpreted as HTML');await page.locator('.definition-list').getByRole('link',{name:'Overview',exact:true}).click();await page.locator('.definition-list').getByRole('link',{name:'r',exact:true}).click();await page.getByRole('heading',{name:'r',exact:true}).waitFor();await page.locator('table .ref-link').click();await page.getByRole('heading',{name:'f',exact:true}).waitFor();});
- await check('Original source download',async()=>{await page.locator('.definition-list').getByRole('link',{name:'Overview',exact:true}).click();await page.getByRole('heading',{name:'unknown.json',exact:true}).waitFor();const href=await page.getByRole('link',{name:'Download source'}).getAttribute('href');const result=await page.evaluate(async href=>await(await fetch(href!)).text(),href);if(result!==text)throw new Error('Source download changed');});
+ await check('Original source download',async()=>{await page.locator('.definition-list').getByRole('link',{name:'Overview',exact:true}).click();await page.getByRole('heading',{name:'unknown.json',exact:true}).waitFor();const downloadPromise=page.waitForEvent('download');await page.getByRole('link',{name:'Download source'}).click();const download=await downloadPromise;const downloadedPath=await download.path();if(!downloadedPath)throw Error('No source download');const result=await Bun.file(downloadedPath).text();if(result!==text)throw new Error('Source download changed');});
  await check('Invalid and unresolved sources refuse visibly',async()=>{for(const [name,value] of [['invalid.json',{...local,umf:'99.0.0'}],['unresolved.json',{...local,modules:[{id:'m',namespace:'n',elements:[{id:'x',extensions:{},references:[{role:'test',module:'missing',element:'x'}]}]}]}]] as const){await page.locator('#file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.startsWith('Could not open local schema'));}});
  await check('Deep links and missing selection',async()=>{await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'schema:legal@1.0.0:clients',definition:JSON.stringify(['native','client_name'])}));await page.getByRole('heading',{name:'client_name',exact:true}).waitFor();await page.goto(origin+'/explorer.html#schema=missing');await page.getByText('This schema is not in the catalog. Choose a schema from the catalog.').waitFor();});
  await check('Same-named domain types stay within their pack version',async()=>{
@@ -58,9 +58,24 @@ try{
   await page.unroute('**/schema-catalog.json');
  });
  await check('Malformed and duplicate-key JSON refuse',async()=>{for(const text of ['{bad','{"umf":"0.8.0","umf":"0.1.0"}']){let refused=false;try{parseEntry({id:'bad',title:'bad',category:'local',path:'bad.json',format:'json',text});}catch{refused=true;}if(!refused)throw new Error('Malformed input accepted');}});
- await page.goto(origin+'/explorer.html');await page.getByRole('heading',{name:'legal',exact:true}).waitFor();await page.screenshot({path:'/private/tmp/umf-explorer-desktop.png',fullPage:true});
+ await page.goto(origin+'/explorer.html#schema=pack%3Alegal%401.0.0');await page.getByRole('heading',{name:'legal',exact:true}).waitFor();await page.screenshot({path:'/private/tmp/umf-explorer-desktop.png',fullPage:true});
  await check('Mobile layout and navigation',async()=>{await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:/^clients /}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw new Error('Mobile overflow');await page.screenshot({path:'/private/tmp/umf-explorer-mobile.png',fullPage:true});});
  await check('Existing routes expose the explorer',async()=>{for(const route of ['index.html','docs.html','demo.html','ecosystem.html']){await page.goto(origin+'/'+route);if(await page.locator('nav a[href="explorer.html"]').count()!==1)throw new Error('Missing nav: '+route);}});
+ await check('All sixteen packs, every declared schema and ontology target navigate',async()=>{
+  const catalog=await Bun.file(join(import.meta.dir,'dist/schema-catalog.json')).json();
+  const packs=catalog.entries.filter((e:any)=>e.id.startsWith('pack:'));
+  if(packs.length!==16)throw new Error('Expected sixteen packs');
+  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
+  for(const entry of catalog.entries.filter((e:any)=>e.pack)){
+   await page.evaluate(id=>{location.hash=new URLSearchParams({schema:id}).toString();},entry.id);
+   await page.locator('#inspector h2').filter({hasText:entry.title}).waitFor();
+   if((await page.locator('#status').innerText()).includes('refused'))throw new Error('Navigation refused: '+entry.id);
+   if(entry.schemaFormat==='umf'){
+    const defs=await page.locator('.definition-list a').count();if(defs<2)throw new Error('Ontology definitions missing');
+    if(!await page.locator('#inspector').innerText().then(t=>t.includes('Relationships')))throw new Error('Ontology relationship details missing');
+   }
+  }
+ });
  if(errors.length)throw new Error(errors.join('\n'));
  const catalog=await Bun.file(join(import.meta.dir,'dist/schema-catalog.json')).json();
  const evidence={date:'2026-10-08',scope:'Microsite schema explorer; no new core/native support or data generation claims',runtime:{bun:Bun.version,chromium:browser.version()},catalog:{packs:catalog.entries.filter((e:any)=>e.id.startsWith('pack:')).length,entries:catalog.entries.length},checks,status:'passed'};

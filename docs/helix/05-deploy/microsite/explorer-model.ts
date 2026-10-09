@@ -1,4 +1,6 @@
-import {parseNativeJson,parseNativeYaml,type NativeJson} from '../../../../src/model/native-json';
+import {readJsonValue} from '../../../../src/model/serialization';
+import {inspectDomainPack} from '../../../../src/domain-packs/profile';
+import {parseNativeJson,parseNativeYaml,renderTree,type NativeJson} from '../../../../src/model/native-json';
 import {importTableSpec,inspectTableSpec} from '../../../../src/adapters/tablespec';
 import {readDocument} from '../../../../src/model/document';
 import {validateDocument} from '../../../../src/validation/document';
@@ -16,7 +18,7 @@ export function parseEntry(entry:Entry):Parsed {
    const document=importTableSpec(entry.text,{id:entry.id,format:entry.format}),checked=inspectTableSpec(document);
    return {native,label:`TableSpec ${native.version??'version not declared'}`,definitions:native.columns.map((c:any,i:number)=>({key:key('native',c.name),module:native.table_name,id:c.name,title:c.name,value:c,pointer:`/columns/${i}`})),valid:checked.valid,complete:false,diagnostics:checked.diagnostics.map(d=>`${d.code}: ${d.message}`).join('\n')};
   }
-  if(native.domain_types&&typeof native.id==='string')return {native,label:`Domain pack ${native.version??'version not declared'}`,definitions:Object.entries(native.domain_types).map(([id,value])=>({key:key('native',id),module:native.id,id,title:id,value:value as Record<string,unknown>,pointer:'/domain_types/'+id.replace(/~/g,'~0').replace(/\//g,'~1')})),valid:false,complete:false,diagnostics:'Pack metadata inspection only. Source bindings and optional generator declarations are retained and are never executed. Canonical pack validation is not installed in this explorer.'};
+  if(native.domain_types&&typeof native.id==='string'){const checked=inspectDomainPack(readJsonValue(renderTree(tree),'json'));return {native,label:`Domain pack ${native.version??'version not declared'}`,definitions:Object.entries(native.domain_types).map(([id,value])=>({key:key('native',id),module:native.id,id,title:id,value:value as Record<string,unknown>,pointer:'/domain_types/'+id.replace(/~/g,'~0').replace(/\//g,'~1')})),valid:checked.valid,complete:checked.complete,diagnostics:checked.diagnostics.join('\n')||'Canonical metadata and declared execution profile validated. Generators, source data and graph storage never execute in this explorer.'};}
   if(native.$schema||native.$defs||native.definitions||entry.schemaFormat==='json-schema')return {native,label:'JSON Schema · source inspection',definitions:[],valid:false,complete:false,diagnostics:'Schema keywords are displayed as declared. Instance validation and reference evaluation are not performed.'};
   throw new Error('Unsupported schema shape. Supply a UMF document, domain-pack manifest, TableSpec table, or JSON Schema.');
  }

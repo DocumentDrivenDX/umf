@@ -40,7 +40,8 @@ brief supplied on 2026-09-20. FR-1–FR-33 preserve the original requirement
 numbers. Original item 34 appears under Non-Goals; FR-34–FR-38 are additions
 from the later brief. FR-39–FR-41 record subsequent browser, DDD, and metamodel-consumer direction.
 FR-42–FR-44 record authored relationships, physical bindings and directed
-generation requested by a model-authoring consumer.
+generation requested by a model-authoring consumer. FR-45 records portable
+domain-pack ownership and consumer execution boundaries.
 All requirements remain product obligations; this draft does
 not assert that every ecosystem must ship in the first release.
 
@@ -163,7 +164,7 @@ and export-only integrations must not claim bidirectional round-trip support.
 ### Must Have (P0)
 
 The owner supplied all 33 capabilities as requirements. They are grouped into
-six mandatory product capabilities without demoting any to optional status:
+seven mandatory product capabilities without demoting any to optional status:
 
 | Capability | Functional Requirements |
 | --- | --- |
@@ -171,6 +172,7 @@ six mandatory product capabilities without demoting any to optional status:
 | Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40 |
 | Native interchange and durable use | FR-1, FR-6, FR-26, FR-29, FR-30, FR-33, FR-36, FR-38, FR-39, FR-41 |
 | Translation and fidelity | FR-7, FR-8, FR-9, FR-10, FR-24, FR-25 |
+| Portable domain packs | FR-45 |
 | Identity, composition, and evolution | FR-15, FR-16, FR-17, FR-18, FR-19 |
 | Validation and compatibility evidence | FR-11, FR-12, FR-13, FR-14, FR-23, FR-32, FR-37 |
 
@@ -359,6 +361,12 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   conditions; generated supplements must remain distinguishable. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
 
+  Owner-selected planning scope includes the [domain-pack catalog and roadmap](domain-pack-roadmap.md).
+  FEAT-009 governs shared catalog qualification; FEAT-010–FEAT-025 and
+  US-061–US-076 govern separate domain outcomes. Ecology/water management
+  includes watershed analysis, river quality, aquatic entomology and
+  fishing-related observations, retaining scientific comparability limits.
+
 ### Subsystem: Translation and Fidelity
 
 - **FR-7** — **Cross-system translation.** UMF must enable `S → UMF → T` where
@@ -483,6 +491,7 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-42 | Author one-to-one, many-to-one, many-to-many, self and heterogeneous associations; classify an undeclared native FK | Authored endpoint meaning is inspectable; native observations retain refinements without inventing intent; two-priority admission and five-priority delivery remain distinct |
 | FR-43 | Bind one logical order model separately to PostgreSQL and Delta with different storage/index choices | Logical IDs and meaning agree; index availability comes only from the selected binding; unsupported choices report residuals and remain recoverable |
 | FR-44 | Generate DDL and SDL from an authored order/customer/product model with an association carrying fields | Outputs pass native adapters and versioned oracles; aggregate/invariant, endpoint and storage losses are reported; retained source and original native archives recover |
+| FR-45 | Inspect a pinned legal or ecology pack, generate its schemas and hand declarative references to TableSpec | UMF executes no artifact-supplied code; TableSpec resolves trusted generators; originals, unknown metadata, schemas and dataset provenance remain attributable |
 
 ## Technical Context
 
@@ -557,7 +566,7 @@ be inspected.
   compatibility behavior require native checks. Axon's exact integration interface
   still requires identification; it is outside the current five-system priority.
 - Which first-slice capabilities are production release commitments rather than
-  spike findings? Owner: product owner; blocks release commitments. All 44
+  spike findings? Owner: product owner; blocks release commitments. All 45
   requirements remain product obligations until explicitly changed.
 - Which slice follows the completed relationship and binding queue? Resolved for
   planning on 2026-10-02: US-050 is next. US-051 and every other residual

@@ -28,3 +28,9 @@ acceptance criteria remain to be developed. See the
 The latest core amendment is [FEAT-005](features/FEAT-005-core-ideals.md), with
 US-040–US-044 for field, nullability, cardinality, facets and key. FR-3 ideal
 admission is separate from FR-28 native-equivalence graduation.
+
+
+The [domain-pack roadmap](domain-pack-roadmap.md) maps owner-selected domain
+schemas into FEAT-009 shared catalog behavior, FEAT-010–FEAT-025 domain outcomes,
+and US-060–US-076 acceptance journeys. The artifacts remain draft planning;
+exact contracts, per-story designs/test plans and evidence govern build readiness.

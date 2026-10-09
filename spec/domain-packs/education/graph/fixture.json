@@ -1,0 +1,684 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:education",
+    "revision": "1.0.0",
+    "sha256": "2a46659aedc36957038d7f17380b92394fa1803ea447ab4f73c2a1a0df3c44c2"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "education",
+    "version": "1.0.0",
+    "sha256": "9c47e41afbca14a7f240ff827c7ae5abe4f64b6560f662773bc82a26fb800ae8"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_academic_terms",
+          "template_assessments",
+          "template_course_offerings",
+          "template_courses",
+          "template_enrollments",
+          "template_institutions",
+          "template_people",
+          "template_prerequisites",
+          "template_results"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_academic_terms": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8d094dee2e48ce3f72b3e7dc23efed25b7c38677707e1e231c201968d38a7bda"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/academic_terms.csv",
+      "revision": "1.0.0"
+    },
+    "template_assessments": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "b9a50b667b80f3c08957ee55ad4636ad5b00412f469d3cdca5fde13bec9b4ccd"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/assessments.csv",
+      "revision": "1.0.0"
+    },
+    "template_course_offerings": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "89ff59f4e3263ee5a9da987c39805c1a51bc13f9929d406c5bf141f21814d0c1"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/course_offerings.csv",
+      "revision": "1.0.0"
+    },
+    "template_courses": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0ebd91b03f37ffcb27da32167c1b9595fe3d4227b05ae7c15e8789feb3c4b27c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/courses.csv",
+      "revision": "1.0.0"
+    },
+    "template_enrollments": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d7acc4b67a8f1b4eff0699691b302a0108ec3c3f657c556d8d92902537c056c7"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/enrollments.csv",
+      "revision": "1.0.0"
+    },
+    "template_institutions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0cb846046d442f86cde64c1bb810c3c596929e42744b245fea7c4da842c7bf65"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/institutions.csv",
+      "revision": "1.0.0"
+    },
+    "template_people": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c0854f50b64b4cbc237eba3d6c206f43809f9ec82c333a4b2ca62ab0dae59c09"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/people.csv",
+      "revision": "1.0.0"
+    },
+    "template_prerequisites": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d20d49db78c4efc2df068ab5b0493bb16deb194cc84cd6161296a4ca18b0d7ab"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/prerequisites.csv",
+      "revision": "1.0.0"
+    },
+    "template_results": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "896568a767f74237d7c98f72df365e58234402bb891688ba30a5a85a53fa9667"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/results.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "institutions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "people",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "courses",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "academic_terms",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "course_offerings",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "enrollments",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "assessments",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "results",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "prerequisites",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_academic_terms": {
+        "algorithm": "sha256",
+        "value": "8d094dee2e48ce3f72b3e7dc23efed25b7c38677707e1e231c201968d38a7bda"
+      },
+      "template_assessments": {
+        "algorithm": "sha256",
+        "value": "b9a50b667b80f3c08957ee55ad4636ad5b00412f469d3cdca5fde13bec9b4ccd"
+      },
+      "template_course_offerings": {
+        "algorithm": "sha256",
+        "value": "89ff59f4e3263ee5a9da987c39805c1a51bc13f9929d406c5bf141f21814d0c1"
+      },
+      "template_courses": {
+        "algorithm": "sha256",
+        "value": "0ebd91b03f37ffcb27da32167c1b9595fe3d4227b05ae7c15e8789feb3c4b27c"
+      },
+      "template_enrollments": {
+        "algorithm": "sha256",
+        "value": "d7acc4b67a8f1b4eff0699691b302a0108ec3c3f657c556d8d92902537c056c7"
+      },
+      "template_institutions": {
+        "algorithm": "sha256",
+        "value": "0cb846046d442f86cde64c1bb810c3c596929e42744b245fea7c4da842c7bf65"
+      },
+      "template_people": {
+        "algorithm": "sha256",
+        "value": "c0854f50b64b4cbc237eba3d6c206f43809f9ec82c333a4b2ca62ab0dae59c09"
+      },
+      "template_prerequisites": {
+        "algorithm": "sha256",
+        "value": "d20d49db78c4efc2df068ab5b0493bb16deb194cc84cd6161296a4ca18b0d7ab"
+      },
+      "template_results": {
+        "algorithm": "sha256",
+        "value": "896568a767f74237d7c98f72df365e58234402bb891688ba30a5a85a53fa9667"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "2a46659aedc36957038d7f17380b92394fa1803ea447ab4f73c2a1a0df3c44c2",
+      "umf/academic_terms.json": "3d47d5279f379124caf84c3682502b3e4fd6ff7f064f1f25f7094bb6e4e9d38a",
+      "umf/assessments.json": "33ceaa3e2bd0cae79d1628f5375ed903985a2f612d1c1e45365a35af811cd87f",
+      "umf/course_offerings.json": "ed048749fa0a704e81a05edfd63b8906d84a5216cbfac2e56cf2aab457d2038c",
+      "umf/courses.json": "43f2115e76d12f5004e7a753ee40250d37fa8482b9e7f89e2b985fceb00d43ef",
+      "umf/enrollments.json": "9c6f4e37581e224e9fab0278ae22b72dd2456b1516355d8dd676483b2e902fca",
+      "umf/institutions.json": "fdfa86028216eb46d8e8d4d58a9a9ab8bba6111561919191b9d3e922e3c276d3",
+      "umf/people.json": "eb6499580e15bd0ade911430b479c22e330cbbd746f9ca46feb0e7a469b0a08f",
+      "umf/prerequisites.json": "febe03c45042245b56fe200d5339c7a31020f7b5534d4bff8d20e470234320cd",
+      "umf/results.json": "94d5580af51a668dfe0bef271ec7552924ca00abcd9b77237e25e52cbe0ce08b"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "education",
+      "sha256": "9c47e41afbca14a7f240ff827c7ae5abe4f64b6560f662773bc82a26fb800ae8",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "625e8e72e3816724fed2f8b2f97a2ec8f208759f70c2478c2eb91f1f93e89b50",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"institutions\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "institutions"
+      },
+      "values": {
+        "institutions.id": "[42,0,\"I1\"]",
+        "institutions.name": "Synthetic school"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"people\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "people"
+      },
+      "values": {
+        "people.id": "[42,0,\"P1\"]",
+        "people.name": "Synthetic learner"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "courses"
+      },
+      "values": {
+        "courses.id": "[42,0,\"C1\"]",
+        "courses.institution_id": "[42,0,\"I1\"]",
+        "courses.code": "COURSE1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"academic_terms\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "academic_terms"
+      },
+      "values": {
+        "academic_terms.id": "[42,0,\"T1\"]",
+        "academic_terms.starts": "2026-01-01",
+        "academic_terms.ends": "2026-04-30"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "course_offerings"
+      },
+      "values": {
+        "course_offerings.id": "[42,0,\"O1\"]",
+        "course_offerings.course_id": "[42,0,\"C1\"]",
+        "course_offerings.term_id": "[42,0,\"T1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "course_offerings"
+      },
+      "values": {
+        "course_offerings.id": "[42,0,\"O2\"]",
+        "course_offerings.course_id": "[42,0,\"C1\"]",
+        "course_offerings.term_id": "[42,0,\"T1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"enrollments\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "enrollments"
+      },
+      "values": {
+        "enrollments.id": "[42,0,\"E1\"]",
+        "enrollments.person_id": "[42,0,\"P1\"]",
+        "enrollments.offering_id": "[42,0,\"O1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "assessments"
+      },
+      "values": {
+        "assessments.id": "[42,0,\"A1\"]",
+        "assessments.offering_id": "[42,0,\"O1\"]",
+        "assessments.name": "Exam"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "assessments"
+      },
+      "values": {
+        "assessments.id": "[42,0,\"A2\"]",
+        "assessments.offering_id": "[42,0,\"O2\"]",
+        "assessments.name": "Exam"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A3\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "assessments"
+      },
+      "values": {
+        "assessments.id": "[42,0,\"A3\"]",
+        "assessments.offering_id": "[42,0,\"O1\"]",
+        "assessments.name": "Essay"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "results"
+      },
+      "values": {
+        "results.id": "[42,0,\"R1\"]",
+        "results.enrollment_id": "[42,0,\"E1\"]",
+        "results.assessment_id": "[42,0,\"A1\"]",
+        "results.score": "8E+1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "results"
+      },
+      "values": {
+        "results.id": "[42,0,\"R2\"]",
+        "results.enrollment_id": "[42,0,\"E1\"]",
+        "results.assessment_id": "[42,0,\"A2\"]",
+        "results.score": "9E+1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"prerequisites\",[\"[42,0,\\\"PR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "element": "prerequisites"
+      },
+      "values": {
+        "prerequisites.id": "[42,0,\"PR1\"]",
+        "prerequisites.course_id": "[42,0,\"C1\"]",
+        "prerequisites.prerequisite_id": "[42,0,\"C1\"]"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"courses.institution_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"courses\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"institutions\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "courses.institution_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"institutions\",[\"[42,0,\\\"I1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings.course_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"courses\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "course_offerings.course_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings.term_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"academic_terms\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "course_offerings.term_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"academic_terms\",[\"[42,0,\\\"T1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings.course_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"courses\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "course_offerings.course_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings.term_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"academic_terms\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "course_offerings.term_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"academic_terms\",[\"[42,0,\\\"T1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"enrollments.person_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"enrollments\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"people\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "enrollments.person_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"enrollments\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"people\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"enrollments.offering_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"enrollments\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "enrollments.offering_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"enrollments\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments.offering_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"assessments\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "assessments.offering_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments.offering_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"assessments\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "assessments.offering_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"assessments.offering_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"assessments\\\",[\\\"[42,0,\\\\\\\"A3\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"course_offerings\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "assessments.offering_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A3\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"course_offerings\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results.enrollment_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"results\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"enrollments\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "results.enrollment_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"enrollments\",[\"[42,0,\\\"E1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results.assessment_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"results\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"assessments\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "results.assessment_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results.enrollment_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"results\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"enrollments\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "results.enrollment_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"enrollments\",[\"[42,0,\\\"E1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"results.assessment_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"results\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"assessments\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "results.assessment_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"results\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"assessments\",[\"[42,0,\\\"A2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"prerequisites.course_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"prerequisites\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"courses\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "prerequisites.course_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"prerequisites\",[\"[42,0,\\\"PR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:education\",\"domain\",\"prerequisites.prerequisite_id\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"prerequisites\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:education\\\",\\\"domain\\\",\\\"courses\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:education",
+        "module": "domain",
+        "id": "prerequisites.prerequisite_id"
+      },
+      "source": "[\"urn:umf:domain:education\",\"domain\",\"prerequisites\",[\"[42,0,\\\"PR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:education\",\"domain\",\"courses\",[\"[42,0,\\\"C1\\\"]\"]]"
+    }
+  ]
+}

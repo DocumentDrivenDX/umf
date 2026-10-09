@@ -49,9 +49,9 @@ inspects schemas and does not load patient rows.
   available without asserting native execution or enforcement.
 - Legacy TableSpec tables use CONTRACT-030 import/inspection. Their native
   types, column metadata, keys and declared foreign keys remain native declarations.
-- Pack metadata and JSON Schema keyword views are source inspection only;
-  canonical pack validation, JSON Schema evaluation and generator execution
-  are not installed here. Numeric native values display as exact `numberToken`
+- Pack metadata validates the canonical manifest and declared execution profile.
+  JSON Schema keyword views remain source inspection only. Dataset generators
+  and graph consumers do not execute here. Numeric native values display as exact `numberToken`
   carriers rather than rounded JavaScript numbers.
 - Local JSON/YAML schema files stay in the browser. Download returns the original
   source. Unsupported or invalid input refuses with a visible message.
