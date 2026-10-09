@@ -599,3 +599,7 @@ authoritative; page text is a lossy search projection, preserving PDF page
 ordinals and candidate Bates identifiers without inventing transcript citations
 or discovery-production history. Local projection tooling never fetches sources.
 Unknown third-party redistribution rights block full source export.
+
+## Domain pack ontology targets
+
+[SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.

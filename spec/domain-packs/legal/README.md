@@ -41,8 +41,14 @@ third-party material: https://www.justice.gov/legalpolicies . No license clearan
 is inferred from public access. The microsite export excludes source PDFs;
 repository research fixtures retain their explicit uncleared-rights declarations.
 
-Synthetic generation of the full mixed pack must refuse external row bindings.
+The legacy synthetic-generation path for the full mixed pack must refuse external row bindings.
 Consumers may explicitly select the original eight fabricated schemas for
-synthetic generation or bind the three observed CSVs for local ingestion. General
-mixed-source orchestration remains consumer work; the pack does not authorize
+synthetic generation or bind the three observed CSVs for local ingestion. TableSpec implements explicit assembly with `ingest --mixed`; the pack does not authorize
 retrieval, legal interpretation or automatic cross-source joins.
+
+
+The execution profile selects all eleven tabular tables and retains the existing
+ontology target, which describes only fabricated operations. TableSpec's mixed
+consumer must keep observed rows fixed and synthetic scale/seed separate. An
+explicit local-use source policy permits private workspace processing while
+retaining unknown rights; it does not clear redistribution.

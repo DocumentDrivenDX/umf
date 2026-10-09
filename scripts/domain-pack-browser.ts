@@ -1,6 +1,14 @@
 import {chromium} from 'playwright';
+const publicPacks:{pack:unknown;schemas:{id:string;text:string}[]}[]=[];
+for(const id of ['nyc-tlc','movielens','noaa-ghcn-daily','gtfs-schedule']){
+ const pack=await Bun.file(`spec/domain-packs/${id}/pack.json`).json(),schemas=[];
+ for(const entry of pack.schemas)schemas.push({id:entry.id,text:await Bun.file(`spec/domain-packs/${id}/${entry.reference}`).text()});
+ publicPacks.push({pack,schemas});
+}
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(request){
  if(new URL(request.url).pathname==='/legal-pack.json')return new Response(Bun.file('spec/domain-packs/legal/pack.json'),{headers:{'content-type':'application/json'}});
+
+ if(new URL(request.url).pathname==='/public-packs.json')return Response.json(publicPacks);
  if(new URL(request.url).pathname==='/medical-pack.json')return new Response(Bun.file('spec/domain-packs/medical/pack.json'),{headers:{'content-type':'application/json'}});
  return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>UMF pack schema verification</title>',{headers:{'content-type':'text/html'}});
 }});
@@ -31,6 +39,14 @@ try {
   check(u.validateDocument(legalDocument,registry).valid);
   for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(legalDocument,format),format))===JSON.stringify(legalDocument));
   check(legal.sources.fabricated.data_kind==='fabricated'&&legal.sources.PTX0014.data_kind==='observed'&&legal.sources.PTX0014.license.redistribution==='unknown');
+
+  const publicPacks=await (await fetch('/public-packs.json')).json();
+  for(const {pack,schemas} of publicPacks){
+   const publicDocument={...document,id:pack.id,extensions:{'umf.domain-pack':pack}};
+   check(u.validateDocument(publicDocument,registry).valid);
+   for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(publicDocument,format),format))===JSON.stringify(publicDocument));
+   for(const schema of schemas)check(u.exportTableSpec(u.importTableSpec(schema.text,{id:schema.id,format:'json'}))===schema.text);
+  }
   check(typeof (globalThis as any).Bun==='undefined'&&typeof (globalThis as any).process==='undefined');
   return {checks};
  });console.log(JSON.stringify({browser:browser.version(),...result}));

@@ -347,6 +347,11 @@
       "id": "evidence_pages",
       "format": "tablespec",
       "reference": "umf/evidence_pages.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
     }
   ],
   "source_bindings": [
@@ -751,5 +756,41 @@
     "joins": "Real evidence links only to sourced cases; no fabricated client/matter association.",
     "execution": "Synthetic generation for the full mixed pack refuses external row bindings; consumers must select and explicitly ingest external CSV sources.",
     "redistribution": "Full source export refuses while any bundled source has unknown redistribution rights."
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "clients",
+        "documents",
+        "ethical_walls",
+        "invoices",
+        "matter_teams",
+        "matters",
+        "time_entries",
+        "timekeepers",
+        "cases",
+        "evidence_documents",
+        "evidence_pages"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "fabricated",
+      "complaint",
+      "memorandum-opinion",
+      "rowley-deposition",
+      "okelley-deposition",
+      "PTX0014",
+      "PTX0032",
+      "PTX0110",
+      "csv_cases",
+      "csv_evidence_documents",
+      "csv_evidence_pages"
+    ],
+    "qualification": "Mixed legal tabular inputs: generate eight fabricated operations tables; ingest three fixed observed evidence tables without replay. Unknown rights prohibit redistributable source archives. Graph schema describes fabricated operations only; no graph storage acceptance."
   }
 }

@@ -26,7 +26,7 @@ def emit(path, data):
 pack['version'] = '1.1.0'
 pack['description'] = 'Mixed legal pack: fabricated firm operations plus observed public court filings, deposition designations and corporate trial exhibits. No invented association between the two.'
 pack['sources'] = {'fabricated': pack['sources']['fabricated']}
-pack['schemas'] = [s for s in pack['schemas'] if s['id'] not in ('cases', 'evidence_documents', 'evidence_pages')]
+# Preserve other governed targets, including the existing ontology schema.
 pack['source_bindings'] = [b for b in pack['source_bindings'] if b['source_id'] == 'fabricated']
 pack['csv_conventions'] = {'encoding': 'UTF-8', 'null_value': '\\N', 'header': True, 'quote': '"'}
 case_rows = [corpus['case']]
@@ -75,7 +75,8 @@ for id, rows in [('cases', case_rows), ('evidence_documents', doc_rows), ('evide
     upstream_ids = [d['evidence_key'] for d in corpus['documents']]
     # Metadata has no copied document body; page text inherits uncleared third-party rights.
     pack['sources'][f'csv_{id}'] = source(f'data/{id}.csv', 'csv', 'unknown' if id == 'evidence_pages' else 'allowed', 'UMF project', source_ids=upstream_ids)
-    pack['schemas'].append({'id': id, 'format': 'tablespec', 'reference': f'umf/{id}.json'})
+    if not any(s['id'] == id for s in pack['schemas']):
+        pack['schemas'].append({'id': id, 'format': 'tablespec', 'reference': f'umf/{id}.json'})
     pack['source_bindings'].append({'schema_id': id, 'source_id': f'csv_{id}', 'role': 'rows'})
 pack['fixture_counts'] = {'cases': len(case_rows), 'evidence_documents': len(doc_rows), 'evidence_pages': len(page_rows)}
 pack['qualification'] = {'subset': 'One digital-advertising antitrust case; seven selected PDFs, not a complete docket or discovery production.',

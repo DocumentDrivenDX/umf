@@ -1,0 +1,82 @@
+---
+ddx:
+  id: FEAT-020
+  type: feature-specification
+  activity: frame
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: umf.prd
+      kind: informed_by
+    - id: umf.cross-cutting-requirements
+      kind: informed_by
+    - id: FEAT-009
+      kind: informed_by
+---
+
+# FEAT-020: Energy and utilities domain pack
+
+**Feature ID:** FEAT-020. **Status:** Draft. **Priority:** P0 under FR-45; roadmap order is proposed. **Owner:** UMF schema maintainers; TableSpec consumer maintainers.
+**Covered PRD Subsystem(s):** Physical Bindings and Authored Generation.
+**Covered PRD Requirements:** FR-45.
+**Cross-Subsystem Rationale:** One domain-pack capability under FR-45. FR-29/41 consumer reuse and FR-4/8/26/30/39/42 representation/fidelity constrain the workflow without adding separate product capabilities.
+
+## Overview
+
+Provide a versioned energy and utilities reference pack for meter history and outage investigation. Users select its declared scope and reuse the same UMF schema meaning for TableSpec datasets and later graph consumers.
+
+## Ideal Future State
+
+A maintainer can inspect the domain schemas, identify their source and support limits, generate a chosen dataset through TableSpec, and use the published scenarios to judge whether ingestion and queries preserve meaning.
+
+## Problem Statement
+
+Independent examples can disagree about domain identities, constraints and native vocabulary. A large generated dataset alone cannot establish whether those meanings survive loading or whether its distribution resembles a real population.
+
+## Requirements
+
+- DOMAIN-01: Cover the initial conceptual inventory: Sites; utility assets; meters; channels; interval readings; tariffs; outages; service relationships.
+- DOMAIN-02: Preserve the domain distinctions below in authored meaning and expose unsupported consumer behavior.
+- DOMAIN-03: Include the positive and negative scenario in US-071, with attributable ground truth separated from ordinary data.
+- DOMAIN-04: Describe scale dimensions for sites, meters, interval frequency, history span, outages and asset topology; TableSpec implements dataset generation and measures resource usage.
+- DOMAIN-05: Ground native fixtures in identified source releases with reuse terms and preserved originals; generated supplemental content has a distinct origin.
+- DOMAIN-06: Demonstrate meter history and outage investigation through a documented consumer question and independently computed expected outcome for a small corpus.
+
+### Domain distinctions
+
+- Consumption, instantaneous power and cumulative register values remain distinct.
+- Interval boundaries and timezone transitions remain explicit.
+- Meter replacement and tariff revisions retain effective periods.
+
+### Non-Functional Requirements
+
+Apply FEAT-009 PACK-01–PACK-06 and the selected fidelity, identity, reproducibility, bounded-processing, conformance, review and runtime-boundary concerns. Published evidence must identify schema/generator versions, subset, scale and actual engine. Zero unexplained source-content loss and zero unlabeled injected anomalies are required on the accepted corpus. Schema tooling remains browser-compatible under ADR-002.
+
+## User Stories
+
+- [US-071: Exercise the energy and utilities pack](../user-stories/US-071-energy-domain-pack.md).
+
+## Edge Cases and Error Handling
+
+Unknown source terms remain retained and marked uninterpreted. Missing references, unsupported required meanings and unresolved identity matches block dependent operations or yield explicitly incomplete reports. A cumulative register reset is identified instead of treated as negative consumption.
+
+## Success Metrics
+
+The small accepted corpus answers the documented domain question with the expected identities, multiplicities and exact values. All declared domain distinctions have positive and counterexample evidence; all published fixtures have source and reuse records.
+
+## Constraints and Assumptions
+
+Weather and usage correlations are proposed synthetic scenarios, not calibrated load forecasts. The first release is a bounded reference pack, with scientific/business realism qualified independently from structural correctness.
+
+## Dependencies
+
+[FEAT-009](FEAT-009-domain-pack-catalog.md) owns shared catalog behavior. CONTRACT-052 supplies the shared draft manifest/schema-tooling surface; the integrated `umf.domain-pack` and `umf.dataset-source` 1.0.0 interfaces are reused; domain-specific extensions require separate design before build. Core/native schemas and independent bindings remain separately versioned. Source candidates: [FIWARE Smart Data Models overview](https://www.fiware.org/data-models/).
+
+## Open Questions
+
+Pinned model commits, meter/readings profile, timezone policy and tariff scope. Source candidates require release/snapshot pinning and reuse review before inclusion; website availability alone is not a redistribution grant.
+
+## Out of Scope
+
+Grid control, billing accuracy guarantees, and load forecasting.

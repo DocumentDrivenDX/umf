@@ -6,11 +6,12 @@
     "chromium": "153.0.8010.12"
   },
   "catalog": {
-    "packs": 2,
-    "entries": 19
+    "packs": 20,
+    "entries": 256
   },
   "checks": [
     "Pack catalog and linked schemas",
+    "Public dataset packs, source downloads and all sixteen schemas",
     "Native foreign-key navigation",
     "Pack hierarchy, breadcrumbs and domain-type ownership",
     "Medical fixed-source pack and all eight schemas",
@@ -25,7 +26,8 @@
     "Same-named domain types stay within their pack version",
     "Malformed and duplicate-key JSON refuse",
     "Mobile layout and navigation",
-    "Existing routes expose the explorer"
+    "Existing routes expose the explorer",
+    "All twenty packs, every declared schema and ontology target navigate"
   ],
   "status": "passed"
 }

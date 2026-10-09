@@ -13,6 +13,7 @@ test('mixed legal corpus pins originals and keeps real evidence separate from fa
  expect(pack.version).toBe('1.1.0');
  expect(pack.fixture_counts).toEqual({cases:1,evidence_documents:7,evidence_pages:383});
  for(const entry of pack.schemas){
+  if(entry.format!=='tablespec')continue;
   const text=await Bun.file(root+'/'+entry.reference).text();
   expect(exportTableSpec(importTableSpec(text,{id:entry.id,format:'json'}))).toBe(text);
  }
