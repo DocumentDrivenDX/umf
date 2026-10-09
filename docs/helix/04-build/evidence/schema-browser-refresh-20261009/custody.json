@@ -1,0 +1,45 @@
+{
+  "format": "umf-schema-browser-refresh-custody/0.1",
+  "sourceBase": "a95c3ec18a8f904decde884a4fa252988d2a5b0f",
+  "files": {
+    "docs/helix/05-deploy/microsite/dist/explorer.js": {
+      "sha256": "1c7264d67a3822563bd0d3f95067e4554b98baf55f9a41b947332b4f8cc46258",
+      "bytes": 2863702
+    },
+    "scripts/browser-explorer-refresh.ts": {
+      "sha256": "642ff55e2af4fe82cb99e381bf928f7ef59120ce038569496dad62d964b08204",
+      "bytes": 4692
+    },
+    "docs/helix/04-build/evidence/schema-browser-refresh-20261009/report.json": {
+      "sha256": "83e3481bed24d4093624e3003129cd9dad9f704a9fb2a25b6af094dddf70b488",
+      "bytes": 4006
+    },
+    "docs/helix/04-build/evidence/schema-browser-refresh-20261009/consumer-field.png": {
+      "sha256": "0818f4123f7bebc498627dd81f9db8adb1a9b69542b664610b3a3670038e1194",
+      "bytes": 211015
+    }
+  },
+  "commands": [
+    "bun build docs/helix/05-deploy/microsite/explorer.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/explorer.js",
+    "bun scripts/browser-explorer-refresh.ts EXPLICIT_CONSUMER_SHELL FRESH_OUTPUT",
+    "bunx tsc --noEmit -p tsconfig.tools.json"
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "browser": "Chromium153.0.8010.12 allnineexactconsumer models;logicalcorecomplete,physicalDeltaextensionspartial;record andfieldroutechanged;zeroexternalrequests/pageerrors",
+    "visual": "1440px screenshot inspected: sourcefield details and catalog readable"
+  },
+  "failedDriverObservations": [
+    {
+      "path": "/private/tmp/ashlar-umf-explorer-refresh-20261009-a.log",
+      "sha256": "1875f726f24f9aef4e138df09dd301c25298ead996b1e5824285959e03d1ea3a",
+      "reason": "Test incorrectly waited for catalog entry ID in document content; document IDs differ."
+    },
+    {
+      "path": "/private/tmp/ashlar-umf-explorer-refresh-20261009-b.log",
+      "sha256": "64481b40610a04b6ac687b3e373285ddb07956e80fb3075d5fd68461409f6769",
+      "reason": "Test selected first generic callout (download status), corrected to exact core-interpretation status."
+    }
+  ],
+  "qualification": "Generated public renderer refresh only; no source pack or logical/native schema rewrite. Exact input shell/catalog hashes are retained in browser report. Actual read-only browser inspection does not establish storage/runtime enforcement."
+}
