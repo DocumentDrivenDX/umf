@@ -5,9 +5,9 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 590,
+  "total": 595,
   "counts": {
-    "SATISFIED": 78,
+    "SATISFIED": 83,
     "UNTESTED": 288,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
@@ -4199,6 +4199,70 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/domain-packs/catalog.test.ts:30"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-publication.test.ts:28",
+        "tests/domain-packs/loader-runner.test.ts:14",
+        "tests/domain-packs/loader-runner.test.ts:45"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-runner.test.ts:30",
+        "tests/domain-packs/loader-runner.test.ts:54",
+        "tests/domain-packs/loader-runner.test.ts:79"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-publication.test.ts:13",
+        "tests/domain-packs/loader-runner.test.ts:14",
+        "tests/domain-packs/loader-runner.test.ts:54",
+        "tests/domain-packs/loader-runner.test.ts:93"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-export.test.ts:20",
+        "tests/domain-packs/loader-export.test.ts:32",
+        "tests/domain-packs/loader-export.test.ts:37",
+        "tests/domain-packs/loader-export.test.ts:43",
+        "tests/domain-packs/loader-export.test.ts:9",
+        "tests/domain-packs/loader-publication.test.ts:13",
+        "tests/domain-packs/loader-publication.test.ts:28",
+        "tests/domain-packs/loader-publication.test.ts:36",
+        "tests/domain-packs/loader-runner.test.ts:101",
+        "tests/domain-packs/loader-runner.test.ts:105",
+        "tests/domain-packs/loader-runner.test.ts:38",
+        "tests/domain-packs/loader-runner.test.ts:60",
+        "tests/domain-packs/loader-runner.test.ts:74"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },

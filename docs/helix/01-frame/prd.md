@@ -361,7 +361,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   synthetic/external source provenance without authorizing code
   execution or network fetching. TableSpec owns fabricated tabular data
   generation, CSV pack export, explicit ingestion of pinned local source rows,
-  and data testing. Published medical examples must retain original meaning,
+  and data testing. Packs must support independently versioned loader companions
+  explicitly invoked by consumers for public-corpus creation, backfill and scheduled
+  refresh. Preserve source revisions, replayable originals, restartable state and
+  visible coverage gaps; inspecting metadata never starts acquisition. Published medical examples must retain original meaning,
   source identity, unresolved references and source-specific redistribution
   conditions; generated supplements must remain distinguishable. The legal pack must
   combine explicitly fabricated firm operations with observed public filings and

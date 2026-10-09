@@ -21,6 +21,20 @@ for(const root of roots){const paths=await files(root);
    packEntry.assets=Object.entries(pack.sources??{}).flatMap(([id,source]:[string,any])=>!source.reference?.includes(':')&&source.license?.redistribution==='allowed'?[{id,reference:source.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+source.reference.split('/').map(encodeURIComponent).join('/'),format:source.format??'unknown',dataKind:source.data_kind,sha256:source.checksum.value,...(source.revision?{revision:source.revision}:{})}]:[]);
    packEntry.aliases=[`pack:${pack.id}@1.0.0`];
   }
+  if(pack.loader){
+   const {exportPack}=await import('../../../../scripts/loaders/export');
+   const demo=['court-documents-loader-demo','sec-filings-loader-demo'].includes(pack.id);
+   if(pack.family?.id!=='medical')await exportPack(path,join(dist,'pack-assets',identity),{includeSources:demo});
+   packEntry.assets=[...(packEntry.assets??[]),...pack.loader.artifacts.map((a:any)=>({id:'loader:'+a.reference,reference:a.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+a.reference,format:a.reference.endsWith('.ts')?'bun-source':a.reference.endsWith('.md')?'markdown':'json-schema',dataKind:'authored companion',sha256:a.sha256}))];
+   if(demo){
+    packEntry.assets.push({id:'inventory',reference:'inventory.json',url:'pack-assets/'+encodeURIComponent(identity)+'/inventory.json',format:'json',dataKind:'empty authored selection',sha256:pack.sources.inventory.checksum.value});
+    const releasePath=join(dist,'loaders/release.json');
+    if(await Bun.file(releasePath).exists()){
+     const release=await Bun.file(releasePath).json(),reference=pack.id+'.zip',bundle=release.bundles?.find((b:any)=>b.reference===reference);
+     if(bundle&&await Bun.file(join(dist,'loaders',reference)).exists()&&new Bun.CryptoHasher('sha256').update(await Bun.file(join(dist,'loaders',reference)).arrayBuffer()).digest('hex')===bundle.sha256)packEntry.assets.push({id:'bundle',reference,url:'loaders/'+reference,format:'zip',dataKind:'authored companion',sha256:bundle.sha256});
+    }
+   }
+  }
   entries.push(packEntry);
   const schemaIds=new Set<string>();for(const declaration of pack.schemas??[]){if(schemaIds.has(declaration.id))throw new Error(`Duplicate schema ID in ${identity}: ${declaration.id}`);schemaIds.add(declaration.id);
    if(typeof declaration.reference!=='string'||isAbsolute(declaration.reference))throw new Error(`Invalid local reference: ${declaration.reference}`);

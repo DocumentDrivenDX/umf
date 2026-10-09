@@ -5654,3 +5654,14 @@ Medical family in the explorer and expose allowed original/row downloads.
 Preflight and export the complete family in separate versioned directories; run
 Bun, actual Chromium, independent TableSpec/pydicom and deployment gates before
 merging. Live PACS and production carrier services remain separate future scope.
+
+### Reusable domain-pack loader companions (2026-10-09)
+
+FR-45, FEAT-009 PACK-07 and US-060-AC8–AC12 govern CONTRACT-057 and
+TD-060/STP-060. The [loader build plan](domain-pack-loader-plan.md) sequences
+portable admission, trusted companion export, bounded acquisition/replay, local
+publication and Pages delivery. Preserve TableSpec's ingestion ownership and
+explicit finite-inventory source scope. Astra ultra plan and implementation
+reviews, process/TLS tests, real Chromium and regression evidence are required
+before deployment. [Execution evidence](evidence/domain-pack-loaders.md) records
+actual qualification and downstream integration feedback.
