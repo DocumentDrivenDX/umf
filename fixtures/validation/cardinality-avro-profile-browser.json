@@ -1,6 +1,6 @@
 {
   "scope": "Native browser codec discovery and internal type-shape resolver parity; no UMF classification/projection acceptance",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "avsc": "5.7.9",
   "checks": {
     "rows": [
@@ -504,8 +504,8 @@
         "hex": "0604c3a9020665cc8104000600",
         "decoded": {
           "value": {
-            "é": 1,
-            "é": 2,
+            "\u00e9": 1,
+            "e\u0301": 2,
             "": 3
           }
         },
@@ -1468,10 +1468,10 @@
     ]
   },
   "externalRequests": [],
-  "bundleSha256": "e324d93e8da829750f8daacc83a7ef5bbfb4bc014253718dd40a9653961cdca9",
+  "bundleSha256": "c83bbcac25b22a8c9491eccc5c3a19ff098c2d956aa7fdcd97895c8157d839d2",
   "sha256": {
     "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
-    "fixtures/validation/cardinality-avro-profile-native.json": "fb66080187cc8e83b34662e5441e21e91d7c70e6ddd44dff1974a43e016bb39e",
+    "fixtures/validation/cardinality-avro-profile-native.json": "1efd4c657d3fadd8d98f262e0db95883347af3a412a2e7e94ab3676c206c7769",
     "scripts/core-ideals/cardinality-avro-profile-browser.ts": "13ebd66bdcabce259aaed7b1b3bb2ce0e01377d7b2789c6c7a54e669dfa4501c",
     "node_modules/avsc/package.json": "3a61ffb74d9077b6f300d186d25f4c5460deff8b1272fc2a4e6c5a1388b06f04",
     "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",

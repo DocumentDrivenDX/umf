@@ -1,0 +1,40 @@
+import {test,expect} from 'bun:test';
+import fixture from '../../fixtures/actions/approve.json';
+import type {Document} from '../../src/model/types';
+import {ReferenceActionIssuer} from '../../scripts/actions-reference/authentication';
+import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
+import {ReferenceActionOutcomes} from '../../scripts/actions-reference/outcomes';
+import type {ReferenceInvokeRequest} from '../../scripts/actions-reference/protocol';
+import {withReferenceStore} from './native-harness';
+/** @covers US-056-AC4 */
+test('native protected terminal lookup retains original decisions across retirement, service changes and restart',async()=>{
+ await withReferenceStore(async store=>{
+  await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),outcomes=new ReferenceActionOutcomes(policy),source=structuredClone(fixture) as unknown as Document;
+  (source.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile={id:'umf.actions.roles',version:'1'};
+  const target={module:'sales',action:'approve',revision:'r1'},request:ReferenceInvokeRequest={protocol:'umf.actions.tx/1',target,key:'token',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]}}};
+  await outcomes.revisions.retain('s',target,source);const credential=issuer.issue({tenant:'tenant',principal:'person',service:'A'});
+  expect(await outcomes.lookup('s',credential,request)).toEqual({status:'denied',code:'AUTHORIZATION'});
+  expect(await outcomes.lookup('s','invalid',request)).toEqual({status:'denied',code:'AUTHORIZATION'});
+  await policy.replayDiscovery('s','sales','approve',['replay-observer']);await policy.membership('s','person','replay-observer',true);
+  await policy.membership('s','person','approver',true);expect(await outcomes.lookup('s',credential,request)).toEqual({status:'not-found'});
+  await store.transaction('s',async(tx,control)=>{const revision=await outcomes.revisions.readInTransaction(tx,control,target);await outcomes.appendInTransaction(tx,control,issuer.authenticate(credential),revision,request,{status:'rejected',code:'PRECONDITION'});});
+  await outcomes.revisions.lifecycle('s',target,'retired');
+  const evolved=structuredClone(source);evolved.modules[0]!.elements.find(element=>element.id==='id')!.scalarType='integer';await outcomes.revisions.retain('s',{...target,revision:'r2'},evolved);
+  const restarted=new ReferenceActionOutcomes(policy),otherService=issuer.issue({tenant:'tenant',principal:'person',service:'B'});
+  expect(await restarted.lookup('s',otherService,request)).toEqual({status:'rejected',code:'PRECONDITION'});
+  expect(await restarted.lookup('s',otherService,{...request,target:{...target,revision:'r2'}})).toEqual({status:'conflict',code:'TOKEN_REUSE'});
+  const incompatible=structuredClone(request);incompatible.target.revision='r2';(incompatible.inputs.order as any).components=[{integerToken:'1'}];expect(await restarted.lookup('s',otherService,incompatible)).toEqual({status:'conflict',code:'TOKEN_REUSE'});
+  const changed=structuredClone(request);(changed.inputs.order as any).components=[{string:'other'}];expect(await restarted.lookup('s',credential,changed)).toEqual({status:'conflict',code:'TOKEN_REUSE'});
+  expect(await store.sql`select * from action_entity`).toHaveLength(0);expect(await store.sql`select * from action_outcome`).toHaveLength(1);
+  await expect(store.transaction('s',async tx=>{await tx`update action_outcome set result='{}'`;})).rejects.toThrow('immutable retained outcome');
+  await expect(store.transaction('s',async tx=>{await tx`delete from action_outcome`;})).rejects.toThrow('immutable retained outcome');
+  await policy.membership('s','person','approver',false);expect(await restarted.lookup('s',credential,request)).toEqual({status:'denied',code:'AUTHORIZATION'});
+  const opaque=structuredClone(source);(opaque.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile.future={deny:true};await outcomes.revisions.retain('s',{...target,revision:'opaque'},opaque);
+  const opaqueRequest={...request,target:{...target,revision:'opaque'}};expect(await restarted.lookup('s',credential,opaqueRequest)).toEqual({status:'denied',code:'AUTHORIZATION'});expect(await restarted.lookup('s',credential,{...opaqueRequest,key:'unknown-token'})).toEqual({status:'denied',code:'AUTHORIZATION'});
+  const unknownRevision={...request,target:{...target,revision:'unknown'}};expect(await restarted.lookup('s',credential,unknownRevision)).toEqual({status:'denied',code:'AUTHORIZATION'});expect(await restarted.lookup('s',credential,{...unknownRevision,key:'unknown-token'})).toEqual({status:'unsupported',code:'REVISION'});
+  await policy.membership('s','person','approver',true);await store.transaction('s',async tx=>{await tx`update action_outcome set tombstone=true`;});
+  expect(await restarted.lookup('s',credential,request)).toEqual({status:'expired',code:'TOKEN_EXPIRED'});
+  await expect(store.transaction('s',async tx=>{await tx`update action_outcome set tombstone=false`;})).rejects.toThrow('immutable retained outcome');
+  await outcomes.revisions.lifecycle('s',target,'unavailable');expect(await restarted.lookup('s',credential,request)).toEqual({status:'unsupported',code:'REVISION'});
+ });
+},60000);

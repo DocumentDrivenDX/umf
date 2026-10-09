@@ -63,6 +63,56 @@ revision; earlier green acceptance must not be presented as current acceptance.
 These are preparation and verification obligations. They do not select a new
 finalization subset or waive the remaining product requirements.
 
+### Action formal-analysis execution (2026-10-08)
+
+Astra-reviewed bounded plan executed: independent Z3 command relations, actual
+phased TLC safety/progress checks and native-history sequentialization. Semantic
+counterexamples changed association observability, transactional cross-Key alias
+resolution and executor-owned invariant dependency boundaries. See
+[findings/results/limits](evidence/actions-formal-analysis.md). These are design
+and synthetic executor observations, not public-library or production acceptance.
+
+### Declarative action design iteration 2 (2026-10-08)
+
+Owner-directed improvement adds CONTRACT-053 for bounded rule/key selectors,
+revision/invocation/lookup, controlled handler access, concurrency/auth timing,
+validation-only preview and audit/receipt epochs. CONTRACT-052 now distinguishes
+role authorization from general policy bindings. ACT-09–13 and EX-01–EX-05 are
+allocated; no new runtime or public-library acceptance is claimed.
+
+Implement complete normative fixtures and the declaration library first; optional
+static rule checking follows with its own versioned evidence. Consumer executor
+code requires a separate story/design for isolation, native invariant scope,
+policy coupling and durable reconciliation. Current core qualification remains
+an independent gate. Earlier bounded experiments remain evidence only for their
+original synthetic subset; they do not prove the expanded contract.
+
+### Declarative action design handoff (2026-10-08)
+
+Owner scope now includes implementation and complete bounded qualification in the
+isolated worktree. FR-45, FEAT-008,
+US-055, CONTRACT-052, SD-008, TD-055 and STP-055 define a local-document extension
+contract. US-056, TD-056 and STP-056 allocate the requested reference-consumer
+implementation and EX-01–05 qualification; production release and downstream
+adoption remain separate.
+Current TableSpec finalization/offline-composition priorities are not displaced.
+
+| Gate | Governing artifact | Required outcome |
+| --- | --- | --- |
+| Requirements/interface review | FEAT-008, US-055, CONTRACT-052 | Review local-only references, explicit-key recipes, contract read/write frames, postconditions, handler/profile boundaries and independent DDD binding. |
+| Library implementation readiness | TD-055, STP-055, current core evidence | Resolve current core qualification gaps; create exercising tests for all nine ACs before acceptance; preserve whole-document registry behavior. |
+| Declaration library acceptance | TD-055, STP-055 | Package/schema audits, scoped regression, typechecks, public build and Bun/Chromium proof with exact versions/fingerprints and limits. |
+| Consumer executor qualification | CONTRACT-053, TD-056, STP-056 | Real store evidence for authorization, state checks, atomic failure, replay races, native side effects and freshness receipts; no mock-derived support claim. |
+
+Scoped public-library tests and actual Chromium now pass;
+[current certification work](evidence/actions-certification.md) records the unfinished
+full qualification gates. The bounded design investigation
+has executed portable, real-store and protocol experiments; see
+[evidence](evidence/actions-plan-execution.md) for separate gate status. Core admission, native equivalence,
+Python action-semantic support, Palantir import/export and cross-document action
+references remain separate. The other consumer proposal sections are not adopted
+by this action handoff.
+
 ### Format separation follow-on
 
 FEAT-005 IDEAL-07 and [CONTRACT-050](../02-design/contracts/CONTRACT-050-format-separation.md)

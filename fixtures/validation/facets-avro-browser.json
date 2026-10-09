@@ -1,6 +1,6 @@
 {
   "scope": "Avro facet helper interpretation, public classification, authored projection and composed recovery in Chromium; prior concept gates remain separate",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "bindingAccepted": false,
   "nativeEquivalence": false,
   "runs": [
@@ -35,16 +35,16 @@
   ],
   "externalRequests": [],
   "sha256": {
-    "dist/avro-facet-selection.js": "eba44318e0c794a02c33d9566dfb5f76f8e418f17054ee715cc61689bf3a25be",
-    "dist/avro-facet-type.js": "9ba82112dfefbab9a84ecf5a5e045e5b3e0c70513ef1135422adb8c30538d424",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
+    "dist/avro-facet-selection.js": "1a4e8e630f9323cbcf362c99628ea0ae48e5cac1d85cb347f8968fbd3bc09e7a",
+    "dist/avro-facet-type.js": "26a343caa3a7a75af22828fbf87e58ca0511b54b01e098b75055e9043e861aac",
+    "dist/umf.js": "f168dae54fdc884b67f4e4b8c27a5a8b415bf258eb7b5dce21102a3785afabfc",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
-    "fixtures/validation/facets-avro-classification-browser.json": "5c0ccfdb4707c0f11e2cda7f5431ff012d1100efaec764694aa2fd5ca19f819d",
-    "fixtures/validation/facets-avro-composition.json": "7278817c63d70ce6d22d1aea02dad3d8eaa6e33c11f40277d2c9efecc74677fe",
-    "fixtures/validation/facets-avro-projection-browser.json": "db2f6baeb5bca804b8e2f86d1c7ba9754c6ded850ef3cafce1ee94806310dcd8",
-    "fixtures/validation/facets-avro-selection-browser.json": "82586b70f5939506c2053ea04ebcbb92eb196ca12202c046e86047bc2c9a6820",
-    "fixtures/validation/facets-avro-type-browser.json": "e7e977780cd971f7855786e0a1251f7287824a53a77867d0aa433787892611f9",
+    "fixtures/validation/facets-avro-classification-browser.json": "132de137fa543ecb948f2fde93c1607b699c83a092725c652da4522e51242337",
+    "fixtures/validation/facets-avro-composition.json": "0c6f5eeddfcf60e0f6e4c643d933a29f04cdc06965359d0a4d24b1904d3392a9",
+    "fixtures/validation/facets-avro-projection-browser.json": "bcbf53b640d487b517ff53a8f934d486894630695be87b7349106f910a77c38d",
+    "fixtures/validation/facets-avro-selection-browser.json": "7104d84bfe1d342b2f92fe1918584585e5701125c5174764b40148ddf127188f",
+    "fixtures/validation/facets-avro-type-browser.json": "4aacea2ed83c7e3c2602ea87beec6714525fd164de327828788d8c8e1620d59e",
     "scripts/core-ideals/facets-avro-browser.ts": "31826e7bbb98b7966dae3101f7d8a3858c638076f507365fe8812ea65f9e57be",
     "scripts/core-ideals/facets-avro-cases.ts": "3d461a5175c61bbd5b41842457f07e5b8a8a7cc358f28061e12bcb0e7fe5a0ee",
     "scripts/core-ideals/facets-avro-classification-browser.ts": "200fb343f4a1d05d9619d98c5371a4ab2fae77f245adb0cca532dc565325fd96",
@@ -54,13 +54,13 @@
     "scripts/core-ideals/facets-avro-type-browser.ts": "6b58b3bedc05dbeb07d877d6be590c2a6c510484cabb85b864a18ac8fb7fc438",
     "spec/core/avro-facet-classification.schema.json": "3f8548127581f7f60a15af05f93aede7b03605844a984a1c1e148cdc6c681f6d",
     "spec/core/facets-avro-projection.schema.json": "3032f6daf14e6f80f352126f55a03278353a4bf38511038126f3e5615e3ca3f4",
-    "spec/extensions/avro-facets/package.json": "83862c82e105c376c04ad625f3993e8206cac42c6d508d15db8f5a3bd07a4ebf",
+    "spec/extensions/avro-facets/package.json": "7d62ff05399c6daf1b7689a66bd5180cd3f11454bebbc31edce84b04a60c577d",
     "spec/extensions/avro-facets/schema.json": "d78378d8b8f159cb9685d98508b03a4be0810375ef99792ca9f084a926d2741a",
     "src/adapters/avro/facet-type.ts": "26db0fcce82230f65a14e0284c2cc6c84c03747c06858dcb5ed68cd04ab67a5b",
     "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
     "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
     "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
     "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d"
+    "src/index.ts": "f3dd67075eade503d082b5a6a251ae398361e8a64b8d310ea77eecf4a066c5bf"
   }
 }

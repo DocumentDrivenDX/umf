@@ -1,0 +1,72 @@
+bun test v1.4.2 (744846f84)
+
+tests/rdfxml/literals.test.ts:
+(pass) SPIKE-006: literal repair preserves authored XML structure and every official graph outcome [51.84ms]
+
+tests/shacl/float.test.ts:
+(pass) US-028 mixed numeric promotions agree with direct native C conversions [26302.16ms]
+(pass) US-028 float lexical validation, signed zero, ties and bounded conversion [0.28ms]
+(pass) US-028 conversion limit blocks without a partial report or source loss [138.07ms]
+
+tests/shacl/targets.test.ts:
+(pass) US-028 Core target sets match native SPARQL across official and authored graphs [4793.94ms]
+(pass) US-028 graph boundaries, exact literals, cycles, deactivation and atomic target edit [889.07ms]
+(pass) US-028 malformed or unsupported target declarations cannot silently select a subset [1351.62ms]
+
+tests/shacl/paths.test.ts:
+(pass) US-028 graph preservation, all path operators and independent expected sets [6376.51ms]
+(pass) US-028 malformed paths remain recoverable but cannot be evaluated [1344.29ms]
+(pass) US-028 unknown encoding, scopes, copied values and atomic rejection [477.08ms]
+(pass) US-028 bounded recursive structure and expensive finite traversal fail without mutation [623.19ms]
+(pass) US-028 pinned official graph inventory and independent corpus evidence [864.82ms]
+
+tests/shacl/metadata.test.ts:
+(pass) US-028 metadata supports consumers without collapsing native declarations [1147.09ms]
+(pass) US-028 invalid paths and literal property links remain explicit metadata [139.00ms]
+
+tests/jsonld/numeric.test.ts:
+(pass) US-026-AC7: exact numbers retain numeric semantics through expansion and edits [1096.23ms]
+(pass) US-026-AC7: conformance comparison cannot conceal rounded decimals or opaque literal changes [1.67ms]
+
+tests/jsonld/compaction.test.ts:
+(pass) US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies [29722.53ms]
+(pass) US-026-AC9: compact exact values, list/JSON ordering, target context, options and copied edits [2317.12ms]
+(pass) US-026-AC9: required context, explicit policies, unknown content and isolated target contexts [130.06ms]
+
+tests/jsonld/to-rdf.test.ts:
+(pass) US-026-AC13: complete toRDF corpus retains sources, candidates and every gap [50727.45ms]
+(pass) US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits [5589.53ms]
+(pass) US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets [29.42ms]
+
+tests/jsonld/jsonld.test.ts:
+(pass) US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons [28716.83ms]
+(pass) US-026-AC4: loss policy, exact numbers, copies and explicit missing contexts [266.13ms]
+(pass) US-026-AC4: supplied contexts are isolated per operation and recover across formats [157.37ms]
+
+tests/jsonld/framing.test.ts:
+(pass) US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies [9440.20ms]
+(pass) US-026-AC10/11: exact values, views, edits, invalid unmatched frames and opaque controls [1787.58ms]
+(pass) US-026-AC10: framing option validation, unknown representation and context isolation [128.67ms]
+
+tests/jsonld/nest.test.ts:
+(pass) US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals [542.80ms]
+
+tests/rdf/merge.test.ts:
+(pass) US-025-AC7: all positive RDF source datasets merge with independent blank scopes [55091.49ms]
+(pass) US-025-AC7: shared labels remain linked within each input, never across inputs [65.98ms]
+(pass) US-025-AC7: unknown encodings block atomically and other metadata remains in source reports [51.97ms]
+
+tests/rdf/rename.test.ts:
+(pass) US-025-AC4: corpus IRI renames match native datasets through both UMF formats [6145.80ms]
+(pass) US-025-AC4: all term positions change while literal text, blank scope and source stay intact [54.94ms]
+(pass) US-025-AC4: collisions, absent terms, invalid IRIs and unknown encoding block atomically [165.80ms]
+
+tests/rdf/turtle.test.ts:
+(pass) US-025-AC5: full official Turtle corpus, expected graphs and candidate exports [19376.89ms]
+(pass) US-025-AC5: blank allocation, explicit labels, base resolution and literal lexemes are stable [110.84ms]
+(pass) US-025-AC5: named graph loss, missing base and RDF 1.2 syntax are explicit failures [49.87ms]
+
+ 38 pass
+ 0 fail
+ 24657 expect() calls
+Ran 38 tests across 14 files. [260.10s]

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
@@ -53,7 +54,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   for(const suffix of system==='tablespec'?['classification-browser','projection-browser']:['browser','projection-browser']){
    const file=`fixtures/validation/nullability-${system}-${suffix}.json`;
    assert.ok(Object.hasOwn(refresh.sha256,file),`Missing browser proof ${file}`);
-   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
+   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assertJsonDataEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
   }
  }
  for(const script of ['nullability-tablespec-classification-oracle.py','nullability-tablespec-projection-oracle.py','nullability-tablespec-execution-oracle.py'])assert.ok(refresh.runs.some((r:any)=>r.command.includes('scripts/core-ideals/'+script)),`Missing native command ${script}`);
@@ -92,8 +93,8 @@ async function bindings():Promise<Record<System,Binding>>{
  };
 }
 function retainPayloads(before:Document,after:Document){
- for(const [key,value] of Object.entries(before.extensions??{}))assert.deepEqual(after.extensions?.[key],value);
- for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assert.deepEqual(target.extensions[key],value);}
+ for(const [key,value] of Object.entries(before.extensions??{}))assertJsonDataEqual(after.extensions?.[key],value);
+ for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assertJsonDataEqual(target.extensions[key],value);}
 }
 export async function verifyNullabilityRoundTrips(){
  const all=await bindings(),coverage:Partial<Record<System,Record<string,number>>>={};
@@ -102,22 +103,22 @@ export async function verifyNullabilityRoundTrips(){
   for(const label of ['required','absent-allowed','unspecified'] as const)for(const loss of [false,true])for(const mode of ['strict','report'] as const){
    const source:Document={umf:'0.3.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:binding.namespace,elements:[{id:'e',name:'value',kind:'field',scalarType:'integer',extensions:{},...(loss?{future:{uninterpreted:['9007199254740993',null]}}:{})}]}]};
    const author=u.declareCoreNullability(source,{module:'m',element:'e'},label),before=u.copyJson(author),result=await binding.project(author,mode);counts.authoredCases++;
-   assert.deepEqual(author,before);assert.equal(result.mapping.origin,'authored');assert.equal(result.mapping.nullability,label);
+   assertJsonDataEqual(author,before);assert.equal(result.mapping.origin,'authored');assert.equal(result.mapping.nullability,label);
    if(loss&&mode==='strict'){assert.equal(result.status,'blocked');assert.equal(result.target,undefined);assert.ok(result.residuals.length);counts.strictBlocks++;continue;}
    assert.equal(result.status,'projected');assert.ok(result.target);
    if(loss){assert.ok(result.residuals.some((r:any)=>r.path.endsWith('/future')));counts.reportResiduals++;}else assert.equal(result.residuals.length,0);
-   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assert.deepEqual(await binding.recover(receipt),author.target);counts.idealRecoveries++;}
+   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assertJsonDataEqual(await binding.recover(receipt),author.target);counts.idealRecoveries++;}
   }
   for(const c of binding.natives)for(const unresolved of [false,true])for(const mode of ['strict','report'] as const){
    const source=u.copyJson(c.source) as unknown as Document;source.vocabularies.future={version:'1.0.0'};source.extensions={...source.extensions,future:{uninterpreted:['9007199254740993',null]}};
-   const before=u.copyJson(source),result=c.classify(source,mode,unresolved);counts.nativeCases++;assert.deepEqual(source,before);
+   const before=u.copyJson(source),result=c.classify(source,mode,unresolved);counts.nativeCases++;assertJsonDataEqual(source,before);
    assert.equal(result.mapping.origin,'classified');assert.equal(result.mapping.nullability,unresolved?'unspecified':c.label);
    if(unresolved&&mode==='strict'){assert.equal(result.status,'blocked');assert.equal(result.target,undefined);assert.ok(result.residuals.length);counts.nativeBlocks++;continue;}
    assert.equal(result.status,'classified');assert.ok(result.target);retainPayloads(source,result.target);
    if(unresolved)assert.ok(result.residuals.length);
-   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assert.deepEqual(c.recover(receipt),c.expected);counts.nativeRecoveries++;}
+   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assertNativeRepresentationEqual(c.recover(receipt),c.expected);counts.nativeRecoveries++;}
   }
-  assert.deepEqual(counts,{authoredCases:12,strictBlocks:3,reportResiduals:3,idealRecoveries:18,nativeCases:8,nativeBlocks:2,nativeRecoveries:12});
+  assertJsonDataEqual(counts,{authoredCases:12,strictBlocks:3,reportResiduals:3,idealRecoveries:18,nativeCases:8,nativeBlocks:2,nativeRecoveries:12});
  }
  return coverage;
 }

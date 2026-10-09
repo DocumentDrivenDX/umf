@@ -14,6 +14,28 @@ three targets is not delivered. The owner's follow-up selects
 after a defined UMF finalization gate. Existing US-050 prerequisites must be
 reconciled when that gate is framed.
 
+## Declarative action requirements and design
+
+Owner-directed action planning (2026-10-08) is captured in
+[FEAT-008](01-frame/features/FEAT-008-declarative-actions.md),
+[US-055](01-frame/user-stories/US-055-declarative-actions.md),
+[CONTRACT-052](02-design/contracts/CONTRACT-052-declarative-actions.md),
+[SD-008](02-design/solution-designs/SD-008-declarative-actions.md),
+[TD-055](02-design/technical-designs/TD-055-declarative-actions.md) and
+[STP-055](03-test/test-plans/STP-055-declarative-actions.md).
+[CONTRACT-053](02-design/contracts/CONTRACT-053-transactional-action-profile.md) adds
+the proposed first executable consumer profile and protocol. These draft artifacts
+define a local core 0.8.0 `umf.actions` extension for authored declarations and
+executor capability comparison. An experimental portable implementation and bounded
+rule/selector interpretation now have [scoped passing evidence](04-build/evidence/actions-certification.md).
+The transactional reference consumer is allocated in
+[US-056](01-frame/user-stories/US-056-transactional-actions.md),
+[TD-056](02-design/technical-designs/TD-056-transactional-actions.md) and
+[STP-056](03-test/test-plans/STP-056-transactional-actions.md). Its native store and
+request/authentication foundations have partial evidence; full execution, complete
+qualification and release acceptance remain unfinished. Execution remains
+consumer-owned; DDD operation metadata and native Delta log actions are separate.
+
 ## Shared schema properties
 
 Owner-directed core 0.8.0 adds titles, aliases, typed examples, collection size,
@@ -1132,3 +1154,12 @@ and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
+
+Action design investigation (2026-10-08): [provenance](00-discover/actions-requirement-provenance.md),
+[decision experiments](02-design/actions-investigation.md),
+[prior art/access](02-design/actions-prior-art-decisions.md),
+[executed evidence and gate status](04-build/evidence/actions-plan-execution.md).
+
+[Executed formal action analysis](04-build/evidence/actions-formal-analysis.md)
+records semantic counterexamples, corrected design, bounded TLC safety/progress
+and independent native-history conformance. Expanded implementation remains open.

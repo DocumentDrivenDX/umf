@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 346,
-  "passed": 346,
+  "schemas": 351,
+  "passed": 351,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -377,6 +377,13 @@
     {
       "path": "spec/core/key-tuple-operation-v2.schema.json",
       "id": "urn:umf:core:key-tuple-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/key-tuple-operation-v3.schema.json",
+      "id": "urn:umf:core:key-tuple-operation:3.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -958,6 +965,34 @@
     {
       "path": "spec/examples/orders-consumers.schema.json",
       "id": "urn:umf:example:orders-consumers:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/assessment.schema.json",
+      "id": "urn:umf:actions:assessment:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/executor-profile.schema.json",
+      "id": "urn:umf:actions:executor-profile:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/inspection.schema.json",
+      "id": "urn:umf:actions:inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/schema.json",
+      "id": "urn:umf:actions:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

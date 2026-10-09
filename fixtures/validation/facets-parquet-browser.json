@@ -1,6 +1,6 @@
 {
   "scope": "Parquet facet helper interpretation, public classification, authored projection and composed recovery in Chromium; prior concept gates remain separate",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "bindingAccepted": false,
   "nativeEquivalence": false,
   "runs": [
@@ -35,10 +35,10 @@
   ],
   "externalRequests": [],
   "sha256": {
-    "dist/parquet-facet-carrier.js": "b6bb90a54583dcfcc512e4acf65a2a81ab74e434690ade27d8eb3f82bd02fd57",
+    "dist/parquet-facet-carrier.js": "52976c3bc2b82a7e7d8fd8c0b275d0d6c79f138a8676cb93f75a2bab95dd5fc3",
     "dist/parquet-facet-type.js": "253d38b194f449f66063c89c18f893d1d6a12c7ccead03cc6ce1438860624609",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
-    "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
+    "dist/umf.js": "f168dae54fdc884b67f4e4b8c27a5a8b415bf258eb7b5dce21102a3785afabfc",
+    "fixtures/parquet/cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
     "fixtures/parquet/facets/carrier-0-0.parquet": "2ab9844a2fcaf56a36638facea12aff16005a78443a3e33eb109ab901b488db1",
     "fixtures/parquet/facets/carrier-0-1.parquet": "7dca9ced67fe2f40608336705dc1f3c4b1a96897aadb883197384741ee8ee51b",
     "fixtures/parquet/facets/carrier-1-0.parquet": "5edabd25f9d8126ac7f7a09c9d44ea2263ef5866555d11fcd597941bb441d441",
@@ -106,13 +106,13 @@
     "fixtures/parquet/facets/uint32-min-plain.parquet": "04fcb314c1a07a60eab32c5d5c463d5975860920b181b6a8ab30fbbc5f9a7d62",
     "fixtures/parquet/facets/uint64-min-plain.parquet": "731d18b44080bd98b48ab885c105ff12bc792f2436e7a8ba61a10b902c85d594",
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
-    "fixtures/validation/facets-parquet-carrier-browser.json": "3373fa28a08316c7251bdb81b20a997bce5452f3d36638c2a91141ba514c74a0",
+    "fixtures/validation/facets-parquet-carrier-browser.json": "334fcd8906912f02cdcc78f2f22d58f4ab4e4fabf056fa0d48f88280e395dd87",
     "fixtures/validation/facets-parquet-carrier-corpus.json": "4ec421cbbc5f0fd77e9dc5282972d7c70866d28fbcf5c9e4c80a474f1e1eab41",
-    "fixtures/validation/facets-parquet-classification-browser.json": "c15022f69db764b0bc38a644d5e93c436b70c8c9fd475b455ac0e4deae8da1fe",
-    "fixtures/validation/facets-parquet-discovery.json": "4756187491f07f797d3b6fc98d064ed71b2164912a9e5224efcf83f0158f5119",
-    "fixtures/validation/facets-parquet-projection-browser.json": "e373a0c7bb254cceb4be93477922f2bc0f0945cbb0fad673501ed33c747248d9",
+    "fixtures/validation/facets-parquet-classification-browser.json": "a7e217b493bf23401a83c02172655bcd3f121975f7e867a1448714b34f2c0cee",
+    "fixtures/validation/facets-parquet-discovery.json": "cf83e209b6f08b092c61d86a963f648f6539f20656028625ddf94f157b738cc2",
+    "fixtures/validation/facets-parquet-projection-browser.json": "6ad6d527f89746ae7484ea328e8a5483d7a47f95251ef999c9886dc5f37ddb7b",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
-    "fixtures/validation/facets-parquet-type-browser.json": "1c394ba658e2f65f9bd617450e6c5edabdf5b0dd8493ef14ca104ead0844aa15",
+    "fixtures/validation/facets-parquet-type-browser.json": "39c4de6e50b601a8754141479c1bf67ff38773b585d83c9b60eb7adb922d94c6",
     "scripts/core-ideals/facets-parquet-browser.ts": "31a5a7d0574e8c27d4ef757a92c8c1d045d7e4037d54b3592e7d7d25608d69ed",
     "scripts/core-ideals/facets-parquet-carrier-browser.ts": "41fbc6e468b18f9502043a4c3d94888dbb700a48a93f7107a78527ee1853483b",
     "scripts/core-ideals/facets-parquet-classification-browser.ts": "6c6fad4dc2bc459646eebfdb19c1237bf960f02b196508369d9dd3bead875edf",
@@ -121,7 +121,7 @@
     "scripts/core-ideals/facets-parquet-type-browser.ts": "6b4f0c9689deb88e4c071bfad081911691ad13a101608edc7e3d49a09af833f6",
     "spec/core/facets-parquet-projection.schema.json": "cb9d3321098e35aef006a9c84735f2f7cf335ecaa3103711c35a2ff3010c9601",
     "spec/core/parquet-facet-classification.schema.json": "44c479dbc8fcb66e87e9d75bc9aaa39bfa5bc7c180483b774ff1f9c395f8075e",
-    "spec/extensions/parquet-facets/package.json": "b3f36163a419b6eee24860618dcbcdbcd07058fd669d158faeea9afd2eb56307",
+    "spec/extensions/parquet-facets/package.json": "a6f42fa7e0836ed4d1bc1f862629cadc292e337fc48384c79e1da87e394f86d8",
     "spec/extensions/parquet-facets/schema.json": "66203b4bf4b6f81eea926afc8e765809f67c686c12d90b445a14665c5e40dafa",
     "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
     "src/adapters/parquet/facet-type.ts": "b634636284065f305ba10f49de55be46c0d36deda6ffbfa9748274903fdf7ecd",
@@ -130,8 +130,13 @@
     "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "f3dd67075eade503d082b5a6a251ae398361e8a64b8d310ea77eecf4a066c5bf",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add"
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785"
+  },
+  "normalizedFingerprintAliases": {
+    "fixtures/parquet/cardinality/array-duplicates-0.parquet": [
+      "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet"
+    ]
   }
 }

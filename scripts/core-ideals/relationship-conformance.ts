@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import * as u from '../../src';
 import {relationshipExtraCases} from './relationship-extras-cases';
@@ -19,7 +20,7 @@ export function verifyRelationshipAuthoredCorpus(){
   let recoveries=0,refusals=0;
   for(const format of ['json','yaml'] as const){
    const saved=u.readJsonValue(u.writeJsonValue(upgrade as any,format),format) as unknown as typeof upgrade;
-   const rolled=u.rollbackRelationshipEnvelope(saved,source);assert.deepEqual(rolled.target,legacy);assert.deepEqual(rolled.source,source);u.verifyRelationshipTransition(rolled);recoveries++;
+   const rolled=u.rollbackRelationshipEnvelope(saved,source);assertJsonDataEqual(rolled.target,legacy);assertJsonDataEqual(rolled.source,source);u.verifyRelationshipTransition(rolled);recoveries++;
    const forged=structuredClone(saved);forged.target.id='forged';assert.throws(()=>u.rollbackRelationshipEnvelope(forged,source));refusals++;
   }
   const extras=[];
@@ -29,11 +30,11 @@ export function verifyRelationshipAuthoredCorpus(){
    assert.equal(r.status,'projected');const current=u.importRelationshipExtraArchive(r.nativeArchive!,'fresh-gate');
    for(const format of ['json','yaml'] as const){
     const saved=u.readJsonValue(u.writeJsonValue(r as any,format),format) as unknown as typeof r;
-    assert.deepEqual(u.recoverRelationshipExtraIdeal(saved,current),source);
-    assert.deepEqual(u.recoverRelationshipExtraNative(saved,current).archive,r.nativeArchive);
+    assertJsonDataEqual(u.recoverRelationshipExtraIdeal(saved,current),source);
+    assertJsonDataEqual(u.recoverRelationshipExtraNative(saved,current).archive,r.nativeArchive);
     const classified=u.classifyRelationshipExtra(current,{system:template.request.system,mode:'report',archive:r.nativeArchive!});
     assert(!classified.target!.modules.some(m=>Object.hasOwn(m,'relationships')),'Native classification invented intent');
-    assert.deepEqual(u.recoverRelationshipExtraNative(classified,classified.target!).archive,r.nativeArchive);recoveries+=3;
+    assertJsonDataEqual(u.recoverRelationshipExtraNative(classified,classified.target!).archive,r.nativeArchive);recoveries+=3;
    }
    const forged=structuredClone(r);forged.residuals.pop();assert.throws(()=>u.verifyRelationshipExtra(forged,current));refusals++;
    extras.push({system:template.request.system,mode:'report',status:r.status,residuals:r.residuals.length});
@@ -54,7 +55,7 @@ export async function verifyRelationshipBindingRoundTrips(){
 // @covers US-045-AC9 @covers US-045-AC10
 export async function verifyRelationshipConformance(){
  const evidence=await verifyRelationshipEvidence(),authored=verifyRelationshipAuthoredCorpus(),roundTrips=await verifyRelationshipBindingRoundTrips();
- assert.deepEqual(await verifyRelationshipEvidence(),evidence,'Evidence changed during conformance');
+ assertJsonDataEqual(await verifyRelationshipEvidence(),evidence,'Evidence changed during conformance');
  const admission={idealAdmitted:true,minimumUsefulPriorityMappings:2,usefulSystems:evidence.usefulSystems,usefulMappings:evidence.usefulMappings,qualification:{path:'fixtures/validation/relationship-gate-refresh.json',sha256:evidence.refreshSha256,versions:evidence.versions},authored};
  const delivery={priorityDelivery:true,systems:['postgresql','sqlserver','tablespec','avro','parquet'],extras:['graphql','rdf','linkml'],evidence,roundTrips};
  return {admission,delivery,nativeEquivalence:false,limits:[

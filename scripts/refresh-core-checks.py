@@ -6,7 +6,8 @@ OUT = Path('fixtures/validation/core-check-refresh')
 BASE = 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def source_inputs():
-    paths=subprocess.check_output(['git','ls-files','src','scripts','spec','tests','native','package.json','bun.lock'],text=True).splitlines()
+    paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z','--','src','scripts','spec','tests','native','package.json','bun.lock']).decode().split('\0')
+    paths=sorted(set(p for p in paths if p))
     return {p:digest(p) for p in paths}
 def inventory(name):
     return json.loads(subprocess.check_output(['git','show',f'{BASE}:fixtures/validation/{name}.json']))

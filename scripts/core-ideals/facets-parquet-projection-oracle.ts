@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
@@ -8,7 +9,7 @@ for(const c of parquetFacetProjectionCases()){
  const result=projectFacetsToParquet(c.author,c.request);
  if(result.status==='blocked'){assert.equal(result.target,undefined);blocked++;continue;}
  const bytes=exportParquetCapture(result.target!),path=`fixtures/parquet/facets/projection-${c.id}.parquet`;await Bun.write(path,bytes);
- for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;assert.deepEqual(recoverFacetsFromParquet(receipt,bytes),c.author.target);recoveries++;}
+ for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;assertJsonDataEqual(recoverFacetsFromParquet(receipt,bytes),c.author.target);recoveries++;}
  const carrier=c.request.carrier;
  rows.push({id:c.id,path,request:c.request,outcome:result.mapping.outcome,residuals:result.residuals.map(r=>({path:r.path,reason:r.reason,outcome:r.outcome})),sha256:createHash('sha256').update(bytes).digest('hex'),expectNative:!(carrier.kind==='decimal'&&carrier.precision>76)});
 }

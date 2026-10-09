@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 /** Host-only SQL Server 2022 generated relationship enforcement oracle. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
@@ -20,7 +21,7 @@ try{
  async function probe(id:string,statement:string,error:number|number[]){const escaped=statement.replaceAll("'","''"),r=await json(`SET NOCOUNT ON; DECLARE @error int=0,@message nvarchar(2048)=NULL; BEGIN TRY EXEC sys.sp_executesql N'${escaped}'; END TRY BEGIN CATCH SET @error=ERROR_NUMBER(); SET @message=ERROR_MESSAGE(); END CATCH; SELECT @error AS error,@message AS message FOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;`);assert.ok((Array.isArray(error)?error:[error]).includes(r.value.error),id+': '+JSON.stringify(r.value));rows.push({id,statement,expected:error,actual:r.value});}
  for(const [i,c] of relationshipSqlServerCases().entries()){
   c.request.namespace='relationship_'+i;const r=projectRelationshipToSqlServer(c.source,c.author,c.binding,c.request);assert.equal(r.status,c.expected);if(!r.target)continue;receipts.push(r);
-  await sql('umf_relationships',`CREATE SCHEMA ${q(c.request.namespace)};`);await sql('umf_relationships',r.target.sql);assert.deepEqual(recoverRelationshipSqlServerIdeal(r,r.target),c.source);
+  await sql('umf_relationships',`CREATE SCHEMA ${q(c.request.namespace)};`);await sql('umf_relationships',r.target.sql);assertJsonDataEqual(recoverRelationshipSqlServerIdeal(r,r.target),c.source);
   const p=c.request,table=(name:string)=>q(p.namespace)+'.'+q(name),sourceTable=table('Source'),targetTable=table(c.name.startsWith('self-')?'Source':'Target'),sourceNames=p.sourceKey.columns.map(x=>x.name),targetNames=p.targetKey.columns.map(x=>x.name),values=(n:number,k:number)=>Array(k).fill(String(n)).join(', '),insert=(t:string,names:string[],vals:string)=>`INSERT INTO ${t} (${tuple(names)}) VALUES (${vals});`;
   const target=(n:number)=>insert(targetTable,targetNames,values(n,targetNames.length)),source=(n:number,ref:string)=>insert(sourceTable,[...sourceNames,...p.referenceColumns],values(n,sourceNames.length)+', '+ref);
   if(p.junction){

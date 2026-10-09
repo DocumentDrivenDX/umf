@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {tableSpecKeyProjectionCases} from './key-tablespec-projection-cases';
@@ -24,7 +25,7 @@ export async function verifyKeyAuthoredRoundTrips() {
   const count = {cases: binding.rows.length, projected: 0, blocked: 0, recoveries: 0, forgedRefusals: 0, strictBlocks: 0, usefulStoredValueMappings: 0};
   for (const row of binding.rows) {
    const before = structuredClone(row), result = await binding.project(row);
-   assert.deepEqual(row, before, `${system}/${row.name}: mutated author input`);
+   assertJsonDataEqual(row, before, `${system}/${row.name}: mutated author input`);
    assert.equal(result.status, row.expected, `${system}/${row.name}`);
    assert.ok(Array.isArray(result.residuals));
    for (const residual of result.residuals) {
@@ -49,7 +50,7 @@ export async function verifyKeyAuthoredRoundTrips() {
    }
    for (const format of ['json', 'yaml'] as const) {
     const stored = u.readJsonValue(u.writeJsonValue(result, format), format) as any;
-    assert.deepEqual(await binding.recover(stored, imported), row.source);
+    assertJsonDataEqual(await binding.recover(stored, imported), row.source);
     count.recoveries++;
     const forged = structuredClone(stored); forged.mappings[0].keyId = 'forged';
     await assert.rejects(async () => binding.recover(forged, stored.target)); count.forgedRefusals++;

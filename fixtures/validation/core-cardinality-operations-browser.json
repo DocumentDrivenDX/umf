@@ -1,6 +1,6 @@
 {
   "scope": "Experimental core 0.4.0 Cardinality inspection, authoring, verified receipts and migration recovery; native bindings remain unfinished",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "recoveries": 18,
     "transitions": 16,
@@ -12,15 +12,15 @@
   "externalRequests": [],
   "fingerprints": {
     "scripts/core-cardinality-operations-browser.ts": "444e6403f0975952bed791e39e544079fdd11da989fa004a22f563b8b46aad6e",
-    "spec/core/cardinality-document.schema.json": "04ce91d7af9a4d144a6b51fb8ae35ddd0ed3d9158f68208a06b3a717799a7018",
-    "spec/core/cardinality-transition.schema.json": "5ebf87ec95c193716add27bc17c5324050b60519b74fcc50c807ef7fca80e8db",
+    "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
+    "spec/core/cardinality-transition.schema.json": "7542f458ae6f04cbd38bb26ddbb3b3b428c8c288ee792e844226a1d5e487ca0f",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "018ec22d88de99ed75bab562985ae7c586aa0de3a141a9e55d93f58b8d84f65e",
     "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
-    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce"
+    "src/index.ts": "f3dd67075eade503d082b5a6a251ae398361e8a64b8d310ea77eecf4a066c5bf",
+    "dist/umf.js": "f168dae54fdc884b67f4e4b8c27a5a8b415bf258eb7b5dce21102a3785afabfc"
   }
 }

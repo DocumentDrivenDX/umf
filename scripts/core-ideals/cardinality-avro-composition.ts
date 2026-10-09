@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {copyJson} from '../../src/model/json';
 import type {Element} from '../../src/model/types';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 import {upgradeCardinalityEnvelope} from '../../src/model/cardinality-transition';
@@ -25,9 +26,9 @@ export function verifyAvroCardinalityComposition(projection:CardinalityAvroProje
  let nativeRecoveries=0,idealRecoveries=0;
  for(const format of ['json','yaml'] as const){
   const nativeReceipt=readJsonValue(writeJsonValue(classified,format),format) as unknown as typeof classified;
-  assert.deepEqual(recoverAvroCardinalityBundle(nativeReceipt,nativeReceipt.target!),bundle);nativeRecoveries++;
+  assert.deepEqual(copyJson(recoverAvroCardinalityBundle(nativeReceipt,nativeReceipt.target!)),copyJson(bundle));nativeRecoveries++;
   const idealReceipt=readJsonValue(writeJsonValue(projection,format),format) as unknown as typeof projection;
-  assert.deepEqual(recoverCardinalityFromAvro(idealReceipt,bundle),projection.author.target);idealRecoveries++;
+  assert.deepEqual(copyJson(recoverCardinalityFromAvro(idealReceipt,bundle)),copyJson(projection.author.target));idealRecoveries++;
  }
  return {nativeRecoveries,idealRecoveries,nativeCardinality:classified.mapping.cardinality,authoredCardinality:projection.mapping.cardinality,nativeNodes:classified.mapping.nodes.length};
 }

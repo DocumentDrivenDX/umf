@@ -2307,7 +2307,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "80c0c2f79863",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -2374,7 +2374,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "0280c0c2f79863",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -2453,7 +2453,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "80c0c2f79863",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -2520,7 +2520,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "8089d3dfe5fa8606",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -2587,7 +2587,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "028089d3dfe5fa8606",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -2666,7 +2666,7 @@
           "operation": "present",
           "status": "accepted",
           "hex": "8089d3dfe5fa8606",
-          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffb7d1b530>)",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffff9c1071d0>)",
           "inputNullCoercedToFalse": false,
           "floatNarrowing": false
         },
@@ -4846,6 +4846,6 @@
   ],
   "fingerprints": {
     "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
-    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96"
+    "/work/scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96"
   }
 }

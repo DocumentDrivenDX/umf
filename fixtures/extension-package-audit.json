@@ -1,8 +1,17 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 59,
-  "passed": 59,
+  "packages": 60,
+  "passed": 60,
   "results": [
+    {
+      "path": "spec/extensions/actions/package.json",
+      "id": "umf.actions",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
       "id": "umf.arrow.flatbuffer",

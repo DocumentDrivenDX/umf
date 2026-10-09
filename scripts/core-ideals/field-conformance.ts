@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
@@ -90,14 +91,16 @@ function recoverNative(receipt:NativeFieldClassification){
   case 'classify-tablespec-field':verifyTableSpecFieldClassification(receipt,receipt.target);assert.equal(exportTableSpec(receipt.target),exportTableSpec(receipt.source));break;
   case 'classify-postgresql-field':assert.equal(recoverPostgresqlFieldCapture(receipt,receipt.target),receipt.request.nativeSource);break;
   case 'classify-sqlserver-field':assert.equal(recoverSqlServerFieldCapture(receipt,receipt.target),receipt.request.nativeSource);break;
-  case 'classify-avro-field':assert.deepEqual(recoverAvroFieldBundle(receipt,receipt.target),{schema:receipt.request.nativeSource,dependencies:receipt.request.dependencies??[]});break;
+  case 'classify-avro-field':assertJsonDataEqual(recoverAvroFieldBundle(receipt,receipt.target),{schema:receipt.request.nativeSource,dependencies:receipt.request.dependencies??[]});break;
   case 'classify-parquet-field':assert.deepEqual(recoverParquetFieldBytes(receipt,receipt.target),exportParquetCapture(receipt.source));break;
  }
  // Kind classification must leave every native extension payload untouched.
- assert.deepEqual(receipt.target.extensions,receipt.source.extensions);
+ assert.equal(receipt.target.extensions===undefined,receipt.source.extensions===undefined);
+ if(receipt.source.extensions!==undefined)assertJsonDataEqual(receipt.target.extensions,receipt.source.extensions);
  for(const module of receipt.source.modules)for(const element of module.elements){
   const after:Element|undefined=receipt.target.modules.find(m=>m.id===module.id)?.elements.find(e=>e.id===element.id);
-  assert.deepEqual(after?.extensions,element.extensions);
+  assert.ok(after,'Native element must survive field classification: '+element.id);
+  assertJsonDataEqual(after.extensions,element.extensions);
  }
 }
 
@@ -106,7 +109,7 @@ export async function verifyFieldRoundTrips(){
  for(const row of await fieldReportCases()){
   const report=await inspectFieldProjection(row.receipt,backend),counts=coverage[row.system]!;
   assert.equal(report.status,row.variant==='loss'&&row.receipt.request.mode==='strict'?'blocked':'projected');
-  assert.equal(report.mapping.origin,'authored');assert.deepEqual(report.mapping.binding,row.receipt.binding);
+  assert.equal(report.mapping.origin,'authored');assertJsonDataEqual(report.mapping.binding,row.receipt.binding);
   if(row.variant==='loss'){
    assert.ok(report.residuals.some(r=>r.sourcePath.endsWith('/future')&&JSON.stringify(r.sourceValue)===JSON.stringify({constraint:'retain',exact:'9007199254740993'})));
   }
@@ -116,12 +119,12 @@ export async function verifyFieldRoundTrips(){
   if(row.variant==='clean')counts.usefulTargets++;else counts.reportResiduals++;
   for(const format of ['json','yaml'] as const){
    const receipt=readJsonValue(writeJsonValue(copyJson(row.receipt),format),format) as unknown as AuthoredFieldProjection;
-   assert.deepEqual(await recoverAuthored(receipt),row.receipt.source);counts.idealRecoveries++;
+   assertJsonDataEqual(await recoverAuthored(receipt),row.receipt.source);counts.idealRecoveries++;
   }
  }
  for(const input of await classificationReportCases()){
   const report=inspectFieldClassification(input),counts=coverage[input.operation.replace('classify-','').replace('-field','')]!;
-  assert.equal(report.mapping.origin,'classified');assert.deepEqual(report.mapping.nativeFragment,input.mapping.nativeFragment);
+  assert.equal(report.mapping.origin,'classified');assertJsonDataEqual(report.mapping.nativeFragment,input.mapping.nativeFragment);
   if(input.status==='blocked'){
    assert.equal(input.target,undefined);assert.ok(report.residuals.some(r=>r.sourceValue==='future-kind'));counts.conflictBlocks++;continue;
   }

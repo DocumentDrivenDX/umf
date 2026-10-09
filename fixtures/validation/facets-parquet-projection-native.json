@@ -2210,7 +2210,7 @@
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-projection-native.py": "504c3350db1e63441805401fd85bb6cef2d4e16495165aae80fce941a48d546c",
+    "scripts/core-ideals/facets-parquet-projection-native.py": "504c3350db1e63441805401fd85bb6cef2d4e16495165aae80fce941a48d546c",
     "fixtures/parquet/facets/projection-0-declared-schema-carrier-only-report.parquet": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
     "fixtures/parquet/facets/projection-0-declared-schema-carrier-only-strict.parquet": "412528cf260630ccbeef4a26eda4135235b912462fd20126859fbf055a13432a",
     "fixtures/parquet/facets/projection-0-declared-schema-metadata-only-report.parquet": "f3ab572d276a2ab6dc16a99214dca47c5b4d80a5b164145bcdd1d076100571bf",
@@ -2390,10 +2390,15 @@
     "fixtures/parquet/facets/projection-9-pyarrow-21-native-type-strict.parquet": "3e26cdad431f9fdb45604cbd4df1dff5c96c11236343176d64c3fed77e2611da",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
     "scripts/core-ideals/facets-parquet-projection-cases.ts": "646ac95a1b937dc3952b81ae66f8fe0dd47476f361d7a8d9f3f4e9ef931d3c6e",
-    "scripts/core-ideals/facets-parquet-projection-oracle.ts": "276135fa623bdd2ef3242dd66ce27397ab6fe3e4a9d4574e8d98506764233673",
+    "scripts/core-ideals/facets-parquet-projection-oracle.ts": "992d8ff7c254bd163a595add98031e116807112a5fc0863cdb3cdc83b7ad1666",
     "spec/core/facets-parquet-projection.schema.json": "cb9d3321098e35aef006a9c84735f2f7cf335ecaa3103711c35a2ff3010c9601",
     "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
     "src/core-ideals/facets-parquet-projection.ts": "22b8a129ddb2df7d5bba0e331e7ad43ba1a9eba6e8dbbf06f0dcc24fb2ad2033",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-parquet-projection-native.py": [
+      "/work/scripts/core-ideals/facets-parquet-projection-native.py"
+    ]
   }
 }

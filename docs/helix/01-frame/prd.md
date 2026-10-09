@@ -40,7 +40,8 @@ brief supplied on 2026-09-20. FR-1–FR-33 preserve the original requirement
 numbers. Original item 34 appears under Non-Goals; FR-34–FR-38 are additions
 from the later brief. FR-39–FR-41 record subsequent browser, DDD, and metamodel-consumer direction.
 FR-42–FR-44 record authored relationships, physical bindings and directed
-generation requested by a model-authoring consumer.
+generation requested by a model-authoring consumer. FR-45 records declarative
+action requirements/design selected on 2026-10-08 from consumer discovery input.
 All requirements remain product obligations; this draft does
 not assert that every ecosystem must ship in the first release.
 
@@ -168,7 +169,7 @@ six mandatory product capabilities without demoting any to optional status:
 | Capability | Functional Requirements |
 | --- | --- |
 | Semantic representation and core | FR-2, FR-3, FR-20, FR-21, FR-28, FR-35 |
-| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40 |
+| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40, FR-45 |
 | Native interchange and durable use | FR-1, FR-6, FR-26, FR-29, FR-30, FR-33, FR-36, FR-38, FR-39, FR-41 |
 | Translation and fidelity | FR-7, FR-8, FR-9, FR-10, FR-24, FR-25 |
 | Identity, composition, and evolution | FR-15, FR-16, FR-17, FR-18, FR-19 |
@@ -264,6 +265,23 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   DDD intent must survive independently of storage, API, and execution choices;
   target bindings must not redefine source meaning. Candidate common concepts
   graduate only under FR-28's evidence and compatibility requirements.
+
+- **FR-45** — **Discoverable action contracts.** Model authors must be able to
+  describe typed inputs/output/failures, preconditions and postconditions, permitted
+  read/write boundaries, result identities/version/freshness obligations, caller-key
+  idempotency, attribution, authorization profiles and inert execution bindings.
+  The first graph consumer requires human attribution, invocation roles and
+  ordered primitive recipes or a qualified named handler in an independently
+  versioned extension. Consumers must distinguish declared effects from verified
+  behavior and refuse unsupported relevant semantics. Initial atomicity is scoped
+  to one executor-selected store; execution remains outside UMF under NFR-50.
+  DDD/native/API operations must not implicitly become actions. FEAT-008/US-055
+  define the local-document declaration slice. Executable profiles must state
+  rule/selector semantics, authorization timing, revision/replay protocol,
+  concurrency and enforced handler access; these remain consumer-owned. Preview
+  is advisory and audit must preserve attribution without leaking protected data.
+  Owner direction on 2026-10-08
+  selects requirements/design, not release order or downstream execution.
 
 ### Subsystem: Native Interchange and Durable Use
 
@@ -472,6 +490,7 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-42 | Author one-to-one, many-to-one, many-to-many, self and heterogeneous associations; classify an undeclared native FK | Authored endpoint meaning is inspectable; native observations retain refinements without inventing intent; two-priority admission and five-priority delivery remain distinct |
 | FR-43 | Bind one logical order model separately to PostgreSQL and Delta with different storage/index choices | Logical IDs and meaning agree; index availability comes only from the selected binding; unsupported choices report residuals and remain recoverable |
 | FR-44 | Generate DDL and SDL from an authored order/customer/product model with an association carrying fields | Outputs pass native adapters and versioned oracles; aggregate/invariant, endpoint and storage losses are reported; retained source and original native archives recover |
+| FR-45 | Author a create-and-link action, retain unknown content and assess an executor profile | Typed targets and obligations survive; unchecked/unsupported meaning blocks eligibility; no metadata check implies execution |
 
 ## Technical Context
 

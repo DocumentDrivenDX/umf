@@ -1,6 +1,6 @@
 {
   "scope": "Experimental public Parquet facet classification and retained byte recovery; author projection and full binding acceptance remain separate",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 180,
     "classified": 101,
@@ -77,8 +77,8 @@
   "bindingAccepted": false,
   "nativeEquivalence": false,
   "sha256": {
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
-    "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
+    "dist/umf.js": "f168dae54fdc884b67f4e4b8c27a5a8b415bf258eb7b5dce21102a3785afabfc",
+    "fixtures/parquet/cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
     "fixtures/parquet/facets/decimal-3-2-59-plain.parquet": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
     "fixtures/parquet/facets/fixed2-6162-plain.parquet": "65e9d052acd3285947099af117def2a555918da047935cf2f0b4a90a70bf387a",
     "fixtures/parquet/facets/float32-narrow-plain.parquet": "f4de1f1222de93f269db555818d43f1035a008d378c076661120bb9b28c14d4e",
@@ -94,11 +94,16 @@
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
     "scripts/core-ideals/facets-parquet-classification-browser.ts": "6c6fad4dc2bc459646eebfdb19c1237bf960f02b196508369d9dd3bead875edf",
     "spec/core/parquet-facet-classification.schema.json": "44c479dbc8fcb66e87e9d75bc9aaa39bfa5bc7c180483b774ff1f9c395f8075e",
-    "spec/extensions/parquet-facets/package.json": "b3f36163a419b6eee24860618dcbcdbcd07058fd669d158faeea9afd2eb56307",
+    "spec/extensions/parquet-facets/package.json": "a6f42fa7e0836ed4d1bc1f862629cadc292e337fc48384c79e1da87e394f86d8",
     "spec/extensions/parquet-facets/schema.json": "66203b4bf4b6f81eea926afc8e765809f67c686c12d90b445a14665c5e40dafa",
     "src/adapters/parquet/facet-type.ts": "b634636284065f305ba10f49de55be46c0d36deda6ffbfa9748274903fdf7ecd",
     "src/core-ideals/facets-parquet.ts": "68b0538bf077d339024f1cb10eb8a739643afdbbff44bf899bd95fdb21d35dcb",
     "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d"
+    "src/index.ts": "f3dd67075eade503d082b5a6a251ae398361e8a64b8d310ea77eecf4a066c5bf"
+  },
+  "normalizedFingerprintAliases": {
+    "fixtures/parquet/cardinality/array-duplicates-0.parquet": [
+      "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet"
+    ]
   }
 }

@@ -344,7 +344,7 @@
     "message": "Column 'id' is declared non-nullable but contains nulls"
   },
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/key-parquet-discovery-native.py": "672a65bf06d6a537b5345742a8ac2aa41858cd077411de5276a37cd0dd73ea2a",
+    "scripts/core-ideals/key-parquet-discovery-native.py": "672a65bf06d6a537b5345742a8ac2aa41858cd077411de5276a37cd0dd73ea2a",
     "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
     "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736",
     "native/parquet/sources/LogicalTypes.md": "01ad5a573ec5b6c3f4c5bba07f3ef708acf1ecca48d09d6edd566df554eeb837",
@@ -360,5 +360,10 @@
     "fixtures/parquet/keys/float-narrowing.parquet": "f6c05727448129a745a134a1122622dd16f3bedbfd7fe1ed97729fa9e2216cb1",
     "fixtures/parquet/keys/integer-input-truncation.parquet": "dd781b61ecbbcf528cc27ce7af66ab5248303067285d154a8357760a31c769f6",
     "fixtures/parquet/keys/binary-metadata.parquet": "695d17f5b8bbc8d94ad622c8e964b3b16388754e3d7549c16ac210dc8891c62b"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/key-parquet-discovery-native.py": [
+      "/work/scripts/core-ideals/key-parquet-discovery-native.py"
+    ]
   }
 }

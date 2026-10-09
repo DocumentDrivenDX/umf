@@ -1,3 +1,4 @@
+import {assertJsonDataEqual, assertNativeRepresentationEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
@@ -114,7 +115,7 @@ export async function verifyFacetRoundTrips(progress: (system: FacetSystem, inde
   if (system === 'postgresql') {
    const c = await u.classifyPostgresqlFacets(pgSource, {column: pgColumns[0]!.path, nativeSource: pgNative, supplement: pgSupplement, mode: 'report', profile: 'stored-value', datumFormat: 'little-endian-datum64', obligation: 'value-domain'}, backend);
    assert.equal(c.status, 'classified');
-   assert.deepEqual(await u.recoverPostgresqlFacetSource(c, c.target!, backend), {nativeSource: pgNative, supplement: pgSupplement}); count.fullCatalogNativeRecoveries++;
+   assertJsonDataEqual(await u.recoverPostgresqlFacetSource(c, c.target!, backend), {nativeSource: pgNative, supplement: pgSupplement}); count.fullCatalogNativeRecoveries++;
    for (const format of ['json', 'yaml'] as const) {
     try { serialized(c, format); } catch (error) { assert.ok(error instanceof u.UmfError && error.code === 'LIMIT'); count.aggregateSerializationRefusals++; }
    }
@@ -122,22 +123,22 @@ export async function verifyFacetRoundTrips(progress: (system: FacetSystem, inde
   }
   for (const [index, row] of b.rows.entries()) {
    if (index % 40 === 0) progress(system, index);
-   const before = u.copyJson(row.author), r = await b.project(row); assert.deepEqual(row.author, before);
+   const before = u.copyJson(row.author), r = await b.project(row); assertJsonDataEqual(row.author, before);
    count.authoredCases++; resultContract(r, row.request.mode); assert.equal(r.mapping.origin, 'authored');
    if (row.request.obligation === 'exact-input' && r.residuals.some((x: any) => x.reason.includes('1.0000000000000002'))) count.floatNarrowing++;
    if (r.status === 'blocked') { count[row.request.mode === 'strict' ? 'strictBlocks' : 'reportBlocks']++; continue; }
    assert.equal(r.status, 'projected'); count.projected++;
    if (r.residuals.length) count.reportResiduals++;
-   for (const format of ['json', 'yaml'] as const) { assert.deepEqual(await b.recover(serialized(r, format)), row.author.target); count.idealRecoveries++; }
+   for (const format of ['json', 'yaml'] as const) { assertJsonDataEqual(await b.recover(serialized(r, format)), row.author.target); count.idealRecoveries++; }
    const c = await b.classify(r, row, index), source = u.copyJson(c.source);
    let report: any;
    for (const mode of ['strict', 'report'] as const) {
-    const classified = await c.classify(mode); assert.deepEqual(c.source, source); resultContract(classified, mode);
+    const classified = await c.classify(mode); assertJsonDataEqual(c.source, source); resultContract(classified, mode);
     assert.equal(classified.mapping.origin, 'classified');
     if (classified.status === 'blocked') { count.classificationBlocks++; assert.equal(mode, 'strict'); continue; }
     assert.equal(classified.status, 'classified');
-    assert.deepEqual(classified.target.extensions.future, c.source.extensions!.future);
-    for (const format of ['json', 'yaml'] as const) { assert.deepEqual(await c.recover(serialized(classified, format)), c.native); count.nativeRecoveries++; }
+    assertJsonDataEqual(classified.target.extensions.future, c.source.extensions!.future);
+    for (const format of ['json', 'yaml'] as const) { assertNativeRepresentationEqual(await c.recover(serialized(classified, format)), c.native); count.nativeRecoveries++; }
     if (mode === 'report') report = classified;
    }
    assert.ok(report, 'report classification must retain emitted native target');
