@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {readdir,readFile} from 'node:fs/promises';
-import {resolve,relative} from 'node:path';
+import {resolve,relative,sep} from 'node:path';
 export const relationshipTests=['tests/core/relationship-ideal.test.ts','tests/core/relationship-transition.test.ts','tests/core/relationship-operations.test.ts','tests/core-ideals/relationship-tablespec-projection.test.ts','tests/core-ideals/relationship-avro-projection.test.ts','tests/core-ideals/relationship-parquet.test.ts','tests/core-ideals/relationship-sqlserver.test.ts','tests/core-ideals/relationship-postgresql.test.ts','tests/core-ideals/relationship-extras.test.ts'];
 export const relationshipProofs=[
  'fixtures/validation/relationship-tablespec-projection-native.json','fixtures/validation/relationship-tablespec-projection-browser.json',
@@ -23,7 +23,7 @@ export const relationshipRefreshCommands=[
  ['bun','test',...relationshipTests],['bun','run','typecheck'],
 ];
 export const digest=(text:string|Uint8Array)=>createHash('sha256').update(text).digest('hex');
-export function safePath(path:string){const rel=relative(process.cwd(),resolve(path));if(!path||path.includes('\\')||path.startsWith('/')||rel.startsWith('..')||rel!==path)throw Error('Unsafe proof path '+path);return path;}
+export function safePath(path:string){const rel=relative(process.cwd(),resolve(path)).split(sep).join('/');if(!path||path.includes('\\')||path.startsWith('/')||rel.startsWith('..')||rel!==path)throw Error('Unsafe proof path '+path);return path;}
 export const readEvidence=(path:string)=>readFile(safePath(path));
 export async function relationshipSourceHashes(){
  const paths:string[]=[];

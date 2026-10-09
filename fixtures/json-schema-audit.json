@@ -1117,6 +1117,13 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/dashboard/schema.json",
+      "id": "urn:umf:dashboard:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/dataset-source/schema.json",
       "id": "urn:umf:dataset-source:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",

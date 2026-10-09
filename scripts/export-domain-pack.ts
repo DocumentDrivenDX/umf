@@ -2,7 +2,7 @@ import {readJsonValue} from '../src/model/serialization';
 import {requireDomainPackProfile} from '../src/domain-packs/profile';
 import {readDocument} from '../src/model/document';
 import {validateDocument} from '../src/validation/document';
-import {resolve,dirname,relative,isAbsolute} from 'node:path';
+import {resolve,dirname,relative as nativeRelative,isAbsolute,sep} from 'node:path';
 import {mkdir,copyFile,realpath} from 'node:fs/promises';
 import {importTableSpec,exportTableSpec} from '../src/adapters/tablespec';
 import {createValidator} from '../src/validation/schema';
@@ -13,6 +13,8 @@ const value=readJsonValue(await Bun.file(input).text(),'json'),validate=createVa
 if(!validate(value))throw Error('Invalid domain-pack metadata');requireDomainPackProfile(value);
 const pack=value as {id:string;schemas?:{id:string;format:string;reference:string}[];sources?:Record<string,{kind:string;reference?:string;checksum?:{algorithm:string;value:string};license?:{redistribution?:string}}>};
 const root=resolve(dirname(input)),destination=resolve(output),check=args.includes('--check');
+// Boundary checks below compare against '../'; use '/' separators on every platform.
+const relative=(from:string,to:string)=>nativeRelative(from,to).split(sep).join('/');
 // Caller-supplied local schema artifacts are exported by default. Sources need
 // explicit inclusion below; this command never downloads source data.
 const entries=[['domain-pack.json',Bun.file(input)]] as [string,ReturnType<typeof Bun.file>][];

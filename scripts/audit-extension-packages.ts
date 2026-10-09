@@ -5,7 +5,8 @@ import {resolve,relative,isAbsolute} from 'node:path';
 
 // Development-only inventory check. A passing audit does not establish native conformance.
 const registry=new Registry(),root=resolve('.'),rows=[];
-const paths=await Array.fromAsync(new Bun.Glob('spec/extensions/*/package.json').scan({cwd:root}));
+// Glob and relative() yield native separators; compare and record repository paths with '/'.
+const paths=(await Array.fromAsync(new Bun.Glob('spec/extensions/*/package.json').scan({cwd:root}))).map(path=>path.replaceAll('\\','/'));
 for(const path of paths.sort()){
  const failures:string[]=[];
  let manifest:ExtensionPackage|undefined;
@@ -16,7 +17,7 @@ for(const path of paths.sort()){
   if(!await Bun.file(schemaPath).exists())failures.push('Missing standalone payload schema');
   else if(!isDeepStrictEqual(manifest!.schema,await Bun.file(schemaPath).json()))failures.push('Embedded and standalone payload schemas differ');
   for(const evidence of manifest!.capabilities.evidence){
-   const target=resolve(root,evidence),local=relative(root,target);
+   const target=resolve(root,evidence),local=relative(root,target).replaceAll('\\','/');
    if(local==='..'||local.startsWith('../')||isAbsolute(local))failures.push('Evidence path leaves repository: '+evidence);
    else if(!await Bun.file(target).exists())failures.push('Missing evidence: '+evidence);
   }

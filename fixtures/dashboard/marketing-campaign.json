@@ -1,0 +1,488 @@
+{
+  "umf": "0.1.0",
+  "id": "dashboard:marketing-campaign-example",
+  "vocabularies": {
+    "umf.dashboard": {
+      "version": "0.1.0"
+    }
+  },
+  "extensions": {
+    "umf.dashboard": {
+      "kind": "dashboard",
+      "title": "Marketing Campaign Performance",
+      "description": "Weekly campaign performance over the last 10 completed weeks, authored from a Lakeview dashboard that was itself converted from a Tableau workbook.",
+      "pages": [
+        "overview",
+        "campaign_details",
+        "filters"
+      ],
+      "layout": {
+        "columns": 12
+      },
+      "theme": {
+        "fontFamily": "Arial",
+        "palette": [
+          "#2C5C8A",
+          "#6B7A90",
+          "#8FAFC9",
+          "#B8874B",
+          "#4F6D5A"
+        ],
+        "roles": {
+          "canvasBackground": {
+            "light": "#F4F5F7",
+            "dark": "#161B22"
+          },
+          "widgetBackground": {
+            "light": "#FFFFFF",
+            "dark": "#1E2530"
+          },
+          "font": {
+            "light": "#1B2430",
+            "dark": "#EDEFF2"
+          },
+          "selection": {
+            "light": "#B8874B",
+            "dark": "#B8874B"
+          }
+        }
+      }
+    }
+  },
+  "modules": [
+    {
+      "id": "data",
+      "namespace": "marketing",
+      "extensions": {
+        "umf.dashboard": {
+          "kind": "data",
+          "description": "Datasets shared by every page."
+        }
+      },
+      "elements": [
+        {
+          "id": "ds_campaign",
+          "name": "Campaign detail",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "dataset",
+              "title": "Campaign detail",
+              "grain": "One row per campaign per week_end within the last 10 completed weeks",
+              "source": {
+                "kind": "query",
+                "query": {
+                  "language": "databricks-sql",
+                  "text": "SELECT campaign_id, campaign_name, channel, week_end, is_prior_week, impressions, revenue FROM v_campaign_detail WHERE is_last_10_weeks"
+                }
+              },
+              "fields": {
+                "campaign_name": {
+                  "role": "column",
+                  "type": "string",
+                  "title": "Campaign"
+                },
+                "channel": {
+                  "role": "column",
+                  "type": "string",
+                  "title": "Channel"
+                },
+                "week_end": {
+                  "role": "column",
+                  "type": "date",
+                  "title": "Week ending"
+                },
+                "revenue": {
+                  "role": "column",
+                  "type": "decimal",
+                  "title": "Revenue"
+                },
+                "Total Impressions": {
+                  "role": "measure",
+                  "type": "integer",
+                  "expression": {
+                    "language": "databricks-sql",
+                    "text": "SUM(`impressions`)"
+                  }
+                },
+                "Prior Week Impressions": {
+                  "role": "measure",
+                  "type": "integer",
+                  "expression": {
+                    "language": "databricks-sql",
+                    "text": "SUM(CASE WHEN `is_prior_week` THEN `impressions` END)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "ds_metric",
+          "name": "Campaign metrics",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "dataset",
+              "title": "Campaign metrics (long)",
+              "grain": "One row per campaign per week_end per metric_name",
+              "source": {
+                "kind": "query",
+                "query": {
+                  "language": "databricks-sql",
+                  "text": "SELECT campaign_id, week_end, metric_name, metric_class, channel, metric_num, metric_denom FROM v_campaign_metric WHERE is_last_10_weeks"
+                }
+              },
+              "fields": {
+                "week_end": {
+                  "role": "column",
+                  "type": "date",
+                  "title": "Week ending"
+                },
+                "channel": {
+                  "role": "column",
+                  "type": "string",
+                  "title": "Channel"
+                },
+                "metric_name": {
+                  "role": "column",
+                  "type": "string",
+                  "title": "Metric"
+                },
+                "Metric Value": {
+                  "role": "measure",
+                  "type": "decimal",
+                  "description": "Ratio metrics as SUM(metric_num)/SUM(metric_denom), averages as AVG(metric_num), all others as SUM(metric_num).",
+                  "expression": {
+                    "language": "databricks-sql",
+                    "text": "CASE WHEN MAX(`metric_class`)='ratio' THEN SUM(`metric_num`)/NULLIF(SUM(`metric_denom`),0) WHEN MAX(`metric_class`)='average' THEN AVG(`metric_num`) ELSE SUM(`metric_num`) END"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "overview",
+      "namespace": "marketing",
+      "extensions": {
+        "umf.dashboard": {
+          "kind": "page",
+          "title": "Overview",
+          "role": "canvas"
+        }
+      },
+      "elements": [
+        {
+          "id": "ov-header",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "text",
+              "content": {
+                "format": "markdown",
+                "text": "## Marketing Campaign Performance — Overview\n\nScoped to the **last 10 completed weeks**. Counters compare against the prior completed week."
+              },
+              "position": {
+                "x": 0,
+                "y": 0,
+                "width": 12,
+                "height": 3
+              }
+            }
+          }
+        },
+        {
+          "id": "w-101-impressions",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "visual",
+              "title": "Impressions",
+              "description": "Sum of impressions with the prior completed week as the comparison target.",
+              "trace": "W-101",
+              "chart": "counter",
+              "dataset": {
+                "module": "data",
+                "element": "ds_campaign"
+              },
+              "encodings": [
+                {
+                  "channel": "value",
+                  "field": "Total Impressions",
+                  "aggregation": "measure",
+                  "title": "Impressions",
+                  "format": {
+                    "kind": "number",
+                    "abbreviation": "compact",
+                    "decimals": 1
+                  }
+                },
+                {
+                  "channel": "target",
+                  "field": "Prior Week Impressions",
+                  "aggregation": "measure",
+                  "title": "vs prior week"
+                }
+              ],
+              "position": {
+                "x": 0,
+                "y": 3,
+                "width": 2,
+                "height": 4
+              }
+            }
+          }
+        },
+        {
+          "id": "w-110-weekly-trend",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "visual",
+              "title": "Weekly Trend — selected metric",
+              "trace": "W-110",
+              "chart": "line",
+              "dataset": {
+                "module": "data",
+                "element": "ds_metric"
+              },
+              "encodings": [
+                {
+                  "channel": "x",
+                  "field": "week_end",
+                  "aggregation": "none",
+                  "title": "Week ending",
+                  "scale": "temporal"
+                },
+                {
+                  "channel": "y",
+                  "field": "Metric Value",
+                  "aggregation": "measure",
+                  "title": "Selected metric",
+                  "scale": "quantitative"
+                }
+              ],
+              "position": {
+                "x": 0,
+                "y": 7,
+                "width": 12,
+                "height": 5
+              }
+            }
+          }
+        },
+        {
+          "id": "w-111-by-channel",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "visual",
+              "title": "Performance by Channel",
+              "trace": "W-111",
+              "chart": "bar",
+              "dataset": {
+                "module": "data",
+                "element": "ds_metric"
+              },
+              "encodings": [
+                {
+                  "channel": "x",
+                  "field": "Metric Value",
+                  "aggregation": "measure",
+                  "title": "Selected metric",
+                  "scale": "quantitative"
+                },
+                {
+                  "channel": "y",
+                  "field": "channel",
+                  "aggregation": "none",
+                  "title": "Channel",
+                  "scale": "categorical",
+                  "sort": {
+                    "by": "value-descending"
+                  }
+                }
+              ],
+              "position": {
+                "x": 0,
+                "y": 12,
+                "width": 4,
+                "height": 5
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "campaign_details",
+      "namespace": "marketing",
+      "extensions": {
+        "umf.dashboard": {
+          "kind": "page",
+          "title": "Campaign Details",
+          "role": "canvas"
+        }
+      },
+      "elements": [
+        {
+          "id": "w-206-campaign-detail",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "visual",
+              "title": "Campaign Detail",
+              "trace": "W-206",
+              "chart": "table",
+              "dataset": {
+                "module": "data",
+                "element": "ds_campaign"
+              },
+              "rows": "detail",
+              "encodings": [
+                {
+                  "channel": "column",
+                  "field": "campaign_name",
+                  "aggregation": "none",
+                  "title": "Campaign"
+                },
+                {
+                  "channel": "column",
+                  "field": "channel",
+                  "aggregation": "none",
+                  "title": "Channel"
+                },
+                {
+                  "channel": "column",
+                  "field": "week_end",
+                  "aggregation": "none",
+                  "title": "Week ending"
+                },
+                {
+                  "channel": "column",
+                  "field": "revenue",
+                  "aggregation": "none",
+                  "title": "Revenue",
+                  "format": {
+                    "kind": "currency",
+                    "currency": "USD",
+                    "decimals": 0
+                  }
+                }
+              ],
+              "position": {
+                "x": 0,
+                "y": 0,
+                "width": 12,
+                "height": 8
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "filters",
+      "namespace": "marketing",
+      "extensions": {
+        "umf.dashboard": {
+          "kind": "page",
+          "title": "Filters",
+          "role": "global-filters"
+        }
+      },
+      "elements": [
+        {
+          "id": "filter-metric",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "filter",
+              "title": "Metric",
+              "control": "single-select",
+              "targets": [
+                {
+                  "dataset": {
+                    "module": "data",
+                    "element": "ds_metric"
+                  },
+                  "field": "metric_name"
+                }
+              ],
+              "default": {
+                "values": [
+                  "Impressions"
+                ]
+              },
+              "position": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 2
+              }
+            }
+          }
+        },
+        {
+          "id": "filter-week-end",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "filter",
+              "title": "Week End",
+              "control": "date-range",
+              "targets": [
+                {
+                  "dataset": {
+                    "module": "data",
+                    "element": "ds_metric"
+                  },
+                  "field": "week_end"
+                },
+                {
+                  "dataset": {
+                    "module": "data",
+                    "element": "ds_campaign"
+                  },
+                  "field": "week_end"
+                }
+              ],
+              "position": {
+                "x": 4,
+                "y": 0,
+                "width": 4,
+                "height": 2
+              }
+            }
+          }
+        },
+        {
+          "id": "filter-channel",
+          "extensions": {
+            "umf.dashboard": {
+              "kind": "filter",
+              "title": "Channel",
+              "control": "multi-select",
+              "targets": [
+                {
+                  "dataset": {
+                    "module": "data",
+                    "element": "ds_metric"
+                  },
+                  "field": "channel"
+                },
+                {
+                  "dataset": {
+                    "module": "data",
+                    "element": "ds_campaign"
+                  },
+                  "field": "channel"
+                }
+              ],
+              "position": {
+                "x": 8,
+                "y": 0,
+                "width": 4,
+                "height": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

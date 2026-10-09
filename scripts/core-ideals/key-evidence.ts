@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {isAbsolute, relative, resolve} from 'node:path';
+import {isAbsolute, relative, resolve, sep} from 'node:path';
 
 export const keySystems = ['tablespec', 'postgresql', 'sqlserver', 'avro', 'parquet'] as const;
 export type KeyEvidenceReader = (path: string) => Promise<Uint8Array>;
@@ -28,7 +28,7 @@ export async function verifyKeyEvidence(reader: KeyEvidenceReader = read) {
  const pending: {path: string; record: any}[] = [];
  function safe(path: string) {
   assert.ok(typeof path === 'string' && path.length && !path.includes('\\'), `unsafe evidence path: ${path}`);
-  const local = relative(process.cwd(), resolve(path));
+  const local = relative(process.cwd(), resolve(path)).split(sep).join('/');
   assert.ok(local && !isAbsolute(local) && !local.split('/').includes('..') && !path.split('/').includes('..'), `unsafe evidence path: ${path}`);
   return local;
  }
