@@ -1,0 +1,22 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core-record-values.test.ts:
+(pass) complete logical record check preserves original document validation [3.17ms]
+(pass) required absence/defaults, wrong values and duplicate/undeclared fields do not pass [4.30ms]
+(pass) unknown scope/availability and dataset keys remain explicit incomplete obligations [3.70ms]
+(pass) explicit version/shape/accessor boundaries refuse without getters or version rewrite [0.71ms]
+
+tests/csv-boolean-lexical.test.ts:
+(pass) four explicit original lexical forms retain typed public validation and immutable original custody [72.01ms]
+(pass) closed grammar/version/Field scope refuses whitespace, case, numeric, absent/null and String [14.45ms]
+(pass) successful token conversion never changes invalid or unknown public Field verdict [31.15ms]
+(pass) receipt recomputation rejects independently mismatched source/request and every forged surface [35.34ms]
+(pass) bounded copying and private schema snapshot refuse getters and hostile receipt/context shapes [12.75ms]
+(pass) UTF-8 aggregate source/request and full receipt ceilings refuse without truncation [19.23ms]
+(pass) early byte traversal matches native JSON escapes/UTF8 and never serializes oversized whole values [14.93ms]
+(pass) native null and absence remain independent Record states, never converted/defaulted [38.23ms]
+
+ 12 pass
+ 0 fail
+ 118 expect() calls
+Ran 12 tests across 2 files. [3.98s]
