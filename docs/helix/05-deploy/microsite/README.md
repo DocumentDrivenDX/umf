@@ -152,3 +152,25 @@ text and downloads retain their exact bytes. JSON Schema and OpenAPI generated
 files default to YAML with an explicit JSON option. Avro and Spark previews use
 YAML for reading; their native downloads and the interchange report bundle stay
 JSON. SQL, GraphQL and Protobuf keep their native syntax.
+
+
+## Integrated medical sample family 1.1.0
+
+The Medical overview and each medical-family schema link Clinical, Carrier,
+Epidemiology, Imaging and Terminology. All five fixed profiles have ontology/table
+companions; the family contains 29 tables/five ontologies. The catalog remains
+24 packs and now has 273 entries. Legacy 1.0.0 medical bookmarks redirect to the
+current 1.1.0 subset. Source namespaces are never merged or matched implicitly.
+
+Local source-inclusive export constructs `dist/pack-assets/` during every build.
+Only checksum-verified local samples with allowed rights are published; source
+metadata never causes a remote fetch. Overviews download original CSV/FHIR/DICOM
+files and notices; selected table pages link their bound CSV. The public CMS
+synthetic excerpts retain ICD-9 meanings; TCIA LIDC-IDRI contributes one
+CC BY 3.0 native CT slice with separate metadata and explicit projection losses.
+`Sample scope` exposes limits while composition/execution metadata stays available
+in a collapsed source detail. Deployment regenerates assets rather than committing
+duplicate originals. 24 Chromium explorer checks pass, including actual public
+sample downloads/hash equality, all catalog entries, family navigation, ontology
+links, old bookmarks and mobile containment. Detailed reproduction and native
+checks are in `../../04-build/evidence/medical-subpacks.md`.

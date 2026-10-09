@@ -1,4 +1,4 @@
-# Medical 1.0.0
+# Medical family 1.1.0
 
 A bounded official HL7 FHIR R4 4.0.1 sample corpus using the same domain-pack
 contract and TableSpec schema profile as the legal pack. UMF owns this metadata,
@@ -43,7 +43,7 @@ Regenstrief Institute, Inc.
 
 ## Composable medical subpacks
 
-The clinical corpus remains medical 1.0.0. Independently versioned siblings add
+The clinical source corpus is unchanged in medical 1.1.0. Independently versioned siblings add
 [carrier workflows](../medical-carrier/README.md),
 [epidemiological aggregates](../medical-epidemiology/README.md),
 [imaging/PACS metadata](../medical-imaging/README.md) and
@@ -51,3 +51,23 @@ The clinical corpus remains medical 1.0.0. Independently versioned siblings add
 Each has its own pack metadata, local source pins, schemas, row bindings and rights
 notices. Select/export each explicitly; this list does not authorize automatic
 retrieval, patient matching or merging population records with individuals.
+
+## Complete family export and browser
+
+The Medical overview links Clinical, Carrier, Epidemiology, Imaging and Terminology.
+Each 1.1.0 pack has fixed tabular targets and a table-derived ontology; combined
+inventory: 29 tables, five ontology schemas and 517 projected rows. Carrier adds
+13 unchanged CMS DE-SynPUF CSV records beside retained FHIR R4 resources. Imaging
+adds one unchanged CC BY 3.0 TCIA LIDC-IDRI CT slice beside the private-sequence
+synthetic control. Source provenance, selected releases and limitations stay local.
+
+Export all five packs, including permitted original CSV/FHIR/DICOM bytes:
+
+```sh
+bun scripts/export-domain-family.ts --pack spec/domain-packs/medical/pack.json --output /tmp/medical-family --include-sources
+```
+
+Use `--check` to verify that export. The output keeps ID/version directories and
+`family.json`; ingest each `domain-pack.json` separately through TableSpec. Composition
+never merges patients or creates links between clinical, CMS and TCIA sources.
+Previous 1.0.0 browser bookmarks redirect to the current qualified subset.

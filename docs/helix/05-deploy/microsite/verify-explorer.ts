@@ -25,23 +25,55 @@ try{
  });
  await page.goto(origin+'/explorer.html');
  // @covers US-055-AC6
- await check('Medical subpacks expose all eighteen source-qualified schemas',async()=>{
+ await check('Medical subpacks expose all source-qualified tables and ontology schemas',async()=>{
   for(const id of ['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology']){
    const metadata=await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs',id,'pack.json')).json();
-   const pack=page.locator(`[data-pack="pack:${id}@1.0.0"]`);
+   const pack=page.locator(`[data-pack="pack:${id}@${metadata.version}"]`);
    await pack.getByRole('button',{name:/^Overview /}).click();await page.getByRole('heading',{name:id,exact:true}).waitFor();
    for(const schema of metadata.schemas){
-    await pack.getByRole('button',{name:new RegExp('^'+schema.id+' ')}).click();
-    await page.getByRole('heading',{name:schema.id,exact:true}).waitFor();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
-    if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!==`schema:${id}@1.0.0:${schema.id}`)throw Error('Subpack selection escaped identity');
+    await pack.getByRole('button',{name:new RegExp('^'+(schema.format==='umf'?id+' ontology':schema.id)+' ')}).click();
+    await page.getByRole('heading',{name:schema.format==='umf'?id+' ontology':schema.id,exact:true}).waitFor();await page.getByRole('heading',{name:schema.format==='umf'?'Records and properties':'Columns',exact:true}).waitFor();
+    if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!==`schema:${id}@1.1.0:${schema.id}`)throw Error('Subpack selection escaped identity');
    }
   }
+ });
+ // @covers US-055-AC1 @covers US-055-AC4 @covers US-055-AC6
+ await check('Medical family links, public samples, exact downloads and old bookmarks',async()=>{
+  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'pack:medical@1.0.0'}));
+  await page.getByRole('heading',{name:'Medical family',exact:true}).waitFor();
+  if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!=='pack:medical@1.1.0')throw Error('Legacy medical bookmark did not redirect');
+  const family=page.locator('#inspector .detail-block').filter({has:page.getByRole('heading',{name:'Medical family',exact:true})});
+  await family.getByRole('link',{name:'Carrier: eligibility, claims and payments',exact:true}).click();
+  await page.getByRole('heading',{name:'medical-carrier',exact:true}).waitFor();
+  if(!(await page.locator('#inspector').innerText()).includes('13 unchanged CMS'))throw Error('Public CMS qualification missing');
+  for(const [packId,name] of [['medical-carrier','cms-carrier.csv'],['medical-carrier','hl7-claim.json'],['medical-carrier','cms-beneficiaries.csv'],['medical-imaging','tcia-lidc-0001-ct.dcm'],['medical-imaging','tcia-lidc-0001-ct.json']] as const){
+   await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:`pack:${packId}@1.1.0`}));
+   const a=page.getByRole('link',{name:'Download '+name,exact:true});await a.waitFor();const href=await a.getAttribute('href');
+   const expected=new Bun.CryptoHasher('sha256').update(await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs',packId,'sources',name)).arrayBuffer()).digest('hex');
+   const hash=await page.evaluate(async href=>{const bytes=await(await fetch(href!)).arrayBuffer();return [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');},href);
+   if(hash!==expected)throw Error('Changed published sample: '+name);
+   const pending=page.waitForEvent('download');await a.click();const download=await pending;if(download.suggestedFilename()!==name)throw Error('Wrong sample download filename');
+  }
+  for(const [id,record] of [['medical-carrier','cms_carrier_claims'],['medical-imaging','instances'],['medical-epidemiology','measures'],['medical-terminology','concepts']] as const){
+   await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:`schema:${id}@1.1.0:${record}`}));
+   await page.getByRole('link',{name:'View ontology record',exact:true}).click();
+   await page.getByRole('heading',{name:'Outgoing relationships',exact:true}).waitFor();
+   await page.getByRole('link',{name:'View corresponding table',exact:true}).click();
+   if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!==`schema:${id}@1.1.0:${record}`)throw Error('Ontology/table link escaped pack');
+  }
+  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'schema:medical-carrier@1.1.0:eligibility'}));
+  await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();await page.getByRole('link',{name:'Download eligibility.csv',exact:true}).waitFor();
+  await page.getByRole('link',{name:'Medical overview',exact:true}).click();await page.getByRole('heading',{name:'medical',exact:true}).waitFor();
+  await page.locator('#search').fill('DICOM');if(!await page.locator('[data-pack="pack:medical-imaging@1.1.0"]').isVisible())throw Error('DICOM search omitted imaging');await page.locator('#search').fill('');
+  await page.setViewportSize({width:390,height:844});await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'pack:medical-imaging@1.1.0'}));await page.getByRole('link',{name:'Download tcia-lidc-0001-ct.dcm',exact:true}).waitFor();
+  if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw Error('Medical family mobile overflow');
+  await page.screenshot({path:'/private/tmp/umf-medical-family-mobile.png',fullPage:true});await page.setViewportSize({width:1440,height:1000});
  });
  await check('Pack catalog and linked schemas',async()=>{await page.locator('[data-pack="pack:legal@1.1.0"]').getByRole('button',{name:/^Overview /}).click();await page.locator('#inspector').getByRole('link',{name:'clients',exact:true}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();if(!await page.locator('#inspector').textContent().then(t=>t?.includes('client_name')))throw new Error('Missing client field');});
  await check('Public dataset packs, source downloads and all sixteen schemas',async()=>{
   for(const id of ['nyc-tlc','movielens','noaa-ghcn-daily','gtfs-schedule']){
    const manifest=await Bun.file(join(import.meta.dir,`../../../../spec/domain-packs/${id}/pack.json`)).json();
-   const pack=page.locator(`[data-pack="pack:${id}@1.0.0"]`);
+   const pack=page.locator(`[data-pack="pack:${id}@${manifest.version}"]`);
    await pack.getByRole('button',{name:/^Overview /}).click();
    await page.getByRole('heading',{name:'Schemas in this pack',exact:true}).waitFor();
    const href=await page.getByRole('link',{name:'Download source'}).getAttribute('href');
@@ -89,7 +121,7 @@ try{
   await crumbs.getByRole('link',{name:'Legal · 1.1.0',exact:true}).click();await page.getByRole('heading',{name:'Schemas in this pack',exact:true}).waitFor();
  });
  await check('Medical fixed-source pack and all eight schemas',async()=>{
-  const pack=page.locator('[data-pack="pack:medical@1.0.0"]');
+  const pack=page.locator('[data-pack="pack:medical@1.1.0"]');
   await pack.getByRole('button',{name:/^Overview /}).click();await page.getByRole('heading',{name:'medical',exact:true}).waitFor();await page.getByRole('heading',{name:'Schemas in this pack',exact:true}).waitFor();
   const href=await page.getByRole('link',{name:'Download source'}).getAttribute('href');const source=await page.evaluate(async href=>await(await fetch(href!)).text(),href);
   if(source!==await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs/medical/pack.json')).text())throw new Error('Medical manifest download changed');
@@ -100,12 +132,12 @@ try{
   }
  });
  await check('Medical domain types, foreign keys and deep links',async()=>{
-  const pack=page.locator('[data-pack="pack:medical@1.0.0"]');
+  const pack=page.locator('[data-pack="pack:medical@1.1.0"]');
   await pack.locator('summary').filter({hasText:/^Domain types$/}).click();
   for(const name of ['fhir_resource_key','fhir_temporal_literal','exact_decimal_text']){await pack.getByRole('button',{name:new RegExp('^'+name+' ')}).click();await page.getByRole('heading',{name,exact:true}).waitFor();}
-  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'schema:medical@1.0.0:observations'}));await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+  await page.goto(origin+'/explorer.html#'+new URLSearchParams({schema:'schema:medical@1.1.0:observations'}));await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
   await page.locator('#inspector').getByRole('link',{name:'patients.resource_key',exact:true}).first().click();await page.getByRole('heading',{name:'patients',exact:true}).waitFor();
-  if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!=='schema:medical@1.0.0:patients')throw new Error('Medical reference escaped its pack');
+  if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!=='schema:medical@1.1.0:patients')throw new Error('Medical reference escaped its pack');
   await page.screenshot({path:'/private/tmp/umf-medical-explorer-desktop.png',fullPage:true});
   await page.setViewportSize({width:390,height:844});await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
   if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw new Error('Medical mobile overflow');

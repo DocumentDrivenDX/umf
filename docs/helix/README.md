@@ -1192,3 +1192,11 @@ profile, bounded small/demo/large replay, graph companion format and source cust
 [CONTRACT-053](02-design/contracts/CONTRACT-053-domain-pack-profiles.md) govern the
 platform; native graph intake, independent scaling axes and third-party source
 coverage remain explicitly qualified.
+
+
+Medical family 1.1.0 now integrates Clinical, Carrier, Epidemiology, Imaging and
+Terminology: 29 tables/five ontology schemas, qualified CMS CSV excerpts and one
+CC BY 3.0 TCIA DICOM slice with retained originals. The Medical overview links
+all five packs; source/row downloads, ontology/table navigation and old bookmarks
+have real-browser evidence. See the [integrated medical evidence](04-build/evidence/medical-subpacks.md#integrated-medical-family-110--2026-10-08)
+and [complete family export](../../spec/domain-packs/medical/README.md#complete-family-export-and-browser).

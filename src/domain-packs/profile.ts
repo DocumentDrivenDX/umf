@@ -11,6 +11,12 @@ function inspectDomainPackInternal(input:unknown):{valid:boolean;complete:boolea
  const schemas=pack.schemas??[],ids=schemas.map((s:any)=>s.id),sources=pack.sources??{};
  if(new Set(ids).size!==ids.length)diagnostics.push('Duplicate schema identity');
  for(const b of pack.source_bindings??[])if(!ids.includes(b.schema_id)||!Object.hasOwn(sources,b.source_id))diagnostics.push('Unresolved source binding');
+ if(pack.composition){
+  const components=pack.composition.components;
+  const identities=components.map((c:any)=>c.id+'@'+c.version);
+  if(new Set(identities).size!==identities.length||new Set(components.map((c:any)=>c.id)).size!==components.length)diagnostics.push('Duplicate component identity');
+  if(components.some((c:any)=>c.id===pack.id))diagnostics.push('Self composition is not supported');
+ }
  const profile=pack.execution_profile;
  if(Object.hasOwn(pack,'execution_profile')){
   if(!profile||typeof profile!=='object'||Array.isArray(profile))return {valid:false,complete:false,diagnostics:['Malformed execution profile']};

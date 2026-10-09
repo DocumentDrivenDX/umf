@@ -5644,3 +5644,13 @@ input/output switching, YAML generation and existing explorer preservation and
 navigation checks; see the schema-explorer evidence. Public deployment is not
 performed. Changed playground HTML requires its Innsigle signature to be renewed
 before publication. Rollback restores the prior viewer and rebuilds bundles.
+
+### Integrated medical family and public samples
+
+Owner direction completes the sample integration under US-055/TD-055/STP-055:
+qualify bounded public CMS CSV and TCIA DICOM sources, retain exact native meaning
+and originals, add all subpack fixed profiles/ontology companions, link the
+Medical family in the explorer and expose allowed original/row downloads.
+Preflight and export the complete family in separate versioned directories; run
+Bun, actual Chromium, independent TableSpec/pydicom and deployment gates before
+merging. Live PACS and production carrier services remain separate future scope.

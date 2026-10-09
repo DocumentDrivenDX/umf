@@ -59,7 +59,7 @@ function render(){
  inspector.replaceChildren();if(!selected||!parsed)return;breadcrumbs();renderDownloads(inspector,selected,parsed);
  if(parsed.native){renderNative();return;}
  const doc=parsed.document!,top=node('div',undefined,'detail-top'),title=node('div');title.append(node('span',selected.category==='domain'?'Domain pack':'Example','tag'),node('h2',selected.title),node('p',doc.id,'schema-id'));top.append(title);
- const download=node('a','Download source','button secondary') as HTMLAnchorElement;download.href=downloadUrl=URL.createObjectURL(new Blob([selected.text],{type:'text/plain'}));download.download=selected.path.split('/').pop()??'schema.json';download.onclick=()=>setTimeout(()=>URL.revokeObjectURL(download.href),1000);top.append(download);inspector.append(top);
+ const download=node('a','Download source','button secondary') as HTMLAnchorElement;download.href=downloadUrl=URL.createObjectURL(new Blob([selected.text],{type:'text/plain'}));download.download=selected.path.split('/').pop()??'schema.json';download.onclick=()=>setTimeout(()=>URL.revokeObjectURL(download.href),1000);top.append(download);inspector.append(top);renderFamily();
  const stats=node('div',undefined,'stats');for(const text of [`UMF ${doc.umf}`,`${doc.modules.length} modules`,`${parsed.definitions.length} definitions`])stats.append(node('span',text,'tag'));inspector.append(stats);
  inspector.append(node('p',`Source: ${selected.path}`,'schema-id'));
  if(selected.description)inspector.append(node('p',selected.description));
@@ -82,19 +82,42 @@ function render(){
 }
 function renderRelationships(relationships:any[]){const b=block('Relationships');for(const r of relationships){const d=node('details');d.append(node('summary',String(r.name??r.id)));for(const side of ['source','target']){const p=node('p',side+': ');for(const endpoint of r[side]??[]){p.append(reference(endpoint),document.createTextNode(' '));}d.append(p);}properties(d,r,['source','target']);b.append(d);}}
 function schemaLink(id:string,title:string){const a=node('a',title,'ref-link') as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:id});return a;}
+function renderFamily(){
+ const owner=selected&&packFor(selected);if(!owner)return;
+ const metadata=JSON.parse(owner.text),family=metadata.family;if(!family)return;
+ const root=entries.find(e=>e.id===`pack:${family.id}@${family.version}`);
+ const b=block('Medical family');
+ if(root&&root!==owner){b.append(schemaLink(root.id,'Medical overview'));}
+ const rootMetadata=root?JSON.parse(root.text):undefined;
+ const members=[...(root?[{id:root.pack,version:root.packVersion,label:'Clinical'}]:[]),...(rootMetadata?.composition?.components??[])];
+ for(const member of members){const target=entries.find(e=>e.id===`pack:${member.id}@${member.version}`),p=node('p');p.append(target?schemaLink(target.id,member.label):node('span',member.label+' · unavailable','unresolved'));p.append(node('span',` · ${member.id} ${member.version}`,'quiet'));if(target===owner)p.append(node('span',' · current','tag'));b.append(p);}
+ b.append(node('p','Separate source namespaces and versions; no automatic patient matching or population joins.','quiet'));
+}
+function renderSources(){
+ const owner=selected&&packFor(selected);if(!owner?.assets?.length)return;
+ const metadata=JSON.parse(owner.text),b=block(selected===owner?'Sample data and originals':'Sample data');
+ const rowIds=new Set((metadata.source_bindings??[]).filter((v:any)=>v.schema_id===selected!.title&&v.role==='rows').map((v:any)=>v.source_id));
+ const assets=selected===owner?owner.assets:owner.assets.filter(a=>rowIds.has(a.id));
+ for(const asset of assets){const p=node('p'),a=node('a',`Download ${asset.reference.split('/').pop()}`,'ref-link') as HTMLAnchorElement;a.href=asset.url;a.download=asset.reference.split('/').pop()!;p.append(a,node('span',` · ${asset.format} · ${asset.dataKind}`,'quiet'));b.append(p);}
+ if(!assets.length)b.append(node('p','No row source is bound to this schema.'));
+ if(selected!==owner)b.append(schemaLink(owner.id,'All sample data and originals'));
+ b.append(node('p','Downloads contain the pinned sample bytes. Source notices and scope are retained in the pack overview.','quiet'));
+}
 function renderNative(){
  const source=parsed!.native!,heading=node('div',undefined,'detail-top');heading.append(node('h2',selected!.title));inspector.append(heading,node('p',`${parsed!.label} · ${selected!.path}`,'schema-id'));
+ renderFamily();
  if(source.description)inspector.append(node('p',String(source.description)));
  inspector.append(node('p',parsed!.diagnostics||'Source metadata inspection; native execution semantics are not certified.','callout'));
  const nav=node('div',undefined,'definition-list');const overview=schemaLink(selected!.id,'Overview');nav.append(overview);for(const def of parsed!.definitions){const a=node('a',def.title) as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:selected!.id,definition:def.key});if(def===definition)a.setAttribute('aria-current','true');nav.append(a);}inspector.append(nav);
  if(definition){const b=block(definition.title);b.append(node('p',definition.pointer,'schema-id'));if(definition.value.description)b.append(node('p',String(definition.value.description)));properties(b,definition.value,['description','domain_type']);if(typeof definition.value.domain_type==='string'){const p=node('p','Domain type: ');p.append(domainTypeLink(definition.value.domain_type));b.append(p);}raw(b,'Original definition metadata',definition.value,true);schemaSource();return;}
  if(source.domain_types){
-  properties(inspector,source,['domain_types','schemas','description','scale_presets','source_bindings','sources']);
+   properties(inspector,source,['domain_types','schemas','description','scale_presets','source_bindings','sources',...(source.family?['family','composition','execution_profile','csv_conventions','fixture_counts','qualification']:[])]);
+  if(source.family){const scope=block('Sample scope');for(const field of ['subset','limits'])if(typeof source.qualification?.[field]==='string')scope.append(node('p',source.qualification[field]));if(source.qualification)raw(scope,'Detailed source qualification',source.qualification);raw(scope,'Pack composition and execution metadata',{family:source.family,...(source.composition?{composition:source.composition}:{}),execution_profile:source.execution_profile,csv_conventions:source.csv_conventions,fixture_counts:source.fixture_counts});}
   for(const [field,label] of [['scale_presets','Scale presets'],['source_bindings','Source bindings'],['sources','Source declarations']])if(source[field])raw(inspector,label,source[field]);
   const b=block('Schemas in this pack');for(const declaration of source.schemas??[]){const target=entries.find(e=>e.pack===source.id&&e.packVersion===selected!.packVersion&&e.path===declaration.reference);const p=node('p');p.append(target?schemaLink(target.id,String(declaration.id)):node('span',`${declaration.id} · ${declaration.reference} · not bundled`,'unresolved'));p.append(node('span',` · ${declaration.format}`,'quiet'));b.append(p);}if(!source.schemas?.length)b.append(node('p','No schema references declared.'));
   const types=block('Domain types');for(const [id,value] of Object.entries(source.domain_types)){const d=node('details');d.append(node('summary',id),node('pre',json(value)));types.append(d);}
  }else if(Array.isArray(source.columns)){
-  const owner=packFor(selected!),targets=owner?JSON.parse(owner.text).execution_profile?.targets:undefined;
+   const owner=packFor(selected!),targets=owner?JSON.parse(owner.text).execution_profile?.targets:undefined;
   const ontology=targets?.graph?.includes('ontology')&&entries.find(e=>e.id===`schema:${selected!.pack}@${selected!.packVersion}:ontology`);
   if(ontology&&targets.tabular?.includes(source.table_name)){const record=parseEntry(ontology).definitions.find(d=>d.id===source.table_name&&d.value.kind==='record');if(record){const a=node('a','View ontology record','ref-link') as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:ontology.id,definition:record.key});inspector.append(a);}}
   const b=block('Columns'),wrap=node('div',undefined,'table-wrap'),table=node('table',undefined,'details-table'),head=node('tr');for(const label of ['Column','Native type','Nullable','Domain type'])head.append(node('th',label));table.append(head);
@@ -103,6 +126,7 @@ function renderNative(){
   if(source.relationships){const r=block('Native relationships');for(const fk of source.relationships.foreign_keys??[]){const target=entries.find(e=>e.pack===selected!.pack&&e.packVersion===selected!.packVersion&&e.title===fk.references_table);const p=node('p',`${fk.column} → `);p.append(target?schemaLink(target.id,`${fk.references_table}.${fk.references_column}`):node('span',`${fk.references_table}.${fk.references_column} · not bundled`,'unresolved'));r.append(p);}raw(r,'Original relationship metadata',source.relationships);}
   properties(inspector,source,['columns','relationships','primary_key','description','table_name']);
  }else{const defs=source.$defs??source.definitions??{};const b=block('Definitions');for(const [id,value] of Object.entries(defs)){const d=node('details');d.append(node('summary',id),node('pre',json(value)));b.append(d);}raw(inspector,'Schema keywords',source,true);}
+ renderSources();
  schemaSource();
  const a=node('a','Download source','button secondary') as HTMLAnchorElement;a.href=downloadUrl=URL.createObjectURL(new Blob([selected!.text],{type:'text/plain'}));a.download=selected!.path.split('/').pop()??'schema.json';a.onclick=()=>setTimeout(()=>URL.revokeObjectURL(a.href),1000);inspector.append(a);
 }

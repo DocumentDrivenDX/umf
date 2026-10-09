@@ -80,3 +80,13 @@ First clinical profile, terminology distribution terms and source separation; FH
 ## Out of Scope
 
 Clinical decision support, medical advice, and population-valid simulation.
+
+## Medical family integration
+
+Clinical, carrier, epidemiology, imaging and terminology packs must be discoverable
+from one Medical overview. Preserve their independent versions and source namespaces.
+Carrier samples include qualified public CSV claim/enrollment excerpts alongside
+FHIR (Fast Healthcare Interoperability Resources) R4 originals. Imaging includes
+a rights-qualified public DICOM (Digital Imaging and Communications in Medicine)
+object alongside the synthetic private-tag control. Publish original-source and
+CSV downloads, source limitations and matching ontology/table navigation.

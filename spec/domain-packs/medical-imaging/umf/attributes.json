@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "table_name": "attributes",
-  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence.",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence; one unchanged public TCIA LIDC-IDRI CT slice with publisher-deidentified source identity.",
   "columns": [
     {
       "name": "attribute_key",

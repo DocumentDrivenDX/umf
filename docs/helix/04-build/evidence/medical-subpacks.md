@@ -123,3 +123,73 @@ TypeScript checks, 61 extension-package and 349 JSON Schema audits, the browser
 build, 60 Chromium library checks, and all 19 explorer checks including every
 catalog schema and all eighteen medical subpack schemas. This supplements the
 source and native-oracle evidence above; it does not broaden native support.
+
+## Integrated medical family 1.1.0 — 2026-10-08
+
+The requested sample integration is complete under US-055/TD-055/STP-055. Five
+1.1.0 packs preserve the unchanged clinical originals, separately versioned
+carrier/epidemiology/imaging/terminology content and source namespaces. There are
+29 tables, five table-derived ontology schemas and 517 projected rows. The
+Medical overview and each child/schema link the whole family; old 1.0.0 browser
+bookmarks redirect to the qualified current subset. One preflighted family export
+retains independent directories and an exact manifest inventory. Historical
+1.0.0 archives and the earlier evidence above remain available.
+
+Public sources add three CMS DE-SynPUF beneficiaries, five inpatient claims and
+five carrier claims as exact native CSV excerpts. These are published synthetic
+2008/2008–2010 data. The selection excludes numeric CPT/Level I HCPCS carrier
+rows, preserves every selected native column and ICD-9-era token, and retains
+upstream/member/subset hashes and original record numbers. CMS rights qualification
+is limited to this subset and does not grant dictionary redistribution. FHIR R4
+originals and separately authored eligibility/authorization/payment scenarios
+remain independent; no CMS-to-FHIR clinical equivalence is claimed.
+
+Imaging adds one unchanged, publisher-deidentified TCIA LIDC-IDRI CT slice under
+CC BY 3.0, DOI 10.7937/K9/TCIA.2015.LO9QL9SX. Collection attribution and selection
+are supplied with the original binary and derived pydicom JSON. This is one of
+133 series instances, not a full study. Its native DICOM edition and burned-in
+annotation declaration are unavailable. Three private elements are retained and
+recorded; no independent deidentification certification is asserted. Native DS/IS
+spellings and file/pixel bytes remain in the binary; JSON numeric normalization
+and local opaque pixel BulkDataURI are explicit projection differences.
+
+Executed integration gates:
+
+- Bun 1.4.2: 48 domain-pack/traceability tests, 3,146 assertions, zero failures.
+  Family version/hash/rights errors refuse before output; all source bytes recover.
+- Both TypeScript configurations, browser ESM/declarations, 61 extension packages,
+  349 canonical schemas, medical regeneration and acceptance inventory pass.
+- Chromium 153.0.8010.12: 68 portable-library checks, including public DICOM
+  preservation; 24 explorer checks navigate all 24 packs/273 catalog entries.
+  Family links, four ontology/table pairs, exact CSV/FHIR/DICOM hashes and actual
+  downloads, old bookmarks, search and mobile containment pass.
+- TableSpec installed metadata 0.0.6.post6.dev0+d2ee70a / Python 3.12.15:
+  all five fixed profiles ingest; 29 tables/517 rows, 96 original attachments,
+  every schema and typed archive row recover. Two archives per pack match bytes.
+  Independent Python CSV reads compare every CMS native cell to projected cells.
+- pydicom 3.0.2 / Python 3.13.16: 24 native assertions pass across synthetic and
+  public objects, including UIDs, transfer syntax, private content and exact bytes.
+- All five published HTML signatures remain valid; no HTML seal/key change is
+  needed. The publication workflow now checks medical regeneration and pack
+  regressions, then constructs allowed sample downloads with the shared exporter.
+
+The [machine record](../../../../fixtures/validation/medical-family-integration-evidence.json)
+fingerprints source, schema, row, tooling, catalog and new archive files.
+Reproduction: `bun scripts/build-medical-subpacks.ts --check`,
+`bun test tests/domain-packs tests/traceability`,
+`bun docs/helix/05-deploy/microsite/build-explorer.ts`,
+`bun docs/helix/05-deploy/microsite/verify-explorer.ts` with the local preview,
+`bun scripts/domain-pack-browser.ts` with the browser library build, and the
+existing native oracle with `--dicom-only` or `--output fixtures/domain-packs`.
+`collect-medical-public-samples.py --cache <directory>` regenerates public selections
+from the explicitly downloaded archives after verifying their pinned hashes. It
+never fetches from browser/pack operations.
+
+Initial verification found a comma in the local DICOM tag fragment, a tooling
+type error, stale browser version selectors and the expected traceability snapshot
+change. These were corrected and the affected gates rerun. An intermediate browser
+run also compared a loaded catalog with a concurrently regenerated manifest; the
+final sequential catalog/browser run passes. Full repository/native replay, full
+terminology dictionaries/maps, graph storage, live PACS/DICOMweb/X12 and production
+carrier behavior remain separate obligations; this delivery completes the
+requested public sample and browser/family integration slice.
