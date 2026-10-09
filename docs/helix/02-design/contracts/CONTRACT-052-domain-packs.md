@@ -121,7 +121,7 @@ Native schema compilation and value realism are separate consumer evidence.
 
 ### Legal pack source and export tooling
 
-UMF owns `spec/domain-packs/legal/pack.json` and its eight tabular schemas,
+UMF owns `spec/domain-packs/legal/pack.json` and its tabular schemas,
 including source declarations and scale presets. `scripts/export-domain-pack.ts`
 exports those caller-selected local schema artifacts and metadata; `--check`
 refuses stale exports. Schema references and symlinks leaving the pack directory
@@ -149,3 +149,22 @@ subset. TableSpec archive manifests map original source references to `inputs/`
 archive members and schema references to `schemas/` members, separate from
 standardized `data/` output; source metadata is
 preserved without rewriting its checksums to describe derivative bytes.
+
+
+### Mixed legal pack 1.1.0
+
+The eight fabricated tables retain their generator, source bindings and scale
+presets. Observed `cases`, `evidence_documents` and `evidence_pages` have external
+CSV row bindings and original PDF reference bindings. Evidence MUST link through
+source-scoped case keys; no fabricated firm/client association is implied.
+Original bytes, SHA-256 pins, publisher URLs and publication/discovery qualifiers
+MUST survive metadata export. PDF page ordinals MUST NOT be represented as native
+transcript page/line citations. Text extraction MUST disclose missing text layers
+and its lack of OCR, layout, image and redaction interpretation.
+
+Pack 1.1.0 is additive metadata under extension 1.0.0. Existing generated tables
+remain fabricated, including the existing `documents` table and its synthetic
+NDA labels. Consumers MUST refuse unsupported full-pack mixed generation rather
+than fabricate the observed rows. Explicit ingestion and generation of selected
+subsets belong to consumers. Full `--include-sources` export MUST refuse unknown
+rights; default schema/metadata export retains those declarations.

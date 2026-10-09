@@ -591,3 +591,11 @@ Unresolved native references are explicit rows, not fabricated entities. TableSp
 shares its spool, constraint checks, CSV ZIP exporter, SQL loader and Sail/Spark
 test lanes across generated legal and externally sourced medical data. Archive
 input snapshots retain source hashes independently of standardized CSV output.
+
+
+The legal mixed pack separates generated firm-operation tables from observed
+`cases`, `evidence_documents` and `evidence_pages`. Original public PDFs remain
+authoritative; page text is a lossy search projection, preserving PDF page
+ordinals and candidate Bates identifiers without inventing transcript citations
+or discovery-production history. Local projection tooling never fetches sources.
+Unknown third-party redistribution rights block full source export.

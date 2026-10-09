@@ -1149,3 +1149,15 @@ using the same portable pack contract as legal. Official source JSON is retained
 alongside CSV derivatives, pinned checksums and license notices. CMS candidates
 remain references only while redistribution is unresolved. TableSpec owns local
 CSV ingestion, ZIP export and Sail/Spark execution tests.
+
+
+## Mixed legal domain pack
+
+The [legal pack](../../spec/domain-packs/legal/pack.json) 1.1.0 combines eight
+fabricated firm-operation tables with observed public litigation documents.
+One Google digital-advertising case supplies seven original PDFs: a complaint,
+an opinion, two deposition selections and three corporate exhibits. The 383
+PDF-page text projections remain lossy search aids; originals are authoritative.
+Real evidence has separate case keys and no invented client relationships.
+Unknown third-party reuse rights block full source export. See
+[scoped evidence](04-build/evidence/domain-packs.md#mixed-legal-corpus-110).

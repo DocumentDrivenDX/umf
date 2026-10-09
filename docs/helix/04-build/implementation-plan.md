@@ -5479,3 +5479,15 @@ external bindings. The bounded FHIR R4 corpus preserves original resources,
 clinical literals and terminology notices. CMS samples remain references pending
 specific redistribution clearance. Scoped evidence:
 [medical-domain-pack.md](evidence/medical-domain-pack.md).
+
+
+### Mixed legal corpus (2026-10-08)
+
+Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-052.
+Retain the eight generated firm-operation tables; add one sourced case, seven
+original public PDFs and 383 per-page extraction records. Court filings,
+deposition designations and corporate exhibits remain separately qualified.
+Originals retain SHA-256 pins; unknown third-party rights block full source
+redistribution. Schema-only exports can refresh consumer/catalog metadata.
+Scoped checks and limitations are recorded in
+[evidence/domain-packs.md](evidence/domain-packs.md#mixed-legal-corpus-110).

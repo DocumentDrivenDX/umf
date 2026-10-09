@@ -1,5 +1,6 @@
 import {chromium} from 'playwright';
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(request){
+ if(new URL(request.url).pathname==='/legal-pack.json')return new Response(Bun.file('spec/domain-packs/legal/pack.json'),{headers:{'content-type':'application/json'}});
  if(new URL(request.url).pathname==='/medical-pack.json')return new Response(Bun.file('spec/domain-packs/medical/pack.json'),{headers:{'content-type':'application/json'}});
  return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>UMF pack schema verification</title>',{headers:{'content-type':'text/html'}});
 }});
@@ -25,6 +26,11 @@ try {
   const medicalDocument={...document,id:'medical-browser',extensions:{'umf.domain-pack':medical}};
   check(u.validateDocument(medicalDocument,registry).valid);
   for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(medicalDocument,format),format))===JSON.stringify(medicalDocument));
+  const legal=await (await fetch('/legal-pack.json')).json();
+  const legalDocument={...document,id:'legal-mixed-browser',extensions:{'umf.domain-pack':legal}};
+  check(u.validateDocument(legalDocument,registry).valid);
+  for(const format of ['json','yaml'])check(JSON.stringify(u.readDocument(u.writeDocument(legalDocument,format),format))===JSON.stringify(legalDocument));
+  check(legal.sources.fabricated.data_kind==='fabricated'&&legal.sources.PTX0014.data_kind==='observed'&&legal.sources.PTX0014.license.redistribution==='unknown');
   check(typeof (globalThis as any).Bun==='undefined'&&typeof (globalThis as any).process==='undefined');
   return {checks};
  });console.log(JSON.stringify({browser:browser.version(),...result}));

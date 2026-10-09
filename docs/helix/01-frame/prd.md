@@ -356,7 +356,11 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   generation, CSV pack export, explicit ingestion of pinned local source rows,
   and data testing. Published medical examples must retain original meaning,
   source identity, unresolved references and source-specific redistribution
-  conditions; generated supplements must remain distinguishable. Ontological sample
+  conditions; generated supplements must remain distinguishable. The legal pack must
+  combine explicitly fabricated firm operations with observed public filings and
+  discovery evidence, retaining original documents, case/source identities,
+  extraction limits and source-specific rights. Real litigants must not acquire
+  invented client or matter relationships. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
 
 ### Subsystem: Translation and Fidelity
