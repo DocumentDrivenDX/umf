@@ -13,10 +13,13 @@ base = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location('graph_projector', Path(__file__).with_name('graph-fixtures.py'))
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
-for root in sorted((base/'spec/domain-packs').iterdir()):
-    pack = json.loads((root/'pack.json').read_text())
-    graph = json.loads((root/'graph/fixture.json').read_text())
-    archive = base/'fixtures/domain-packs'/f"{pack['id']}-1.0.0.zip"
+provenance_spec = importlib.util.spec_from_file_location('graph_provenance', Path(__file__).with_name('graph-candidate-provenance.py'))
+provenance = importlib.util.module_from_spec(provenance_spec)
+provenance_spec.loader.exec_module(provenance)
+audit = provenance.verify_inventory(base)
+for candidate in audit['candidates']:
+    graph = json.loads((base/candidate['fixture']).read_text())
+    archive = base/candidate['archive']
     assert graph['dataset']['archive_sha256'] == hashlib.sha256(archive.read_bytes()).hexdigest()
     objects = {o['key']:o for o in graph['objects']}
     assert len(objects) == len(graph['objects'])
@@ -35,7 +38,9 @@ for root in sorted((base/'spec/domain-packs').iterdir()):
         assert total == len(objects)
     for edge in graph['edges']:
         assert edge['source'] in objects and edge['target'] in objects
-    print(pack['id'], len(objects), len(graph['edges']))
+    print(candidate['pack'], len(objects), len(graph['edges']), candidate['classification'],
+          'source='+candidate['source_version'], 'current='+candidate['current_version'])
+print('Packs without graph candidate data:', ', '.join(audit['without_candidate']))
 with TemporaryDirectory() as temporary:
     root = Path(temporary)/'pack'
     shutil.copytree(base/'spec/domain-packs/commerce',root)
@@ -82,4 +87,4 @@ with TemporaryDirectory() as temporary:
     try: module.project(base/'spec/domain-packs/medical/pack.json',Path(temporary)/'bad.json',forged_medical)
     except Exception: pass
     else: raise AssertionError('Forged fixed medical run admitted')
-print('All graph companions and refusal cases verified')
+print('All declared graph candidates and refusal cases verified; native/current-pack admission is separate')
