@@ -27,7 +27,8 @@
   },
   "content_root": "docs/helix/05-deploy/microsite/dist",
   "content_globs": [
-    "docs/helix/05-deploy/microsite/dist/*.html"
+    "docs/helix/05-deploy/microsite/dist/*.html",
+    "docs/helix/05-deploy/microsite/dist/actions/*.html"
   ],
   "kind_from_frontmatter": true
 }

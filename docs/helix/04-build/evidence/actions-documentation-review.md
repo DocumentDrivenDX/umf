@@ -48,3 +48,15 @@ Astra Ultra reviewed the concrete plan and checked source evidence on 2026-10-09
 | Fingerprint impact considered changed hashes but not newly discovered inputs | Gate now compares input inventory additions/removals as well as changed captured paths, explicitly including package scripts, tools and tests |
 
 Review found no architectural blocker beyond these bounded corrections. Astra Ultra final confirmation: scoped approval, all five findings resolved, no remaining plan blocker. Approval covers this implementation plan, not future reader validation, rendered visuals, build/signature coverage or publication. No documentation implementation, native tutorial validation, visual production, signing or website publication gate is represented as passed by this planning review.
+
+## Implementation review — 2026-10-09
+
+Astra Ultra independently reviewed the implemented guide, build and browser evidence. Initial review rejected generic prose-card diagrams and found teaching order, API inventory, refusal example, nonmutating verification, transitive input coverage, link checks, keyboard/text scaling and live-control-placement defects. These were corrected and reverified. All eight drawings now use their intended distinct topology at desktop/mobile widths. Final scoped implementation approval found no substantive documentation/site blocker; accessible request-token descriptions also match their labels.
+
+A further DOC-01 review approved status and component corrections in four governing documents and the entry-point/build-plan pointers. All eight pre-edit governing hashes matched HEAD; IDs/frontmatter/normative obligations and historical certificate bytes were preserved. The formal reproducer manifest excludes itself, records executed gates and has verified artifact hashes. Served HTML is compared to reviewed output hashes in addition to assets.
+
+This is scoped implementation review, not current-source action certification or release acceptance. Actual reader sessions, duplicate identity resolution, refreshed integrated qualification, signing, merge, deployment verification and release remain open in the separate delivery record.
+
+## Continuation verification
+
+Astra Ultra approved the isolated malformed-source/output controls, exact ten-chapter inventory and TypeScript configuration input coverage. The untouched copy passes before fault injection; all seven controls require their intended refusal and preserve malformed bytes. Both workflow filters cover the declared build inputs. Fresh integrated compilation/manifest audits pass for 353 schemas and 62 packages; certified old audit bytes were archived and hash-verified before regeneration. These checks add no integrated-native qualification or release claim.

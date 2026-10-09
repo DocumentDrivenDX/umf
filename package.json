@@ -21,7 +21,15 @@
     "build:smithy-experiment": "bun scripts/build-smithy-js.ts",
     "build:postgresql": "bun scripts/build-postgresql.ts",
     "test:postgresql-catalog": "bun scripts/postgresql-catalog-oracle.ts",
-    "build:arrow": "bun scripts/build-arrow.ts"
+    "build:arrow": "bun scripts/build-arrow.ts",
+    "build:docs": "python3 scripts/actions-docs/render-diagrams.py && bun scripts/actions-docs/build.ts",
+    "test:docs:build": "python3 scripts/actions-docs/render-diagrams.py --check && bun scripts/actions-docs/build.ts --check && bun scripts/actions-docs/check.ts && python3 scripts/actions-docs/render-negative-control.py && python3 scripts/actions-docs/build-negative-controls.py",
+    "test:docs:examples": "bun scripts/actions-docs/portable-example.ts && bun scripts/actions-docs/refusal-example.ts && bun scripts/actions-docs/rule-example.ts",
+    "test:docs:browser": "bun scripts/actions-docs/browser.ts",
+    "docs:example": "bun scripts/actions-docs/inspect-example.ts",
+    "docs:example:native": "bun scripts/actions-docs/native-example.ts",
+    "docs:example:refusal": "bun scripts/actions-docs/refusal-example.ts",
+    "docs:example:rule": "bun scripts/actions-docs/rule-example.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

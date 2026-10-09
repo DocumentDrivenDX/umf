@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-08",
+  "scope": "Microsite schema explorer; no new core/native support or data generation claims",
+  "runtime": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "catalog": {
+    "packs": 24,
+    "entries": 273
+  },
+  "checks": [
+    "Playground YAML defaults and JSON interchange",
+    "Domain packs start collapsed except the selected pack",
+    "Download target preview, review gate and SQL download",
+    "Medical subpacks expose all source-qualified tables and ontology schemas",
+    "Medical family links, public samples, exact downloads and old bookmarks",
+    "Pack catalog and linked schemas",
+    "Public dataset packs, source downloads and all sixteen schemas",
+    "Ontology context, record pages, relationship map and legacy URLs",
+    "Native foreign-key navigation",
+    "Pack hierarchy, breadcrumbs and domain-type ownership",
+    "Medical fixed-source pack and all eight schemas",
+    "Medical domain types, foreign keys and deep links",
+    "Field detail and history navigation",
+    "Search and empty state",
+    "Core definition and exact decimal inspection",
+    "Local upload, unknown retention, and inert text",
+    "Original source download",
+    "Invalid and unresolved sources refuse visibly",
+    "Deep links and missing selection",
+    "Same-named domain types stay within their pack version",
+    "Malformed and duplicate-key JSON refuse",
+    "Mobile layout and navigation",
+    "Existing routes expose the explorer",
+    "All twenty-four packs, every declared schema and ontology target navigate"
+  ],
+  "status": "passed"
+}

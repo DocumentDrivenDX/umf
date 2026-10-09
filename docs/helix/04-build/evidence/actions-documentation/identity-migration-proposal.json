@@ -1,0 +1,27 @@
+{
+  "status": "approved; current action IDs migrated, final integration/qualification pending",
+  "reason": "Independent master and action work assigned duplicate IDs; preserve original identities in certified-governing-snapshot.json while selecting unique current identities",
+  "baseMasterRevision": "fc78a6d48f08b3640748ccac0fc4a9ee06fc61e3",
+  "preserveCurrentMasterIdentities": true,
+  "actionCurrentIdMapping": {
+    "US-055": "US-078",
+    "TD-055": "TD-078",
+    "STP-055": "STP-078",
+    "CONTRACT-052": "CONTRACT-056",
+    "CONTRACT-053": "CONTRACT-057",
+    "FR-45": "FR-51"
+  },
+  "unchangedActionIdentities": [
+    "US-056",
+    "TD-056",
+    "STP-056"
+  ],
+  "requirementsBeforeApplication": [
+    "Human approval of migration policy",
+    "Recheck unused target IDs against latest primary branch",
+    "Update live links/citations and regenerate acceptance ledger",
+    "Do not rewrite historical certificates or recorded execution hashes",
+    "Freeze integrated sources and perform required fresh qualification"
+  ],
+  "approval": "Owner approved identity migration on 2026-10-09; unused IDs rechecked against fetched primary branch"
+}

@@ -3189,3 +3189,27 @@ subset in real Chromium; advanced-property cases qualify preservation only.
 Installed-wheel and extracted-sdist checks MUST run without relying on checkout
 resource paths. Full JavaScript semantic API parity and all native pipeline
 mappings remain outside this bounded package acceptance claim.
+
+### Portable domain packs and sources (CONTRACT-052)
+
+UMF tests schema reproducibility, known-shape refusal, synthetic/external/mixed
+metadata, unknown-content retention, package registration and native TableSpec
+schema recovery. Run the public schema API in real Chromium and package the same
+canonical schemas for Python. TableSpec owns seeded data properties, constraint
+reports, CSV ZIP round trips and local Sail/Spark ingestion. Source references
+never authorize network access; external data generation must refuse without an
+explicit ingestion binding. Rights metadata is retained, not legally certified.
+
+
+### Medical pack within portable domain packs (2026-10-08)
+
+CONTRACT-052 / FR-45: validate the medical payload with the canonical 1.0.0
+schema and existing TableSpec adapter. Verify original-source and projected-CSV
+SHA-256 hashes, exact source recovery, rights-gated export and browser JSON/YAML
+metadata preservation. Consumer tests must exercise checksum/rights/path refusal,
+null/unique/FK violations, deterministic ZIP bytes and original-source attachments.
+Use the existing Sail and Spark ingestion fixture for generated DDL, repeated
+replacement, independent count/FK audits and exact Unicode/multiline source JSON
+read-back. Partial dates, timezone offsets, decimal text, native interpretation
+labels and unresolved references must remain recoverable. Structural/data checks
+do not establish clinical validity, native FHIR conformance or population realism.

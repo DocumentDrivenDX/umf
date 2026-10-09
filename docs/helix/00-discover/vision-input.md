@@ -316,3 +316,119 @@ and derives its compiler view from shared documents, retaining legacy I/O for
 explicit compatibility and migration. Unknown content survives; execution of
 uninterpreted relevant semantics refuses. Package publication requires a concrete
 release decision and must not be inferred from a format version.
+
+## Owner direction: in-browser schema browser (2026-10-08)
+
+UMF should include an in-browser schema browser tool. The owner's first use
+case is to better document the on-disk structures used by Ashlar and Truss.
+This adds a human-facing product surface to PRD FR-39/FR-41's browser execution
+and metadata consumer direction. Implementation evidence remains to be established.
+
+### Proposed first slice and acceptance criteria
+
+Frame a read-only inspection and documentation slice using versioned UMF
+descriptions of representative Ashlar and Truss disk structures. Read-only is
+a proposed initial boundary; eventual editing remains open.
+
+- Users can open the selected schemas in a real browser, navigate structures
+  and references, and inspect supplied fields, types, constraints, keys,
+  relationships and descriptions.
+- Physical layouts and encodings remain distinguishable from logical graph
+  meaning. Documentation identifies source, revision and format version;
+  descriptions do not imply runtime enforcement.
+- Unknown extension content remains inspectable. Declared, inferred,
+  preserved-only and unsupported meaning are visibly distinguished, including
+  relevant validation and fidelity diagnostics.
+- Both repositories supply representative fixtures and source references.
+  Maintainers can trace displayed documentation to those definitions;
+  incomplete descriptions identify their gaps explicitly.
+- Browser verification exercises both fixture sets, an unknown extension and
+  an unresolved reference, without a mandatory schema-processing server.
+  Inspection must not alter loaded content.
+
+### Dependencies and unresolved choices
+
+Inspect current Ashlar and Truss storage contracts and implementations before
+selecting the corpus; the 2026-10-04 ecosystem inventory is historical and
+does not establish present disk formats. Determine whether inputs are existing
+UMF documents, native schemas requiring adapters, or new UMF descriptions of
+implementation structures. Data-instance inspection and backend query execution
+are separate scope decisions.
+
+File loading, navigation layout, documentation export, hosting, supported
+versions and editing remain open. The request does not change the selected
+TableSpec-native integration priority; browser scheduling remains unplaced.
+
+Next framing work: update the PRD, add a browser feature/story and define the
+two-repository corpus. Architecture/design and a browser acceptance plan follow.
+Read CONTRACT-001 through CONTRACT-011 and current implementation evidence
+before extending code. Ashlar and Truss own their storage contracts; UMF owns
+the shared browser tool.
+
+### Owner clarification: build the microsite explorer (2026-10-08)
+
+The owner directs implementation now and selects a browsable schema explorer
+for all domain packs as an addition to the existing microsite. Domain-pack
+creation proceeds in a separate chat. The browser consumes pack metadata and
+schemas without owning generators or changing pack definitions. The earlier
+Ashlar/Truss documentation use case remains applicable when those schema
+assets become available. The microsite implementation and scoped verification
+are documented in [its build notes](../05-deploy/microsite/README.md).
+
+## Owner direction: domain-pack catalog (2026-10-08)
+
+A domain pack contains schemas representing a domain and sufficient declared
+consumer tooling to generate datasets at different scales. UMF owns the schemas
+and schema-generation tooling; TableSpec owns data generation and testing,
+including CSV ZIP output and loading. Packs remain portable metadata with
+references to trusted consumer implementations. They do not execute arbitrary
+code by being read.
+
+The owner requests plans for legal, medical, commerce/procurement, supply
+chain/logistics, cybersecurity/IT operations, manufacturing/maintenance,
+banking/payments, education, transit/mobility, real estate/property operations,
+energy/utilities, HR/recruiting, MarTech, construction, ecology/water management, and archaeology.
+This selects planning scope; scheduling and release readiness require their
+own evidence. Official published examples should ground packs where available.
+
+The ecology motivation is a Synaptiq partner's watershed-analysis, river-quality,
+entomology and fishing work. A US freshwater watershed is a provisional planning
+assumption; no geography, partner dataset or scientific calibration is selected.
+Source models and a proposed unified observation shape are captured in SD-024.
+Preserve native meanings, source versions, unresolved identity matches, sampling
+methods/effort and scientific comparability limits.
+
+See [the domain-pack roadmap](../01-frame/domain-pack-roadmap.md) for placement,
+shared feature and individual feature/story plans.
+
+
+### Owner addition: archaeology
+
+The owner adds an archaeology domain pack grounded where possible in Madaba
+Plains Project published material. Requested scope includes field reports,
+photos, maps, square drawings, object drawings, pottery analysis, soil analysis
+and fauna analysis. FEAT-025/US-076 and SD-025 preserve excavation context,
+material/sample provenance, evidence associations and competing interpretations.
+Open Context project metadata, the project manual and publication inventory
+provide source candidates; exact downloadable record/media coverage remains
+explicitly unverified until a bounded fixture inventory is completed.
+
+### Owner direction: public-dataset schema packs (2026-10-08)
+
+The owner accepts the recommended first wave: NYC TLC yellow taxis, MovieLens,
+NOAA GHCN Daily and GTFS Schedule. UMF owns the schema packs under FR-45 and
+CONTRACT-052. Select bounded, documented profiles and preserve native codes,
+missing-value conventions, units, temporal meanings and source provenance.
+The schema explorer must discover them through its existing catalog path.
+Dataset ingestion and generators remain consumer-owned. An agency feed for
+GTFS, checksum-pinned row snapshots and additional TLC trip families remain open.
+
+### Owner direction: ontology-aware schema explorer (2026-10-08)
+
+The owner accepts ontology-specific pack navigation, structured record pages
+with properties/identity/incoming and outgoing relationships, an interactive
+relationship map, and repair of duplicate standalone ontology entries. Existing
+URLs must resolve to pack-owned entries without losing selected definitions.
+Show only declared UMF meaning; inheritance, equivalence and native ontology
+reasoning are not inferred. Table/record links use CONTRACT-053's explicit
+record-to-table identity convention within the same pack/version.

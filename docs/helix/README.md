@@ -1,5 +1,20 @@
 # UMF project documentation
 
+**Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
+
+## Domain-pack planning
+
+The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
+16 domains, including ecology/water management. UMF owns schemas and schema
+tooling; TableSpec owns dataset generation, CSV ZIP output, loading and data
+tests. FEAT-009 defines catalog behavior; separate features/stories define each
+domain outcome. [SD-024](02-design/solution-designs/SD-024-ecology-domain-pack.md)
+proposes an ecology model with explicit scientific comparability boundaries.
+[SD-025](02-design/solution-designs/SD-025-archaeology-domain-pack.md) proposes
+context-linked archaeological evidence and specialist analyses grounded in
+Madaba Plains Project source candidates. These draft plans do not claim
+delivered packs or native equivalence.
+
 ## Ecosystem integration direction
 
 The owner's 2026-10-04 goal is shared UMF schemas feeding TableSpec pipelines,
@@ -18,12 +33,12 @@ reconciled when that gate is framed.
 
 Owner-directed action planning (2026-10-08) is captured in
 [FEAT-008](01-frame/features/FEAT-008-declarative-actions.md),
-[US-055](01-frame/user-stories/US-055-declarative-actions.md),
-[CONTRACT-052](02-design/contracts/CONTRACT-052-declarative-actions.md),
+[US-078](01-frame/user-stories/US-078-declarative-actions.md),
+[CONTRACT-056](02-design/contracts/CONTRACT-056-declarative-actions.md),
 [SD-008](02-design/solution-designs/SD-008-declarative-actions.md),
-[TD-055](02-design/technical-designs/TD-055-declarative-actions.md) and
-[STP-055](03-test/test-plans/STP-055-declarative-actions.md).
-[CONTRACT-053](02-design/contracts/CONTRACT-053-transactional-action-profile.md) adds
+[TD-078](02-design/technical-designs/TD-078-declarative-actions.md) and
+[STP-078](03-test/test-plans/STP-078-declarative-actions.md).
+[CONTRACT-057](02-design/contracts/CONTRACT-057-transactional-action-profile.md) adds
 the proposed first executable consumer profile and protocol. These draft artifacts
 define a local core 0.8.0 `umf.actions` extension for authored declarations and
 executor capability comparison. An experimental portable implementation and bounded
@@ -31,9 +46,9 @@ rule/selector interpretation now have [scoped passing evidence](04-build/evidenc
 The transactional reference consumer is allocated in
 [US-056](01-frame/user-stories/US-056-transactional-actions.md),
 [TD-056](02-design/technical-designs/TD-056-transactional-actions.md) and
-[STP-056](03-test/test-plans/STP-056-transactional-actions.md). Its native store and
-request/authentication foundations have partial evidence; full execution, complete
-qualification and release acceptance remain unfinished. Execution remains
+[STP-056](03-test/test-plans/STP-056-transactional-actions.md). Its historical certificate records completed bounded execution and qualification
+at captured sources. Current integrated qualification and release acceptance
+remain open. Execution remains
 consumer-owned; DDD operation metadata and native Delta log actions are separate.
 
 ## Shared schema properties
@@ -1162,4 +1177,61 @@ Action design investigation (2026-10-08): [provenance](00-discover/actions-requi
 
 [Executed formal action analysis](04-build/evidence/actions-formal-analysis.md)
 records semantic counterexamples, corrected design, bounded TLC safety/progress
-and independent native-history conformance. Expanded implementation remains open.
+and independent native-history conformance. This pointer describes the earlier
+design milestone; the later action certificate records completed bounded
+implementation qualification at its captured source. See the action guide and
+documentation delivery record above for the current integration status.
+Portable tabular domain packs are governed by
+[CONTRACT-052](02-design/contracts/CONTRACT-052-domain-packs.md). UMF owns pack
+metadata, table schemas and schema export tooling; TableSpec owns executable
+sample-data generation, CSV packaging and ingestion tests. Dataset-source
+metadata distinguishes origin from data nature and retains licensing and
+provenance. Referenced datasets are not implicitly fetched.
+
+
+## Medical sample pack
+
+The [medical pack evidence and usage](04-build/evidence/medical-domain-pack.md)
+describe a curated HL7 FHIR R4 4.0.1 example corpus and eight tabular schemas,
+using the same portable pack contract as legal. Official source JSON is retained
+alongside CSV derivatives, pinned checksums and license notices. CMS candidates
+remain references only while redistribution is unresolved. TableSpec owns local
+CSV ingestion, ZIP export and Sail/Spark execution tests.
+
+
+## Mixed legal domain pack
+
+The [legal pack](../../spec/domain-packs/legal/pack.json) 1.1.0 combines eight
+fabricated firm-operation tables with observed public litigation documents.
+One Google digital-advertising case supplies seven original PDFs: a complaint,
+an opinion, two deposition selections and three corporate exhibits. The 383
+PDF-page text projections remain lossy search aids; originals are authoritative.
+Real evidence has separate case keys and no invented client relationships.
+Unknown third-party reuse rights block full source export. See
+[scoped evidence](04-build/evidence/domain-packs.md#mixed-legal-corpus-110).
+
+
+Four [medical subpacks](04-build/evidence/medical-subpacks.md) now add carrier
+workflows, epidemiological aggregates, imaging/PACS metadata and terminology
+references: 18 tabular schemas and 363 source-qualified rows. They retain official
+HL7/CDC sources separately from fabricated supplements, exact literals and native
+DICOM bytes. The explorer discovers these alongside the clinical, legal and broader catalog packs.
+SNOMED CT/CPT dictionaries remain consumer-local licensed inputs; CMS claims,
+TCIA images and live services remain separately qualified work.
+## Domain catalog and ontology targets
+
+All sixteen packs and their ontology schemas are discoverable in the schema explorer.
+[Catalog build evidence](04-build/evidence/domain-pack-catalog.md) records the shared
+profile, bounded small/demo/large replay, graph companion format and source custody.
+[SD-026](02-design/solution-designs/SD-026-domain-pack-platform.md) and
+[CONTRACT-053](02-design/contracts/CONTRACT-053-domain-pack-profiles.md) govern the
+platform; native graph intake, independent scaling axes and third-party source
+coverage remain explicitly qualified.
+
+
+Medical family 1.1.0 now integrates Clinical, Carrier, Epidemiology, Imaging and
+Terminology: 29 tables/five ontology schemas, qualified CMS CSV excerpts and one
+CC BY 3.0 TCIA DICOM slice with retained originals. The Medical overview links
+all five packs; source/row downloads, ontology/table navigation and old bookmarks
+have real-browser evidence. See the [integrated medical evidence](04-build/evidence/medical-subpacks.md#integrated-medical-family-110--2026-10-08)
+and [complete family export](../../spec/domain-packs/medical/README.md#complete-family-export-and-browser).

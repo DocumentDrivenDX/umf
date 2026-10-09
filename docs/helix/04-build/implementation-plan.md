@@ -51,8 +51,13 @@ relationship and binding acceptance”; those results qualify their recorded
 source, versions and subsets. The core 0.8.0 API simplification and current-only
 Key tuple correction have later scoped evidence in
 [schema-property execution evidence](evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
-Fresh repository regression and native qualification remain incomplete for that
-revision; earlier green acceptance must not be presented as current acceptance.
+The later [action certificate](evidence/actions-certification.md) records completed
+core regression and bounded native qualification at its captured revision. The
+current integration changes those inputs and needs fresh evidence; earlier green
+acceptance must not be presented as acceptance of changed source. The
+[documentation build plan](actions-documentation-plan.md) and
+[delivery record](evidence/actions-documentation-execution.md) govern the new
+learning path and website build.
 
 | Next work | Governing input | Completion boundary |
 | --- | --- | --- |
@@ -74,9 +79,9 @@ and synthetic executor observations, not public-library or production acceptance
 
 ### Declarative action design iteration 2 (2026-10-08)
 
-Owner-directed improvement adds CONTRACT-053 for bounded rule/key selectors,
+Owner-directed improvement adds CONTRACT-057 for bounded rule/key selectors,
 revision/invocation/lookup, controlled handler access, concurrency/auth timing,
-validation-only preview and audit/receipt epochs. CONTRACT-052 now distinguishes
+validation-only preview and audit/receipt epochs. CONTRACT-056 now distinguishes
 role authorization from general policy bindings. ACT-09–13 and EX-01–EX-05 are
 allocated; no new runtime or public-library acceptance is claimed.
 
@@ -90,8 +95,8 @@ original synthetic subset; they do not prove the expanded contract.
 ### Declarative action design handoff (2026-10-08)
 
 Owner scope now includes implementation and complete bounded qualification in the
-isolated worktree. FR-45, FEAT-008,
-US-055, CONTRACT-052, SD-008, TD-055 and STP-055 define a local-document extension
+isolated worktree. FR-51, FEAT-008,
+US-078, CONTRACT-056, SD-008, TD-078 and STP-078 define a local-document extension
 contract. US-056, TD-056 and STP-056 allocate the requested reference-consumer
 implementation and EX-01–05 qualification; production release and downstream
 adoption remain separate.
@@ -99,14 +104,15 @@ Current TableSpec finalization/offline-composition priorities are not displaced.
 
 | Gate | Governing artifact | Required outcome |
 | --- | --- | --- |
-| Requirements/interface review | FEAT-008, US-055, CONTRACT-052 | Review local-only references, explicit-key recipes, contract read/write frames, postconditions, handler/profile boundaries and independent DDD binding. |
-| Library implementation readiness | TD-055, STP-055, current core evidence | Resolve current core qualification gaps; create exercising tests for all nine ACs before acceptance; preserve whole-document registry behavior. |
-| Declaration library acceptance | TD-055, STP-055 | Package/schema audits, scoped regression, typechecks, public build and Bun/Chromium proof with exact versions/fingerprints and limits. |
-| Consumer executor qualification | CONTRACT-053, TD-056, STP-056 | Real store evidence for authorization, state checks, atomic failure, replay races, native side effects and freshness receipts; no mock-derived support claim. |
+| Requirements/interface review | FEAT-008, US-078, CONTRACT-056 | Review local-only references, explicit-key recipes, contract read/write frames, postconditions, handler/profile boundaries and independent DDD binding. |
+| Library implementation readiness | TD-078, STP-078, current core evidence | Resolve current core qualification gaps; create exercising tests for all nine ACs before acceptance; preserve whole-document registry behavior. |
+| Declaration library acceptance | TD-078, STP-078 | Package/schema audits, scoped regression, typechecks, public build and Bun/Chromium proof with exact versions/fingerprints and limits. |
+| Consumer executor qualification | CONTRACT-057, TD-056, STP-056 | Real store evidence for authorization, state checks, atomic failure, replay races, native side effects and freshness receipts; no mock-derived support claim. |
 
 Scoped public-library tests and actual Chromium now pass;
-[current certification work](evidence/actions-certification.md) records the unfinished
-full qualification gates. The bounded design investigation
+[historical certification](evidence/actions-certification.md) records completed
+qualification for its exact sources and bounded reference consumer. Fresh
+integrated qualification is tracked separately in the documentation delivery record. The bounded design investigation
 has executed portable, real-store and protocol experiments; see
 [evidence](evidence/actions-plan-execution.md) for separate gate status. Core admission, native equivalence,
 Python action-semantic support, Palantir import/export and cross-document action
@@ -5498,3 +5504,209 @@ compiler snapshots, unsupported-property refusal and the existing compiler path
 are consumer-owned. Broader core-property execution bindings and full native-port
 acceptance remain distinct from package delivery. Scoped Python/package/browser
 evidence is recorded in [python-consumers.md](evidence/python-consumers.md).
+
+### Portable domain packs and dataset sources (2026-10-08)
+
+Owner direction assigns all pack metadata, tabular schemas and schema tooling to
+UMF, with generation, CSV output, ingestion and data testing in TableSpec.
+CONTRACT-056 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
+provenance and explicit execution boundaries. The legal source pack lives under
+`spec/domain-packs/legal/`; generated consumer snapshots preserve compatibility.
+
+Implement portable schema generation and registration, local native-schema
+export/check, Python resources and Chromium metadata checks. TableSpec consumes
+versioned references through trusted factory registration, retaining external
+source declarations while refusing fabricated substitution for external row
+inputs. Retrieval adapters and general mixed-source transformation remain open;
+no workspace or source dataset is fetched during this implementation.
+
+Scoped implementation evidence is recorded in
+[domain-packs.md](evidence/domain-packs.md). The portable metadata subset has
+TypeScript, Bun, Python, canonical-audit and real-browser evidence. Broader native
+adapter qualification remains distinct and its failing gates are retained.
+
+### Official medical fixture consumption (2026-10-08)
+
+The medical corpus extends the legal domain-pack system without another metadata
+version or generator framework. Explicit local-source export verifies rights,
+checksums and path boundaries. TableSpec consumes external CSV bindings through
+its shared validation, ZIP archive and ingestion paths; generation still refuses
+external bindings. The bounded FHIR R4 corpus preserves original resources,
+clinical literals and terminology notices. CMS samples remain references pending
+specific redistribution clearance. Scoped evidence:
+[medical-domain-pack.md](evidence/medical-domain-pack.md).
+
+
+### Mixed legal corpus (2026-10-08)
+
+Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-056.
+Retain the eight generated firm-operation tables; add one sourced case, seven
+original public PDFs and 383 per-page extraction records. Court filings,
+deposition designations and corporate exhibits remain separately qualified.
+Originals retain SHA-256 pins; unknown third-party rights block full source
+redistribution. Schema-only exports can refresh consumer/catalog metadata.
+Scoped checks and limitations are recorded in
+[evidence/domain-packs.md](evidence/domain-packs.md#mixed-legal-corpus-110).
+
+
+### Medical carrier and terminology expansion — pending (2026-10-08)
+
+Authority: FR-51 and CONTRACT-056. This is a dependency sequence for the expanded
+requirement, not execution evidence or an implementation-ready schema design.
+The clinical 1.0.0 checks remain scoped to their existing corpus.
+
+1. Inventory exact CMS synthetic RIF, DE-SynPUF, Blue Button and official FHIR
+   candidate files against every carrier area in CONTRACT-056. Record versions,
+   coverage gaps, download/access requirements and embedded terminology rights.
+   Select the smallest useful enrollment/claim source subset; keep historical
+   ICD-9 claims separate. Exit: source/rights manifest and explicit gap matrix.
+2. Frame linked carrier stories, technical design and story tests before code.
+   Define keys and relationships, temporal/event handling, money/currency,
+   lossless native retention and pack version compatibility. Model eligibility,
+   authorization, adjudication and payment separately. Exit: concrete approved
+   surfaces and acceptance scenarios; missing public examples stay named gaps.
+3. Define version-pinned terminology/reference bindings and consumer-local
+   licensed inputs. Start with official ICD-10-CM/PCS and HCPCS Level II files;
+   support SNOMED CT and CPT without requiring their redistribution. Define
+   qualified directional maps for Truss/Ashlar independently of tabular rows.
+   Exit: exact release/rights decisions and tests for ambiguous, retired,
+   unavailable and unknown codes; no inferred clinical/billing equivalence.
+4. After those prerequisites, implement UMF pack schemas and export fixtures,
+   TableSpec local ingestion/archive/readback and separately qualified graph
+   consumption. Exit: Bun metadata/hash/recovery checks, real Chromium checks,
+   source-inclusive rights refusal checks, TableSpec native ingestion/readback,
+   and graph preservation evidence within declared subsets. Include active and
+   inactive coverage, positive/negative eligibility, authorized/denied services,
+   multi-line paid/denied claims, adjustments, multiple coverages and appeals.
+   Supplemental fabricated scenarios carry separate provenance; they cannot
+   substitute for public-source coverage claims.
+
+No new pack version, terminology release or source redistribution entitlement is
+chosen by this amendment. Full carrier support remains pending until its
+coverage matrix and the separate consumer gates pass.
+
+
+### Epidemiology and imaging subpacks — pending (2026-10-08)
+
+Authority: FR-51 and CONTRACT-056. Keep these independent of carrier delivery,
+while sharing the versioned terminology/source-binding work above.
+
+- Epidemiology: select a bounded CDC WONDER export and pin query, release,
+  original bytes and use conditions. Design population/geography/time/measure
+  schemas and tests for denominators, adjusted rates, suppression versus zero,
+  incompatible cohorts and revisions. Acceptance requires exact source recovery
+  and preserved aggregate meaning in TableSpec and separately qualified graphs.
+- Imaging/PACS: select a rights-qualified small TCIA collection subset and pin
+  its DICOM edition, native objects and collection terms. Design study/series/
+  instance metadata and binary-reference handling before adding fixtures.
+  Acceptance requires independent native metadata inspection, exact original
+  byte recovery, nested/private-tag preservation, unresolved-link handling and
+  Bun/Chromium metadata checks. Pixel decoding and live PACS/DICOMweb operations
+  require their own future designs and evidence.
+
+Frame linked stories/designs/tests for each subpack before implementation.
+Cross-subpack tests must reject fabricated patient links and population-to-patient
+promotion. Record source coverage and rights gaps without inventing source facts.
+
+### Medical subpack implementation — US-078 (2026-10-08)
+
+US-078 / TD-078 / STP-078 implement a bounded first delivery of the carrier,
+epidemiology, imaging and terminology requirements above. Four independent
+1.0.0 packs use CONTRACT-056 and the unchanged shared source exporter and TableSpec
+local ingestion/archive paths. Browser-compatible projections retain original
+text and exact native fragments; the host builder produces deterministic source
+manifests, native TableSpec schemas and CSV rows without fetching.
+
+The carrier subset contains nine official HL7 R4 resources, nineteen authored
+FHIR-shaped supplements and four workflow events. Epidemiology includes twelve
+CDC/NCHS observed aggregate rows and two separate authored edge cases. Imaging
+includes one synthetic DICOM binary/JSON object with private tags and a sequence.
+Terminology includes twelve historical official ICD-10-CM order-file records
+and separate source/system descriptors; SNOMED CT and CPT use caller-local record
+lookup without bundled vocabularies. This is not full carrier or native support.
+
+[medical-subpacks.md](evidence/medical-subpacks.md) records executed gates and
+residuals. The previous pending sections remain the broader delivery sequence:
+CMS/TCIA source qualification, full dictionaries/maps, richer native-conformance
+profiles and Truss/Ashlar engine adoption still require separate execution evidence.
+## Full domain catalog first release
+
+Astra ultra reviewed SD-026 and CONTRACT-057. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
+
+### Domain catalog first release
+
+The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and graph
+companions are implemented under SD-026/CONTRACT-057. See
+[evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
+review corrections, executable results and remaining qualification boundaries.
+
+### Public dataset schema packs (2026-10-08)
+
+FR-51 and CONTRACT-056 govern the owner's selected NYC TLC, MovieLens,
+NOAA GHCN Daily and GTFS Schedule profiles. Generate 16 authored TableSpec
+schemas and four external-source manifests with distinct documentation pins.
+Preserve native missing/time/code semantics and explicit unresolved row inputs.
+The existing microsite catalog discovers the canonical pack directory.
+
+Verification requires deterministic regeneration, pack/source/schema/domain
+reference consistency, exact TableSpec adapter recovery, native consumer model
+admission, export/check and real Chromium inspection of all sixteen schemas.
+Record scoped results in [domain-pack evidence](evidence/domain-packs.md).
+Rollback removes the four packs and generator and rebuilds the catalog.
+No row ingestion, full native replay, source equivalence, public deployment or
+new TableSpec generator is claimed.
+
+### Ontology-aware schema explorer (2026-10-08)
+
+Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-057 graph-schema
+inspection: split Tables/Ontology navigation, display record-owned properties
+and keys, separate incoming/outgoing relationships, and provide clickable
+record neighborhoods/full-model maps. Reuse stable module/element identity.
+Deduplicate pack-owned schema files while retaining legacy URL aliases.
+
+Bun verifies ecology's exact 19 records/81 properties/20 relationships and
+catalog ownership. Chromium verifies old-link redirects, record/edge clicks,
+corresponding table navigation, multiplicity display, mobile containment and
+all existing catalog entries. Multi-endpoint relationships remain explicit
+declarations and are not flattened into binary arrows. No data-instance
+graph, ontology inference or native backend acceptance is added. Rebuild the
+previous viewer to roll back; pack schemas are unaffected. Results live in
+`../05-deploy/schema-explorer-evidence.json` and microsite build notes.
+
+## Browser schema downloads — 2026-10-08
+
+CONTRACT-054 records the owner-requested consumer profile. The explorer now
+previews nine generated scalar targets, blocks unsupported members, requires
+review of limitations and downloads a source-retaining report bundle. Native
+adapter payloads expose separate recovery downloads with source companions.
+Bun checks fields, exact source retention, rejected types/nullability, SQL
+quoting, GraphQL parsing, Avro parsing and JSON Schema compilation. Chromium
+checks all nine previews, review gating and an actual SQL download alongside
+all catalog navigation checks. No DDL execution or native-equivalence claim.
+Rollback removes the download widget and rebuilds the microsite.
+
+### Website YAML defaults — 2026-10-08
+
+Owner-directed human-facing schema interactions use YAML in playground presets,
+explorer metadata/ontology/source views and JSON Schema/OpenAPI generation.
+Explicit JSON output remains available; Avro/Spark native downloads, report
+bundles, catalog transport and exact original-source downloads retain JSON or
+their source format. Native source views preserve numeric lexemes through YAML
+AST rendering rather than JavaScript number conversion.
+
+Both TypeScript configurations and seven download tests (45 assertions) pass.
+Chromium 153.0.8010.12 passes 23 checks, including YAML playground input, JSON
+input/output switching, YAML generation and existing explorer preservation and
+navigation checks; see the schema-explorer evidence. Public deployment is not
+performed. Changed playground HTML requires its Innsigle signature to be renewed
+before publication. Rollback restores the prior viewer and rebuilds bundles.
+
+### Integrated medical family and public samples
+
+Owner direction completes the sample integration under US-078/TD-078/STP-078:
+qualify bounded public CMS CSV and TCIA DICOM sources, retain exact native meaning
+and originals, add all subpack fixed profiles/ontology companions, link the
+Medical family in the explorer and expose allowed original/row downloads.
+Preflight and export the complete family in separate versioned directories; run
+Bun, actual Chromium, independent TableSpec/pydicom and deployment gates before
+merging. Live PACS and production carrier services remain separate future scope.

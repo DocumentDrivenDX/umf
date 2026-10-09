@@ -15,19 +15,19 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: US-055
+    - id: US-078
       kind: informed_by
     - id: US-056
       kind: informed_by
-    - id: CONTRACT-052
+    - id: CONTRACT-056
       kind: references
-    - id: CONTRACT-053
+    - id: CONTRACT-057
       kind: references
-    - id: TD-055
+    - id: TD-078
       kind: informed_by
     - id: TD-056
       kind: informed_by
-    - id: STP-055
+    - id: STP-078
       kind: informed_by
     - id: STP-056
       kind: informed_by
@@ -45,7 +45,7 @@ Requested 2026-10-09: review the internal documentation, plan improvements and i
 
 The documentation already specifies the action model in substantial detail. The gap is a trustworthy learning path: current status is scattered, historical experiments look current, implementation references have drifted, and the website introduces neither actions nor their consumer protocol. See the [review and evidence inventory](evidence/actions-documentation-review.md).
 
-Governing behavior remains [CONTRACT-052](../02-design/contracts/CONTRACT-052-declarative-actions.md), [CONTRACT-053](../02-design/contracts/CONTRACT-053-transactional-action-profile.md), TD-055/056 and STP-055/056. [The acceptance certificate](evidence/actions-certification.md) qualifies core 0.8.0, actions 0.1.0 and the fixed reference consumer, including PostgreSQL 17.9 and Bun 1.4.2. It does not approve draft specifications or establish production/downstream adoption. No new action semantics, public execution service, framework migration or hosting provider is in scope.
+Governing behavior remains [CONTRACT-056](../02-design/contracts/CONTRACT-056-declarative-actions.md), [CONTRACT-057](../02-design/contracts/CONTRACT-057-transactional-action-profile.md), TD-078/056 and STP-078/056. [The acceptance certificate](evidence/actions-certification.md) qualifies core 0.8.0, actions 0.1.0 and the fixed reference consumer, including PostgreSQL 17.9 and Bun 1.4.2. It does not approve draft specifications or establish production/downstream adoption. No new action semantics, public execution service, framework migration or hosting provider is in scope.
 
 ## Shared Constraints
 
@@ -102,13 +102,13 @@ Commands prefixed **proposed** below do not exist yet. Existing qualification co
 
 | Slice | Outputs and governing references | Depends on | Completion gate |
 | --- | --- | --- | --- |
-| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-052/053, TD-055, STP-055 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
+| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-056/053, TD-078, STP-078 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
 | DOC-02 — Beginner portable journey | Concepts/glossary/getting started/declarations; fixture README; runnable examples from actual fixtures | DOC-01 | **proposed** `bun run test:docs:examples`: exercise actual exported APIs, unchanged source, diagnostic/result assertions and known-error/unknown-preservation cases; run the portable examples in Chromium |
 | DOC-03 — Consumer and reference | Execution/receipts/API/support chapters; consumer README; stable setup/reproduction entry points | DOC-01, DOC-02 | Inventory all public action exports/types and logical consumer operations; match bounded native outcomes to recorded exercising witnesses; mandatory fresh validation of exact published native setup/walkthrough/cleanup commands in an isolated store, with explicit environment/logs; otherwise ship only a labelled recorded walkthrough and keep runnable acceptance pending |
 | DOC-04 — Formal teaching and visuals | Formal chapter and V1–V8; editable sources, SVGs and accessible descriptions | DOC-02, DOC-03 | All eight semantic gates plus screenshot/accessibility review; pinned reproducers replace ephemeral path assumptions; glossary/prediction exercises checked |
 | DOC-05 — Static website integration | Small Bun/TypeScript build tool, page templates, source manifest, generated `microsite/dist/actions/`; existing navigation/landing-page pointers; pipeline path/version fixes | DOC-02, DOC-03, DOC-04 | **proposed** `bun run build:docs` deterministic; **proposed** `bun run test:docs:build` checks clean generation, stale outputs, links, base path, snippets, diagrams, escaped content and claim manifest |
-| DOC-06 — Reader/browser verification | New documentation evidence record and novice walkthrough results; fix found teaching/build defects | DOC-05 | **proposed** `bun run test:docs:browser` plus observed first-time reader exercise; desktop/mobile, keyboard/zoom, zero page errors/network dependencies, defined task rubric |
-| DOC-07 — Review and publication readiness | Status alignment, certification-impact disposition, HTML/asset manifest, signing instructions and deployment checklist | DOC-06 | All relevant docs checks pass; final semantic/visual review; exact rendered HTML signed through existing Innsigle process when credentials are available; CI regenerates identically and verifies every page before existing deployment |
+| DOC-06 — Reader/browser verification | New documentation evidence record and novice walkthrough results; fix found teaching/build defects | DOC-05 | **proposed** `bun run test:docs:browser` plus fresh repeatable working walkthroughs; desktop/mobile, keyboard/zoom, zero page errors/network dependencies, defined task rubric |
+| DOC-07 — Review and publication readiness | Status alignment, certification-impact disposition, HTML/asset manifest, signing instructions and deployment checklist | DOC-06 | All relevant docs checks and actual working demonstrations pass; final semantic/visual review; exact rendered HTML signed through existing Innsigle process when credentials are available; CI regenerates identically and verifies every page before existing deployment |
 
 ## Website Build Design
 
@@ -122,7 +122,7 @@ Update both push/PR path filters for all declared documentation inputs and check
 
 ## Issue Decomposition
 
-DOC-01–07 are reviewable work packages, with the blockers above. No external work items or human assignments are created by this planning task. Future issues reference this plan, nearest governing artifact and completion gate, labelled `helix`, `activity:build`, `kind:build` and `area:actions-documentation`. Use US-055/056 when testing those existing behaviors; do not invent new action acceptance criteria or story identities for prose improvements. DOC-02/04 need technical writer and semantic review; DOC-05 needs build/security review; DOC-06 needs an actual first-time reader. Owners are unassigned.
+DOC-01–07 are reviewable work packages, with the blockers above. No external work items or human assignments are created by this planning task. Future issues reference this plan, nearest governing artifact and completion gate, labelled `helix`, `activity:build`, `kind:build` and `area:actions-documentation`. Use US-078/056 when testing those existing behaviors; do not invent new action acceptance criteria or story identities for prose improvements. DOC-02/04 need technical writer and semantic review; DOC-05 needs build/security review; DOC-06 requires real runnable system demonstrations; reader sessions are follow-up. Owners are unassigned.
 
 ## Validation Plan
 
@@ -130,7 +130,7 @@ DOC-01–07 are reviewable work packages, with the blockers above. No external w
 - Machine-check runnable snippets through the public entry point and expected observations, including `executionVerified:false`, error/refusal cases and source preservation. Test meaningful behavior, not snapshots of all incidental report prose. Protect the beginner approve example from silently acquiring fabricated conditions/outputs.
 - The native tutorial is optional for the reader, but fresh validation is mandatory before publishing it as runnable. Execute the exact authored setup, walkthrough, failure and cleanup commands in a disposable native environment; record its server/runtime version and independent stored-state observations. Documentation cannot infer a current fresh native result from old recorded logs.
 - Check generated navigation, links, anchors, manifest completeness, assets, base path, deterministic output and stale-file cleanup confined to generated ownership. Browser verification exercises the actual public bundle and docs routes, not a synthetic HTML surrogate.
-- First-time reader rubric: starting with no UMF/CQRS knowledge, independently run portable inspection; explain why no business write happened; find and interpret one refusal; distinguish failed rollback from indeterminate outcome; explain why received fact 2 does not prove fact 1 visible; identify one unsupported native scope; locate the exact evidence. Record assistance, wrong predictions and revisions. Target two entry-level readers completing all tasks without undocumented intervention; this is a project teaching gate, not an empirical guarantee about every reader. If readers are unavailable, leave that gate explicitly pending.
+- First-time reader rubric: starting with no UMF/CQRS knowledge, independently run portable inspection; explain why no business write happened; find and interpret one refusal; distinguish failed rollback from indeterminate outcome; explain why received fact 2 does not prove fact 1 visible; identify one unsupported native scope; locate the exact evidence. Record assistance, wrong predictions and revisions. Owner update (2026-10-09): two entry-level reader sessions remain a usability follow-up. The release gate is actual runnable demonstrations of success, refusal/rollback, replay and projection visibility, exercised against the qualified runtime with independently observed stored state. No simulated success or unavailable human session substitutes for working system evidence.
 - Captured-document impact: calculate proposed changed paths against certificate source/governing hashes before edits, and compare the input-discovery inventory before/after for additions and removals. Adding package scripts, build tools or documentation tests can change captured input sets even when guide Markdown itself is outside them. New guides do not automatically change captured inputs; status corrections to captured contracts/TD/STP do. Preserve the historical certificate unchanged. Record documentation-only deltas and their exact old/new hashes separately, without claiming the original certificate binds new bytes. Changes to normative behavior require upstream design/test review and fresh applicable qualification. If current-source certification is required after any captured change, use the existing qualification/fingerprint rules; a prose label cannot waive them.
 - Existing focused gates, when applicable: `bun run typecheck`, `bun run build`, `bun test ./tests/actions/*.test.ts`, `bun scripts/actions-browser.ts`, `bun scripts/acceptance-traceability.ts --check`. Full core/native recertification is required only by the actual changed-input/qualification policy, not asserted unnecessary by this plan.
 - Record final scope, sources, versions, commands, screenshots, reader outcomes, unresolved gates and review findings under `04-build/evidence/`. Website publication evidence stays separate from action execution evidence.

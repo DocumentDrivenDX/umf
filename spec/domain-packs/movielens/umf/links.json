@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "table_name": "links",
+  "description": "MovieLens links.csv field profile.",
+  "columns": [
+    {
+      "name": "movieId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Dataset movie identifier."
+    },
+    {
+      "name": "imdbId",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Identifier text preserves leading zeros."
+    },
+    {
+      "name": "tmdbId",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Identifier text; absent value remains absent."
+    }
+  ],
+  "primary_key": [
+    "movieId"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "movieId",
+        "references_table": "movies",
+        "references_column": "movieId"
+      }
+    ]
+  }
+}

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "umf-core"
-version = "0.8.0"
+version = "0.8.1"
 description = "Official Python document models and extension machinery for UMF"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,6 +18,8 @@ packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
 "../spec/core" = "spec/core"
+"../spec/extensions/domain-pack" = "spec/extensions/domain-pack"
+"../spec/extensions/dataset-source" = "spec/extensions/dataset-source"
 "../fixtures/python" = "fixtures/python"
 "../fixtures/core/schema-properties.json" = "fixtures/core/schema-properties.json"
 

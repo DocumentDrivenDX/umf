@@ -8,18 +8,18 @@ import {UmfError,type Document} from '../../src/model/types';
 const source=()=>structuredClone(fixture) as unknown as Document;
 const registry=()=>registerActions(new Registry());
 const action=(d:Document)=>(d.modules[0]!.extensions!['umf.actions'] as any).actions[0];
-test('@covers US-055-AC6: JSON/YAML recover exact future meaning and rule text with isolated results',()=>{
+test('@covers US-078-AC6: JSON/YAML recover exact future meaning and rule text with isolated results',()=>{
  const document=source(),a=action(document);a.future={nested:[null,JSON.parse('{"__proto__":"ordinary data"}')]};a.writes[0].selector.future={keep:'annotation'};
  document.vocabularies['future.native']={version:'1.0.0'};document.extensions={'future.native':{competing:['storage','compute']}};
  for(const format of ['json','yaml'] as const){const recovered=readDocument(writeDocument(document,format),format);expect(recovered).toEqual(document);expect(inspectActions(recovered,registry()).validation.valid).toBe(true);expect(()=>editAction(recovered,{module:'sales',action:'approve'},action(recovered),registry())).toThrow();}
  const report=inspectActions(document,registry());(report.actions[0]!.action.future as any).nested.push('changed');expect(a.future.nested).toHaveLength(2);
 });
-test('@covers US-055-AC6: an unrelated unknown extension survives a safe known-profile action edit',()=>{
+test('@covers US-078-AC6: an unrelated unknown extension survives a safe known-profile action edit',()=>{
  const document=source(),a=action(document);a.authorization.profile={id:'umf.actions.roles',version:'1'};
  document.vocabularies['future.native']={version:'1.0.0'};document.extensions={'future.native':{native:{keep:'exact'}}};
  const updated=editAction(document,{module:'sales',action:'approve'},{...a,description:'Updated safely'},registry());expect(updated.extensions).toEqual(document.extensions);expect(a.description).toBe('Set an order status to approved.');
 });
-test('@covers US-055-AC8: structural/version/identity failures are atomic and getters stay inert',()=>{
+test('@covers US-078-AC8: structural/version/identity failures are atomic and getters stay inert',()=>{
  const document=source(),before=structuredClone(document),r=registry();
  expect(()=>inspectActions({...document,umf:'0.7.0'},r)).toThrow();expect(()=>inspectActions({...document,modules:null} as any,r)).toThrow();
  const version=source();version.vocabularies['umf.actions']!.version='9.0.0';expect(()=>inspectActions(version,r)).toThrow();
@@ -27,7 +27,7 @@ test('@covers US-055-AC8: structural/version/identity failures are atomic and ge
  let calls=0;const hostile=Object.defineProperty({},'id',{enumerable:true,get(){calls++;return 'evil'}});expect(()=>declareAction(document,'sales',hostile as any,r)).toThrow();expect(calls).toBe(0);expect(document).toEqual(before);
  const escaped=source();action(escaped)['future/~']={keep:true};expect(inspectActions(escaped,r).validation.diagnostics.some(d=>d.code==='ACTION_UNCHECKED'&&d.path.endsWith('/future~1~0'))).toBe(true);
 });
-test('@covers US-055-AC8: every array/expression boundary accepts its bound and refuses bound plus one',()=>{
+test('@covers US-078-AC8: every array/expression boundary accepts its bound and refuses bound plus one',()=>{
  const template=action(source());const condition={id:'condition',rule:{language:'opaque',version:'1',expression:'x',references:[]},failure:{code:'reason',message:'reason'}};
  const mutations:[string,number,unknown][]=[['parameters',128,template.parameters[0]],['outputs',128,template.parameters[0]],['preconditions',128,condition],['postconditions',128,condition],['reads',128,{...template.writes[0],create:false,delete:false}],['writes',128,template.writes[0]],['failures',128,{code:'reason',message:'reason',retryable:false}]];
  for(const [member,bound,item] of mutations){const candidate=structuredClone(template);candidate[member]=Array.from({length:bound},()=>structuredClone(item));expect(()=>admitAction(candidate)).not.toThrow();candidate[member].push(structuredClone(item));expect(()=>admitAction(candidate)).toThrow(UmfError);}

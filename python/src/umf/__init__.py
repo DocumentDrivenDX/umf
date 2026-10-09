@@ -2,7 +2,12 @@
 
 from .models import Document, Element, Module, Reference, Vocabulary
 from .registry import Diagnostic, Extension, Registry, Validation
-from .schemas import core_schema, schema_validator
+from .schemas import (
+    core_schema,
+    dataset_source_schema,
+    domain_pack_schema,
+    schema_validator,
+)
 from .serialization import (
     read_document,
     read_json_value,
@@ -23,6 +28,8 @@ __all__ = [
     "Validation",
     "Vocabulary",
     "core_schema",
+    "dataset_source_schema",
+    "domain_pack_schema",
     "read_document",
     "read_json_value",
     "schema_validator",

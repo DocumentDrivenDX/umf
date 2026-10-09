@@ -40,8 +40,9 @@ brief supplied on 2026-09-20. FR-1–FR-33 preserve the original requirement
 numbers. Original item 34 appears under Non-Goals; FR-34–FR-38 are additions
 from the later brief. FR-39–FR-41 record subsequent browser, DDD, and metamodel-consumer direction.
 FR-42–FR-44 record authored relationships, physical bindings and directed
-generation requested by a model-authoring consumer. FR-45 records declarative
-action requirements/design selected on 2026-10-08 from consumer discovery input.
+generation requested by a model-authoring consumer. FR-45 records portable
+domain-pack ownership and consumer execution boundaries.
+FR-51 records declarative action requirements/design selected on 2026-10-08 from consumer discovery input.
 All requirements remain product obligations; this draft does
 not assert that every ecosystem must ship in the first release.
 
@@ -164,14 +165,15 @@ and export-only integrations must not claim bidirectional round-trip support.
 ### Must Have (P0)
 
 The owner supplied all 33 capabilities as requirements. They are grouped into
-six mandatory product capabilities without demoting any to optional status:
+seven mandatory product capabilities without demoting any to optional status:
 
 | Capability | Functional Requirements |
 | --- | --- |
 | Semantic representation and core | FR-2, FR-3, FR-20, FR-21, FR-28, FR-35 |
-| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40, FR-45 |
+| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40, FR-45, FR-51 |
 | Native interchange and durable use | FR-1, FR-6, FR-26, FR-29, FR-30, FR-33, FR-36, FR-38, FR-39, FR-41 |
 | Translation and fidelity | FR-7, FR-8, FR-9, FR-10, FR-24, FR-25 |
+| Portable domain packs | FR-45 |
 | Identity, composition, and evolution | FR-15, FR-16, FR-17, FR-18, FR-19 |
 | Validation and compatibility evidence | FR-11, FR-12, FR-13, FR-14, FR-23, FR-32, FR-37 |
 
@@ -266,7 +268,7 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   target bindings must not redefine source meaning. Candidate common concepts
   graduate only under FR-28's evidence and compatibility requirements.
 
-- **FR-45** — **Discoverable action contracts.** Model authors must be able to
+- **FR-51** — **Discoverable action contracts.** Model authors must be able to
   describe typed inputs/output/failures, preconditions and postconditions, permitted
   read/write boundaries, result identities/version/freshness obligations, caller-key
   idempotency, attribution, authorization profiles and inert execution bindings.
@@ -340,6 +342,11 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   visibly under FR-8. JavaScript runtime representations do not create core
   scalar types; database transport/storage codecs remain in Truss/Weft. This
   bounded library capability follows FR-39 and does not assert downstream adoption.
+  The domain-pack browser must expose ontology records, owned properties, keys,
+  incoming/outgoing relationships and declared participation through structured
+  pages and an interactive schema map. Preserve pack/version context and existing
+  deep links. Table/record correspondence requires an explicit profile binding;
+  visualization must not invent inheritance, equivalence or native reasoning.
 - **FR-42** — **Authored relationships.** Model authors must be able to state
   named associations between identified element types, including direction,
   endpoint multiplicity and an optional inverse presentation, without asserting
@@ -365,6 +372,55 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   native checks within declared versions and subsets. Each operation retains
   its source and reports missing target semantics. Query execution, resolvers,
   pagination and business-system behavior remain outside UMF.
+
+- **FR-45** — **Portable domain packs.** UMF owns declarative domain-pack
+  schemas and tooling that generates them. Packs retain versioned generator and
+  schema artifact references, domain-type metadata, scale declarations and
+  synthetic/external source provenance without authorizing code
+  execution or network fetching. TableSpec owns fabricated tabular data
+  generation, CSV pack export, explicit ingestion of pinned local source rows,
+  and data testing. Published medical examples must retain original meaning,
+  source identity, unresolved references and source-specific redistribution
+  conditions; generated supplements must remain distinguishable. The legal pack must
+  combine explicitly fabricated firm operations with observed public filings and
+  discovery evidence, retaining original documents, case/source identities,
+  extraction limits and source-specific rights. Real litigants must not acquire
+  invented client or matter relationships. Ontological sample
+  data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
+  The medical pack must cover the carrier lifecycle: payer/plan and member
+  enrollment, coverage and benefits, eligibility requests and responses, prior
+  authorization, claim headers and lines, adjudication and denials, explanations
+  of benefits, payment/remittance, coordination of benefits and appeals.
+  Clinical and financial records must retain distinct identities, dates, statuses,
+  monetary meanings and source-qualified relationships. Public synthetic claims
+  and official terminology sources must be evaluated and used where suitable;
+  missing workflow evidence must be explicit rather than fabricated as observed.
+  Terminology integration must distinguish SNOMED CT, ICD-10-CM, ICD-10-PCS,
+  CPT and HCPCS Level II by edition, effective period and rights, retaining
+  native codes, unknown codes and qualified mappings without asserting equivalence.
+  Licensed sources must remain usable through explicit consumer-local bindings
+  when redistribution is restricted. See CONTRACT-052 and its planned carrier
+  expansion; the delivered medical 1.0.0 corpus does not meet this broader scope.
+  Medical scope also includes epidemiological/public-health data and imaging/PACS
+  (Picture Archiving and Communication System) metadata. These are independently
+  versioned, composable subpacks in the medical family, pending concrete design;
+  epidemiology need not become a separate top-level domain merely because its
+  records are population-level. Epidemiological measures must retain cohort/case
+  definitions, geography, periods, denominators, uncertainty and suppression.
+  Imaging must retain study/series/instance identities, native DICOM metadata and
+  explicit references to binary objects without claiming pixel decoding or PACS
+  service support. Links between subpacks must be source-supported; population
+  aggregates must not be presented as patient records.
+  The first public-dataset schema packs cover NYC TLC yellow taxis, MovieLens
+  32M, NOAA GHCN Daily and a basic GTFS Schedule profile. These are bounded
+  source-qualified schemas; external row references do not establish a pinned
+  data snapshot, ingestion support or redistribution clearance.
+
+  Owner-selected planning scope includes the [domain-pack catalog and roadmap](domain-pack-roadmap.md).
+  FEAT-009 governs shared catalog qualification; FEAT-010–FEAT-025 and
+  US-061–US-076 govern separate domain outcomes. Ecology/water management
+  includes watershed analysis, river quality, aquatic entomology and
+  fishing-related observations, retaining scientific comparability limits.
 
 ### Subsystem: Translation and Fidelity
 
@@ -490,7 +546,8 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-42 | Author one-to-one, many-to-one, many-to-many, self and heterogeneous associations; classify an undeclared native FK | Authored endpoint meaning is inspectable; native observations retain refinements without inventing intent; two-priority admission and five-priority delivery remain distinct |
 | FR-43 | Bind one logical order model separately to PostgreSQL and Delta with different storage/index choices | Logical IDs and meaning agree; index availability comes only from the selected binding; unsupported choices report residuals and remain recoverable |
 | FR-44 | Generate DDL and SDL from an authored order/customer/product model with an association carrying fields | Outputs pass native adapters and versioned oracles; aggregate/invariant, endpoint and storage losses are reported; retained source and original native archives recover |
-| FR-45 | Author a create-and-link action, retain unknown content and assess an executor profile | Typed targets and obligations survive; unchecked/unsupported meaning blocks eligibility; no metadata check implies execution |
+| FR-51 | Author a create-and-link action, retain unknown content and assess an executor profile | Typed targets and obligations survive; unchecked/unsupported meaning blocks eligibility; no metadata check implies execution |
+| FR-45 | Inspect a pinned legal or ecology pack, generate its schemas and hand declarative references to TableSpec | UMF executes no artifact-supplied code; TableSpec resolves trusted generators; originals, unknown metadata, schemas and dataset provenance remain attributable |
 
 ## Technical Context
 
@@ -565,7 +622,7 @@ be inspected.
   compatibility behavior require native checks. Axon's exact integration interface
   still requires identification; it is outside the current five-system priority.
 - Which first-slice capabilities are production release commitments rather than
-  spike findings? Owner: product owner; blocks release commitments. All 44
+  spike findings? Owner: product owner; blocks release commitments. All 45
   requirements remain product obligations until explicitly changed.
 - Which slice follows the completed relationship and binding queue? Resolved for
   planning on 2026-10-02: US-050 is next. US-051 and every other residual

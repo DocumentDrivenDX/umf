@@ -1,5 +1,7 @@
 # UMF
 
+Start with the [action guide](docs/helix/04-build/guides/actions/index.md) for runnable examples, diagrams, CQRS and formal-analysis explanations. [Recorded action qualification](docs/helix/04-build/evidence/actions-certification.md) has exact versions and limits; [current documentation delivery](docs/helix/04-build/evidence/actions-documentation-execution.md) is separate.
+
 UMF is a machine-readable metamodel and schema interchange fabric for complex
 systems built over evolving, partly understood data shapes. Reuse metadata for
 transforms, visualization, generators, forms, AI context, and human documentation

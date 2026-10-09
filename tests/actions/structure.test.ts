@@ -6,7 +6,7 @@ import {validateDocument} from '../../src/validation/document';
 import {UmfError} from '../../src/model/types';
 const payload=fixture.modules[0]!.extensions['umf.actions'];
 const original=payload.actions[0]!;
-describe('action structural admission (partial STP-055 evidence)',()=>{
+describe('action structural admission (partial STP-078 evidence)',()=>{
  test('actual registry compiler accepts the complete core 0.8.0 fixture',()=>{
   const registry=new Registry().register(actionsPackage);
   expect(checkActionsStructure(payload)).toBe(true);

@@ -11,7 +11,7 @@ import {Registry} from '../../src/registry/registry';
 import type {Document} from '../../src/model/types';
 const validator=createValidator();for(const schema of [core,actions,profileSchema,inspectionSchema,assessmentSchema])validator.addSchema(schema);
 const checkProfile=validator.getSchema(profileSchema.$id)!,checkInspection=validator.getSchema(inspectionSchema.$id)!,checkAssessment=validator.getSchema(assessmentSchema.$id)!;
-test('@covers US-055-AC5: actual reports satisfy published exact report/profile schemas',()=>{
+test('@covers US-078-AC5: actual reports satisfy published exact report/profile schemas',()=>{
  const source=structuredClone(fixture) as unknown as Document,r=registerActions(new Registry()),inspection=inspectActions(source,r),identity={module:'sales',action:'approve'};
  const profile:ActionExecutorProfile={id:'declaration',version:'1',coreVersion:'0.8.0',actionVersion:'0.1.0',source,identity,claims:inspection.actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://declaration']}))};
  const assessment=assessAction(source,identity,profile,r);expect(checkProfile(profile)).toBe(true);expect(checkInspection(inspection)).toBe(true);expect(checkAssessment(assessment)).toBe(true);

@@ -11,7 +11,7 @@ ddx:
       kind: informed_by
     - id: umf.architecture
       kind: informed_by
-    - id: CONTRACT-052
+    - id: CONTRACT-056
       kind: references
     - id: umf.concerns
       kind: references
@@ -28,7 +28,7 @@ ddx:
 Use a module-scoped, independently versioned action extension. UMF owns portable
 model validation/inspection and declared capability comparison. Consumer-owned
 executors own authorization, state predicates, atomic writes and read receipts.
-CONTRACT-052 owns the action surface; CONTRACT-053 owns the bounded proposed
+CONTRACT-056 owns the action surface; CONTRACT-057 owns the bounded proposed
 consumer execution profile and protocol. This follows architecture's
 extension/runtime boundary and introduces no persistent UMF service.
 
@@ -36,14 +36,14 @@ extension/runtime boundary and introduces no persistent UMF service.
 
 | Requirement | Design capability | Verification |
 | --- | --- | --- |
-| ACT-01 | Exact local references to existing core Records, Fields and stable Keys | US-055-AC1/8 |
-| ACT-02 | Opaque, version-qualified rule envelope and failure identities; no evaluator | US-055-AC2/5 |
-| ACT-03 | Separate semantic frames/postconditions and recipe/handler bindings; recipe dependency checks | US-055-AC3/8 |
-| ACT-04 | Explicit executor obligations, separate from declaration validity | US-055-AC4/5 |
-| ACT-05 | Inert named handler implementing a bounded contract | US-055-AC2/5 |
-| ACT-06 | Source-retaining obligation inventory and per-declaration profile comparison | US-055-AC5/8 |
-| ACT-07 | Existing serializer/registry, copied results and conservative action edits | US-055-AC6/8/9 |
-| ACT-08 | Optional explicit DDD operation association with independent semantics | US-055-AC7 |
+| ACT-01 | Exact local references to existing core Records, Fields and stable Keys | US-078-AC1/8 |
+| ACT-02 | Opaque, version-qualified rule envelope and failure identities; no evaluator | US-078-AC2/5 |
+| ACT-03 | Separate semantic frames/postconditions and recipe/handler bindings; recipe dependency checks | US-078-AC3/8 |
+| ACT-04 | Explicit executor obligations, separate from declaration validity | US-078-AC4/5 |
+| ACT-05 | Inert named handler implementing a bounded contract | US-078-AC2/5 |
+| ACT-06 | Source-retaining obligation inventory and per-declaration profile comparison | US-078-AC5/8 |
+| ACT-07 | Existing serializer/registry, copied results and conservative action edits | US-078-AC6/8/9 |
+| ACT-08 | Optional explicit DDD operation association with independent semantics | US-078-AC7 |
 
 ## Solution Approaches
 
@@ -88,13 +88,13 @@ flowchart LR
 
 ## System Decomposition
 
-US-055/TD-055 owns the package, portable declaration validator, copied APIs and
+US-078/TD-078 owns the package, portable declaration validator, copied APIs and
 capability comparison. Core validators retain authority over Fields/Keys/values;
 no action-specific numeric or key equality implementation is introduced.
 
 The executor is an external integration boundary. It must qualify state reads,
 role profile, handlers, native side effects, atomicity, replay and receipts
-against CONTRACT-052 before claiming support. UMF does not supply its transport
+against CONTRACT-056 before claiming support. UMF does not supply its transport
 or treat locator strings as authenticated evidence.
 
 ## Technology Rationale
@@ -128,10 +128,10 @@ association Record; they do not settle broader core instance semantics.
 
 ## Traceability and Gaps
 
-STP-055 allocates all nine story criteria to concrete planned tests. US-056, TD-056 and STP-056 allocate the complete bounded reference-consumer
+STP-078 allocates all nine story criteria to concrete planned tests. US-056, TD-056 and STP-056 allocate the complete bounded reference-consumer
 journey, including EX-01–05 runtime witnesses. Consumer
 execution witnesses are a separate gate and are not a passing library result.
-CONTRACT-053 selects exact bounded rule/selector syntax, invocation variants and
+CONTRACT-057 selects exact bounded rule/selector syntax, invocation variants and
 handler-access requirements. Store adapters, policy/handler implementations and
 sandbox qualification remain consumer-owned, unimplemented work. Broader proposal sections 2–6 (global conformance,
 instance semantics, scalar coverage, canonical keys and authority) are not

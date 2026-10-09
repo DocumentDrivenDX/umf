@@ -18,7 +18,7 @@ ddx:
 **Priority:** Requirements/design selected by owner on 2026-10-08; implementation
 release order remains unselected.
 **Covered PRD Subsystem(s):** Extensions and Partial Participation.
-**Covered PRD Requirements:** FR-45; supporting FR-4/5/22/27/34.
+**Covered PRD Requirements:** FR-51; supporting FR-4/5/22/27/34.
 **Cross-Subsystem Rationale:** One extension capability; browser metadata access
 uses FR-39/41 without owning the broader consumer requirements.
 
@@ -95,7 +95,7 @@ establish that a transaction or permission check will occur.
 
 ## User Stories
 
-[US-055](../user-stories/US-055-declarative-actions.md) owns the library journey:
+[US-078](../user-stories/US-078-declarative-actions.md) owns the library journey:
 author, inspect, serialize and assess a declaration. Runtime execution is a
 separate consumer-owned qualification gate, not a UMF runtime story.
 
@@ -108,7 +108,7 @@ Executor replay, authorization races and atomic failures require consumer eviden
 
 ## Success Metrics
 
-All US-055 criteria must have exercising, cited Bun and scoped Chromium proof
+All US-078 criteria must have exercising, cited Bun and scoped Chromium proof
 where allocated. The declaration corpus must have zero unreported serialization
 loss. Execution claims must name executor version, profile/subset and evidence;
 metadata validation earns no execution claim. Resource-limit cases must publish
@@ -125,9 +125,9 @@ service. Initial references stay within one core 0.8.0 document.
 ## Dependencies
 
 CONTRACT-001/040/041/049 own envelope, Record/Field/Key, relationships and values.
-CONTRACT-005 owns DDD independently. CONTRACT-052 owns the action surface; CONTRACT-053 owns the proposed first
+CONTRACT-005 owns DDD independently. CONTRACT-056 owns the action surface; CONTRACT-057 owns the proposed first
 executable profile and protocol; SD-008,
-TD-055 and STP-055 own realization and verification. Cross-document action
+TD-078 and STP-078 own realization and verification. Cross-document action
 references await US-050 and a separate action extension revision.
 
 ## Out of Scope
@@ -140,7 +140,7 @@ scalar semantics, general constraint evaluation and authority/routing vocabulary
 
 Design choice: an extension rather than core syntax; no useful native action
 admission evidence exists. First delivery is declaration tooling. The first executable design now selects bounded rules/selectors and a
-transactional protocol in CONTRACT-053. Store deployment, handler implementations
+transactional protocol in CONTRACT-057. Store deployment, handler implementations
 and production policy bindings remain unselected and unqualified; assessment
 refuses absent exact profiles and evidence. This does not block the library design.
 Release scheduling and downstream integrations remain owner decisions.

@@ -11,9 +11,9 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: CONTRACT-053
+    - id: CONTRACT-057
       kind: references
-    - id: CONTRACT-052
+    - id: CONTRACT-056
       kind: references
     - id: ADR-002
       kind: references
@@ -26,7 +26,7 @@ ddx:
 
 ## Scope
 
-Implement the full bounded CONTRACT-053 reference profile in host-side tooling.
+Implement the full bounded CONTRACT-057 reference profile in host-side tooling.
 PostgreSQL 17.9 is the first candidate native qualification. Portable `src/` retains
 pure declaration and interpretation functions; it receives no database/process APIs.
 This implementation is a qualification consumer, not a production UMF service.
@@ -161,7 +161,7 @@ keys; those return indeterminate and have no keyed at-most-once guarantee.
 ## API/Interface Design
 
 Use logical invoke/lookup/preview/readAtLeast and exact outcome distinctions from
-CONTRACT-053. Authentication is a separate trusted issuer input, not request metadata.
+CONTRACT-057. Authentication is a separate trusted issuer input, not request metadata.
 No new public portable export or network endpoint is required for this story.
 
 ## Data Model Changes
@@ -251,7 +251,7 @@ include a DB connection. Runtime qualification includes adversarial access attem
 ## Performance
 
 No throughput target is accepted. Qualification uses bounded fixtures and records observed
-latency. CONTRACT-053 expression/frame/operation limits remain mandatory. Whole-store
+latency. CONTRACT-057 expression/frame/operation limits remain mandatory. Whole-store
 locking is an explicit first-adapter tradeoff; contention optimizations require equal
 native invariant and revocation evidence before adoption.
 

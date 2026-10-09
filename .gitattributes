@@ -3,3 +3,13 @@ native/rdfxml/sources/** -text
 native/shacl/sources/** -text
 fixtures/shacl/corpus/** -text
 native/tablespec/sources/** -text
+# Medical source/row checksums cover original bytes, including native CRLF.
+spec/domain-packs/medical*/sources/** -text
+spec/domain-packs/medical*/data/** -text
+spec/domain-packs/medical-terminology/sources/*.txt whitespace=cr-at-eol
+
+spec/domain-packs/medical-carrier/sources/cms-*.csv -text whitespace=cr-at-eol
+spec/domain-packs/medical-imaging/sources/*.dcm binary
+
+# Generated bundles may contain literal trailing spaces in dependency strings.
+docs/helix/05-deploy/microsite/dist/*.js whitespace=-blank-at-eol

@@ -79,13 +79,13 @@ not a researched completeness claim or a list of mandatory core primitives.
 
 ## Proposed declarative action boundary
 
-[FR-45/FEAT-008](../01-frame/features/FEAT-008-declarative-actions.md) introduces
+[FR-51/FEAT-008](../01-frame/features/FEAT-008-declarative-actions.md) introduces
 a proposed independently versioned `umf.actions` extension. The feature-level
 [SD-008](solution-designs/SD-008-declarative-actions.md) separates declaration
 validation/inspection and profile comparison from consumer-owned execution.
-[CONTRACT-052](contracts/CONTRACT-052-declarative-actions.md) owns exact action
-semantics; [TD-055](technical-designs/TD-055-declarative-actions.md) describes the
-bounded library slice. [CONTRACT-053](contracts/CONTRACT-053-transactional-action-profile.md)
+[CONTRACT-056](contracts/CONTRACT-056-declarative-actions.md) owns exact action
+semantics; [TD-078](technical-designs/TD-078-declarative-actions.md) describes the
+bounded library slice. [CONTRACT-057](contracts/CONTRACT-057-transactional-action-profile.md)
 adds a proposed bounded executable consumer profile, revision/protocol and
 handler-access/audit requirements. These are design proposals, not delivered architecture.
 
@@ -582,3 +582,45 @@ TableSpec retains its extension and pipeline models in its own repository. Its
 legacy compiler view is derived from the current shared document, with explicit
 refusal for unsupported core semantics. Legacy files remain a compatibility
 surface; UMF-native files are read and written without stripping unknown content.
+
+### Portable domain-pack ownership
+
+Owner direction on 2026-10-08 assigns portable pack schemas and schema-generation
+tooling to UMF. CONTRACT-052 defines versioned declarative metadata. The
+browser library emits the Draft 2020-12 schema; a development script publishes
+its canonical standalone and extension-package forms. Python packages the same
+schema resource. Generator references are opaque metadata, resolved only by an
+explicitly installed consumer registry. No artifact imports code or fetches its
+schema references. TableSpec owns tabular data generation, CSV ZIP output,
+ingestion and data testing; Truss/Ashlar own ontological sample data. Consumer
+schema snapshots are generated artifacts, not competing structural authorities.
+
+Dataset source references form a reusable document-scoped extension with separate
+origin and data-kind declarations. Packs can reference published synthetic fixtures,
+observed data or mixed sources without conflating origin with privacy/realism.
+Revision/checksum, rights notices and transformation provenance remain metadata.
+Consumers explicitly bind local files or install retrieval adapters; metadata never
+imports a downloader. The initial legal pack and its native TableSpec schema
+artifacts live in UMF; consumer copies are exported and checked from that source.
+
+
+The medical pack extends the same source model with curated official Health Level
+Seven (HL7) Fast Healthcare Interoperability Resources (FHIR) R4 4.0.1 examples.
+Source-scoped native keys, original JSON bytes and partial temporal/exact decimal
+text prevent a scalar table projection from silently losing source meaning.
+Unresolved native references are explicit rows, not fabricated entities. TableSpec
+shares its spool, constraint checks, CSV ZIP exporter, SQL loader and Sail/Spark
+test lanes across generated legal and externally sourced medical data. Archive
+input snapshots retain source hashes independently of standardized CSV output.
+
+
+The legal mixed pack separates generated firm-operation tables from observed
+`cases`, `evidence_documents` and `evidence_pages`. Original public PDFs remain
+authoritative; page text is a lossy search projection, preserving PDF page
+ordinals and candidate Bates identifiers without inventing transcript citations
+or discovery-production history. Local projection tooling never fetches sources.
+Unknown third-party redistribution rights block full source export.
+
+## Domain pack ontology targets
+
+[SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.

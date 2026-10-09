@@ -1,0 +1,85 @@
+{
+  "version": "1.0",
+  "table_name": "eligibility",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "status"
+    },
+    {
+      "name": "patient_reference",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "patient reference"
+    },
+    {
+      "name": "direction",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "direction"
+    },
+    {
+      "name": "purpose_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "purpose json"
+    },
+    {
+      "name": "created",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "created"
+    },
+    {
+      "name": "serviced_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "serviced json"
+    },
+    {
+      "name": "request_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "request json"
+    },
+    {
+      "name": "outcome",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "outcome"
+    },
+    {
+      "name": "insurance_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "insurance json"
+    },
+    {
+      "name": "items_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "items json"
+    }
+  ],
+  "primary_key": [
+    "resource_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "resource_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      }
+    ]
+  }
+}

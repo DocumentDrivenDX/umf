@@ -1,0 +1,198 @@
+[
+  {
+    "id": "model",
+    "figure": "V1",
+    "title": "Model and instance",
+    "kind": "model",
+    "panels": [
+      {
+        "title": "UMF document \u00b7 metadata",
+        "text": "sales.id and sales.status are required string Fields."
+      },
+      {
+        "title": "Record and ordered Key",
+        "text": "sales.order contains both Fields. Its primary Key pk contains sales.id."
+      },
+      {
+        "title": "Module extension",
+        "text": "sales.extensions \u2192 umf.actions \u2192 approve declares the permitted status assignment."
+      },
+      {
+        "title": "Separate business data",
+        "text": "An example stored order has id order-1 and status pending. It is not a row inside the UMF document."
+      }
+    ]
+  },
+  {
+    "id": "responsibilities",
+    "figure": "V2",
+    "title": "Two responsibilities",
+    "kind": "lanes",
+    "panels": [
+      {
+        "title": "Library \u00b7 browser-compatible",
+        "text": "Read a document. Register vocabulary. Inspect and compare declarations. No authentication or business writes."
+      },
+      {
+        "title": "Explicit interpretation",
+        "text": "Compile supported rules/selectors. Evaluate rules only with supplied state. This is separate from inspection."
+      },
+      {
+        "title": "Consumer \u00b7 host-only",
+        "text": "Authenticate principal and service. Authorize. Freeze identities. Execute and verify under the native transaction boundary."
+      },
+      {
+        "title": "Qualification boundary",
+        "text": "Declared compatibility is not execution verification. Inspection does not invoke the consumer or access storage."
+      }
+    ]
+  },
+  {
+    "id": "approval",
+    "figure": "V3",
+    "title": "Approval, no-op and replay",
+    "kind": "states",
+    "panels": [
+      {
+        "title": "First request token \u00b7 business change",
+        "text": "Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact."
+      },
+      {
+        "title": "Fresh request token \u00b7 business no-op",
+        "text": "Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance."
+      },
+      {
+        "title": "Original request token \u00b7 replay",
+        "text": "Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op."
+      }
+    ]
+  },
+  {
+    "id": "create-link",
+    "figure": "V4",
+    "title": "Create before linking",
+    "kind": "recipe",
+    "panels": [
+      {
+        "title": "1 \u00b7 create",
+        "text": "Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier."
+      },
+      {
+        "title": "2 \u00b7 link-customer",
+        "text": "Source is created:create. Target is the existing customer parameter, using the authored relationship orientation."
+      },
+      {
+        "title": "3 \u00b7 link-product",
+        "text": "Source is created:create. Target is the existing product parameter. Forward references would refuse."
+      },
+      {
+        "title": "Permissions are separate",
+        "text": "The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not."
+      }
+    ]
+  },
+  {
+    "id": "retry",
+    "figure": "V5",
+    "title": "When a response is lost",
+    "kind": "sequence",
+    "panels": [
+      {
+        "title": "Client \u2192 consumer",
+        "text": "Send original token, revision, typed inputs and expected versions. Trusted context supplies actor identity."
+      },
+      {
+        "title": "Consumer \u2192 native store",
+        "text": "Commit business changes, verification and terminal outcome atomically. Then the acknowledgement is lost."
+      },
+      {
+        "title": "Client knowledge \u00b7 indeterminate",
+        "text": "Unknown whether commit occurred. Timeout does not prove rollback. Keep the original request; do not mint a fresh token."
+      },
+      {
+        "title": "Client \u2192 protected lookup",
+        "text": "Current discovery and original-result authorization gate lookup. Return the retained original outcome; lookup never executes."
+      },
+      {
+        "title": "Missing or expired",
+        "text": "Missing after uncertainty is not permission to reexecute. No-key requests lack keyed recovery guarantees."
+      }
+    ]
+  },
+  {
+    "id": "visibility",
+    "figure": "V6",
+    "title": "Commit is not query visibility",
+    "kind": "timeline",
+    "panels": [
+      {
+        "title": "Write transaction \u00b7 commit",
+        "text": "Business change + terminal outcome + outbox fact commit together. Receipt carries store, epoch and opaque version."
+      },
+      {
+        "title": "Delivery \u00b7 position 2 arrives first",
+        "text": "Position 1 is missing. Complete applied prefix stays 0. A larger received position proves no visibility."
+      },
+      {
+        "title": "Projection \u00b7 position 1 then 2",
+        "text": "Apply exact facts in order. Update read content and contiguous prefix atomically. Repeated delivery is deduplicated."
+      },
+      {
+        "title": "Read at least the receipt",
+        "text": "Visible only for the matching store/epoch and qualified content through that complete prefix; otherwise pending or unsupported."
+      },
+      {
+        "title": "Restore boundary",
+        "text": "Rotate visibility epoch and fence uncertain restored state. Epoch rotation does not erase old replay identity or authorize retry."
+      }
+    ]
+  },
+  {
+    "id": "handler",
+    "figure": "V7",
+    "title": "Bounded handler access",
+    "kind": "boundary",
+    "panels": [
+      {
+        "title": "Isolated handler",
+        "text": "No raw SQL connection, database credentials, ambient network or broad host mount. Only declared transaction capabilities."
+      },
+      {
+        "title": "Controlled gateway",
+        "text": "Freeze canonical identities. Check every attempted read/write before storage access. Returning state to its old value cannot hide an attempt."
+      },
+      {
+        "title": "Consumer-owned transaction",
+        "text": "Authorization, native invariant checks, replay ledger and outbox are control responsibilities. Their reads are not handler permissions."
+      },
+      {
+        "title": "Commit or rollback",
+        "text": "Verify outputs, constraints, frame and postconditions. Failure aborts the whole attempted transaction; no partial business outcome."
+      }
+    ]
+  },
+  {
+    "id": "counterexample",
+    "figure": "V8",
+    "title": "A complete reservation intent",
+    "kind": "counterexample",
+    "panels": [
+      {
+        "title": "Incomplete property",
+        "text": "post.stock = pre.stock \u2212 quantity is insufficient by itself. This is a handler example, not the approve recipe."
+      },
+      {
+        "title": "Counterexample \u00b7 quantity zero",
+        "text": "Stock can remain unchanged and the equation still holds. A promised reservation might also be absent."
+      },
+      {
+        "title": "Corrected obligations",
+        "text": "Require positive quantity, exact stock relation, nonnegative stock, reservation existence and the correct entity identities."
+      },
+      {
+        "title": "Scope of the evidence",
+        "text": "Model bounds and assumptions are explicit. Actual native refinement and implementation mutants are separate witnesses; none proves every deployment."
+      }
+    ]
+  }
+]

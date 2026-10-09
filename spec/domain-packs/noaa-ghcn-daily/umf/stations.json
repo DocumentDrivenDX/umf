@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "table_name": "stations",
+  "description": "ghcnd-stations.txt fixed-width field projection; flags use authored underscore names.",
+  "columns": [
+    {
+      "name": "ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "11-character station code.",
+      "domain_type": "ghcn_station"
+    },
+    {
+      "name": "LATITUDE",
+      "data_type": "FLOAT",
+      "nullable": false,
+      "description": "Latitude degrees."
+    },
+    {
+      "name": "LONGITUDE",
+      "data_type": "FLOAT",
+      "nullable": false,
+      "description": "Longitude degrees."
+    },
+    {
+      "name": "ELEVATION",
+      "data_type": "FLOAT",
+      "nullable": false,
+      "description": "Metres; -999.9 is missing, retained."
+    },
+    {
+      "name": "STATE",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Fixed-width text; blank and leading-zero meanings retained."
+    },
+    {
+      "name": "NAME",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Fixed-width text; blank and leading-zero meanings retained."
+    },
+    {
+      "name": "GSN_FLAG",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Fixed-width text; blank and leading-zero meanings retained."
+    },
+    {
+      "name": "HCN_CRN_FLAG",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Fixed-width text; blank and leading-zero meanings retained."
+    },
+    {
+      "name": "WMO_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Fixed-width text; blank and leading-zero meanings retained."
+    }
+  ],
+  "primary_key": [
+    "ID"
+  ]
+}
