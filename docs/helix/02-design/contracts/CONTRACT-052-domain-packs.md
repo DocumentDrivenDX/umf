@@ -307,3 +307,35 @@ are FHIR-shaped authored examples, not full native-conformance evidence. CMS
 claims rows, complete terminology dictionaries/maps, TCIA images, live PACS/X12
 and native graph-engine consumers remain separately required and unimplemented.
 See [scoped execution evidence](../../04-build/evidence/medical-subpacks.md).
+### Public dataset schema profiles
+
+The first public packs use the same 1.0.0 metadata contract and authored
+TableSpec 1.0 JSON schema format:
+
+| Pack | Declared profile | Schemas |
+| --- | --- | --- |
+| `nyc-tlc` | Yellow dictionary 2025-03-18; January 2025 row reference | Yellow trips and taxi-zone lookup |
+| `movielens` | Fixed `ml-32m` release generated 2023-10-13 | Movies, links, ratings, tags |
+| `noaa-ghcn-daily` | GHCN-Daily documentation 3.35 | Stations, monthly `.dly` records, inventory |
+| `gtfs-schedule` | Basic fixed-stop Schedule fields at commit `3c9e7b904b5035349622f03e11851e25c16d1d99` | Agency, stops, routes, trips, stop times, calendar, calendar dates |
+
+Each pack retains `profile` as descriptive consumer metadata. Documentation
+sources have SHA-256 fingerprints and `role: reference`; row sources and their
+bindings remain separate. Documentation checksums MUST NOT be interpreted as
+row-data pins. No source bytes are bundled. GTFS's unresolved feed URN MUST NOT
+be treated as a selected agency dataset or executable loader reference.
+
+Pack schemas describe authored carriers, not automatically derived Parquet
+physical types or complete source-instance validators. Taxi trip identities
+are not invented; nullability is explicitly permissive. MovieLens identifiers
+retain text where leading zeros matter, and no user entity is fabricated.
+GHCN retains all 31 monthly slots, source integers, missing sentinels and flags.
+GTFS retains service-day times and dates as text; conditional and union
+references remain explicit profile descriptions instead of false foreign keys.
+Unlisted source fields/files MUST remain in retained input or produce explicit
+loss reporting. No source parser, cross-system equivalence or row rights
+clearance follows from structural admission or native schema recovery.
+
+`scripts/public-dataset-packs.ts` deterministically generates the four packs;
+`--check` refuses stale artifacts. Existing export/check and microsite catalog
+tooling consume them without a new extension version or generator registry.

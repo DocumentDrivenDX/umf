@@ -591,3 +591,7 @@ Unresolved native references are explicit rows, not fabricated entities. TableSp
 shares its spool, constraint checks, CSV ZIP exporter, SQL loader and Sail/Spark
 test lanes across generated legal and externally sourced medical data. Archive
 input snapshots retain source hashes independently of standardized CSV output.
+
+## Domain pack ontology targets
+
+[SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.

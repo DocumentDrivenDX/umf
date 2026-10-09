@@ -5561,3 +5561,29 @@ lookup without bundled vocabularies. This is not full carrier or native support.
 residuals. The previous pending sections remain the broader delivery sequence:
 CMS/TCIA source qualification, full dictionaries/maps, richer native-conformance
 profiles and Truss/Ashlar engine adoption still require separate execution evidence.
+## Full domain catalog first release
+
+Astra ultra reviewed SD-026 and CONTRACT-053. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
+
+### Domain catalog first release
+
+The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and graph
+companions are implemented under SD-026/CONTRACT-053. See
+[evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
+review corrections, executable results and remaining qualification boundaries.
+
+### Public dataset schema packs (2026-10-08)
+
+FR-45 and CONTRACT-052 govern the owner's selected NYC TLC, MovieLens,
+NOAA GHCN Daily and GTFS Schedule profiles. Generate 16 authored TableSpec
+schemas and four external-source manifests with distinct documentation pins.
+Preserve native missing/time/code semantics and explicit unresolved row inputs.
+The existing microsite catalog discovers the canonical pack directory.
+
+Verification requires deterministic regeneration, pack/source/schema/domain
+reference consistency, exact TableSpec adapter recovery, native consumer model
+admission, export/check and real Chromium inspection of all sixteen schemas.
+Record scoped results in [domain-pack evidence](evidence/domain-packs.md).
+Rollback removes the four packs and generator and rebuilds the catalog.
+No row ingestion, full native replay, source equivalence, public deployment or
+new TableSpec generator is claimed.

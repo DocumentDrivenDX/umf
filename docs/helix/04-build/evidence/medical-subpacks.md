@@ -113,3 +113,13 @@ terminologies/maps, TCIA collection qualification, production adjudication,
 clinical conformance and Truss/Ashlar graph-engine adoption require separate gates.
 No full-repository regression, database/warehouse/Sail/Spark replay, live patient
 linkage or universal native equivalence is claimed by this scoped evidence.
+
+## Combined catalog merge verification (2026-10-08)
+
+Merged with master at `30e489aa`, preserving the broader domain and public-dataset
+catalog. The regenerated explorer contains 24 packs and 278 entries. The combined
+state passes 35 domain-pack/traceability tests (2,207 assertions), portable/tool
+TypeScript checks, 61 extension-package and 349 JSON Schema audits, the browser
+build, 60 Chromium library checks, and all 19 explorer checks including every
+catalog schema and all eighteen medical subpack schemas. This supplements the
+source and native-oracle evidence above; it does not broaden native support.

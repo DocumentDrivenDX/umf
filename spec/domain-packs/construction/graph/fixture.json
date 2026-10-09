@@ -1,0 +1,1149 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:construction",
+    "revision": "1.0.0",
+    "sha256": "c41f515e2a6aaf5b6197caa5c7d67ce51d2937a520279339bf364696b8529359"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "construction",
+    "version": "1.0.0",
+    "sha256": "5b3e687f25d1bdbb8dda3dfebc75b81fd8c7a4c1ec71f046a0f199d86619e3cc"
+  },
+  "source_metadata": {
+    "asset_plan_svg": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "770cc02ad08782d1fe33ccb6b6992a2b8a3e1e59d02ccecbb9c38a3a0ab488ff"
+      },
+      "data_kind": "fabricated",
+      "format": "svg",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF authored synthetic illustration",
+        "redistribution": "allowed"
+      },
+      "reference": "assets/plan.svg",
+      "revision": "1.0.0"
+    },
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "asset_plan_svg",
+          "template_activities",
+          "template_assets",
+          "template_bim_references",
+          "template_change_orders",
+          "template_contracts",
+          "template_cost_items",
+          "template_dependencies",
+          "template_documents",
+          "template_inspections",
+          "template_locations",
+          "template_parties",
+          "template_projects",
+          "template_resources",
+          "template_rfis",
+          "template_submittals",
+          "template_work_packages"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_activities": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "72d7c6c9320c616b1c7b8a0c119f6281074961f085c306110c1930bf7a9f6215"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/activities.csv",
+      "revision": "1.0.0"
+    },
+    "template_assets": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e5864666d4df31b564b80218294649ead0cc89579b35df20b012c9d471a3dddb"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/assets.csv",
+      "revision": "1.0.0"
+    },
+    "template_bim_references": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bd4179b6dd85d184a53de282b55587aa5d2fdcb43f1781d865ead6d9fd64eec5"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/bim_references.csv",
+      "revision": "1.0.0"
+    },
+    "template_change_orders": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bbc8277d8379e7d3577bac5365e50b7e03c6f7c54c21bc316aa46ec36d56c965"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/change_orders.csv",
+      "revision": "1.0.0"
+    },
+    "template_contracts": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "577a200a2b17cd17ee75729dbd1127b0f1e58980ed1820f8adbe00c99b8f1223"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/contracts.csv",
+      "revision": "1.0.0"
+    },
+    "template_cost_items": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "51cb54ef0cd306ec681267b2b1884a7cc7bd6e8a4f2d2e878c43f683a5a50362"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/cost_items.csv",
+      "revision": "1.0.0"
+    },
+    "template_dependencies": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ca97496a2bf64171c33893626f1ac9484c63dbc3f03a58a62a8f8952dd0670c8"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/dependencies.csv",
+      "revision": "1.0.0"
+    },
+    "template_documents": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "9c5fa1ab54e73440107a2a1c9c531bede285e2faa3a47ba1571b20d103d40049"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/documents.csv",
+      "revision": "1.0.0"
+    },
+    "template_inspections": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "971910f4099190793bc4f061b21406aa625bab9c5e5000c74342f151dc35ad5a"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/inspections.csv",
+      "revision": "1.0.0"
+    },
+    "template_locations": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "838e384a2401fb912c9e573b61519b43a024adb8032683f5d47558b5a00bcbe4"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/locations.csv",
+      "revision": "1.0.0"
+    },
+    "template_parties": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5c006ee1b75e90e52ecc2d444cfbb7e93cd3300bc784b57b0abc66e9cdb4fef3"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/parties.csv",
+      "revision": "1.0.0"
+    },
+    "template_projects": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4f2bf031642d7334047c0a101b74fb238dfb2faa53cc653eaf30e5c2d978a9c8"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/projects.csv",
+      "revision": "1.0.0"
+    },
+    "template_resources": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d3224d0e1e41831135718cac906239983760c2a8f34b7303fbc936defb234f5d"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/resources.csv",
+      "revision": "1.0.0"
+    },
+    "template_rfis": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0bae1f1cbdbe920a94e333b622a09d78220c94238d6fc32bec1f0635a81d543e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/rfis.csv",
+      "revision": "1.0.0"
+    },
+    "template_submittals": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "dc53d92cac06bd74f509e671e2081d91c033491eedf9f5acb435f103702a073e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/submittals.csv",
+      "revision": "1.0.0"
+    },
+    "template_work_packages": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0c01227c5559530595d661e45371ede2173a20fdab4b962ae5cf4922d5d153c3"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/work_packages.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "projects",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "parties",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "contracts",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "locations",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "assets",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "work_packages",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "activities",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "dependencies",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "resources",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "cost_items",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "change_orders",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "rfis",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "inspections",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "submittals",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "bim_references",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "documents",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "asset_plan_svg": {
+        "algorithm": "sha256",
+        "value": "770cc02ad08782d1fe33ccb6b6992a2b8a3e1e59d02ccecbb9c38a3a0ab488ff"
+      },
+      "template_activities": {
+        "algorithm": "sha256",
+        "value": "72d7c6c9320c616b1c7b8a0c119f6281074961f085c306110c1930bf7a9f6215"
+      },
+      "template_assets": {
+        "algorithm": "sha256",
+        "value": "e5864666d4df31b564b80218294649ead0cc89579b35df20b012c9d471a3dddb"
+      },
+      "template_bim_references": {
+        "algorithm": "sha256",
+        "value": "bd4179b6dd85d184a53de282b55587aa5d2fdcb43f1781d865ead6d9fd64eec5"
+      },
+      "template_change_orders": {
+        "algorithm": "sha256",
+        "value": "bbc8277d8379e7d3577bac5365e50b7e03c6f7c54c21bc316aa46ec36d56c965"
+      },
+      "template_contracts": {
+        "algorithm": "sha256",
+        "value": "577a200a2b17cd17ee75729dbd1127b0f1e58980ed1820f8adbe00c99b8f1223"
+      },
+      "template_cost_items": {
+        "algorithm": "sha256",
+        "value": "51cb54ef0cd306ec681267b2b1884a7cc7bd6e8a4f2d2e878c43f683a5a50362"
+      },
+      "template_dependencies": {
+        "algorithm": "sha256",
+        "value": "ca97496a2bf64171c33893626f1ac9484c63dbc3f03a58a62a8f8952dd0670c8"
+      },
+      "template_documents": {
+        "algorithm": "sha256",
+        "value": "9c5fa1ab54e73440107a2a1c9c531bede285e2faa3a47ba1571b20d103d40049"
+      },
+      "template_inspections": {
+        "algorithm": "sha256",
+        "value": "971910f4099190793bc4f061b21406aa625bab9c5e5000c74342f151dc35ad5a"
+      },
+      "template_locations": {
+        "algorithm": "sha256",
+        "value": "838e384a2401fb912c9e573b61519b43a024adb8032683f5d47558b5a00bcbe4"
+      },
+      "template_parties": {
+        "algorithm": "sha256",
+        "value": "5c006ee1b75e90e52ecc2d444cfbb7e93cd3300bc784b57b0abc66e9cdb4fef3"
+      },
+      "template_projects": {
+        "algorithm": "sha256",
+        "value": "4f2bf031642d7334047c0a101b74fb238dfb2faa53cc653eaf30e5c2d978a9c8"
+      },
+      "template_resources": {
+        "algorithm": "sha256",
+        "value": "d3224d0e1e41831135718cac906239983760c2a8f34b7303fbc936defb234f5d"
+      },
+      "template_rfis": {
+        "algorithm": "sha256",
+        "value": "0bae1f1cbdbe920a94e333b622a09d78220c94238d6fc32bec1f0635a81d543e"
+      },
+      "template_submittals": {
+        "algorithm": "sha256",
+        "value": "dc53d92cac06bd74f509e671e2081d91c033491eedf9f5acb435f103702a073e"
+      },
+      "template_work_packages": {
+        "algorithm": "sha256",
+        "value": "0c01227c5559530595d661e45371ede2173a20fdab4b962ae5cf4922d5d153c3"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "c41f515e2a6aaf5b6197caa5c7d67ce51d2937a520279339bf364696b8529359",
+      "umf/activities.json": "62d405b241b28f693aadbd1090f799059a75e0fd328b7b0df866f7aa20e657bf",
+      "umf/assets.json": "ef311b82f32e0b53161ef20e764c2205132405b88c18633689f626e36eb524a0",
+      "umf/bim_references.json": "0841959941588ca8920efad8877e02f2c44288f3ab00d5808f0f5ff71ba7449f",
+      "umf/change_orders.json": "0d08dd229c1bc79ef13ea1809dfbc17f334799c3bb199dec0ff6b5f3f9404ee9",
+      "umf/contracts.json": "7583b15f6c6d6227c71ff806aec09db03acb2699e988ab83d18c3f57cb2487df",
+      "umf/cost_items.json": "37b80ae892109356923a31102e1e83f4dc361e30bdeffb0d46c70ef7523581f3",
+      "umf/dependencies.json": "04499e3c19536af2555570fb66141ee28c8bf66e828e9f487155f8a8cf179ea1",
+      "umf/documents.json": "1a9329cfd12db76f0ea657c00237faa4f33b999b5b48b869d082436e0731ab16",
+      "umf/inspections.json": "16f40202b4c887afe3408a51cfa24445c9582b34288018443ed6c867cde204a7",
+      "umf/locations.json": "d1fe25334fda32dfb0d171dbbc5e3ec050678459ce14e9288641074bc103ed4a",
+      "umf/parties.json": "425bfecb19034e1c9a5d90f0f7dc9787ad07fdc679aae1c83a97a13a63539af0",
+      "umf/projects.json": "174d743f3c0ef9892e6ac9fc8c32a95b6b0f6d30edab121ddc1817ceb0642eec",
+      "umf/resources.json": "512ec87418e7b9a4a9021a7501c46ada4d16426d4412dd3b9d311d5aee12d7bb",
+      "umf/rfis.json": "7bf5107c817028343ab1e2ef3621c7f79b34a45fe4eb015ff36a031f3ae4184e",
+      "umf/submittals.json": "6534c8ff60edf163a1d1d7c75a73e2c306aa3792ff49f3968171aed916343fc9",
+      "umf/work_packages.json": "45017db2f1c352ff0087b6923a0a8cbe60619dd35af8b3605514ad4fa35235c3"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "construction",
+      "sha256": "5b3e687f25d1bdbb8dda3dfebc75b81fd8c7a4c1ec71f046a0f199d86619e3cc",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "22e88b11f0cab5be2e8159480aa3ce80a8b3511f9a8ac27711f4611fa76350bd",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "projects"
+      },
+      "values": {
+        "projects.id": "[42,0,\"P1\"]",
+        "projects.name": "Synthetic project"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"parties\",[\"[42,0,\\\"PA1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "parties"
+      },
+      "values": {
+        "parties.id": "[42,0,\"PA1\"]",
+        "parties.name": "Synthetic contractor"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "contracts"
+      },
+      "values": {
+        "contracts.id": "[42,0,\"C1\"]",
+        "contracts.project_id": "[42,0,\"P1\"]",
+        "contracts.party_id": "[42,0,\"PA1\"]",
+        "contracts.amount": "1E+3",
+        "contracts.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"locations\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "locations"
+      },
+      "values": {
+        "locations.id": "[42,0,\"L1\"]",
+        "locations.project_id": "[42,0,\"P1\"]",
+        "locations.grid": "local-grid",
+        "locations.datum": "site-datum"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "assets"
+      },
+      "values": {
+        "assets.id": "[42,0,\"A1\"]",
+        "assets.location_id": "[42,0,\"L1\"]",
+        "assets.asset_kind": "beam"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "work_packages"
+      },
+      "values": {
+        "work_packages.id": "[42,0,\"W1\"]",
+        "work_packages.project_id": "[42,0,\"P1\"]",
+        "work_packages.name": "Frame",
+        "work_packages.status": "delayed"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "work_packages"
+      },
+      "values": {
+        "work_packages.id": "[42,0,\"W2\"]",
+        "work_packages.project_id": "[42,0,\"P1\"]",
+        "work_packages.name": "Finish",
+        "work_packages.status": "blocked"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "activities"
+      },
+      "values": {
+        "activities.id": "[42,0,\"AC1\"]",
+        "activities.work_package_id": "[42,0,\"W1\"]",
+        "activities.name": "Install"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "activities"
+      },
+      "values": {
+        "activities.id": "[42,0,\"AC2\"]",
+        "activities.work_package_id": "[42,0,\"W2\"]",
+        "activities.name": "Inspect"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "dependencies"
+      },
+      "values": {
+        "dependencies.id": "[42,0,\"D1\"]",
+        "dependencies.predecessor_id": "[42,0,\"AC1\"]",
+        "dependencies.successor_id": "[42,0,\"AC2\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "dependencies"
+      },
+      "values": {
+        "dependencies.id": "[42,0,\"D2\"]",
+        "dependencies.predecessor_id": "[42,0,\"AC2\"]",
+        "dependencies.successor_id": "[42,0,\"AC1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"resources\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "resources"
+      },
+      "values": {
+        "resources.id": "[42,0,\"R1\"]",
+        "resources.activity_id": "[42,0,\"AC1\"]",
+        "resources.quantity": "2",
+        "resources.unit": "person-hour"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"cost_items\",[\"[42,0,\\\"CI1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "cost_items"
+      },
+      "values": {
+        "cost_items.id": "[42,0,\"CI1\"]",
+        "cost_items.contract_id": "[42,0,\"C1\"]",
+        "cost_items.activity_id": "[42,0,\"AC1\"]",
+        "cost_items.amount": "1E+2",
+        "cost_items.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "change_orders"
+      },
+      "values": {
+        "change_orders.id": "[42,0,\"CH1\"]",
+        "change_orders.contract_id": "[42,0,\"C1\"]",
+        "change_orders.status": "proposed",
+        "change_orders.amount": "5E+1",
+        "change_orders.downstream_package_id": "[42,0,\"W2\"]",
+        "change_orders.rfi_id": "[42,0,\"RFI1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "change_orders"
+      },
+      "values": {
+        "change_orders.id": "[42,0,\"CH2\"]",
+        "change_orders.contract_id": "[42,0,\"C1\"]",
+        "change_orders.status": "approved",
+        "change_orders.amount": "75",
+        "change_orders.downstream_package_id": "[42,0,\"W2\"]",
+        "change_orders.rfi_id": "[42,0,\"RFI1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"rfis\",[\"[42,0,\\\"RFI1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "rfis"
+      },
+      "values": {
+        "rfis.id": "[42,0,\"RFI1\"]",
+        "rfis.asset_id": "[42,0,\"A1\"]",
+        "rfis.question": "Synthetic connection detail",
+        "rfis.status": "open"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"inspections\",[\"[42,0,\\\"IN1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "inspections"
+      },
+      "values": {
+        "inspections.id": "[42,0,\"IN1\"]",
+        "inspections.asset_id": "[42,0,\"A1\"]",
+        "inspections.result": "pass",
+        "inspections.method": "visual"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"submittals\",[\"[42,0,\\\"SUB1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "submittals"
+      },
+      "values": {
+        "submittals.id": "[42,0,\"SUB1\"]",
+        "submittals.project_id": "[42,0,\"P1\"]",
+        "submittals.asset_id": "[42,0,\"A1\"]",
+        "submittals.status": "approved",
+        "submittals.revision": "r1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"bim_references\",[\"[42,0,\\\"BIM1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "bim_references"
+      },
+      "values": {
+        "bim_references.id": "[42,0,\"BIM1\"]",
+        "bim_references.asset_id": "[42,0,\"A1\"]",
+        "bim_references.publisher": "synthetic-model",
+        "bim_references.model_revision": "r1",
+        "bim_references.native_object_id": "beam-001"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"documents\",[\"[42,0,\\\"DOC1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "element": "documents"
+      },
+      "values": {
+        "documents.id": "[42,0,\"DOC1\"]",
+        "documents.project_id": "[42,0,\"P1\"]",
+        "documents.document_kind": "plan",
+        "documents.reference": "assets/plan.svg",
+        "documents.availability": "included"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"contracts.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"contracts\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "contracts.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"contracts.party_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"contracts\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"parties\\\",[\\\"[42,0,\\\\\\\"PA1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "contracts.party_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"parties\",[\"[42,0,\\\"PA1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"locations.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"locations\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "locations.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"locations\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"assets.location_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"locations\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "assets.location_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"locations\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "work_packages.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "work_packages.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"activities.work_package_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "activities.work_package_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"activities.work_package_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "activities.work_package_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies.predecessor_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"dependencies\\\",[\\\"[42,0,\\\\\\\"D1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "dependencies.predecessor_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies.successor_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"dependencies\\\",[\\\"[42,0,\\\\\\\"D1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "dependencies.successor_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies.predecessor_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"dependencies\\\",[\\\"[42,0,\\\\\\\"D2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "dependencies.predecessor_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies.successor_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"dependencies\\\",[\\\"[42,0,\\\\\\\"D2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "dependencies.successor_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"dependencies\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"resources.activity_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"resources\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "resources.activity_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"resources\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"cost_items.contract_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"cost_items\\\",[\\\"[42,0,\\\\\\\"CI1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"contracts\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "cost_items.contract_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"cost_items\",[\"[42,0,\\\"CI1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"cost_items.activity_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"cost_items\\\",[\\\"[42,0,\\\\\\\"CI1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"activities\\\",[\\\"[42,0,\\\\\\\"AC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "cost_items.activity_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"cost_items\",[\"[42,0,\\\"CI1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"activities\",[\"[42,0,\\\"AC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.contract_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"contracts\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.contract_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.downstream_package_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.downstream_package_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.rfi_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"rfis\\\",[\\\"[42,0,\\\\\\\"RFI1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.rfi_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"rfis\",[\"[42,0,\\\"RFI1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.contract_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"contracts\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.contract_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"contracts\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.downstream_package_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"work_packages\\\",[\\\"[42,0,\\\\\\\"W2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.downstream_package_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"work_packages\",[\"[42,0,\\\"W2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders.rfi_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"change_orders\\\",[\\\"[42,0,\\\\\\\"CH2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"rfis\\\",[\\\"[42,0,\\\\\\\"RFI1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "change_orders.rfi_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"change_orders\",[\"[42,0,\\\"CH2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"rfis\",[\"[42,0,\\\"RFI1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"rfis.asset_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"rfis\\\",[\\\"[42,0,\\\\\\\"RFI1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "rfis.asset_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"rfis\",[\"[42,0,\\\"RFI1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"inspections.asset_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"inspections\\\",[\\\"[42,0,\\\\\\\"IN1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "inspections.asset_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"inspections\",[\"[42,0,\\\"IN1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"submittals.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"submittals\\\",[\\\"[42,0,\\\\\\\"SUB1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "submittals.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"submittals\",[\"[42,0,\\\"SUB1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"submittals.asset_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"submittals\\\",[\\\"[42,0,\\\\\\\"SUB1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "submittals.asset_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"submittals\",[\"[42,0,\\\"SUB1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"bim_references.asset_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"bim_references\\\",[\\\"[42,0,\\\\\\\"BIM1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "bim_references.asset_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"bim_references\",[\"[42,0,\\\"BIM1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"assets\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:construction\",\"domain\",\"documents.project_id\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"documents\\\",[\\\"[42,0,\\\\\\\"DOC1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:construction\\\",\\\"domain\\\",\\\"projects\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:construction",
+        "module": "domain",
+        "id": "documents.project_id"
+      },
+      "source": "[\"urn:umf:domain:construction\",\"domain\",\"documents\",[\"[42,0,\\\"DOC1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:construction\",\"domain\",\"projects\",[\"[42,0,\\\"P1\\\"]\"]]"
+    }
+  ]
+}

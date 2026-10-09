@@ -374,3 +374,51 @@ schemas without owning generators or changing pack definitions. The earlier
 Ashlar/Truss documentation use case remains applicable when those schema
 assets become available. The microsite implementation and scoped verification
 are documented in [its build notes](../05-deploy/microsite/README.md).
+
+## Owner direction: domain-pack catalog (2026-10-08)
+
+A domain pack contains schemas representing a domain and sufficient declared
+consumer tooling to generate datasets at different scales. UMF owns the schemas
+and schema-generation tooling; TableSpec owns data generation and testing,
+including CSV ZIP output and loading. Packs remain portable metadata with
+references to trusted consumer implementations. They do not execute arbitrary
+code by being read.
+
+The owner requests plans for legal, medical, commerce/procurement, supply
+chain/logistics, cybersecurity/IT operations, manufacturing/maintenance,
+banking/payments, education, transit/mobility, real estate/property operations,
+energy/utilities, HR/recruiting, MarTech, construction, ecology/water management, and archaeology.
+This selects planning scope; scheduling and release readiness require their
+own evidence. Official published examples should ground packs where available.
+
+The ecology motivation is a Synaptiq partner's watershed-analysis, river-quality,
+entomology and fishing work. A US freshwater watershed is a provisional planning
+assumption; no geography, partner dataset or scientific calibration is selected.
+Source models and a proposed unified observation shape are captured in SD-024.
+Preserve native meanings, source versions, unresolved identity matches, sampling
+methods/effort and scientific comparability limits.
+
+See [the domain-pack roadmap](../01-frame/domain-pack-roadmap.md) for placement,
+shared feature and individual feature/story plans.
+
+
+### Owner addition: archaeology
+
+The owner adds an archaeology domain pack grounded where possible in Madaba
+Plains Project published material. Requested scope includes field reports,
+photos, maps, square drawings, object drawings, pottery analysis, soil analysis
+and fauna analysis. FEAT-025/US-076 and SD-025 preserve excavation context,
+material/sample provenance, evidence associations and competing interpretations.
+Open Context project metadata, the project manual and publication inventory
+provide source candidates; exact downloadable record/media coverage remains
+explicitly unverified until a bounded fixture inventory is completed.
+
+### Owner direction: public-dataset schema packs (2026-10-08)
+
+The owner accepts the recommended first wave: NYC TLC yellow taxis, MovieLens,
+NOAA GHCN Daily and GTFS Schedule. UMF owns the schema packs under FR-45 and
+CONTRACT-052. Select bounded, documented profiles and preserve native codes,
+missing-value conventions, units, temporal meanings and source provenance.
+The schema explorer must discover them through its existing catalog path.
+Dataset ingestion and generators remain consumer-owned. An agency feed for
+GTFS, checksum-pinned row snapshots and additional TLC trip families remain open.

@@ -332,6 +332,11 @@
       "format": "tablespec",
       "id": "timekeepers",
       "reference": "umf/timekeepers.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
     }
   ],
   "source_bindings": [
@@ -387,5 +392,28 @@
       "kind": "synthetic"
     }
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "clients",
+        "documents",
+        "ethical_walls",
+        "invoices",
+        "matter_teams",
+        "matters",
+        "time_entries",
+        "timekeepers"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "fabricated"
+    ],
+    "qualification": "Delivered tabular behavior unchanged. Graph schema candidate only; no graph storage acceptance."
+  }
 }

@@ -71,3 +71,17 @@ inferred semantics, and never imply unsupported enforcement or execution.
 | Normalization versus native independence | Keep normalization explicit and reproducible; use the FR-3 ideal admission gate separately from FR-28 native-equivalence graduation. |
 | Offline resolution versus external references | Package declared dependencies; diagnose missing/ambiguous inputs instead of guessing or traversing arbitrary networks. |
 | Resource limits versus complete validation | Report incomplete/limited evaluation; never label partial analysis as complete conformance. |
+
+
+## Domain-pack application
+
+FEAT-009 and FEAT-010–FEAT-025 reuse the selected concerns and ADR-002 runtime
+slot. No new UI/authentication/datastore slot is selected for this schema-library
+slice. Fidelity requires retaining native scientific/business distinctions;
+identity requires source-qualified IDs and explicit matching; reproducibility
+requires pinned schema/generator/source inputs; bounded processing prohibits
+artifact-driven code execution and implicit network traversal; conformance
+separates schema, data, native-engine and realism evidence; review requires
+independently releasable pack scopes; runtime boundaries keep dataset execution
+in TableSpec. Ecology additionally preserves sampling effort, taxonomy revisions,
+censoring, coordinate uncertainty and source-specific reuse restrictions.
