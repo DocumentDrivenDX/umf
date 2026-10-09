@@ -5,7 +5,7 @@ import {importTableSpec,inspectTableSpec} from '../../../../src/adapters/tablesp
 import {readDocument} from '../../../../src/model/document';
 import {validateDocument} from '../../../../src/validation/document';
 import type {Document} from '../../../../src/model/types';
-export interface Entry {id:string;title:string;category:string;path:string;text:string;format:'json'|'yaml';pack?:string;description?:string;schemaFormat?:string;packVersion?:string}
+export interface Entry {id:string;title:string;category:string;path:string;text:string;format:'json'|'yaml';pack?:string;description?:string;schemaFormat?:string;packVersion?:string;aliases?:string[]}
 export interface Definition {key:string;module:string;id:string;title:string;value:Record<string,unknown>;pointer:string}
 export interface Parsed {document?:Document;native?:Record<string,any>;label?:string;definitions:Definition[];diagnostics:string;valid:boolean;complete:boolean}
 export const key=(module:string,id:string)=>JSON.stringify([module,id]);

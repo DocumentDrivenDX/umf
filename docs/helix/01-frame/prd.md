@@ -324,6 +324,11 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   visibly under FR-8. JavaScript runtime representations do not create core
   scalar types; database transport/storage codecs remain in Truss/Weft. This
   bounded library capability follows FR-39 and does not assert downstream adoption.
+  The domain-pack browser must expose ontology records, owned properties, keys,
+  incoming/outgoing relationships and declared participation through structured
+  pages and an interactive schema map. Preserve pack/version context and existing
+  deep links. Table/record correspondence requires an explicit profile binding;
+  visualization must not invent inheritance, equivalence or native reasoning.
 - **FR-42** — **Authored relationships.** Model authors must be able to state
   named associations between identified element types, including direction,
   endpoint multiplicity and an optional inverse presentation, without asserting

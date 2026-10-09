@@ -422,3 +422,13 @@ missing-value conventions, units, temporal meanings and source provenance.
 The schema explorer must discover them through its existing catalog path.
 Dataset ingestion and generators remain consumer-owned. An agency feed for
 GTFS, checksum-pinned row snapshots and additional TLC trip families remain open.
+
+### Owner direction: ontology-aware schema explorer (2026-10-08)
+
+The owner accepts ontology-specific pack navigation, structured record pages
+with properties/identity/incoming and outgoing relationships, an interactive
+relationship map, and repair of duplicate standalone ontology entries. Existing
+URLs must resolve to pack-owned entries without losing selected definitions.
+Show only declared UMF meaning; inheritance, equivalence and native ontology
+reasoning are not inferred. Table/record links use CONTRACT-053's explicit
+record-to-table identity convention within the same pack/version.

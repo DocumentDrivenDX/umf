@@ -42,7 +42,7 @@ includes source/rights metadata and qualification; it does not retrieve dataset
 rows, licensed dictionaries or DICOM pixel objects.
 
 The canonical NYC TLC, MovieLens 32M, NOAA GHCN Daily and GTFS Schedule packs
-add 16 schemas. The current catalog contains 20 packs and 256 entries, including
+add 16 schemas. The current catalog contains 20 packs and 240 entries, including
 the existing core example. External source profiles, documentation fingerprints
 and unresolved dataset choices remain visible as metadata. Browsing does not
 fetch the datasets or certify their schema profiles as instance validators.
@@ -80,3 +80,41 @@ conformance, certify all possible packs, or qualify data generation.
 The publishing workflow rebuilds the explorer catalog from canonical pack files.
 Page signatures must be renewed after published HTML changes; CI verifies them
 and copies the public attestations into the site artifact.
+
+## Ontology inspection — 2026-10-08
+
+Pack navigation separates Tables and Ontology. UMF ontology records have
+property/type/availability/identity tables and incoming/outgoing relationship
+links. Record and table views link in both directions only under CONTRACT-053's
+explicit graph/table profile and exact schema/Record IDs in one pack/version.
+A record neighborhood is the default map; a focus selector and Show full model
+control expand it. Nodes open records, numbered edge targets open relationship
+declarations, and matching edge labels show source/target participation.
+Multi-endpoint relationships and endpoints outside the record model remain
+listed explicitly rather than being drawn as misleading binary arrows.
+Unknown/other definitions and source metadata remain inspectable. No inheritance,
+equivalence, OWL inference or instance-data meaning is invented.
+
+Catalog construction suppresses the 16 duplicate pack-owned ontology entries
+and retains their previous repository-path IDs as aliases on canonical entries.
+Legacy redirects preserve other URL parameters and restore pack breadcrumbs.
+The desktop catalog scrolls within the viewport; mobile maps scroll inside
+their own panel. Schema bytes remain unchanged.
+
+Scoped verification: 29 pack tests / 1,199 assertions pass across six files,
+TypeScript checks pass, and Chromium 153.0.8010.12 passes 19 explorer checks
+against the local preview. Initial checks caught a relationship-array tooling
+type error and zero-height SVG edge hit areas. The corrected renderer guards
+array shape and adds numbered, keyboard-focusable edge targets; reruns pass.
+The canonical catalog now contains 20 packs / 240 entries. This qualifies
+source inspection and browser interaction, not ontology reasoning or backend
+execution. These results record local verification before publication.
+
+### Merge qualification
+
+Integration onto master `a917e1b4` preserves the newer legal 1.1.0 corpus and
+four medical subpacks. Rebuilt catalog: 24 packs / 266 entries. All 37 pack
+tests / 1,530 assertions, both TypeScript configurations and all 20 Chromium
+explorer checks pass. The legal navigation assertions now use 1.1.0; initial
+integration verification exposed their stale 1.0.0 assumption. Earlier
+20-pack totals describe the preceding checkpoint.

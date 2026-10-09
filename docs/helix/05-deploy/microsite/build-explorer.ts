@@ -5,7 +5,7 @@ import {parseEntry,type Entry} from './explorer-model';
 const repo=resolve(import.meta.dir,'../../../..'),dist=join(import.meta.dir,'dist');
 const supplied=process.argv.slice(2),roots=supplied.length?supplied.map(p=>resolve(p)):[...['domain-packs','packs','spec/domain-packs','examples/domain-packs'].map(p=>join(repo,p)),join(import.meta.dir,'catalog-sources')];
 async function files(root:string):Promise<string[]>{try{const items=await readdir(root,{withFileTypes:true});return (await Promise.all(items.filter(i=>!i.name.startsWith('.')&&i.name!=='node_modules').map(i=>i.isDirectory()?files(join(root,i.name)):Promise.resolve(/\.(json|ya?ml)$/i.test(i.name)?[join(root,i.name)]:[])))).flat().sort();}catch(error:any){if(error.code==='ENOENT'&&!supplied.length)return [];throw error;}}
-const entries:Entry[]=[],seen=new Set<string>();
+const entries:Entry[]=[],seen=new Set<string>(),owned=new Map<string,Entry>();
 for(const root of roots){const paths=await files(root);
  const manifestPaths:string[]=[];for(const candidate of paths.filter(p=>p.endsWith('.json'))){const data=JSON.parse(await Bun.file(candidate).text());if(data&&typeof data.id==='string'&&data.domain_types)manifestPaths.push(candidate);}
  for(const path of manifestPaths){
@@ -18,10 +18,10 @@ for(const root of roots){const paths=await files(root);
    const source=resolve(dirname(path),declaration.reference),rel=relative(dirname(path),source);if(rel.startsWith('..')||isAbsolute(rel))throw new Error(`Pack reference escapes its directory: ${declaration.reference}`);
    const actual=await realpath(source),actualRoot=await realpath(dirname(path)),inside=relative(actualRoot,actual);if(inside==='..'||inside.startsWith('../')||isAbsolute(inside))throw new Error('Schema symlink escapes pack');
    const format=/\.ya?ml$/i.test(source)?'yaml':'json',entry:Entry={id:`schema:${identity}:${declaration.id}`,title:declaration.id,category:'domain',path:declaration.reference,pack:pack.id,packVersion:pack.version,schemaFormat:declaration.format,text:await Bun.file(source).text(),format};
-   const parsed=parseEntry(entry);if(parsed.document)entry.title=String(parsed.document.title??parsed.document.id);entries.push(entry);
+   const parsed=parseEntry(entry);if(parsed.document)entry.title=String(parsed.document.title??parsed.document.id);entry.aliases=[relative(repo,source)];owned.set(actual,entry);entries.push(entry);
   }
  }
- for(const path of paths.filter(p=>!manifestPaths.includes(p))){const text=await Bun.file(path).text(),format=/\.ya?ml$/i.test(path)?'yaml':'json';if(format==='json'){const value=JSON.parse(text);if(!value||typeof value.umf!=='string'||!Array.isArray(value.modules))continue;}else if(!/^umf\s*:/m.test(text))continue;
+ for(const path of paths.filter(p=>!manifestPaths.includes(p))){if(owned.has(await realpath(path)))continue;const text=await Bun.file(path).text(),format=/\.ya?ml$/i.test(path)?'yaml':'json';if(format==='json'){const value=JSON.parse(text);if(!value||typeof value.umf!=='string'||!Array.isArray(value.modules))continue;}else if(!/^umf\s*:/m.test(text))continue;
   const source=relative(repo,path);if(seen.has(source))continue;seen.add(source);const entry:Entry={id:source,title:source,category:'domain',path:source,text,format};const parsed=parseEntry(entry);entry.title=String(parsed.document!.title??parsed.document!.id);entries.push(entry);
  }
 }

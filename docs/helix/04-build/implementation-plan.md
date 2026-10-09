@@ -5599,3 +5599,20 @@ Record scoped results in [domain-pack evidence](evidence/domain-packs.md).
 Rollback removes the four packs and generator and rebuilds the catalog.
 No row ingestion, full native replay, source equivalence, public deployment or
 new TableSpec generator is claimed.
+
+### Ontology-aware schema explorer (2026-10-08)
+
+Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-053 graph-schema
+inspection: split Tables/Ontology navigation, display record-owned properties
+and keys, separate incoming/outgoing relationships, and provide clickable
+record neighborhoods/full-model maps. Reuse stable module/element identity.
+Deduplicate pack-owned schema files while retaining legacy URL aliases.
+
+Bun verifies ecology's exact 19 records/81 properties/20 relationships and
+catalog ownership. Chromium verifies old-link redirects, record/edge clicks,
+corresponding table navigation, multiplicity display, mobile containment and
+all existing catalog entries. Multi-endpoint relationships remain explicit
+declarations and are not flattened into binary arrows. No data-instance
+graph, ontology inference or native backend acceptance is added. Rebuild the
+previous viewer to roll back; pack schemas are unaffected. Results live in
+`../05-deploy/schema-explorer-evidence.json` and microsite build notes.
