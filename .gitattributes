@@ -3,3 +3,7 @@ native/rdfxml/sources/** -text
 native/shacl/sources/** -text
 fixtures/shacl/corpus/** -text
 native/tablespec/sources/** -text
+# Medical source/row checksums cover original bytes, including native CRLF.
+spec/domain-packs/medical*/sources/** -text
+spec/domain-packs/medical*/data/** -text
+spec/domain-packs/medical-terminology/sources/*.txt whitespace=cr-at-eol

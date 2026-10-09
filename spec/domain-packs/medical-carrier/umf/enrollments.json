@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "table_name": "enrollments",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events.",
+  "columns": [
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "direction",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "direction"
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "status"
+    },
+    {
+      "name": "created",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "created"
+    },
+    {
+      "name": "candidate_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "candidate json"
+    },
+    {
+      "name": "coverage_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "coverage json"
+    },
+    {
+      "name": "request_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "request json"
+    },
+    {
+      "name": "outcome",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "outcome"
+    }
+  ],
+  "primary_key": [
+    "resource_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "resource_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      }
+    ]
+  }
+}

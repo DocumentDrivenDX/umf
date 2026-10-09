@@ -7,6 +7,19 @@ const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:str
 async function check(name:string,fn:()=>Promise<void>){await fn();checks.push(name);}
 try{
  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
+ // @covers US-055-AC6
+ await check('Medical subpacks expose all eighteen source-qualified schemas',async()=>{
+  for(const id of ['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology']){
+   const metadata=await Bun.file(join(import.meta.dir,'../../../../spec/domain-packs',id,'pack.json')).json();
+   const pack=page.locator(`[data-pack="pack:${id}@1.0.0"]`);
+   await pack.getByRole('button',{name:/^Overview /}).click();await page.getByRole('heading',{name:id,exact:true}).waitFor();
+   for(const schema of metadata.schemas){
+    await pack.getByRole('button',{name:new RegExp('^'+schema.id+' ')}).click();
+    await page.getByRole('heading',{name:schema.id,exact:true}).waitFor();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+    if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!==`schema:${id}@1.0.0:${schema.id}`)throw Error('Subpack selection escaped identity');
+   }
+  }
+ });
  await check('Pack catalog and linked schemas',async()=>{await page.locator('[data-pack="pack:legal@1.0.0"]').getByRole('button',{name:/^Overview /}).click();await page.locator('#inspector').getByRole('link',{name:'clients',exact:true}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();if(!await page.locator('#inspector').textContent().then(t=>t?.includes('client_name')))throw new Error('Missing client field');});
  await check('Native foreign-key navigation',async()=>{await page.getByRole('button',{name:/^time_entries /}).click();await page.locator('#inspector').getByRole('link',{name:'matters.matter_id',exact:true}).click();await page.getByRole('heading',{name:'matters',exact:true}).waitFor();});
  await check('Pack hierarchy, breadcrumbs and domain-type ownership',async()=>{

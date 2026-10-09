@@ -5,9 +5,9 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 442,
+  "total": 448,
   "counts": {
-    "SATISFIED": 63,
+    "SATISFIED": 69,
     "UNTESTED": 155,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
@@ -4085,6 +4085,64 @@
         "scripts/javascript-numeric-browser.ts:3"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-055-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:17"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:17",
+        "tests/domain-packs/medical-subpacks.test.ts:66"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:55"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:66"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:113",
+        "tests/domain-packs/medical-subpacks.test.ts:81",
+        "tests/domain-packs/medical-subpacks.test.ts:97"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-055-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/medical-subpacks.test.ts:113",
+        "tests/domain-packs/medical-subpacks.test.ts:97"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
     }
   ]
 }

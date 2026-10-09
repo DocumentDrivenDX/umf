@@ -3,7 +3,10 @@ import { buildAcceptanceLedger } from '../../scripts/acceptance-traceability';
 
 test('every governed acceptance criterion has one auditable traceability classification', async () => {
   const ledger = await buildAcceptanceLedger();
-  expect(ledger.total).toBe(433);
+  // The committed inventory is the snapshot; adding governed stories must not
+  // leave an unrelated historical criterion count baked into this gate.
+  expect(ledger).toEqual(await Bun.file('docs/helix/03-test/acceptance-criteria-ledger.json').json());
+  expect(ledger.total).toBeGreaterThan(0);
   expect(ledger.criteria).toHaveLength(ledger.total);
   expect(new Set(ledger.criteria.map(row => row.id)).size).toBe(ledger.total);
   expect(ledger.danglingCitations).toEqual([]);

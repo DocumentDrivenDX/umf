@@ -1149,3 +1149,12 @@ using the same portable pack contract as legal. Official source JSON is retained
 alongside CSV derivatives, pinned checksums and license notices. CMS candidates
 remain references only while redistribution is unresolved. TableSpec owns local
 CSV ingestion, ZIP export and Sail/Spark execution tests.
+
+
+Four [medical subpacks](04-build/evidence/medical-subpacks.md) now add carrier
+workflows, epidemiological aggregates, imaging/PACS metadata and terminology
+references: 18 tabular schemas and 363 source-qualified rows. They retain official
+HL7/CDC sources separately from fabricated supplements, exact literals and native
+DICOM bytes. The explorer discovers all six packs including clinical and legal.
+SNOMED CT/CPT dictionaries remain consumer-local licensed inputs; CMS claims,
+TCIA images and live services remain separately qualified work.

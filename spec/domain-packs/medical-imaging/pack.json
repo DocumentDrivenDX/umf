@@ -1,0 +1,219 @@
+{
+  "id": "medical-imaging",
+  "version": "1.0.0",
+  "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
+  "domain_types": {
+    "source_qualified_identity": {
+      "description": "Source namespace and native identity; no inferred patient identity."
+    },
+    "exact_native_literal": {
+      "description": "Numeric and temporal source spelling retained as text."
+    }
+  },
+  "schemas": [
+    {
+      "id": "instances",
+      "format": "tablespec",
+      "reference": "umf/instances.json"
+    },
+    {
+      "id": "attributes",
+      "format": "tablespec",
+      "reference": "umf/attributes.json"
+    }
+  ],
+  "sources": {
+    "dicom_json": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/synthetic-dicom.json",
+      "format": "dicom-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e6e9beff8acc1a07d1a059f9f75890d6616e90bde906123b3022436e5419ada4"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-synthetic-1.0.0"
+    },
+    "dicom_binary": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/synthetic.dcm",
+      "format": "dicom-part10",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "54f23548d26d998a92fac698f829f330d19bf8633bab848a5b33da5710e1db1d"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "provenance": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "sources/provenance.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "41ecb95b1f4c857fc6149d6b0d3c05a0679d241c2b5e8a2cc34cae5a99f0e30c"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "tcia": {
+      "kind": "external",
+      "data_kind": "deidentified",
+      "reference": "https://www.cancerimagingarchive.net/data-usage-policies-and-restrictions/",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "The Cancer Imaging Archive"
+      }
+    },
+    "notices": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "licenses/NOTICE.txt",
+      "format": "text",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5406b7be08334dbd64bcfb0523895a594fd39992a4196ebe5398e3baefd53804"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "csv_instances": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/instances.csv",
+      "format": "csv",
+      "revision": "medical-imaging-1.0.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "78a44cc081c21c2c7a4efde37309458ec474953ca6df7924933ced31f5bca552"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "dicom_json",
+          "dicom_binary",
+          "provenance"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_attributes": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/attributes.csv",
+      "format": "csv",
+      "revision": "medical-imaging-1.0.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "414edf65a0f5c21865bb296a5e150ddaa7cbb60817bd9a257f94ad4340ca7f8e"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "dicom_json"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    }
+  },
+  "source_bindings": [
+    {
+      "schema_id": "instances",
+      "source_id": "csv_instances",
+      "role": "rows"
+    },
+    {
+      "schema_id": "instances",
+      "source_id": "dicom_json",
+      "role": "reference"
+    },
+    {
+      "schema_id": "instances",
+      "source_id": "dicom_binary",
+      "role": "reference"
+    },
+    {
+      "schema_id": "instances",
+      "source_id": "provenance",
+      "role": "reference"
+    },
+    {
+      "schema_id": "attributes",
+      "source_id": "csv_attributes",
+      "role": "rows"
+    },
+    {
+      "schema_id": "attributes",
+      "source_id": "dicom_json",
+      "role": "reference"
+    }
+  ],
+  "csv_conventions": {
+    "encoding": "UTF-8",
+    "null_value": "\\N",
+    "header": true,
+    "quote": "\""
+  },
+  "fixture_counts": {
+    "instances": 1,
+    "attributes": 24
+  },
+  "qualification": {
+    "native_format": "DICOM Part 10 Explicit VR Little Endian and DICOM JSON",
+    "subset": "One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence.",
+    "projection_losses": [
+      "pydicom DICOM JSON normalizes native DS decimal spellings (1.2500 to 1.25); original spellings remain in the unchanged binary object. File-meta elements and preamble are binary-only, retained in the original."
+    ],
+    "limits": "Native metadata and original binary retention only. No public patient images, pixel decoding, full IOD conformance, DICOMweb or live PACS operations. TCIA remains a collection-specific rights/access candidate; no TCIA bytes are bundled."
+  }
+}

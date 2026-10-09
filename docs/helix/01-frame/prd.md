@@ -358,6 +358,30 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   source identity, unresolved references and source-specific redistribution
   conditions; generated supplements must remain distinguishable. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
+  The medical pack must cover the carrier lifecycle: payer/plan and member
+  enrollment, coverage and benefits, eligibility requests and responses, prior
+  authorization, claim headers and lines, adjudication and denials, explanations
+  of benefits, payment/remittance, coordination of benefits and appeals.
+  Clinical and financial records must retain distinct identities, dates, statuses,
+  monetary meanings and source-qualified relationships. Public synthetic claims
+  and official terminology sources must be evaluated and used where suitable;
+  missing workflow evidence must be explicit rather than fabricated as observed.
+  Terminology integration must distinguish SNOMED CT, ICD-10-CM, ICD-10-PCS,
+  CPT and HCPCS Level II by edition, effective period and rights, retaining
+  native codes, unknown codes and qualified mappings without asserting equivalence.
+  Licensed sources must remain usable through explicit consumer-local bindings
+  when redistribution is restricted. See CONTRACT-052 and its planned carrier
+  expansion; the delivered medical 1.0.0 corpus does not meet this broader scope.
+  Medical scope also includes epidemiological/public-health data and imaging/PACS
+  (Picture Archiving and Communication System) metadata. These are independently
+  versioned, composable subpacks in the medical family, pending concrete design;
+  epidemiology need not become a separate top-level domain merely because its
+  records are population-level. Epidemiological measures must retain cohort/case
+  definitions, geography, periods, denominators, uncertainty and suppression.
+  Imaging must retain study/series/instance identities, native DICOM metadata and
+  explicit references to binary objects without claiming pixel decoding or PACS
+  service support. Links between subpacks must be source-supported; population
+  aggregates must not be presented as patient records.
 
 ### Subsystem: Translation and Fidelity
 

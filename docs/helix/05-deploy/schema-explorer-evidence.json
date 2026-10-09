@@ -6,10 +6,11 @@
     "chromium": "153.0.8010.12"
   },
   "catalog": {
-    "packs": 2,
-    "entries": 19
+    "packs": 6,
+    "entries": 41
   },
   "checks": [
+    "Medical subpacks expose all eighteen source-qualified schemas",
     "Pack catalog and linked schemas",
     "Native foreign-key navigation",
     "Pack hierarchy, breadcrumbs and domain-type ownership",
