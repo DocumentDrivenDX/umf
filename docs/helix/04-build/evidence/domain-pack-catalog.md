@@ -116,6 +116,14 @@ GitHub Pages deployment run `37866865323` succeeded. The public explorer at
 checks, including navigation of every schema and ontology target in all sixteen
 packs (236 entries).
 
+Concurrent main integration added GTFS Schedule, MovieLens, NOAA GHCN Daily and
+NYC TLC packs. The combined catalog passed 27 domain tests and all 18 public
+Chromium checks: **20 packs and 256 entries**. Public deployment run
+`37867678708` succeeded. TableSpec PR #30 carries the replay and mixed-schema
+archive tooling; its pre-commit check passed, while the broader coverage job was
+still running at integration. The scoped unit and Sail results above remain the
+consumer acceptance evidence; complete classic Spark coverage remains unqualified.
+
 ## Remaining qualifications
 
 Component replay scales counts, not independent topology, time span, scientific
