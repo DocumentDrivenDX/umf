@@ -5628,3 +5628,19 @@ quoting, GraphQL parsing, Avro parsing and JSON Schema compilation. Chromium
 checks all nine previews, review gating and an actual SQL download alongside
 all catalog navigation checks. No DDL execution or native-equivalence claim.
 Rollback removes the download widget and rebuilds the microsite.
+
+### Website YAML defaults — 2026-10-08
+
+Owner-directed human-facing schema interactions use YAML in playground presets,
+explorer metadata/ontology/source views and JSON Schema/OpenAPI generation.
+Explicit JSON output remains available; Avro/Spark native downloads, report
+bundles, catalog transport and exact original-source downloads retain JSON or
+their source format. Native source views preserve numeric lexemes through YAML
+AST rendering rather than JavaScript number conversion.
+
+Both TypeScript configurations and seven download tests (45 assertions) pass.
+Chromium 153.0.8010.12 passes 23 checks, including YAML playground input, JSON
+input/output switching, YAML generation and existing explorer preservation and
+navigation checks; see the schema-explorer evidence. Public deployment is not
+performed. Changed playground HTML requires its Innsigle signature to be renewed
+before publication. Rollback restores the prior viewer and rebuilds bundles.

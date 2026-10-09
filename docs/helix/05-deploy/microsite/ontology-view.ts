@@ -1,3 +1,4 @@
+import {stringify} from 'yaml';
 import {key,type Parsed,type Definition,type Entry} from './explorer-model';
 export interface Edge {key:string;module:string;value:any}
 export function ontologyModel(parsed:Parsed){
@@ -16,7 +17,7 @@ export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entrie
  const link=(text:string,values:Record<string,string>,cls='ref-link')=>{const a=el('a',text,cls) as HTMLAnchorElement;a.href=href(values);return a;};
  const ref=(value:any)=>{const d=parsed.definitions.find(d=>d.key===endpointKey(value));return d?link(pretty(d.title),{definition:d.key}):el('span',`${value.module} / ${value.element} · unresolved`,'unresolved');};
  const section=(title:string)=>{const s=el('section',undefined,'detail-block');s.append(el('h3',title));root.append(s);return s;};
- const raw=(parent:HTMLElement,title:string,value:unknown)=>{const d=el('details',undefined,'raw-content');d.append(el('summary',title),el('pre',JSON.stringify(value,null,2)));parent.append(d);};
+ const raw=(parent:HTMLElement,title:string,value:unknown)=>{const d=el('details',undefined,'raw-content');d.append(el('summary',title),el('pre',stringify(value,{aliasDuplicateObjects:false,lineWidth:0})));parent.append(d);};
  const relations=(record:Definition,side:'source'|'target')=>model.edges.filter(e=>(e.value[side]??[]).some((p:any)=>endpointKey(p)===record.key));
  const nav=el('nav',undefined,'definition-list');nav.setAttribute('aria-label','Ontology views');
  nav.append(link('Model overview',{}));for(const d of model.records)nav.append(link(pretty(d.title),{definition:d.key}));root.append(nav);

@@ -1,9 +1,10 @@
+import {writeJsonValue} from '../../../../src/model/serialization';
 import type {Entry,Parsed} from './explorer-model';
 export type Target='postgresql'|'sqlserver'|'delta'|'json-schema'|'avro'|'graphql'|'protobuf'|'openapi'|'spark';
 export const targets:Record<Target,string>={postgresql:'PostgreSQL DDL',sqlserver:'SQL Server DDL',delta:'Spark / Delta DDL','json-schema':'JSON Schema 2020-12',avro:'Avro schema',graphql:'GraphQL SDL',protobuf:'Protobuf proto3',openapi:'OpenAPI 3.1 schema components',spark:'Spark / Delta schema JSON'};
 type Field={name:string,type:string,nullable:boolean};
 type Table={name:string,fields:Field[]};
-export function generateDownload(entry:Entry,parsed:Parsed,target:Target){
+export function generateDownload(entry:Entry,parsed:Parsed,target:Target,format:'yaml'|'json'='yaml'){
  const issues:string[]=['Schema-only scalar profile v1. Keys, relationships, constraints, defaults, descriptions and extension content are retained in the source companion, not enforced by generated output.','Integers use signed 64-bit carriers; floats use double. Decimal and timestamp values use text to avoid inventing precision or timezone semantics. No data conversion is performed. Core absent-allowed maps to target nullable/optional; native absence and null are not equivalent.'];
  const tables:Table[]=[];
  if(parsed.native?.columns){const n=parsed.native;tables.push({name:n.table_name,fields:n.columns.map((c:any)=>{if(typeof c.nullable!=='boolean')throw new Error(`${c.name}: explicit boolean nullable is required`);return {name:c.name,type:({VARCHAR:'string',TEXT:'string',CHAR:'string',BOOLEAN:'boolean',INTEGER:'integer',DECIMAL:'decimal',FLOAT:'float',DATE:'date',DATETIME:'timestamp',TIMESTAMP:'timestamp'} as Record<string,string>)[c.data_type]??'unsupported',nullable:c.nullable};})});}
@@ -26,5 +27,6 @@ export function generateDownload(entry:Entry,parsed:Parsed,target:Target){
  if(['json-schema','openapi'].includes(target))issues.push('Integers are decimal strings; date, timestamp, decimal and byte text formats are not constrained.');
  if(target==='avro')issues.push('Output is an Avro union of records. Date, timestamp and decimal use unconstrained strings.');
  if(target==='spark')issues.push('Output is a table-name map of StructTypes; select a value for a single Spark schema.');
- const content=typeof value==='string'?value:JSON.stringify(value,null,2)+'\n';return {filename:`schema.${extension}`,content,report:{profile:'umf-browser-scalar-export-1',target,issues,source:{path:entry.path,format:entry.format,text:entry.text},files:[{name:`schema.${extension}`,content}]}};
+ if(['json-schema','openapi'].includes(target))extension=format;
+ const content=typeof value==='string'?value:writeJsonValue(value,extension==='yaml'?'yaml':'json');return {filename:`schema.${extension}`,content,report:{profile:'umf-browser-scalar-export-1',target,issues,source:{path:entry.path,format:entry.format,text:entry.text},files:[{name:`schema.${extension}`,content}]}};
 }

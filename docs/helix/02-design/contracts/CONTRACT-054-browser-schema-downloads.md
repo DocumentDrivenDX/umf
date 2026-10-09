@@ -39,3 +39,8 @@ and dependencies; external dependencies are not fetched. Arrow/Parquet recovery
 does not imply general schema generation. Runtime acceptance of generated DDL,
 custom scalar implementations, and migration policies remain unknown and
 outside this bounded browser profile.
+
+Owner direction (2026-10-08): human-facing schema interactions default to YAML.
+JSON Schema/OpenAPI scaffolds offer YAML by default and an explicit JSON choice.
+Avro/Spark previews use YAML, with native JSON downloads. Report bundles and
+exact original-source companions retain their interchange/native formats.

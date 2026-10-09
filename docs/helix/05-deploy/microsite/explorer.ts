@@ -1,3 +1,4 @@
+import {parseDocument,stringify} from 'yaml';
 import {clearDownloads,renderDownloads} from './download-view';
 import {ontologyModel,renderOntology} from './ontology-view';
 import {parseEntry,key,matches,type Entry,type Parsed,type Definition} from './explorer-model';
@@ -7,8 +8,9 @@ let downloadUrl:string|undefined;
 let entries:Entry[]=[], selected:Entry|undefined, parsed:Parsed|undefined, definition:Definition|undefined;
 const search=$<HTMLInputElement>('search'),category=$<HTMLSelectElement>('category');
 function node(tag:string,text?:string,className?:string):HTMLElement {const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
-function json(value:unknown){return JSON.stringify(value,null,2);}
+function json(value:unknown){return stringify(value,{aliasDuplicateObjects:false,lineWidth:0}).trimEnd();}
 function raw(parent:HTMLElement,title:string,value:unknown,open=false){const d=node('details',undefined,'raw-content') as HTMLDetailsElement;d.open=open;d.append(node('summary',title),node('pre',typeof value==='string'?value:json(value)));parent.append(d);}
+function schemaSource(){const source=selected!;raw(inspector,'Schema · YAML',parseDocument(source.text,{intAsBigInt:true}).toString({collectionStyle:'block',lineWidth:0}));raw(inspector,'Original schema source',source.text);}
 function block(title:string){const b=node('section',undefined,'detail-block');b.append(node('h3',title));inspector.append(b);return b;}
 function route(entry:Entry,d?:Definition){location.hash=new URLSearchParams({schema:entry.id,...(d?{definition:d.key}:{})}).toString();}
 function reference(ref:unknown):HTMLElement {
@@ -63,7 +65,7 @@ function render(){
  if(selected.description)inspector.append(node('p',selected.description));
  const notice=node('div',`${parsed.valid?'Core structure valid':'Core structure invalid'} · ${parsed.complete?'All supplied content checked':'Some semantics are not interpreted'}. Inspection does not establish storage or runtime enforcement.`,'callout');inspector.append(notice);
  if(parsed.diagnostics)raw(inspector,'Validation and interpretation messages',parsed.diagnostics);
- if((selected.schemaFormat==='umf'||String(doc.title??'').includes('ontology'))&&ontologyModel(parsed).records.length){renderOntology(inspector,parsed,selected,entries,new URLSearchParams(location.hash.slice(1)));raw(inspector,'Original schema source',selected.text);return;}
+ if((selected.schemaFormat==='umf'||String(doc.title??'').includes('ontology'))&&ontologyModel(parsed).records.length){renderOntology(inspector,parsed,selected,entries,new URLSearchParams(location.hash.slice(1)));schemaSource();return;}
  const nav=node('div',undefined,'definition-list');const overview=node('a','Overview') as HTMLAnchorElement;overview.href='#'+new URLSearchParams({schema:selected.id});if(!definition)overview.setAttribute('aria-current','true');nav.append(overview);
  for(const def of parsed.definitions){const a=node('a',def.title) as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:selected.id,definition:def.key});a.title=`${def.module} / ${def.id}`;if(def===definition)a.setAttribute('aria-current','true');nav.append(a);}inspector.append(nav);
  if(definition){const value=definition.value;inspector.append(node('h3',definition.title,'definition-heading'),node('p',`${definition.module} / ${definition.id} · ${definition.pointer}`,'schema-id'));if(value.description)inspector.append(node('p',String(value.description)));properties(inspector,value,['id','name','title','description','extensions','references','members','keys','itemType','valueType']);references(inspector,value);
@@ -76,7 +78,7 @@ function render(){
  for(const module of doc.modules){const b=block(String(module.title??module.namespace??module.id));b.append(node('p',`${module.id} · ${module.elements.length} definitions`,'schema-id'));if(module.extensions)raw(b,'Module extensions',module.extensions);if(Array.isArray(module.relationships)&&module.relationships.length)renderRelationships(module.relationships);}
  raw(block('Declared vocabularies'),'Versions and declarations',doc.vocabularies,true);if(doc.extensions)raw(inspector,'Document extensions',doc.extensions);
  }
- raw(inspector,'Original schema source',selected.text);
+ schemaSource();
 }
 function renderRelationships(relationships:any[]){const b=block('Relationships');for(const r of relationships){const d=node('details');d.append(node('summary',String(r.name??r.id)));for(const side of ['source','target']){const p=node('p',side+': ');for(const endpoint of r[side]??[]){p.append(reference(endpoint),document.createTextNode(' '));}d.append(p);}properties(d,r,['source','target']);b.append(d);}}
 function schemaLink(id:string,title:string){const a=node('a',title,'ref-link') as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:id});return a;}
@@ -85,7 +87,7 @@ function renderNative(){
  if(source.description)inspector.append(node('p',String(source.description)));
  inspector.append(node('p',parsed!.diagnostics||'Source metadata inspection; native execution semantics are not certified.','callout'));
  const nav=node('div',undefined,'definition-list');const overview=schemaLink(selected!.id,'Overview');nav.append(overview);for(const def of parsed!.definitions){const a=node('a',def.title) as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:selected!.id,definition:def.key});if(def===definition)a.setAttribute('aria-current','true');nav.append(a);}inspector.append(nav);
- if(definition){const b=block(definition.title);b.append(node('p',definition.pointer,'schema-id'));if(definition.value.description)b.append(node('p',String(definition.value.description)));properties(b,definition.value,['description','domain_type']);if(typeof definition.value.domain_type==='string'){const p=node('p','Domain type: ');p.append(domainTypeLink(definition.value.domain_type));b.append(p);}raw(b,'Original definition metadata',definition.value,true);raw(inspector,'Original schema source',selected!.text);return;}
+ if(definition){const b=block(definition.title);b.append(node('p',definition.pointer,'schema-id'));if(definition.value.description)b.append(node('p',String(definition.value.description)));properties(b,definition.value,['description','domain_type']);if(typeof definition.value.domain_type==='string'){const p=node('p','Domain type: ');p.append(domainTypeLink(definition.value.domain_type));b.append(p);}raw(b,'Original definition metadata',definition.value,true);schemaSource();return;}
  if(source.domain_types){
   properties(inspector,source,['domain_types','schemas','description','scale_presets','source_bindings','sources']);
   for(const [field,label] of [['scale_presets','Scale presets'],['source_bindings','Source bindings'],['sources','Source declarations']])if(source[field])raw(inspector,label,source[field]);
@@ -101,7 +103,7 @@ function renderNative(){
   if(source.relationships){const r=block('Native relationships');for(const fk of source.relationships.foreign_keys??[]){const target=entries.find(e=>e.pack===selected!.pack&&e.packVersion===selected!.packVersion&&e.title===fk.references_table);const p=node('p',`${fk.column} → `);p.append(target?schemaLink(target.id,`${fk.references_table}.${fk.references_column}`):node('span',`${fk.references_table}.${fk.references_column} · not bundled`,'unresolved'));r.append(p);}raw(r,'Original relationship metadata',source.relationships);}
   properties(inspector,source,['columns','relationships','primary_key','description','table_name']);
  }else{const defs=source.$defs??source.definitions??{};const b=block('Definitions');for(const [id,value] of Object.entries(defs)){const d=node('details');d.append(node('summary',id),node('pre',json(value)));b.append(d);}raw(inspector,'Schema keywords',source,true);}
- raw(inspector,'Original schema source',selected!.text,true);
+ schemaSource();
  const a=node('a','Download source','button secondary') as HTMLAnchorElement;a.href=downloadUrl=URL.createObjectURL(new Blob([selected!.text],{type:'text/plain'}));a.download=selected!.path.split('/').pop()??'schema.json';a.onclick=()=>setTimeout(()=>URL.revokeObjectURL(a.href),1000);inspector.append(a);
 }
 function restore(){const params=new URLSearchParams(location.hash.slice(1)),id=params.get('schema');const entry=entries.find(e=>e.id===id)??entries.find(e=>e.aliases?.includes(id??''))??(!id?entries[0]:undefined);if(entry&&id&&entry.id!==id){params.set('schema',entry.id);history.replaceState(null,'','#'+params);}if(!entry){selected=undefined;parsed=undefined;inspector.replaceChildren(node('p','This schema is not in the catalog. Choose a schema from the catalog.','empty'));renderCatalog();return;}try{selected=entry;parsed=parseEntry(entry);definition=parsed.definitions.find(d=>d.key===params.get('definition'));render();renderCatalog();status.textContent=params.get('definition')&&!definition?'Definition not found; showing the schema overview.':[`${entries.filter(e=>e.id.startsWith('pack:')).length} domain pack${entries.filter(e=>e.id.startsWith('pack:')).length===1?'':'s'}`,`${entries.filter(e=>e.category==='domain'&&!e.id.startsWith('pack:')).length} domain schemas`,`${entries.filter(e=>e.category==='example').length} example${entries.filter(e=>e.category==='example').length===1?'':'s'}`].join(' · ');}catch(error){parsed=undefined;inspector.replaceChildren(node('p','This schema could not be opened.','empty'),node('pre',String(error)));renderCatalog();status.textContent='Schema inspection refused; original source remains available.';raw(inspector,'Original schema source',entry.text);}}

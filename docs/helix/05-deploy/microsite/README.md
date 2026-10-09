@@ -143,3 +143,12 @@ Binary descriptor downloads do not imply Protobuf source generation.
 
 Domain packs start collapsed. Selecting a schema opens its owning pack; search
 opens matching packs. Explicit expansion state is retained during navigation.
+
+## Human-facing serialization — 2026-10-08
+
+Playground presets and output default to YAML; JSON input and output remain
+available. Explorer metadata and schema views use YAML while original source
+text and downloads retain their exact bytes. JSON Schema and OpenAPI generated
+files default to YAML with an explicit JSON option. Avro and Spark previews use
+YAML for reading; their native downloads and the interchange report bundle stay
+JSON. SQL, GraphQL and Protobuf keep their native syntax.

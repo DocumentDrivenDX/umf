@@ -6,6 +6,10 @@ const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
 async function check(name:string,fn:()=>Promise<void>){for(const pack of await page.locator('details[data-pack]').all()){if(!await pack.evaluate(el=>(el as HTMLDetailsElement).open))await pack.locator(':scope > summary').click();}await fn();checks.push(name);}
 try{
+ await page.goto(origin+'/demo.html');await page.waitForFunction(()=>document.querySelector('#result')?.textContent?.includes('Content retained'));
+ if(!await page.locator('#source').inputValue().then(t=>t.startsWith('umf:')))throw Error('Playground input is not YAML');
+ await page.locator('#format').selectOption('json');await page.locator('#run').click();JSON.parse(await page.locator('#output').innerText());
+ await page.locator('#source').fill(await page.locator('#output').innerText());await page.locator('#format').selectOption('yaml');await page.locator('#run').click();if(!(await page.locator('#result').innerText()).includes('Content retained'))throw Error('JSON input to YAML failed');checks.push('Playground YAML defaults and JSON interchange');
  await page.goto(origin+'/explorer.html');await page.waitForFunction(()=>document.querySelector('#status')?.textContent?.includes('domain pack'));
  if(await page.locator('details[data-pack][open]').count()>1)throw Error('Unselected domain packs start expanded');
  checks.push('Domain packs start collapsed except the selected pack');
@@ -14,6 +18,7 @@ try{
   const panel=page.locator('details').filter({has:page.locator('summary').filter({hasText:'Download as…'})});
   await panel.locator('summary').click();await panel.getByLabel('Download target').waitFor();
   for(const target of ['postgresql','sqlserver','delta','json-schema','avro','graphql','protobuf','openapi','spark']){await panel.getByLabel('Download target').selectOption(target);await panel.locator('pre').waitFor();if(!await panel.locator('pre').textContent().then(t=>t?.includes('site_id')))throw Error('Missing generated field');}
+  await panel.getByLabel('Download target').selectOption('json-schema');if(await panel.getByLabel('Schema serialization').inputValue()!=='yaml'||!(await panel.locator('pre').innerText()).startsWith('$schema:'))throw Error('Missing YAML default');await panel.getByLabel('Schema serialization').selectOption('json');JSON.parse(await panel.locator('pre').innerText());
   await panel.getByLabel('Download target').selectOption('postgresql');
   if(await panel.getByRole('link',{name:'Download schema.sql',exact:true}).isVisible())throw Error('Review gate bypassed');
   await panel.getByRole('checkbox').check();const pending=page.waitForEvent('download');await panel.getByRole('link',{name:'Download schema.sql',exact:true}).click();const download=await pending;if(download.suggestedFilename()!=='schema.sql')throw Error('Wrong filename');
