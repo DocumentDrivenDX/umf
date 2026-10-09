@@ -1,6 +1,33 @@
 {
   "id": "medical-epidemiology",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "family": {
+    "id": "medical",
+    "version": "1.1.0",
+    "label": "Epidemiology"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "measures",
+        "supplemental_measures"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "cdc",
+      "cdc_metadata",
+      "supplement",
+      "notices",
+      "csv_measures",
+      "csv_supplemental_measures"
+    ],
+    "qualification": "Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim."
+  },
   "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
   "domain_types": {
     "source_qualified_identity": {
@@ -20,6 +47,11 @@
       "id": "supplemental_measures",
       "format": "tablespec",
       "reference": "umf/supplemental_measures.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
     }
   ],
   "sources": {
@@ -122,7 +154,7 @@
       "data_kind": "observed",
       "reference": "data/measures.csv",
       "format": "csv",
-      "revision": "medical-epidemiology-1.0.0",
+      "revision": "medical-epidemiology-1.1.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "be23947804729c7a64bb5b5d0071a20e5bba619d27cfaa5504188482969f71ab"
@@ -147,7 +179,7 @@
       "data_kind": "fabricated",
       "reference": "data/supplemental_measures.csv",
       "format": "csv",
-      "revision": "medical-epidemiology-1.0.0",
+      "revision": "medical-epidemiology-1.1.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "05cd03ec8cf05416a2cf296b5272b0540bd87ffd0e44cfc6399c1f93524de415"

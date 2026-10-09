@@ -4091,6 +4091,7 @@
       "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
       "status": "SATISFIED",
       "evidence": [
+        "tests/domain-packs/medical-family.test.ts:11",
         "tests/domain-packs/medical-subpacks.test.ts:17"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -4119,6 +4120,7 @@
       "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
       "status": "SATISFIED",
       "evidence": [
+        "tests/domain-packs/medical-family.test.ts:11",
         "tests/domain-packs/medical-subpacks.test.ts:66"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -4128,6 +4130,7 @@
       "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
       "status": "SATISFIED",
       "evidence": [
+        "tests/domain-packs/medical-family.test.ts:24",
         "tests/domain-packs/medical-subpacks.test.ts:113",
         "tests/domain-packs/medical-subpacks.test.ts:81",
         "tests/domain-packs/medical-subpacks.test.ts:97"
@@ -4139,6 +4142,8 @@
       "story": "docs/helix/01-frame/user-stories/US-055-medical-subpacks.md",
       "status": "SATISFIED",
       "evidence": [
+        "tests/domain-packs/medical-family.test.ts:11",
+        "tests/domain-packs/medical-family.test.ts:24",
         "tests/domain-packs/medical-subpacks.test.ts:113",
         "tests/domain-packs/medical-subpacks.test.ts:97"
       ],

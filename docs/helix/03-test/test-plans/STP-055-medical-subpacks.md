@@ -63,3 +63,17 @@ suppression/zero/unknown, exact money and nested private DICOM content.
 Follow TD-055: source qualification, projections, pack artifacts, consumer checks.
 Done requires all six criteria to pass their named scoped checks, with versions and
 limits recorded. Full native equivalence and live services remain unclaimed.
+
+## Integrated public-source and family checks
+
+AC1: independently compare every selected CMS CSV cell and historical native
+column against the retained excerpt; show its synthetic source separately from
+FHIR. AC4: pydicom checks the selected TCIA UIDs, metadata, native sequences and
+original bytes without treating the private-tag synthetic case as public evidence.
+AC6: validate all five fixed profiles and ontologies; export/check all family
+members; reject wrong hashes, versions, duplicates, traversal, missing members
+and uncleared sources before output. Chromium follows Medical-to-subpack and
+back links, every table/ontology pair, CSV/FHIR/DICOM downloads, search, direct
+links and mobile containment. TableSpec ingests every tabular target and recovers
+both schemas and original attachments. Historical broader obligations remain
+separate from acceptance of this requested sample/integration slice.

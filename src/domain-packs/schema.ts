@@ -10,6 +10,13 @@ export function generateDomainPackSchema() {
     anyOf: [{properties:{generator:{}},required:['generator']},{properties:{sources:{}},required:['sources']}],
     properties: {
       id: text, version, description: {type: 'string'},
+      family: {type:'object',required:['id','version','label'],properties:{id:text,version,label:text},additionalProperties:true},
+      composition: {type:'object',required:['version','components'],properties:{
+        version:{const:'1.0.0'},components:{type:'array',minItems:1,maxItems:32,items:{type:'object',required:['id','version','label','checksum'],properties:{
+          id:{type:'string',pattern:'^[a-z][a-z0-9-]*$'},version,label:text,
+          checksum:{type:'object',required:['algorithm','value'],properties:{algorithm:{const:'sha256'},value:{type:'string',pattern:'^[a-f0-9]{64}$'}},additionalProperties:true},
+        },additionalProperties:true}},
+      },additionalProperties:true},
       generator: {type: 'object', required: ['id', 'version'],
         properties: {id: text, version}, additionalProperties: true},
       domain_types: {type: 'object', minProperties: 1,

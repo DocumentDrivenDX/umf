@@ -1,6 +1,32 @@
 {
   "id": "medical-terminology",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "family": {
+    "id": "medical",
+    "version": "1.1.0",
+    "label": "Terminology"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "systems",
+        "concepts"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "icd10cm",
+      "selection",
+      "notices",
+      "csv_systems",
+      "csv_concepts"
+    ],
+    "qualification": "Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim."
+  },
   "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
   "domain_types": {
     "source_qualified_identity": {
@@ -20,6 +46,11 @@
       "id": "concepts",
       "format": "tablespec",
       "reference": "umf/concepts.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
     }
   ],
   "sources": {
@@ -171,7 +202,7 @@
       "data_kind": "unknown",
       "reference": "data/systems.csv",
       "format": "csv",
-      "revision": "medical-terminology-1.0.0",
+      "revision": "medical-terminology-1.1.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "a5a2fa063a954b57253b9afb34e10605f19e20b565eb037acf9f6483b533f002"
@@ -198,7 +229,7 @@
       "data_kind": "unknown",
       "reference": "data/concepts.csv",
       "format": "csv",
-      "revision": "medical-terminology-1.0.0",
+      "revision": "medical-terminology-1.1.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "4c9d331a8e2ef23faf1c2eb0f54c7e96b90ffea6c8ee9490e62b33c515daf954"

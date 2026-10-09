@@ -7,13 +7,14 @@
   },
   "catalog": {
     "packs": 24,
-    "entries": 266
+    "entries": 273
   },
   "checks": [
     "Playground YAML defaults and JSON interchange",
     "Domain packs start collapsed except the selected pack",
     "Download target preview, review gate and SQL download",
-    "Medical subpacks expose all eighteen source-qualified schemas",
+    "Medical subpacks expose all source-qualified tables and ontology schemas",
+    "Medical family links, public samples, exact downloads and old bookmarks",
     "Pack catalog and linked schemas",
     "Public dataset packs, source downloads and all sixteen schemas",
     "Ontology context, record pages, relationship map and legacy URLs",

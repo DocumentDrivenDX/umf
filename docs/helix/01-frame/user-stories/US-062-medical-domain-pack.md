@@ -28,7 +28,7 @@ The pack's conceptual scope is Patients; organizations; practitioners; encounter
 
 ## Delivered Subset
 
-The completed medical pack is an official fixed example corpus, not a longitudinal generator: 17 HL7 R4 resources, eight projections, exact originals/literals and explicit source provenance. [Evidence](../../04-build/evidence/medical-domain-pack.md) records typed ZIP and local Sail/Spark checks. Medication is a resource, not an inferred order/administration. Conditions, allergies, procedures, notes and claims remain desired expansions. CMS records are reference-only until selected bytes and reuse terms are established. AC4/AC5 apply to future generated supplementation; they must not force cloning published clinical records or be marked passed by fixed corpus ingestion.
+The completed medical pack is an official fixed example corpus, not a longitudinal generator: 17 HL7 R4 resources, eight projections, exact originals/literals and explicit source provenance. [Evidence](../../04-build/evidence/medical-domain-pack.md) records typed ZIP and local Sail/Spark checks. Medication is a resource, not an inferred order/administration. Conditions, allergies, procedures and notes remain desired expansions. US-055 separately qualifies carrier FHIR/CSV examples and bounded CMS DE-SynPUF excerpts; these do not establish the longitudinal generated scenario in this story. Medical 1.1.0 links that independent carrier pack and the imaging, epidemiology and terminology packs while retaining the unchanged clinical sources. AC4/AC5 apply to future generated supplementation; they must not force cloning published clinical records or be marked passed by fixed corpus ingestion.
 
 ## Pilot Question
 

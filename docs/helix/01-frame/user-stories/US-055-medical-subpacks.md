@@ -80,3 +80,14 @@ CONTRACT-001, CONTRACT-052, ADR-002, architecture, TD-055 and STP-055.
 Production carrier processing, clinical validation, patient identity matching,
 terminology equivalence, pixel codecs, live PACS and native graph-engine adoption.
 These retain separate FR-45 requirements and qualification gates.
+
+## Integrated family delivery
+
+Owner direction extends AC1/AC4/AC6 to qualified public samples and complete
+family discovery/export. Medical's clinical overview links each independently
+versioned subpack; each subpack links back. Exact public CMS CSV excerpts remain
+historical synthetic claims, distinct from the FHIR examples. A selected TCIA
+DICOM object keeps collection citation, rights and unchanged bytes. The explorer
+offers local source and CSV downloads and all four subpack ontology views.
+One explicit family export preserves separate pack directories and inventories;
+composition never invents patient linkage or combines populations.

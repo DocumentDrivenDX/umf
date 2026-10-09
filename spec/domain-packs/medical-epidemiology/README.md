@@ -1,4 +1,4 @@
-# medical-epidemiology 1.0.0
+# medical-epidemiology 1.1.0
 
 12 CDC/NCHS leading-causes-of-death aggregate records and two separate fabricated zero/suppression cases.
 

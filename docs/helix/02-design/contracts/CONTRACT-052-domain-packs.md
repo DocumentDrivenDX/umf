@@ -368,3 +368,41 @@ This selection MUST NOT mark rights cleared or permit redistributable source ZIP
 export. Mixed processing MUST generate only synthetic bindings through a trusted
 generator, ingest observed bindings unchanged and refuse unresolved bindings or
 cross-boundary references before target writes.
+
+## Medical family composition and public fixture delivery
+
+Optional `family` metadata is `{id,version,label}`. Optional `composition` is
+`{version:"1.0.0",components:[{id,version,label,checksum:{algorithm:"sha256",value}}]}`.
+Component IDs use lowercase letters, digits and hyphens, start with a letter and
+contain no path separators. Identity is exact pack ID/version. Duplicate or self
+components, malformed descriptors and unsupported composition versions refuse
+admission. Unknown annotation fields remain retained. These additive metadata
+fields use the existing extensible domain-pack 1.0.0 envelope.
+
+Composition resolves only caller-selected local sibling pack directories. Each
+component's manifest hash, exact identity and matching `family` declaration must
+agree. Components cannot themselves contain compositions. No implicit fetching,
+patient matching or cross-source joins occur. `export-domain-family.ts --pack
+<pack.json> --output <directory> [--include-sources] [--check]` exports the root
+and components into independent ID/version directories using the shared exporter;
+it preflights every component before publishing and writes `family.json` with
+exact manifest hashes. Rights, hash and path errors refuse the whole preflight.
+
+Subpacks expose CONTRACT-053 fixed tabular and graph targets. Ontologies are
+declared schema companions of their exact tables, not native graph-engine or
+clinical-conformance evidence. CSV/FHIR/DICOM originals stay source authorities.
+
+The schema explorer resolves exact composition identities and hashes within its
+built catalog, shows family links and publishes only checksum-verified local
+sources with explicit allowed redistribution. Row bindings link a selected table
+to its CSV; source cards identify format, origin, release and qualification.
+Downloads preserve exact bytes; no remote metadata URL triggers retrieval.
+
+CMS DE-SynPUF excerpts preserve native columns and tokens, empty cells and ICD-9
+era semantics; they are published synthetic data, not real beneficiary records.
+The selected TCIA LIDC-IDRI object retains original binary and separate pydicom
+JSON metadata; pixel/file-meta representation differences remain explicit.
+Collection-specific CC BY 3.0 attribution accompanies redistribution. Public
+source selection and native inspection are development evidence; the portable
+library performs no binary parsing or pixel decoding. Live PACS/DICOMweb and
+production carrier processing retain their separate future designs.

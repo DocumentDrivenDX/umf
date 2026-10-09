@@ -97,3 +97,20 @@ slice; no persisted core migration or cross-repository port is required.
 Public examples may not agree financially or resolve references. Retain originals
 and unresolved relationships. Public code availability does not grant unrestricted
 terminology rights. Source-specific notices and local licensed bindings apply.
+
+## Family integration and public sources
+
+Follow CONTRACT-052 composition metadata and family export. The deterministic
+builder adds fixed execution profiles and table-derived ontology schemas to
+each subpack, then fingerprints component manifests from Medical's overview.
+CMS native CSV excerpts get separate schemas and source lineage without FHIR
+conversion or ICD crosswalks. A TCIA object gets a separate source namespace,
+recursive metadata views and unchanged binary source. Source qualification is
+checked in; regeneration and browser/catalog builds never download sources.
+
+The explorer links family overviews, table/ontology counterparts and pinned
+local original/row downloads. Site asset construction uses shared rights/hash
+checks. Export preserves one directory per pack and preflights before writes.
+Bun rejects stale or escaping members; Chromium exercises direct links, downloads,
+search and mobile layout. Independent TableSpec and pydicom checks verify public
+CSV cells, local-only joins, recursive DICOM metadata and exact archived originals.

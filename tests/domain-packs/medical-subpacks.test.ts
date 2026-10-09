@@ -23,7 +23,7 @@ const run=async(args:string[])=>{
  expect(t.payments![0]!.amount).toBe('100.47');
  expect(t.resource_references!.every(r=>r.target_key===null)).toBe(true);
  const carrier=await Bun.file(root+'/medical-carrier/pack.json').json();
- expect(carrier.schemas.map((s:any)=>s.id)).toEqual(['resources','coverage','eligibility','claims','claim_lines','adjudications','payments','plans','enrollments','resource_references','coded_values','workflow_events']);
+ expect(carrier.schemas.map((s:any)=>s.id)).toEqual(['resources','coverage','eligibility','claims','claim_lines','adjudications','payments','plans','enrollments','resource_references','coded_values','workflow_events','cms_beneficiaries','cms_inpatient_claims','cms_carrier_claims','ontology']);
  const positive=JSON.parse(await read('medical-carrier','supplement-eligibility-positive-response.json'));
  const negative=JSON.parse(await read('medical-carrier','supplement-eligibility-negative-response.json'));
  expect(positive.insurance[0].inforce).toBe(true);expect(negative.insurance[0].inforce).toBe(false);
@@ -99,7 +99,7 @@ const run=async(args:string[])=>{
  for(const id of packs){
   const pack=await Bun.file(root+'/'+id+'/pack.json').json();
   expect(createValidator().compile(generateDomainPackSchema())(pack)).toBe(true);expect(pack.generator).toBeUndefined();
-  for(const s of pack.schemas){const text=await Bun.file(root+'/'+id+'/'+s.reference).text();expect(exportTableSpec(importTableSpec(text,{id:s.id,format:'json'}))).toBe(text);}
+  for(const s of pack.schemas.filter((s:any)=>s.format==='tablespec')){const text=await Bun.file(root+'/'+id+'/'+s.reference).text();expect(exportTableSpec(importTableSpec(text,{id:s.id,format:'json'}))).toBe(text);}
   for(const source of Object.values(pack.sources) as any[]){
    if(source.reference.includes(':')){expect(source.license.redistribution).toBe('unknown');continue;}
    const bytes=await Bun.file(root+'/'+id+'/'+source.reference).arrayBuffer();

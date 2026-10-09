@@ -18,6 +18,7 @@ const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(request){
   '/carrier-response.json':'medical-carrier/sources/hl7-claimresponse.json',
   '/cdc.json':'medical-epidemiology/sources/cdc-mortality.json',
   '/dicom.json':'medical-imaging/sources/synthetic-dicom.json',
+  '/public-dicom.json':'medical-imaging/sources/tcia-lidc-0001-ct.json',
   ...Object.fromEntries(['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology'].map(id=>['/'+id+'.json',id+'/pack.json']))};
  if(fixtureFiles[path])return new Response(Bun.file('spec/domain-packs/'+fixtureFiles[path]),{headers:{'content-type':'application/json'}});
  return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>UMF pack schema verification</title>',{headers:{'content-type':'text/html'}});
@@ -70,6 +71,11 @@ try {
   const dicom=u.projectDicomMetadata(await(await fetch('/dicom.json')).text(),'dicom');
   check(dicom.instances[0].sop_instance_uid==='2.25.555001');
   check(dicom.attributes.some((a:any)=>a.native_path==='/00111010/Value/0/00111002'&&a.vr==='DS'));
+  const publicText=await(await fetch('/public-dicom.json')).text(),publicDicom=u.projectDicomMetadata(publicText,'tcia');
+  check(publicDicom.instances[0].metadata_json===publicText);
+  check(publicDicom.instances[0].sop_instance_uid==='1.3.6.1.4.1.14519.5.2.1.6279.6001.143451261327128179989900675595');
+  check(publicDicom.attributes.some((a:any)=>a.tag==='7FE00010'&&a.bulk_data_uri==='sources/tcia-lidc-0001-ct.dcm#tag-7FE00010'));
+  check(publicDicom.attributes.some((a:any)=>a.tag==='00131010'&&a.vr==='LO'));
   const query={system:'http://www.ama-assn.org/go/cpt',release:'caller-selected',code:'fixture-only'};
   check(u.lookupMedicalTerminology(query).status==='source-unavailable');
   check(u.lookupMedicalTerminology(query,[{...query,future:{retained:true}}]).matches[0].future.retained);
