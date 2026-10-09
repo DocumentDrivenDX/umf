@@ -13,7 +13,7 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: CONTRACT-056
+    - id: CONTRACT-900
       kind: references
     - id: TP-001
       kind: references
@@ -87,7 +87,7 @@ condition and unknown extensions. No state executor or real identity is needed.
 Use `fixtures/actions/cases.json` with language-neutral inputs, targeted core/
 extension versions and expected validity, interpretation completeness and
 code/path/severity diagnostic sets. Normative rule expectations derive from
-CONTRACT-056; message wording is excluded. This is action-slice conformance, not
+CONTRACT-900; message wording is excluded. This is action-slice conformance, not
 all-core cross-language certification. Add association Record/composite-Key
 fixtures, same-name collisions, unknown members, unsupported float/temporal
 values, key mutation, profile drift and limit vectors.
@@ -131,7 +131,7 @@ fresh-key no-op versus replay and contiguous projection visibility.
 
 ## Iteration 2 profile qualification allocation
 
-CONTRACT-057 adds consumer-owned requirements; the earlier 21-history SQL
+CONTRACT-901 adds consumer-owned requirements; the earlier 21-history SQL
 harness, sentinel check and browser representation do not satisfy them. US-056,
 TD-056 and STP-056 allocate the later bounded consumer implementation and
 EX-01–EX-05 native witnesses. Their completed source-bound evidence is recorded

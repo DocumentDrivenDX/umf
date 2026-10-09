@@ -44,6 +44,14 @@ export function literalIdentity(field:Element,value:CoreLiteral):string {
  if(typeof v.boolean!=='boolean')schemaError('Expected boolean literal');return 'boolean:'+v.boolean;
 }
 export function checkSchemaLiteral(doc:Document,field:Element,value:CoreLiteral,refinements=true,depth=0):void {
+ evaluateSchemaLiteral(doc,field,value,refinements,depth);
+}
+/** Internal metered entry; the same evaluator owns all literal semantics. */
+export function checkSchemaLiteralTracked(doc:Document,field:Element,value:CoreLiteral,charge:(doc:Document,field:Element,value:CoreLiteral)=>void):void {
+ evaluateSchemaLiteral(doc,field,value,true,0,charge);
+}
+function evaluateSchemaLiteral(doc:Document,field:Element,value:CoreLiteral,refinements=true,depth=0,charge?:(doc:Document,field:Element,value:CoreLiteral)=>void):void {
+ charge?.(doc,field,value);
  if(depth>LIMITS.maxDepth)schemaError('Literal recursion exceeds limit');
  if(field.kind!=='field')schemaError('Literal target must be a Field');
  if(field.references?.some(r=>r.role==='record-type'))schemaError('Record-valued literals require a separate contract');
@@ -58,7 +66,7 @@ export function checkSchemaLiteral(doc:Document,field:Element,value:CoreLiteral,
   const item=doc.modules.find(m=>m.id===ref.module)?.elements.find(e=>e.id===ref.element);if(!item)schemaError('Unresolved itemType');
   const values=kind==='array'?items:Object.values(items),size=facets.collectionSize;
   if(size){knownSchemaMembers(size,['min','max'],'/facets/collectionSize');if(size.min!==undefined&&values.length<size.min||size.max!==undefined&&values.length>size.max)schemaError('Collection size outside bounds');}
-  for(const entry of values)checkSchemaLiteral(doc,item,entry,refinements,depth+1);
+  for(const entry of values)evaluateSchemaLiteral(doc,item,entry,refinements,depth+1,charge);
  }else{
   if(field.cardinality!==undefined&&!['one','unspecified'].includes(field.cardinality as string))schemaError('Unknown cardinality');
   const kind=field.scalarType,wrapper=({boolean:'boolean',integer:'integerToken',decimal:'decimalToken',string:'string',binary:'binaryHex',float:'floatToken',date:'date',time:'time',timestamp:'timestamp'} as Record<string,string>)[kind as string];

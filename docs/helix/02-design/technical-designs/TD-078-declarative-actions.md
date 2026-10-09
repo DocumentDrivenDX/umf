@@ -11,7 +11,7 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: CONTRACT-056
+    - id: CONTRACT-900
       kind: references
     - id: umf.architecture
       kind: references
@@ -27,7 +27,7 @@ ddx:
 ## Scope
 
 Implement declaration validation, authoring, inspection and supplied-profile
-comparison under CONTRACT-056. No executor, state evaluator or native adapter is
+comparison under CONTRACT-900. No executor, state evaluator or native adapter is
 part of this story. The parent design owns the extension/runtime boundary.
 
 ## Technical Approach
@@ -83,7 +83,7 @@ fresh qualification. The table below names actual implementation components.
 
 ## API/Interface Design
 
-CONTRACT-056 alone owns declarations, APIs, report/profile fields, diagnostics
+CONTRACT-900 alone owns declarations, APIs, report/profile fields, diagnostics
 and bounds. Use existing Registry and Document operations; do not create an
 execution transport, generic plugin loader or persistence receipt verifier.
 
@@ -148,7 +148,7 @@ infer a universal expression language or executor from this design.
 
 ## Iteration 2 implementation handoff
 
-CONTRACT-057 is a separate consumer runtime design dependency. Add schema forms
+CONTRACT-901 is a separate consumer runtime design dependency. Add schema forms
 for role/policy authorization and profile/version obligations to this library
 slice. A separately registered rules/keys interpreter may statically parse and
 check the bounded JSON AST without state evaluation; absent registration retains
@@ -156,7 +156,7 @@ text as unchecked. Never claim rule interpretation from string preservation.
 
 1. Replace simplified probes with full core/action/profile fixtures for create-
    link, approve and reserve, and malformed AST/authorization/profile cases.
-2. Implement CONTRACT-056 schemas, copied APIs, semantic model references and
+2. Implement CONTRACT-900 schemas, copied APIs, semantic model references and
    complete obligations; use the nine AC gates already allocated.
 3. Implement an optional portable static checker for rules/keys version 1 with
    phase/type/dependency/limit checks; require its own fixtures and browser proof.

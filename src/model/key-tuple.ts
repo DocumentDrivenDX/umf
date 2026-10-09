@@ -91,33 +91,41 @@ export function encodeCoreKeyTuple(input:unknown,identityInput:CoreKeyIdentity,v
  if(source===null||typeof source!=='object'||Array.isArray(source)||source.umf!=='0.8.0')fail('KEY_TUPLE_SOURCE','Expected current core 0.8.0 document','/source/umf');
  const validation=validateDocument(source);
  if(!validation.valid)fail(validation.diagnostics.some(d=>d.code==='KEY_EQUALITY')?'KEY_TUPLE_EQUALITY':'KEY_TUPLE_SOURCE',JSON.stringify(validation.diagnostics),'/source');
+ const body=encodeCoreKeyTupleBody(source,identity,values,validation);
+ const receipt={operation:body.operation,version:body.version,profile:body.profile,source,identity,values,keyPath:body.keyPath,bytesHex:body.bytesHex};
+ if(!check(receipt))fail('KEY_TUPLE_RESULT',JSON.stringify(check.errors),'');
+ return copyJson(receipt) as unknown as CoreKeyTupleReceipt;
+}
+/** Internal shared encoder; not exported from the package API. */
+export function encodeCoreKeyTupleBody(source:Json,identity:CoreKeyIdentity,values:CoreKeyTupleValue[],validation:import('./types').Validation,checkLiteral:typeof checkSchemaLiteral=checkSchemaLiteral,selection?:{record:Element;recordPath:string;key:CoreKeyDefinition;keyPath:string;fields:{field:Element;path:string;member:string}[]}){
+ const originalSelection=()=>{
  const modules=(source as unknown as {modules:Module[]}).modules,mi=modules.findIndex(m=>m.id===identity.module),ei=modules[mi]?.elements.findIndex(e=>e.id===identity.element)??-1;
  const record=modules[mi]?.elements[ei],keys=record?.keys as CoreKeyDefinition[]|undefined,ki=keys?.findIndex(k=>k.id===identity.key)??-1;
  if(!record||record.kind!=='record'||ki<0)fail('KEY_TUPLE_MISSING','Explicit Record/Key identity does not resolve','/identity');
  const key=keys![ki]!,recordPath=`/modules/${mi}/elements/${ei}`,keyPath=recordPath+`/keys/${ki}`;
+  const fields=key.fields.map(ref=>{
+   const mi=modules.findIndex(m=>m.id===ref.module),ei=modules[mi]!.elements.findIndex(e=>e.id===ref.element);
+   const member=(record.members as CoreKeyFieldReference[]).findIndex(r=>id(r)===id(ref));
+   return {field:modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}/facets`,member:recordPath+`/members/${member}`};
+  });return {record,recordPath,key,keyPath,fields};
+ };
+ const {key,keyPath,fields}=selection??originalSelection();
  if(!Array.isArray(values)||values.length!==key.fields.length)fail('KEY_TUPLE_ARITY','Expected one value per key component','/values');
  let text=0;
  for(const value of values)if(value&&typeof value==='object')for(const v of Object.values(value))if(typeof v==='string'){text+=v.length;if(text>limit)fail('LIMIT','Aggregate key value text exceeds limit','/values');}
- const fields=key.fields.map(ref=>{
-  const mi=modules.findIndex(m=>m.id===ref.module),ei=modules[mi]!.elements.findIndex(e=>e.id===ref.element);
-  const member=(record.members as CoreKeyFieldReference[]).findIndex(r=>id(r)===id(ref));
-  return {field:modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}/facets`,member:recordPath+`/members/${member}`};
- });
  const relevant=[keyPath,...fields.flatMap(f=>[f.path,f.member])];
  for(const d of validation.diagnostics)if(d.severity==='warning'&&['UNKNOWN_KEY_QUALIFIER','UNKNOWN_FACET','UNKNOWN_FACET_UNIT'].includes(d.code)&&relevant.some(p=>d.path===p||d.path.startsWith(p+'/')))fail('KEY_TUPLE_UNKNOWN','Relevant qualifier has no defined encoding meaning',d.path);
  const parts:Uint8Array[]=[encoder.encode('UMFK1'),new Uint8Array(leb(values.length))];let length=parts.reduce((n,p)=>n+p.length,0);
  fields.forEach(({field},i)=>{
   const p=payload(field,values[i]!,`/values/${i}`);
-  checkSchemaLiteral(source as unknown as Document,field,values[i]!);
+  checkLiteral(source as unknown as Document,field,values[i]!);
   const header=new Uint8Array([p.tag,...leb(p.bytes.length)]);
   length+=header.length+p.bytes.length;if(length>limit)fail('LIMIT','Encoded tuple exceeds limit','/values');parts.push(header,p.bytes);
  });
  const bytes=new Uint8Array(length);let offset=0;for(const p of parts){bytes.set(p,offset);offset+=p.length;}
  // Chunking avoids quadratic concatenation and argument-count limits on large tuples.
  const chunks:string[]=[];for(let start=0;start<bytes.length;start+=4096)chunks.push(Array.from(bytes.subarray(start,start+4096),b=>b.toString(16).padStart(2,'0')).join(''));
- const receipt={operation:'encode-core-key-tuple',version:'3.0.0',profile:'umf-key-tuple-v1',source,identity,values,keyPath,bytesHex:chunks.join('')};
- if(!check(receipt))fail('KEY_TUPLE_RESULT',JSON.stringify(check.errors),'');
- return copyJson(receipt) as unknown as CoreKeyTupleReceipt;
+ return {operation:'encode-core-key-tuple' as const,version:'3.0.0' as const,profile:'umf-key-tuple-v1' as const,identity,values,keyPath,bytesHex:chunks.join('')};
 }
 export function verifyCoreKeyTuple(input:CoreKeyTupleReceipt,current:unknown):CoreKeyTupleReceipt{
  const receipt=copyJson(input) as unknown as CoreKeyTupleReceipt;

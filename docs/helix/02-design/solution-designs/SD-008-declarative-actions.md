@@ -11,7 +11,7 @@ ddx:
       kind: informed_by
     - id: umf.architecture
       kind: informed_by
-    - id: CONTRACT-056
+    - id: CONTRACT-900
       kind: references
     - id: umf.concerns
       kind: references
@@ -28,7 +28,7 @@ ddx:
 Use a module-scoped, independently versioned action extension. UMF owns portable
 model validation/inspection and declared capability comparison. Consumer-owned
 executors own authorization, state predicates, atomic writes and read receipts.
-CONTRACT-056 owns the action surface; CONTRACT-057 owns the bounded proposed
+CONTRACT-900 owns the action surface; CONTRACT-901 owns the bounded proposed
 consumer execution profile and protocol. This follows architecture's
 extension/runtime boundary and introduces no persistent UMF service.
 
@@ -94,7 +94,7 @@ no action-specific numeric or key equality implementation is introduced.
 
 The executor is an external integration boundary. It must qualify state reads,
 role profile, handlers, native side effects, atomicity, replay and receipts
-against CONTRACT-056 before claiming support. UMF does not supply its transport
+against CONTRACT-900 before claiming support. UMF does not supply its transport
 or treat locator strings as authenticated evidence.
 
 ## Technology Rationale
@@ -131,7 +131,7 @@ association Record; they do not settle broader core instance semantics.
 STP-078 allocates all nine story criteria to concrete planned tests. US-056, TD-056 and STP-056 allocate the complete bounded reference-consumer
 journey, including EX-01–05 runtime witnesses. Consumer
 execution witnesses are a separate gate and are not a passing library result.
-CONTRACT-057 selects exact bounded rule/selector syntax, invocation variants and
+CONTRACT-901 selects exact bounded rule/selector syntax, invocation variants and
 handler-access requirements. Store adapters, policy/handler implementations and
 sandbox qualification remain consumer-owned, unimplemented work. Broader proposal sections 2–6 (global conformance,
 instance semantics, scalar coverage, canonical keys and authority) are not

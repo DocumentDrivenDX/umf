@@ -1,3 +1,4 @@
+import {snapshotSchema} from './internal-schema';
 import schema from '../../spec/core/relationship-document.schema.json';
 import {createValidator} from './schema';
 import {validateKeyCandidate} from './keys';
@@ -9,7 +10,7 @@ export interface RelationshipTarget extends RelationshipEndpoint {key:string}
 export interface RelationshipMultiplicity {min:number;max:number|'*';[key:string]:unknown}
 export interface CoreRelationship {id:string;name:string;source:RelationshipEndpoint[];target:RelationshipTarget[];sourceMultiplicity:RelationshipMultiplicity;targetMultiplicity:RelationshipMultiplicity;targetLifecycle:'owned'|'independent'|'unspecified'|(string&{});directed:boolean;inverse?:string;associationRecord?:RelationshipEndpoint;[key:string]:unknown}
 export interface RelationshipCandidate {umf:'0.7.0';id:string;vocabularies:Document['vocabularies'];modules:(Module&{relationships?:CoreRelationship[]})[];extensions?:Record<string,Json>;[key:string]:unknown}
-const check=createValidator().compile(schema);
+const check=createValidator().compile(snapshotSchema(schema));
 const identity=(ref:RelationshipEndpoint)=>JSON.stringify([ref.module,ref.element]);
 
 /** Explicit candidate validator; never reinterprets an older envelope. */

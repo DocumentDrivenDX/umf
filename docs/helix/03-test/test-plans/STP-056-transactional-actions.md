@@ -13,7 +13,7 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: CONTRACT-057
+    - id: CONTRACT-901
       kind: references
 ---
 
@@ -26,7 +26,7 @@ ddx:
 
 ## Scope and Objective
 
-Prove the full bounded CONTRACT-057 consumer journey in an actual PostgreSQL store.
+Prove the full bounded CONTRACT-901 consumer journey in an actual PostgreSQL store.
 The rows below identify required current-source witnesses; execution status is recorded
 in the certification evidence. A canonical citation establishes traceability, not a pass. Portable interpreter tests and prior SQL/TLC
 probes are prerequisites, not these runtime witnesses. Production/downstream/cross-store

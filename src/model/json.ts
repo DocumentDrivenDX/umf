@@ -1,10 +1,13 @@
 import { UmfError, type Json, pointer } from './types';
 export const LIMITS = { maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const;
 /** Copy JSON data without invoking getters, toJSON, or custom prototypes. */
-export function copyJson(input: unknown): Json {
+export function copyJson(input: unknown): Json { return copyJsonCharged(input); }
+/** Internal copy hook; public copyJson retains its exact interface. */
+export function copyJsonCharged(input: unknown,charge?:(visits:number)=>void): Json {
   const active = new Set<object>();
   let values = 0;
   function visit(value: unknown, path: string, depth: number): Json {
+    charge?.(1);
     if (++values > LIMITS.maxValues || depth > LIMITS.maxDepth) throw new UmfError('LIMIT', 'JSON structural limit exceeded', path);
     if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
     if (typeof value === 'number') {

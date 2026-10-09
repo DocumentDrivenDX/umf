@@ -26,6 +26,11 @@ Integrated schema/package audits pass for 355 schemas and 63 packages; these com
 
 ## Open delivery gates
 
-Owner approved identity migration on 2026-10-09. Active action artifacts now use US/TD/STP-078, CONTRACT-056/057 and FR-51 after checking the newer primary branch. Exact certified governing bytes/IDs remain in the historical snapshot; historical certificates and logs are unchanged. The two human-reader sessions remain a usability follow-up. Actual runnable demonstrations and fresh integrated qualification are mandatory release gates.
+Owner approved identity migration on 2026-10-09. Active action artifacts now use US/TD/STP-078, CONTRACT-900/901 and FR-51 after checking the newer primary branch. Exact certified governing bytes/IDs remain in the historical snapshot; historical certificates and logs are unchanged. The two human-reader sessions remain a usability follow-up. Actual runnable demonstrations and fresh integrated qualification are mandatory release gates.
 
 Signing, PR review/integration into master, verification of the actual deployed website, and release publication remain pending. This record makes no merged, deployed, release-ready or current-source-certified claim.
+
+
+## Subsequent primary integration — 2026-10-09
+
+Primary a95c3ec18a8f904decde884a4fa252988d2a5b0f changes shared value/Key validation and adds compact finite dataset receipts. The source-2f08bac0 campaign is intentionally superseded before completion: its fresh successful command logs are retained in [the attempt record](actions-documentation/qualification-attempt-2f08bac0/disposition.json), not claimed as final qualification. A concurrent CONTRACT-056 allocation is resolved by moving active action contracts to the unused CONTRACT-900/901 range under the approved identity migration policy. Governing meanings and the original certificate remain unchanged. Final release requires fresh qualification of the newer integrated source.

@@ -1,3 +1,4 @@
+import {evaluateFieldValue} from './internal/field-body';
 import {copyJson} from './json';
 import {type Document,type Json,type Element,UmfError,type Validation} from './types';
 import {validateDocument} from '../validation/document';
@@ -56,16 +57,9 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  return copyJson(target) as unknown as Document;
 }
 export function validateCoreFieldValue(input:Document,fieldInput:{module:string;element:string},valueInput:CoreLiteral):Validation {
- const diagnostics:Validation['diagnostics']=[];
- try{
-  const field=copyJson(fieldInput) as unknown as {module:string;element:string};
-  const value=copyJson(valueInput) as unknown as CoreLiteral;
-  if(!checkCoreLiteral(value))schemaError('Invalid typed literal');
-  knownSchemaMembers(field,['module','element'],'/identity');
-  const located=locate(input,{scope:'element',...field});checkSchemaLiteral(located.source,located.node as unknown as Element,value);
- }catch(error){if(!(error instanceof UmfError))throw error;diagnostics.push({code:error.code,path:error.path,message:error.message,severity:'error'});}
- return {valid:diagnostics.length===0,complete:diagnostics.length===0,diagnostics};
+ return evaluateFieldValue(fieldInput,valueInput,field=>locate(input,{scope:'element',...field}));
 }
+
 export type CoreDefaultInput={state:'missing'}|{state:'present';value:CoreLiteral};
 export function resolveCoreDefault(input:Document,fieldInput:{module:string;element:string},stateInput:CoreDefaultInput){
  const field=copyJson(fieldInput) as unknown as {module:string;element:string};

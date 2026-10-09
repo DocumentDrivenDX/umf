@@ -10,7 +10,7 @@ export * from './projections/avro-tablespec';
 export * from './projections/tablespec-via-avro';
 export * from './projections/postgresql-avro';
 export * from './projections/parquet-avro';
-export * from './model/json';
+export {copyJson,LIMITS} from './model/json';
 export * from './model/serialization';
 export * from './model/document';
 export * from './model/selection';
@@ -325,7 +325,8 @@ export * from './core-ideals/facets-parquet-projection';
 
 export * from './model/keys';
 export * from './model/key-transition';
-export * from './model/key-tuple';
+export {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes} from './model/key-tuple';
+export type {CoreKeyIdentity,CoreKeyTupleValue,CoreKeyTupleReceipt} from './model/key-tuple';
 export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
 export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
 export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
@@ -408,3 +409,6 @@ export {validateCoreRecordValues} from './model/record-values';
 export type {CoreRecordValueIdentity,CoreRecordFieldValue,CoreRecordValueCheck} from './model/record-values';
 export {validateCoreDatasetValues,verifyCoreDatasetValues,coreDatasetValueOperationSchema} from './model/dataset-values';
 export type {CoreDatasetInput,CoreDatasetRecord,CoreDatasetRelationship,CoreDatasetValueCheck} from './model/dataset-values';
+
+export {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,coreDatasetValueCompactOperationSchema} from './model/dataset-values-compact';
+export type {CoreCompactRecordValueCheck,CoreCompactKeyTupleReceipt,CoreDatasetCompactValueCheck} from './model/dataset-values-compact';

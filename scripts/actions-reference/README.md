@@ -1,6 +1,6 @@
 # Transactional action reference consumer
 
-This is host-only qualification tooling, not a browser library, production service or public HTTP API. Read the [execution guide](../../docs/helix/04-build/guides/actions/execution.md) and [CONTRACT-057](../../docs/helix/02-design/contracts/CONTRACT-057-transactional-action-profile.md).
+This is host-only qualification tooling, not a browser library, production service or public HTTP API. Read the [execution guide](../../docs/helix/04-build/guides/actions/execution.md) and [CONTRACT-901](../../docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md).
 
 ## Run a safe first example
 

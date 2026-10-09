@@ -23,5 +23,15 @@
     "Do not rewrite historical certificates or recorded execution hashes",
     "Freeze integrated sources and perform required fresh qualification"
   ],
-  "approval": "Owner approved identity migration on 2026-10-09; unused IDs rechecked against fetched primary branch"
+  "approval": "Owner approved identity migration on 2026-10-09; unused IDs rechecked against fetched primary branch",
+  "subsequentPrimaryCollision": {
+    "primaryRevision": "a95c3ec18a8f904decde884a4fa252988d2a5b0f",
+    "reason": "Concurrent primary work claimed CONTRACT-056 and refactored shared action value/Key validation",
+    "resolution": "Action contracts moved to unused CONTRACT-900/901 under the approved migration policy; numeric IDs carry no semantic meaning",
+    "supersededFrozenSource": "2f08bac024ad56af18119ae67d848a8a35e8dbe1"
+  },
+  "activeContractMapping": {
+    "CONTRACT-052": "CONTRACT-900",
+    "CONTRACT-053": "CONTRACT-901"
+  }
 }

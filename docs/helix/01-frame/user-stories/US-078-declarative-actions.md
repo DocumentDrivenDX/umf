@@ -31,7 +31,7 @@ change and unresolved obligations before deciding to invoke it.
 A create-and-link action needs more than a DDD operation name. This slice
 provides portable declaration tooling and conservative capability comparison.
 It invokes no handler, evaluates no state predicate and mutates no stored data.
-CONTRACT-056 owns exact fields, diagnostics and executor obligations.
+CONTRACT-900 owns exact fields, diagnostics and executor obligations.
 
 ## Walkthrough
 
@@ -96,7 +96,7 @@ can distinguish links sharing endpoints. Report mode cannot waive obligations.
 
 ## Dependencies
 
-FEAT-008, CONTRACT-056, SD-008, TD-078, STP-078; core 0.8.0 and existing registry
+FEAT-008, CONTRACT-900, SD-008, TD-078, STP-078; core 0.8.0 and existing registry
 and serialization. US-050 is not required for this local-only slice. Planned
 STP-078 tests are not executed evidence.
 
@@ -108,7 +108,7 @@ separate profile/version evidence before a support claim.
 
 ## Iteration 2 boundary
 
-CONTRACT-057 defines the first executable profile. Public-library AC2/4/5/8
+CONTRACT-901 defines the first executable profile. Public-library AC2/4/5/8
 must exercise its declaration/profile metadata without implementing runtime
 execution. EX-01–EX-05 in STP-078 allocate ACT-09–13 runtime witnesses separately.
 Their passing results cannot be inferred from US-078 or the earlier SQL harness.

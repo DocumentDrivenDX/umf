@@ -1,3 +1,4 @@
+import {snapshotSchema} from './internal-schema';
 import relationships from '../../spec/core/relationship-document.schema.json';
 import keys from '../../spec/core/key-document.schema.json';
 import Ajv2020 from 'ajv/dist/2020';
@@ -25,13 +26,13 @@ export function installJsonEquality(validator:Pick<Ajv2020,'removeKeyword'|'addK
  validator.removeKeyword('enum').addKeyword({keyword:'enum',schemaType:'array',errors:false,validate:(expected:unknown[],data:unknown)=>expected.some(value=>canonical(value)===canonical(data))});
 }
 const ajv = createValidator();
-export const checkCore = ajv.compile(core);
-export const checkCoreFields = ajv.compile(fields);
-export const checkCoreNullability = ajv.compile(nullability);
-export const checkCoreCardinality = ajv.compile(cardinality);
-export const checkCoreFacets = ajv.compile(facets);
-export const checkPackage = ajv.compile(manifest);
+export const checkCore = ajv.compile(snapshotSchema(core));
+export const checkCoreFields = ajv.compile(snapshotSchema(fields));
+export const checkCoreNullability = ajv.compile(snapshotSchema(nullability));
+export const checkCoreCardinality = ajv.compile(snapshotSchema(cardinality));
+export const checkCoreFacets = ajv.compile(snapshotSchema(facets));
+export const checkPackage = ajv.compile(snapshotSchema(manifest));
 
-export const checkCoreKeys = ajv.compile(keys);
+export const checkCoreKeys = ajv.compile(snapshotSchema(keys));
 
-export const checkCoreRelationships = ajv.compile(relationships);
+export const checkCoreRelationships = ajv.compile(snapshotSchema(relationships));
