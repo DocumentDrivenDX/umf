@@ -10,7 +10,69 @@
     "qualification": "TableSpec native Python acquisition and offline BagIt transfer. PREMIS semantic JSON mapping and PROV-O source revision graph; no PREMIS XML, OCFL archive or WARC capture claim. Domain projections remain separately qualified."
   },
   "id": "legal-appellate",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "artifact_collections": [
+    {
+      "version": "1.0.0",
+      "id": "court-opinions",
+      "title": "Original court opinions",
+      "view": "documents",
+      "semantic_kinds": [
+        "court_opinion"
+      ],
+      "source_ids": [
+        "castillo",
+        "nasir",
+        "havis-reconsideration",
+        "brown",
+        "bennett",
+        "chatrie",
+        "chatrie-rehearing",
+        "smith",
+        "munoz-panel",
+        "munoz-rehearing",
+        "munoz-scotus",
+        "hansen-panel",
+        "hansen-rehearing",
+        "hansen-scotus",
+        "kennedy-panel",
+        "kennedy-rehearing",
+        "kennedy-scotus",
+        "aybar",
+        "mallory-scotus",
+        "black-rehearing",
+        "ny-doj-rehearing",
+        "graham",
+        "taylor",
+        "cobra-amended",
+        "hirschfeld-vacatur",
+        "hirschfeld-panel",
+        "tabb",
+        "vmg",
+        "bridgeport",
+        "philadelphia",
+        "ny-doj-panel",
+        "cobra-original",
+        "german-santos",
+        "mallory-pa"
+      ],
+      "media_types": [
+        "application/pdf"
+      ],
+      "metadata_schema_ids": [
+        "cases",
+        "decisions",
+        "courts",
+        "counsel"
+      ],
+      "derived_schema_ids": [
+        "decision_pages",
+        "annotations",
+        "annotation_evidence"
+      ],
+      "description": "Original judicial PDFs are authoritative; extracted text and provisional annotations remain separate projections."
+    }
+  ],
   "description": "Historical judicial PDFs, provisional split-screening annotations and fixed workflow fixtures; no live monitor.",
   "domain_types": {
     "source_scoped_identity": {

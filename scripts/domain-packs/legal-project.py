@@ -23,7 +23,7 @@ def emit(path, data):
     else:
         path.write_bytes(data)
 
-pack['version'] = '1.1.0'
+pack['version'] = '1.2.0'
 pack['description'] = 'Mixed legal pack: fabricated firm operations plus observed public court filings, deposition designations and corporate trial exhibits. No invented association between the two.'
 pack['sources'] = {'fabricated': pack['sources']['fabricated']}
 # Preserve other governed targets, including the existing ontology schema.
@@ -78,6 +78,7 @@ for id, rows in [('cases', case_rows), ('evidence_documents', doc_rows), ('evide
     if not any(s['id'] == id for s in pack['schemas']):
         pack['schemas'].append({'id': id, 'format': 'tablespec', 'reference': f'umf/{id}.json'})
     pack['source_bindings'].append({'schema_id': id, 'source_id': f'csv_{id}', 'role': 'rows'})
+pack['artifact_collections'] = [dict(version='1.0.0',id='litigation-originals',title='Original litigation documents',view='documents',semantic_kinds=['court_filing','trial_exhibit'],source_ids=[k for k,v in pack['sources'].items() if v.get('format')=='pdf'],media_types=['application/pdf'],metadata_schema_ids=['evidence_documents','cases'],derived_schema_ids=['evidence_pages'],ontology_schema_ids=['ontology'],description='Selected original PDFs; firm operations remain fabricated and unrelated.') ]
 pack['fixture_counts'] = {'cases': len(case_rows), 'evidence_documents': len(doc_rows), 'evidence_pages': len(page_rows)}
 pack['qualification'] = {'subset': 'One digital-advertising antitrust case; seven selected PDFs, not a complete docket or discovery production.',
                          'extraction': f'pypdf {__version__}; PDF page ordinals, not transcript page/line citations; text layer only, no OCR.',

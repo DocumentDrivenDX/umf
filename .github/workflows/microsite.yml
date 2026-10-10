@@ -16,6 +16,7 @@ on:
       - 'native/tablespec/relationship-runtime/domain-base-types.json'
       - 'native/tablespec/sources/src/tablespec/schemas/umf.schema.json'
       - 'spec/**'
+      - 'scripts/artifact-collections-browser.ts'
       - 'scripts/build-medical-subpacks.ts'
       - 'scripts/domain-pack-family.ts'
       - 'scripts/export-domain-family.ts'
@@ -54,6 +55,7 @@ on:
       - 'native/tablespec/relationship-runtime/domain-base-types.json'
       - 'native/tablespec/sources/src/tablespec/schemas/umf.schema.json'
       - 'spec/**'
+      - 'scripts/artifact-collections-browser.ts'
       - 'scripts/build-medical-subpacks.ts'
       - 'scripts/domain-pack-family.ts'
       - 'scripts/export-domain-family.ts'
@@ -108,6 +110,10 @@ jobs:
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
+      - name: Qualify artifact collection browser
+        run: |
+          bun x playwright install --with-deps chromium
+          bun scripts/artifact-collections-browser.ts
       - name: Check action guide generation and examples
         run: |
           bun run test:docs:build

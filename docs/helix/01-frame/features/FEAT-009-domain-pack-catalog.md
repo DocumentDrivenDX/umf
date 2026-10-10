@@ -43,6 +43,8 @@ Example schemas and fake values alone leave relationships, semantic rules and co
 
 - PACK-07: Ship a versioned, explicitly selected loader companion for bounded source acquisition, backfill, refresh and retained-input replay. Expose configuration, dependencies, checkpoint/recovery policy, source scope and machine-readable run evidence. Retain original bytes and revisions; failed collection cannot masquerade as empty coverage. Consumer execution stays outside the portable library.
 
+- PACK-08: The browser presents a compact, responsive workspace with readable display labels and exact identifiers, adequate field widths, searchable field details, and explicit links between tables, ontology and source artifacts. Structured technical metadata uses progressive disclosure; original metadata and material qualifications remain accessible.
+
 ## User Stories
 
 - [US-060: Reuse a domain pack across schema and dataset tooling](../user-stories/US-060-domain-pack-catalog.md).

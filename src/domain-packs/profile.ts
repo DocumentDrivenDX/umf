@@ -1,3 +1,4 @@
+import {inspectArtifactReferences} from './artifacts';
 import {inspectDomainPackLoader} from './loader';
 import {generateDomainPackSchema} from './schema';
 import {createValidator} from '../validation/schema';
@@ -9,6 +10,7 @@ function inspectDomainPackInternal(input:unknown):{valid:boolean;complete:boolea
  let pack:any;try{pack=copyJson(input);}catch(error){return {valid:false,complete:false,diagnostics:[String(error)]};}
  const diagnostics:string[]=[];
  if(!validate(copyJson(pack)))return {valid:false,complete:false,diagnostics:['Invalid canonical domain-pack metadata']};
+ diagnostics.push(...inspectArtifactReferences(pack));
  const schemas=pack.schemas??[],ids=schemas.map((s:any)=>s.id),sources=pack.sources??{};
  if(new Set(ids).size!==ids.length)diagnostics.push('Duplicate schema identity');
  for(const b of pack.source_bindings??[])if(!ids.includes(b.schema_id)||!Object.hasOwn(sources,b.source_id))diagnostics.push('Unresolved source binding');

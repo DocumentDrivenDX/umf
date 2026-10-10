@@ -42,3 +42,23 @@ def test_external_dataset_source_is_structural_and_copied():
     assert dataset_source_schema()["properties"]
     with pytest.raises(ValueError, match="version"):
         dataset_source_schema("2.0.0")
+
+
+def test_artifact_collection_structure_and_unknown_annotations():
+    validator = schema_validator(domain_pack_schema())
+    collection = {
+        'version': '1.0.0', 'id': 'originals', 'title': 'Originals',
+        'view': 'imaging', 'semantic_kinds': ['DICOM_instance'],
+        'source_ids': ['original'], 'future': {'opaque': True},
+    }
+    pack = {'id': 'fixture', 'version': '1.0.0',
+            'domain_types': {'identity': {'description': 'Source identity'}},
+            'sources': {'original': {'kind': 'external', 'data_kind': 'unknown', 'reference': 'https://example.org/original', 'format': 'dicom-part10', 'license': {'redistribution': 'unknown'}}},
+            'artifact_collections': [collection]}
+    assert validator.is_valid(pack)
+    assert collection['future'] == {'opaque': True}
+    # Python admission is structural; TS pack inspection resolves IDs.
+    assert validator.is_valid({**pack, 'artifact_collections': [{**collection, 'source_ids': ['unresolved']}]})
+    for mutation in [{'version': '2.0.0'}, {'source_ids': ['original', 'original']},
+                     {'source_ids': []}]:
+        assert not validator.is_valid({**pack, 'artifact_collections': [{**collection, **mutation}]})

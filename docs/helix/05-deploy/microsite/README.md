@@ -174,3 +174,13 @@ duplicate originals. 24 Chromium explorer checks pass, including actual public
 sample downloads/hash equality, all catalog entries, family navigation, ontology
 links, old bookmarks and mobile containment. Detailed reproduction and native
 checks are in `../../04-build/evidence/medical-subpacks.md`.
+
+## Schema browser workspace refinement — 2026-10-10
+
+Readable labels preserve technical IDs and native source downloads. The catalog
+uses a responsive drawer and desktop focus mode; fields have filtering, sticky
+identifiers and roomy description columns. Ontologies use record selection and
+wrapped graph labels; structured metadata uses full-width disclosures. Export
+panels remain inside the viewport. Browser entry-point typechecking is part of
+`bun run typecheck`. Visual evidence and limitations:
+[workspace qualification](../../04-build/evidence/schema-browser-ux.md).

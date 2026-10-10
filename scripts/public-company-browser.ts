@@ -28,9 +28,9 @@ try{
  });
  const downloadPromise=page.waitForEvent('download');await page.getByRole('link',{name:'Download source',exact:true}).click();const download=await downloadPromise;
  const text=await Bun.file((await download.path())!).text();if(text!==await Bun.file('spec/domain-packs/public-company-intelligence/pack.json').text())throw Error('Manifest download differs');
- await page.locator('#inspector').getByRole('link',{name:'filings',exact:true}).click();await page.getByRole('heading',{name:'Columns',exact:true}).waitFor();
+ await page.locator('#inspector').getByRole('link',{name:'Filings',exact:true}).click();await page.getByRole('heading',{name:'Fields',exact:true}).waitFor();
  await page.goto(origin+'/explorer.html#schema=schema%3Apublic-company-intelligence%401.0.0%3Aontology');
- await page.getByRole('heading',{name:'public-company-intelligence ontology',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Public company intelligence ontology',exact:true}).waitFor();
  await page.getByRole('img',{name:'Record relationship neighborhood',exact:true}).waitFor();
  if(errors.length)throw Error(errors.join('\n'));
  console.log(JSON.stringify({browser:browser.version(),...result,ui_checks:3,page_errors:errors}));

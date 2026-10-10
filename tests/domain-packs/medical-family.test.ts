@@ -12,7 +12,7 @@ async function run(input:string,output:string,check=false){const p=Bun.spawn(['b
  test('medical composition preserves five independent fixed profiles and ontology/table closure',async()=>{
  const members=await resolveDomainFamily(root);expect(members.map(m=>m.pack.id)).toEqual(['medical','medical-carrier','medical-epidemiology','medical-imaging','medical-terminology']);
  let tables=0;
- for(const {path,pack} of members){expect(inspectDomainPack(pack)).toEqual({valid:true,complete:true,diagnostics:[]});expect(pack.version).toBe('1.1.0');expect(pack.execution_profile.mode).toBe('fixed');
+ for(const {path,pack} of members){expect(inspectDomainPack(pack)).toEqual({valid:true,complete:true,diagnostics:[]});expect(pack.version).toBe('1.2.0');expect(pack.execution_profile.mode).toBe('fixed');
   const ontology=readDocument(await Bun.file(join(path,'../ontology.json')).text(),'json');expect(validateDocument(ontology).valid).toBe(true);
   const records=ontology.modules.flatMap(m=>m.elements.filter(e=>e.kind==='record'));expect(records.map(r=>r.id)).toEqual(pack.execution_profile.targets.tabular);tables+=records.length;
   for(const record of records){const native=await Bun.file(join(path,'../umf/'+record.id+'.json')).json();expect((Array.isArray(record.members)?record.members.length:0)).toBe(native.columns.length);}
@@ -27,10 +27,10 @@ async function run(input:string,output:string,check=false){const p=Bun.spawn(['b
  try{
   expect((await run(root,join(dir,'export'))).code).toBe(0);expect((await run(root,join(dir,'export'),true)).code).toBe(0);
   const inventory=await Bun.file(join(dir,'export/family.json')).json();expect(inventory.packs).toHaveLength(5);
-  for(const member of await resolveDomainFamily(root))for(const source of Object.values(member.pack.sources) as any[]){if(source.reference.includes(':'))continue;const a=new Uint8Array(await Bun.file(join(member.path,'../'+source.reference)).arrayBuffer()),b=new Uint8Array(await Bun.file(join(dir,'export',member.pack.id+'@1.1.0',source.reference)).arrayBuffer());expect(b).toEqual(a);}
+  for(const member of await resolveDomainFamily(root))for(const source of Object.values(member.pack.sources) as any[]){if(source.reference.includes(':'))continue;const a=new Uint8Array(await Bun.file(join(member.path,'../'+source.reference)).arrayBuffer()),b=new Uint8Array(await Bun.file(join(dir,'export',member.pack.id+'@1.2.0',source.reference)).arrayBuffer());expect(b).toEqual(a);}
   for(const member of await resolveDomainFamily(root))await cp(join(member.path,'..'),join(dir,member.pack.id),{recursive:true});
   const copy=join(dir,'medical/pack.json'),parent=await Bun.file(copy).json();parent.composition.components[0].version='9.0.0';await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('version');expect(await stat(join(dir,'blocked')).then(()=>true,()=>false)).toBe(false);
-  parent.composition.components[0].version='1.1.0';parent.composition.components[0].checksum.value='0'.repeat(64);await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('checksum');
+  parent.composition.components[0].version='1.2.0';parent.composition.components[0].checksum.value='0'.repeat(64);await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('checksum');
   const child=join(dir,'medical-carrier/pack.json'),metadata=await Bun.file(child).json();metadata.sources.cms_carrier.license.redistribution='unknown';const text=JSON.stringify(metadata);await Bun.write(child,text);parent.composition.components[0].checksum.value=new Bun.CryptoHasher('sha256').update(text).digest('hex');await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('redistribution');expect(await stat(join(dir,'blocked')).then(()=>true,()=>false)).toBe(false);
  }finally{await rm(dir,{recursive:true,force:true});}
 },30000);
