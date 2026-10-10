@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 63,
-  "passed": 63,
+  "packages": 64,
+  "passed": 64,
   "results": [
     {
       "path": "spec/extensions/actions/package.json",
@@ -218,6 +218,19 @@
         "subset": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed"
       },
       "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-definition/package.json",
+      "id": "umf.delta.definition",
+      "version": "0.1.0",
+      "native": {
+        "system": "Azure Databricks SQL",
+        "version": "Documentation inspected 2026-10-08; native execution not yet verified",
+        "subset": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties"
+      },
+      "evidenceCount": 2,
       "passed": true,
       "failures": []
     },

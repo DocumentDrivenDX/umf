@@ -1,0 +1,191 @@
+{
+  "profile": "umf.actions.latest-main-integration/1",
+  "previousPublishedHead": "b8e235c6f1f9935ac208f2779745f2609d329960",
+  "integratedMain": "d2ef29e267eafcb6bae28efd3c7974754c1d0b23",
+  "frozenExecutionCertificateSource": "1fa21f6ea1d7a3e1009746da99f1a61d444cd489",
+  "certificateScopeUnchanged": true,
+  "pending": [
+    "CI",
+    "merge",
+    "live deployment",
+    "release"
+  ],
+  "contractMigration": {
+    "from": "CONTRACT-050-delta-ddl.md",
+    "to": "CONTRACT-062-delta-ddl.md",
+    "reason": "Preserve established CONTRACT-050 format separation identity; requirements unchanged; historical main evidence retains its source identity"
+  },
+  "affectedImplementationPaths": [
+    "bun.lock",
+    "dist/umf.js",
+    "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md",
+    "docs/helix/05-deploy/microsite/dist/explorer.css",
+    "docs/helix/05-deploy/microsite/dist/explorer.js",
+    "docs/helix/05-deploy/microsite/dist/schema-catalog.json",
+    "docs/helix/05-deploy/microsite/explorer.ts",
+    "package.json",
+    "scripts/artifact-collections-browser.ts",
+    "scripts/delta-ddl-browser.ts",
+    "spec/extensions/delta-definition/package.json",
+    "spec/extensions/delta-definition/schema.json",
+    "src/adapters/delta/ddl.ts",
+    "src/index.ts",
+    "tests/delta/ddl.test.ts"
+  ],
+  "checks": {
+    "schemas": {
+      "log": "main-integration-schemas.log",
+      "sha256": "97f887452146206c43673cd67718b3c4e4e7184cfba0fe64a681f2d9d6b3b2e6"
+    },
+    "delta-browser": {
+      "log": "main-integration-delta-browser.log",
+      "sha256": "79d494111bd1504f20c6f2b09c2e06e8c7d6fece006710bbd3c7dfad3ec6b9a1"
+    },
+    "artifact-browser": {
+      "log": "main-integration-artifact-browser.log",
+      "sha256": "335458bbba2dde3e2d947e8a7b975494933e6f72bc07b51bda882f3238b1793d"
+    },
+    "explorer-ux": {
+      "log": "main-integration-explorer-ux.log",
+      "sha256": "3d410dab36b3970574633eb49f5d1ca03d282544e594c24972a24f21a49068bb"
+    },
+    "explorerDetails": {
+      "browser": "153.0.8010.12",
+      "checks": [
+        {
+          "width": 1440,
+          "focusNavigation": true,
+          "fieldFilter": true,
+          "overflowHints": [
+            {
+              "overflow": false,
+              "hintVisible": false
+            }
+          ],
+          "pageOverflow": false,
+          "pageErrors": []
+        },
+        {
+          "width": 390,
+          "focusNavigation": true,
+          "fieldFilter": true,
+          "overflowHints": [
+            {
+              "overflow": true,
+              "hintVisible": true
+            }
+          ],
+          "pageOverflow": false,
+          "pageErrors": []
+        }
+      ]
+    },
+    "native": {
+      "passed": 119,
+      "failed": 0,
+      "assertions": 1932,
+      "database": "PostgreSQL 17.9",
+      "report": "reference-foundation.json"
+    },
+    "actionsBrowser": {
+      "report": "actions-browser.json",
+      "externalRequests": []
+    },
+    "signing": {
+      "verifiedClaims": 15,
+      "log": "signing.log"
+    },
+    "documentation": {
+      "log": "main-integration-docs.log",
+      "browserReport": "../actions-documentation/browser.json",
+      "retainedManifest": "../actions-documentation/build-manifest.json"
+    }
+  },
+  "scope": "Bounded later integration evidence. Frozen execution certificate and strict baseline retain their original sources; this record does not certify merge, deployment, release or fresh strict admission.",
+  "manualVisualInspection": {
+    "mobile": {
+      "path": "explorer-390.png",
+      "reviewed": true,
+      "result": "Readable inspector, filter and table; horizontal guidance visible for actual overflow. External header logo blocked by network-isolated test; live asset verification remains required."
+    },
+    "desktop": {
+      "path": "explorer-1440.png",
+      "reviewed": true,
+      "result": "Readable compact toolbar and inspector, functioning filter; wide table has no unnecessary scroll hint."
+    }
+  },
+  "mergedTestedBytes": {
+    "docs/helix/05-deploy/microsite/explorer.ts": "b1bffa2a5ec9c36f759f03c72800c875f096cd7d0fd296d9bdcd7c1f51e08616",
+    "docs/helix/05-deploy/microsite/dist/explorer.css": "4f41c73d60c75364781cc9a4cd598eb1cc01fa1c266af6a18ee45acedb428696",
+    "docs/helix/05-deploy/microsite/dist/explorer.js": "92f1f615dda6a043847268529dc7fa510bf54aad69cbee0df4db109f3ba13b0f",
+    "docs/helix/05-deploy/microsite/dist/schema-catalog.json": "2bcd31b1572909ea6e5cfa9c4173c964257a6884fe4235d48cf1b4031ba92672",
+    "scripts/delta-ddl-browser.ts": "2f6d072f263e6866173a2dafec73174e2d51ab6bb252bccf03f40dc12a292e7f",
+    "scripts/artifact-collections-browser.ts": "50930eeb942ccff91c0918583d2df4a2fbf92da96cec70ffe99c0a3a071af6ec",
+    "src/adapters/delta/ddl.ts": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44",
+    "src/index.ts": "a12d53c7284f5a328993ee32a1e787478ab3a13aaae989cf2b62045f71e9e889",
+    "spec/extensions/delta-definition/schema.json": "8c2360f5b5c61a0e4e00bf048fae937132f4988bc1bdb472e8784cc5aa019caa",
+    "spec/extensions/delta-definition/package.json": "21f05eddbff419dd133cec8cd29959042419147564ce7e9b02ed27c27d7a4e81",
+    "tests/delta/ddl.test.ts": "9de8f5a57c8abafe60368bc70239923ee76a3460cc290947f72540ef7b2d448c",
+    "dist/umf.js": "05baba2947e224814a47590f7434238d0e60a514270e4110fdb96a41935c1009",
+    "package.json": "e9fe3ba2ba6981e3adbe92e1f67aa3daa98ea5a76528e56d0192ff6446f707cb",
+    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
+    "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md": "aa418acf0c3f3be453aee43fe5c87efa1ffefc71df1e8135f2111ac71503c86c"
+  },
+  "commandObservations": [
+    {
+      "command": "bun run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "bun test tests/delta",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:schemas",
+      "exitCode": 0
+    },
+    {
+      "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 scripts/delta-ddl-browser.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 scripts/artifact-collections-browser.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -v /private/tmp/umf-final-explorer-ux.cjs:/tmp/explorer-ux.cjs:ro -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 /tmp/explorer-ux.cjs",
+      "exitCode": 0
+    },
+    {
+      "command": "bun scripts/actions-reference/qualify-foundation.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun scripts/actions-browser.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run build:docs",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:docs:build",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:docs:examples",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:docs:browser",
+      "exitCode": 0
+    }
+  ],
+  "runtimeImage": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+  "freshActionsInputInventory": {
+    "path": "reference-foundation.json",
+    "field": "sha256",
+    "verifiedCurrentInputCount": 1319,
+    "allCurrentHashesMatch": true
+  }
+}

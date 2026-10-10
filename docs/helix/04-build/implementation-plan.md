@@ -5743,3 +5743,98 @@ and actual Chromium discovery. Record outcomes in
 [evidence/public-company-intelligence.md](evidence/public-company-intelligence.md).
 Databricks egress, S&P licensing, narrative extraction, model evals and
 production scheduler/email remain separately owned consumer work.
+
+### Ashlar-driven Delta DDL generation — 2026-10-08
+
+Owner direction places the reusable Delta DDL generator in UMF.
+[CONTRACT-062](../02-design/contracts/CONTRACT-062-delta-ddl.md) defines
+`umf.delta.definition` 0.1.0 alongside existing exact `umf.delta` schemas.
+The pure TypeScript API generates proposed managed CREATE statements with
+explicit nullability, clustering/partitioning and five selected table properties.
+Unknown meaning remains serializable and blocks generation. No native UUID,
+protocol compatibility, migration, relationship enforcement or predictive
+optimization change is inferred.
+
+Eight focused Bun tests (151 assertions, including existing schema recovery)
+and library typecheck pass. The initial tests could not resolve dependencies
+in this worktree; linking the existing project dependency installation resolved
+that environment issue. Browser evidence is scoped in
+`fixtures/delta/ddl-browser-results.json`; native DDL execution remains separate.
+Ashlar must independently compare its model-generated carriers with its existing
+layout before replacing installation input.
+
+
+### Delta DDL decimal iteration — 2026-10-08
+
+CONTRACT-062 now covers canonical decimal(p,s) declarations with precision 1–38
+and scale 0–precision. The emitter preserves both authored integers without
+rounding/defaulting; unsupported bounds, noncanonical spellings and SQL-like
+content refuse. Exact original schema recovery remains required.
+
+Six focused DDL tests pass (53 assertions), library TypeScript checking passes,
+and real Chromium verifies atomic/decimal JSON and YAML recovery, unknown-content
+retention/refusal and absence of Node globals. Browser evidence is retained in
+`fixtures/delta/ddl-browser-results.json`. Initial local startup was unusually
+slow; a redundant broader test process was stopped. No new cloud jobs or native
+SQL execution occurred. Nested types, logical-core-to-physical mapping and wider
+dialects remain subsequent explicit work, not claimed support.
+
+
+### Delta DDL recursive type iteration — 2026-10-08
+
+Owner direction grows the reusable generator in UMF. CONTRACT-062 now permits
+recursive STRUCT/ARRAY/MAP and explicit TIMESTAMP_NTZ without changing the
+preserved schema envelope or definition vocabulary shape. Ordered struct fields,
+quoted names, decimal parameters and nullability remain explicit. Non-null array
+elements/map values, absent map nullability, required fields below collections,
+unknown recursive properties, nested metadata and complex layout keys refuse.
+The emitter never silently relaxes these meanings or asserts native protocol admission.
+
+Nine focused Bun tests pass (81 assertions), including exact JSON/YAML recovery,
+full nested type expectations and refusal cases. Library TypeScript checking
+passes. Chromium 153.0.8010.12 verifies nested nullable arrays of TIMESTAMP_NTZ,
+atomic/decimal definitions, source recovery and unknown-content refusal in the
+browser library. Browser evidence is fixtures/delta/ddl-browser-results.json;
+STRUCT/MAP execution is covered by Bun generation tests, not native SQL.
+Initial sandbox browser startup failed to listen on localhost; the same focused
+check passed outside the sandbox. No cloud runs or SQL applications occurred.
+Native target execution, migrations, richer metadata interpretation and logical
+core-to-physical projection remain separate work.
+
+
+### Delta DDL column-description iteration — 2026-10-08
+
+Reusable generation remains UMF-owned. CONTRACT-062 now interprets only the
+Delta field metadata key `comment`, at top-level and nested STRUCT fields.
+Empty/Unicode descriptions and apostrophes/backslashes retain exact source
+schema and emit escaped Databricks literals. Other metadata, nonstring comments,
+controls and client dollar macros refuse without relaxing preservation.
+
+Eleven focused Bun tests pass (93 assertions); library TypeScript checking
+passes. Chromium verifies comment JSON/YAML recovery and SQL generation alongside
+previous atomic/decimal/nested checks; evidence is
+`fixtures/delta/ddl-browser-results.json`. Initial typecheck exposed an object
+annotation mismatch, corrected before the passing check. The sandbox could not
+bind the browser server; the focused localhost check passed outside it.
+No native SQL, cloud compute, migration or protocol admission is claimed.
+Logical-core-to-physical mapping, richer metadata and wider DDL targets remain
+separate increments.
+
+### Delta DDL complete-bundle iteration — 2026-10-08
+
+Reusable multi-table generation now belongs to UMF through
+`generateDeltaDDLBundle`, governed by CONTRACT-062. The browser-compatible API
+retains caller order, exact per-table schemas, copied physical definitions and
+source document IDs. It requires explicit catalog/schema/table names and refuses
+empty bundles, duplicate document IDs, case-insensitive qualified-name collisions
+and unsupported meaning in any member. No partial proposal is returned; database
+application is not claimed atomic. Dependency ordering and relationships remain
+consumer-owned explicit requirements.
+
+Thirteen focused Bun tests pass (106 assertions), and library TypeScript checking
+passes. Chromium verifies ordered JSON/YAML bundle recovery and whole-bundle
+refusal alongside previous single-table evidence in
+`fixtures/delta/ddl-browser-results.json`. Sandbox localhost binding failed; the
+same focused browser check was rerun outside the sandbox. No native SQL, cloud
+compute, migration or protocol admission is claimed. Ashlar's existing pinned
+single-table generator remains compatible; consumer repinning is separate work.

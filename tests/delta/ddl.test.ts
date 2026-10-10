@@ -1,0 +1,156 @@
+import {test,expect} from 'bun:test';
+import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
+import {readDocument,writeDocument} from '../../src/model/document';
+import {exportDeltaSchema} from '../../src/adapters/delta';
+
+const schema=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'caption',type:'string',nullable:true,metadata:{}}]});
+const definition={profile:'databricks-managed-delta/0.1' as const,name:['catalog','schema','items'],clusterBy:['id'],partitionBy:[],properties:{'delta.targetFileSize':'67108864'}};
+test('authored Delta definition survives JSON and YAML and emits a complete managed CREATE',()=>{
+  const source=defineDeltaTable(schema,definition,{id:'items'}),original=JSON.stringify(source);
+  for(const format of ['json','yaml'] as const){
+    const recovered=readDocument(writeDocument(source,format),format),result=generateDeltaDDL(recovered);
+    expect(exportDeltaSchema(recovered)).toBe(schema);
+    expect(result.sql).toBe("CREATE TABLE `catalog`.`schema`.`items` (\n  `id` BIGINT NOT NULL,\n  `caption` STRING\n) USING DELTA CLUSTER BY (`id`)\nTBLPROPERTIES ('delta.targetFileSize'='67108864');\n");
+    expect(result.definition).toEqual(definition);
+  }
+  expect(JSON.stringify(source)).toBe(original);
+});
+test('unknown definition and core content survive serialization but refuse executable export',()=>{
+  for(const location of ['definition','document','vocabulary'] as const){
+    const doc=defineDeltaTable(schema,definition,{id:'unknown'});
+    if(location==='definition')(doc.extensions![DELTA_DEFINITION_EXTENSION] as Record<string,any>).future={exact:'18446744073709551615'};
+    if(location==='document')doc.future={exact:'18446744073709551615'};
+    if(location==='vocabulary')doc.vocabularies[DELTA_DEFINITION_EXTENSION]!.future=true;
+    const recovered=readDocument(writeDocument(doc,'yaml'),'yaml');
+    expect(JSON.stringify(recovered)).toContain('future');
+    expect(()=>generateDeltaDDL(recovered)).toThrow();
+  }
+});
+test('DDL refuses incompatible layouts, unsupported properties, expressions and stale columns',()=>{
+  for(const changed of [
+    {...definition,partitionBy:['id']},
+    {...definition,clusterBy:['missing']},
+    {...definition,clusterBy:['id','ID']},
+    {...definition,name:['items; DROP TABLE secrets']},
+    {...definition,properties:{'delta.future':'true'}},
+    {...definition,properties:{'delta.targetFileSize':"1'); DROP TABLE secrets;--"}},
+    {...definition,properties:{'delta.dataSkippingStatsColumns':'missing'}},
+  ])expect(()=>defineDeltaTable(schema,changed,{id:'refuse'})).toThrow();
+});
+test('metadata, protocol dependent types, case collisions and unknown schema meaning are never discarded',()=>{
+  for(const field of [
+    {name:'id',type:'long',nullable:false,metadata:{'delta.columnMapping.id':1}},
+    {name:'id',type:'variant',nullable:true,metadata:{}},
+    {name:'id',type:'long',nullable:false,metadata:{},future:true},
+  ])expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[field]}),definition,{id:'refuse'})).toThrow();
+  expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'ID',type:'long',nullable:true,metadata:{}}]}),definition,{id:'collision'})).toThrow();
+});
+test('explicit partitioning and retention settings do not force maintenance off',()=>{
+  const doc=defineDeltaTable(schema,{...definition,clusterBy:[],partitionBy:['id'],properties:{'delta.deletedFileRetentionDuration':'interval 14 days','delta.logRetentionDuration':'interval 30 days'}},{id:'partitioned'});
+  const sql=generateDeltaDDL(doc).sql;
+  expect(sql).toContain('PARTITIONED BY (`id`)');expect(sql).toContain('interval 14 days');
+  expect(sql).not.toContain('DISABLE');expect(sql).not.toContain('LOCATION');expect(sql).not.toContain('IF NOT EXISTS');
+});
+
+test('decimal precision and scale remain exact through recovery and DDL',()=>{
+  for(const type of ['decimal(1,0)','decimal(38,0)','decimal(38,38)','decimal(19,4)']){
+    const text=JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:false,metadata:{}}]});
+    const doc=defineDeltaTable(text,definition,{id:'decimal'});
+    for(const format of ['json','yaml'] as const){
+      const recovered=readDocument(writeDocument(doc,format),format);
+      expect(generateDeltaDDL(recovered).schemaJson).toBe(text);
+      expect(generateDeltaDDL(recovered).sql).toContain(type.toUpperCase()+' NOT NULL');
+    }
+  }
+  for(const type of ['decimal(0,0)','decimal(39,0)','decimal(2,3)','decimal(19,-1)','decimal(019,4)','decimal(19,04)','decimal(19, 4)','decimal(19,4); DROP TABLE items']){
+    expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:true,metadata:{}}]}),definition,{id:'refuse'})).toThrow();
+  }
+});
+
+
+test('nested types preserve order, nullability and exact schema through both formats',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'payload',nullable:true,metadata:{},type:{type:'struct',fields:[
+    {name:'at',type:'timestamp_ntz',nullable:false,metadata:{}},
+    {name:'tags',type:{type:'array',elementType:'string',containsNull:true},nullable:true,metadata:{}},
+    {name:'amounts',type:{type:'map',keyType:'string',valueType:'decimal(19,4)',valueContainsNull:true},nullable:true,metadata:{}}
+  ]}}]});
+  const doc=defineDeltaTable(text,definition,{id:'nested'}),original=JSON.stringify(doc);
+  for(const format of ['json','yaml'] as const){
+    const result=generateDeltaDDL(readDocument(writeDocument(doc,format),format));
+    expect(result.schemaJson).toBe(text);
+    expect(result.sql).toContain('`payload` STRUCT<`at`: TIMESTAMP_NTZ NOT NULL, `tags`: ARRAY<STRING>, `amounts`: MAP<STRING, DECIMAL(19,4)>>');
+  }
+  expect(JSON.stringify(doc)).toBe(original);
+});
+test('nested unsupported meaning and collection nullability refuse without source mutation',()=>{
+  for(const type of [
+    {type:'array',elementType:'long',containsNull:false},
+    {type:'array',elementType:'long',containsNull:true,future:true},
+    {type:'map',keyType:'string',valueType:'long'},
+    {type:'map',keyType:'string',valueType:'long',valueContainsNull:false},
+    {type:'struct',fields:[{name:'x',type:'long',nullable:true,metadata:{future:true}}]},
+    {type:'struct',fields:[{name:'x',type:'long',nullable:true,metadata:{}},{name:'X',type:'string',nullable:true,metadata:{}}]},
+    {type:'array',containsNull:true,elementType:{type:'struct',fields:[{name:'x',type:'long',nullable:false,metadata:{}}]}},
+  ]){
+    const doc=defineDeltaTable(schema,definition,{id:'refusal'});
+    // Retain the unsupported schema independently; no failed export may mutate it.
+    const retained=JSON.stringify(type);
+    expect(()=>defineDeltaTable(JSON.stringify({type:'struct',fields:[{name:'id',type,nullable:true,metadata:{}}]}),definition,{id:'refusal'})).toThrow();
+    expect(JSON.stringify(type)).toBe(retained);
+    expect(generateDeltaDDL(doc).schemaJson).toBe(schema);
+  }
+});
+
+test('complex columns cannot accidentally become partition or clustering keys',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:{type:'array',elementType:'string',containsNull:true},nullable:true,metadata:{}}]});
+  for(const layout of [{clusterBy:['id'],partitionBy:[]},{clusterBy:[],partitionBy:['id']}])expect(()=>defineDeltaTable(text,{...definition,...layout},{id:'complex-layout'})).toThrow();
+});
+
+
+test('column comments preserve exact schema, Unicode and escaped literals at both depths',()=>{
+  const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{comment: "Owner's \\ path 雪"}},
+    {name:'payload',nullable:true,metadata:{comment:''},type:{type:'struct',fields:[{name:'label',type:'string',nullable:true,metadata:{comment:'Nested label'}}]}}]});
+  const doc=defineDeltaTable(text,definition,{id:'comments'}),original=JSON.stringify(doc);
+  for(const format of ['json','yaml'] as const){
+    const result=generateDeltaDDL(readDocument(writeDocument(doc,format),format));
+    expect(result.schemaJson).toBe(text);
+    expect(result.sql).toContain("BIGINT NOT NULL COMMENT 'Owner\\'s \\\\ path 雪'");
+    expect(result.sql).toContain("STRUCT<`label`: STRING COMMENT 'Nested label'> COMMENT ''");
+  }
+  expect(JSON.stringify(doc)).toBe(original);
+});
+
+test('comment metadata refuses unknown meaning, controls and client macros',()=>{
+  for(const metadata of [{comment:1},{comment:null},{comment:'unsafe\ntext'},{comment:'$widget'},{comment:'ok',future:true}]){
+    const text=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:true,metadata}]});
+    expect(()=>defineDeltaTable(text,definition,{id:'bad-comment'})).toThrow();
+  }
+});
+
+test('bundle preserves ordered complete proposals and detached source recovery',()=>{
+  const inputs=['second','first'].map(id=>defineDeltaTable(schema,{...definition,name:['catalog','schema',id]},{id}));
+  const original=JSON.stringify(inputs);
+  const result=generateDeltaDDLBundle(inputs);
+  expect(result.tables.map(table=>table.documentId)).toEqual(['second','first']);
+  expect(result.sql).toBe(inputs.map(doc=>generateDeltaDDL(doc).sql).join('\n'));
+  for(const table of result.tables)expect(table.schemaJson).toBe(schema);
+  result.tables[0]!.definition.name[0]='changed';
+  expect(JSON.stringify(inputs)).toBe(original);
+  for(const format of ['json','yaml'] as const){
+    expect(generateDeltaDDLBundle(inputs.map(doc=>readDocument(writeDocument(doc,format),format))).sql).toBe(result.sql);
+  }
+});
+
+test('bundle refuses partial export, ambiguous context and identity collisions',()=>{
+  const first=defineDeltaTable(schema,definition,{id:'first'});
+  const second=defineDeltaTable(schema,{...definition,name:['catalog','schema','other']},{id:'second'});
+  const unsupported=readDocument(writeDocument(second,'json'),'json');
+  (unsupported.extensions![DELTA_DEFINITION_EXTENSION] as Record<string,any>).future=true;
+  const original=JSON.stringify([first,unsupported]);
+  expect(()=>generateDeltaDDLBundle([first,unsupported])).toThrow();
+  expect(JSON.stringify([first,unsupported])).toBe(original);
+  expect(()=>generateDeltaDDLBundle([])).toThrow();
+  expect(()=>generateDeltaDDLBundle([first,defineDeltaTable(schema,{...definition,name:['CATALOG','SCHEMA','ITEMS']},{id:'other'})])).toThrow();
+  expect(()=>generateDeltaDDLBundle([first,defineDeltaTable(schema,{...definition,name:['catalog','schema','other']},{id:'first'})])).toThrow();
+  expect(()=>generateDeltaDDLBundle([defineDeltaTable(schema,{...definition,name:['items']},{id:'short'})])).toThrow();
+});

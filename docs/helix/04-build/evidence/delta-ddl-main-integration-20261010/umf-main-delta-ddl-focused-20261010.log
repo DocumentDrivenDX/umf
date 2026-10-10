@@ -1,0 +1,21 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/delta/ddl.test.ts:
+(pass) authored Delta definition survives JSON and YAML and emits a complete managed CREATE [171.28ms]
+(pass) unknown definition and core content survive serialization but refuse executable export [165.66ms]
+(pass) DDL refuses incompatible layouts, unsupported properties, expressions and stale columns [221.80ms]
+(pass) metadata, protocol dependent types, case collisions and unknown schema meaning are never discarded [128.04ms]
+(pass) explicit partitioning and retention settings do not force maintenance off [65.42ms]
+(pass) decimal precision and scale remain exact through recovery and DDL [829.40ms]
+(pass) nested types preserve order, nullability and exact schema through both formats [95.60ms]
+(pass) nested unsupported meaning and collection nullability refuse without source mutation [711.24ms]
+(pass) complex columns cannot accidentally become partition or clustering keys [52.45ms]
+(pass) column comments preserve exact schema, Unicode and escaped literals at both depths [96.77ms]
+(pass) comment metadata refuses unknown meaning, controls and client macros [142.11ms]
+(pass) bundle preserves ordered complete proposals and detached source recovery [260.72ms]
+(pass) bundle refuses partial export, ambiguous context and identity collisions [281.89ms]
+
+ 13 pass
+ 0 fail
+ 106 expect() calls
+Ran 13 tests across 1 file. [3.50s]
