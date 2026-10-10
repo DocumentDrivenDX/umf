@@ -118,7 +118,7 @@ Build from a declared complete input set: guides, diagram source/render versions
 
 Avoid wall-clock timestamps in generated pages. Generate a source/output hash manifest; two clean builds must match byte-for-byte. CI regenerates into a staging directory and compares with reviewed committed generated files before signature verification. Stale pages, missing new routes or changed diagrams fail clearly. Sign finalized HTML after generation; CI verifies without obtaining signing secrets. Ensure Innsigle coverage includes all added pages. HTML signatures alone do not attest separately referenced SVG/JS/CSS bytes: asset hashes must be bound through a reviewed signed-page manifest reference or signed manifest mechanism demonstrably supported by the existing verifier. Until that mechanism is selected and verified, describe asset hashes as CI integrity checks, not cryptographic asset attestation.
 
-Update both push/PR path filters for all declared documentation inputs and checker/build scripts, including guides, action fixtures and relevant governing artifacts. Add docs build/check steps before Innsigle verification/upload. Align the workflow's Bun 1.3.14 pin with the repository's Bun 1.4.2 pin, and record the chosen version. Keep PR checks separate from master deployment. Update `05-deploy/README.md` to explain authored versus generated sources, reproduction, signatures, input triggers and rollback. Do not present the earlier private Sites preview as the repository GitHub Pages deployment or evidence of this new guide.
+Update both push/PR path filters for all declared documentation inputs and checker/build scripts, including guides, action fixtures and relevant governing artifacts. Add docs build/check steps before Innsigle verification/upload. Align the workflow's Bun 1.3.14 pin with the repository's Bun 1.4.2 pin, and record the chosen version. Keep PR checks separate from main deployment. Update `05-deploy/README.md` to explain authored versus generated sources, reproduction, signatures, input triggers and rollback. Do not present the earlier private Sites preview as the repository GitHub Pages deployment or evidence of this new guide.
 
 ## Issue Decomposition
 
@@ -145,7 +145,7 @@ DOC-01–07 are reviewable work packages, with the blockers above. No external w
 | Attractive diagrams hide concurrency or receipt holes | High: named negative cases, captions and readable sequential panels | Replace offending figure with verified text until corrected |
 | Signing unavailable | Publication gate remains pending | Keep reviewed local build; do not claim verified publication |
 | Beginner reader sessions unavailable | Usability follow-up remains open | Release requires executable walkthroughs; reader comprehension is not yet independently established |
-| Deployment introduces broken nested routes or assets | Preview base-path/browser gates; verify actual published routes after authorized deployment | Revert site commit through existing master workflow; preserve action evidence |
+| Deployment introduces broken nested routes or assets | Preview base-path/browser gates; verify actual published routes after authorized deployment | Revert site commit through existing main workflow; preserve action evidence |
 
 ## Exit Criteria
 
