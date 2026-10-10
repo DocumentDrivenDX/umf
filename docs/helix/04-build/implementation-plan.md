@@ -9745,3 +9745,223 @@ wrapper inventory.34 selected review/source/docs/runtime/log pins stay unchanged
 parent attribution of native execution and excludes B10 promotion/full closure.
 Prepared/cached guard mutation and admission drift integration remain next work.
 Original26/132 acceptance and active goal remain unchanged.
+
+
+### Typed field semantics on main — 2026-10-10
+
+Weft main effe0276abb486c847d2901581a2255199931c18 now retains actual borrowed
+Field/Context payloads beside owner source events, advancing the independent
+requirement issuer design under current Weft CONTRACT-006. Stored events retain
+the exact qualified field/inventory owner references, catalog carrier and raw
+ontology classification (protection/query-use); context has a separate channel.
+All original domain/facet/allowed-value/opaque metadata remains available without
+normalization or cloning. Charged lookup/ID retention, exact event-key projection,
+foreign equal-pointer substitution refusals and populated4096/4097 boundaries
+remain private. Source-only derivation retains its prior ledger.
+
+The [source-pinned execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/effe0276abb486c847d2901581a2255199931c18/docs/helix/04-build/evidence/security-field-events/checkpoint.json)
+records557 passing Rust workspace tests/44groups with no failures/ignored/filtered;
+all822 declared repository inputs were frozen before execution and verified
+unchanged, including after concurrent main integration. External Cargo registry/
+build runtime dependencies are outside that inventory. Separate document/schema
+validation passes51 artifacts/31schemas/30planned compiler criteria/636fixtures;
+those ordinary compiler criteria do not replace the shared security acceptance plan.
+Initial/pre-refinement runs and the corrected directory-link/parser failures are
+preserved rather than relabeled.
+
+Astra ultra's independent read-only review is clean after isolated channel-only
+and false-branch self-join controls. It replays3 conditional algebraic address
+laws/9formulas in fresh Z3 contexts (3UNSAT/6SAT), verifying source prefreeze and
+pre-solve SMT capture. These establish constructor separation under the stated
+address assumptions; they are not Rust pointer/string/traversal refinement,
+backend enforcement or native acceptance. The [review](https://github.com/DocumentDrivenDX/weft/blob/effe0276abb486c847d2901581a2255199931c18/docs/helix/04-build/evidence/security-field-events/astra-review.json)
+retains those limits.
+
+Next retain typed Key/member ordering and query projection/operator/output
+semantics, then author complete independent kind/template/site/failure/prerequisite
+and original case/assertion mappings with authenticated exact backend profiles.
+Complete issuance, admission drift/B10 closure, physical lowering and integrated
+native qualification remain unfinished. All132 original cases remain binding;
+no case is promoted by this field-custody checkpoint and the goal remains active.
+
+
+### Selected Key/member semantics on main — 2026-10-10
+
+Weft main bf64c8c56520d1117ace6d12b517c6b5a15559de retains actual selected Key
+and ordered-member payloads beside owner source events under CONTRACT-006. Exact
+qualified target/key-ID/member-slice references, original native Key definition,
+zero-based ordinal, native member declaration and catalog field carrier remain
+borrowed. A selected nonprimary Key stays selected when another Key is primary;
+existing canonical source member positions remain one-based without decoding.
+Resolution/retention is phase-charged and bounded, preserves original member order,
+and refuses foreign equal pointers, reordered/shortened/duplicate/missing selected
+members. Key/KeyField source-key projection equals the complete payload map; the
+legacy source-only ledger stays unchanged.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/bf64c8c56520d1117ace6d12b517c6b5a15559de/docs/helix/04-build/evidence/security-key-events/checkpoint.json)
+records559 Rust workspace tests passing across44groups, zero failed/ignored/filtered.
+All823 declared repository inputs were prefrozen and checked unchanged at terminal
+exit0 and after concurrent-main integration; external Cargo registry/build-runtime
+dependencies are excluded. Separate documentation/schema/corpus checks pass51
+artifacts/31schemas/30planned compiler criteria/636fixtures, without replacing the
+shared security acceptance plan. Initial visibility/initializer compilation errors
+and a correctly refused fixture missing mandatory Key.name are preserved with
+actual corrected runs; admission checks and assertions were not weakened.
+
+Astra ultra's read-only implementation review is clean. It independently replays
+three conditional Key-address laws/nine formulas in fresh Z3 contexts (3UNSAT/6SAT)
+and verifies all four current source pins, prefreeze/recheck and pre-solve SMT
+capture. These establish constructor/projection separation under stated address
+assumptions, not Rust pointer/string/usize/Vec/traversal refinement, selected-Key
+implementation proof or native enforcement. Simplified erasure controls are not
+Rust mutants. The [review receipt](https://github.com/DocumentDrivenDX/weft/blob/bf64c8c56520d1117ace6d12b517c6b5a15559de/docs/helix/04-build/evidence/security-key-events/astra-review.json)
+retains these limits and the historical producer receipt remains source-qualified.
+
+Next retain actual query projection/operator/output payloads and author complete
+independent backend kind/template/site/failure/prerequisite and original assertion
+mappings with authenticated exact profiles. Complete issuance, B10/admission-drift
+closure, physical lowering and integrated native qualification remain unfinished.
+All132 original cases remain binding; no acceptance case is promoted by this
+Key-custody checkpoint. The goal remains active.
+
+### Query payload custody merged directly to main — 2026-10-10
+
+Weft main45910686acb1c607bcd9769e163f8189a0afc595 contains reviewed private
+Projection/QueryField/Operator/Output payload custody under CONTRACT-006 and the
+shared independent requirement issuer design. Actual scan inventories, qualified
+field references, native catalog carriers, ontology classifications, admitted
+requirements and original resolved application Plan remain borrowed. Projection
+objects retain exact identity; operators preserve the profile-owned admitted use
+and OriginalAuthorized action; outputs preserve original ordered positions, aliases
+and expressions, including repeated fields. Resolved uses/projections are families,
+not all SQL AST occurrences. Identity conflicts refuse, work/text is charged and
+population is bounded at4096. Complete query payload keys equal their source-event
+projection while legacy source-only traversal retains its ledger.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/45910686acb1c607bcd9769e163f8189a0afc595/docs/helix/04-build/evidence/security-query-events/checkpoint.json)
+records559 Rust workspace tests passing across44groups with zero failed, ignored or
+filtered, plus successful documentation/schema/corpus checks. Its824 declared test
+inputs were captured during execution and checked unchanged at terminal and after
+concurrent main integration; this is explicitly not a pre-execution freeze and
+excludes external registry/runtime dependencies. Initial strengthened-test failure
+(profile-owned use versus raw-query pointer expectation) and premature documentation
+check failure are preserved alongside corrected runs. Astra ultra's final read-only
+implementation review has no remaining findings after pointer expectation correction
+and isolated scan/operator carrier/classification substitution controls.
+
+Direct main push succeeded with concurrent main updates preserved, without a PR or
+force push. This checkpoint adds tested private semantic custody, no new formal Rust
+refinement proof or native enforcement claim; older source-specific formal receipts
+remain unchanged. All132 original backend cases remain binding and none is promoted.
+Next complete remaining association custody and independent backend applicability,
+templates, sites, failures, prerequisites and original assertion mappings, then
+authenticated issuance, physical lowering and B10/admission-drift closure. The
+implementation goal remains active.
+
+### Original association semantics on main — 2026-10-10
+
+Weft main2650937c1cc1827689d903d7d97b3dbc08c6c637 retains original association
+semantics under CONTRACT-006 and the shared independent requirement issuer design.
+Each private record-association dependency carries exact original scan/action
+inventories, qualified association reference, native catalog record and complete
+ontology declaration. Endpoint roles, qualified targets, selected keys, ordered
+component fields and classification metadata remain borrowed rather than decoded
+from source IDs. This is per-scan/action dependency custody; Rule occurrence
+inventories separately retain each Exists expression. Graph association activation
+remains unfinished. Charged full-qualified declaration lookup refuses absent or
+duplicate matches; bounded identity retention refuses foreign equal objects, and
+Association source-key projection equals the complete payload map. The legacy
+source-only traversal ledger remains unchanged.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/2650937c1cc1827689d903d7d97b3dbc08c6c637/docs/helix/04-build/evidence/security-association-events/checkpoint.json)
+records560 Rust workspace tests passing across44groups, zero failed/ignored/filtered,
+with all825 declared repository inputs frozen before execution and checked
+unchanged at terminal. External Cargo registry/runtime dependencies are excluded.
+Documentation/schema/corpus checks also pass51 artifacts/31schemas/30planned
+compiler criteria/636fixtures. Actual controls cover independently authored
+source-to-qualified-reference expectations, all five pointer substitutions,
+self-join ownership, forward/reverse compound endpoints, an actual empty inventory
+retaining its action duty, exact/minus-one budgets and populated4096/4097 boundaries.
+Astra ultra caught a test-oracle gap accepting swapped complete payloads; the
+independent golden map closes it and final read-only review has no findings.
+
+The requirement trace links identity/order controls to original S01/S02/S05 and
+B02/B13 assertions without claiming those native cases passed. No original132
+backend case is promoted, and historical26/132 acceptance remains unchanged.
+This checkpoint adds no formal Rust refinement proof, complete independent issuer,
+authenticated profile, public security lowering or native population completeness.
+Direct main push succeeded without a PR. Next connect retained semantic inputs
+to explicitly authored backend applicability/templates/sites/failures/prerequisites
+and original assertion mappings, implement authenticated issuance and physical
+bodies, and close B10/admission drift with integrated native evidence. The current
+Truss handoff still explicitly lacks seven native semantic protected bodies; its
+other checkpoint progress is not full backend qualification. The goal remains active.
+
+
+### Native prepared-call installation drift checkpoint — 2026-10-10
+
+Under the PostgreSQL planner-observation annex and original pg-raw.B10 assertion,
+a current-main spike now connects selected installed routine custody to actual
+prepared-call dispatch. The private observer helper snapshots ten explicit native
+metadata fields and refuses drift before the original ordinary connection sends
+EXECUTE. PG17.9 with SCRAM authentication passes72 native observations:18 individual
+flag-on/flag-removed refusals,18 unchanged-PID checks and18 restored same-prepared
+call results, plus independent fixture metadata/identity/baseline and actual
+guard-erasure disclosure controls. Four pure custody tests pass on Python3.9.6.
+The [execution checkpoint](evidence/security/pg-routine-drift/checkpoint.json)
+retains raw logs, current source pins, the full97,695-byte positive native trace
+and independently observed private OID16417, historical source-specific receipts
+and the initial missing-database failure. Native runs freeze five declared inputs
+and verify them unchanged; unit pins are qualified as post-run source custody.
+
+Astra ultra's review corrected a structurally vacuous zero-dispatch assertion by
+requiring one shared read/admit/execute path and an actual guard-erasure dispatch.
+Its other implemented feedback covers resilient owned cleanup, authenticated TCP
+readiness, exact executed-script binding, and retained positive disclosure evidence.
+The final independent read-only audit verifies all72 expectations, five source
+pins, the trace hash and six exact private-relid matches; no findings remain
+within the stated native JSON/trusted-installer premise.
+
+This is a physical detected-drift experiment, not complete backend enforcement.
+The selected tuple omits other metadata/dependencies; production registration
+authentication, atomic check-to-use exclusion, direct ordinary SQL bypass closure,
+complete diagnostic observation policy and authority/publication integration
+remain open. The original B10 case stays counterexample-found, historical26/132
+acceptance is unchanged and all132 required cases remain binding. No formal Rust/
+Python/native refinement proof follows from these runs. Next bind installation
+validation to common native exclusion and close direct SQL/dependency routes
+alongside the independent backend issuer and physical bodies. Goal remains active.
+
+
+### Cooperative installation exclusion checkpoint — 2026-10-10
+
+The [native receipt](evidence/security/pg-installation-exclusion/native.json)
+records 61 passing observations on PostgreSQL 17.9 across Alice, Bob and outsider
+persistent ordinary prepared sessions. A real installer mutation after successful
+validation exposes private plan metadata. With a shared transaction advisory lock,
+an independently observed exclusive installer waits through validation and execution;
+all protected traces contain two outer plans and no relation IDs. After reader
+release, the installer progresses and fresh drift causes zero-dispatch refusal.
+Six frozen inputs and six complete trace hashes bind these observations.
+
+The [formal receipt](evidence/security/pg-installation-exclusion/formal.json)
+contains eight independently parser-replayed SMT formulas (three UNSAT, five SAT).
+Two conditional ideal laws establish initial installation identity and preserve it
+through finite histories while readers hold exclusion and every mutator cooperates.
+Assumption-erasure controls and a possible post-release writer transition are
+satisfiable; they do not prove eventual progress or fairness. This is not refinement of
+Python or PostgreSQL, authentication, complete mutator coverage or noninterference.
+
+A failed stronger trace check is retained alongside its exact source and log.
+The final producer uses offset-independent reads of live stderr; shared descriptor
+seeking could interfere with writes. The earlier passing receipt remains historical,
+with relocated trace hashes, rather than being repinned to the corrected producer.
+B10 remains counterexample-found, historical acceptance remains 26/132, and all
+132 original cases remain binding. Direct SQL routes, transitive dependencies,
+complete diagnostics, authenticated issuance, cancellation and publication remain
+open. The goal remains active.
+
+Astra ultra independently verifies all 61 observations, six traces, six native
+and eight formal source pins, the executed helper prefix and all eight fresh Z3
+replays. No findings remain within the qualified scope. Four custody unit tests
+also pass. Review and execution receipt hashes are retained in the checkpoint.

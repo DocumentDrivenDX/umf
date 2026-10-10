@@ -1,0 +1,945 @@
+{
+  "version": "umf.security.pg-installation-exclusion-spike/0.1.0",
+  "status": "scoped-exclusion-and-race-controls-passed",
+  "runId": "cdd8f2ab-8126-46fa-91ea-c64b4512930b",
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "sourcePins": {
+    "tools/security/pg-installation-exclusion-probe.py": "f585d26553035c0c818c9211f5b583740dc5f6d38f25066b9a55f7eb80b0d690",
+    "tools/security/pg-routine-drift-probe.py": "3e50a19c2a6c2ed04c59049e3a13d120f7c6cae4fc2a1d4deae3102089612e45",
+    "tools/security/pg-routine-custody.py": "2c4aa144f13dd5fdb0ceaf84faa18ea2c8ba46a4df47c79575764717c82e23b0",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+  },
+  "executedHelperPrefixSha256": "bb6e1ccee852d209392372b3fafec0fb3fbae2c41aa8411440daa49ef38a2212",
+  "originalRoutine": {
+    "oid": "16495",
+    "owner": "umf_sec_guardian",
+    "language": "sql",
+    "definer": true,
+    "volatility": "s",
+    "signature": "",
+    "configuration": [
+      "search_path=pg_catalog",
+      "debug_print_plan=off",
+      "debug_print_parse=off",
+      "debug_print_rewritten=off"
+    ],
+    "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+    "binary": null,
+    "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+  },
+  "originalB10Assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+  "lockKey": 529088,
+  "observations": [
+    {
+      "stage": "engine",
+      "expected": "170009",
+      "observed": "170009"
+    },
+    {
+      "stage": "original:owner",
+      "expected": "umf_sec_guardian",
+      "observed": "umf_sec_guardian"
+    },
+    {
+      "stage": "original:language",
+      "expected": "sql",
+      "observed": "sql"
+    },
+    {
+      "stage": "original:definer",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "stage": "original:volatility",
+      "expected": "s",
+      "observed": "s"
+    },
+    {
+      "stage": "original:signature",
+      "expected": "",
+      "observed": ""
+    },
+    {
+      "stage": "original:configuration",
+      "expected": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ],
+      "observed": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ]
+    },
+    {
+      "stage": "original:body",
+      "expected": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+      "observed": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource "
+    },
+    {
+      "stage": "original:binary",
+      "expected": null,
+      "observed": null
+    },
+    {
+      "stage": "original-public-execute",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "ordinary:umf_sec_alice",
+      "expected": {
+        "pid": 185,
+        "user": "umf_sec_alice",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 185,
+        "user": "umf_sec_alice",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "baseline:umf_sec_alice",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "race-original-admitted:umf_sec_alice",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "unexcluded-race-rows:umf_sec_alice",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "unexcluded-race-executed:umf_sec_alice",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "stage": "unexcluded-race-drifted:umf_sec_alice",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "unexcluded-race-private-plan:umf_sec_alice",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "stage": "native-exclusion-held:umf_sec_alice",
+      "expected": {
+        "writerWaiting": true,
+        "readerHeld": true
+      },
+      "observed": {
+        "writerWaiting": true,
+        "readerHeld": true
+      }
+    },
+    {
+      "stage": "writer-not-completed:umf_sec_alice",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "protected-prepared-rows:umf_sec_alice",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "protected-private-plan-absent:umf_sec_alice",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "stage": "protected-live-outer-diagnostics:umf_sec_alice",
+      "expected": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      },
+      "observed": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      }
+    },
+    {
+      "stage": "protected-installation-still-original:umf_sec_alice",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "writer-still-not-completed:umf_sec_alice",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "installer-drift-after-release:umf_sec_alice",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "post-mutation-refuses:umf_sec_alice",
+      "expected": {
+        "refused": true,
+        "executions": 0
+      },
+      "observed": {
+        "refused": true,
+        "executions": 0
+      }
+    },
+    {
+      "stage": "restored-original-call:umf_sec_alice",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 185,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "ordinary:umf_sec_bob",
+      "expected": {
+        "pid": 347,
+        "user": "umf_sec_bob",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 347,
+        "user": "umf_sec_bob",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "baseline:umf_sec_bob",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "race-original-admitted:umf_sec_bob",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "unexcluded-race-rows:umf_sec_bob",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "unexcluded-race-executed:umf_sec_bob",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "stage": "unexcluded-race-drifted:umf_sec_bob",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "unexcluded-race-private-plan:umf_sec_bob",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "stage": "native-exclusion-held:umf_sec_bob",
+      "expected": {
+        "writerWaiting": true,
+        "readerHeld": true
+      },
+      "observed": {
+        "writerWaiting": true,
+        "readerHeld": true
+      }
+    },
+    {
+      "stage": "writer-not-completed:umf_sec_bob",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "protected-prepared-rows:umf_sec_bob",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "protected-private-plan-absent:umf_sec_bob",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "stage": "protected-live-outer-diagnostics:umf_sec_bob",
+      "expected": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      },
+      "observed": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      }
+    },
+    {
+      "stage": "protected-installation-still-original:umf_sec_bob",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "writer-still-not-completed:umf_sec_bob",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "installer-drift-after-release:umf_sec_bob",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "post-mutation-refuses:umf_sec_bob",
+      "expected": {
+        "refused": true,
+        "executions": 0
+      },
+      "observed": {
+        "refused": true,
+        "executions": 0
+      }
+    },
+    {
+      "stage": "restored-original-call:umf_sec_bob",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 347,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "ordinary:umf_sec_outsider",
+      "expected": {
+        "pid": 509,
+        "user": "umf_sec_outsider",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 509,
+        "user": "umf_sec_outsider",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "baseline:umf_sec_outsider",
+      "expected": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "race-original-admitted:umf_sec_outsider",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "unexcluded-race-rows:umf_sec_outsider",
+      "expected": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "unexcluded-race-executed:umf_sec_outsider",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "stage": "unexcluded-race-drifted:umf_sec_outsider",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "unexcluded-race-private-plan:umf_sec_outsider",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "stage": "native-exclusion-held:umf_sec_outsider",
+      "expected": {
+        "writerWaiting": true,
+        "readerHeld": true
+      },
+      "observed": {
+        "writerWaiting": true,
+        "readerHeld": true
+      }
+    },
+    {
+      "stage": "writer-not-completed:umf_sec_outsider",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "protected-prepared-rows:umf_sec_outsider",
+      "expected": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "protected-private-plan-absent:umf_sec_outsider",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "stage": "protected-live-outer-diagnostics:umf_sec_outsider",
+      "expected": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      },
+      "observed": {
+        "relationIds": [],
+        "planRows": [
+          "1",
+          "1"
+        ]
+      }
+    },
+    {
+      "stage": "protected-installation-still-original:umf_sec_outsider",
+      "expected": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      },
+      "observed": {
+        "oid": "16495",
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "signature": "",
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "binary": null,
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+      }
+    },
+    {
+      "stage": "writer-still-not-completed:umf_sec_outsider",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "installer-drift-after-release:umf_sec_outsider",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "post-mutation-refuses:umf_sec_outsider",
+      "expected": {
+        "refused": true,
+        "executions": 0
+      },
+      "observed": {
+        "refused": true,
+        "executions": 0
+      }
+    },
+    {
+      "stage": "restored-original-call:umf_sec_outsider",
+      "expected": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 509,
+        "user": "umf_sec_outsider"
+      }
+    }
+  ],
+  "traces": [
+    {
+      "actor": "umf_sec_alice",
+      "phase": "unexcluded-race",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_alice-unexcluded-race.log",
+      "sha256": "aad6e3ef87a88120420a488de4c89fa57362661e8689d994fd66280935fb39b9",
+      "bytes": 97680,
+      "privateOid": 16417,
+      "privateRelidMatches": 6
+    },
+    {
+      "actor": "umf_sec_alice",
+      "phase": "protected-call",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_alice-protected-call.log",
+      "sha256": "3ce95c8568e6d470a04cbd3f48c55d002a2c97a089d48cfad531d2d6494affcd",
+      "bytes": 16506,
+      "privateOid": 16417,
+      "privateRelidMatches": 0
+    },
+    {
+      "actor": "umf_sec_bob",
+      "phase": "unexcluded-race",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_bob-unexcluded-race.log",
+      "sha256": "48bb7a7871feb3747b2e0b2e7e86a70fe062035812bb76dae8b9aeee3445cea0",
+      "bytes": 97683,
+      "privateOid": 16417,
+      "privateRelidMatches": 6
+    },
+    {
+      "actor": "umf_sec_bob",
+      "phase": "protected-call",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_bob-protected-call.log",
+      "sha256": "da8ca5ff7705e853d6591f2ca91b74bcedc5c42b62c038b2f5e8d3fdabd9f507",
+      "bytes": 16480,
+      "privateOid": 16417,
+      "privateRelidMatches": 0
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "phase": "unexcluded-race",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_outsider-unexcluded-race.log",
+      "sha256": "e573e89a24de2bf2c591647b12faea49581ea8c8c49bfed78b60f12dcf90784f",
+      "bytes": 102578,
+      "privateOid": 16417,
+      "privateRelidMatches": 6
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "phase": "protected-call",
+      "path": "docs/helix/04-build/evidence/security/pg-installation-exclusion/umf_sec_outsider-protected-call.log",
+      "sha256": "cb3e2b18f3a50c817b190456af947e86a1c85ebbce4b29977fa66b1cffa24ccf",
+      "bytes": 16506,
+      "privateOid": 16417,
+      "privateRelidMatches": 0
+    }
+  ],
+  "scope": "PG17.9 ten-field installation tuple, ordinary persistent SCRAM prepared sessions. Unexcluded installer interleaving exposes private plan after a valid check. Cooperating exclusive installer waits while reader shared lock protects validation/execution; mutation after release causes zero-dispatch refusal. Native observation and conditional cooperative protocol only, not authenticated profile, uncoordinated/direct SQL closure, transitive dependencies, cancellation/publication safety, formal native refinement or B10 qualification."
+}

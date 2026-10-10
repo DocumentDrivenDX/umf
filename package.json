@@ -18,6 +18,8 @@
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun test tests",
     "build": "bun scripts/build.ts",
+    "build:schema-browser": "bun docs/helix/05-deploy/schema-browser/build.ts",
+    "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
     "test:browser": "bun scripts/browser.ts",
     "test:conformance": "bun scripts/conformance.ts",
     "test:schemas": "bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts",

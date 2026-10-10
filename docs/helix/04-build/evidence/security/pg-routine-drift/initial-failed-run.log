@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-routine-drift-probe.py", line 72, in <module>
+    session=Session(actor);session.query('SET client_min_messages=debug1; SET debug_print_plan=on; SET debug_print_parse=on; SET debug_print_rewritten=on')
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-routine-drift-probe.py", line 42, in query
+    if not chunk:raise RuntimeError('Persistent session ended')
+RuntimeError: Persistent session ended

@@ -1,0 +1,18 @@
+{
+  "version": "umf.security-main-transport-migration/0.1.0",
+  "requestProtocol": "weft-security-compile/0.2.0",
+  "ownerContract": "CONTRACT-006",
+  "command": "WEFT_SECURITY_REPOSITORY=<explicit selected source checkout> bun tools/security/weft-main-transport-conformance.ts",
+  "receipt": "docs/helix/04-build/evidence/security/weft-main-protocol-transport.json",
+  "receiptSha256": "8dc977388169982af6e1d378e83078f55d15e75aad83abe7d81ba76fe7ef139f",
+  "observations": 54,
+  "status": "passed",
+  "qualification": "Transport shape and exact result-contract byte custody only; synthetic compiled example does not qualify owner lowering, native enforcement or acceptance. Original 132-case backend goal remains open.",
+  "historicalCustody": "Original exact-source runner and receipt preserved byte-for-byte against HEAD. Initial wrong-destination completed attempt retained separately, original restored, then fresh replay to separate destination.",
+  "sourceSelection": "Explicit Weft checkout retained in sourceDigests; this does not confer trusted native authority.",
+  "independentReview": {
+    "reviewer": "Astra ultra",
+    "result": "No actionable finding in bounded transport migration scope. All 549 source/runtime/dependency pins and 54 ordered Boolean controls verified. Historical runner and receipt exactly match HEAD.",
+    "limits": "Read-only source/receipt review; no native qualification or acceptance promotion."
+  }
+}

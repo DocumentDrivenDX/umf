@@ -111,3 +111,21 @@ the full model, qualify neighborhoods with shown/total counts, separate coincide
 parallel relationships and move self-loop badges outside nodes. Expose interactive
 SVG content as a named group with links, and honor hidden export serialization.
 Verify all of these in the real browser and retain original schemas/bytes/IDs.
+
+## Reusable software package (owner amendment, 2026-10-10)
+
+PACK-09 extends the existing UX to a framework-neutral iframe mount and standalone
+page. The iframe is deliberate isolation for CSS, hash routing and per-browser
+state; hosts can mount multiple instances. The package contains browser ESM,
+TypeScript declarations, local CSS, an empty catalog and usage documentation.
+It contains tools, not public datasets. Supplied entries or an explicitly named
+catalog URL replace microsite catalog fetching; declared relative asset URLs use
+a caller-supplied base. Schema sources remain inert text. No fonts, analytics,
+credentials or undeclared source acquisition are required. A host serves assets
+with the correct MIME types and permits the frame/module under its CSP.
+
+Qualification: install a built tarball in a clean consumer directory; serve its
+assets; mount two instances with independent catalogs and routes; inspect tables,
+artifacts and ontology; verify host state/CSS isolation, local schemas, original
+text preservation and teardown. Browser package support is distinct from native
+rendering of PDF/DICOM or source collection.

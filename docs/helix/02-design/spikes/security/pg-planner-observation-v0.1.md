@@ -71,3 +71,60 @@ Original acceptance stays26/132, production open, lowering closed and goal activ
 
 Evidence: `docs/helix/04-build/evidence/security/pg-private-diagnostics.json`.
 Producer: `tools/security/pg-private-diagnostics.py`.
+
+
+## Selected routine drift guard and prepared-call evidence
+
+The subsequent current-main native spike adds installer-observed custody for ten
+explicit pg_proc fields: OID, owner, language, definer mode, volatility, input
+signature, ordered proconfig, source body, binary source and ACL text. These are
+a selected observed tuple, not a complete installed dependency closure. The
+registered baseline is copied from independently qualified fixture metadata;
+this trusted-installer premise is not production profile authentication.
+
+One guarded execution path obtains the current tuple, compares it with that
+baseline, and only then sends EXECUTE on the original ordinary SCRAM session.
+For each Alice/Bob/outsider connection, setting each local debug flag to on or
+removing it causes actual pre-dispatch refusal. All18 drift controls send zero
+prepared executions, retain the original PID, and resume the same prepared call
+with original authorized results after exact ordered configuration restoration.
+A test-only guard-erasure control uses the same dispatch path and sends an actual
+prepared execution; its retained native stderr trace exposes the independently
+observed private Assignment relation OID. This is a decisive refusal/control pair,
+not a production publication guarantee or raw-wire noninterference proof.
+
+The [checkpoint](../../../04-build/evidence/security/pg-routine-drift/checkpoint.json)
+retains72 native observations, four pure custody tests, source-specific earlier
+receipts, the initial failed invocation and Astra ultra's independent evidence
+audit. Final native execution freezes five declared inputs, executes the helper
+and SQL from captured bytes, verifies current source hashes and cleans up only
+its unique label-checked owned container. Exact script invocation and authenticated
+TCP readiness are checked. Selected tuple mutation/omission, unknown members,
+nested baseline mutation, configuration order, foreign type callbacks and large/
+non-JSON values are separately tested in the private observer helper.
+
+A check followed by execution still has a check-to-use interval. The integrated
+physical profile must bind installation validation and execution to coherent
+exclusion shared with all admitted installation/policy/authority mutators. This
+spike supplies no such atomic exclusion. Its fixture also retains direct ordinary
+EXECUTE privileges: bypassing the host guard remains possible and is deliberately
+shown by the positive control. A qualified profile must close or independently
+secure that route. Transitive objects, other pg_proc metadata, role inheritance,
+errors, timing, extensions, complete diagnostic channels and native publication
+remain unqualified. Original B10 stays counterexample-found and26/132 acceptance
+is unchanged; neither selected tuple equality nor restoration promotes it.
+
+
+### Cooperating installer exclusion evidence — 2026-10-10
+
+The installation exclusion spike demonstrates the check-to-use race with an actual
+installer mutation, and protects a prepared call using a shared transaction advisory
+lock while the installer requests the corresponding exclusive lock. Independent
+native lock observations establish that the installer waits until reader release.
+All mutators must follow this protocol: advisory locks do not constrain arbitrary
+DDL or direct SQL. The retained native receipt has 61 observations and six traces;
+the formal receipt proves two conditional ideal laws with eight SMT controls.
+See `../../../04-build/evidence/security/pg-installation-exclusion/` for exact
+sources, trace hashes, historical and failed attempts. These receipts do not qualify
+B10 or prove native refinement, authentication, dependency closure, cancellation or
+publication safety. Production common exclusion and bypass closure remain required.
