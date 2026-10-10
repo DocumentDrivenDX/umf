@@ -9212,5 +9212,14 @@
     "timeoutRetries": "actions-security-integration/regression/timeout-retries/record.json",
     "currentStrictAdmissionClaim": false,
     "deliveryPending": true
+  },
+  "subsequentWebsiteMainIntegration": {
+    "main": "7c0cade5663bfb2dd0ccdfeafad6f0dd0e8178a5",
+    "frozenImplementation": "2dfa0e144fab9eef443a1364a7fde511e04a64b5",
+    "sourceSchemaNativeLockDependenciesUnchanged": true,
+    "scope": "Reusable browser/site/workflow/package-script/security-tool delta; action qualification remains frozen, latest website checked separately",
+    "firstCiFailure": "Guide manifest retains pre-merge package/workflow hashes; rebuild required",
+    "evidence": "actions-security-integration/subsequent-main/integration.json",
+    "deliveryPending": true
   }
 }

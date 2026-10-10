@@ -1,5 +1,5 @@
 from pathlib import Path
-import json,hashlib,subprocess,urllib.request,urllib.parse,datetime,concurrent.futures
+import json,base64,hashlib,subprocess,urllib.request,urllib.parse,datetime,concurrent.futures
 R=Path('/Users/erik/.codex/worktrees/actions-requirements-design/umf');S=R/'docs/helix/05-deploy/microsite/dist';D=R/'.cache/actions-live-attestations';D.mkdir(parents=True,exist_ok=True)
 base='https://documentdrivendx.github.io/umf/';cli='/private/tmp/umf-actions-innsigle-verifier/src/cli.mjs'
 verifier=Path(cli).parents[1];verifier_revision='4185eb56beb7b52beaa4a00c2fc897f93d44b939'
@@ -16,7 +16,12 @@ keys=get(base+'.well-known/innsigle/keys.json');assert keys==(R/'.innsigle/publi
 rows=[]
 for local in sorted((R/'.innsigle/public/claims').glob('*.attestation.json')):
  claim=get(base+'.well-known/innsigle/claims/'+local.name);assert claim==local.read_bytes(),('Live claim differs',local.name)
- payload=json.loads(claim)['payload'];subject=payload['subjects'][0];uri=subject['uri'];assert uri.startswith(base)
+ payload=json.loads(claim)['payload']
+ if isinstance(payload,str):
+  try: payload=json.loads(payload)
+  except json.JSONDecodeError: payload=json.loads(base64.b64decode(payload,validate=True))
+ assert isinstance(payload,dict)
+ subject=payload['subjects'][0];uri=subject['uri'];assert uri.startswith(base)
  relative=uri[len(base):];assert relative.endswith('.html') and '..' not in relative
  content=get(uri);assert content==(S/relative).read_bytes(),('Live HTML differs',relative)
  assert subject['digest']=={'alg':'sha256','value':sha(content)}
