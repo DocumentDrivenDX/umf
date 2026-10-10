@@ -9873,3 +9873,37 @@ acceptance is unchanged and all132 required cases remain binding. No formal Rust
 Python/native refinement proof follows from these runs. Next bind installation
 validation to common native exclusion and close direct SQL/dependency routes
 alongside the independent backend issuer and physical bodies. Goal remains active.
+
+
+### Cooperative installation exclusion checkpoint — 2026-10-10
+
+The [native receipt](evidence/security/pg-installation-exclusion/native.json)
+records 61 passing observations on PostgreSQL 17.9 across Alice, Bob and outsider
+persistent ordinary prepared sessions. A real installer mutation after successful
+validation exposes private plan metadata. With a shared transaction advisory lock,
+an independently observed exclusive installer waits through validation and execution;
+all protected traces contain two outer plans and no relation IDs. After reader
+release, the installer progresses and fresh drift causes zero-dispatch refusal.
+Six frozen inputs and six complete trace hashes bind these observations.
+
+The [formal receipt](evidence/security/pg-installation-exclusion/formal.json)
+contains eight independently parser-replayed SMT formulas (three UNSAT, five SAT).
+Two conditional ideal laws establish initial installation identity and preserve it
+through finite histories while readers hold exclusion and every mutator cooperates.
+Assumption-erasure controls and a possible post-release writer transition are
+satisfiable; they do not prove eventual progress or fairness. This is not refinement of
+Python or PostgreSQL, authentication, complete mutator coverage or noninterference.
+
+A failed stronger trace check is retained alongside its exact source and log.
+The final producer uses offset-independent reads of live stderr; shared descriptor
+seeking could interfere with writes. The earlier passing receipt remains historical,
+with relocated trace hashes, rather than being repinned to the corrected producer.
+B10 remains counterexample-found, historical acceptance remains 26/132, and all
+132 original cases remain binding. Direct SQL routes, transitive dependencies,
+complete diagnostics, authenticated issuance, cancellation and publication remain
+open. The goal remains active.
+
+Astra ultra independently verifies all 61 observations, six traces, six native
+and eight formal source pins, the executed helper prefix and all eight fresh Z3
+replays. No findings remain within the qualified scope. Four custody unit tests
+also pass. Review and execution receipt hashes are retained in the checkpoint.

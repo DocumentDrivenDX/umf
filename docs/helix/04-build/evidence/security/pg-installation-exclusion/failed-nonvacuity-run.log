@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-installation-exclusion-probe.py", line 80, in <module>
+    check('protected-live-outer-diagnostics:'+actor,{'relationIds':[],'planRows':['1','1']},{'relationIds':[int(v) for v in re.findall(rb':relid\s+([0-9]+)',protected)],'planRows':[v.decode() for v in re.findall(rb'plan_rows\s+([0-9.]+)',protected)]})
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-routine-drift-probe.py", line 32, in check
+    class Session:
+AssertionError: protected-live-outer-diagnostics:umf_sec_bob

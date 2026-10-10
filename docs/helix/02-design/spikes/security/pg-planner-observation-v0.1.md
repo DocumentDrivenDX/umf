@@ -113,3 +113,18 @@ secure that route. Transitive objects, other pg_proc metadata, role inheritance,
 errors, timing, extensions, complete diagnostic channels and native publication
 remain unqualified. Original B10 stays counterexample-found and26/132 acceptance
 is unchanged; neither selected tuple equality nor restoration promotes it.
+
+
+### Cooperating installer exclusion evidence — 2026-10-10
+
+The installation exclusion spike demonstrates the check-to-use race with an actual
+installer mutation, and protects a prepared call using a shared transaction advisory
+lock while the installer requests the corresponding exclusive lock. Independent
+native lock observations establish that the installer waits until reader release.
+All mutators must follow this protocol: advisory locks do not constrain arbitrary
+DDL or direct SQL. The retained native receipt has 61 observations and six traces;
+the formal receipt proves two conditional ideal laws with eight SMT controls.
+See `../../../04-build/evidence/security/pg-installation-exclusion/` for exact
+sources, trace hashes, historical and failed attempts. These receipts do not qualify
+B10 or prove native refinement, authentication, dependency closure, cancellation or
+publication safety. Production common exclusion and bypass closure remain required.
