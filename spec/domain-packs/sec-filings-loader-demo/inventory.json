@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "id": "sec-filings-selection",
+  "allowed_hosts": [
+    "www.sec.gov",
+    "data.sec.gov"
+  ],
+  "request_interval_ms": 1000,
+  "max_bytes": 10485760,
+  "max_total_bytes": 104857600,
+  "max_documents": 100,
+  "timeout_ms": 30000,
+  "retries": 2,
+  "entries": []
+}

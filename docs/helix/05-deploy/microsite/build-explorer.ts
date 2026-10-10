@@ -15,11 +15,29 @@ for(const root of roots){const paths=await files(root);
   if(typeof pack.version!=='string'||!pack.domain_types)throw new Error(`Incomplete pack manifest: ${path}`);
   const identity=`${pack.id}@${pack.version}`;if(seen.has(identity)){if(root===join(import.meta.dir,'catalog-sources'))continue;throw new Error(`Duplicate pack identity: ${identity}`);}seen.add(identity);
   const packEntry:Entry={id:`pack:${identity}`,title:pack.id,category:'domain',path:'domain-pack.json',pack:pack.id,packVersion:pack.version,text,format:'json',description:pack.description};
-  if(pack.family?.id==='medical'){
+  if(pack.family?.id==='medical'||['legal-appellate','public-company-intelligence'].includes(pack.id)){
    const child=Bun.spawn(['bun',join(repo,'scripts/export-domain-pack.ts'),'--pack',path,'--output',join(dist,'pack-assets',identity),'--include-sources'],{stdout:'pipe',stderr:'pipe'});
    const [code,stderr]=await Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);if(code)throw Error(stderr);
    packEntry.assets=Object.entries(pack.sources??{}).flatMap(([id,source]:[string,any])=>!source.reference?.includes(':')&&source.license?.redistribution==='allowed'?[{id,reference:source.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+source.reference.split('/').map(encodeURIComponent).join('/'),format:source.format??'unknown',dataKind:source.data_kind,sha256:source.checksum.value,...(source.revision?{revision:source.revision}:{})}]:[]);
-   packEntry.aliases=[`pack:${pack.id}@1.0.0`];
+   if(pack.family?.id==='medical')packEntry.aliases=[`pack:${pack.id}@1.0.0`];
+  }
+  if(pack.loader){
+   const {exportPack}=await import('../../../../scripts/loaders/export');
+   const demo=['court-documents-loader-demo','sec-filings-loader-demo'].includes(pack.id);
+   if(pack.family?.id!=='medical'&&!['legal-appellate','public-company-intelligence'].includes(pack.id))await exportPack(path,join(dist,'pack-assets',identity),{includeSources:demo});
+   packEntry.assets=[...(packEntry.assets??[]),...pack.loader.artifacts.map((a:any)=>({id:'loader:'+a.reference,reference:a.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+a.reference,format:a.reference.endsWith('.ts')?'bun-source':a.reference.endsWith('.md')?'markdown':'json-schema',dataKind:'authored companion',sha256:a.sha256}))];
+   if(demo)packEntry.assets.push({id:'inventory',reference:'inventory.json',url:'pack-assets/'+encodeURIComponent(identity)+'/inventory.json',format:'json',dataKind:'empty authored selection',sha256:pack.sources.inventory.checksum.value});
+  }
+  if(['legal-appellate','public-company-intelligence'].includes(pack.id)){
+   const research=join(dist,'research/release.json');
+   if(await Bun.file(research).exists()){
+    const release=await Bun.file(research).json();
+    for(const artifact of release.artifacts.filter((a:any)=>a.reference.endsWith('.py'))){
+     const source=join(dist,'research',artifact.reference);
+     if(new Bun.CryptoHasher('sha256').update(await Bun.file(source).arrayBuffer()).digest('hex')!==artifact.sha256)throw Error('Research tool hash mismatch');
+     packEntry.assets=[...(packEntry.assets??[]),{id:'research:'+artifact.reference,reference:artifact.reference,url:'research/'+artifact.reference,format:'python',dataKind:'consumer discovery/qualification tool',sha256:artifact.sha256}];
+    }
+   }
   }
   entries.push(packEntry);
   const schemaIds=new Set<string>();for(const declaration of pack.schemas??[]){if(schemaIds.has(declaration.id))throw new Error(`Duplicate schema ID in ${identity}: ${declaration.id}`);schemaIds.add(declaration.id);

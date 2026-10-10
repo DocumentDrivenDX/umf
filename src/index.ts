@@ -401,6 +401,7 @@ export {default as domainPackPackage} from '../spec/extensions/domain-pack/packa
 
 export {generateDatasetSourceSchema} from './domain-packs/source-schema';
 export * from './domain-packs/medical';
+export * from './domain-packs/public-company';
 export {default as datasetSourceSchema} from '../spec/extensions/dataset-source/schema.json';
 export {default as datasetSourcePackage} from '../spec/extensions/dataset-source/package.json';
 export {inspectDomainPack,requireDomainPackProfile} from './domain-packs/profile';
@@ -414,3 +415,8 @@ export {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,coreData
 export type {CoreCompactRecordValueCheck,CoreCompactKeyTupleReceipt,CoreDatasetCompactValueCheck} from './model/dataset-values-compact';
 
 export * from './model/csv-boolean-lexical';
+
+export {generateDomainPackLoaderSchema,inspectDomainPackLoader} from './domain-packs/loader';
+export {generateLoaderInventorySchema} from './domain-packs/loader-inventory';
+
+export {inspectCoreEvolution,verifyCoreEvolution,coreEvolutionPolicySchema,coreEvolutionOperationSchema,type CoreEvolutionPolicy} from './model/evolution';

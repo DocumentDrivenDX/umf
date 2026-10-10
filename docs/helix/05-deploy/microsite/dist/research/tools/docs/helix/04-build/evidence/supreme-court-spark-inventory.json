@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "id": "spark-qualification-three-court-pdfs",
+  "allowed_hosts": [
+    "www.supremecourt.gov"
+  ],
+  "request_interval_ms": 1000,
+  "max_bytes": 52428800,
+  "max_total_bytes": 524288000,
+  "max_documents": 3,
+  "timeout_ms": 30000,
+  "retries": 1,
+  "entries": [
+    {
+      "id": "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79",
+      "url": "https://www.supremecourt.gov/docket/docketfiles/html/qp/22-07466qp.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Publicly accessible; reuse rights not assessed. Local-use only."
+        ]
+      },
+      "metadata": {
+        "case_numbers": [
+          "22-7466"
+        ],
+        "labels": [
+          "Questions Presented"
+        ]
+      },
+      "expected_sha256": "7ea0d68643381b57d4ac82db55965e69e422ec2643b0086c20f3327b2e2e793f"
+    },
+    {
+      "id": "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2",
+      "url": "https://www.supremecourt.gov/docket/docketfiles/html/qp/23-01002qp.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Publicly accessible; reuse rights not assessed. Local-use only."
+        ]
+      },
+      "metadata": {
+        "case_numbers": [
+          "23-1002"
+        ],
+        "labels": [
+          "Questions Presented"
+        ]
+      },
+      "expected_sha256": "7c7ac15e62b571314297c4e0bf4024454c0a7aa8b2ff4549de6988351549612e"
+    },
+    {
+      "id": "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb",
+      "url": "https://www.supremecourt.gov/docket/docketfiles/html/qp/23-01007qp.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Publicly accessible; reuse rights not assessed. Local-use only."
+        ]
+      },
+      "metadata": {
+        "case_numbers": [
+          "23-1007"
+        ],
+        "labels": [
+          "Questions Presented"
+        ]
+      },
+      "expected_sha256": "ed968da0ad8210f375f7bbac13a5f6c5b584eacb9421d2ff81738af1f999462c"
+    }
+  ]
+}

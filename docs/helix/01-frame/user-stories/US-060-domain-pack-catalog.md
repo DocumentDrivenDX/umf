@@ -15,7 +15,7 @@ ddx:
 
 # US-060: Reuse a domain pack across schema and dataset tooling
 
-**Feature:** FEAT-009. **Feature Requirements:** PACK-01–PACK-06. **PRD Requirements:** FR-45; FR-29/41 apply to consumer reuse. **Priority:** P0 under FR-45. **Status:** Draft.
+**Feature:** FEAT-009. **Feature Requirements:** PACK-01–PACK-07. **PRD Requirements:** FR-45; FR-29/41 apply to consumer reuse. **Priority:** P0 under FR-45. **Status:** Draft.
 
 ## Story
 
@@ -42,6 +42,12 @@ UMF owns schemas and schema tooling; TableSpec owns records, archives, loading a
 - **US-060-AC5:** Given a generated archive, when reloaded under the admitted encoding, then exact values and reference identities agree.
 - **US-060-AC6:** Given a support report, when reviewed, then its actual engines, versions, subset, source fingerprints and unverified paths are explicit.
 - **US-060-AC7:** Given a required unresolved schema dependency, when generation is requested, then it refuses without implicit network resolution.
+
+- **US-060-AC8:** Given a loader companion, inspection in Bun and Chromium retains unknown content and exposes exact runtime/profile dependencies without executing it; unsupported execution versions refuse.
+- **US-060-AC9:** Given an explicit finite inventory, backfill and refresh retain exact originals and lineage; unchanged reruns add no duplicate document versions, while amendments remain distinct.
+- **US-060-AC10:** Given collection failure or interruption, the receipt exposes incomplete coverage, the last published snapshot remains readable, and a retry safely resumes without skipping failed items. Concurrent invocations using the same state refuse.
+- **US-060-AC11:** Given retained inputs, offline replay verifies hashes and regenerates the same projection without network access; source, loader, configuration and projection identities remain attributable.
+- **US-060-AC12:** Given an exported companion, a clean install invokes the CLI with bounded requests, source rights policy and scheduler-visible exit status. Court-document and SEC-filing inventories exercise both profiles; arbitrary supplied code never loads.
 
 ## Edge Cases
 

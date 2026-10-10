@@ -15,7 +15,7 @@ ddx:
 
 # US-061: Exercise the legal domain pack
 
-**Feature:** FEAT-010. **Feature Requirements:** DOMAIN-01–DOMAIN-06; FEAT-009 PACK-01–PACK-06.
+**Feature:** FEAT-010. **Feature Requirements:** DOMAIN-01–DOMAIN-07; FEAT-009 PACK-01–PACK-06.
 **PRD Requirements:** FR-45; FR-29/41 apply to consumer reuse. **Priority:** P0 under FR-45. **Status:** Draft.
 
 ## Story
@@ -49,6 +49,11 @@ Which time entries belong to eligible matter-team members, and which fabricated 
 - **US-061-AC7:** Given native fixtures and synthetic records, when their origins are inspected, then the two can be distinguished with source, release and transformation lineage.
 - **US-061-AC8:** Given a required unknown or unsupported meaning, when a dependent consumer operation is requested, then the operation refuses or reports explicitly incomplete support while retaining the source.
 
+- **US-061-AC9:** Given the appellate subpack, when inspected, then full original PDFs, comparison identities, court levels, page evidence and source rights are available separately from provisional interpretation.
+- **US-061-AC10:** Given fixed temporal replay fixtures, when consumed, then independently expected duplicate, amendment, vacatur, retry and per-recipient delivery outcomes can be checked without sending email.
+- **US-061-AC11:** Given expected collection windows, when attempts are inspected, then successful-empty windows and unresolved collection, retrieval, extraction and screening failures remain distinguishable.
+- **US-061-AC12:** Given counsel evidence or missing information, when inspected, then represented-party scope, source/as-of provenance and unattempted or fabricated enrichment remain explicit.
+
 ## Edge Cases
 
 - An entry by the excluded timekeeper is detected; the clean entry remains valid.
@@ -81,3 +86,14 @@ The legal reference pack is delivered for its recorded subset. This draft story 
 ## Out of Scope
 
 Legal advice, production entitlement enforcement, and a complete billing ledger.
+
+
+## Supreme Court source-only collection extension
+
+- **US-061-AC13:** Source-list discovery preserves case identities and explicit merits-list scope, excluded populations and incomplete PDF coverage.
+- **US-061-AC14:** Docket parsing preserves counsel source context, dated proceedings, rejected/submitted/unknown status distinctions and associated PDF URLs.
+- **US-061-AC15:** Immutable batch selection and retained hashes support replay, explicit refresh and failure visibility without replacing successful snapshots.
+
+CONTRACT-060 governs this independent consumer collector. Original party filings
+remain local-use with unknown redistribution rights; publishing tooling and
+metadata does not clear original-source redistribution or qualify Databricks.
