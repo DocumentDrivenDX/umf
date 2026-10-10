@@ -1,0 +1,13 @@
+{
+  "files": {
+    "git-alternates.txt": "bf8d6dda7a9361e08333c155e17486ef486f5ec38738956319d4341645539699",
+    "umf-integrated-qualification-01a391b6-prepare.log": "fe38e6bceae0f1db2ef9555d80d1a7df679b91a07705fc70d8238d74b9039f45",
+    "umf-integrated-execution-observation-01a391b6.json": "21ff3de6decd96019fb8b1b25947d744c602051c44ab547f6b9e70850f2d7db8",
+    "umf-strict-primary-qualification-01a391b6.py": "8305267abeef4e3675b9f279df81405106d32812094942e21f4f91de47194c44",
+    "umf-primary-local-filesystem-01a391b6.json": "6b7fbaf89dadd6ea3d077b60dba39e470fdbfeea85cb906173041a5f00e6d5ad",
+    "umf-integrated-runtime-observation-01a391b6.json": "3dcb33721ecb73213cb8734f416890c121cc051394f2ddc68ee0e48c3363e96c",
+    "pre-existing-prepare-runtime-observation.json": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6"
+  },
+  "meaning": "Failed prepare before native tests: Git alternate object directory outside container. No successful fresh gates.",
+  "preExistingReportMeaning": "Observed stale committed container-runtime bytes copied during failed prepare; not successful fresh runtime output."
+}

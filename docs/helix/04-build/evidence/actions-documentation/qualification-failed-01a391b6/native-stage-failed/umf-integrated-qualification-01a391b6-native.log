@@ -1,0 +1,29 @@
+{"stage": null, "command": [".venv/bin/python", "scripts/refresh-core-checks.py"]}
+fatal: path 'fixtures/validation/field-gate-refresh-evidence.json' exists on disk, but not in 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
+Traceback (most recent call last):
+  File "/work/scripts/refresh-core-checks.py", line 112, in <module>
+    else:run(args.resume)
+         ^^^^^^^^^^^^^^^^
+  File "/work/scripts/refresh-core-checks.py", line 34, in run
+    plan=commands();manifest=OUT/'native-browser.json'
+         ^^^^^^^^^^
+  File "/work/scripts/refresh-core-checks.py", line 17, in commands
+    rows += [r['command'] for r in inventory(name)['runs']]
+                                   ^^^^^^^^^^^^^^^
+  File "/work/scripts/refresh-core-checks.py", line 13, in inventory
+    return json.loads(subprocess.check_output(['git','show',f'{BASE}:fixtures/validation/{name}.json']))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6:fixtures/validation/field-gate-refresh-evidence.json']' returned non-zero exit status 128.
+Traceback (most recent call last):
+  File "/opt/replay.py", line 88, in <module>
+    run(command)
+  File "/opt/replay.py", line 24, in run
+    subprocess.run(command, check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['.venv/bin/python', 'scripts/refresh-core-checks.py']' returned non-zero exit status 1.

@@ -1,0 +1,112 @@
+{
+  "prepare": {
+    "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "command": [
+      "prepare"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-01a391b6",
+      "UMF_REPLAY_IMAGE_ID": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true,
+        "type": "bind",
+        "name": null
+      },
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-tests/_data",
+        "destination": "/work/tests",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-tests"
+      },
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-scripts/_data",
+        "destination": "/work/scripts",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-scripts"
+      },
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-stories/_data",
+        "destination": "/work/docs/helix/01-frame/user-stories",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-stories"
+      },
+      {
+        "source": "/private/tmp/umf-integrated-qualification-01a391b6",
+        "destination": "/work",
+        "rw": true,
+        "type": "bind",
+        "name": null
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-01a391b6"
+    ]
+  },
+  "native": {
+    "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "command": [
+      "native"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-01a391b6",
+      "UMF_REPLAY_IMAGE_ID": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-stories/_data",
+        "destination": "/work/docs/helix/01-frame/user-stories",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-stories"
+      },
+      {
+        "source": "/private/tmp/umf-integrated-qualification-01a391b6",
+        "destination": "/work",
+        "rw": true,
+        "type": "bind",
+        "name": null
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true,
+        "type": "bind",
+        "name": null
+      },
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-tests/_data",
+        "destination": "/work/tests",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-tests"
+      },
+      {
+        "source": "/var/lib/docker/volumes/umf-integrated-qualification-01a391b6-local-scripts/_data",
+        "destination": "/work/scripts",
+        "rw": false,
+        "type": "volume",
+        "name": "umf-integrated-qualification-01a391b6-local-scripts"
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-01a391b6"
+    ]
+  }
+}
