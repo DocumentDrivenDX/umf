@@ -121,3 +121,33 @@ jobs:
           if archives:
               raise SystemExit('Generated ZIPs must remain consumer-local: ' + str(archives))
           PY
+      - name: Get Innsigle verifier
+        uses: actions/checkout@v4
+        with:
+          repository: DocumentDrivenDX/innsigle
+          ref: 4185eb56beb7b52beaa4a00c2fc897f93d44b939
+          path: .tools/innsigle
+      - name: Verify page signatures
+        run: node .tools/innsigle/src/cli.mjs verify --all
+      - name: Include public keys and attestations
+        run: node .tools/innsigle/src/cli.mjs publish docs/helix/05-deploy/microsite/dist
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/helix/05-deploy/microsite/dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
