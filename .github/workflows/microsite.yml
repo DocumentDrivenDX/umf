@@ -100,12 +100,12 @@ jobs:
         run: |
           bun docs/helix/05-deploy/schema-browser/build.ts
           bun docs/helix/05-deploy/schema-browser/publish-site.ts
+      - name: Install browser qualification runtime
+        run: bun x playwright install --with-deps chromium
       - name: Qualify reusable browser package
         run: bun scripts/schema-browser-package-browser.ts
       - name: Qualify artifact collection browser
-        run: |
-          bun x playwright install --with-deps chromium
-          bun scripts/artifact-collections-browser.ts
+        run: bun scripts/artifact-collections-browser.ts
       - name: Verify tools-only distribution
         run: |
           python3 - <<'PY'
