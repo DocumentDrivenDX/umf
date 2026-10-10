@@ -981,3 +981,68 @@ translating the same assertions for generation; universal safety and expected
 results are unchanged. The 60-group component run passes, and retained-formula
 audit passes 563 formulas across 32 receipts using Z3 4.15.4. This is parser/solver
 agreement under the recorded premises, not generator/native refinement.
+
+
+## Native fixed graph membership on original layout 0.16 — 2026-10-10
+
+`tools/security/truss-native-membership-probe.py` installs the complete, unchanged
+59,119-byte Truss `source-epoch-layout-0.16.owner-export.sql`, SHA256
+`dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f`,
+in a disposable PostgreSQL17.9 fixture. The retained local copy is
+`tests/security/native/truss-layout-source-epoch-0.16.sql`; it must equal the
+original owner export before acquisition. This replaces synthetic *table layout*
+in this experiment, not synthetic model allocation or accepted consumer data.
+The original schema comment remains review-only and unqualified.
+
+The fixed overlay uses native `object` and `edge` tables. Complete `(id,type_id)`
+identities and relationship IDs are mandatory in the hidden membership join.
+One active Staff assignment to any owning Project grants the Resource; a sibling
+Project sharing the same Client and ownerless Resources grant nothing.
+`SESSION_USER` binds the original authenticated actor inside fixed definer
+functions. Ordinary SCRAM actors can read RLS-filtered storage identities and a
+restricted ID/value projection. Column grants deny bag and retained bytes;
+edge reads, mutation and transition to the excluded NOLOGIN table owner deny.
+The excluded owner bypasses its own non-FORCE RLS to read hidden authorization
+facts; no ordinary membership or callable owner-role transition is granted.
+
+This mapping deliberately fixes types1–4, relationships11–15 and JSON property
+IDs101/102/201/301/999. It does not use accepted UMF documents, registered property
+definitions, canonical key buckets or a Weft compiler artifact. Direct fixture
+insertion satisfies native definition-source tuple constraints using the
+`accepted_document` enum, but the document carries an explicit unqualified
+fixture and `not-admitted-synthetic-fixture` validation status. Its content hash
+is actual; these rows are **not** evidence of Truss schema acceptance. Excluded
+installer-inserted overlapping numeric IDs exercise defensive typed identity;
+they are not admitted normal Truss allocation populations. No installation
+marker, issuer, seven native semantic bodies or publication path is qualified.
+
+The current [native receipt](../../04-build/evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
+retains110 observations and51 transcripts against the independently authored raw
+membership oracle. All six input pins remain unchanged, including original DDL,
+overlay, runner, oracle and original case inventory. Separate active-assignment,
+ownership-relationship and assignment-relationship guard erasures expose exact
+independent expected rows; each is restored for all actors. Root-type erasure
+exposes other native object types, and restored direct RLS checks retain only
+Resource type3. Reversed endpoint roles fail the actual native endpoint foreign
+key, after proving both endpoint objects exist and the tuple cannot collide with
+`edge_out`. Three invalid invocation controls refuse before Docker acquisition.
+
+All preceding attempts retain start pins, exact executable/DDL/overlay preimages
+and seed SQL. Three development failures and three superseded passing receipts
+are historical. The failed FK attempt did not retain its decisive native stderr;
+only the corrected final control qualifies that observation. This is native
+fixed-policy evidence for US-056-AC2/AC5, not a formal SQL/Rust refinement proof
+or a complete BindingReceipt under CONTRACT-063. Missing/ambiguous Staff
+refusal, authenticated complete source/cut, general disclosure, current-authority
+drain and arbitrary diagnostics remain open. All original132 required cases
+remain binding; historical acceptance stays26/132 and truss.B01 remains not-run.
+
+Next integration must replace synthetic field/key allocation with original
+accepted model/property/key custody, feed the original Weft artifact through
+Truss-owned lowering, and qualify the complete protected path. This overlay is
+an experimental physical witness and cannot become a second policy compiler.
+
+Astra ultra independently audited the final source pins, retained native outputs,
+independent oracle and invocation receipts, finding no remaining blocker in this
+fixed mapping scope. The [read-only audit](../../04-build/evidence/security/truss-native-membership/astra-review.json)
+does not claim an independent native rerun.

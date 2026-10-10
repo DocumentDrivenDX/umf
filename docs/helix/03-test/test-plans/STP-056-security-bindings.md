@@ -362,3 +362,33 @@ Future B10 qualification must additionally cover prepared/cached guard mutation,
 all reachable observation paths and settings/body drift through actual admission.
 See [design annex](../../02-design/spikes/security/pg-planner-observation-v0.1.md).
 This is native spike evidence; no original acceptance case is promoted.
+
+
+## Original-layout native graph witness — 2026-10-10
+
+For US-056-AC2/AC5, execute `python3 tools/security/truss-native-membership-probe.py`
+from the repository root with disposable fixture access. The exact original
+Truss0.16 owner export and shared independently authored raw membership oracle
+are mandatory inputs. TD-056 defines the fixed synthetic mapping and excluded
+owner boundary; no original case status is promoted by this component.
+
+Required controls compare complete actor rows and native typed identities;
+multiple owners must not duplicate Resources. Inactive assignment, sibling
+Client, no owner, wrong relationship decoys and outsider remain denied. Direct
+bag/retained/edge reads, mutation and owner-role transition must return42501
+without rows. A reversed edge must fail23503 specifically at the endpoint FK,
+with independently checked existing objects and absent index collision.
+Individually erasing active, ownership-rel, assignment-rel and root-type guards
+must expose the recorded counterexamples; restoration must recover every actor's
+oracle rows and Resource-only direct RLS types. Copied executable, extra arguments
+and wrong working directory must refuse before acquisition. Freeze inputs before
+effects, retain SQLSTATE/output/diagnostics, verify source stability and clean up
+only the UUID-labelled owned fixture.
+
+The retained final run has110 observations/51 transcripts; three separate custody
+controls pass. Prior failed and superseded runs remain diagnostic history with
+exact attempt source snapshots. Required follow-on backend tests replace fixture
+source enums/field IDs/storage IDs with authentic accepted model/property/key
+custody and actual Weft lowering, then exercise missing/ambiguous Staff refusal,
+full reachable native inventory, diagnostics and current-authority publication.
+No fixed overlay can satisfy those remaining acceptance obligations.

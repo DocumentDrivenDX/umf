@@ -10064,3 +10064,30 @@ authenticated profile selection, original assertion/procedure sufficiency or
 Rust/database refinement. Native bodies/current-cut/enforcement qualification
 and all132 original acceptance obligations remain required. Historical required
 acceptance stays26/132; no case is promoted and the full goal remains active.
+
+
+### Original-layout native graph membership checkpoint
+
+The fixed graph spike now executes against the complete original Truss0.16 DDL,
+not a reconstructed entity/association table layout. PostgreSQL17.9 ordinary
+SCRAM actors match the independent raw membership oracle. The
+[final receipt](evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
+retains110 observations/51 transcripts and six unchanged input pins. Separate
+active/ownership-rel/assignment-rel/root-type erasures expose native leaks and
+restore; direct bags/retained/edges and owner transitions deny, while reversed
+endpoint roles fail the actual FK without an index-collision confounder.
+Three exact-invocation refusal controls pass. Seven original attempt directories
+retain their source preimages and outcomes; only the final source-qualified run
+supports current110-observation claims.
+
+TD-056/STP-056 document the synthetic fixed mapping, direct fixture source rows,
+excluded non-FORCE table owner and defensive overlapping IDs. This is not Truss
+schema admission, normal allocation, registered property/key decoding, original
+Weft lowering, complete native diagnostics or current-authority publication.
+It is not a formal implementation refinement proof. All132 original obligations
+remain required, historical acceptance stays26/132, truss.B01 remains not-run,
+and the full implementation goal remains active.
+
+The [Astra ultra read-only audit](evidence/security/truss-native-membership/astra-review.json)
+found no remaining blocker in this component scope; no independent native rerun
+was performed by the reviewer.

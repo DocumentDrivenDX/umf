@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "sourceSha256": "8261db254f6214a11727fb118ae2e57145426ff077f85f4c34200cf5e346b6c6",
+  "cases": [
+    {
+      "id": "copied-script",
+      "observed": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/private/tmp/umf-graph-invocation-ji2q5ex9/copy.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+        "dockerCalled": false
+      }
+    },
+    {
+      "id": "extra-argument",
+      "observed": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/truss-native-membership-probe.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+        "dockerCalled": false
+      }
+    },
+    {
+      "id": "wrong-working-directory",
+      "observed": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/truss-native-membership-probe.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+        "dockerCalled": false
+      }
+    }
+  ],
+  "scope": "Three invalid invocations refuse before any Docker acquisition; copied source is not canonical execution custody."
+}
