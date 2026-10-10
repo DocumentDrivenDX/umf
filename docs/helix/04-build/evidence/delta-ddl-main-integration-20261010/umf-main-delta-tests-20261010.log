@@ -1,0 +1,95 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/delta/table.test.ts:
+(pass) US-018-AC4: context preserves embedded spelling, exact integers and future declarations [186.85ms]
+(pass) US-018-AC4: feature/partition inconsistencies and malformed schema remain visible and preserved [60.05ms]
+(pass) US-018-AC5: generic context edits are atomic and do not imply safe table evolution [172.96ms]
+
+tests/delta/schema.test.ts:
+(pass) US-018-AC1: Delta source cases preserve exact schema through JSON/YAML [1612.85ms]
+(pass) US-018-AC2: unknown metadata and representation fields never disappear silently [38.20ms]
+(pass) US-018-AC3: edits are atomic and keep source; shape failure rejects candidate [49.11ms]
+
+tests/delta/mapped-nested.test.ts:
+(pass) US-018-AC7: array and map-value field renames preserve mapping across both protocol families [3351.66ms]
+
+tests/delta/multipart.test.ts:
+(pass) US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds [12.41ms]
+(pass) US-018-AC19: native multipart recovery preserves all parts and row origins [1481.16ms]
+(pass) US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block [205.19ms]
+(pass) US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot [461.21ms]
+(pass) US-018-AC19: invalid finite part counts retain schema-valid blocked evidence [0.09ms]
+
+tests/delta/checkpoint.test.ts:
+(pass) US-018-AC13: checkpoint and following commits reproduce native-backed states without earlier history [45.82ms]
+(pass) US-018-AC13: checkpoint invariants and missing sidecars block without partial state [71.12ms]
+(pass) US-018-AC13: both pinned upstream JSON checkpoints retain source and report unresolved Parquet sidecars [70.32ms]
+
+tests/delta/log.test.ts:
+(pass) US-018-AC9: full log text preserves line endings, exact numbers, future actions and invalid lines [24.75ms]
+(pass) US-018-AC9: empty and duplicate-key input stay captured; representation additions block export [20.10ms]
+(pass) US-018-AC9: inspection bounds leave uninspected source intact [19.09ms]
+
+tests/delta/upstream.test.ts:
+(pass) US-018-AC8: pinned upstream schema/context corpus preserves source and known rejection [9282.00ms]
+
+tests/delta/column-mapping.test.ts:
+(pass) US-018-AC6: mapped nested field IDs and physical paths are checked independently [142.87ms]
+(pass) US-018-AC6: missing mapping context and exact out-of-range IDs are diagnosed without source loss [129.39ms]
+(pass) US-018-AC6: feature-era mapping requires both feature lists; none mode stays separate [88.86ms]
+
+tests/delta/sidecars.test.ts:
+(pass) US-018-AC16: native sidecar checkpoints recover states and retain origin/source evidence [678.53ms]
+(pass) US-018-AC16: missing, duplicate, extra, mismatched and mixed sidecars block atomically [586.47ms]
+(pass) US-018-AC16: nonfile sidecar actions and malformed bytes cannot seed state [136.38ms]
+(pass) US-018-AC16: supplied upstream sidecars retain typed-statistics blockers and all bytes [212.58ms]
+
+tests/delta/checkpoint-parquet-trial.test.ts:
+(pass) US-018-AC14: Parquet decoder trial agrees with typed native values and exact decimal boundaries [327.97ms]
+
+tests/delta/parquet-actions.test.ts:
+(pass) US-018-AC15: native checkpoint corpus projects exact actions or blocks with source intact [5382.95ms]
+(pass) US-018-AC15: ambiguous maps, typed values, missing required fields and action conflicts cannot silently lower [973.72ms]
+(pass) US-018-AC17: annotated statistics dates and timestamp fractions have explicit bounds [3.06ms]
+
+tests/delta/actions.test.ts:
+(pass) US-018-AC10: known action shapes and exact integer boundaries retain source [118.44ms]
+(pass) US-018-AC10: arbitrary commit provenance and opaque future content remain incomplete [60.32ms]
+
+tests/delta/history-upstream.test.ts:
+(pass) US-018-AC12: all pinned ordinary-commit prefixes preserve sources and reproduce state or explicit blocks [10323.66ms]
+
+tests/delta/rename.test.ts:
+(pass) US-018-AC7: mapped rename preserves physical meaning and updates top-level partition references [672.53ms]
+(pass) US-018-AC7: collisions, expressions, unknown features and non-field pointers block [659.03ms]
+(pass) US-018-AC7: expressions elsewhere in the schema and unknown storage providers block [238.38ms]
+
+tests/delta/reconcile.test.ts:
+(pass) US-018-AC11: native six-version history matches action state and preserves every source [92.98ms]
+(pass) US-018-AC11: gaps, duplicates, missing initial context, checkpoints and ambiguous file changes block [72.46ms]
+(pass) US-018-AC11: DV changes are set-based; domains and unknown actions remain preserved [55.50ms]
+
+tests/delta/ddl.test.ts:
+(pass) authored Delta definition survives JSON and YAML and emits a complete managed CREATE [93.48ms]
+(pass) unknown definition and core content survive serialization but refuse executable export [101.83ms]
+(pass) DDL refuses incompatible layouts, unsupported properties, expressions and stale columns [183.33ms]
+(pass) metadata, protocol dependent types, case collisions and unknown schema meaning are never discarded [99.56ms]
+(pass) explicit partitioning and retention settings do not force maintenance off [45.20ms]
+(pass) decimal precision and scale remain exact through recovery and DDL [586.34ms]
+(pass) nested types preserve order, nullability and exact schema through both formats [64.08ms]
+(pass) nested unsupported meaning and collection nullability refuse without source mutation [457.92ms]
+(pass) complex columns cannot accidentally become partition or clustering keys [43.86ms]
+(pass) column comments preserve exact schema, Unicode and escaped literals at both depths [55.21ms]
+(pass) comment metadata refuses unknown meaning, controls and client macros [101.53ms]
+(pass) bundle preserves ordered complete proposals and detached source recovery [195.69ms]
+(pass) bundle refuses partial export, ambiguous context and identity collisions [279.91ms]
+
+tests/delta/parquet-checkpoint.test.ts:
+(pass) US-018-AC18: explicit V1/V2 Parquet checkpoint recovery agrees with nine native snapshots [2522.97ms]
+(pass) US-018-AC18: wrong checkpoint specs, missing sidecars and missing successors cannot produce state [601.25ms]
+(pass) US-018-AC18: pinned single-file checkpoints preserve bounded recovery outcomes [3847.97ms]
+
+ 55 pass
+ 0 fail
+ 3098 expect() calls
+Ran 55 tests across 17 files. [53.73s]
