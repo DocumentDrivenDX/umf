@@ -28,7 +28,7 @@ The original SMT/TLC probes, simplified SQL feasibility executor and actual refe
 
 ## Reproduce and inspect
 
-Use docs/helix/02-design/experiments/actions/formal/README.md for the original bounded model sources and pinned tool setup. Use the acceptance certificate for actual implementation witnesses, runtime versions, source hashes, assumptions and exclusions. Retained logs include failed intermediate attempts; only final qualified gates count as passes.
+Read the [bounded model sources and pinned tool setup](../../../02-design/experiments/actions/formal/README.md). From a clone of this repository, run `python3 scripts/actions-docs/reproduce-formal.py` for SMT, or add `--tlc` to also run the finite state models. The TLC command pulls a pinned public Java 21 image; its recorded qualification is Linux ARM64. Use the acceptance certificate for actual implementation witnesses, runtime versions, source hashes, assumptions and exclusions. Retained logs include failed intermediate attempts; only final qualified gates count as passes.
 
 ## Predict the result
 
