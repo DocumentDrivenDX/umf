@@ -36,14 +36,14 @@ extension/runtime boundary and introduces no persistent UMF service.
 
 | Requirement | Design capability | Verification |
 | --- | --- | --- |
-| ACT-01 | Exact local references to existing core Records, Fields and stable Keys | US-078-AC1/8 |
-| ACT-02 | Opaque, version-qualified rule envelope and failure identities; no evaluator | US-078-AC2/5 |
-| ACT-03 | Separate semantic frames/postconditions and recipe/handler bindings; recipe dependency checks | US-078-AC3/8 |
-| ACT-04 | Explicit executor obligations, separate from declaration validity | US-078-AC4/5 |
-| ACT-05 | Inert named handler implementing a bounded contract | US-078-AC2/5 |
-| ACT-06 | Source-retaining obligation inventory and per-declaration profile comparison | US-078-AC5/8 |
-| ACT-07 | Existing serializer/registry, copied results and conservative action edits | US-078-AC6/8/9 |
-| ACT-08 | Optional explicit DDD operation association with independent semantics | US-078-AC7 |
+| ACT-01 | Exact local references to existing core Records, Fields and stable Keys | US-900-AC1/8 |
+| ACT-02 | Opaque, version-qualified rule envelope and failure identities; no evaluator | US-900-AC2/5 |
+| ACT-03 | Separate semantic frames/postconditions and recipe/handler bindings; recipe dependency checks | US-900-AC3/8 |
+| ACT-04 | Explicit executor obligations, separate from declaration validity | US-900-AC4/5 |
+| ACT-05 | Inert named handler implementing a bounded contract | US-900-AC2/5 |
+| ACT-06 | Source-retaining obligation inventory and per-declaration profile comparison | US-900-AC5/8 |
+| ACT-07 | Existing serializer/registry, copied results and conservative action edits | US-900-AC6/8/9 |
+| ACT-08 | Optional explicit DDD operation association with independent semantics | US-900-AC7 |
 
 ## Solution Approaches
 
@@ -88,7 +88,7 @@ flowchart LR
 
 ## System Decomposition
 
-US-078/TD-078 owns the package, portable declaration validator, copied APIs and
+US-900/TD-900 owns the package, portable declaration validator, copied APIs and
 capability comparison. Core validators retain authority over Fields/Keys/values;
 no action-specific numeric or key equality implementation is introduced.
 
@@ -128,7 +128,7 @@ association Record; they do not settle broader core instance semantics.
 
 ## Traceability and Gaps
 
-STP-078 allocates all nine story criteria to concrete planned tests. US-056, TD-056 and STP-056 allocate the complete bounded reference-consumer
+STP-900 allocates all nine story criteria to concrete planned tests. US-056, TD-056 and STP-056 allocate the complete bounded reference-consumer
 journey, including EX-01–05 runtime witnesses. Consumer
 execution witnesses are a separate gate and are not a passing library result.
 CONTRACT-901 selects exact bounded rule/selector syntax, invocation variants and

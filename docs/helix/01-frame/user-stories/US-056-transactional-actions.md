@@ -73,7 +73,7 @@ An ambiguous response permits reconciliation, not an assumed rollback retry.
 
 ## Dependencies
 
-US-078; FEAT-008; CONTRACT-900/053; SD-008; ADR-002. PostgreSQL and an isolated
+US-900; FEAT-008; CONTRACT-900/053; SD-008; ADR-002. PostgreSQL and an isolated
 handler runtime are qualification dependencies, not portable library dependencies.
 
 ## Out of Scope

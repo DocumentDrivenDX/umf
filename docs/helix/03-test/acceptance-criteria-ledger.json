@@ -5,13 +5,13 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 611,
+  "total": 631,
   "counts": {
-    "SATISFIED": 99,
+    "SATISFIED": 117,
     "UNTESTED": 288,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
-    "REVIEWED_EXCEPTION": 3
+    "REVIEWED_EXCEPTION": 5
   },
   "danglingCitations": [],
   "criteria": [
@@ -4394,6 +4394,71 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
+      "id": "US-060-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-publication.test.ts:28",
+        "tests/domain-packs/loader-runner.test.ts:14",
+        "tests/domain-packs/loader-runner.test.ts:45"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-runner.test.ts:30",
+        "tests/domain-packs/loader-runner.test.ts:54",
+        "tests/domain-packs/loader-runner.test.ts:79"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-publication.test.ts:13",
+        "tests/domain-packs/loader-runner.test.ts:14",
+        "tests/domain-packs/loader-runner.test.ts:54",
+        "tests/domain-packs/loader-runner.test.ts:93"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-060-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/loader-export.test.ts:20",
+        "tests/domain-packs/loader-export.test.ts:32",
+        "tests/domain-packs/loader-export.test.ts:37",
+        "tests/domain-packs/loader-export.test.ts:43",
+        "tests/domain-packs/loader-export.test.ts:50",
+        "tests/domain-packs/loader-export.test.ts:9",
+        "tests/domain-packs/loader-publication.test.ts:13",
+        "tests/domain-packs/loader-publication.test.ts:28",
+        "tests/domain-packs/loader-publication.test.ts:36",
+        "tests/domain-packs/loader-runner.test.ts:101",
+        "tests/domain-packs/loader-runner.test.ts:105",
+        "tests/domain-packs/loader-runner.test.ts:38",
+        "tests/domain-packs/loader-runner.test.ts:60",
+        "tests/domain-packs/loader-runner.test.ts:74"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
       "id": "US-061-AC1",
       "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
       "status": "UNTESTED",
@@ -4448,6 +4513,70 @@
       "status": "UNTESTED",
       "evidence": [],
       "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-061-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/legal-appellate.test.ts:135",
+        "tests/domain-packs/legal-appellate.test.ts:31"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/legal-appellate.test.ts:74"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/legal-appellate.test.ts:74"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/legal-appellate.test.ts:124"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
     },
     {
       "id": "US-062-AC1",
@@ -5354,7 +5483,82 @@
     },
     {
       "id": "US-078-AC1",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company.test.ts:30"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company.test.ts:37"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company.test.ts:15",
+        "tests/domain-packs/public-company.test.ts:24"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company.test.ts:62"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/domain-packs/verify-public-company.py:1"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-078-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company-loader.test.ts:10",
+        "tests/domain-packs/public-company.test.ts:63"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/public-company-loader.test.ts:10",
+        "tests/domain-packs/public-company.test.ts:55"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-078-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-078-public-company-intelligence.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/public-company-browser.ts:1"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-900-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:15",
@@ -5363,8 +5567,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC2",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:23"
@@ -5372,8 +5576,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC3",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:29",
@@ -5382,8 +5586,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC4",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:37",
@@ -5394,8 +5598,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC5",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/assessment.test.ts:11",
@@ -5409,8 +5613,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC6",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:65",
@@ -5421,8 +5625,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC7",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/contracts.test.ts:46"
@@ -5430,8 +5634,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC8",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/corpus.test.ts:5",
@@ -5441,8 +5645,8 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-078-AC9",
-      "story": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "id": "US-900-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/corpus.test.ts:5"

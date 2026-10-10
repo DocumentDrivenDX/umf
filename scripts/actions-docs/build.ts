@@ -20,7 +20,7 @@ function href(target:string,file:string):string{
  const resolved=resolve(dirname(join(source,file)),path!);
  if(!resolved.startsWith(resolve('.')+'/'))throw Error('Link leaves repository');
  if(!existsSync(resolved))throw Error('Missing repository link '+target+' in '+file);
- return 'https://github.com/DocumentDrivenDX/umf/blob/master/'+resolved.slice(resolve('.').length+1)+(anchor?'#'+anchor:'');
+ return 'https://github.com/DocumentDrivenDX/umf/blob/main/'+resolved.slice(resolve('.').length+1)+(anchor?'#'+anchor:'');
 }
 function inline(s:string,file:string):string{
  return escape(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\[([^\]]+)\]\(([^)]+)\)/g,(_,label,url)=>`<a href="${escape(href(url.replaceAll('&amp;','&'),file))}">${label}</a>`);

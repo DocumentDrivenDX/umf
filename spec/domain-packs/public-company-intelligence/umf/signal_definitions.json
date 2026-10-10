@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "signal_definitions",
+  "description": "Public-company intelligence signal_definitions; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "signal_definitions.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "version",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "signal_definitions.version; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "title",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "signal_definitions.title; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "method",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "signal_definitions.method; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "meaning",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "signal_definitions.meaning; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ]
+}

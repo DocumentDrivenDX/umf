@@ -41,6 +41,8 @@ Example schemas and fake values alone leave relationships, semantic rules and co
 - PACK-05: Distinguish official originals, traceable projections and generated supplements with source versions, checksums, reuse terms and transformation lineage. CSV ZIP serialization must define exact values, null/empty distinctions, time and Unicode before publication.
 - PACK-06: Qualify each consumer path with actual schema-generation, export/reload and independent semantic checks. DuckDB is a portable relational lane; Sail is a fast Spark-compatible lane; Spark and optional operator-run Databricks qualification remain distinct evidence.
 
+- PACK-07: Ship a versioned, explicitly selected loader companion for bounded source acquisition, backfill, refresh and retained-input replay. Expose configuration, dependencies, checkpoint/recovery policy, source scope and machine-readable run evidence. Retain original bytes and revisions; failed collection cannot masquerade as empty coverage. Consumer execution stays outside the portable library.
+
 ## User Stories
 
 - [US-060: Reuse a domain pack across schema and dataset tooling](../user-stories/US-060-domain-pack-catalog.md).
@@ -71,4 +73,4 @@ Per-domain profile semantics and archive compatibility beyond the delivered lega
 
 ## Out of Scope
 
-UMF data-generation or database-execution runtime, automatic source fetching, production loading, universal domain equivalence and blanket scientific/business realism claims.
+UMF data-generation or database-execution runtime, implicit source fetching, production database loading, universal domain equivalence and blanket scientific/business realism claims.

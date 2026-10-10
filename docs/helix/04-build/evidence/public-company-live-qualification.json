@@ -1,0 +1,67 @@
+{
+  "scope": "Public-company live acquisition/Databricks preparation; not runtime acceptance",
+  "status": "awaiting_operator_inputs",
+  "versions": {
+    "tablespec": "0.0.9",
+    "umf-core": "0.8.1",
+    "python": "3.12.15",
+    "jsonschema": "4.25.1",
+    "duckdb": "1.5.0"
+  },
+  "preflight": {
+    "sources": 50,
+    "pack_hash": "a2d45d43f21f1fa0eb025db2e3a411a8de4fc521939db22c924266bb28693286",
+    "inventory_hash": "f90d1045d7258819950dd0f90a25f04b6c6aa25ced7bbf4de322ed56fc9ae0ac"
+  },
+  "artifacts": {
+    "/tmp/umf-sec-qualification-release/tablespec-0.0.9-py3-none-any.whl": {
+      "sha256": "8258bf0c129dc872e9ba4bd5aedaadd1ea909b34cb4746cfc879acd931a08a0b",
+      "bytes": 839048
+    },
+    "/tmp/umf-sec-qualification-release/umf_core-0.8.1-py3-none-any.whl": {
+      "sha256": "b712eb6ea8cfd27694e37aaa7603c109063a3820bd11696e642300f2c26f7b84",
+      "bytes": 238533
+    },
+    "/tmp/umf-sec-qualification-pack/public-company-intelligence-1.0.0.zip": {
+      "sha256": "665e7243522ba8e125fa5f5da4cade7d444b29bc0c03382bd3c8fc721c6e3819",
+      "bytes": 474894
+    },
+    "/Users/erik/.codex/worktrees/8c2f/umf/scripts/domain-packs/qualify-sec-acquisition.py": {
+      "sha256": "626741e61c90c05928dd83e882990cb60064eaa2c6da0b840e1249b28e1e0683",
+      "bytes": 5385
+    }
+  },
+  "databricks": {
+    "profile": "aidev-cus",
+    "authentication": "valid with network access",
+    "workspace": "https://adb-7405607548213398.18.azuredatabricks.net",
+    "dedicated_target": null,
+    "dedicated_volume": null
+  },
+  "pending": [
+    "genuine SEC operator/contact identity",
+    "dedicated Databricks destination"
+  ],
+  "claims_not_made": [
+    "live SEC Python acquisition",
+    "live Databricks collector/runtime qualification",
+    "refreshed domain corpus",
+    "model/email execution"
+  ],
+  "failed_attempts": [
+    "Restricted-network auth metadata failed; network-enabled retry valid",
+    "UMF release tag v0.8.1 absent; actual tag python-v0.8.1 resolved",
+    "UMF release has no SHA256SUMS; official wheel locally hashed",
+    "Published pack has enclosing directory; resolved domain-pack.json under version directory",
+    "System Python compile cache denied; switched Python3.12 and /tmp cache"
+  ],
+  "shared_local_spark": {
+    "status": "passed court subset",
+    "source": "/Users/erik/.codex/worktrees/36f4/umf/docs/helix/04-build/evidence/supreme-court-spark-runtime.md",
+    "tablespec": "0.0.9",
+    "umf-core": "0.8.1",
+    "spark": "4.0.1",
+    "delta": "4.0.0",
+    "scope": "3 court PDFs; Python source HTTPS blocked during publication, no OS isolation; no SEC/Databricks acceptance"
+  }
+}

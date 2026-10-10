@@ -1,0 +1,40 @@
+{
+  "format": "umf-core-evolution-evidence/0.1",
+  "profile": "core-0.8-absent-string-additions/0.1",
+  "implementationState": "Candidate implementation pending independent final review; no native migration or universal compatibility claim.",
+  "tests": {
+    "focused": 16,
+    "assertions": 49,
+    "originalDatasetRegressionTests": 30,
+    "originalDatasetRegressionAssertions": 747,
+    "regressionQualification": "Original compact/full/supply-chain30 tests previously passed in this clone; final focused16/49 and bothTSconfigs/schema361 checked on retained final source."
+  },
+  "browser": {
+    "browser": "153.0.8010.12",
+    "cases": 6,
+    "resourceControls": [
+      "LIMIT",
+      "LIMIT"
+    ],
+    "completeReceiptParity": true,
+    "classifications": [
+      "preserved",
+      "preserved",
+      "breaking",
+      "breaking",
+      "unsupported",
+      "preserved"
+    ],
+    "libraryNativeClaims": false
+  },
+  "originalPresenceAuthority": "Invocation-local original source context executes the original Record semantic body; restored full original public Record receipts compare exactly in tests, with unrelated required/context diagnostics retained.",
+  "reproduction": [
+    "bun test tests/core-evolution.test.ts",
+    "bun node_modules/typescript/bin/tsc --noEmit",
+    "bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
+    "bun scripts/audit-json-schemas.ts",
+    "bun scripts/core-evolution-browser.ts FRESH_OUTPUT"
+  ],
+  "scope": "Same-module new scalarString/one/absent-allowed Fields with exactclosedmembers; requiredString addition and knownquantitytypechange break; unknownsemantics/crossmodule/annotations unsupported. Existing full/compact APIs unchanged. SourcefieldIDs/catalogstorage/nativecapabilities remain consumerauthority. Original wire formatting not certified by copied JSON sources.",
+  "browserAttemptTiming": "a failed loopback bind withoutbrowser; b earlier3case source proof; c final6case/2LIMIT source proof retained. No old proof repinned."
+}

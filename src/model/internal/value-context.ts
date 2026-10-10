@@ -19,7 +19,7 @@ export class ValueWork {
  snapshot(){return {used:this.used,categories:{...this.categories}};}
 }
 /** Streaming exact UTF-8 JSON byte bound before any semantic validator. */
-function preflightBytes(value:any,work:ValueWork){
+export function preflightBytes(value:any,work:ValueWork){
  let bytes=0;const add=(n:number)=>{bytes+=n;if(bytes>4_000_000)throw new WorkExceeded('Compact source/input serialized bytes exceeded');};
  const string=(s:string)=>{add(2);for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);if(c===34||c===92)add(2);else if(c<32)add([8,9,10,12,13].includes(c)?2:6);else if(c>=0xd800&&c<=0xdbff){const next=s.charCodeAt(i+1);if(next>=0xdc00&&next<=0xdfff){add(4);i++;}else add(6);}else if(c>=0xdc00&&c<=0xdfff)add(6);else add(c<128?1:c<2048?2:3);}};
  const visit=(v:any)=>{work.charge('preflight-byte-traversal',1);if(typeof v==='string'){string(v);return;}if(v===null||typeof v!=='object'){add(JSON.stringify(v).length);return;}if(Array.isArray(v)){add(2+Math.max(0,v.length-1));for(const child of v)visit(child);return;}const entries=Object.entries(v);add(2+Math.max(0,entries.length-1));for(const [key,child] of entries){string(key);add(1);visit(child);}};

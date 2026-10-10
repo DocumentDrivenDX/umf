@@ -1,0 +1,226 @@
+{
+  "date": "2026-10-09",
+  "scope": "US-078 fixed source/item-metadata subset plus pre-release shared loader integration",
+  "versions": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "python": "3.12.15",
+    "tablespec": "0.0.6.post6.dev0+d2ee70a",
+    "duckdb": "1.5.0",
+    "table_schema": "1.0",
+    "core": "0.8.0",
+    "domain_pack": "1.0.0",
+    "loader": "1.0.0 pre-release"
+  },
+  "counts": {
+    "companies": 25,
+    "identifiers": 141,
+    "universes": 1,
+    "memberships": 25,
+    "source_snapshots": 100,
+    "filings": 340,
+    "documents": 340,
+    "financial_observations": 647,
+    "business_events": 2,
+    "signal_definitions": 1,
+    "signal_observations": 2,
+    "opportunity_hypotheses": 2,
+    "analysis_runs": 1,
+    "evidence_links": 2
+  },
+  "tests": {
+    "focused": {
+      "passed": 8,
+      "failed": 0,
+      "assertions": 167
+    },
+    "domain_regression": {
+      "passed": 55,
+      "failed": 0,
+      "files": 13,
+      "assertions": 2567,
+      "companion_artifacts": [
+        {
+          "reference": "run.ts",
+          "sha256": "9831aad4d59c0eb0b12f8614cfb347271b08202d6139d433e2b34cd5bda02f72"
+        },
+        {
+          "reference": "inventory.schema.json",
+          "sha256": "90c7117097e6523858afed55f03bcfd9b234b55479e18f1421f2accc8c00e3a4"
+        },
+        {
+          "reference": "loader.schema.json",
+          "sha256": "dac470e294187bb2cc69643a258902d79e63967244896c13a36de15d2f5f3de9"
+        },
+        {
+          "reference": "README.md",
+          "sha256": "ec79634f9a69e0b424ff85e9a8282ccd34411f7e6c695f861628cf39dbf8de2f"
+        }
+      ],
+      "scope": "Prior companion snapshot; reader update has fresh focused coverage"
+    },
+    "browser": {
+      "library_checks": 8,
+      "ui_checks": 3,
+      "page_errors": 0
+    },
+    "packages": {
+      "passed": 62,
+      "failed": 0
+    },
+    "schemas": {
+      "passed": 357,
+      "failed": 0
+    },
+    "typecheck": "passed",
+    "table_ingestion": "passed; all null/uniqueness/FK violations zero",
+    "independent_archive_engine": "passed; 1629 rows, 67 source artifacts, exact lexical/source/schema bytes and FKs",
+    "standalone_loader_replay": "passed; injected acquisition fixture, actual CLI replay, zero network requests",
+    "portable_pack_zip": "passed; 89 byte-compared files including five canonical companion artifacts",
+    "publication_reader": "passed; actual exported CLI verifies retained publication and passes exact selected bytes into projectSecSubmissions"
+  },
+  "archives": {
+    "fixtures/domain-packs/public-company-intelligence-1.0.0.zip": {
+      "sha256": "419d75c07dd2c8c10ba233eac83810df41c73e276fc505a320cd75266ce86d35",
+      "bytes": 388812
+    },
+    "fixtures/domain-packs/public-company-intelligence-pack-1.0.0.zip": {
+      "sha256": "61857f76ba8303e384e53449027f29fb46f41ce2a107aa66b7eaa232723cbc40",
+      "bytes": 483154
+    }
+  },
+  "source_fingerprints": {
+    "scripts/domain-packs/public-company.ts": {
+      "sha256": "e3b5ad2d11db181777350cb1d8a8f00bb0255ca019848e0bb29fc9680303ea39",
+      "bytes": 14424
+    },
+    "scripts/domain-packs/verify-public-company.py": {
+      "sha256": "b5627f08ccb97e83e2c1df794f1e68307310cb09ecf2cf5b155df627ddcb30af",
+      "bytes": 3587
+    },
+    "scripts/export-domain-pack.ts": {
+      "sha256": "b2cc29181b15bd893a336924651de87bc714e6f5261a5a862ce40e36430fcf0d",
+      "bytes": 466
+    },
+    "scripts/loaders/bytes.ts": {
+      "sha256": "ff436950a7898d6595e00aef2524ea73d2cda137d1ac44433f4cfcc072b6f55c",
+      "bytes": 1076
+    },
+    "scripts/loaders/companion.ts": {
+      "sha256": "5026a54c99d43b4afd2d9b02d733578f0d0ad22b481879057439e62ad4cb8ea7",
+      "bytes": 1610
+    },
+    "scripts/loaders/engine.ts": {
+      "sha256": "3df9d4ba6aba053b399fffe24aa0dc032bbcc4bfd4dcb616f0062869ecee0776",
+      "bytes": 6610
+    },
+    "scripts/loaders/export.ts": {
+      "sha256": "f123a95726de83116e0c419ae498779c4fe5856240edfd0947db9f406a0e934c",
+      "bytes": 5047
+    },
+    "scripts/loaders/inventory.ts": {
+      "sha256": "1fd7205787b8cda200ef609d12b5e40fc30bfa60409a3fa534e0a46be5e8f8d9",
+      "bytes": 2272
+    },
+    "scripts/loaders/publication.ts": {
+      "sha256": "f07a3ed0e252e00c1952f988e758067bab7636c286a877906dcffaafa7f723a0",
+      "bytes": 1681
+    },
+    "scripts/loaders/read-publication.ts": {
+      "sha256": "987df0a270a054ed2e9282a7cdc6d9267858efe256d3d9b8374c7f3cb67bf8ad",
+      "bytes": 2306
+    },
+    "scripts/loaders/run.ts": {
+      "sha256": "2791de4c7b10719bb818b295a7a996d13413899701e2907ea05a23c11be15198",
+      "bytes": 2879
+    },
+    "scripts/loaders/state.ts": {
+      "sha256": "508bfbabb13aa7ff5d297db5719586f11c5cdd8c868728a067a5e012dc704be8",
+      "bytes": 5840
+    },
+    "scripts/loaders/transport.ts": {
+      "sha256": "5e094c1b8b6f6fd029a8075fd837760e9484066396efd63feb3e3c1bf4242013",
+      "bytes": 3073
+    },
+    "scripts/public-company-browser.ts": {
+      "sha256": "1add29988b84acbbb256230cd3223d191394ee1a8017564775515acbc8f69452",
+      "bytes": 3575
+    },
+    "spec/domain-packs/public-company-intelligence/pack.json": {
+      "sha256": "82d359e44e788f9b40cd71df8ae1a2006d241b5e6e57fb25b9279d9bebf12e83",
+      "bytes": 160729
+    },
+    "spec/domain-packs/public-company-intelligence/source-selection.json": {
+      "sha256": "a73b0c9e8b76732d262aa1852d61919af8ad0eaa7e03fa79bc9b44057aced16b",
+      "bytes": 44877
+    },
+    "spec/loader-companion/1.0.0/release.json": {
+      "sha256": "6750776e5534d232f617ff83667f8ad131e39a64758ec1ec893e7652a6ce65fc",
+      "bytes": 773
+    },
+    "src/domain-packs/loader-inventory.ts": {
+      "sha256": "db6647afb4825b307a031cfa477a3595e50f24f51b097934ec3758a354472abc",
+      "bytes": 1364
+    },
+    "src/domain-packs/loader.ts": {
+      "sha256": "b979bdc0db0208a7a44d4110e2546c0b1e5e1ef6887200aa61c41a3fd5f7f7c9",
+      "bytes": 1991
+    },
+    "src/domain-packs/public-company.ts": {
+      "sha256": "3e228ec8f965e40bc140ec2a5453202898a22aef177ac94b2a1529329367f513",
+      "bytes": 6137
+    },
+    "tests/domain-packs/public-company-loader.test.ts": {
+      "sha256": "aa15f2ecc77b5aeb5fbb28d7056549c411974a55bd8e3431de924437b7d45879",
+      "bytes": 4369
+    },
+    "tests/domain-packs/public-company.test.ts": {
+      "sha256": "1747662750e0d67a1ea830bd834b1bc2b14a2df889c2c8f72ccaaf8cad6ff55d",
+      "bytes": 7974
+    }
+  },
+  "companion_artifacts": [
+    {
+      "reference": "run.ts",
+      "sha256": "78d174cab9e8ca8a8e23670d920ad51759bbaaa33ce1e03a2f931d0debda1c27"
+    },
+    {
+      "reference": "read-publication.ts",
+      "sha256": "2da3e35038d1b27c34d86b8cc2abe94d10c110ac2df9d573d09af266740fd25b"
+    },
+    {
+      "reference": "inventory.schema.json",
+      "sha256": "a9a1b67bcba686f7b13463867aa7ca19f0a3bc830fecc832eae64e1bc8f6d5ce"
+    },
+    {
+      "reference": "loader.schema.json",
+      "sha256": "b5c7a02960e71ccad8aaff5bbcc7e6e77b047a7fe65bc2e3544bf58c7445236b"
+    },
+    {
+      "reference": "README.md",
+      "sha256": "284f9140e67c8bf6c773a119e9422bf1f439f91ee814a50b45d79cf9098e6380"
+    }
+  ],
+  "claims_not_made": [
+    "authoritative S&P membership",
+    "complete original API response bundle",
+    "exhaustive filing coverage",
+    "narrative or exhibit analysis",
+    "model ranking/evaluation",
+    "live shared-loader SEC acquisition",
+    "Databricks egress/execution",
+    "native graph storage",
+    "public deployment",
+    "scheduler/email",
+    "whole-repository release acceptance"
+  ],
+  "retained_failed_attempts": [
+    "restricted DNS",
+    "missing frozen dependencies",
+    "native JSON budgets on full responses",
+    "25 original document HTTP 403 responses",
+    "sandbox listen restriction",
+    "graph archive external-run descriptor mismatch",
+    "missing shared loader-inventory import"
+  ]
+}

@@ -5,7 +5,7 @@
 ## Domain-pack planning
 
 The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
-16 domains, including ecology/water management. UMF owns schemas and schema
+17 planned domains, including ecology/water management and public-company intelligence. UMF owns schemas and schema
 tooling; TableSpec owns dataset generation, CSV ZIP output, loading and data
 tests. FEAT-009 defines catalog behavior; separate features/stories define each
 domain outcome. [SD-024](02-design/solution-designs/SD-024-ecology-domain-pack.md)
@@ -14,6 +14,13 @@ proposes an ecology model with explicit scientific comparability boundaries.
 context-linked archaeological evidence and specialist analyses grounded in
 Madaba Plains Project source candidates. These draft plans do not claim
 delivered packs or native equivalence.
+
+The [public-company intelligence pack](../../spec/domain-packs/public-company-intelligence/GUIDE.md)
+adds 25 selected SEC issuers, 340 filing records and 647 exact financial
+observations with separate item-metadata signals and authored hypotheses.
+[Scoped evidence](04-build/evidence/public-company-intelligence.md) qualifies
+fixed local ingestion and browser inspection; narrative documents returned
+HTTP 403, and live Databricks/model/email execution remains consumer work.
 
 ## Ecosystem integration direction
 
@@ -33,11 +40,11 @@ reconciled when that gate is framed.
 
 Owner-directed action planning (2026-10-08) is captured in
 [FEAT-008](01-frame/features/FEAT-008-declarative-actions.md),
-[US-078](01-frame/user-stories/US-078-declarative-actions.md),
+[US-900](01-frame/user-stories/US-900-declarative-actions.md),
 [CONTRACT-056](02-design/contracts/CONTRACT-900-declarative-actions.md),
 [SD-008](02-design/solution-designs/SD-008-declarative-actions.md),
-[TD-078](02-design/technical-designs/TD-078-declarative-actions.md) and
-[STP-078](03-test/test-plans/STP-078-declarative-actions.md).
+[TD-900](02-design/technical-designs/TD-900-declarative-actions.md) and
+[STP-900](03-test/test-plans/STP-900-declarative-actions.md).
 [CONTRACT-057](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
 the proposed first executable consumer profile and protocol. These draft artifacts
 define a local core 0.8.0 `umf.actions` extension for authored declarations and
@@ -1235,3 +1242,16 @@ CC BY 3.0 TCIA DICOM slice with retained originals. The Medical overview links
 all five packs; source/row downloads, ontology/table navigation and old bookmarks
 have real-browser evidence. See the [integrated medical evidence](04-build/evidence/medical-subpacks.md#integrated-medical-family-110--2026-10-08)
 and [complete family export](../../spec/domain-packs/medical/README.md#complete-family-export-and-browser).
+
+## Domain-pack loader and research releases
+
+The [release notes](05-deploy/domain-pack-release-notes.md) cover loader 1.0.0,
+legal-appellate 1.0.0 and public-company-intelligence 1.0.0. These fixed corpora
+ship the same canonical loader and verified publication reader; their qualified
+source coverage and consumer boundaries remain separate.
+
+
+The [document research tools 1.0.0](05-deploy/document-research.md) publish Supreme Court discovery,
+batching/acquisition configuration, SEC qualification harness and scoped local
+Spark evidence. Original local-use archives are excluded; live SEC/Databricks
+qualification remains pending. CONTRACT-060 governs the source mirror.

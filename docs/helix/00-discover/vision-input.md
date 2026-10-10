@@ -1,5 +1,79 @@
 # Product direction supplied by the founder
 
+## Owner direction: reusable domain-pack loaders (2026-10-09)
+
+Standardize a loader mechanism that can ship with a domain pack. Use the same
+loader to build public dataset releases and let end users extend or refresh
+their own datasets through cron or another scheduler. This is owner direction
+for subsequent framing and design; no loader interface or runtime is delivered
+by this note.
+
+The source discussions are the Codex chats
+[Find appellate opinion sources](codex://threads/01a122db-05c6-7e43-9404-71089e027eae)
+and [Research public-data S&P 500 pack](codex://threads/01a122e0-a9aa-7a91-bae1-1655f10de1b4).
+The appellate use case collects newly posted opinions and designated orders
+from selected courts, retains PDFs and counsel provenance, and exposes collection
+and processing failures. Screening, review emails, duplicate notification
+suppression and optional PACER counsel lookup are downstream workflow needs.
+Supreme Court docket monitoring remains separately undefined. The company
+research use case collects selected SEC filings and financial observations
+against a dated company universe, then performs evidence-linked analysis and
+digest delivery. Source availability, rights and source-specific access policies
+need their own qualification; the chats do not establish a released loader.
+
+### Proposed shared boundary
+
+A pack should distribute or reference an independently versioned loader
+companion with its supported source profile, configuration schema, invocation
+instructions and runtime dependencies. Preserve FEAT-009 and FR-45's explicit
+execution boundary: inspecting/importing pack metadata never executes code or
+fetches sources. A consumer explicitly selects and invokes a trusted loader.
+UMF owns portable declarations and schema tooling; source acquisition and target
+loading remain consumer runtime responsibilities. TableSpec owns its tabular
+loading and data tests. The executable packaging and shared runner owner require
+design; shipping a companion does not move network execution into the browser
+library.
+
+Recommended design scope:
+
+- One finite invocation suitable for local use, cron or managed jobs, with
+  explicit source scope, time window, output location and external state location.
+  Provide initial backfill, incremental refresh and offline replay of retained
+  inputs through the same source profile.
+- Separate acquisition of original bytes, deterministic projection into pack
+  schemas and publication to a selected target. Retain originals, checksums,
+  source/retrieval dates, rights and transformation versions. Emit datasets and
+  manifests usable independently of a particular storage backend.
+- Stable source identities and explicit document revisions. Retries and repeated
+  runs must avoid duplicate records; amendments, corrected postings and changed
+  source bytes must remain attributable. Define checkpoint advancement and
+  recovery after partial failure before claiming reliable incremental delivery.
+- Machine-readable run receipts and scheduler-visible exit status, including
+  attempted coverage, completed coverage, failures, retries and unresolved gaps.
+  A successful empty poll must remain distinguishable from failed collection.
+- Configurable source-policy limits and bounded retries, with coordination across
+  workers where required. Credentials are supplied by the invoking environment;
+  source profiles declare requirements without distributing secrets.
+- Separate ingestion state from extraction/model state and notification state.
+  New prompt/model versions can reprocess retained evidence without downloading
+  it again; notification receipts support downstream duplicate suppression.
+  Email, attorney screening, opportunity scoring and optional paid enrichment
+  remain independently invoked workflow stages.
+
+Qualification should demonstrate backfill followed by refresh, unchanged rerun,
+amendment, interrupted-run recovery, failed-source coverage and deterministic
+offline replay for both appellate and company-filing profiles. Verify exact
+original-byte retention and lineage into projected rows. Each support claim must
+name loader/runtime/source-profile versions, supported subset and evidence.
+
+Next framing targets are FR-45, FEAT-009 and US-060, followed by a versioned
+loader companion contract alongside CONTRACT-052/053 and consumer designs.
+Unknowns include executable distribution format, runner ownership, checkpoint
+store and concurrency protocol, publication atomicity, first court/source scope,
+company universe and rights-cleared release membership. Existing domain-pack
+1.0.0 metadata does not acquire executable-loader semantics from this direction;
+extension/version compatibility must be decided explicitly.
+
 Source: the project owner's UMF vision supplied on 2026-09-20. This note
 preserves framing inputs that sit below the concise [product vision](product-vision.md).
 It is source material for subsequent artifacts, not an approved requirements

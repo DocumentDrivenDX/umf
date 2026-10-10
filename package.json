@@ -8,6 +8,10 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "import": "./dist/umf.js"
+    },
+    "./loader-contract": {
+      "types": "./src/domain-packs/loader-contract.ts",
+      "import": "./src/domain-packs/loader-contract.ts"
     }
   },
   "scripts": {

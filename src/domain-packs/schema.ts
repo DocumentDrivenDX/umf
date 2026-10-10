@@ -1,3 +1,4 @@
+import {generatePreservationProfileSchema} from './preservation';
 import {generateDatasetSourceSchema} from './source-schema';
 /** Portable pack metadata only; implementation references never authorize execution. */
 export function generateDomainPackSchema() {
@@ -9,6 +10,7 @@ export function generateDomainPackSchema() {
     required: ['id', 'version', 'domain_types'],
     anyOf: [{properties:{generator:{}},required:['generator']},{properties:{sources:{}},required:['sources']}],
     properties: {
+      preservation: generatePreservationProfileSchema(),
       id: text, version, description: {type: 'string'},
       family: {type:'object',required:['id','version','label'],properties:{id:text,version,label:text},additionalProperties:true},
       composition: {type:'object',required:['version','components'],properties:{

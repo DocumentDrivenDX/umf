@@ -1,3 +1,4 @@
+import {inspectDomainPackLoader} from './loader';
 import {generateDomainPackSchema} from './schema';
 import {createValidator} from '../validation/schema';
 import {copyJson} from '../model/json';
@@ -17,6 +18,8 @@ function inspectDomainPackInternal(input:unknown):{valid:boolean;complete:boolea
   if(new Set(identities).size!==identities.length||new Set(components.map((c:any)=>c.id)).size!==components.length)diagnostics.push('Duplicate component identity');
   if(components.some((c:any)=>c.id===pack.id))diagnostics.push('Self composition is not supported');
  }
+ if(Object.hasOwn(pack,'loader'))diagnostics.push(...inspectDomainPackLoader(pack.loader).diagnostics);
+ if(pack.preservation?.derivations?.some((d:any)=>!ids.includes(d.schema_id)))diagnostics.push('Unresolved preservation derivation schema');
  const profile=pack.execution_profile;
  if(Object.hasOwn(pack,'execution_profile')){
   if(!profile||typeof profile!=='object'||Array.isArray(profile))return {valid:false,complete:false,diagnostics:['Malformed execution profile']};
