@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/microsite.yml'
       - 'docs/helix/05-deploy/microsite/**'
+      - 'docs/helix/05-deploy/schema-browser/**'
+      - 'scripts/schema-browser-package-browser.ts'
       - 'src/**'
       - 'spec/**'
       - 'scripts/artifact-collections-browser.ts'
@@ -36,6 +38,8 @@ on:
     paths:
       - '.github/workflows/microsite.yml'
       - 'docs/helix/05-deploy/microsite/**'
+      - 'docs/helix/05-deploy/schema-browser/**'
+      - 'scripts/schema-browser-package-browser.ts'
       - 'src/**'
       - 'spec/**'
       - 'scripts/artifact-collections-browser.ts'
@@ -92,6 +96,12 @@ jobs:
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
+      - name: Build reusable browser distribution
+        run: |
+          bun docs/helix/05-deploy/schema-browser/build.ts
+          bun docs/helix/05-deploy/schema-browser/publish-site.ts
+      - name: Qualify reusable browser package
+        run: bun scripts/schema-browser-package-browser.ts
       - name: Qualify artifact collection browser
         run: |
           bun x playwright install --with-deps chromium

@@ -1,0 +1,22 @@
+import {resolve,join} from 'node:path';
+import {mkdir,cp} from 'node:fs/promises';
+const source=import.meta.dir,site=resolve(source,'../microsite/dist'),repo=resolve(source,'../../../..');
+const output=resolve(process.argv[2]??join(repo,'dist/schema-browser'));
+await mkdir(join(output,'assets'),{recursive:true});
+for(const name of ['package.json','README.md','LICENSE-MIT','LICENSE-APACHE'])await cp(join(source,name),join(output,name));
+await cp(join(site,'explorer.css'),join(output,'assets/explorer.css'));
+const renderer=await Bun.build({entrypoints:[resolve(source,'../microsite/explorer.ts')],target:'browser',minify:true,metafile:true,outdir:join(output,'assets')});
+if(!renderer.success)throw Error(renderer.logs.join('\n'));
+const {thirdPartyNotices}=await import('./notices');
+await Bun.write(join(output,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(repo,Object.keys((typeof renderer.metafile==='string'?JSON.parse(renderer.metafile):renderer.metafile as any).inputs)));
+// Offline consumers do not need Google Fonts, a site logo, or public datasets.
+const style=(await Bun.file(join(site,'style.css')).text()).replace(/^@import\s+url\([^)]*\);\s*/,'').replace(/background-image:url\(logo\.svg\)/g,'background-image:none');
+await Bun.write(join(output,'assets/style.css'),style);
+const build=await Bun.build({entrypoints:[join(source,'index.ts')],target:'browser',format:'esm',outdir:output,minify:true});
+if(!build.success)throw Error(build.logs.join('\n'));
+const types=Bun.spawn(['bun',join(repo,'node_modules/typescript/bin/tsc'),join(source,'index.ts'),'--ignoreConfig','--declaration','--emitDeclarationOnly','--skipLibCheck','--strict','--target','ES2022','--module','ESNext','--moduleResolution','Bundler','--outDir',join(output,'types')],{stdout:'inherit',stderr:'inherit'});
+if(await types.exited)throw Error('Browser API declaration build failed.');
+const {shell}=await import('./shell');
+await Bun.write(join(output,'assets/index.html'),`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UMF schema browser</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="explorer.css"></head><body>${shell}<script type="module" src="explorer.js"></script></body></html>`);
+await Bun.write(join(output,'assets/schema-catalog.json'),JSON.stringify({version:1,entries:[]})+'\n');
+console.log(`Reusable schema browser built at ${output}; no public catalog or source corpus bundled.`);
