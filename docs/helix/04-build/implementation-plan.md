@@ -9687,3 +9687,41 @@ wrapper inventory.34 selected review/source/docs/runtime/log pins stay unchanged
 parent attribution of native execution and excludes B10 promotion/full closure.
 Prepared/cached guard mutation and admission drift integration remain next work.
 Original26/132 acceptance and active goal remain unchanged.
+
+
+### Typed field semantics on main — 2026-10-10
+
+Weft main effe0276abb486c847d2901581a2255199931c18 now retains actual borrowed
+Field/Context payloads beside owner source events, advancing the independent
+requirement issuer design under current Weft CONTRACT-006. Stored events retain
+the exact qualified field/inventory owner references, catalog carrier and raw
+ontology classification (protection/query-use); context has a separate channel.
+All original domain/facet/allowed-value/opaque metadata remains available without
+normalization or cloning. Charged lookup/ID retention, exact event-key projection,
+foreign equal-pointer substitution refusals and populated4096/4097 boundaries
+remain private. Source-only derivation retains its prior ledger.
+
+The [source-pinned execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/effe0276abb486c847d2901581a2255199931c18/docs/helix/04-build/evidence/security-field-events/checkpoint.json)
+records557 passing Rust workspace tests/44groups with no failures/ignored/filtered;
+all822 declared repository inputs were frozen before execution and verified
+unchanged, including after concurrent main integration. External Cargo registry/
+build runtime dependencies are outside that inventory. Separate document/schema
+validation passes51 artifacts/31schemas/30planned compiler criteria/636fixtures;
+those ordinary compiler criteria do not replace the shared security acceptance plan.
+Initial/pre-refinement runs and the corrected directory-link/parser failures are
+preserved rather than relabeled.
+
+Astra ultra's independent read-only review is clean after isolated channel-only
+and false-branch self-join controls. It replays3 conditional algebraic address
+laws/9formulas in fresh Z3 contexts (3UNSAT/6SAT), verifying source prefreeze and
+pre-solve SMT capture. These establish constructor separation under the stated
+address assumptions; they are not Rust pointer/string/traversal refinement,
+backend enforcement or native acceptance. The [review](https://github.com/DocumentDrivenDX/weft/blob/effe0276abb486c847d2901581a2255199931c18/docs/helix/04-build/evidence/security-field-events/astra-review.json)
+retains those limits.
+
+Next retain typed Key/member ordering and query projection/operator/output
+semantics, then author complete independent kind/template/site/failure/prerequisite
+and original case/assertion mappings with authenticated exact backend profiles.
+Complete issuance, admission drift/B10 closure, physical lowering and integrated
+native qualification remain unfinished. All132 original cases remain binding;
+no case is promoted by this field-custody checkpoint and the goal remains active.
