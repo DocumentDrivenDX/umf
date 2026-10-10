@@ -1,0 +1,64 @@
+{
+  "complete": true,
+  "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+  "uniqueTests": 2399,
+  "uniqueTestFiles": 445,
+  "regressionTests": 2382,
+  "gateTests": 17,
+  "nativeBrowserInventoryCommands": 174,
+  "currentProofConcepts": 6,
+  "sealingRuntime": {
+    "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+    "replayScriptSha256": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+    "sealScriptSha256": "a27e9d967f3901dbf905675d547fcf486bcd9f2c67f351b41398654dfae5bf43"
+  },
+  "previousEvidence": {
+    "status": "new artifact; absent from frozen source commit",
+    "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602"
+  },
+  "schemaProperties": {
+    "browser": {
+      "cases": 38,
+      "recoveries": 4,
+      "refusals": 12,
+      "getterCalls": 0,
+      "extensionChecks": 6,
+      "unknownUnitChecks": 4
+    },
+    "independentLiteralOracle": {
+      "probes": 58,
+      "agreed": 58
+    }
+  },
+  "notApplicableHistoricalPaths": [
+    "scripts/core-semantic-types-oracle-inputs.ts",
+    "scripts/core-semantic-types-oracle.py",
+    "fixtures/validation/core-semantic-types-acceptance.json",
+    "tests/semantic-types/core.test.ts",
+    "tests/semantic-types/semantic-types.test.ts"
+  ],
+  "scope": "Fresh exact-source native/browser inventory, disjoint regression, complete admission gates and current core0.8 schema-properties browser/literal oracle. Auxiliary/affected overlap excluded; no core0.9 semantic-type claim, native-equivalence claim or universal correctness claim.",
+  "sha256": {
+    "fixtures/validation/core-check-refresh/native-browser.json": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249",
+    "fixtures/validation/core-check-refresh/auxiliary.json": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce",
+    "fixtures/validation/core-check-refresh/regression.json": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08",
+    "fixtures/validation/core-check-refresh/publication.json": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318",
+    "fixtures/validation/core-check-refresh/gates.json": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9",
+    "fixtures/validation/core-check-refresh/container-runtime.json": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6",
+    "fixtures/validation/core-check-refresh/container-gates.json": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99",
+    "fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2",
+    "fixtures/validation/core-check-refresh/container-affected.json": "8a447e2e0160539ad76839383c9dd401572a9d4ad7ffe36677194965edbae627",
+    "fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571",
+    "fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5",
+    "fixtures/validation/core-check-refresh/container-publication.json": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d",
+    "fixtures/validation/core-check-refresh/container-gates.log": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a",
+    "fixtures/validation/core-check-refresh/container-integrity.log": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa",
+    "fixtures/validation/core-check-refresh/container-affected.log": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652",
+    "fixtures/validation/core-schema-properties-browser.json": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33",
+    "fixtures/validation/core-schema-properties-oracle.json": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f",
+    "fixtures/validation/core-schema-properties-oracle-inputs.json": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf",
+    "fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6",
+    "fixtures/validation/core-check-refresh/container-publication.log": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14"
+  }
+}

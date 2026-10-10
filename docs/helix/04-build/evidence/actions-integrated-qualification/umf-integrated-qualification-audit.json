@@ -1,0 +1,1175 @@
+{
+  "profile": "umf.actions.integrated-qualification-audit/1",
+  "pass": true,
+  "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+  "sourceInputs": 7662,
+  "nativeActionInputs": 1190,
+  "nativeBrowserCommands": 174,
+  "auxiliaryCommands": 6,
+  "distinctTests": 2399,
+  "distinctFiles": 445,
+  "assertions": 136786,
+  "failures": 0,
+  "browserCases": 44,
+  "nativeTests": 119,
+  "criteria": 21,
+  "nativeRefinementHistories": 216,
+  "nativeRefinementTransitions": 648,
+  "actualImplementationMutantHashesVerified": 5,
+  "qualifierBufferedStreamIndependentlyVerified": false,
+  "nativeRawExecutionEvidence": [
+    "fixtures/validation/core-check-refresh/regression-4.log"
+  ],
+  "supplementalMetadataExecution": {
+    "command": [
+      "bun",
+      "/private/tmp/umf-integrated-handler-metadata-probe-5c0b99e5.ts"
+    ],
+    "exitCode": 0,
+    "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+    "log": "/private/tmp/umf-integrated-handler-metadata-probe-5c0b99e5.log",
+    "logSha256": "e9b8c90e1f8bbd1b668de221e7dd291597bf90df60be452d71a53172d34267bf",
+    "scriptSha256": "e89275308ffecf9d2714db905f37cd7de2eaef8f89c209d1ad340bbd22b57785"
+  },
+  "scope": "Exact recorded bounded action/reference profile and integrated core prerequisites; no universal completeness or production/downstream adoption claim",
+  "finalizationTooling": {
+    "current": {
+      "profile": "umf.actions.core08-finalization-runtime/1",
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "sameConfig": true,
+      "parentLayersPreserved": true,
+      "addedLayers": [
+        "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+        "sha256:4771ae7c48f6ebf1badf8f2e28d76e3b4732b6f571656aaee082716c4b8876ae"
+      ],
+      "files": {
+        "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+        "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+        "seal.py": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9"
+      },
+      "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+    },
+    "historicalVariants": [
+      {
+        "profile": "umf.actions.core08-finalization-runtime/1",
+        "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+        "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "sameConfig": true,
+        "parentLayersPreserved": true,
+        "addedLayers": [
+          "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+          "sha256:1f876902bf9a7c1c21dd8d7afbba13ae4b1a8aaa1ebc13bea85c3f913545e150"
+        ],
+        "files": {
+          "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+          "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+          "seal.py": "a27e9d967f3901dbf905675d547fcf486bcd9f2c67f351b41398654dfae5bf43"
+        },
+        "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+      }
+    ],
+    "failedAttempts": [
+      {
+        "execution": {
+          "stage": "publish",
+          "ownedContainer": "umf-integrated-qualification-5c0b99e5-publish",
+          "command": [
+            "docker",
+            "run",
+            "--network",
+            "umf-integrated-qualification-5c0b99e5",
+            "-v",
+            "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock",
+            "-e",
+            "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+            "-e",
+            "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "--name",
+            "umf-integrated-qualification-5c0b99e5-publish",
+            "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "publish"
+          ],
+          "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "exitCode": 1,
+          "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+          "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+          "logSha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d",
+          "generatedReports": {
+            "fixtures/validation/core-check-refresh/publication.json": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb"
+          }
+        },
+        "runtime": {
+          "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "command": [
+            "publish"
+          ],
+          "entrypoint": [
+            "/opt/venv/bin/python",
+            "/opt/replay.py"
+          ],
+          "pins": {
+            "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+            "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+          },
+          "mounts": [
+            {
+              "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+              "destination": "/work",
+              "rw": true
+            },
+            {
+              "source": "/var/run/docker.sock",
+              "destination": "/var/run/docker.sock",
+              "rw": true
+            }
+          ],
+          "networks": [
+            "umf-integrated-qualification-5c0b99e5"
+          ]
+        },
+        "relocation": {
+          "rawStageLog": {
+            "originalPath": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publish.log",
+            "sha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d"
+          },
+          "fixtures/validation/core-check-refresh/publication.json": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publication.json",
+            "sha256": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb",
+            "meaning": "Observed pre-existing bytes during failed stage; not successful fresh output."
+          },
+          "container-semantic-inputs.json": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.json",
+            "sha256": "1d3bd2663d97a309a7cedcffe01d4e32d039d03eec5cef54a88acfd4f0de9300"
+          },
+          "container-semantic-inputs.log": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.log",
+            "sha256": "da7ed521674c2c5ee8c0793c9b2f6ab38f0eb9c1c429fbfc56a9c4866824e4b1"
+          }
+        }
+      }
+    ],
+    "supersededStages": [
+      {
+        "reason": "Seal tooling amended to bind actual browser bundle; successful original stage retained without substitution",
+        "execution": {
+          "stage": "seal",
+          "ownedContainer": "umf-integrated-qualification-5c0b99e5-seal",
+          "command": [
+            "docker",
+            "run",
+            "--network",
+            "umf-integrated-qualification-5c0b99e5",
+            "-v",
+            "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock",
+            "-e",
+            "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+            "-e",
+            "UMF_REPLAY_IMAGE_ID=sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "--name",
+            "umf-integrated-qualification-5c0b99e5-seal",
+            "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "seal"
+          ],
+          "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "exitCode": 0,
+          "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+          "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-seal.log",
+          "logSha256": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+          "generatedReports": {
+            "fixtures/validation/core-check-refresh/final-seal.json": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+          }
+        },
+        "runtime": {
+          "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "command": [
+            "seal"
+          ],
+          "entrypoint": [
+            "/opt/venv/bin/python",
+            "/opt/replay.py"
+          ],
+          "pins": {
+            "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+            "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+          },
+          "mounts": [
+            {
+              "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+              "destination": "/work",
+              "rw": true
+            },
+            {
+              "source": "/var/run/docker.sock",
+              "destination": "/var/run/docker.sock",
+              "rw": true
+            }
+          ],
+          "networks": [
+            "umf-integrated-qualification-5c0b99e5"
+          ]
+        },
+        "retainedLog": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/seal.log",
+        "retainedReports": {
+          "fixtures/validation/core-check-refresh/final-seal.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/final-seal.json",
+            "sha256": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+          }
+        },
+        "retainedClosure": {
+          "fixtures/validation/core-check-refresh/native-browser.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/native-browser.json",
+            "sha256": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249"
+          },
+          "fixtures/validation/core-check-refresh/auxiliary.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/auxiliary.json",
+            "sha256": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce"
+          },
+          "fixtures/validation/core-check-refresh/regression.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/regression.json",
+            "sha256": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08"
+          },
+          "fixtures/validation/core-check-refresh/publication.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/publication.json",
+            "sha256": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318"
+          },
+          "fixtures/validation/core-check-refresh/gates.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/gates.json",
+            "sha256": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9"
+          },
+          "fixtures/validation/core-check-refresh/container-runtime.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-runtime.json",
+            "sha256": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6"
+          },
+          "fixtures/validation/core-check-refresh/container-gates.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.json",
+            "sha256": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99"
+          },
+          "fixtures/validation/core-check-refresh/container-integrity.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.json",
+            "sha256": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2"
+          },
+          "fixtures/validation/core-check-refresh/container-affected.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.json",
+            "sha256": "8a447e2e0160539ad76839383c9dd401572a9d4ad7ffe36677194965edbae627"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.json",
+            "sha256": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.json",
+            "sha256": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5"
+          },
+          "fixtures/validation/core-check-refresh/container-publication.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.json",
+            "sha256": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d"
+          },
+          "fixtures/validation/core-check-refresh/container-gates.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.log",
+            "sha256": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a"
+          },
+          "fixtures/validation/core-check-refresh/container-integrity.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.log",
+            "sha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+          },
+          "fixtures/validation/core-check-refresh/container-affected.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.log",
+            "sha256": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652"
+          },
+          "fixtures/validation/core-schema-properties-browser.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-browser.json",
+            "sha256": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33"
+          },
+          "fixtures/validation/core-schema-properties-oracle.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle.json",
+            "sha256": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f"
+          },
+          "fixtures/validation/core-schema-properties-oracle-inputs.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle-inputs.json",
+            "sha256": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.log",
+            "sha256": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6"
+          },
+          "fixtures/validation/core-check-refresh/container-publication.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.log",
+            "sha256": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14"
+          }
+        }
+      }
+    ]
+  },
+  "governingInputs": {
+    "docs/helix/01-frame/user-stories/US-078-declarative-actions.md": "f42699b622d9ef048b3f0c0fc194e48cc082301164a6372bef4a7193b670ed20",
+    "docs/helix/01-frame/user-stories/US-056-transactional-actions.md": "48f4f8a0489ffcb5c45421542efdfd691f263a164fc346beead0235cb144bf8e",
+    "docs/helix/02-design/technical-designs/TD-078-declarative-actions.md": "3d14041439e89c6b4284949d6d62a99a51f8c7129b81227a84d446cff81eec7e",
+    "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md": "f5d29b291da2c7c1c1f44e4c0eb29d477a9ce1b0e5970ced71610add08a5a65e",
+    "docs/helix/03-test/test-plans/STP-078-declarative-actions.md": "57b53d3804c03a413559d6f151272e002f0acad7641baa87a9b075693e44639c",
+    "docs/helix/03-test/test-plans/STP-056-transactional-actions.md": "bb57ec70a1e1672ac72dfefdb507b696b823591ee10f8f161f4a82a0540ed9b0",
+    "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md": "3cab2c74d47f52773f0d81bc1961f9a654ec4eb9aa24d90a683b21f0d7f215b9",
+    "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md": "a9e6438d27f6fc8aa08a8bb55e8bcc8d1934c8f82fcfca0ec25d096cb5a3fb5c"
+  },
+  "acceptanceLedgerSha256": "be15a7cc6b975e0a09494372d8701a221e7b1236d8f32e70d69e54a5b346e060",
+  "criteriaWitnessLineage": [
+    {
+      "criterion": "US-056-AC1",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:81",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/preview.test.ts:10",
+          "sha256": "3d490c450e34a39765aa6aef425a4713f88f7dea1de9f36a7e6be82ac79e92ae"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:13",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        }
+      ],
+      "historicalCriterion": "US-056-AC1"
+    },
+    {
+      "criterion": "US-056-AC2",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:21",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:81",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:11",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/fresh-admission.test.ts:8",
+          "sha256": "f728ab8d9eb225988aaa50d58e28e3f2560be84773f2e5c1377b6b125130b1f9"
+        },
+        {
+          "location": "tests/actions-reference/native-refinement.test.ts:44",
+          "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+        }
+      ],
+      "historicalCriterion": "US-056-AC2"
+    },
+    {
+      "criterion": "US-056-AC3",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:21",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:33",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/lookup-horizon.test.ts:11",
+          "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+        }
+      ],
+      "historicalCriterion": "US-056-AC3"
+    },
+    {
+      "criterion": "US-056-AC4",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/attempts.test.ts:91",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:21",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:11",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:33",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:47",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/lookup-horizon.test.ts:11",
+          "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+        },
+        {
+          "location": "tests/actions-reference/lookup-horizon.test.ts:13",
+          "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+        },
+        {
+          "location": "tests/actions-reference/native-refinement.test.ts:44",
+          "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+        },
+        {
+          "location": "tests/actions-reference/outcomes.test.ts:9",
+          "sha256": "6173099535af78a4c9dc19f57721fc26b4af397cbb64ab8080c6e08a939cada6"
+        }
+      ],
+      "historicalCriterion": "US-056-AC4"
+    },
+    {
+      "criterion": "US-056-AC5",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/native-refinement.test.ts:44",
+          "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+        },
+        {
+          "location": "tests/actions-reference/reader-revocation.test.ts:12",
+          "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:46",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        }
+      ],
+      "historicalCriterion": "US-056-AC5"
+    },
+    {
+      "criterion": "US-056-AC6",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/evolution.test.ts:34",
+          "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+        },
+        {
+          "location": "tests/actions-reference/handler-executor.test.ts:85",
+          "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+        },
+        {
+          "location": "tests/actions-reference/handler-executor.test.ts:97",
+          "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+        },
+        {
+          "location": "tests/actions-reference/native-refinement.test.ts:44",
+          "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+        }
+      ],
+      "historicalCriterion": "US-056-AC6"
+    },
+    {
+      "criterion": "US-056-AC7",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/handler-executor.test.ts:85",
+          "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+        },
+        {
+          "location": "tests/actions-reference/handler-executor.test.ts:97",
+          "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:23",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:30",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:34",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:9",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        }
+      ],
+      "historicalCriterion": "US-056-AC7"
+    },
+    {
+      "criterion": "US-056-AC8",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:21",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:81",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:47",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/invariant-mutants.test.ts:114",
+          "sha256": "fa9920c93161ba06eff400e0c41e6bd6eee245ef1fa8446684361e8d67f694ae"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:54",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        },
+        {
+          "location": "tests/actions-reference/state.test.ts:10",
+          "sha256": "10c40aac8851d74c93c0bdeb2276f5fcec10e64f1214af93f8b73bebe11e80a3"
+        }
+      ],
+      "historicalCriterion": "US-056-AC8"
+    },
+    {
+      "criterion": "US-056-AC9",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/attempts.test.ts:28",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:42",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:63",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:23",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        },
+        {
+          "location": "tests/actions-reference/launch-owner.test.ts:9",
+          "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+        },
+        {
+          "location": "tests/actions-reference/process-recovery.test.ts:10",
+          "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:24",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:18",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:46",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        }
+      ],
+      "historicalCriterion": "US-056-AC9"
+    },
+    {
+      "criterion": "US-056-AC10",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/attempts.test.ts:36",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/composite-key.test.ts:21",
+          "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+        },
+        {
+          "location": "tests/actions-reference/lookup-horizon.test.ts:13",
+          "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+        },
+        {
+          "location": "tests/actions-reference/process-recovery.test.ts:10",
+          "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:29",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:38",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        },
+        {
+          "location": "tests/actions-reference/recovery.test.ts:55",
+          "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:16",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        }
+      ],
+      "historicalCriterion": "US-056-AC10"
+    },
+    {
+      "criterion": "US-056-AC11",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/attempts.test.ts:107",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:114",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:121",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:17",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:28",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:36",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:42",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:48",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:57",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:63",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:69",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:76",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:85",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:91",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/attempts.test.ts:97",
+          "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+        },
+        {
+          "location": "tests/actions-reference/audit.test.ts:10",
+          "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+        },
+        {
+          "location": "tests/actions-reference/audit.test.ts:22",
+          "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+        },
+        {
+          "location": "tests/actions-reference/audit.test.ts:44",
+          "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+        },
+        {
+          "location": "tests/actions-reference/executor.test.ts:11",
+          "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+        },
+        {
+          "location": "tests/actions-reference/native-refinement.test.ts:44",
+          "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+        },
+        {
+          "location": "tests/actions-reference/process-recovery.test.ts:10",
+          "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+        },
+        {
+          "location": "tests/actions-reference/reader-revocation.test.ts:12",
+          "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:47",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        }
+      ],
+      "historicalCriterion": "US-056-AC11"
+    },
+    {
+      "criterion": "US-056-AC12",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions-reference/evolution.test.ts:13",
+          "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+        },
+        {
+          "location": "tests/actions-reference/evolution.test.ts:34",
+          "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+        },
+        {
+          "location": "tests/actions-reference/invariant-mutants.test.ts:114",
+          "sha256": "fa9920c93161ba06eff400e0c41e6bd6eee245ef1fa8446684361e8d67f694ae"
+        },
+        {
+          "location": "tests/actions-reference/projection.test.ts:17",
+          "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+        },
+        {
+          "location": "tests/actions-reference/projection.test.ts:36",
+          "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+        },
+        {
+          "location": "tests/actions-reference/projection.test.ts:48",
+          "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+        },
+        {
+          "location": "tests/actions-reference/reader-revocation.test.ts:12",
+          "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:13",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:20",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:24",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        },
+        {
+          "location": "tests/actions-reference/receipts.test.ts:28",
+          "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:16",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:31",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:39",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:47",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        },
+        {
+          "location": "tests/actions-reference/restore.test.ts:54",
+          "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+        }
+      ],
+      "historicalCriterion": "US-056-AC12"
+    },
+    {
+      "criterion": "US-078-AC1",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:15",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        }
+      ],
+      "historicalCriterion": "US-055-AC1"
+    },
+    {
+      "criterion": "US-078-AC2",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:23",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        }
+      ],
+      "historicalCriterion": "US-055-AC2"
+    },
+    {
+      "criterion": "US-078-AC3",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:29",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        }
+      ],
+      "historicalCriterion": "US-055-AC3"
+    },
+    {
+      "criterion": "US-078-AC4",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:37",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/contracts.test.ts:54",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/contracts.test.ts:65",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        }
+      ],
+      "historicalCriterion": "US-055-AC4"
+    },
+    {
+      "criterion": "US-078-AC5",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/assessment.test.ts:11",
+          "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+        },
+        {
+          "location": "tests/actions/assessment.test.ts:18",
+          "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+        },
+        {
+          "location": "tests/actions/assessment.test.ts:23",
+          "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+        },
+        {
+          "location": "tests/actions/assessment.test.ts:28",
+          "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+        },
+        {
+          "location": "tests/actions/contracts.test.ts:65",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/contracts.test.ts:71",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/reports.test.ts:14",
+          "sha256": "4a16043bd893f46f535367d7dd2d5f7cb8062fae5b39b75d9fe430fdfadb384e"
+        }
+      ],
+      "historicalCriterion": "US-055-AC5"
+    },
+    {
+      "criterion": "US-078-AC6",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:65",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        },
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        },
+        {
+          "location": "tests/actions/preservation.test.ts:11",
+          "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+        },
+        {
+          "location": "tests/actions/preservation.test.ts:17",
+          "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+        }
+      ],
+      "historicalCriterion": "US-055-AC6"
+    },
+    {
+      "criterion": "US-078-AC7",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/contracts.test.ts:46",
+          "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+        }
+      ],
+      "historicalCriterion": "US-055-AC7"
+    },
+    {
+      "criterion": "US-078-AC8",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        },
+        {
+          "location": "tests/actions/preservation.test.ts:22",
+          "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+        },
+        {
+          "location": "tests/actions/preservation.test.ts:30",
+          "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+        }
+      ],
+      "historicalCriterion": "US-055-AC8"
+    },
+    {
+      "criterion": "US-078-AC9",
+      "status": "current cited tests executed/pass for stated bounded scope",
+      "witnesses": [
+        {
+          "location": "tests/actions/corpus.test.ts:5",
+          "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+        }
+      ],
+      "historicalCriterion": "US-055-AC9"
+    }
+  ],
+  "implementationRecords": {
+    "nativeCompositeKey": {
+      "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "bun": "1.4.2",
+      "components": 2,
+      "family": "string",
+      "swappedIdentitiesDistinct": true,
+      "commits": 2,
+      "restartedReplay": "exact",
+      "scope": "One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"
+    },
+    "nativeUnsupportedRelationships": {
+      "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "bun": "1.4.2",
+      "declarations": [
+        "owned",
+        "association-record"
+      ],
+      "validMetadata": true,
+      "independentLayoutControl": "admitted",
+      "allInputsTyped": "admitted",
+      "prepare": "refused",
+      "preview": "unsupported/PARAMETER",
+      "invoke": "unsupported/PARAMETER",
+      "businessAccesses": 0,
+      "transactionalWrites": 0,
+      "allActionTablesGuarded": 20,
+      "allActionRowsUnchanged": true,
+      "scope": "Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"
+    },
+    "nativeRefinement": {
+      "profile": "umf.actions.finite-idempotent-set/1",
+      "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "alphabet": [
+        "invoke-A",
+        "invoke-B",
+        "lookup-A",
+        "revoke",
+        "grant",
+        "retire"
+      ],
+      "depth": 3,
+      "traces": 216,
+      "transitions": 648,
+      "mismatches": 0,
+      "scope": "One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"
+    },
+    "nativeMutation": {
+      "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "killed": 3,
+      "total": 3,
+      "witnesses": [
+        {
+          "id": "skip-replay",
+          "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+          "mutantSha256": "6c745a46fbaf20bb4efb9e516f3a8e5d44399587fcef04aaeb9ff4172a3df67d",
+          "trace": [
+            "invoke-A",
+            "invoke-A"
+          ],
+          "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"
+        },
+        {
+          "id": "ignore-role-membership",
+          "sourceSha256": "78265b7610012a9ea028ec117d6ff67608ef5bd4558eb12dabf56724eefd2865",
+          "mutantSha256": "9d9fcd5f213e9b2797c55a8bf07ebad7a0b1764f8ea91ed3fc154c30e46b9a15",
+          "trace": [
+            "invoke-A",
+            "revoke",
+            "invoke-A"
+          ],
+          "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 revoke \u2192 invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"
+        },
+        {
+          "id": "omit-terminal-audit",
+          "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+          "mutantSha256": "e80b4a2b64ca1f21736aa52d118bc4c041670d26e4b1b00a00a3c571979d3147",
+          "trace": [
+            "invoke-A"
+          ],
+          "reason": "Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"
+        }
+      ]
+    },
+    "nativeInvariantMutation": {
+      "bun": "1.4.2",
+      "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "killed": 2,
+      "total": 2,
+      "witnesses": [
+        {
+          "id": "per-key-canonical-identity",
+          "sourceSha256": "a4f5b334780f9945b26108fc7b5ac12132398961d2b6b745ba4764a4bdda3c30",
+          "mutantSha256": "1fa33c5a3edf594a89907d77267aaa04c3a6f1fe7cb1eac87c8849147991106c",
+          "baseline": "passed",
+          "boundary": "alias canonical identity",
+          "expected": [
+            "entity:2",
+            "entity:2"
+          ],
+          "actual": [
+            "key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]",
+            "key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"
+          ]
+        },
+        {
+          "id": "skip-missing-projection-prefix",
+          "sourceSha256": "d97bb62fe3b872fb2b40d84b15bd52457ffda3011b42f9cb79cf75e902503ccd",
+          "mutantSha256": "6c95edb557b90afcb6929094fd714e1a0bb4e949479a96455815d5550186a3d8",
+          "baseline": "passed",
+          "boundary": "projection missing-prefix visibility",
+          "expected": {
+            "delivery": {
+              "status": "delivered",
+              "prefix": "0"
+            },
+            "prefix": "0",
+            "content": {
+              "profile": {
+                "id": "umf.actions.native-graph",
+                "version": "1"
+              },
+              "entities": [
+                {
+                  "id": "5",
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "fields": {
+                    "[\"sales\",\"id\"]": {
+                      "string": "one"
+                    },
+                    "[\"sales\",\"status\"]": {
+                      "string": "pending"
+                    }
+                  },
+                  "version": "original-version"
+                },
+                {
+                  "id": "6",
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "fields": {
+                    "[\"sales\",\"id\"]": {
+                      "string": "two"
+                    },
+                    "[\"sales\",\"status\"]": {
+                      "string": "pending"
+                    }
+                  },
+                  "version": "original-version"
+                }
+              ],
+              "links": []
+            },
+            "queued": [
+              "2"
+            ],
+            "readStatus": "pending"
+          },
+          "actual": {
+            "delivery": {
+              "status": "delivered",
+              "prefix": "2"
+            },
+            "prefix": "2",
+            "content": {
+              "profile": {
+                "id": "umf.actions.native-graph",
+                "version": "1"
+              },
+              "entities": [
+                {
+                  "id": "5",
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "fields": {
+                    "[\"sales\",\"id\"]": {
+                      "string": "one"
+                    },
+                    "[\"sales\",\"status\"]": {
+                      "string": "pending"
+                    }
+                  },
+                  "version": "original-version"
+                },
+                {
+                  "id": "6",
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "fields": {
+                    "[\"sales\",\"id\"]": {
+                      "string": "two"
+                    },
+                    "[\"sales\",\"status\"]": {
+                      "string": "approved"
+                    }
+                  },
+                  "version": "b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"
+                }
+              ],
+              "links": []
+            },
+            "queued": [
+              "2"
+            ],
+            "readStatus": "visible"
+          }
+        }
+      ],
+      "scope": "One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"
+    }
+  }
+}

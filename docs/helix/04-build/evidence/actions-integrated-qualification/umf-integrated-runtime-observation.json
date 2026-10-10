@@ -1,0 +1,211 @@
+{
+  "native": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "native"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "auxiliary": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "auxiliary"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "regression": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "regression"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "publish": {
+    "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+    "command": [
+      "publish"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "gates": {
+    "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+    "command": [
+      "gates"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "seal": {
+    "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "command": [
+      "seal"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REPLAY_IMAGE_ID": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  },
+  "actions": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "scripts/actions-reference/qualify-foundation.ts"
+    ],
+    "entrypoint": [
+      "bun"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-5c0b99e5"
+    ]
+  }
+}

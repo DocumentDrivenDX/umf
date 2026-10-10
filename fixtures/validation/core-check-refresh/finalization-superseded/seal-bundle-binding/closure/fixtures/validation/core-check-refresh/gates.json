@@ -1,0 +1,38 @@
+{
+  "complete": true,
+  "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+  "uniqueTests": 17,
+  "files": 8,
+  "failed": 0,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/cardinality-conformance.test.ts",
+        "tests/core-ideals/facets-conformance.test.ts",
+        "tests/core-ideals/facets-evidence.test.ts",
+        "tests/core-ideals/field-conformance.test.ts",
+        "tests/core-ideals/key-conformance.test.ts",
+        "tests/core-ideals/key-evidence.test.ts",
+        "tests/core-ideals/nullability-conformance.test.ts",
+        "tests/core-ideals/relationship-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/container-gates.log",
+      "logSha256": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a",
+      "results": {
+        "passed": 17,
+        "failed": 0,
+        "assertions": 210,
+        "tests": 17,
+        "files": 8
+      }
+    }
+  ],
+  "previousEvidence": {
+    "status": "new artifact; absent from frozen source commit",
+    "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602"
+  },
+  "scope": "Complete eight-file admission run; overlapping auxiliary and affected checks excluded."
+}

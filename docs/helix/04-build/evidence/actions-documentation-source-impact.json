@@ -766,7 +766,8 @@
   ],
   "currentIntegratedInputs": {
     "comparedWith": "historical captured native-browser sourceInputs",
-    "primaryRevision": "a95c3ec18a8f904decde884a4fa252988d2a5b0f",
+    "primaryRevision": "cea3fa03480de1f3437ecd6d23e500bea618e0f3",
+    "frozenSourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
     "sourceInputs": {
       "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
       "native/arrow/flatbuffer-runtime.ts": "7e7f5eb33ebffc4e9a320780587685a91d3a099899a502b3f9c82e10e36e1c11",
@@ -5549,6 +5550,7 @@
       "scripts/binding/stable-ids-schema.ts": "90e85724a95f9beb1cc089a17939ef049eaf74627dd035f1d835437c2f0e4676",
       "scripts/browser-core-dataset-compact.ts": "b969f25dc216a56fa100c0de6c49188643a30bb1eb7a2d952fe58fc301e03b65",
       "scripts/browser-core-dataset-supply-chain.ts": "8c45b3c2a68b51b804ca44c03fbed1b05446cd111a92e7514df6ae2e39c7031e",
+      "scripts/browser-explorer-refresh.ts": "642ff55e2af4fe82cb99e381bf928f7ef59120ce038569496dad62d964b08204",
       "scripts/browser.ts": "6d2540644f9eb15fdf7503d1732836393e21c3ba892dd5182a70925c77f486ac",
       "scripts/build-arrow.ts": "f111c1694d68a55f533dc26bbc00dc7b4abc720f122e8f014cb90af092092f3f",
       "scripts/build-medical-subpacks.ts": "a74d49f9985753b86a1f5633399d1294bdafa15dcf7a3023e19175861e882990",
@@ -8448,6 +8450,7 @@
       "scripts/actions-reference/README.md",
       "scripts/browser-core-dataset-compact.ts",
       "scripts/browser-core-dataset-supply-chain.ts",
+      "scripts/browser-explorer-refresh.ts",
       "scripts/build-medical-subpacks.ts",
       "scripts/collect-medical-public-samples.py",
       "scripts/core-dataset-values-browser.ts",
