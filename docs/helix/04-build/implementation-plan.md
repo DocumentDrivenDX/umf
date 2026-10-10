@@ -9725,3 +9725,43 @@ and original case/assertion mappings with authenticated exact backend profiles.
 Complete issuance, admission drift/B10 closure, physical lowering and integrated
 native qualification remain unfinished. All132 original cases remain binding;
 no case is promoted by this field-custody checkpoint and the goal remains active.
+
+
+### Selected Key/member semantics on main — 2026-10-10
+
+Weft main bf64c8c56520d1117ace6d12b517c6b5a15559de retains actual selected Key
+and ordered-member payloads beside owner source events under CONTRACT-006. Exact
+qualified target/key-ID/member-slice references, original native Key definition,
+zero-based ordinal, native member declaration and catalog field carrier remain
+borrowed. A selected nonprimary Key stays selected when another Key is primary;
+existing canonical source member positions remain one-based without decoding.
+Resolution/retention is phase-charged and bounded, preserves original member order,
+and refuses foreign equal pointers, reordered/shortened/duplicate/missing selected
+members. Key/KeyField source-key projection equals the complete payload map; the
+legacy source-only ledger stays unchanged.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/bf64c8c56520d1117ace6d12b517c6b5a15559de/docs/helix/04-build/evidence/security-key-events/checkpoint.json)
+records559 Rust workspace tests passing across44groups, zero failed/ignored/filtered.
+All823 declared repository inputs were prefrozen and checked unchanged at terminal
+exit0 and after concurrent-main integration; external Cargo registry/build-runtime
+dependencies are excluded. Separate documentation/schema/corpus checks pass51
+artifacts/31schemas/30planned compiler criteria/636fixtures, without replacing the
+shared security acceptance plan. Initial visibility/initializer compilation errors
+and a correctly refused fixture missing mandatory Key.name are preserved with
+actual corrected runs; admission checks and assertions were not weakened.
+
+Astra ultra's read-only implementation review is clean. It independently replays
+three conditional Key-address laws/nine formulas in fresh Z3 contexts (3UNSAT/6SAT)
+and verifies all four current source pins, prefreeze/recheck and pre-solve SMT
+capture. These establish constructor/projection separation under stated address
+assumptions, not Rust pointer/string/usize/Vec/traversal refinement, selected-Key
+implementation proof or native enforcement. Simplified erasure controls are not
+Rust mutants. The [review receipt](https://github.com/DocumentDrivenDX/weft/blob/bf64c8c56520d1117ace6d12b517c6b5a15559de/docs/helix/04-build/evidence/security-key-events/astra-review.json)
+retains these limits and the historical producer receipt remains source-qualified.
+
+Next retain actual query projection/operator/output payloads and author complete
+independent backend kind/template/site/failure/prerequisite and original assertion
+mappings with authenticated exact profiles. Complete issuance, B10/admission-drift
+closure, physical lowering and integrated native qualification remain unfinished.
+All132 original cases remain binding; no acceptance case is promoted by this
+Key-custody checkpoint. The goal remains active.
