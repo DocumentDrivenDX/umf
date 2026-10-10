@@ -15,7 +15,7 @@ ddx:
 
 **Priority:** P0 for the owner-requested security slice.
 **Covered PRD Subsystem(s):** Extensions and Partial Participation
-**Covered PRD Requirements:** FR-45; existing FR-4/5/22/27/34 constrain participation.
+**Covered PRD Requirements:** FR-46; existing FR-4/5/22/27/34 constrain participation.
 **Cross-Subsystem Rationale:** Security authoring and binding qualification form
 one portable-policy capability; query execution remains consumer-owned.
 
@@ -116,7 +116,7 @@ this library. Full timing-channel resistance is outside the initial profile.
 
 ## Dependencies
 
-FR-45, CONTRACT-001, CONTRACT-040/041/042, CONTRACT-062/063 and SD-008.
+FR-46, CONTRACT-001, CONTRACT-040/041/042, CONTRACT-062/063 and SD-008.
 Weft owns query lowering; consumers own execution and native installation.
 
 ## Out of Scope

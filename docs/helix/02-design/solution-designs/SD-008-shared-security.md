@@ -17,7 +17,7 @@ ddx:
 
 ## Scope
 
-Feature FEAT-008 implements FR-45 through an independently versioned extension.
+Feature FEAT-008 implements FR-46 through an independently versioned extension.
 Governing authorities: CONTRACT-001/040/041/042, current architecture and concerns.
 CONTRACT-062/063 own exact semantics, bindings and evidence admission.
 
