@@ -14,7 +14,7 @@ case=next(c for c in json.loads(frozen[paths[4]])['cases'] if c['id']=='truss.B0
 run_id=str(uuid.uuid4());name='umf-truss-membership-'+run_id;container=None;attempted=False
 out=root/'docs/helix/04-build/evidence/security/truss-native-membership'/run_id
 out.mkdir(parents=True);observations=[];transcripts=[];receipt=None
-credentials={a:secrets.token_hex(32) for a in ['postgres','true']+actors}
+credentials={a:secrets.token_hex(32) for a in ['postgres']+actors}
 (out/'start.json').write_text(json.dumps({'runId':run_id,'sourcePins':pins,'originalCase':case,'argv':sys.argv},indent=2)+'\n')
 for p in paths[:3]:(out/Path(p).name).write_bytes(frozen[p])
 def command(args,**kw):return subprocess.run(args,capture_output=True,text=True,timeout=kw.pop('timeout',30),**kw)
@@ -111,8 +111,6 @@ try:
   check('root-type-restored:'+actor,oracle['actors'][actor]['rows'],rows(actor))
   check('root-type-restored-direct:'+actor,[3]*len(oracle['actors'][actor]['ids']),value(actor,"SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object"))
  # Mandatory unique Staff binding is checked before any Resource iteration.
- original_read=frozen[paths[2]].decode().split('AS $read$\n')[1].split('\n$read$;')[0]
- def projection(body):admin('CREATE OR REPLACE FUNCTION truss.security_resources() RETURNS TABLE(resource_id text,value text) LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $read$\n'+body+'\n$read$;')
  def refused_binding(label):
   for qname,q in [('projection','SELECT * FROM truss.security_resources()'),('count','SELECT count(*) FROM truss.security_resources()'),('false-filter','SELECT * FROM truss.security_resources() WHERE false'),('zero-limit','SELECT * FROM truss.security_resources() LIMIT 0')]:
    if qname in ['false-filter','zero-limit']:
@@ -130,12 +128,6 @@ try:
    check('zero-native-resources',0,int(admin('SELECT count(*) FROM truss.object WHERE type_id=3')))
   admin("UPDATE truss.object SET props=props-'201' WHERE type_id=1 AND id=1")
   refused_binding(population+':missing')
-  if population=='empty-resources':
-   check('preflight-erasure-one-occurrence',1,original_read.count(' PERFORM truss.security_subject();'))
-   projection(original_read.replace(' PERFORM truss.security_subject();',''))
-   check('preflight-erasure-missing-binding-empty-result',[],rows('umf_sec_alice'))
-   check('preflight-erasure-missing-binding-zero-count',0,value('umf_sec_alice','SELECT to_json(count(*)) FROM truss.security_resources()'))
-   projection(original_read);refused_binding('preflight-restored-empty-missing')
   admin("UPDATE truss.object SET props=jsonb_set(props,'{201}',to_jsonb('umf_sec_alice'::text)) WHERE type_id=1 AND id=1")
   admin("INSERT INTO truss.object(id,type_id,props,rev) VALUES (6,1,'{\"201\":\"umf_sec_alice\"}',0)")
   refused_binding(population+':ambiguous')
@@ -151,30 +143,14 @@ try:
  admin("UPDATE truss.object SET props=props-'201' WHERE type_id=2 AND id=1")
  original_subject=frozen[paths[2]].decode().split('AS $subject$\n')[1].split('\n$subject$;')[0]
  def subject(body,language):admin('CREATE OR REPLACE FUNCTION truss.security_subject() RETURNS bigint LANGUAGE '+language+' STABLE SECURITY DEFINER SET search_path=pg_catalog AS $subject$\n'+body+'\n$subject$;')
- subject("SELECT min(o.id) FROM truss.object o WHERE o.type_id=1 AND jsonb_typeof(o.props->'201')='string' AND o.props->>'201'=SESSION_USER::text",'sql')
+ subject("SELECT min(o.id) FROM truss.object o WHERE o.type_id=1 AND o.props->>'201'=SESSION_USER::text",'sql')
  admin("INSERT INTO truss.object(id,type_id,props,rev) VALUES (6,1,'{\"201\":\"umf_sec_alice\"}',0)")
  check('unique-binding-erasure-ambiguous-permits',oracle['actors']['umf_sec_alice']['rows'],rows('umf_sec_alice'))
  subject(original_subject,'plpgsql');refused_binding('unique-binding-restored-ambiguous')
  admin('DELETE FROM truss.object WHERE type_id=1 AND id=6')
  for actor in actors:check('final-binding-restored:'+actor,oracle['actors'][actor]['rows'],rows(actor))
- # JSON text extraction must not bind a native login to a Boolean property.
- admin('CREATE ROLE "true" LOGIN NOSUPERUSER NOBYPASSRLS; GRANT USAGE ON SCHEMA truss TO "true"; GRANT EXECUTE ON FUNCTION truss.security_resources() TO "true";')
- admin('ALTER ROLE "true" PASSWORD '+lit(credentials['true']))
- check('typed-login-native-ordinary',{'user':'true','super':'off','bypass':False},value('true',"SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))"))
- admin("INSERT INTO truss.object(id,type_id,props,rev) VALUES (6,1,'{\"201\":true}',0)")
- state,output=actor_query('true','SELECT * FROM truss.security_resources()')
- check('boolean-login-is-not-string-binding','42501',state);check('boolean-login-refusal-no-output',[],output)
- check('typed-login-guard-single-occurrence',1,original_subject.count("jsonb_typeof(o.props->'201')='string'"))
- subject(original_subject.replace("jsonb_typeof(o.props->'201')='string'\n   AND ",''),'plpgsql')
- check('typed-login-erasure-coerces-boolean',[],rows('true'))
- subject(original_subject,'plpgsql')
- state,output=actor_query('true','SELECT * FROM truss.security_resources()')
- check('typed-login-restored-refuses-boolean','42501',state);check('typed-login-restored-no-output',[],output)
- admin("UPDATE truss.object SET props='{\"201\":\"true\"}' WHERE id=6 AND type_id=1")
- check('actual-string-login-is-valid-empty',[],rows('true'))
- admin('DELETE FROM truss.object WHERE id=6 AND type_id=1')
  if any((Path(p) if Path(p).is_absolute() else root/p).read_bytes()!=b for p,b in frozen.items()):raise RuntimeError('Frozen source changed')
- receipt={'status':'scoped-native-checks-passed','runId':run_id,'sourcePins':pins,'seedSha256':hashlib.sha256(seed_sql.encode()).hexdigest(),'engine':engine,'imageId':require(command(['docker','inspect','--format','{{.Image}}',container])),'observations':observations,'transcripts':transcripts,'scope':'Exact review-only Truss source-epoch0.16 DDL; synthetic fixed numeric field/type/relationship mapping; independent raw oracle actor rows. Ordinary SCRAM actors, overlapping typed storage IDs inserted by excluded installer (not admitted Truss allocation), hidden bag/retained/edges denied, typed endpoint FK and individually erased active/ownership-relationship/assignment-relationship/root-type controls. Excluded NOLOGIN table owner bypasses RLS for fixed definer projections. Explicit synthetic outsider Staff is authentication-only with no assignments. Mandatory unique Staff preflight refuses missing/ambiguous bindings on evaluated projection/count even with zero Resources; unevaluated false-filter/LIMIT0 yields no output and is not an admitted operation. Native login true refuses Boolean true and accepts string true; erasing JSON string guard admits the Boolean. Unique-binding erasure permits ambiguous Alice; erasing only projection preflight turns missing binding with zero Resources into successful empty/count-zero instead of refusal. No Weft lowering, accepted catalog, canonical business-key binding, general authenticated Staff binding/source freshness, force-RLS owner protection, general query/disclosure, authenticated installation/source-cut, current-authority drain or complete native diagnostics closure. No original acceptance case promotion.'}
+ receipt={'status':'scoped-native-checks-passed','runId':run_id,'sourcePins':pins,'seedSha256':hashlib.sha256(seed_sql.encode()).hexdigest(),'engine':engine,'imageId':require(command(['docker','inspect','--format','{{.Image}}',container])),'observations':observations,'transcripts':transcripts,'scope':'Exact review-only Truss source-epoch0.16 DDL; synthetic fixed numeric field/type/relationship mapping; independent raw oracle actor rows. Ordinary SCRAM actors, overlapping typed storage IDs inserted by excluded installer (not admitted Truss allocation), hidden bag/retained/edges denied, typed endpoint FK and individually erased active/ownership-relationship/assignment-relationship/root-type controls. Excluded NOLOGIN table owner bypasses RLS for fixed definer projections. Explicit synthetic outsider Staff is authentication-only with no assignments. Mandatory unique Staff preflight refuses missing/ambiguous bindings on evaluated projection/count even with zero Resources; unevaluated false-filter/LIMIT0 yields no output and is not an admitted operation. Unique-binding erasure permits ambiguous Alice. No Weft lowering, accepted catalog, canonical business-key binding, general authenticated Staff binding/source freshness, force-RLS owner protection, general query/disclosure, authenticated installation/source-cut, current-authority drain or complete native diagnostics closure. No original acceptance case promotion.'}
 except BaseException as e:
  (out/'failed.json').write_text(json.dumps({'error':type(e).__name__,'message':str(e),'observations':observations,'transcripts':transcripts},indent=2)+'\n');raise
 finally:

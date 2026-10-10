@@ -392,3 +392,32 @@ source enums/field IDs/storage IDs with authentic accepted model/property/key
 custody and actual Weft lowering, then exercise missing/ambiguous Staff refusal,
 full reachable native inventory, diagnostics and current-authority publication.
 No fixed overlay can satisfy those remaining acceptance obligations.
+
+
+### Unique Staff binding controls
+
+The expanded original-layout producer retains217 native observations. In
+addition to the prior membership/bypass matrix, missing or duplicate Staff login
+bindings must return42501 without output on evaluated projection and count,
+for both nonempty and genuinely empty Resource collections. A valid bound
+principal with no Resources must instead return successful empty. Restore every
+original actor after each changed world. A matching login on a foreign native
+type must not count as Staff. Direct helper execution must remain denied.
+
+Use real ordinary native login `true` to distinguish Boolean JSON `true` from
+string JSON `"true"`; only the string may bind. Erase cardinality, projection
+preflight and JSON string guards separately to record their failure witnesses,
+then restore the original behaviors. Retain outer false-filter/LIMIT0 controls
+as unevaluated/no-output observations, never admission or refusal evidence.
+
+Four conditional formal laws retain12 exact SMT assertions; independently replay
+all expected solver outcomes and confirm actual source hashes. Native and formal
+correspondence is reviewed, not mechanically proved. This matrix supplements
+US-056-AC2/AC5/AC7 under CONTRACT-062/063 and does not promote any original case.
+Complete backend context/source/fact/cut/publication/diagnostics qualification
+remains mandatory before acceptance.
+
+The principal-binding count/preflight formulas are explicit guard-definition
+sanity checks; they do not independently model publication or prove SQL ordering.
+The final cardinality-erasure control retains JSON string typing. Earlier217
+and formal source snapshots remain historical rather than repinned.

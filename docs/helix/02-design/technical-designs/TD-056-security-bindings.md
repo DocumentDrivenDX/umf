@@ -1016,7 +1016,7 @@ installer-inserted overlapping numeric IDs exercise defensive typed identity;
 they are not admitted normal Truss allocation populations. No installation
 marker, issuer, seven native semantic bodies or publication path is qualified.
 
-The current [native receipt](../../04-build/evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
+The first checkpoint [native receipt](../../04-build/evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
 retains110 observations and51 transcripts against the independently authored raw
 membership oracle. All six input pins remain unchanged, including original DDL,
 overlay, runner, oracle and original case inventory. Separate active-assignment,
@@ -1046,3 +1046,62 @@ Astra ultra independently audited the final source pins, retained native outputs
 independent oracle and invocation receipts, finding no remaining blocker in this
 fixed mapping scope. The [read-only audit](../../04-build/evidence/security/truss-native-membership/astra-review.json)
 does not claim an independent native rerun.
+
+
+### Native unique Staff binding and mandatory preflight checkpoint
+
+CONTRACT-062 requires missing/ambiguous authenticated Staff mapping to refuse,
+rather than choosing one witness or treating unknown identity as false. The
+fixed graph overlay now resolves a private exact-type1 Staff binding using
+`SESSION_USER`, a JSON string guard, and native `count(*)`/`min(id)`. It returns
+an ID only for exactly one match, otherwise a uniform42501 principal-binding
+refusal. Both eligibility and the public fixed projection call it before their
+own evaluation. Projection preflight runs before Resource iteration, including
+zero native Resources. The helper has no ordinary EXECUTE grant; its excluded
+NOLOGIN definer owner remains the fixed experiment's private fact reader.
+
+The synthetic fixture adds an authentication-only outsider Staff with no
+Assignment facts; the independently authored oracle's authorized rows stay
+unchanged. Ordinary actor `true` is a separate typing control: Boolean JSON
+`true` must not bind the login, while string JSON `"true"` produces a valid empty
+result. This is a source-qualified fixed property mapping, not registered core
+Field decoding, authentic attribute issuance or accepted model/key allocation.
+
+The new [native receipt](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/native.json)
+retains217 observations at six unchanged input pins. Missing and ambiguous Staff
+bindings refuse evaluated projection/count calls both with Resource rows and
+with no Resources. Complete actor restores, foreign-type matching login, private
+helper denial and typed-login controls pass. Removing unique cardinality admits
+ambiguous Alice; removing only projection preflight converts missing binding
+with zero Resources into successful empty/count-zero. Each guard is restored.
+Three fresh exact-invocation controls pass against this final executable.
+The earlier110/191/206 checkpoints qualify their captured earlier sources only.
+
+PostgreSQL can avoid calling the function for outer `WHERE false` or `LIMIT 0`.
+Those evaluated SQL statements yield no output but do **not** demonstrate
+principal preflight or an admitted protected operation. Arbitrary caller SQL,
+complete source/fact coverage, general authenticated binding, current-authority
+and final-publication closure remain unqualified. Uniform tested error messages
+are not arbitrary-diagnostics noninterference. No full Truss case is promoted.
+
+[Four conditional formal laws](../../04-build/evidence/security/graph-principal-formal/c3f36651-19b6-4c93-8072-6d9b1b3171a7/proof.json)
+retain12 pre-solve formulas with UNSAT safety, SAT population and SAT weakened
+control for each law. The count/min selection law assumes three distinct int64
+Staff IDs and complete exactly typed match/eligibility predicates; separate
+refusal/preflight laws admit arbitrary nonnegative cardinalities. JSON string-tag
+necessity is a conditional decoding law. All12 formulas replay with Z3 4.15.4.
+The explicit model relates to native controls by human source review, not an
+automatic translation or SQL/Rust refinement proof. Native source authentication,
+accepted property/key decoding, completeness and current-cut ordering remain
+premises awaiting backend implementation/evidence. Original132 required cases
+remain binding and historical acceptance remains26/132.
+
+The principal-binding count/preflight formulas are explicit guard-definition
+sanity checks; they do not independently model publication or prove SQL ordering.
+The final cardinality-erasure control retains JSON string typing. Earlier217
+and formal source snapshots remain historical rather than repinned.
+
+The [Astra ultra final read-only review](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/astra-review.json)
+verified all current native/formal source pins and independently replayed12
+formulas, finding no remaining issue in this fixed-fixture scope. It did not
+execute a native rerun or promote acceptance.

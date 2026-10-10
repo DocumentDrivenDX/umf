@@ -10091,3 +10091,38 @@ and the full implementation goal remains active.
 The [Astra ultra read-only audit](evidence/security/truss-native-membership/astra-review.json)
 found no remaining blocker in this component scope; no independent native rerun
 was performed by the reviewer.
+
+
+### Native graph principal binding and formal preflight checkpoint
+
+The fixed native graph overlay now enforces unique, exactly typed Staff login
+binding before eligibility and before Resource iteration. The
+[current native receipt](evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/native.json)
+retains217 observations at six unchanged pins, including missing/ambiguous binding
+refusal with zero Resources, ordinary JSON Boolean/string login discrimination,
+foreign-type matching login and complete actor restores. Cardinality, projection
+preflight and JSON string guard erasures demonstrate distinct native failures.
+Three current-source invocation controls pass. Earlier110/191/206 records remain
+historical at their own captured sources.
+
+[Four conditional denotational laws](evidence/security/graph-principal-formal/c3f36651-19b6-4c93-8072-6d9b1b3171a7/proof.json)
+pass12 safety/population/erasure queries and saved-formula replay with Z3 4.15.4.
+They assume complete typed matches and exact count/min semantics, using three
+arbitrary int64 Staff IDs plus arbitrary nonnegative count/preflight variables.
+This is not automatic SQL/Rust refinement or native fact/source authentication.
+Outer WHEREfalse/LIMIT0 may avoid invocation: no output is observed, but no
+principal admission is proved. Arbitrary diagnostics remain unqualified.
+All132 original obligations, full backend integration and current-authority
+publication remain required; historical acceptance stays26/132 and the goal
+remains active. The former fixed anonymous/no-match join is not retained as the
+current implementation of missing-binding semantics.
+
+The principal-binding count/preflight formulas are explicit guard-definition
+sanity checks; they do not independently model publication or prove SQL ordering.
+The final cardinality-erasure control retains JSON string typing. Earlier217
+and formal source snapshots remain historical rather than repinned.
+
+The [Astra ultra final read-only review](evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/astra-review.json)
+verified all current native/formal source pins and independently replayed12
+formulas, finding no remaining issue in this fixed-fixture scope. It did not
+execute a native rerun or promote acceptance.

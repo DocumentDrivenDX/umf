@@ -151,7 +151,7 @@ try:
  admin("UPDATE truss.object SET props=props-'201' WHERE type_id=2 AND id=1")
  original_subject=frozen[paths[2]].decode().split('AS $subject$\n')[1].split('\n$subject$;')[0]
  def subject(body,language):admin('CREATE OR REPLACE FUNCTION truss.security_subject() RETURNS bigint LANGUAGE '+language+' STABLE SECURITY DEFINER SET search_path=pg_catalog AS $subject$\n'+body+'\n$subject$;')
- subject("SELECT min(o.id) FROM truss.object o WHERE o.type_id=1 AND jsonb_typeof(o.props->'201')='string' AND o.props->>'201'=SESSION_USER::text",'sql')
+ subject("SELECT min(o.id) FROM truss.object o WHERE o.type_id=1 AND o.props->>'201'=SESSION_USER::text",'sql')
  admin("INSERT INTO truss.object(id,type_id,props,rev) VALUES (6,1,'{\"201\":\"umf_sec_alice\"}',0)")
  check('unique-binding-erasure-ambiguous-permits',oracle['actors']['umf_sec_alice']['rows'],rows('umf_sec_alice'))
  subject(original_subject,'plpgsql');refused_binding('unique-binding-restored-ambiguous')

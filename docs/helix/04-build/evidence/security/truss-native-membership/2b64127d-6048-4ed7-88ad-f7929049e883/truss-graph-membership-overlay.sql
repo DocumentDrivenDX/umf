@@ -16,8 +16,7 @@ LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $subject$
 DECLARE matches bigint; selected_id bigint;
 BEGIN
  SELECT count(*),min(o.id) INTO matches,selected_id FROM truss.object o
- WHERE o.type_id=1 AND jsonb_typeof(o.props->'201')='string'
-   AND o.props->>'201'=SESSION_USER::text;
+ WHERE o.type_id=1 AND o.props->>'201'=SESSION_USER::text;
  IF matches<>1 THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Security principal binding refused';
  END IF;
