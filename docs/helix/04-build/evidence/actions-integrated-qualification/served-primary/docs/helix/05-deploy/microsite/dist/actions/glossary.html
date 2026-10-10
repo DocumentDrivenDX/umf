@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Words used in this guide · UMF</title><meta name="description" content="Learn UMF actions through real examples, readable diagrams and scoped evidence."><link rel="stylesheet" href="guide.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../index.html">UMF</a><a href="../docs.html">Developers</a><a href="index.html">Actions</a><a href="../explorer.html">Schema explorer</a><a href="../demo.html">Playground</a></header><div class="layout"><aside aria-label="Action guide"><nav><a href="index.html">Understand and use UMF actions</a>
+<a href="concepts.html">Meet the model</a>
+<a href="getting-started.html">Inspect your first action</a>
+<a href="declarations.html">Describe a change precisely</a>
+<a href="execution.html">Follow a consumer execution</a>
+<a href="receipts-and-queries.html">Know when a query is fresh enough</a>
+<a href="formal-analysis.html">Find mistakes before they become incidents</a>
+<a href="api-reference.html">Public action API reference</a>
+<a href="support-and-evidence.html">Check support and evidence</a>
+<a href="glossary.html" aria-current="page">Words used in this guide</a></nav></aside><main id="content"><h1 id="words-used-in-this-guide">Words used in this guide</h1>
+<ul>
+<li>Action: a versioned declaration describing a requested change and its obligations.</li>
+<li>Command: a request for a decision that may change business state.</li>
+<li>Query: a request to read information without performing a business change.</li>
+<li>Event or fact: a statement that something committed; delivery may repeat.</li>
+<li>Extension: separately versioned meaning attached to the core model.</li>
+<li>Registry: explicitly installed vocabulary packages and their semantic checking callbacks.</li>
+<li>Field: definition of an admitted value and its constraints.</li>
+<li>Record: definition grouping Fields into an entity shape.</li>
+<li>Key: an ordered tuple identifying an entity under exact declared equality rules.</li>
+<li>Frame: frozen selected identities and explicitly permitted reads or writes.</li>
+<li>Recipe: an ordered list of required primitive effects.</li>
+<li>Handler: separately registered implementation operating through bounded capabilities.</li>
+<li>Precondition: a rule over admitted pre-write state; false invocation conditions yield business rejection.</li>
+<li>Postcondition: a rule checked before commit against candidate post-state and retained pre-state; failure rolls back.</li>
+<li>Replay token: caller key within a trusted scope used to recognize the original request and outcome.</li>
+<li>Revision: immutable identity of the exact retained declaration snapshot.</li>
+<li>Version: adapter-owned opaque identity used for commit or resource checks; not a universal clock.</li>
+<li>Receipt: store/epoch/version binding used to request qualified read freshness.</li>
+<li>Epoch: identity separating store visibility histories, such as after restore.</li>
+<li>Outbox: publication facts retained atomically with the business transaction.</li>
+<li>Projection: read model built from committed facts, with defined content semantics.</li>
+<li>Contiguous prefix: every commit position through a point has been applied, without holes.</li>
+<li>CQRS: separation of command and query responsibilities; event sourcing is optional.</li>
+<li>Invariant: property required to hold in every accepted state.</li>
+<li>Counterexample: specific case violating a claimed property.</li>
+<li>Refinement: checking that an implementation&#39;s steps agree with an independently stated model.</li>
+<li>Mutation test: deliberately faulty implementation used to check that verification detects its fault.</li>
+<li>SMT: Satisfiability Modulo Theories, solving encoded logical constraints under stated domains.</li>
+<li>TLA+ / TLC: specification language and finite model checker for states and transitions.</li>
+<li>Native witness: observed behavior from the actual named store/runtime, not a simulation.</li>
+</ul></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"81850e486cfdf6a18d395a594cb59fad6b3222920feff08cc19787f8b2c5c17c"}</script></body></html>

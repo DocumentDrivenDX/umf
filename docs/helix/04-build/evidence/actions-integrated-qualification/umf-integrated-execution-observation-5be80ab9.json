@@ -1,0 +1,389 @@
+{
+  "coordinator": {
+    "path": "/private/tmp/umf-strict-primary-qualification-5be80ab9.py",
+    "sha256": "1b381cc9e8cab1308c4c664b0b47e46212dcf1b931f2f77090ac9ddfb7a2bc12"
+  },
+  "profile": "umf.actions.integrated-execution-observation/3",
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "runtimeImage": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+  "finalizationRuntime": {
+    "profile": "umf.actions.core08-finalization-runtime/1",
+    "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "sameConfig": true,
+    "parentLayersPreserved": true,
+    "addedLayers": [
+      "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+      "sha256:4771ae7c48f6ebf1badf8f2e28d76e3b4732b6f571656aaee082716c4b8876ae"
+    ],
+    "files": {
+      "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+      "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+      "seal.py": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9"
+    },
+    "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+  },
+  "filesystemOverlay": {
+    "path": "/private/tmp/umf-primary-local-filesystem-5be80ab9.json",
+    "sha256": "1541dfc5fd5a33e0ed163021de3f9fad89c30fdcb400d7a33fdbef9f936bbaeb"
+  },
+  "runs": [
+    {
+      "stage": "prepare",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-prepare",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-prepare",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "prepare"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-prepare.log",
+      "logSha256": "6a046c2ba10df89d9ecdde8a72587caa1692a1a9b4612d5693812c8f5a498fa2",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/prepare-runtime-observation.json": "0c69d5e68cdf573b36f1c0fa808488b14f1d4c729d6dbdaa0ea6eb86aac06f1b"
+      }
+    },
+    {
+      "stage": "native",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-native",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-native",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "native"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-native.log",
+      "logSha256": "f7d60c5f272deb3b996b0af891aeea247975cf89a45fad35f2d5b72447ae6a19",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/native-browser.json": "001f71cad85904cd7384cb9822723d32b07c52535b7f8e990cbf5af9a8b89e62"
+      }
+    },
+    {
+      "stage": "auxiliary",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-auxiliary",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-auxiliary",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "auxiliary"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-auxiliary.log",
+      "logSha256": "d1bece63cea07f13f250215a682d3279268a0b7500a48ce22ce8f85569abe8fd",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/auxiliary.json": "d25280b2b2d3253e0bad15502adb0e089e6019c8d7a4d81e9a3c5387ad9f628d",
+        "fixtures/extension-package-audit.json": "329bfe34582ad9a160b73dc1075fd3b8981a01be6083feb1f680b38688c950ec",
+        "fixtures/json-schema-audit.json": "ef1bcf7c9bee113e9055686f38d326b9a454bc12364eb446ff4125f9eebf62c2"
+      }
+    },
+    {
+      "stage": "regression",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-regression",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-regression",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "regression"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-regression.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/regression.json": "b86fd56e58baf62907646f6ad940f37bd4feb111c0cfe37b0afb8c7c8916699b"
+      }
+    },
+    {
+      "stage": "publish",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-publish",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-publish",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "publish"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-publish.log",
+      "logSha256": "40c4b18bc11e6c658df23be5c1b970911b82274a64ae2e5d7783d36da0a2dcd4",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/publication.json": "c2d30dd821041cd0e523900497c38d94ae783684609ea3d30523bb48a8618fe1"
+      }
+    },
+    {
+      "stage": "gates",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-gates",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-gates",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "gates"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-gates.log",
+      "logSha256": "03ba9ec8ea472e6f7ae4fff92b1893c71621adcabc965db03122b45c5edaabd6",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/container-gates.json": "554b73c7b1710529fe64082e0cccee543a0aeecdae4ae550cc1c2e9023b0b9e5",
+        "fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2"
+      }
+    },
+    {
+      "stage": "seal",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-seal",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-seal",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "seal"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-seal.log",
+      "logSha256": "f12aef7ccb4ba9d0b6f9353421abdf2e8815b7ca82589d522cf7b035bde6470a",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/final-seal.json": "3228af49d27d4221eb1ff6df7d82c631c5a23bb654aab6328cebf595d2e34ec9"
+      }
+    },
+    {
+      "stage": "actions",
+      "ownedContainer": "umf-integrated-qualification-5be80ab9-actions",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-5be80ab9",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-tests:/work/tests:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-scripts:/work/scripts:ro",
+        "-v",
+        "umf-integrated-qualification-5be80ab9-local-stories:/work/docs/helix/01-frame/user-stories:ro",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "--name",
+        "umf-integrated-qualification-5be80ab9-actions",
+        "--entrypoint",
+        "bun",
+        "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "scripts/actions-reference/qualify-foundation.ts"
+      ],
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "exitCode": 0,
+      "inputChecks": {
+        "before": {
+          "pass": true
+        },
+        "after": {
+          "pass": true
+        }
+      },
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected actual container exit; immutable input boundary results recorded separately",
+      "log": "/private/tmp/umf-integrated-qualification-5be80ab9-actions-native.log",
+      "logSha256": "f8c6f320bf90e1d1cca99ffe2e3be659aeb8bd5137e0fbfdc1d3a7b4451bb5a4",
+      "generatedReports": {
+        "fixtures/actions/reference-foundation.json": "4b15433134ac1ecef4efbb9999a41900a988a241d80956c2f63a76655b5a819b"
+      }
+    }
+  ]
+}

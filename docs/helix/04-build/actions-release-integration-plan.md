@@ -33,7 +33,53 @@ The exact per-file identity migration is recorded in
 `evidence/actions-identity-migration-900.json`; original certificate identities
 and hashes remain historical subjects.
 
-## Acceptance profile
+## Latest primary integration decision
+
+Primary advanced again to `322b193cef7c940d07b741860cf0170272628868` during
+qualification of frozen `5be80ab9e71d2da9aea589e688fdc61af0a0e251`.
+Astra Ultra reviewed the complete delta. It changes domain-pack artifact
+collections and the schema explorer, including public-entrypoint initialization,
+but leaves action, core model/validation, adapter, native runtime and native-driver
+bodies, package dependencies and Bun lock unchanged. CONTRACT-061 governs the
+new optional collection reference checks. The synchronized standalone/embedded
+schemas preserve the earlier canonical preservation-schema repair.
+
+Finish, independently audit, publish and archive the full strict 5be campaign
+before merging these later changes. Then freeze the merged revision and publish
+a **separate bounded integration report**, rather than claiming that its bytes
+received the 174-command campaign. This decision supersedes the exact-current-source
+release claim below for this latest, reviewed delta; the strict campaign itself
+and its original fingerprint checks remain mandatory and unchanged.
+
+The integration report must bind an exhaustive old/new Git delta with additions,
+deletions and per-file hashes, including documentation, website inputs, Python,
+configuration and manifests outside the core capture. Machine-check the unchanged
+implementation, native drivers, dependencies, runtime and fixtures. Admit only
+the reviewed public-entrypoint/domain-pack exceptions. Preserve all 17 original
+admission tests as executed baseline evidence; allocate every substantive semantic
+assertion explicitly to baseline or fresh merged execution. Never count a strict
+fingerprint refusal as a passing current check or weaken that guard.
+
+Fresh merged verification includes the complete behavior regression, library and
+website builds, typechecks, canonical schema parity, domain-pack and Python tests,
+all affected browsers, all 119 native action tests, 44 shared browser cases,
+metadata controls, the real PostgreSQL tutorial and bounded formal checks.
+Correct the public-company browser's renamed labels while preserving its byte
+comparison, assertions and historical-bookmark coverage. Re-run the affected native
+matrix if any shared semantic/runtime impact cannot be bounded; re-run all 174
+if that scope cannot be bounded. Inherited qualification counts and fresh merged
+counts remain separate. Website signing, responsive visual verification, main
+merge, deployed byte/signature checks and release verification remain required.
+
+### Reproducible formal tooling addition
+
+The prepared integration source is now `1d1f5eb2a21fd90a58b1fe52ce8fde9af23c96d2`, preserving the reviewed primary merge `a55345d10a6b78e8c6024e6a6796dbdadf88637a`. Astra Ultra approved a further three-file change to the formal reproduction helper and its instructions. TLC now pulls a public immutable Eclipse Temurin Java 21 image for Linux ARM64 rather than requiring an unavailable historical local image. The original model sources, properties, timeouts and bounds remain unchanged. A fresh-cache tool check passed all 22 SMT checks and 13 TLC configurations; the final merged campaign must still rerun them against its captured source. The complete reviewed delta contains 63 paths, and the integration audit reconstructs it from the immutable prepared commit.
+
+## Historical strict campaign decision
+
+This section records the earlier decision, before the latest primary delta.
+The latest decision above governs the merged release. The exact-source 5be
+campaign still executes this full strict profile as baseline qualification.
 
 Complete and retain the strict 40e campaign, including all 174 native/browser
 commands, six auxiliary commands, four complete disjoint regression shards,
@@ -136,9 +182,12 @@ and native bodies are unchanged; `preflightBytes` gains only an export keyword;
 new initialization creates private validators; domain-pack behavior changes.
 Astra found composition defensible with the executable obligations above and
 required complete assertion allocation for the original 17 admission tests.
-The selected release path instead reruns the complete strict profile, so all
-17 original admission tests execute unchanged on the current source. No extracted
-assertions or new composition authority are used for this release.
+The earlier selected path reruns the complete strict profile on frozen 5be,
+including all 17 unchanged admission tests. The latest reviewed primary delta
+uses the separate bounded integration report described above: those 17 results
+remain baseline-scoped, with fresh merged semantic checks retaining the exact
+coverage, recovery, refusal and identity assertions. No current-proof admission
+flags are manufactured for the later revision.
 This is design approval, not completed certification. Final command inventories,
 certificate hashes, source revision, results and deployment URLs remain unknown
 until their actual execution and audit. A later primary change requires a new

@@ -1,6 +1,6 @@
 {
   "complete": true,
-  "sourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d",
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
   "uniqueTests": 17,
   "files": 8,
   "failed": 0,
@@ -20,7 +20,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/container-gates.log",
-      "logSha256": "ecb466d1922c22cf3c73c83823dc1f14822ddbb725c6ae6475fe775643861679",
+      "logSha256": "d55fff303103bb1509d7659881235180a6ba21f0a8f6435fe826c7b100cbae44",
       "results": {
         "passed": 17,
         "failed": 0,
@@ -31,8 +31,9 @@
     }
   ],
   "previousEvidence": {
-    "status": "new artifact; absent from frozen source commit",
-    "sourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d"
+    "revision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+    "path": "fixtures/validation/core-check-refresh/gates.json",
+    "sha256": "3256a8cdcd04f2309500cc7f1be111ad3e29b55eda7c648720e59c976f156e74"
   },
   "scope": "Complete eight-file admission run; overlapping auxiliary and affected checks excluded."
 }

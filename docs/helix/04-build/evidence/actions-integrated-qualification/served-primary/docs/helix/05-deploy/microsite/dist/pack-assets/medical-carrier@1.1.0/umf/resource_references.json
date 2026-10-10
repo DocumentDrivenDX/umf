@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "table_name": "resource_references",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "reference_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "reference key"
+    },
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "native_path",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native path"
+    },
+    {
+      "name": "native_reference",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native reference"
+    },
+    {
+      "name": "target_key",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "target key"
+    }
+  ],
+  "primary_key": [
+    "reference_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "resource_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      },
+      {
+        "column": "target_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      }
+    ]
+  }
+}

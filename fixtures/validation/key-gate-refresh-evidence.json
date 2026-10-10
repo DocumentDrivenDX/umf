@@ -22,7 +22,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/003.log",
-      "logSha256": "adf3eb2d0e2a24181ac18061654792f40530f08f5e7a4cf7967710bbf1d6046e"
+      "logSha256": "a3a3182bb448cbc853c85daee5ef6b3999117f0fb429e91255053866cb4bb8f2"
     },
     {
       "command": [
@@ -42,7 +42,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/auxiliary-6.log",
-      "logSha256": "c1ea468aa2b7fbd8c908e5facd7b734bfb4fd1bb04e25f026690a6e0b4aab494"
+      "logSha256": "96c7970d02182acb77f67b8195a863bca16c031b4aa903835b174af6d65400db"
     },
     {
       "command": [
@@ -210,7 +210,7 @@
   "sha256": {
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
     "dist/postgresql/runtime.js": "b13ccde163fb2d139518d06338626e7110dfbe12493c546b5ac7c78a1ec2cd17",
-    "dist/umf.js": "258945bb1fcb2a4bfe4967c8919b82ef3cf29324d4f04ecebe4994c33d30a6ad",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39",
     "fixtures/avro/key-discovery-cases.json": "97ee172c126aa946de0331566a71dcf04b1487468e6995b9aee004d7a2be4aa7",
     "fixtures/avro/key-projection-generated.json": "7d9c881ded77d46ce4fce77ea92719a58a9f6fc13ff21720e452114c62c9fe95",
     "fixtures/parquet/keys/binary-metadata.parquet": "695d17f5b8bbc8d94ad622c8e964b3b16388754e3d7549c16ac210dc8891c62b",
@@ -245,27 +245,27 @@
     "fixtures/postgresql/keys.sql": "e18dad5cf600c550db4c1749b6c3cfb81ef9a673b3237ed4765775fa13510310",
     "fixtures/sqlserver/key-encodings.sql": "e2d4f081e94c38dd0dcf4c763302b81d7faec728017488f0cd1204696b9d6308",
     "fixtures/sqlserver/keys.sql": "ea5234b7f9a5b1d8193302ca6c3272f70244b7742a298e533b5610f1b660c229",
-    "fixtures/validation/key-avro-browser.json": "84eef1a3c38570c847fe630539cd10e189b2008db7cdd5eb77b0f6bc1d0013ad",
+    "fixtures/validation/key-avro-browser.json": "97293149c26b1ecdf8a8a0c4e27a6b1f55fc305d59e8ba254273a00367806336",
     "fixtures/validation/key-avro-discovery-native.json": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1",
-    "fixtures/validation/key-avro-projection-browser.json": "d49f437c018aa2ab9ba48689a1356d20a57565f2dc08266c7c3afe09ae5bcdd8",
+    "fixtures/validation/key-avro-projection-browser.json": "b181851f5fb2abfb89a27652c98aad52cd23b7c751c683a2c5b9c0b7413a4e9b",
     "fixtures/validation/key-avro-projection-native.json": "9009810781f65cf584c08b0b1c4c5f19eabf07c78c59fb8e36ba6bfd511dccca",
-    "fixtures/validation/key-parquet-browser.json": "fb8d06efeef4d6f55433816c52b2011a831e7d306a8996098ad161b5e9ac4cb4",
+    "fixtures/validation/key-parquet-browser.json": "18ada68b8c78d535d63f956c6f5719f68cb2b45233ab0161436fadbefa420ce9",
     "fixtures/validation/key-parquet-discovery-native.json": "2c5a745f2c1aacd1ee10399650b08c8d22e0a07bfd82c53608ad38bf3509b341",
-    "fixtures/validation/key-parquet-projection-browser.json": "fdb8a0a33fb94f3216c8e669fb6aee95e5cceea67488cbcc576cdf930f2d8475",
+    "fixtures/validation/key-parquet-projection-browser.json": "3a86c3febb1c184ad7f994ab64c05e1504b79562d84706df951cae3e5e5c4ed9",
     "fixtures/validation/key-parquet-projection-corpus.json": "8e814387d737f0085747ebed675de660f707cb5ad11c3001ff2698ef453621ff",
     "fixtures/validation/key-parquet-projection-native.json": "16a030ac5b5aba62169d1a4bf7a99665a155aa55811af81928dc31cb4859da77",
-    "fixtures/validation/key-postgresql-browser.json": "51560d2a442020c61d44a52733fb06d444e40dab61575d0314818f80efd1f929",
-    "fixtures/validation/key-postgresql-catalog-browser.json": "74e3e8f5f288c9ef19a6d4f9604d0cdd1ed64b31cfb66591c734c797c0ff99f4",
+    "fixtures/validation/key-postgresql-browser.json": "a66baa6210f7e9c835e91ba732e4ac8c6bb75d53dbeb4b3bff9e9fc6062c4c1d",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "43ac66605bbf62dd51de64d6409d11ae4d0d3255b4012e3209cd71e5b25319f9",
     "fixtures/validation/key-postgresql-catalog-capture.json": "bb0a16aabaa67ba463a4f334e13de206e833c19d0220766375f1a6c5da2e4b50",
     "fixtures/validation/key-postgresql-discovery-native.json": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9",
     "fixtures/validation/key-postgresql-projection-native.json": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d",
-    "fixtures/validation/key-sqlserver-browser.json": "1eef3ffd4257a09348e6a3858dac9f15a9782bf8e75dadfc6e0d6f83b949351b",
+    "fixtures/validation/key-sqlserver-browser.json": "723073b0fc3fb85424a26a6e5c44e0ce16369cbdd3e2c4e1d5c99020b5d74dd6",
     "fixtures/validation/key-sqlserver-discovery-native.json": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41",
-    "fixtures/validation/key-sqlserver-encoding-browser.json": "17cc8e629054530e1511d947d46559d985d286b035192dabd613781ddfc40f21",
+    "fixtures/validation/key-sqlserver-encoding-browser.json": "936ae5982db14c6f2646d750d4a68bcd737a06a68c0ed5ffd99c6e268dcdf856",
     "fixtures/validation/key-sqlserver-encoding-native.json": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650",
-    "fixtures/validation/key-sqlserver-projection-browser.json": "6a938501c17d269effe1822b63ec445d9df77ba854f15b11ef825cff2a18f654",
+    "fixtures/validation/key-sqlserver-projection-browser.json": "d41eae5d79c715a5de0bac01a9df17f9118cb4bf431c7753b12968530e1cf57b",
     "fixtures/validation/key-sqlserver-projection-native.json": "7f7472b8d99daf44f104f2f2fd018ba357d9eaf3c2fe3bc6cfb8cf2bf2edda8c",
-    "fixtures/validation/key-tablespec-classification-browser.json": "1fe0c116b5610d2a86728ed5e7f9a526ac7e72cfdd9f5046ac1ad270cc4276cc",
+    "fixtures/validation/key-tablespec-classification-browser.json": "a9429f9183cd3d99163deddc1071fc33a87281e80724f766c283a484f7f8e0dd",
     "fixtures/validation/key-tablespec-discovery-native.json": "de10f3d929bc2487de7b940424a863c77aeadee2d765f52852e61fdc96f41e79",
     "fixtures/validation/key-tablespec-projected-schemas.json": "29094378176b6a2e1f5bef8695e9f27c06a31fdb7c8853ed839dbc5c62a89f1c",
     "fixtures/validation/key-tablespec-projection-native.json": "4f45d32274abe35bdae854eafd84a418c9585c5a5d8b9f44ffe46f9ae6f655b6",
@@ -473,7 +473,7 @@
     "src/core-ideals/key-tablespec.ts": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
     "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
-    "src/index.ts": "08e2348ba6a57d24d9db562d7c75a57798a7d116e79c75766b5100bb0b62642a",
+    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
     "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
     "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
     "tests/core-ideals/key-avro.test.ts": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
@@ -503,11 +503,11 @@
   },
   "currentReplay": {
     "path": "fixtures/validation/core-check-refresh/native-browser.json",
-    "sha256": "e5c0d17512b60802563d3bc8e06f006bdb12bc284853b84f93ba9ae41d6ee6a1"
+    "sha256": "001f71cad85904cd7384cb9822723d32b07c52535b7f8e990cbf5af9a8b89e62"
   },
   "currentBrowserReplay": {
     "path": "fixtures/validation/core-check-refresh/auxiliary.json",
-    "sha256": "861ca7e00670ca9aaac32928c3ae9765a45c00f5d3c98daeaa19082b702108f9"
+    "sha256": "d25280b2b2d3253e0bad15502adb0e089e6019c8d7a4d81e9a3c5387ad9f628d"
   },
   "browser": "153.0.8010.12"
 }

@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "table_name": "identifiers",
+  "description": "Public-company intelligence identifiers; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "identifiers.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "company_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "identifiers.company_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "scheme",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "identifiers.scheme; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_value",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "identifiers.native_value; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "identifiers.source_id; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "company_id",
+        "references_table": "companies",
+        "references_column": "id"
+      },
+      {
+        "column": "source_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

@@ -354152,6 +354152,21 @@ function evaluateActionRule(document2, action, rule, phase, stateInput) {
   };
   return bool(evaluate(compiled.ast));
 }
+// src/domain-packs/preservation.ts
+function generatePreservationProfileSchema() {
+  return { type: "object", required: ["version", "handoff", "fixity", "events", "provenance", "originals", "primary_runtime"], properties: {
+    version: { const: "1.0.0" },
+    handoff: { const: "BagIt-1.0" },
+    fixity: { const: "sha256" },
+    events: { const: "PREMIS-3.0-semantic-mapping" },
+    provenance: { const: "PROV-O-JSON-LD" },
+    originals: { const: "authoritative-immutable-bytes" },
+    primary_runtime: { const: "tablespec-python" },
+    qualification: { type: "string", minLength: 1 },
+    derivations: { type: "array", items: { type: "object", required: ["schema_id", "source_identity"], properties: { schema_id: { type: "string", minLength: 1 }, source_identity: { type: "string", minLength: 1 }, qualification: { type: "string", minLength: 1 } }, additionalProperties: true } }
+  }, additionalProperties: true };
+}
+
 // src/domain-packs/source-schema.ts
 function generateDatasetSourceSchema() {
   const text = { type: "string", minLength: 1 };
@@ -354192,6 +354207,7 @@ function generateDomainPackSchema() {
     required: ["id", "version", "domain_types"],
     anyOf: [{ properties: { generator: {} }, required: ["generator"] }, { properties: { sources: {} }, required: ["sources"] }],
     properties: {
+      preservation: generatePreservationProfileSchema(),
       id: text,
       version,
       description: { type: "string" },
@@ -354268,6 +354284,71 @@ var schema_default8 = {
     }
   ],
   properties: {
+    preservation: {
+      type: "object",
+      required: [
+        "version",
+        "handoff",
+        "fixity",
+        "events",
+        "provenance",
+        "originals",
+        "primary_runtime"
+      ],
+      properties: {
+        version: {
+          const: "1.0.0"
+        },
+        handoff: {
+          const: "BagIt-1.0"
+        },
+        fixity: {
+          const: "sha256"
+        },
+        events: {
+          const: "PREMIS-3.0-semantic-mapping"
+        },
+        provenance: {
+          const: "PROV-O-JSON-LD"
+        },
+        originals: {
+          const: "authoritative-immutable-bytes"
+        },
+        primary_runtime: {
+          const: "tablespec-python"
+        },
+        qualification: {
+          type: "string",
+          minLength: 1
+        },
+        derivations: {
+          type: "array",
+          items: {
+            type: "object",
+            required: [
+              "schema_id",
+              "source_identity"
+            ],
+            properties: {
+              schema_id: {
+                type: "string",
+                minLength: 1
+              },
+              source_identity: {
+                type: "string",
+                minLength: 1
+              },
+              qualification: {
+                type: "string",
+                minLength: 1
+              }
+            },
+            additionalProperties: true
+          }
+        }
+      },
+      additionalProperties: true
+    },
     id: {
       type: "string",
       minLength: 1
@@ -354727,6 +354808,71 @@ var package_default62 = {
       }
     ],
     properties: {
+      preservation: {
+        type: "object",
+        required: [
+          "version",
+          "handoff",
+          "fixity",
+          "events",
+          "provenance",
+          "originals",
+          "primary_runtime"
+        ],
+        properties: {
+          version: {
+            const: "1.0.0"
+          },
+          handoff: {
+            const: "BagIt-1.0"
+          },
+          fixity: {
+            const: "sha256"
+          },
+          events: {
+            const: "PREMIS-3.0-semantic-mapping"
+          },
+          provenance: {
+            const: "PROV-O-JSON-LD"
+          },
+          originals: {
+            const: "authoritative-immutable-bytes"
+          },
+          primary_runtime: {
+            const: "tablespec-python"
+          },
+          qualification: {
+            type: "string",
+            minLength: 1
+          },
+          derivations: {
+            type: "array",
+            items: {
+              type: "object",
+              required: [
+                "schema_id",
+                "source_identity"
+              ],
+              properties: {
+                schema_id: {
+                  type: "string",
+                  minLength: 1
+                },
+                source_identity: {
+                  type: "string",
+                  minLength: 1
+                },
+                qualification: {
+                  type: "string",
+                  minLength: 1
+                }
+              },
+              additionalProperties: true
+            }
+          }
+        },
+        additionalProperties: true
+      },
       id: {
         type: "string",
         minLength: 1
@@ -355460,6 +355606,137 @@ function lookupMedicalTerminology(query, records) {
   const matches = rows.filter((r) => r.system === q.system && r.release === q.release && r.code === q.code);
   return { status: matches.length ? "matched" : "not-in-subset", matches };
 }
+// src/domain-packs/public-company.ts
+var get2 = (n, k) => n?.kind === "object" ? n.members[k] : undefined;
+function object6(n) {
+  if (n?.kind !== "object")
+    throw Error("Expected SEC object");
+  return n.members;
+}
+function array3(n) {
+  if (n?.kind !== "array")
+    throw Error("Expected SEC array");
+  return n.items;
+}
+function text4(n, required = false) {
+  if (!required && (n === undefined || n.kind === "null"))
+    return null;
+  if (n?.kind !== "string" || required && !n.value)
+    throw Error("Expected SEC string");
+  return n.value;
+}
+function token(n) {
+  if (n === undefined || n.kind === "null")
+    return null;
+  if (n.kind !== "number")
+    throw Error("Expected SEC numeric token");
+  return n.value;
+}
+function identity14(root, sourceId) {
+  object6(root);
+  if (typeof sourceId !== "string" || !sourceId || sourceId.length > 1024)
+    throw Error("Invalid SEC source identity");
+  const native = get2(root, "cik");
+  const cik = native?.kind === "string" ? native.value : token(native);
+  if (!cik || !/^[0-9]{1,10}$/.test(cik) || BigInt(cik) === 0n)
+    throw Error("Invalid SEC CIK");
+  return cik.padStart(10, "0");
+}
+var key14 = (...parts) => JSON.stringify(parts);
+var pointer4 = (s) => s.replaceAll("~", "~0").replaceAll("/", "~1");
+function projectSecSubmissions(input, sourceId) {
+  const root = parseNativeJson(input), cik = identity14(root, sourceId);
+  const name = text4(get2(root, "name"), true);
+  const identifiers = [{ id: key14(sourceId, "cik"), company_id: cik, scheme: "SEC-CIK", native_value: cik, source_id: sourceId }];
+  for (const field of ["tickers", "exchanges"]) {
+    const values = get2(root, field);
+    if (values !== undefined)
+      array3(values).forEach((n, i) => identifiers.push({
+        id: key14(sourceId, field, String(i)),
+        company_id: cik,
+        scheme: field,
+        native_value: text4(n, true),
+        source_id: sourceId
+      }));
+  }
+  const recent = object6(get2(get2(root, "filings"), "recent"));
+  const required = ["accessionNumber", "filingDate", "reportDate", "form", "primaryDocument", "items"];
+  for (const name of required)
+    if (!Object.hasOwn(recent, name))
+      throw Error("Missing SEC recent column: " + name);
+  const columns = Object.entries(recent).map(([name, n]) => [name, array3(n)]);
+  const count = array3(recent.accessionNumber).length;
+  if (columns.some(([, values]) => values.length !== count))
+    throw Error("Unequal SEC recent arrays");
+  const used = new Set;
+  const filings = [];
+  for (let i = 0;i < count; i++) {
+    const native = { kind: "object", members: Object.fromEntries(columns.map(([name, values]) => [name, values[i]])) };
+    const accession = text4(get2(native, "accessionNumber"), true);
+    if (!/^\d{10}-\d{2}-\d{6}$/.test(accession) || used.has(accession))
+      throw Error("Invalid or duplicate SEC accession");
+    used.add(accession);
+    const primary = text4(get2(native, "primaryDocument"));
+    if (primary && (primary.startsWith("/") || /[\\?#:]/.test(primary) || primary.split("/").some((s) => !s || s === "." || s === "..")))
+      throw Error("Unsafe SEC primary document");
+    const filingDate = text4(get2(native, "filingDate"), true);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(filingDate))
+      throw Error("Invalid SEC filing date");
+    filings.push({
+      id: key14(cik, accession),
+      company_id: cik,
+      snapshot_id: sourceId,
+      accession,
+      filing_date: filingDate,
+      report_date: text4(get2(native, "reportDate")),
+      form: text4(get2(native, "form"), true),
+      items: text4(get2(native, "items")),
+      primary_document: primary,
+      primary_url: primary ? `https://www.sec.gov/Archives/edgar/data/${BigInt(cik)}/${accession.replaceAll("-", "")}/${primary}` : null,
+      native_path: "/filings/recent/" + i,
+      native_json: renderTree(native)
+    });
+  }
+  return { companies: [{ id: cik, name, source_id: sourceId }], identifiers, filings };
+}
+function projectSecCompanyFacts(input, sourceId) {
+  const root = parseNativeJson(input), cik = identity14(root, sourceId), result = [];
+  for (const [taxonomy, concepts] of Object.entries(object6(get2(root, "facts")))) {
+    for (const [concept, definition] of Object.entries(object6(concepts))) {
+      const conceptJson = renderTree({ kind: "object", members: Object.fromEntries(Object.entries(object6(definition)).filter(([name]) => name !== "units")) });
+      for (const [unit, observations] of Object.entries(object6(get2(definition, "units")))) {
+        array3(observations).forEach((observation, ordinal) => {
+          object6(observation);
+          const value = get2(observation, "val");
+          const path = `/facts/${pointer4(taxonomy)}/${pointer4(concept)}/units/${pointer4(unit)}/${ordinal}`;
+          result.push({
+            id: key14(sourceId, taxonomy, concept, unit, String(ordinal)),
+            company_id: cik,
+            snapshot_id: sourceId,
+            taxonomy,
+            concept,
+            unit,
+            ordinal: String(ordinal),
+            value: token(value),
+            value_state: value === undefined ? "absent" : value.kind === "null" ? "null" : "present",
+            start_date: text4(get2(observation, "start")),
+            end_date: text4(get2(observation, "end")),
+            accession: text4(get2(observation, "accn")),
+            filed_date: text4(get2(observation, "filed")),
+            form: text4(get2(observation, "form")),
+            fiscal_year: token(get2(observation, "fy")),
+            fiscal_period: text4(get2(observation, "fp")),
+            frame: text4(get2(observation, "frame")),
+            native_path: path,
+            native_json: renderTree(observation),
+            concept_json: conceptJson
+          });
+        });
+      }
+    }
+  }
+  return result;
+}
 // spec/extensions/dataset-source/schema.json
 var schema_default9 = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -355823,8 +356100,39 @@ var package_default63 = {
     ]
   }
 };
+// src/domain-packs/loader.ts
+function generateDomainPackLoaderSchema() {
+  const text = { type: "string", minLength: 1 };
+  const path = { type: "string", pattern: "^(?!/)(?!.*(?:^|/)\\.\\.?/)[A-Za-z0-9_-]+(?:[./][A-Za-z0-9_-]+)*$" };
+  return {
+    $schema: "https://json-schema.org/draft/2020-12/schema",
+    $id: "urn:umf:domain-pack-loader:1.0.0",
+    type: "object",
+    required: ["version", "id", "implementation_version", "profile", "runtime", "entrypoint", "configuration_schema", "qualification", "artifacts"],
+    properties: { version: { const: "1.0.0" }, id: { const: "umf.document-loader" }, implementation_version: { const: "1.0.0" }, profile: { enum: ["court-documents", "sec-filings", "documents"] }, runtime: { const: "bun" }, entrypoint: { const: "run.ts" }, configuration_schema: { const: "inventory.schema.json" }, qualification: text, artifacts: { type: "array", minItems: 2, maxItems: 32, items: { type: "object", required: ["reference", "sha256"], properties: { reference: path, sha256: { type: "string", pattern: "^[a-f0-9]{64}$" } }, additionalProperties: true } } },
+    additionalProperties: true
+  };
+}
+var validate2 = createValidator().compile(generateDomainPackLoaderSchema());
+function inspectDomainPackLoader(input) {
+  try {
+    const value = copyJson(input);
+    if (!validate2(value))
+      return { valid: false, complete: false, diagnostics: ["Unsupported or malformed loader companion"] };
+    const refs = value.artifacts.map((a) => a.reference);
+    const diagnostics = [];
+    if (new Set(refs).size !== refs.length)
+      diagnostics.push("Duplicate loader artifact");
+    if (!refs.includes(value.entrypoint) || !refs.includes(value.configuration_schema))
+      diagnostics.push("Incomplete loader artifact closure");
+    return { valid: !diagnostics.length, complete: !diagnostics.length, diagnostics };
+  } catch {
+    return { valid: false, complete: false, diagnostics: ["Non-JSON loader companion"] };
+  }
+}
+
 // src/domain-packs/profile.ts
-var validate2 = createValidator().compile(generateDomainPackSchema());
+var validate3 = createValidator().compile(generateDomainPackSchema());
 function inspectDomainPackInternal(input) {
   let pack;
   try {
@@ -355833,7 +356141,7 @@ function inspectDomainPackInternal(input) {
     return { valid: false, complete: false, diagnostics: [String(error)] };
   }
   const diagnostics = [];
-  if (!validate2(copyJson(pack)))
+  if (!validate3(copyJson(pack)))
     return { valid: false, complete: false, diagnostics: ["Invalid canonical domain-pack metadata"] };
   const schemas = pack.schemas ?? [], ids = schemas.map((s) => s.id), sources = pack.sources ?? {};
   if (new Set(ids).size !== ids.length)
@@ -355849,6 +356157,10 @@ function inspectDomainPackInternal(input) {
     if (components.some((c) => c.id === pack.id))
       diagnostics.push("Self composition is not supported");
   }
+  if (Object.hasOwn(pack, "loader"))
+    diagnostics.push(...inspectDomainPackLoader(pack.loader).diagnostics);
+  if (pack.preservation?.derivations?.some((d) => !ids.includes(d.schema_id)))
+    diagnostics.push("Unresolved preservation derivation schema");
   const profile = pack.execution_profile;
   if (Object.hasOwn(pack, "execution_profile")) {
     if (!profile || typeof profile !== "object" || Array.isArray(profile))
@@ -356468,7 +356780,7 @@ var canonical70 = (v) => Array.isArray(v) ? "[" + v.map(canonical70).join(",") +
 var fail11 = (message) => {
   throw new UmfError("CORE_DATASET_INPUT", message);
 };
-function identity14(value, keys) {
+function identity15(value, keys) {
   knownSchemaMembers(value, keys, "/input");
   if (Object.keys(value).length !== keys.length || keys.some((k) => typeof value[k] !== "string" || !value[k]))
     fail11("Exact nonempty qualified identity required");
@@ -356589,7 +356901,7 @@ function composeCoreDatasetValues(sourceInput, inputInput, compact) {
     knownSchemaMembers(instance, ["instanceId", "identity", "values"], "/input/records/" + index);
     if (Object.keys(instance).length !== 3 || typeof instance.instanceId !== "string" || !instance.instanceId)
       fail11("Exact record locator required");
-    identity14(instance.identity, ["module", "element"]);
+    identity15(instance.identity, ["module", "element"]);
     if (instances.has(instance.instanceId)) {
       add("DUPLICATE_DATASET_INSTANCE", "/input/records/" + index, "Duplicate record instance locator");
       keyInvalid = true;
@@ -356649,11 +356961,11 @@ function composeCoreDatasetValues(sourceInput, inputInput, compact) {
     knownSchemaMembers(link, ["instanceId", "identity", "sourceInstanceId", "target"], path);
     if (Object.keys(link).length !== 4 || typeof link.instanceId !== "string" || !link.instanceId || typeof link.sourceInstanceId !== "string" || !link.sourceInstanceId)
       fail11("Exact relationship occurrence/source locator required");
-    identity14(link.identity, ["module", "id"]);
+    identity15(link.identity, ["module", "id"]);
     knownSchemaMembers(link.target, ["identity", "values"], path + "/target");
     if (Object.keys(link.target).length !== 2)
       fail11("Exact target Key locator required");
-    identity14(link.target.identity, ["module", "element", "key"]);
+    identity15(link.target.identity, ["module", "element", "key"]);
     if (occurrences.has(link.instanceId)) {
       relationshipInvalid = true;
       add("DUPLICATE_DATASET_RELATIONSHIP", path, "Duplicate relationship occurrence locator");
@@ -357945,6 +358257,487 @@ function verifyCsvBooleanLexical(receiptInput, sourceInput, requestInput) {
     fail12("Stale or forged Boolean lexical receipt");
   return expected;
 }
+// src/domain-packs/loader-inventory.ts
+function generateLoaderInventorySchema() {
+  const text = { type: "string", minLength: 1, maxLength: 4096 };
+  const integer = (minimum, maximum) => ({ type: "integer", minimum, maximum });
+  return { $schema: "https://json-schema.org/draft/2020-12/schema", $id: "urn:umf:loader-inventory:1.0.0", type: "object", required: ["version", "id", "allowed_hosts", "request_interval_ms", "max_bytes", "max_total_bytes", "max_documents", "timeout_ms", "retries", "entries"], properties: {
+    version: { const: "1.0.0" },
+    id: text,
+    allowed_hosts: { type: "array", minItems: 1, maxItems: 32, uniqueItems: true, items: text },
+    request_interval_ms: integer(100, 60000),
+    max_bytes: integer(1, 50 * 1024 * 1024),
+    max_total_bytes: integer(1, 500 * 1024 * 1024),
+    max_documents: integer(1, 1000),
+    timeout_ms: integer(1000, 60000),
+    retries: integer(0, 3),
+    entries: { type: "array", maxItems: 1000, items: { type: "object", required: ["id", "url", "media_type", "license"], properties: { id: text, url: text, media_type: { enum: ["application/pdf", "application/json", "text/html", "text/plain"] }, expected_sha256: { type: "string", pattern: "^[a-f0-9]{64}$" }, license: { type: "object", required: ["redistribution"], properties: { redistribution: { enum: ["allowed", "restricted", "unknown"] } }, additionalProperties: true }, metadata: { type: "object" } }, additionalProperties: true } }
+  }, additionalProperties: true };
+}
+// spec/core/evolution-policy.schema.json
+var evolution_policy_schema_default = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "urn:umf:core:evolution-policy:1.0.0",
+  title: "Core evolution preservation policy",
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "profile"
+  ],
+  properties: {
+    profile: {
+      const: "core-0.8-absent-string-additions/0.1"
+    }
+  }
+};
+// spec/core/evolution-operation.schema.json
+var evolution_operation_schema_default = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "urn:umf:core:evolution-operation:1.0.0",
+  title: "Experimental bounded core revision preservation receipt",
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "operation",
+    "version",
+    "profile",
+    "before",
+    "after",
+    "beforeValidation",
+    "afterValidation",
+    "classification",
+    "complete",
+    "changes",
+    "presenceChecks",
+    "diagnostics",
+    "residuals"
+  ],
+  properties: {
+    operation: {
+      const: "inspect-core-evolution"
+    },
+    version: {
+      const: "1.0.0"
+    },
+    profile: {
+      const: "core-0.8-absent-string-additions/0.1"
+    },
+    before: {
+      $ref: "urn:umf:core:0.8.0"
+    },
+    after: {
+      $ref: "urn:umf:core:0.8.0"
+    },
+    beforeValidation: {
+      type: "object",
+      properties: {
+        valid: {
+          type: "boolean"
+        },
+        complete: {
+          type: "boolean"
+        },
+        diagnostics: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              code: {
+                type: "string",
+                minLength: 1
+              },
+              path: {
+                type: "string"
+              },
+              message: {
+                type: "string"
+              },
+              severity: {
+                enum: [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            required: [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            additionalProperties: false
+          }
+        }
+      },
+      required: [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      additionalProperties: false
+    },
+    afterValidation: {
+      type: "object",
+      properties: {
+        valid: {
+          type: "boolean"
+        },
+        complete: {
+          type: "boolean"
+        },
+        diagnostics: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              code: {
+                type: "string",
+                minLength: 1
+              },
+              path: {
+                type: "string"
+              },
+              message: {
+                type: "string"
+              },
+              severity: {
+                enum: [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            required: [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            additionalProperties: false
+          }
+        }
+      },
+      required: [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      additionalProperties: false
+    },
+    classification: {
+      enum: [
+        "preserved",
+        "breaking",
+        "unsupported"
+      ]
+    },
+    complete: {
+      type: "boolean"
+    },
+    changes: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: [
+          "beforePath",
+          "afterPath",
+          "kind"
+        ],
+        properties: {
+          beforePath: {
+            type: [
+              "string",
+              "null"
+            ]
+          },
+          afterPath: {
+            type: [
+              "string",
+              "null"
+            ]
+          },
+          kind: {
+            enum: [
+              "added-absent-string",
+              "changed-definition",
+              "removed-definition",
+              "unsupported-change"
+            ]
+          }
+        }
+      }
+    },
+    presenceChecks: {
+      type: "array",
+      items: {
+        $ref: "urn:umf:core:dataset-value-operation:1.0.0#/$defs/recordCheck"
+      }
+    },
+    diagnostics: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          code: {
+            type: "string",
+            minLength: 1
+          },
+          path: {
+            type: "string"
+          },
+          message: {
+            type: "string"
+          },
+          severity: {
+            enum: [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        required: [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        additionalProperties: false
+      }
+    },
+    residuals: {
+      type: "array",
+      items: {
+        type: "string",
+        minLength: 1
+      }
+    }
+  },
+  allOf: [
+    {
+      if: {
+        properties: {
+          classification: {
+            const: "preserved"
+          }
+        }
+      },
+      then: {
+        properties: {
+          complete: {
+            const: true
+          },
+          residuals: {
+            maxItems: 0,
+            type: "array"
+          },
+          beforeValidation: {
+            properties: {
+              valid: {
+                const: true
+              },
+              complete: {
+                const: true
+              }
+            },
+            type: "object"
+          },
+          afterValidation: {
+            properties: {
+              valid: {
+                const: true
+              },
+              complete: {
+                const: true
+              }
+            },
+            type: "object"
+          }
+        }
+      },
+      else: {
+        properties: {
+          complete: {
+            const: false
+          },
+          residuals: {
+            minItems: 1,
+            type: "array"
+          }
+        }
+      }
+    }
+  ]
+};
+
+// src/model/evolution.ts
+var policySchema = snapshotSchema(evolution_policy_schema_default);
+var receiptSchema = snapshotSchema(evolution_operation_schema_default);
+var validator100 = createValidator();
+for (const s of [schema_properties_document_schema_default, key_tuple_operation_v3_schema_default, dataset_value_operation_schema_default])
+  validator100.addSchema(snapshotSchema(s));
+var checkPolicy2 = validator100.compile(policySchema);
+var checkReceipt3 = validator100.compile(receiptSchema);
+var coreEvolutionPolicySchema = evolution_policy_schema_default;
+var coreEvolutionOperationSchema = evolution_operation_schema_default;
+function canonical72(value, work) {
+  work.charge("evolution-canonical", 1);
+  if (Array.isArray(value))
+    return "[" + value.map((x) => canonical72(x, work)).join(",") + "]";
+  if (value !== null && typeof value === "object") {
+    const keys = Object.keys(value);
+    work.charge("evolution-sort", keys.length * Math.ceil(Math.log2(keys.length + 1)));
+    return "{" + keys.sort().map((k) => JSON.stringify(k) + ":" + canonical72(value[k], work)).join(",") + "}";
+  }
+  return JSON.stringify(value);
+}
+function equal4(a, b, w) {
+  return canonical72(a, w) === canonical72(b, w);
+}
+function bounded(value, w) {
+  const n = w.count(value);
+  if (n > 1e5)
+    throw new WorkExceeded("Evolution aggregate value limit");
+  preflightBytes(value, w);
+}
+function compose(beforeInput, afterInput, policyInput, work) {
+  const policy = work.copy(policyInput);
+  bounded(policy, work);
+  reserveSchemaWork(policySchema, policySchema, policy, work, "evolution-policy");
+  if (!checkPolicy2(policy))
+    throw new UmfError("CORE_EVOLUTION_POLICY", "Explicit bounded evolution profile required");
+  const frozenBefore = work.copy(beforeInput), frozenAfter = work.copy(afterInput);
+  bounded({ before: frozenBefore, after: frozenAfter, policy }, work);
+  const beforeContext = createValueContext(frozenBefore, {}, work), afterContext = createValueContext(frozenAfter, {}, work);
+  const before = beforeContext.source, after = afterContext.source;
+  bounded({ before, after, policy }, work);
+  const changes = [], presenceChecks = [], residuals = [];
+  let broken = false;
+  const changed = (kind, beforePath, afterPath) => {
+    work.charge("evolution-change", 1);
+    changes.push({ kind, beforePath, afterPath });
+    residuals.push("Existing definition or unsupported structure differs: " + (afterPath ?? beforePath));
+    if (kind !== "unsupported-change")
+      broken = true;
+  };
+  const stripped = work.copy(after);
+  const beforeModules = before.modules, afterModules = stripped.modules;
+  if (beforeModules.length > afterModules.length)
+    changed("removed-definition", "/modules", null);
+  if (before.id !== after.id || before.umf !== after.umf)
+    changed("changed-definition", "/id", "/id");
+  for (let mi = 0;mi < beforeModules.length; mi++) {
+    const bm = beforeModules[mi], am = afterModules[mi];
+    work.charge("evolution-module", 1);
+    if (!am || am.id !== bm.id) {
+      changed("removed-definition", "/modules/" + mi, "/modules/" + mi);
+      continue;
+    }
+    if (!equal4(bm.relationships ?? [], am.relationships ?? [], work))
+      changed("changed-definition", "/modules/" + mi + "/relationships", "/modules/" + mi + "/relationships");
+    work.charge("evolution-element-index", 2 * bm.elements.length);
+    const oldIds = new Set(bm.elements.map((e) => e.id));
+    work.charge("evolution-appended-copy", Math.max(0, am.elements.length - bm.elements.length));
+    const appended = am.elements.slice(bm.elements.length);
+    const additions = new Map;
+    for (const [additionIndex, field] of appended.entries()) {
+      work.charge("evolution-added-field", 1);
+      work.walk("evolution-field-key-scan", field, 8);
+      const known = ["id", "name", "kind", "scalarType", "cardinality", "nullability", "extensions"];
+      if (field.kind === "field" && field.scalarType === "string" && field.cardinality === "one" && field.nullability === "absent-allowed" && !oldIds.has(field.id) && Object.keys(field).every((k) => known.includes(k)) && equal4(field.extensions ?? {}, {}, work))
+        additions.set(field.id, field);
+      else
+        changed(field.kind === "field" && field.nullability === "required" ? "changed-definition" : "unsupported-change", null, "/modules/" + mi + "/elements/" + (bm.elements.length + additionIndex));
+    }
+    const used = new Set;
+    for (let ei = 0;ei < bm.elements.length; ei++) {
+      const old = bm.elements[ei], next = am.elements[ei];
+      work.charge("evolution-existing-field", 1);
+      if (!next || next.id !== old.id) {
+        changed("removed-definition", "/modules/" + mi + "/elements/" + ei, null);
+        continue;
+      }
+      if (old.kind === "field" && ["kind", "scalarType", "cardinality", "nullability", "facets", "default"].some((k) => !equal4(old[k] ?? null, next[k] ?? null, work)))
+        changed("changed-definition", "/modules/" + mi + "/elements/" + ei, "/modules/" + mi + "/elements/" + ei);
+      if (old.kind === "record" && !equal4(old.keys ?? [], next.keys ?? [], work))
+        changed("changed-definition", "/modules/" + mi + "/elements/" + ei + "/keys", "/modules/" + mi + "/elements/" + ei + "/keys");
+      if (old.kind === "record" && Array.isArray(old.members) && Array.isArray(next.members)) {
+        work.charge("evolution-member-comparison-copy", Math.min(next.members.length, old.members.length));
+        if (!equal4(old.members, next.members.slice(0, old.members.length), work))
+          changed("changed-definition", "/modules/" + mi + "/elements/" + ei + "/members", "/modules/" + mi + "/elements/" + ei + "/members");
+        work.charge("evolution-member-suffix-copy", Math.max(0, next.members.length - old.members.length));
+        const suffix = next.members.slice(old.members.length);
+        for (const [suffixIndex, ref] of suffix.entries()) {
+          work.charge("evolution-member", 1);
+          if (ref.module !== bm.id || !additions.has(ref.element) || used.has(old.id + "\x00" + ref.element)) {
+            changed("unsupported-change", null, "/modules/" + mi + "/elements/" + ei + "/members");
+            continue;
+          }
+          used.add(old.id + "\x00" + ref.element);
+          const compact = afterContext.record({ module: bm.id, element: old.id }, [{ field: ref, state: "absent" }]);
+          const { sourceRef, ...body } = compact;
+          const original = work.copy({ ...body, source: after });
+          presenceChecks.push(original);
+          work.charge("evolution-field-result-scan", compact.fields.length);
+          const result = compact.fields.find((f) => f.field.module === ref.module && f.field.element === ref.element);
+          if (!result?.validation.valid || !result.validation.complete)
+            changed("changed-definition", null, "/modules/" + mi + "/elements/" + ei + "/members");
+          changes.push({ kind: "added-absent-string", beforePath: null, afterPath: "/modules/" + mi + "/elements/" + ei + "/members/" + (old.members.length + suffixIndex) });
+        }
+        work.charge("evolution-member-prefix-copy", Math.min(next.members.length, old.members.length));
+        next.members = next.members.slice(0, old.members.length);
+      }
+    }
+    for (const id of additions.keys()) {
+      work.charge("evolution-unused-scan", 2 * used.size);
+      if (![...used].some((k) => k.endsWith("\x00" + id))) {
+        changed("unsupported-change", null, "/modules/" + mi + "/elements");
+      }
+    }
+    work.charge("evolution-element-prefix-copy", Math.min(am.elements.length, bm.elements.length));
+    am.elements = am.elements.slice(0, bm.elements.length);
+  }
+  if (!equal4(before, stripped, work))
+    changed("unsupported-change", "/", "/");
+  if (!beforeContext.documentValidation.complete || !afterContext.documentValidation.complete)
+    residuals.push("Unknown retained source meaning is not classified");
+  const classification = broken ? "breaking" : residuals.length ? "unsupported" : "preserved";
+  work.charge("evolution-diagnostic-copy", beforeContext.documentValidation.diagnostics.length + afterContext.documentValidation.diagnostics.length);
+  const receipt = { operation: "inspect-core-evolution", version: "1.0.0", profile: "core-0.8-absent-string-additions/0.1", before, after, beforeValidation: beforeContext.documentValidation, afterValidation: afterContext.documentValidation, classification, complete: classification === "preserved", changes, presenceChecks, diagnostics: [...beforeContext.documentValidation.diagnostics, ...afterContext.documentValidation.diagnostics], residuals };
+  bounded(receipt, work);
+  return receipt;
+}
+function limit3(error) {
+  if (error instanceof WorkExceeded)
+    throw new UmfError("LIMIT", error.message);
+  throw error;
+}
+function inspectCoreEvolution(before, after, policy) {
+  try {
+    const work = new ValueWork, receipt = compose(before, after, policy, work);
+    reserveSchemaWork(receiptSchema, receiptSchema, receipt, work, "evolution-result");
+    if (!checkReceipt3(receipt))
+      throw new UmfError("CORE_EVOLUTION_RESULT", JSON.stringify(checkReceipt3.errors));
+    return work.copy(receipt);
+  } catch (error) {
+    return limit3(error);
+  }
+}
+function verifyCoreEvolution(receiptInput, before, after, policy) {
+  try {
+    const work = new ValueWork, receipt = work.copy(receiptInput);
+    bounded(receipt, work);
+    reserveSchemaWork(receiptSchema, receiptSchema, receipt, work, "evolution-receipt");
+    if (!checkReceipt3(receipt))
+      throw new UmfError("CORE_EVOLUTION_RECEIPT", "Closed original receipt required");
+    const expected = compose(before, after, policy, work);
+    if (!equal4(receipt, expected, work))
+      throw new UmfError("CORE_EVOLUTION_RECEIPT", "Original expected inputs or complete result differ");
+    return work.copy(expected);
+  } catch (error) {
+    return limit3(error);
+  }
+}
 export {
   ARROW_EXTENSION,
   ARROW_FLATBUFFER_EXTENSION,
@@ -358122,6 +358915,8 @@ export {
   dataset_value_compact_operation_schema_default as coreDatasetValueCompactOperationSchema,
   dataset_value_operation_schema_default as coreDatasetValueOperationSchema,
   element_selection_schema_default as coreElementSelectionSchema,
+  coreEvolutionOperationSchema,
+  coreEvolutionPolicySchema,
   facet_operation_schema_default as coreFacetOperationSchema,
   facet_operation_v2_schema_default as coreFacetOperationV2Schema,
   facet_operation_v3_schema_default as coreFacetOperationV3Schema,
@@ -358300,7 +359095,9 @@ export {
   generalizedRdfPackage,
   generalizedRdfRegistry,
   generateDatasetSourceSchema,
+  generateDomainPackLoaderSchema,
   generateDomainPackSchema,
+  generateLoaderInventorySchema,
   getArrowNode,
   getAvroFieldMetadata,
   getAvroNode,
@@ -358406,6 +359203,7 @@ export {
   inspectBinding,
   inspectCoreCardinality,
   inspectCoreElementKind,
+  inspectCoreEvolution,
   inspectCoreFacets,
   inspectCoreKeys,
   inspectCoreNullability,
@@ -358422,6 +359220,7 @@ export {
   inspectDeltaLog,
   inspectDeltaTable,
   inspectDomainPack,
+  inspectDomainPackLoader,
   inspectFieldClassification,
   inspectFieldProjection,
   inspectGeneralizedRdfDocument,
@@ -358628,6 +359427,8 @@ export {
   projectRelationshipToSqlServer,
   projectRelationshipToTableSpec,
   projectRelationshipsToPostgresql,
+  projectSecCompanyFacts,
+  projectSecSubmissions,
   projectSmithyToJsonSchema,
   projectSparkToArrow,
   projectSqlServerToAvro,
@@ -358898,6 +359699,7 @@ export {
   verifyCoreCardinalityDeclaration,
   verifyCoreDatasetValues,
   verifyCoreDatasetValuesCompact,
+  verifyCoreEvolution,
   verifyCoreFacetDeclaration,
   verifyCoreKeyOperation,
   verifyCoreKeyTuple,

@@ -4,11 +4,15 @@ A **command** requests a change. The reference consumer decides whether it can c
 
 ## Try the optional native example
 
-Docker must be running, and the local runtime must be Bun 1.4.2. This command starts its own PostgreSQL 17.9 container, seeds synthetic data, executes approval, checks native rows and cleans up its own store and container in a finally block.
+Start a local Docker daemon and install Bun 1.4.2. From the prepared repository, load the qualified Linux ARM64 PostgreSQL image and give it the tag used by the tutorial harness. The final command starts its own PostgreSQL 17.9 container, seeds synthetic data, executes approval, checks native rows and cleans up its own store and container in a finally block.
 
 ```sh
+docker pull --platform linux/arm64 postgres@sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545
+docker tag postgres@sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545 postgres:17.9
 bun run docs:example:native
 ```
+
+This pinned reference runtime is qualified on ARM64. Other platforms need their own runtime qualification; the portable declaration example remains independent of Docker.
 
 The full executable source is scripts/actions-docs/native-example.ts. It copies approve.json and explicitly changes its opaque authorization profile to umf.actions.roles/1. That copy is a new declaration retained as tutorial-r1. It provisions current approver membership and a separate replay-discovery policy. Neither role is granted by the document itself. The walkthrough makes two real approvals, replays an original result, observes a fresh-token no-op, and checks that a false postcondition discards a tentative SET before SQL persistence. It then injects an audit-table constraint failure after business writes and verifies PostgreSQL rolls back the entity rows, receipts, business sequence, outcomes and outbox facts. A false precondition instead creates a durable rejection that replays. It delivers projection event 2 before event 1, observes pending visibility, closes the gap, and compares the visible graph against independently queried PostgreSQL rows. Final counts are four outcomes and two outbox facts.
 
@@ -49,11 +53,17 @@ The reference profile serializes a store through a control lock. Arbitrary outsi
 
 A handler launch has a durable ownership record: the consumer records which container it owns before starting it. If launch or cleanup cannot be confirmed within the profile's limits, the reference consumer returns LIMIT and keeps new handler admission closed. A restart does not erase that record. Even an absent container is insufficient evidence that the ownership record was reconciled.
 
-Run the recovery demonstration after installing the pinned native test dependencies described in the getting-started guide:
+The recovery demonstration uses real Docker containers. Install Bun 1.4.2 and the Docker CLI, start a local Docker daemon with a Unix socket, and run these commands from the repository root. The qualified handler image is Linux ARM64; the reference profile requires this exact image and does not substitute another platform.
 
 ```sh
+bun install --frozen-lockfile
+docker info
+docker pull --platform linux/arm64 mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+docker image inspect sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
 bun test tests/actions-reference/launch-owner.test.ts
 ```
+
+The image inspection must report Os as linux and Architecture as arm64. Run the test suite serially against this daemon: the qualified consumer admits one handler launch at a time. Docker Desktop provides a local daemon on macOS; a remote TCP Docker endpoint is outside this reference profile.
 
 The first test deliberately delays Docker's create response. It verifies that the handler never starts, a restarted consumer refuses another launch, and recovery without the required acknowledgement refuses. It then supplies the actual acknowledged container ID to recoverReferenceHandlerLaunch, verifies removal, and successfully runs a fresh handler. This demonstrates failure, explicit recovery and successful execution with real containers.
 

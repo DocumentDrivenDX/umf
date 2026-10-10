@@ -1,0 +1,30 @@
+{
+  "coordinator": {
+    "path": "/private/tmp/umf-actions-demonstration-runner-5be80ab9.py",
+    "sha256": "e8499a8fa5a6054732017b6652ad963292c2928eb92af30864ad4f4596dca50c"
+  },
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "umf-integrated-qualification-5be80ab9",
+    "-v",
+    "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+    "-v",
+    "/var/run/docker.sock:/var/run/docker.sock",
+    "-e",
+    "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+    "--entrypoint",
+    "bun",
+    "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "run",
+    "docs:example:native"
+  ],
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "exitCode": 0,
+  "sourceHeldStable": true,
+  "postcheckError": null,
+  "log": "/private/tmp/umf-integrated-qualification-5be80ab9-native-tutorial.log",
+  "logSha256": "c976b15361c144f84596fb3cbd9de6a18ac7e80eadd97ee4db3724c150e9ce5e"
+}

@@ -3,10 +3,10 @@
   "baselineRevision": "cc1446fdf919107ec2782d6eaa85cc8bf38fffa6",
   "nativeBrowserCommands": 174,
   "regression": {
-    "passed": 2390,
+    "passed": 2441,
     "failed": 0,
-    "assertions": 136664,
-    "files": 438
+    "assertions": 160658,
+    "files": 448
   },
   "browser": "153.0.8010.12",
   "normalizedProofPaths": [
@@ -77,11 +77,11 @@
   ],
   "execution": {
     "path": "fixtures/validation/core-check-refresh/native-browser.json",
-    "sha256": "e5c0d17512b60802563d3bc8e06f006bdb12bc284853b84f93ba9ae41d6ee6a1"
+    "sha256": "001f71cad85904cd7384cb9822723d32b07c52535b7f8e990cbf5af9a8b89e62"
   },
   "finalizationPublisher": {
     "path": "scripts/publish-core-check-refresh.py",
-    "executionSourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d",
+    "executionSourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
     "executionSourceSha256": "73cf13038a873f613e05254545cebf17628b137bb4db51c476072000ff0daf23",
     "finalizationSha256": "73cf13038a873f613e05254545cebf17628b137bb4db51c476072000ff0daf23",
     "scope": "Publication-only tooling; all other captured execution inputs remain exact"

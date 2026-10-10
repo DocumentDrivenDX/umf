@@ -1,9 +1,9 @@
 {
   "complete": true,
-  "sourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d",
-  "uniqueTests": 2407,
-  "uniqueTestFiles": 446,
-  "regressionTests": 2390,
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "uniqueTests": 2458,
+  "uniqueTestFiles": 456,
+  "regressionTests": 2441,
   "gateTests": 17,
   "nativeBrowserInventoryCommands": 174,
   "currentProofConcepts": 6,
@@ -13,8 +13,9 @@
     "sealScriptSha256": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9"
   },
   "previousEvidence": {
-    "status": "new artifact; absent from frozen source commit",
-    "sourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d"
+    "revision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+    "path": "fixtures/validation/core-check-refresh/final-seal.json",
+    "sha256": "4ef7e1ec4885159b4057040ea3f726ad460a916e1c5e55423701821f255f634c"
   },
   "schemaProperties": {
     "browser": {
@@ -39,27 +40,27 @@
   ],
   "scope": "Fresh exact-source native/browser inventory, disjoint regression, complete admission gates and current core0.8 schema-properties browser/literal oracle. Auxiliary/affected overlap excluded; no core0.9 semantic-type claim, native-equivalence claim or universal correctness claim.",
   "sha256": {
-    "fixtures/validation/core-check-refresh/native-browser.json": "e5c0d17512b60802563d3bc8e06f006bdb12bc284853b84f93ba9ae41d6ee6a1",
-    "fixtures/validation/core-check-refresh/auxiliary.json": "861ca7e00670ca9aaac32928c3ae9765a45c00f5d3c98daeaa19082b702108f9",
-    "fixtures/validation/core-check-refresh/regression.json": "ad9d54ce758bd6c77e148472495cac54fb47cc65c9a268dc880c1370396e2ce9",
-    "fixtures/validation/core-check-refresh/publication.json": "46918ea87edb085fa30eb8a2cfeb55bc0f4a70745ecc2730bf541bf142d48721",
-    "fixtures/validation/core-check-refresh/gates.json": "3256a8cdcd04f2309500cc7f1be111ad3e29b55eda7c648720e59c976f156e74",
-    "fixtures/validation/core-check-refresh/container-runtime.json": "a5bf0c3c3674700caad87c424aa63d1068e821a9288686b306a7028941331f0c",
-    "fixtures/validation/core-check-refresh/container-gates.json": "073c76a0f216d3b290b87496dd1003b76a70e326b1d43363425c3f1ffe37ce53",
+    "fixtures/validation/core-check-refresh/native-browser.json": "001f71cad85904cd7384cb9822723d32b07c52535b7f8e990cbf5af9a8b89e62",
+    "fixtures/validation/core-check-refresh/auxiliary.json": "d25280b2b2d3253e0bad15502adb0e089e6019c8d7a4d81e9a3c5387ad9f628d",
+    "fixtures/validation/core-check-refresh/regression.json": "b86fd56e58baf62907646f6ad940f37bd4feb111c0cfe37b0afb8c7c8916699b",
+    "fixtures/validation/core-check-refresh/publication.json": "c2d30dd821041cd0e523900497c38d94ae783684609ea3d30523bb48a8618fe1",
+    "fixtures/validation/core-check-refresh/gates.json": "8d5a1a0abb5378128d82db45d66fb95daa515e05c9e6de2e12dcc55ff7865fd3",
+    "fixtures/validation/core-check-refresh/container-runtime.json": "c3c7c796d6f649fe82be9e99c7148e6deedfd15338a520ec3f4e42055bbe7ba8",
+    "fixtures/validation/core-check-refresh/container-gates.json": "554b73c7b1710529fe64082e0cccee543a0aeecdae4ae550cc1c2e9023b0b9e5",
     "fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2",
-    "fixtures/validation/core-check-refresh/container-affected.json": "2f6bf041d9628d88cc8e6bd7aee9d966442a33ca5200b05745cf0159ff6058b7",
+    "fixtures/validation/core-check-refresh/container-affected.json": "1e54352a4cf2b542d3b626fc26102054d6776324db8b0dae563941b211879fba",
     "fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571",
     "fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5",
-    "fixtures/validation/core-check-refresh/container-publication.json": "0278f71ac498f876a4f686b1d7da2e115a4803208e0298a32928dc66326aea8f",
-    "dist/umf.js": "258945bb1fcb2a4bfe4967c8919b82ef3cf29324d4f04ecebe4994c33d30a6ad",
-    "fixtures/validation/core-check-refresh/container-gates.log": "ecb466d1922c22cf3c73c83823dc1f14822ddbb725c6ae6475fe775643861679",
+    "fixtures/validation/core-check-refresh/container-publication.json": "01b7cd8d7593548693602ddd9e1b2838e44360791944fa75a3d14502f5e395c6",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39",
+    "fixtures/validation/core-check-refresh/container-gates.log": "d55fff303103bb1509d7659881235180a6ba21f0a8f6435fe826c7b100cbae44",
     "fixtures/validation/core-check-refresh/container-integrity.log": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa",
-    "fixtures/validation/core-check-refresh/container-affected.log": "8d3c64849ddc7170dbe5f7e0fe33fbc3b0767c3495d3f6e534b495a3e13d2cd6",
-    "fixtures/validation/core-schema-properties-browser.json": "af6f6733a2757b474d047358bf40bd98232c6a627488b5562a3e1692fbb16a5f",
+    "fixtures/validation/core-check-refresh/container-affected.log": "14ad8288cc6919b4b767e1fe95a27f596c74cfe07fdae4e4f6cf2ec9b198d339",
+    "fixtures/validation/core-schema-properties-browser.json": "617aaf08edd5c0726710cfe046099606c05e49e9b93f662cdf2659d94afa4460",
     "fixtures/validation/core-schema-properties-oracle.json": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f",
     "fixtures/validation/core-schema-properties-oracle-inputs.json": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf",
     "fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6",
-    "fixtures/validation/core-check-refresh/container-publication.log": "955a3802d393a76b1eb546bd6f43a246d653a582af7cac426db5a93b8211284d"
+    "fixtures/validation/core-check-refresh/container-publication.log": "fac46bf092d8bebe0a360e7d4993937264406c504f9242b2621b265e48d25264"
   }
 }
