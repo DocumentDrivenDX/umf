@@ -77,7 +77,7 @@ original bytes before changing inventory or installation.
 Install versioned ZIPs in separate directories. Verify artifact hashes and the
 pack manifest, then use the documented reader and fixed-data ingestion route.
 To roll back, select the previous installation and its corresponding state.
-Reverting the integration commit on master redeploys the earlier website.
+Reverting the integration commit on main redeploys the earlier website.
 
 ## Known Issues and Support
 

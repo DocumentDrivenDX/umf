@@ -2,7 +2,7 @@ name: Publish microsite
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - '.github/workflows/microsite.yml'
       - 'docs/helix/05-deploy/microsite/**'
@@ -31,7 +31,7 @@ on:
       - 'bun.lock'
       - '.innsigle/**'
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
       - '.github/workflows/microsite.yml'
       - 'docs/helix/05-deploy/microsite/**'
@@ -108,7 +108,7 @@ jobs:
           path: docs/helix/05-deploy/microsite/dist
 
   deploy:
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     permissions:

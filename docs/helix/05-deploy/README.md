@@ -10,15 +10,15 @@ The [design guide](../02-design/DESIGN.md) records the visual identity and voice
 
 [Publish microsite](../../../.github/workflows/microsite.yml) builds the
 playground with Bun 1.3.14 and uploads only the static site directory. Pull
-requests build without deploying. Pushes to `master` publish to GitHub Pages;
-the workflow can also be run manually from Actions on `master`.
+requests build without deploying. Pushes to `main` publish to GitHub Pages;
+the workflow can also be run manually from Actions on `main`.
 
 GitHub Pages is configured to use Actions. The publication address is
 https://documentdrivendx.github.io/umf/; the first publication requires this
-workflow and site source to reach `master`. The existing private Sites preview
+workflow and site source to reach `main`. The existing private Sites preview
 remains separate.
 
-To revert a site change, revert its commit on `master`; the next workflow run
+To revert a site change, revert its commit on `main`; the next workflow run
 publishes the previous source. Review the Actions run and the published pages
 after a deployment. No repository secret or separate hosting token is required.
 
