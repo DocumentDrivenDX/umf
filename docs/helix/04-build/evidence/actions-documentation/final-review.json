@@ -26,5 +26,13 @@
     "remainingFindings": 0,
     "scope": "Ten guides, eight diagrams, normal desktop/mobile and sampled 200% layouts; final corrected V4/V5/V7 approved"
   },
-  "scope": "Final documentation packaging verification after the separately frozen execution qualification. Actual primary merge, deployment and release are separate delivery observations."
+  "scope": "Final documentation packaging verification after the separately frozen execution qualification. Actual primary merge, deployment and release are separate delivery observations.",
+  "workflowManifestRefresh": {
+    "changedGuideOutputs": [
+      "manifest.json"
+    ],
+    "allReviewedHtmlAndAssetsUnchanged": true,
+    "buildChecksPassed": true,
+    "scope": "Workflow runtime handoff changed only manifest input hashes; reviewed browser and visual page bytes remain exact"
+  }
 }
