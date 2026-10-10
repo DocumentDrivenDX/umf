@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:evolution-operation:1.0.0",
+  "title": "Experimental bounded core revision preservation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "profile",
+    "before",
+    "after",
+    "beforeValidation",
+    "afterValidation",
+    "classification",
+    "complete",
+    "changes",
+    "presenceChecks",
+    "diagnostics",
+    "residuals"
+  ],
+  "properties": {
+    "operation": {
+      "const": "inspect-core-evolution"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "profile": {
+      "const": "core-0.8-absent-string-additions/0.1"
+    },
+    "before": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "after": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "beforeValidation": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "afterValidation": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "classification": {
+      "enum": [
+        "preserved",
+        "breaking",
+        "unsupported"
+      ]
+    },
+    "complete": {
+      "type": "boolean"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "beforePath",
+          "afterPath",
+          "kind"
+        ],
+        "properties": {
+          "beforePath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "afterPath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "added-absent-string",
+              "changed-definition",
+              "removed-definition",
+              "unsupported-change"
+            ]
+          }
+        }
+      }
+    },
+    "presenceChecks": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:umf:core:dataset-value-operation:1.0.0#/$defs/recordCheck"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "classification": {
+            "const": "preserved"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "complete": {
+            "const": true
+          },
+          "residuals": {
+            "maxItems": 0,
+            "type": "array"
+          },
+          "beforeValidation": {
+            "properties": {
+              "valid": {
+                "const": true
+              },
+              "complete": {
+                "const": true
+              }
+            },
+            "type": "object"
+          },
+          "afterValidation": {
+            "properties": {
+              "valid": {
+                "const": true
+              },
+              "complete": {
+                "const": true
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "complete": {
+            "const": false
+          },
+          "residuals": {
+            "minItems": 1,
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}

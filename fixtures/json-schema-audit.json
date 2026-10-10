@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 363,
-  "passed": 363,
+  "schemas": 367,
+  "passed": 367,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -167,6 +167,20 @@
     {
       "path": "spec/core/element-selection.schema.json",
       "id": "urn:umf:core:element-selection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/evolution-operation.schema.json",
+      "id": "urn:umf:core:evolution-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/evolution-policy.schema.json",
+      "id": "urn:umf:core:evolution-policy:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1006,6 +1020,20 @@
     },
     {
       "path": "spec/domain-packs/legal-appellate/loader.schema.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/domain-packs/legal-supreme-court/inventory.schema.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/domain-packs/legal-supreme-court/loader.schema.json",
       "id": null,
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
