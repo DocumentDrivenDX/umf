@@ -69,3 +69,39 @@ page overflow at either size. Resize observers disconnect on schema changes.
 Mobile export opening/Escape dismissal and ontology CMS inpatient → beneficiary
 selection pass in the real browser; graph links and stable IDs remain present.
 Graph structure and layout are unchanged. TypeScript validation passes.
+
+## Independent Astra Ultra review and fixes
+
+Astra Ultra reviewed live 1280 × 720 views and the source diff. It reproduced
+coincident stratigraphic-context paths, a hidden self-loop badge, an overview
+showing only three of 22 records without explaining the subset, a 2725 px DICOM
+page, field-filter loss on Back, an incorrectly visible SQL serialization control,
+and inaccessible interactive SVG links. Its final source pass found no blockers;
+broader graph placement remains a limitation rather than a support claim.
+
+Implemented a searchable artifact inventory with compact disclosures and lazy
+metadata rendering, visible exact references/rights/origin/download availability,
+collapsed collection semantics, and no unsupported scalar artifact export.
+Tables retain filters and scroll positions through field inspection and Back,
+with explicit empty states/live counts. Ontology overviews show the full model;
+focused views state displayed/total counts. Parallel declarations use distinct
+curves, self-loops rise above records, and diagrams expose a labelled group of
+keyboard-accessible links. Original data and qualified absence remain unchanged.
+
+Parent browser verification: SEC list has 100 declarations and 50 verified local
+links; search for submissions-0000320193 yields two rows, distinguishable as local
+projection versus reference-only original. Expanding a row retains provenance and
+checksum metadata; no-match feedback is visible. Medical NCH_PRMRY drill-in/Back
+restores its query and one matching field. SQL serialization remains hidden.
+Archaeology overview displays 22/22 records and 28/28 relationships; the two
+stratigraphic paths differ. Samples neighborhood displays 3/22 and 3/28, with
+self-loop badge at y=27 above its node at y=60. Accessible snapshot includes node
+and edge links; Tab reaches the next relationship/record. At 390 px both artifacts
+and diagram stay inside the page; the map scrolls internally. All checks run
+through the real browser. TypeScript passes; 18 targeted tests (95 assertions)
+pass, plus final loop geometry rerun. CI now qualifies counts, parallel paths,
+interactive roles and Back restoration alongside existing rights/network checks.
+
+Screenshots: [artifact inventory](schema-browser-ux/astra-artifacts.jpg),
+[ontology neighborhood](schema-browser-ux/astra-ontology.jpg),
+[filtered table](schema-browser-ux/astra-table.jpg).
