@@ -17,6 +17,13 @@ on:
       - 'scripts/build-domain-pack-releases.ts'
       - 'docs/helix/05-deploy/domain-pack-loaders.md'
       - 'docs/helix/05-deploy/document-preservation.md'
+      - 'docs/helix/05-deploy/document-research.md'
+      - 'docs/helix/04-build/evidence/supreme-court-*'
+      - 'docs/helix/04-build/evidence/public-company-live-qualification.*'
+      - 'scripts/build-document-research-release.py'
+      - 'scripts/domain-packs/supreme-court-*.py'
+      - 'scripts/domain-packs/qualify-sec-acquisition.py'
+      - 'scripts/qualification/**'
       - 'scripts/domain-packs/ontology.ts'
       - 'tests/domain-packs/**'
       - 'patches/**'
@@ -39,6 +46,13 @@ on:
       - 'scripts/build-domain-pack-releases.ts'
       - 'docs/helix/05-deploy/domain-pack-loaders.md'
       - 'docs/helix/05-deploy/document-preservation.md'
+      - 'docs/helix/05-deploy/document-research.md'
+      - 'docs/helix/04-build/evidence/supreme-court-*'
+      - 'docs/helix/04-build/evidence/public-company-live-qualification.*'
+      - 'scripts/build-document-research-release.py'
+      - 'scripts/domain-packs/supreme-court-*.py'
+      - 'scripts/domain-packs/qualify-sec-acquisition.py'
+      - 'scripts/qualification/**'
       - 'scripts/domain-packs/ontology.ts'
       - 'tests/domain-packs/**'
       - 'patches/**'
@@ -72,6 +86,8 @@ jobs:
         run: bun scripts/build-domain-pack-loaders.ts --check --site
       - name: Package fixed domain-pack releases
         run: bun scripts/build-domain-pack-releases.ts
+      - name: Package document research tools and evidence
+        run: python3 scripts/build-document-research-release.py
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog

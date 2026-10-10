@@ -36,3 +36,5 @@ is reserved for optional HTTP-context capture. Neither is implemented or claimed
 Source collection, preservation transfer and downstream schemas remain separate
 interfaces; native Spark/Unity Catalog and DuckDB sinks implement TableSpec's
 publication interface. Snowflake remains separately qualified future work.
+
+[New discovery tools and runtime evidence](https://documentdrivendx.github.io/umf/research/README.md) complement the fixed packs. Local Spark 4.0.1/Delta 4.0.0 is qualified for the documented three-court-document driver subset; live Databricks remains pending.

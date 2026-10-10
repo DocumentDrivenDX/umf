@@ -42,6 +42,14 @@ for(const root of roots){const paths=await files(root);
     if(bundle&&await Bun.file(join(dist,'packs',bundle.reference)).exists()&&new Bun.CryptoHasher('sha256').update(await Bun.file(join(dist,'packs',bundle.reference)).arrayBuffer()).digest('hex')===bundle.sha256)packEntry.assets!.push({id:'bundle',reference:bundle.reference,url:'packs/'+bundle.reference,format:'zip',dataKind:'qualified fixed corpus',sha256:bundle.sha256});
    }
   }
+  if(['legal-appellate','public-company-intelligence'].includes(pack.id)){
+   const research=join(dist,'research/release.json');
+   if(await Bun.file(research).exists()){
+    const release=await Bun.file(research).json(),bundle=release.bundles[0],archive=join(dist,'research',bundle.reference);
+    if(new Bun.CryptoHasher('sha256').update(await Bun.file(archive).arrayBuffer()).digest('hex')!==bundle.sha256)throw Error('Research bundle hash mismatch');
+    packEntry.assets=[...(packEntry.assets??[]),{id:'research-tools',reference:bundle.reference,url:'research/'+bundle.reference,format:'zip',dataKind:'discovery tools and scoped runtime evidence; no acquired originals',sha256:bundle.sha256}];
+   }
+  }
   entries.push(packEntry);
   const schemaIds=new Set<string>();for(const declaration of pack.schemas??[]){if(schemaIds.has(declaration.id))throw new Error(`Duplicate schema ID in ${identity}: ${declaration.id}`);schemaIds.add(declaration.id);
    if(typeof declaration.reference!=='string'||isAbsolute(declaration.reference))throw new Error(`Invalid local reference: ${declaration.reference}`);

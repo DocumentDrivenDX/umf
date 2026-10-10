@@ -46,3 +46,9 @@ explorer exposes their original-source assets and complete ZIPs. The Pages build
 runs `scripts/build-domain-pack-releases.ts` after loader packaging and before
 rebuilding the catalog; deterministic ZIP bytes keep website and release hashes
 aligned. HTML and its existing signatures are unchanged.
+
+
+The [document research tools 1.0.0](document-research.md) publish Supreme Court discovery,
+batching/acquisition configuration, SEC qualification harness and scoped local
+Spark evidence. Original local-use archives are excluded; live SEC/Databricks
+qualification remains pending. CONTRACT-060 governs the source mirror.

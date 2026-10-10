@@ -82,3 +82,9 @@ Official code-set revision/reuse terms only if adding native terminology, and qu
 ## Out of Scope
 
 Legal advice, production entitlement enforcement, and a complete billing ledger.
+
+
+The owner-authorized Supreme Court extension is a source-only consumer collector,
+separate from the appellate schema pack. CONTRACT-060 and US-061-AC13–15 preserve
+merits-list scope, docket/source custody, explicit PDF coverage and local-use
+rights. Public tooling and evidence ship separately from retained originals.

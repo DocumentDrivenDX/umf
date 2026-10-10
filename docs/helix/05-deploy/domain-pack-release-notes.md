@@ -111,3 +111,9 @@ offline publish, refresh and scheduled fixity audits. PREMIS XML, OCFL/WARC,
 Snowflake and live Databricks serverless are not qualified by these releases.
 See [preservation guidance](document-preservation.md) and the
 [TableSpec release](https://github.com/DocumentDrivenDX/tablespec/releases/tag/v0.0.8).
+
+
+The [document research tools 1.0.0](document-research.md) publish Supreme Court discovery,
+batching/acquisition configuration, SEC qualification harness and scoped local
+Spark evidence. Original local-use archives are excluded; live SEC/Databricks
+qualification remains pending. CONTRACT-060 governs the source mirror.

@@ -1214,3 +1214,9 @@ The [release notes](05-deploy/domain-pack-release-notes.md) cover loader 1.0.0,
 legal-appellate 1.0.0 and public-company-intelligence 1.0.0. These fixed corpora
 ship the same canonical loader and verified publication reader; their qualified
 source coverage and consumer boundaries remain separate.
+
+
+The [document research tools 1.0.0](05-deploy/document-research.md) publish Supreme Court discovery,
+batching/acquisition configuration, SEC qualification harness and scoped local
+Spark evidence. Original local-use archives are excluded; live SEC/Databricks
+qualification remains pending. CONTRACT-060 governs the source mirror.

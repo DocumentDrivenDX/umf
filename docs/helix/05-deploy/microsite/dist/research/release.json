@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "scope": "Authored discovery/qualification tools and evidence; acquired original archive excluded because redistribution rights are unknown",
+  "bundles": [
+    {
+      "id": "document-research-tools",
+      "version": "1.0.0",
+      "reference": "document-research-tools-1.0.0.zip",
+      "sha256": "a403c1882dcd0e8e3101a0f2fe56e546903108de4a73d20a31fbbef8ff5c19cc",
+      "bytes": 243152
+    }
+  ],
+  "qualification": {
+    "local_spark": "Spark 4.0.1 / Delta 4.0.0 / TableSpec 0.0.9 / umf-core 0.8.1; three court PDFs",
+    "live_sec": "pending genuine user-agent identity",
+    "live_databricks": "pending caller-designated targets"
+  }
+}

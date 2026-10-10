@@ -86,3 +86,14 @@ The legal reference pack is delivered for its recorded subset. This draft story 
 ## Out of Scope
 
 Legal advice, production entitlement enforcement, and a complete billing ledger.
+
+
+## Supreme Court source-only collection extension
+
+- **US-061-AC13:** Source-list discovery preserves case identities and explicit merits-list scope, excluded populations and incomplete PDF coverage.
+- **US-061-AC14:** Docket parsing preserves counsel source context, dated proceedings, rejected/submitted/unknown status distinctions and associated PDF URLs.
+- **US-061-AC15:** Immutable batch selection and retained hashes support replay, explicit refresh and failure visibility without replacing successful snapshots.
+
+CONTRACT-060 governs this independent consumer collector. Original party filings
+remain local-use with unknown redistribution rights; publishing tooling and
+metadata does not clear original-source redistribution or qualify Databricks.
