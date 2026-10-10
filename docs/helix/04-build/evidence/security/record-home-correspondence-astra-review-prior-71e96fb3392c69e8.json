@@ -1,0 +1,361 @@
+{
+  "id": "record-home-correspondence-astra-review",
+  "reviewer": "/root/astra_security_review",
+  "requestedModel": "Astra ultra",
+  "status": "qualified-correspondence-review-passed",
+  "generatedAt": "2026-10-10T09:09:59.975216+00:00",
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "fd1395c0d9c088dda68703a3914eac298228311e4dd1666809ab4c9f937a0aad",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "docs/helix/02-design/spikes/security/record-homes-v0.1.schema.json": "ede23e1a814b1e2bfe1b1e06758f20a2cdf7f1a71cdeb68e690ec2e04cacde91",
+    "tools/security/prove-record-home-correspondence.py": "546ba46388e8f2d97132d8c0644c28a9232d610c7c965b84a7faf4f67a38bc7e",
+    "docs/helix/04-build/evidence/security/record-home-correspondence-formal.json": "79e47b7d806b9a60035d5f77c96e9d74fd3aee68c33c9f83011086698c618c70",
+    "/private/tmp/record-home-correspondence-astra-review.py": "6d9e609883608fdd4eea02102c31e3ada9fd038ed639bc1b8893b66827abd705",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/record-home-correspondence-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "6d9e609883608fdd4eea02102c31e3ada9fd038ed639bc1b8893b66827abd705",
+    "source": "\"\"\"Independent retained-formula replay and invocation guard checks; no native/Cargo.\"\"\"\nimport hashlib, importlib.util, json, subprocess, sys, tempfile\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT=Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF=Path('/private/tmp/record-home-correspondence-astra-review.py')\nif Path.cwd().resolve()!=ROOT or Path(__file__).resolve()!=SELF or len(sys.argv)!=1:\n    raise RuntimeError('Unknown exact independent review invocation')\nsha=lambda b:hashlib.sha256(b).hexdigest()\nproducer='tools/security/prove-record-home-correspondence.py'\nproof_path='docs/helix/04-build/evidence/security/record-home-correspondence-formal.json'\noutput=ROOT/'docs/helix/04-build/evidence/security/record-home-correspondence-astra-review.json'\nprior=output.read_bytes() if output.exists() else None\nproof_bytes=(ROOT/proof_path).read_bytes()\nproof=json.loads(proof_bytes)\nexpected_sources={producer,'docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md',\n    'docs/helix/02-design/spikes/security/record-homes-v0.1.schema.json',\n    '/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs'}\nassert set(proof['sourceDigests'])==expected_sources\ncaptured={p:(ROOT/p).read_bytes() for p in expected_sources}\nassert all(sha(raw)==proof['sourceDigests'][p] for p,raw in captured.items())\nassert proof['status']=='conditional-proof-passed' and proof['sourcesUnchanged'] is True\nassert proof['nativeImplementationQualified'] is False and proof['acceptanceCasesPromoted']==[]\nself_bytes=SELF.read_bytes()\nspec=importlib.util.find_spec('z3')\nassert spec and spec.origin\nsolver_root=Path(spec.origin).resolve().parent\ndef runtime_inventory():\n    return {Path(sys.executable).resolve()}|{p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}\nruntime={str(p):p.read_bytes() for p in runtime_inventory()}\nimport z3\nassert z3.get_version_string()==proof['solverVersion']\n\nids=['endpoint-domain-retains-refinements','qualified-reference-injective',\n    'unbounded-ordered-key-correspondence','endpoint-role-target-selected-key-ordered-members',\n    'same-type-source-reuse-versus-distinct-type-partition',\n    'bidirectional-carrier-population-rejects-extra-key','carrier-multiplicity-rejects-duplicate-key',\n    'key-population-alone-does-not-prove-field-coherence','utf8-byte-limit-is-not-character-limit',\n    'known-native-images-cannot-prune-dead-branch']\nassert len(proof['cases'])==10 and [c['id'] for c in proof['cases']]==ids\nreplays=[]\nfor case in proof['cases']:\n    assert case['covers']==['US-056-AC6','US-056-AC7']\n    for kind,expected in [('violation','unsat'),('negativeControl','sat'),('positivePopulation','sat')]:\n        retained=case[kind]\n        assert retained['result']==retained['replayResult']==expected\n        formula=retained['smt']\n        assert isinstance(formula,str) and formula\n        assert not any(x in formula for x in ['model-add','model-del','model-converter'])\n        context=z3.Context();solver=z3.Solver(ctx=context);solver.set(timeout=10000)\n        solver.from_string(formula)\n        observed=str(solver.check())\n        assert observed==expected,(case['id'],kind,observed)\n        replays.append({'id':case['id']+'/'+kind,'expected':expected,'observed':observed,\n            'formulaSha256':sha(formula.encode()),'freshContext':True})\n        del solver,context\n\n# These executions are restricted by the original producer's own invocation guard;\n# neither reaches formula construction or receipt publication.\nguards=[]\nwith tempfile.TemporaryDirectory(prefix='record-home-invocation-review-',dir='/private/tmp') as name:\n    temporary=Path(name)\n    copy=temporary/'producer-copy.py';copy.write_bytes(captured[producer])\n    assert sha(copy.read_bytes())==sha(captured[producer])\n    for label,command,cwd in [\n        ('copied-producer-from-intended-root',[sys.executable,str(copy)],ROOT),\n        ('original-producer-from-foreign-root',[sys.executable,str(ROOT/producer)],temporary)]:\n        execution=subprocess.run(command,cwd=cwd,capture_output=True,text=True,timeout=20)\n        observed=execution.returncode!=0 and execution.stdout=='' and execution.stderr.rstrip().endswith('RuntimeError: Unknown exact proof invocation')\n        assert observed,(label,execution.returncode,execution.stdout,execution.stderr)\n        assert (ROOT/proof_path).read_bytes()==proof_bytes\n        assert not (temporary/proof_path).exists()\n        guards.append({'id':label,'expected':True,'observed':observed,'command':command,'cwd':str(cwd),\n            'exitCode':execution.returncode,'stdout':execution.stdout,'stderr':execution.stderr,\n            'executedSourceSha256':sha(captured[producer]),'receiptUnchanged':True})\n\nassert {str(p) for p in runtime_inventory()}==set(runtime)\nassert all(Path(p).read_bytes()==raw for p,raw in runtime.items())\nassert all((ROOT/p).read_bytes()==raw for p,raw in captured.items())\nassert (ROOT/proof_path).read_bytes()==proof_bytes and SELF.read_bytes()==self_bytes\nassert (output.read_bytes() if output.exists() else None)==prior\npins={**{p:sha(raw) for p,raw in captured.items()},proof_path:sha(proof_bytes),str(SELF):sha(self_bytes),\n    **{p:sha(raw) for p,raw in runtime.items()}}\nreceipt={\n    'id':'record-home-correspondence-astra-review','reviewer':'/root/astra_security_review',\n    'requestedModel':'Astra ultra','status':'qualified-correspondence-review-passed',\n    'generatedAt':datetime.now(timezone.utc).isoformat(),'sourceDigests':pins,'sourcesUnchanged':True,\n    'reviewCommand':{'argv':[sys.executable,str(SELF)],'cwd':str(ROOT),'sourceSha256':sha(self_bytes),\n        'source':self_bytes.decode(),'pythonVersion':sys.version,'solverVersion':z3.get_version_string()},\n    'proofSourceDigests':proof['sourceDigests'],'formulaReplays':replays,'invocationControls':guards,\n    'observations':{'laws':10,'independentFreshContextReplays':30,'unsat':10,'sat':20,\n        'invocationRefusals':2,'successfulProducerExecutions':0,'cargoExecutions':0,'nativeAcquisitions':0,\n        'formulaResults':{'expected':{'unsat':10,'sat':20},'observed':{'unsat':10,'sat':20}},\n        'invocationGuard':{'expected':2,'observed':len(guards)}},\n    'reviewedMeaning':[\n        'Qualified references and the five-member normalized-domain datatype retain all modeled components; concrete canonical domain normalization is a premise, not derived.',\n        'Ordered component equality is universally quantified over positive arity. The swapped two-component set-equality mutant is satisfiable.',\n        'Endpoint correspondence conjoins role, full target, selected Key and ordered members. Its weakened control drops metadata correspondence, not actual source extraction.',\n        'The same-type reuse versus distinct-type discriminator partition predicate models this conservative PostgreSQL profile. It does not model native collation or universal UMF disjointness.',\n        'Carrier counts are nonnegative, authoritative selected Keys are unique, and bidirectional exact counts reject both extra and duplicate carriers. Both weakened controls retain forward inclusion and a nonempty authoritative population.',\n        'The value-coherence control retains exact nonempty Key population but permits a required field mismatch when coherence is omitted.',\n        'The identifier law uses an abstract UTF8 size range and explicit 16-scalar/64-byte witness; it does not verify a Unicode encoder.',\n        'The known-image law retains a known dead-branch literal in all three formulas; live-branch-only checking admits its unsupported image.'\n    ],\n    'resolvedFindings':['Original producer now refuses copied-file and foreign-working-directory invocations before receipt publication.'],\n    'remainingFindings':[],\n    'scope':'Independent source/design review, thirty retained SMT formulas freshly parsed and solved in separate contexts, and two actual rejected producer invocations. The violation formulas are conditional consequences of explicit datatype/equality/count/coherence/image predicates, often definition sanity checks. SAT controls establish nonvacuity or necessity within these abstractions, not extraction or implementation refinement. Full Reference and Domain datatypes, native canonical images, complete authoritative population and required-field/literal predicates are supplied modeled meanings. No schema-to-Rust interpreter, actual codec/collation/value extraction, native population/authentication/current authority, backend enforcement or release is established. The successful proof producer run is parent evidence; this review did not regenerate formulas. Independent solver runtime is captured separately; its pins do not retroactively establish producer runtime custody. Platform and process environment remain trusted premises.',\n    'nativeImplementationQualified':False,'ownerBindingInterpreterQualifiedByThisProbe':False,'acceptanceCasesPromoted':[]\n}\nif prior is not None:\n    digest=sha(prior);archive=output.with_name('record-home-correspondence-astra-review-prior-'+digest[:16]+'.json')\n    if archive.exists() and archive.read_bytes()!=prior:raise RuntimeError('Historical archive collision')\n    if not archive.exists():archive.write_bytes(prior)\n    receipt['previousReceipt']={'path':str(archive),'sha256':digest,'scope':'Historical only.'}\noutput.write_text(json.dumps(receipt,indent=2)+'\\n')\nprint(json.dumps({'status':receipt['status'],'formulas':len(replays),'invocationRefusals':len(guards),\n    'sourcePins':len(pins),'output':str(output),'sha256':sha(output.read_bytes())}))\n",
+    "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "solverVersion": "4.15.4"
+  },
+  "proofSourceDigests": {
+    "tools/security/prove-record-home-correspondence.py": "546ba46388e8f2d97132d8c0644c28a9232d610c7c965b84a7faf4f67a38bc7e",
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "fd1395c0d9c088dda68703a3914eac298228311e4dd1666809ab4c9f937a0aad",
+    "docs/helix/02-design/spikes/security/record-homes-v0.1.schema.json": "ede23e1a814b1e2bfe1b1e06758f20a2cdf7f1a71cdeb68e690ec2e04cacde91",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711"
+  },
+  "formulaReplays": [
+    {
+      "id": "endpoint-domain-retains-refinements/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "38cb17e2ed996c9181c7881eb64672f023153b3f14a1eb404a774f0de6c0dd87",
+      "freshContext": true
+    },
+    {
+      "id": "endpoint-domain-retains-refinements/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "6469938d434b31bb58e0a57cdc7d5e92e9d086c344c2caea8b76be01df588cf1",
+      "freshContext": true
+    },
+    {
+      "id": "endpoint-domain-retains-refinements/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "ec5b2042ea5f71cac8c0b5c0cf5d3f7614c35ab9b8a629339d5decde04fe9d70",
+      "freshContext": true
+    },
+    {
+      "id": "qualified-reference-injective/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "ebdd59b8795cf139d792f04c4905b6cbd42510d5394d93d9e460f1d9a1889e40",
+      "freshContext": true
+    },
+    {
+      "id": "qualified-reference-injective/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "a289e61166c2a6a6b99c4b3d1110bed0283a4364f13f27d7a9f03d0bcf805419",
+      "freshContext": true
+    },
+    {
+      "id": "qualified-reference-injective/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "e5c30a16bfe9c8424a7b7cd6d003d48fe5bb6aedd12a254ac33ec775bc7c638b",
+      "freshContext": true
+    },
+    {
+      "id": "unbounded-ordered-key-correspondence/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "76e50717144cab7f7a64973b17714c2e72c8cc2baa764696d9bfe444296a9938",
+      "freshContext": true
+    },
+    {
+      "id": "unbounded-ordered-key-correspondence/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "e7f93455e5ad00a82797178faaf194a54215d088a89b2947610702e8943da049",
+      "freshContext": true
+    },
+    {
+      "id": "unbounded-ordered-key-correspondence/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "ca7920215b1df4ed4dc4a4a79584d2e35f65424f4be4dc25078443c279e57287",
+      "freshContext": true
+    },
+    {
+      "id": "endpoint-role-target-selected-key-ordered-members/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "48ad338b91f2da4a8b8c876c57d719eee42ed2c6aa91a7a3cf33ae2126d8eb1a",
+      "freshContext": true
+    },
+    {
+      "id": "endpoint-role-target-selected-key-ordered-members/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "a7e4b88335653fdbceb31915995d79bbabaac7ba21e07883424983c0c32af23c",
+      "freshContext": true
+    },
+    {
+      "id": "endpoint-role-target-selected-key-ordered-members/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "99bab2dc171401672450cf4ed7f41c5749a0adbca22725f7a42f063a9ac4a2c3",
+      "freshContext": true
+    },
+    {
+      "id": "same-type-source-reuse-versus-distinct-type-partition/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "59819dcf6f29ca591caa1d6f0185d196f133034f310abb0631525f3477bbbdef",
+      "freshContext": true
+    },
+    {
+      "id": "same-type-source-reuse-versus-distinct-type-partition/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "a16b3864d9e68b874f70481c76c5dfdb8020316e80f6eecc3065510072076095",
+      "freshContext": true
+    },
+    {
+      "id": "same-type-source-reuse-versus-distinct-type-partition/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "460edd8df6420c601d9d017874e3b473997f96b5a245e2001cdd4a6c647ff29c",
+      "freshContext": true
+    },
+    {
+      "id": "bidirectional-carrier-population-rejects-extra-key/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "ca61930fc9012720e4bfbfea5ccf525f78114c74b79f59d0e852057f5d743c3c",
+      "freshContext": true
+    },
+    {
+      "id": "bidirectional-carrier-population-rejects-extra-key/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "1119b5be36ae15ea4b1714789745b087b5807e70eb7eece3db414e6fd317e9a6",
+      "freshContext": true
+    },
+    {
+      "id": "bidirectional-carrier-population-rejects-extra-key/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "ef286f60193efce1470cc346d9f505525e90fca099a5af4bd247aec987d676d1",
+      "freshContext": true
+    },
+    {
+      "id": "carrier-multiplicity-rejects-duplicate-key/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "6f482c05e75b037d6e1021d4ecd59c077bf24601c5992809b99964afd96f7dea",
+      "freshContext": true
+    },
+    {
+      "id": "carrier-multiplicity-rejects-duplicate-key/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "21008035472f81e5fd74e90ab8de5e3e7cf2dcaa7501c919523c1c54477cf4b1",
+      "freshContext": true
+    },
+    {
+      "id": "carrier-multiplicity-rejects-duplicate-key/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "ef286f60193efce1470cc346d9f505525e90fca099a5af4bd247aec987d676d1",
+      "freshContext": true
+    },
+    {
+      "id": "key-population-alone-does-not-prove-field-coherence/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "bd0d055e56a7df0a2fe4a5e1caae4494c6b9618f8c6ae9ae9d84e504f59e56ce",
+      "freshContext": true
+    },
+    {
+      "id": "key-population-alone-does-not-prove-field-coherence/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "d773e99351920da08319cd1c0ce6f91c42a233c6104f4c1d56e13f1be21c6bb9",
+      "freshContext": true
+    },
+    {
+      "id": "key-population-alone-does-not-prove-field-coherence/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "17b44a698d5930515af3bed07f20e2f43bf09d2bf2d578fb9141c8ca07a140d2",
+      "freshContext": true
+    },
+    {
+      "id": "utf8-byte-limit-is-not-character-limit/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "137fd118b257631a7ce627d5e94723419dc917dadde737ee32de87e340201da9",
+      "freshContext": true
+    },
+    {
+      "id": "utf8-byte-limit-is-not-character-limit/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "71f077776763173308034483ae37cb9c3fdada0bdf8d993c2542d045b48eace2",
+      "freshContext": true
+    },
+    {
+      "id": "utf8-byte-limit-is-not-character-limit/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "ec1dc28f70b5f3563147e873f94d21fed9f5bd662c250e6a9c39a5278b5fdab2",
+      "freshContext": true
+    },
+    {
+      "id": "known-native-images-cannot-prune-dead-branch/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "95b2e7cf9fd76d2ae13b61f3a03c5412c88e470df4821de930694078b005a9f0",
+      "freshContext": true
+    },
+    {
+      "id": "known-native-images-cannot-prune-dead-branch/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "8ed01e0b0f7b830efbc219dcd1374cfc19ac032b46a1257c789c0d76c7d61781",
+      "freshContext": true
+    },
+    {
+      "id": "known-native-images-cannot-prune-dead-branch/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b3ba8ec2121efb99c52cdc0ee970a8af2de0d5caf81dc9b89e928833cfa9a830",
+      "freshContext": true
+    }
+  ],
+  "invocationControls": [
+    {
+      "id": "copied-producer-from-intended-root",
+      "expected": true,
+      "observed": true,
+      "command": [
+        "/private/tmp/umf-security-proof-venv/bin/python",
+        "/private/tmp/record-home-invocation-review-nzukb92x/producer-copy.py"
+      ],
+      "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/private/tmp/record-home-invocation-review-nzukb92x/producer-copy.py\", line 8, in <module>\n    raise RuntimeError('Unknown exact proof invocation')\nRuntimeError: Unknown exact proof invocation\n",
+      "executedSourceSha256": "546ba46388e8f2d97132d8c0644c28a9232d610c7c965b84a7faf4f67a38bc7e",
+      "receiptUnchanged": true
+    },
+    {
+      "id": "original-producer-from-foreign-root",
+      "expected": true,
+      "observed": true,
+      "command": [
+        "/private/tmp/umf-security-proof-venv/bin/python",
+        "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-record-home-correspondence.py"
+      ],
+      "cwd": "/private/tmp/record-home-invocation-review-nzukb92x",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-record-home-correspondence.py\", line 8, in <module>\n    raise RuntimeError('Unknown exact proof invocation')\nRuntimeError: Unknown exact proof invocation\n",
+      "executedSourceSha256": "546ba46388e8f2d97132d8c0644c28a9232d610c7c965b84a7faf4f67a38bc7e",
+      "receiptUnchanged": true
+    }
+  ],
+  "observations": {
+    "laws": 10,
+    "independentFreshContextReplays": 30,
+    "unsat": 10,
+    "sat": 20,
+    "invocationRefusals": 2,
+    "successfulProducerExecutions": 0,
+    "cargoExecutions": 0,
+    "nativeAcquisitions": 0,
+    "formulaResults": {
+      "expected": {
+        "unsat": 10,
+        "sat": 20
+      },
+      "observed": {
+        "unsat": 10,
+        "sat": 20
+      }
+    },
+    "invocationGuard": {
+      "expected": 2,
+      "observed": 2
+    }
+  },
+  "reviewedMeaning": [
+    "Qualified references and the five-member normalized-domain datatype retain all modeled components; concrete canonical domain normalization is a premise, not derived.",
+    "Ordered component equality is universally quantified over positive arity. The swapped two-component set-equality mutant is satisfiable.",
+    "Endpoint correspondence conjoins role, full target, selected Key and ordered members. Its weakened control drops metadata correspondence, not actual source extraction.",
+    "The same-type reuse versus distinct-type discriminator partition predicate models this conservative PostgreSQL profile. It does not model native collation or universal UMF disjointness.",
+    "Carrier counts are nonnegative, authoritative selected Keys are unique, and bidirectional exact counts reject both extra and duplicate carriers. Both weakened controls retain forward inclusion and a nonempty authoritative population.",
+    "The value-coherence control retains exact nonempty Key population but permits a required field mismatch when coherence is omitted.",
+    "The identifier law uses an abstract UTF8 size range and explicit 16-scalar/64-byte witness; it does not verify a Unicode encoder.",
+    "The known-image law retains a known dead-branch literal in all three formulas; live-branch-only checking admits its unsupported image."
+  ],
+  "resolvedFindings": [
+    "Original producer now refuses copied-file and foreign-working-directory invocations before receipt publication."
+  ],
+  "remainingFindings": [],
+  "scope": "Independent source/design review, thirty retained SMT formulas freshly parsed and solved in separate contexts, and two actual rejected producer invocations. The violation formulas are conditional consequences of explicit datatype/equality/count/coherence/image predicates, often definition sanity checks. SAT controls establish nonvacuity or necessity within these abstractions, not extraction or implementation refinement. Full Reference and Domain datatypes, native canonical images, complete authoritative population and required-field/literal predicates are supplied modeled meanings. No schema-to-Rust interpreter, actual codec/collation/value extraction, native population/authentication/current authority, backend enforcement or release is established. The successful proof producer run is parent evidence; this review did not regenerate formulas. Independent solver runtime is captured separately; its pins do not retroactively establish producer runtime custody. Platform and process environment remain trusted premises.",
+  "nativeImplementationQualified": false,
+  "ownerBindingInterpreterQualifiedByThisProbe": false,
+  "acceptanceCasesPromoted": [],
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-f1e5bf034a0720ab.json",
+    "sha256": "f1e5bf034a0720ab197f17544bef634868cdd807c1061e7578daef276ab1300b",
+    "scope": "Historical only."
+  }
+}

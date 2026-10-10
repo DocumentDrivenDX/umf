@@ -1,0 +1,6 @@
+{"kind":"request","text":"SELECT session_user::pg_catalog.text AS original_actor,current_user::pg_catalog.text AS effective_actor,(SELECT rolsuper::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_superuser,(SELECT rolbypassrls::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_bypass,pg_catalog.current_setting('client_encoding')::pg_catalog.text AS native_encoding","values":[],"custody":{"lease":"52820fc7-6f46-4fb3-ad27-aecfd5cc5842","ordinal":"6"}}
+{"kind":"frame","hex":"54000000ae00056f726967696e616c5f6163746f720000000000000000000019ffffffffffff00006566666563746976655f6163746f720000000000000000000019ffffffffffff00006e61746976655f7375706572757365720000000000000000000019ffffffffffff00006e61746976655f6279706173730000000000000000000019ffffffffffff00006e61746976655f656e636f64696e670000000000000000000019ffffffffffff0000"}
+{"kind":"frame","hex":"440000004200050000000d756d665f7365635f616c6963650000000d756d665f7365635f616c6963650000000566616c73650000000566616c73650000000455544638"}
+{"kind":"frame","hex":"430000000d53454c454354203100"}
+{"kind":"frame","hex":"5a0000000554"}
+{"kind":"outcome","outcome":"response_complete"}

@@ -1,0 +1,28 @@
+{
+  "status": "private-rule-semantic-custody-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 126,
+    "failed": 0
+  },
+  "selectedPostRunSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "a9a7cc395f40c631055ec79701da4a4baaabf9d3f5fae8cfe024de49e6ebc74f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "f076f57d44a9ee2f69c77a54324c3874a6e39dc92f11c1423ecf34f028cd2e15"
+  },
+  "rawOutputSha256": "691e4f0eb6d284d024eba84594a05894694ddc949367b73bd0529ea40eb0ee30",
+  "scope": "Borrowed actual rule semantics at typed source events, not complete obligation-kind path enumeration, independent template issuance, authenticated profile or native discharge. Post-run selected pins are not complete frozen build custody.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": []
+}

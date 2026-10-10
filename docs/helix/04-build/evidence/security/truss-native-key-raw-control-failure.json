@@ -1,0 +1,7 @@
+{
+  "status": "failed-control-target-selection",
+  "sourceSha256": "a8e7a526d35a37e84b3111a53791c74e55672fb6b6c820e1bff4f132a47f75a4",
+  "observedFailure": "raw-key-refusal-controls aggregate mismatch after original raw admission passed",
+  "causeFromSourceInspection": "Nullable/determinism controls changed tables[0], which in the raw descriptor inventory is unselected Company, not mapped Staff. This does not contradict selected key correspondence. Correct controls resolve original Staff home explicitly.",
+  "fullBackendAcceptance": false
+}

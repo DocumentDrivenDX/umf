@@ -1,0 +1,11 @@
+{
+  "status": "terminal-exit0",
+  "observedAt": "2026-10-08T18:20:08.816920+00:00",
+  "toolSessionId": 79827,
+  "command": "cargo test --offline --locked --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --target-dir /private/tmp/umf-security-weft-bridge-target",
+  "scope": "Interactive pre-source-packet admission checkpoint; not fresh whole-workspace proof for later source-packet changes",
+  "lastObservedPhase": "PostgreSQL original decimal-domain test; generated core integer/decimal tests completed",
+  "nextAction": "Do not restart this terminal handle; current source admission is independently checked by weft-admission.json",
+  "terminalObservedAt": "2026-10-08T18:26:45.126040+00:00",
+  "exitCode": 0
+}

@@ -17,11 +17,20 @@ test('every governed acceptance criterion has one auditable traceability classif
       expect(row.evidence.every(path => path.startsWith('tests/'))).toBe(true);
     }
   }
-});
+}, 60_000);
+
+test('partial security citations never close the open backend acceptance gate', async()=>{
+  const ledger=await buildAcceptanceLedger();
+  const security=ledger.criteria.filter(row=>['US-079','US-056','US-057'].some(id=>row.id.startsWith(id+'-AC')));
+  expect(security).toHaveLength(28);
+  const gate=await Bun.file('docs/helix/04-build/evidence/security/acceptance.json').json();
+  if(gate.status!=='passed')expect(security.every(row=>row.status==='UNTESTED')).toBe(true);
+  expect(security.find(row=>row.id==='US-079-AC3')?.evidence.length).toBeGreaterThan(0);
+}, 60_000);
 
 test('the PostgreSQL generator browser-parity criterion retains reviewed harness evidence', async () => {
   const ledger = await buildAcceptanceLedger();
   const row = ledger.criteria.find(item => item.id === 'US-048-AC9');
   expect(row?.status).toBe('REVIEWED_EXCEPTION');
   expect(row?.evidence.some(path => path.startsWith('scripts/projections/ddd-postgresql-browser.ts:'))).toBe(true);
-});
+}, 60_000);

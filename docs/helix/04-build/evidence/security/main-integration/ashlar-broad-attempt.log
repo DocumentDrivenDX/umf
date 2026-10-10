@@ -1,0 +1,1439 @@
+test_conflict_stale_resurrection_refuse_without_mutating_prior (test_apply.ApplyTests) ... ok
+test_create_parallel_edges_isolated_node_and_late_endpoint (test_apply.ApplyTests) ... ok
+test_missing_typed_endpoint_and_incident_node_delete_refuse (test_apply.ApplyTests) ... ok
+test_policy_required_and_false_is_not_success (test_apply.ApplyTests) ... ok
+test_replace_delete_replay_retains_exact_history_and_tombstone (test_apply.ApplyTests) ... ok
+test_archaeology_graph_oracle (unittest.loader._FailedTest) ... ERROR
+test_archaeology_outbox_publication (unittest.loader._FailedTest) ... ERROR
+test_archaeology_source_transaction (unittest.loader._FailedTest) ... ERROR
+test_actual_provider_interval_preserves_query_cancellation (test_ashlar_host.HostTests) ... ok
+test_cleanup_marker_cannot_replace_readonly_primary (test_ashlar_host.HostTests) ... ok
+test_connection_and_stop_both_attempted (test_ashlar_host.HostTests) ... ok
+test_context_replacement_preserves_primary (test_ashlar_host.HostTests) ... ok
+test_context_suppression_preserves_primary (test_ashlar_host.HostTests) ... ok
+test_package_without_checkout_or_native_import (test_ashlar_host.HostTests) ... ok
+test_packaged_resources_have_original_schema (test_ashlar_host.HostTests) ... ok
+test_public_api_refuses_before_phase_import (test_ashlar_host.HostTests) ... ok
+test_publication_qualification_present (test_ashlar_host.HostTests) ... ok
+test_query_reader_close_failure_withholds_report_and_stops (test_ashlar_host.HostTests) ... ok
+test_required_typed_configuration (test_ashlar_host.HostTests) ... ok
+test_independent_selected_membership_and_honest_enforcement (test_assertions.AssertionInventoryTests) ... ok
+test_resource_refusal_returns_no_truncated_inventory (test_assertions.AssertionInventoryTests) ... ok
+test_result_does_not_share_mutable_profile_pin_state (test_assertions.AssertionInventoryTests) ... ok
+test_wrong_source_and_unsupported_assertions_refuse_completeness (test_assertions.AssertionInventoryTests) ... ok
+test_complete_phase_replay_and_session_lifetime (test_attempt_store.AttemptStoreTests) ... ok
+test_corrupt_duplicate_and_missing_custody_refuse (test_attempt_store.AttemptStoreTests) ... ok
+test_skip_conflict_and_missing_result_refuse_before_write (test_attempt_store.AttemptStoreTests) ... ok
+test_executable_container_and_identity_subclasses_refuse (test_authority.AuthorityTests) ... ok
+test_executable_grant_containers_records_and_fields_refuse (test_authority.AuthorityTests) ... ok
+test_explicit_writer_collections_preserve_whole_identity (test_authority.AuthorityTests) ... ok
+test_inherited_modify_and_management_refuse (test_authority.AuthorityTests) ... ok
+test_metaclass_equality_cannot_spoof_container_types (test_authority.AuthorityTests) ... ok
+test_owner_and_write_principal_cannot_spoof_trusted_identity (test_authority.AuthorityTests) ... ok
+test_private_owner_and_explicit_readers (test_authority.AuthorityTests) ... ok
+test_scalar_mapping_and_invalid_writer_carriers_refuse (test_authority.AuthorityTests) ... ok
+test_unknown_missing_and_owner_refuse (test_authority.AuthorityTests) ... ok
+test_explicit_absent_allowed_is_candidate_only (test_binding.BindingTests) ... ok
+test_incomplete_foreign_duplicate_correspondence_refuses (test_binding.BindingTests) ... ok
+test_unknown_optional_not_translated (test_binding.BindingTests) ... ok
+test_wrong_source_pin_refuses (test_binding.BindingTests) ... ok
+test_bound_umf_records (unittest.loader._FailedTest) ... ERROR
+test_exhaustion_does_not_prevent_existing_identity (test_catalog.CatalogIdentityTests) ... ok
+test_never_reuses_highwater_gaps (test_catalog.CatalogIdentityTests) ... ok
+test_preserves_authoritative_ids_and_reservations (test_catalog.CatalogIdentityTests) ... ok
+test_qualification_and_owner_do_not_collapse (test_catalog.CatalogIdentityTests) ... ok
+test_refuses_duplicate_and_invalid_state (test_catalog.CatalogIdentityTests) ... ok
+test_retirement_reactivation_and_distinct_incarnation (test_catalog.CatalogIdentityTests) ... ok
+test_explicit_original_sources_run_outside_repository_and_refuse_changes (test_cli.AdditionalPackCLITests) ... ok
+test_incomplete_first_transaction_emits_no_batch (test_cli.CLITests) ... ok
+test_original_batch_bytes_and_large_cursor_from_module_command (test_cli.CLITests) ... ok
+test_invalid_or_duplicate_mapping_cannot_emit_custody (test_cli.CSVCLITests) ... ok
+test_user_input_custody_is_directly_recoverable_with_outer_checkpoint (test_cli.CSVCLITests) ... ok
+test_explicit_original_inputs_preserve_candidate_and_refuse_changed_source (test_cli.CommerceCLITests) ... ok
+test_configured_source_uses_installed_portable_components (test_cli.ConfiguredCLITests) ... ok
+test_explicit_receipt_original_sources_and_fresh_output_outside_repository (test_cli.MedicalCLITests) ... ok
+test_checks_unchanged_before_query_and_buffer_until_close (test_commerce_arithmetic_weft.ArithmeticPublicationHostTests) ... ok
+test_exact_operator_free_plan_allows_empty_arithmetic_but_enforces_schema_guard (test_commerce_arithmetic_weft.ArithmeticPublicationHostTests) ... ok
+test_missing_unknown_lifecycle_or_publication_obligations_refuse (test_commerce_arithmetic_weft.ArithmeticPublicationHostTests) ... ok
+test_original_all_record_and_field_homes_and_equivalent_query (test_commerce_arithmetic_weft.ArithmeticPublicationHostTests) ... ok
+test_public_source_rows_require_actual_admission_before_capacity_or_query (test_commerce_arithmetic_weft.ArithmeticPublicationHostTests) ... ok
+test_spark_stop_failure_withholds_all_evidence (test_commerce_arithmetic_weft.CleanupEvidenceTests) ... ok
+test_graph_original_identity_compares_without_rewriting_native_text (test_commerce_arithmetic_weft.OriginalReplayIdentityTests) ... ok
+test_exact_original_text_no_float_or_zero_normalization (test_commerce_arithmetic_weft.PublicScalarTextTests) ... ok
+test_unknown_lossy_or_missing_results_refuse (test_commerce_arithmetic_weft.PublicScalarTextTests) ... ok
+test_actual_bags_guard_phases_and_original_public_receipts (test_commerce_arithmetic_weft.RetainedNativeArithmeticTests) ... ok
+test_addition_preserves_all_existing_content_order_and_unknowns (test_commerce_evolution.CommerceEvolutionTests) ... ok
+test_exact_tokens_delete_and_absence_are_preserved (test_commerce_evolution.CommerceEvolutionTests) ... ok
+test_original_bindings_remain_exact_and_new_id_appends (test_commerce_evolution.CommerceEvolutionTests) ... ok
+test_wrong_original_bytes_refuse (test_commerce_evolution.CommerceEvolutionTests) ... ok
+test_compressed_oversize_refuses_before_public_calls (test_commerce_evolution_admission.AdmissionTests) ... ok
+test_forwarding_exact_prior_policy_and_replay (test_commerce_evolution_admission.AdmissionTests) ... ok
+test_fresh_public_failure_and_wrong_original_hash_refuse (test_commerce_evolution_admission.AdmissionTests) ... ok
+test_giant_file_is_bounded_before_full_read_or_public_calls (test_commerce_evolution_admission.AdmissionTests) ... ok
+test_missing_incomplete_and_changed_source_policy_refuse (test_commerce_evolution_admission.AdmissionTests) ... ok
+test_batch_scope_no_global_or_epoch_collision_original_events_unchanged (test_commerce_evolution_publication.PreparationTests) ... ok
+test_both_cleanup_resources_attempted_and_failure_propagates (test_commerce_evolution_publication.PreparationTests) ... ok
+test_exact_interleave_sql_state_and_independent_full_rows (test_commerce_evolution_publication.PreparationTests) ... ok
+test_oversized_compressed_input_refuses_before_public_or_spark (test_commerce_evolution_publication.PreparationTests) ... ok
+test_real_commit_response_loss_wrapper_only_selected_command (test_commerce_evolution_publication.PreparationTests) ... ok
+test_recovery_inventory_requires_exact_actual_injections (test_commerce_evolution_publication.PreparationTests) ... ok
+test_wrong_envelope_and_record_cursors_refuse (test_commerce_evolution_publication.PreparationTests) ... ok
+test_actual_apply_requires_exact_delete_carrier_and_transition_policy (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_breaking_and_changed_custody_refuse_before_output (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_graph_sql_plan_all_prefixes_matches_independent_source_cells_and_replay (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_namespaces_do_not_collapse_overlapping_numeric_ids (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_new_field_absent_and_present_keep_decimal_and_registry (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_oracle_does_not_adopt_emitted_bad_property (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_prefix_topology_history_and_no_dangling_edges (test_commerce_evolution_transactions.EvolutionTransactionsTests) ... ok
+test_fixed_decimal_coefficients_keep_no_rounding (test_commerce_exact_puppygraph.ExactFiniteRepresentationTests) ... ok
+test_integer_exact_bounds_and_capability_refusal (test_commerce_exact_puppygraph.ExactFiniteRepresentationTests) ... ok
+test_intermediate_overflow_and_native_float_bool_refuse (test_commerce_exact_puppygraph.ExactFiniteRepresentationTests) ... ok
+test_unfiltered_intermediates_cannot_hide_rounding_or_missing_paths (test_commerce_exact_puppygraph.ExactFiniteRepresentationTests) ... ok
+test_closing_success_releases_exact_result (test_commerce_exact_puppygraph.NativeClosingCustodyTests) ... ok
+test_failure_and_changed_close_withhold_results (test_commerce_exact_puppygraph.NativeClosingCustodyTests) ... ok
+test_both_native_languages_preserve_exact_scenario_and_intermediate_bags (test_commerce_exact_puppygraph.RetainedNativeScenarioTests) ... ok
+test_duplicate_record_key_refuses_without_allocating_identity (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_independent_decimal_scenarios_match_original_template_expectations (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_missing_endpoint_and_duplicate_edge_refuse (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_request_membership_and_explicit_original_topology (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_stale_key_receipt_source_values_or_version_refuse (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_unknown_or_mismatched_authored_fk_binding_refuses (test_commerce_graph_oracle.CommerceGraphOracleTests) ... ok
+test_changed_values_endpoints_missing_duplicate_bags_refuse (test_commerce_graph_release.Tests) ... ok
+test_complete_exact_original_bag_and_independent_edges (test_commerce_graph_release.Tests) ... ok
+test_export_only_returns_after_whole_provider_closure (test_commerce_graph_release.Tests) ... ok
+test_original_source_descriptor_context_and_whole_vector_are_required (test_commerce_graph_release.Tests) ... ok
+test_outer_reader_closing_failure_withholds_release_and_custody (test_commerce_graph_release.Tests) ... ok
+test_pair_persistence_failure_removes_both_new_artifacts (test_commerce_graph_release.Tests) ... ok
+test_pin_reuse_never_opens_unheld_or_different_vector (test_commerce_graph_release.Tests) ... ok
+test_duplicate_dangling_and_literal_key_corruption_refuse (test_commerce_graphframes.Tests) ... ok
+test_original_source_key_lexical_and_receipt_reference_custody (test_commerce_graphframes.Tests) ... ok
+test_parallel_loop_and_isolate_topology_control_separate_from_pack (test_commerce_graphframes.Tests) ... ok
+test_corrupted_template_is_not_expected_self_proof (test_commerce_graphframes_scenarios.CommerceScenarioOracleTests) ... ok
+test_original_four_authored_bags (test_commerce_graphframes_scenarios.CommerceScenarioOracleTests) ... ok
+test_every_exact_carrier_and_native_incidence (test_commerce_gremlin.GremlinProjectionTests) ... ok
+test_no_scalar_casting (test_commerce_gremlin.GremlinProjectionTests) ... ok
+test_complete_native_original_walk_bags_and_full_key (test_commerce_gremlin.RetainedNativeGremlinTests) ... ok
+test_inventory_repin_and_symlink_refuse (test_commerce_oracle.CommerceOracleTests) ... ok
+test_numeric_source_tamper_refuses_before_oracle (test_commerce_oracle.CommerceOracleTests) ... ok
+test_original_scenario_results_are_independently_expected (test_commerce_oracle.CommerceOracleTests) ... ok
+test_changed_custody_or_incomplete_dataset_refuses (test_commerce_outbox_publication.Tests) ... ok
+test_genuine_record_warnings_remain_separate_from_complete_finite_dataset (test_commerce_outbox_publication.Tests) ... ok
+test_independent_original_oracle_preserves_decimal_tokens_and_original_endpoints (test_commerce_outbox_publication.Tests) ... ok
+test_legacy_named_profile_and_numeric_field_mapping_are_distinct (test_commerce_outbox_publication.Tests) ... ok
+test_changed_source_and_uncovered_query_refuse (test_commerce_path_oracle.Oracle) ... ok
+test_original_opaque_keys_and_edge_occurrences (test_commerce_path_oracle.Oracle) ... ok
+test_ambiguous_edge_carriers_refuse (test_commerce_path_request.CommercePathRequestTests) ... ok
+test_complete_original_relationship_composition_and_no_mutation (test_commerce_path_request.CommercePathRequestTests) ... ok
+test_missing_edge_carrier_refuses (test_commerce_path_request.CommercePathRequestTests) ... ok
+test_missing_edge_table_refuses (test_commerce_path_request.CommercePathRequestTests) ... ok
+test_adversarial_inputs_do_not_close_dataset_admission (test_commerce_public_dataset.Tests) ... ok
+test_every_original_instance_endpoint_and_key_occurrence_is_retained (test_commerce_public_dataset.Tests) ... ok
+test_original_declared_version_and_entire_source_remain_unchanged (test_commerce_public_dataset.Tests) ... ok
+test_each_and_both_cleanup_failures_withhold_success_and_attempt_both (test_commerce_publication_lifecycle.CommercePublicationLifecycleTests) ... ok
+test_incomplete_operation_and_absent_transport_stop_without_success (test_commerce_publication_lifecycle.CommercePublicationLifecycleTests) ... ok
+test_report_preserves_bytes_and_follows_both_cleanup_steps (test_commerce_publication_lifecycle.CommercePublicationLifecycleTests) ... ok
+test_closing_whole_vector_or_pg_failure_discards_custody (test_commerce_publication_weft.LifecycleTests) ... ok
+test_complete_native_pin_and_pg_closure_precedes_immutable_custody (test_commerce_publication_weft.LifecycleTests) ... ok
+test_connection_cleanup_failure_withholds_buffered_rows_and_custody (test_commerce_publication_weft.LifecycleTests) ... ok
+test_stale_custody_is_reset_and_closed_reader_cannot_reenter (test_commerce_publication_weft.LifecycleTests) ... ok
+test_canonical_field_binding_uses_exact_original_identity_and_full_vector (test_commerce_publication_weft.Tests) ... ok
+test_exact_checks_user_sql_and_closing_resolver (test_commerce_publication_weft.Tests) ... ok
+test_failed_integrity_and_suppressed_context_never_release_user_rows (test_commerce_publication_weft.Tests) ... ok
+test_full_vector_closing_drift_withholds_buffered_result (test_commerce_publication_weft.Tests) ... ok
+test_provider_freezes_complete_original_binding_and_refuses_changed_source (test_commerce_publication_weft.Tests) ... ok
+test_unknown_duplicate_or_changed_publication_refuses_before_sql (test_commerce_publication_weft.Tests) ... ok
+test_exact_carriers_original_metadata_and_single_handle (test_commerce_puppygraph.CommercePuppyPreparationTests) ... ERROR
+test_wrong_pair_refuses_before_output (test_commerce_puppygraph.CommercePuppyPreparationTests) ... ERROR
+test_preserves_prior_labels_and_refuses_collision (test_commerce_puppygraph.CommerceSchemaAdditionTests) ... ok
+test_carrier_value_and_missing_row_refuse (test_commerce_release_graphframes.CommerceGraphFramesTests) ... ok
+test_observable_limit (test_commerce_release_graphframes.CommerceGraphFramesTests) ... ok
+test_original_complete_carriers (test_commerce_release_graphframes.CommerceGraphFramesTests) ... ok
+test_walk_bags_preserve_parallel_occurrences_and_cycles (test_commerce_release_graphframes.CommerceGraphFramesTests) ... ok
+test_deterministic_largest_original_type (test_commerce_release_graphframes.NativeLimitSelectionTests) ... ok
+test_no_observable_truncation_refuses (test_commerce_release_graphframes.NativeLimitSelectionTests) ... ok
+test_deterministic_complete_transaction_and_source_isolation (test_commerce_source_transaction.Tests) ... ok
+test_fresh_installation_plan_and_exact_delivery_replay (test_commerce_source_transaction.Tests) ... ok
+test_legacy_named_property_fixture_is_explicit_and_original_rows_remain_equal (test_commerce_source_transaction.Tests) ... ok
+test_modified_originals_and_missing_namespace_refused (test_commerce_source_transaction.Tests) ... ok
+test_original_rows_endpoints_and_exact_values (test_commerce_source_transaction.Tests) ... ok
+test_changed_original_csv_and_unknown_extra_file_refuse (test_commerce_values.CommerceValueRequestTests) ... ok
+test_no_numeric_conversion_and_no_null_sentinel (test_commerce_values.CommerceValueRequestTests) ... ok
+test_original_rows_and_exact_literals_remain_unadmitted (test_commerce_values.CommerceValueRequestTests) ... ok
+test_source_pin_and_path_inventory_refuse (test_commerce_values.CommerceValueRequestTests) ... ok
+test_stale_partial_or_forged_receipt_refuses (test_commerce_values.CommerceValueRequestTests) ... ok
+test_symlink_copy_refuses (test_commerce_values.CommerceValueRequestTests) ... ok
+test_unknown_family_collection_and_record_refuse (test_commerce_values.CommerceValueRequestTests) ... ok
+test_exact_replay_still_uses_original_writer_and_current_ack (test_committed_replay.ReplayTests) ... ok
+test_missing_incomplete_or_conflicting_attempt_cannot_be_recreated (test_committed_replay.ReplayTests) ... ok
+test_changed_csv_position_epoch_digest_or_profile_refuses_before_writer (test_csv_checkpoint.CSVCheckpointTests) ... ok
+test_original_csv_outer_progress_survives_durable_intent_and_replay (test_csv_checkpoint.CSVCheckpointTests) ... ok
+test_rehashed_retained_request_cannot_hide_source_checkpoint_change (test_csv_checkpoint.CSVCheckpointTests) ... ok
+test_all_ordinals_revalidate_without_reconstructing_preceding_rows (test_csv_source.CSVCorrespondenceTests) ... ok
+test_untrusted_source_mapping_schema_identity_refuse (test_csv_source.CSVCorrespondenceTests) ... ok
+test_valid_but_substituted_event_with_rehashed_commit_refuses (test_csv_source.CSVCorrespondenceTests) ... ok
+test_exact_crlf_quote_unicode_empty_and_large_integer_text (test_csv_source.CSVSourceTests) ... ok
+test_full_example_replay_delete_and_unknown_custody (test_csv_source.CSVSourceTests) ... ok
+test_incremental_consumption_and_mapping_snapshot (test_csv_source.CSVSourceTests) ... ok
+test_invalid_csv_controls_or_bounds_refuse (test_csv_source.CSVSourceTests) ... ok
+test_explicit_mutation_identity_keeps_reads_fresh (test_databricks_transport.OperationRoutingTests) ... ok
+test_exact_native_string_and_schema (test_databricks_transport.TransportTests) ... ok
+test_truncated_missing_shape_or_terminal_failure_refuses (test_databricks_transport.TransportTests) ... ok
+test_exact_original_source_binding_preserves_other_progress (test_descriptor_checkpoint.DescriptorCheckpointTests) ... ok
+test_wrong_epoch_position_payload_schema_identity_or_intent_refuses (test_descriptor_checkpoint.DescriptorCheckpointTests) ... ok
+test_contract_budget_boundaries_reject_booleans_and_cross_limit_drift (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_custom_ca_and_path_policy (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_explicit_configuration_ignores_poisoned_ambient_settings (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_headers_are_closed_immutable_and_bounded (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_origin_snapshot_and_required_operator_sources (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_secret_representation_copy_and_serialization (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_url_and_tls_policy_refusals_are_safe (test_diagnostics_configuration.DiagnosticsConfigurationTests) ... ok
+test_copy_is_exact_including_unknown_files (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_duplicate_members_invalid_utf8_and_nonfinite_refuse (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_full_commit_only_and_missing_pin_refuses (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_inventory_uses_git_objects_not_dirty_worktree (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_missing_or_nested_copy_pack_refuses (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_path_escape_and_git_expression_refuse (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_provenance_reports_hash_and_endpoint_conflicts (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_symlink_git_object_refuses (test_domain_pack_inventory.DomainPackInventoryTests) ... ok
+test_all_original_models_and_absences_are_explicit (test_domain_pack_model_validation.Tests) ... ok
+test_denied_plan_retains_no_intent_or_effects (test_durable_effects.DurableEffectTests) ... ok
+test_interrupted_plan_reloads_and_recovers_only_original_second_handle (test_durable_effects.DurableEffectTests) ... ok
+test_recovery_of_missing_or_changed_plan_refuses_without_effects (test_durable_effects.DurableEffectTests) ... ok
+test_full_phase_custody_and_fresh_instance_replay (test_durable_publisher.DurablePublisherTests) ... ok
+test_uncertain_effect_and_commit_reload_original_phase (test_durable_publisher.DurablePublisherTests) ... ok
+test_validation_refusal_retains_applied_without_commit (test_durable_publisher.DurablePublisherTests) ... ok
+test_fresh_client_replays_terminal_without_network_and_conflicts_refuse (test_durable_sql.DurableSQLTests) ... ok
+test_lost_submission_never_reposts (test_durable_sql.DurableSQLTests) ... ok
+test_pending_recovery_uses_only_original_handle (test_durable_sql.DurableSQLTests) ... ok
+test_terminal_failure_is_original_failure_on_replay (test_durable_sql.DurableSQLTests) ... ok
+test_changed_original_bytes_refuse (test_ecology_graph_oracle.Tests) ... ok
+test_original_rows_and_nine_scenario_joins (test_ecology_graph_oracle.Tests) ... ok
+test_changed_custody_or_incomplete_dataset_refuses (test_ecology_outbox_publication.Tests) ... ok
+test_cleanup_failures_withhold_success_and_attempt_both_resources (test_ecology_outbox_publication.Tests) ... ok
+test_genuine_record_warnings_remain_separate_from_complete_finite_dataset (test_ecology_outbox_publication.Tests) ... ok
+test_independent_original_oracle_preserves_decimal_tokens_and_original_endpoints (test_ecology_outbox_publication.Tests) ... ok
+test_deterministic_complete_transaction_and_source_isolation (test_ecology_source_transaction.Tests) ... ok
+test_fresh_installation_plan_and_exact_delivery_replay (test_ecology_source_transaction.Tests) ... ok
+test_modified_originals_and_missing_namespace_refused (test_ecology_source_transaction.Tests) ... ok
+test_original_rows_endpoints_and_exact_values (test_ecology_source_transaction.Tests) ... ok
+test_present_null_and_exponent_decimal_tokens_are_exact (test_ecology_source_transaction.Tests) ... ok
+test_bad_profile_and_identity_refuse (test_effect_validation.EffectValidationTests) ... ok
+test_duplicate_extra_missing_and_changed_text_refuse (test_effect_validation.EffectValidationTests) ... ok
+test_full_exact_inventory_and_version (test_effect_validation.EffectValidationTests) ... ok
+test_complete_pagination_preserves_inherited_origins_and_writer_checks (test_effective_grants.EffectiveGrantTests) ... ok
+test_empty_page_continues_and_raw_unknown_page_is_retained_before_refusal (test_effective_grants.EffectiveGrantTests) ... ok
+test_unknown_partial_and_repeated_content_refuse (test_effective_grants.EffectiveGrantTests) ... ok
+test_bad_receipt_refuses_and_cancel_identity_preserved (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_cleanup_cancellations_win_over_ordinary_body_failures (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_cleanup_failure_preserves_cancel_and_removes_owned_directory (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_closing_cancellation_wins_over_ordinary_body_failure (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_closing_drift_withholds_return_and_failure_still_checks_closing (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_config_exact_bounds_and_types (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_gzip_limits_trailing_data_and_invalid_config_before_capture (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_package_resources_core_four_batches_and_exact_fresh_proof_gate (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_writer_cleanup_cancellation_wins_over_ordinary_write_failure (test_evolution_admission.EvolutionAdmissionTests) ... ok
+test_body_cancel_survives_selector_cleanup_failure (test_evolution_producer.EvolutionProducerTests) ... ok
+test_descriptor_refuses_symlink_fifo_and_over_limit (test_evolution_producer.EvolutionProducerTests) ... ok
+test_early_supervisor_loss_cannot_forge_success (test_evolution_producer.EvolutionProducerTests) ... ok
+test_post_launch_setup_failures_close_all_owned_descriptors (test_evolution_producer.EvolutionProducerTests) ... ok
+test_real_inert_child_closed_environment_and_stream_caps (test_evolution_producer.EvolutionProducerTests) ... ok
+test_real_status_shell_free_argv_and_group_kill_precedes_reap (test_evolution_producer.EvolutionProducerTests) ... ok
+test_setup_cancel_closes_real_owned_streams_and_preserves_identity (test_evolution_producer.EvolutionProducerTests) ... ok
+test_snapshot_fresh_cleanup_cancellation_wins_over_ordinary_failure (test_evolution_producer.EvolutionProducerTests) ... ok
+test_success_kills_stdio_closed_descendant (test_evolution_producer.EvolutionProducerTests) ... ok
+test_timeout_when_descendant_holds_pipe (test_evolution_producer.EvolutionProducerTests) ... ok
+test_explicit_endpoint_and_profile_before_client_or_output (test_explicit_native_endpoint.EndpointTests) ... ok
+test_existing_single_source_oracle_keeps_original_inventory (test_fixture_oracle_graph.Tests) ... ok
+test_overlapping_ids_and_parallel_edges_remain_independent (test_fixture_oracle_graph.Tests) ... ok
+test_source_update_delete_cannot_remove_other_source (test_fixture_oracle_graph.Tests) ... ok
+test_unicode_source_hash_retains_canonical_utf8_identity (test_fixture_oracle_graph.Tests) ... ok
+test_current_package_and_stale_model_refusal (test_generated_carriers.GeneratedCarriersTests) ... ok
+test_unexpected_input_cannot_trigger_arbitrary_file_read (test_generated_carriers.GeneratedCarriersTests) ... ok
+test_complete_prescribed_cases (test_graph_augmentations.GraphAugmentationTests) ... ok
+test_parallel_edge_and_presence_null_absent_cannot_collapse (test_graph_augmentations.GraphAugmentationTests) ... ok
+test_semantically_valid_lookalike_does_not_satisfy_scalar_corpus (test_graph_augmentations.GraphAugmentationTests) ... ok
+test_large_integer_signedzero_unicode_and_parallel_edges_exact (test_graph_augmentations_puppygraph.AuthoredPuppyCarrierTests) ... ok
+test_missing_ordered_declaration_members_refuse (test_graph_augmentations_puppygraph.AuthoredPuppyCarrierTests) ... ok
+test_null_absence_empty_zero_false_remain_distinct (test_graph_augmentations_puppygraph.AuthoredPuppyCarrierTests) ... ok
+test_both_native_languages_preserve_all_twenty_one_scalar_state_queries (test_graph_augmentations_puppygraph.RetainedSharedNativePuppyTests) ... ok
+test_atomic_immutable_local_persistence_and_interrupted_write (test_graph_release.GraphReleaseTests) ... ok
+test_complete_reversible_graph_and_exact_carriers (test_graph_release.GraphReleaseTests) ... ok
+test_empty_release_and_closing_refusal (test_graph_release.GraphReleaseTests) ... ok
+test_exact_signed64_identity_boundaries (test_graph_release.GraphReleaseTests) ... ok
+test_full_release_refuses_budget_duplicate_dangling_corrupt_and_expiry (test_graph_release.GraphReleaseTests) ... ok
+test_invalid_identity_profiles_refuse (test_graph_release.GraphReleaseTests) ... ok
+test_old_release_bytes_remain_stable_with_successor_values (test_graph_release.GraphReleaseTests) ... ok
+test_duplicate_json_and_noncanonical_bytes (test_graph_release_graphframes.Tests) ... ok
+test_empty_and_explicit_columns (test_graph_release_graphframes.Tests) ... ok
+test_exact_properties_identity_and_directed_multigraph_oracle (test_graph_release_graphframes.Tests) ... ok
+test_original_manifest_lineage_and_complete_mapping_refusals (test_graph_release_graphframes.Tests) ... ok
+test_refusal_custody_encoding_closed_carriers_duplicates_endpoints (test_graph_release_graphframes.Tests) ... ok
+test_help_needs_neither_host_package_nor_native_libraries (test_host_cli.HostCliTests) ... ok
+test_invalid_configuration_refuses_before_composition (test_host_cli.HostCliTests) ... ok
+test_all_sixteen_profile_pins_admitted_before_capture_or_worker (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_close_failure_before_sink_still_closes_owner_with_one_deadline (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_diagnostic_cleanup_does_not_mark_business_primary_and_cancellation_priority (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_local_capture_precedes_worker_and_startup_failure_remains_untraced (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_ordinary_context_failure_keeps_capture_and_still_closes_owner_once (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_ordinary_emit_failure_retains_owner_for_cleanup_and_local_capture (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_partial_capture_refuses_before_worker_and_startup_cancellation_closes_capture (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_unqualified_startup_failure_never_enters_business_body (test_host_diagnostic_composition.CompositionTests) ... skipped 'selected composition requires Python 3.11'
+test_disabled_avoids_discovery_construction_and_preserves_body_primary (test_host_diagnostic_composition.DisabledCompositionTests) ... ok
+test_concurrent_attempts_sequence_and_no_duplicate_finish (test_host_diagnostics.DiagnosticsTests) ... ok
+test_constructor_io_refusals_are_safe_and_cancellation_is_exact (test_host_diagnostics.DiagnosticsTests) ... ok
+test_emission_loss_gaps_and_empty_filter_not_completeness (test_host_diagnostics.DiagnosticsTests) ... ok
+test_final_manifest_failure_stays_open_and_primary_survives (test_host_diagnostics.DiagnosticsTests) ... ok
+test_final_publication_ordinary_failure_does_not_reclassify (test_host_diagnostics.DiagnosticsTests) ... ok
+test_fixed_catalog_and_forged_attempt_refuse_before_sink (test_host_diagnostics.DiagnosticsTests) ... ok
+test_four_segment_rotation_and_total_bound (test_host_diagnostics.DiagnosticsTests) ... ok
+test_open_missing_expired_hash_and_symlink_refusal (test_host_diagnostics.DiagnosticsTests) ... ok
+test_partial_segment_write_invalidates_prior_records (test_host_diagnostics.DiagnosticsTests) ... ok
+test_primary_and_cleanup_only_cancellation_identity (test_host_diagnostics.DiagnosticsTests) ... ok
+test_reader_duplicate_numeric_and_closed_mutation_controls (test_host_diagnostics.DiagnosticsTests) ... ok
+test_real_offline_schema_correspondence (test_host_diagnostics.DiagnosticsTests) ... skipped 'Optional real schema test environment unavailable'
+test_sink_mutation_cannot_change_local_event_and_shutdown_snapshot (test_host_diagnostics.DiagnosticsTests) ... ok
+test_snapshot_rechecks_earlier_segment_after_later_reads (test_host_diagnostics.DiagnosticsTests) ... ok
+test_started_after_phase_refuses_even_with_loss (test_host_diagnostics.DiagnosticsTests) ... ok
+test_success_trace_filters_private_bytes_and_exact_manifest (test_host_diagnostics.DiagnosticsTests) ... ok
+test_undeclared_segment_requires_declared_loss (test_host_diagnostics.DiagnosticsTests) ... ok
+test_unknown_export_counts_and_fixed_notice_once (test_host_diagnostics.DiagnosticsTests) ... ok
+test_absent_selection_avoids_composition_import_and_metadata (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_invalid_selected_file_refuses_before_composition_or_query (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_open_malformed_changed_and_invalid_filter_release_no_stdout (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_public_reader_equivalence_filters_zero_and_truncation_without_discovery (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_retrieval_output_cancellation_retains_identity_without_worker_discovery (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_retrieval_short_write_reports_failure_without_inventing_atomic_output (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_selected_loader_composition_query_closure_console_order (test_host_diagnostics_cli.DiagnosticCliTests) ... ok
+test_cancellation_preserved_descriptor_closed_and_cleanup_attempted (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_closed_structural_shape_duplicate_keys_nonfinite_utf8 (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_depth_number_guards_reject_before_unbounded_conversion (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_exact_explicit_values_secret_wrapping_and_no_ambient_discovery (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_growth_and_path_replacement_during_read_refused (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_regular_absolute_nonsymlink_bounded_file (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_replacement_between_inspection_and_open_refused_and_closed (test_host_diagnostics_config_file.ConfigFileTests) ... ok
+test_actual_provider_distinguishes_ack_guard_from_cleanup_ports (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_business_cancellation_wins_over_later_diagnostic_cancellation (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_business_category_preserved_when_native_cleanup_also_fails (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_cancellation_inside_reader_closes_reader_before_stop (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_cleanup_state_tracks_actual_port_only_and_preserves_cancellation (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_commit_completed_cancellation_preserves_published_report (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_failed_begin_does_not_fabricate_attempt_or_finish (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_finish_cancellation_supersedes_ordinary_business_error (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_guard_refusal_is_typed_refused_without_message_inspection (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_native_cleanup_failure_is_failed_cleanup_category (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_ordinary_finish_failure_preserves_business_primary (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_ordinary_sink_failures_do_not_abort_or_mark_native_cleanup (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_post_acquisition_phase_cancellation_stops_spark_before_propagation (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_post_cleanup_source_drift_uses_closing_category (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_reader_acquired_region_preserves_primary_with_and_without_facts (test_host_paths_diagnostics.DiagnosticWorkflowTests)
+Exercise the owning acquired-region AST with inert ports, not native I/O. ... ok
+test_reader_cleanup_only_failure_has_explicit_native_cleanup_fact (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_reader_closing_drift_does_not_invent_cleanup_failure (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_success_observed_after_actual_report_publish_and_stop (test_host_paths_diagnostics.DiagnosticWorkflowTests) ... ok
+test_actual_public_schemas_when_explicitly_available (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... skipped 'Separate explicit real-schema environment required'
+test_all_actual_compiled_metadata_and_blocked_cases (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_exact_ordered_collection_and_capacity_inventories (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_generic_obligation_numeric_identity_cannot_use_boolean_equality (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_onehop_original_key_and_relationship_correspondence (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_original_field_membership_allows_cross_module_but_refuses_optional_source (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_positioned_onehop_map_and_guard_remain_exact (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_profile_selection_has_no_cross_profile_fallback (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_relationship_guard_complete_consumed_inventory (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_required_root_and_closed_descriptor_no_null_fallback (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_standalone_edge_schema_does_not_require_synthetic_record_binding (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_standalone_schema_and_full_empty_outer_inventory (test_host_paths_keys_admission.PathsKeysAdmissionTests) ... ok
+test_bad_native_identity_type_refuses_before_any_sql_even_empty (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_closing_publication_drift_withholds_decoded_result (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_empty_result_still_runs_complete_original_collection_guards (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_malformed_or_null_collection_never_returns_evidence (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_original_carrier_and_duplicate_occurrences_survive_held_execution (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_owning_collection_failure_withholds_user_query (test_host_paths_keys_execution.PathsKeysExecutionTests) ... ok
+test_selected_closing_schema_drift_withholds_after_spark_stop (test_host_paths_profile_wiring.HostProfileWiringTests) ... ok
+test_selected_compiler_cancellation_survives_required_cleanup_failure (test_host_paths_profile_wiring.HostProfileWiringTests) ... ok
+test_selected_compiler_failure_never_uses_old_compiler_or_releases_report (test_host_paths_profile_wiring.HostProfileWiringTests) ... ok
+test_selected_profile_owns_all_ten_requests_admission_and_closing (test_host_paths_profile_wiring.HostProfileWiringTests) ... ok
+test_selected_schema_failure_has_no_fallback_or_producer_effects (test_host_paths_profile_wiring.HostProfileWiringTests) ... ok
+test_all_ten_requests_change_only_the_explicit_backend_selection (test_host_paths_profile_wiring.RequestProfileTests) ... ok
+test_invalid_selection_refuses_before_original_request_construction (test_host_paths_profile_wiring.RequestProfileTests) ... ok
+test_cancellation_reader_replacement_and_stop_failure_preserve_primary (test_host_paths_query.LifecycleTests) ... ok
+test_complete_ten_results_persist_only_after_reader_and_stop (test_host_paths_query.LifecycleTests) ... ok
+test_final_report_write_cancellation_survives_stream_close_failure (test_host_paths_query.LifecycleTests) ... ok
+test_postcommit_report_cleanup_cancellation_is_not_swallowed (test_host_paths_query.LifecycleTests) ... ok
+test_reader_suppression_withholds_and_stop_runs (test_host_paths_query.LifecycleTests) ... ok
+test_report_close_failure_leaves_no_final_report (test_host_paths_query.LifecycleTests) ... ok
+test_report_drift_after_reader_closes_withholds (test_host_paths_query.LifecycleTests) ... ok
+test_required_onehop_refusal_withholds_whole_report (test_host_paths_query.LifecycleTests) ... ok
+test_all_ten_independent_original_bags_and_opaque_identities (test_host_paths_query.OracleRequestTests) ... ok
+test_complete_request_preserves_original_source_and_all_homes (test_host_paths_query.OracleRequestTests) ... ok
+test_package_import_without_tools_or_sdk (test_host_paths_query.OracleRequestTests) ... ok
+test_schema_pin_refusal_before_dependency_and_optional_real_validator (test_host_paths_query.OracleRequestTests) ... ok
+test_native_projection_and_field_receipt_correspondence_refuse_independent_mutations (test_host_paths_query.PublicSourceTests) ... ok
+test_preflight_refuses_before_encoder_and_numeric_conversion (test_host_paths_query.PublicSourceTests) ... ok
+test_identifier_and_quoting_share_closed_grammar (test_host_public_ports.PublicHostPortsTests) ... ok
+test_json_exact_fraction_unknown_content_and_root_shapes (test_host_public_ports.PublicHostPortsTests) ... ok
+test_json_rejects_duplicates_invalid_utf8_and_nonfinite (test_host_public_ports.PublicHostPortsTests) ... ok
+test_request_digest_rejects_mutation_missing_unknown_and_empty (test_host_public_ports.PublicHostPortsTests) ... ok
+test_oracle_bag_and_native_closure_refuse (test_indexed_weft_commerce.IndexedCommerceTests) ... ok
+test_public_indexed_compile_exact_sql_and_all_guards (test_indexed_weft_commerce.IndexedCommerceTests) ... ok
+test_response_framing_and_duplicate_keys_refuse (test_indexed_weft_commerce.IndexedCommerceTests) ... ok
+test_unknown_obligation_and_closing_failure_never_return (test_indexed_weft_commerce.IndexedCommerceTests) ... ok
+test_capture_migration_preserves_unchanged_definitions (test_installed_path_host.InstalledPathHostTests) ... ok
+test_installed_public_guards_and_cleanup (test_installed_path_host.InstalledPathHostTests) ... ok
+test_original_profile_remains_the_default_admission (test_installed_path_host.InstalledPathHostTests) ... ok
+test_changed_authority_cannot_recover_another_original (test_journaled_attempts.JournaledAttemptTests) ... ok
+test_read_reconciles_original_pending_handle_before_absence (test_journaled_attempts.JournaledAttemptTests) ... ok
+test_uncertain_no_handle_cannot_be_reported_absent (test_journaled_attempts.JournaledAttemptTests) ... ok
+test_contiguous_progress_reopen_and_exact_repeat (test_journaled_csv_progress.CsvProgressTests) ... ok
+test_gap_wrong_predecessor_changed_file_epoch_and_mapping_refuse (test_journaled_csv_progress.CsvProgressTests) ... ok
+test_lost_local_commit_receipt_remains_unknown_and_exact_replay_recovers (test_journaled_csv_progress.CsvProgressTests) ... ok
+test_missing_native_descriptor_and_closing_source_denial_do_not_advance (test_journaled_csv_progress.CsvProgressTests) ... ok
+test_postcommit_native_closure_failure_is_explicit_unknown_not_rollback (test_journaled_csv_progress.CsvProgressTests) ... ok
+test_actual_byte_positions_complete_groups_reopen_and_old_repeat (test_journaled_jsonl_progress.JsonlProgressTests) ... ok
+test_checkpoint_cannot_substitute_group_ordinal_or_other_cursors (test_journaled_jsonl_progress.JsonlProgressTests) ... ok
+test_gap_changed_original_and_failed_closing_custody_refuse (test_journaled_jsonl_progress.JsonlProgressTests) ... ok
+test_full_stored_publisher_composition_and_reopen_no_replacement (test_journaled_publisher_driver.JournaledDriverTests) ... ok
+test_interrupted_effect_recovery_requires_original_artifact_observations (test_journaled_publisher_driver.JournaledDriverTests) ... ok
+test_native_validation_denial_keeps_original_applied_custody_without_manifest (test_journaled_publisher_driver.JournaledDriverTests) ... ok
+test_capture_then_reopen_preserves_bytes_without_snapshot_queries (test_journaled_snapshot_artifacts.SnapshotArtifactTests) ... ok
+test_failed_capture_and_missing_custody_never_observe_replacement (test_journaled_snapshot_artifacts.SnapshotArtifactTests) ... ok
+test_vector_mismatch_and_corrupt_artifact_refuse (test_journaled_snapshot_artifacts.SnapshotArtifactTests) ... ok
+test_explicit_model_ids_source_and_replay (test_jsonl_source_configuration.ConfigurationTests) ... ok
+test_unknown_configuration_stale_digests_and_foreign_ids_refuse (test_jsonl_source_configuration.ConfigurationTests) ... ok
+test_control_spelling_and_no_normalization (test_lineage.LineageTests) ... ok
+test_independent_truss_vectors (test_lineage.LineageTests) ... ok
+test_refuses_unknown_incomplete_and_untransportable (test_lineage.LineageTests) ... ok
+test_default_old_bytes_and_exact_four_mib_boundary (test_local_delta_capacity.CapacityTests) ... ok
+test_default_one_byte_over_refuses_before_journal_and_native_dispatch (test_local_delta_capacity.CapacityTests) ... ok
+test_exact_utf8_escape_count_and_early_refusal_without_whole_serialization (test_local_delta_capacity.CapacityTests) ... ok
+test_explicit_eight_mib_boundary_binds_every_custody_surface_and_missing_reopen_refuses (test_local_delta_capacity.CapacityTests) ... ok
+test_same_selected_profile_reopens_original_operation_and_recovers_without_second_write (test_local_delta_capacity.CapacityTests) ... ok
+test_unknown_open_profiles_refuse_before_any_native_or_journal_installation (test_local_delta_capacity.CapacityTests) ... ok
+test_closed_target_and_parameter_profiles_and_journal_installation (test_local_delta_custody.Tests) ... ok
+test_closing_callback_uuid_and_runtime_refuse (test_local_delta_custody.Tests) ... ok
+test_deleted_operation_named_history_refuses_changed_parameters (test_local_delta_custody.Tests) ... ok
+test_lost_journal_never_reinitializes (test_local_delta_custody.Tests) ... ok
+test_missing_or_changed_registration_refuses (test_local_delta_custody.Tests) ... ok
+test_original_intent_and_uncertain_commit_duplicates_refuse (test_local_delta_custody.Tests) ... ok
+test_original_native_metadata_and_exact_receipt_replay_without_write (test_local_delta_custody.Tests) ... ok
+test_original_parameters_frozen_before_callbacks (test_local_delta_custody.Tests) ... ok
+test_recovery_requires_original_plan_and_ordered_steps (test_local_delta_custody.Tests) ... ok
+test_reservation_survives_uncertain_initialization_at_empty_version_zero (test_local_delta_custody.Tests) ... ok
+test_submitted_absent_is_uncertain_and_never_replaced (test_local_delta_custody.Tests) ... ok
+test_wrong_original_native_commit_version_and_uuid_refuse (test_local_delta_custody.Tests) ... ok
+test_cli_composes_schema_source_apply_and_retained_replay (test_local_example.LocalExampleTests) ... ok
+test_execute_refuses_replacement_during_edge_read_even_with_same_rows (test_local_graph_refresh.Tests) ... ok
+test_explicit_profile_preserves_controls_and_successor_mutations (test_local_graph_refresh.Tests) ... ok
+test_handle_immutable_and_malformed_byte_binding_refused (test_local_graph_refresh.Tests) ... ok
+test_same_rows_node_replacement_while_edge_query_requires_closing_vector (test_local_graph_refresh.Tests) ... ok
+test_whole_handle_vector_and_directory_binding (test_local_graph_refresh.Tests) ... ok
+test_invalid_roles_refuse_before_container_or_authentication_access (test_local_outbox_connection.Tests) ... ok
+test_wrong_container_and_nonlocal_endpoint_refuse_before_authentication (test_local_outbox_connection.Tests) ... ok
+test_explicit_source_port_required_and_metadata_cannot_change (test_local_outbox_publication.Tests) ... ok
+test_incomplete_or_reused_current_core_receipt_cannot_admit_other_source (test_local_outbox_publication.Tests) ... ok
+test_independent_sources_overlap_ids_without_collapsing_objects_edges_history (test_local_outbox_publication.Tests) ... ok
+test_interleaved_global_ancestry_is_distinct_from_source_progress_and_epochs (test_local_outbox_publication.Tests) ... ok
+test_manifest_descriptor_read_rechecks_original_uuid_after_select (test_local_outbox_publication.Tests) ... ok
+test_manifest_recovery_cannot_submit_without_original_native_intent (test_local_outbox_publication.Tests) ... ok
+test_phase_and_manifest_mutations_bind_exact_original_request (test_local_outbox_publication.Tests) ... ok
+test_real_source_envelopes_closed_and_graph_sql_matches_declared_topology (test_local_outbox_publication.Tests) ... ok
+test_recovery_executor_dispatches_exact_original_child_and_never_mutation (test_local_outbox_publication.Tests) ... ok
+test_zero_match_delete_specialization_is_source_qualified_and_retains_real_deletes (test_local_outbox_publication.Tests) ... ok
+test_actual_compiler_typed_subset_and_engine_refusal (test_local_weft_typed_probe.OriginalLocalCompilerArtifactsTests) ... skipped 'Set ASHLAR_LOCAL_WEFT_PROBE to original local runner output; no compiler/runtime claim from this skip'
+test_actual_public_scalar_domains_refuse_corrupt_source (test_local_weft_typed_probe.TypedPublicModelTests) ... ok
+test_actual_public_upgrade_and_complete_typed_fields (test_local_weft_typed_probe.TypedPublicModelTests) ... ERROR
+test_separately_authored_original_source (test_local_weft_typed_probe.TypedPublicModelTests) ... ok
+skipped 'Set ASHLAR_LOCAL_WEFT_SPARK4 to actual retained local run; no runtime proof from skip'
+test_admission_denial_precedes_manifest_effect (test_manifest.ManifestTests) ... ok
+test_bound_append_and_exact_readback (test_manifest.ManifestTests) ... ok
+test_identity_change_refuses_before_effect (test_manifest.ManifestTests) ... ok
+test_incomplete_and_malformed_vectors_refuse (test_manifest.ManifestTests) ... ok
+test_replay_preserves_original_and_conflict_refuses (test_manifest.ManifestTests) ... ok
+test_full_uuid_inventory_and_exact_scope_required (test_manifest_pins.ManifestPinTests) ... ok
+test_original_manifest_matches_held_vector (test_manifest_pins.ManifestPinTests) ... ok
+test_parsed_descriptor_substitution_refuses (test_manifest_pins.ManifestPinTests) ... ok
+test_semantically_equal_changed_bytes_do_not_reuse_original_pins (test_manifest_pins.ManifestPinTests) ... ok
+test_singleton_composes_real_manifest_binding_before_row_read (test_manifest_pins.ManifestPinTests) ... ok
+test_fresh_process_replays_original_microseconds_without_network (test_materialization_clock.ClockTests) ... ok
+test_noncanonical_clock_and_mismatched_workload_refuse (test_materialization_clock.ClockTests) ... ok
+test_pending_recovers_same_handle_and_lost_submission_never_reposts (test_materialization_clock.ClockTests) ... ok
+test_complete_archive_fullvalue_and_original_occurrence_bags (test_medical_historical_oracle.HistoricalMedicalOracleTests) ... ok
+test_independent_csv_oracle_catches_graph_value_key_and_incidence_changes (test_medical_historical_oracle.HistoricalMedicalOracleTests) ... ok
+test_regenerated_original_oracle_matches_frozen_public_input_hash (test_medical_historical_oracle.HistoricalMedicalOracleTests) ... ok
+test_admission_rechecks_whole_original_bytes_and_only_owns_original_changes (test_medical_source.MedicalSourceTests) ... ok
+test_complete_typed_source_retains_boolean_tokens_and_null_with_original_unbounded_integer (test_medical_source.MedicalSourceTests) ... ok
+test_exact_original_receipt_pin_and_boolean_custody_cannot_be_swapped (test_medical_source.MedicalSourceTests) ... ok
+test_independent_original_fullrow_oracle_matches_decoded_source_and_exposes_bad_binding (test_medical_source.MedicalSourceTests) ... ok
+test_stop_failure_withholds_success_report (test_medical_source.MedicalSourceTests) ... ok
+test_exact_resource_reference_and_authored_types (test_medical_source_oracle.OriginalMedicalOracleTests) ... ok
+test_explicit_current_csv_carriers_keep_native_null_and_boolean (test_medical_source_oracle.OriginalMedicalOracleTests) ... ok
+test_historical_pack_archive_and_boolean_tokens_stay_separate (test_medical_source_oracle.OriginalMedicalOracleTests) ... ok
+test_json_pointer_keeps_native_reference_without_resolution_invention (test_medical_source_oracle.OriginalMedicalOracleTests) ... ok
+test_actual_repository_policy (test_module_boundaries.BoundaryTests) ... src/ashlar_host/path_execution.py:199: DeprecationWarning: invalid escape sequence \.
+  and re.fullmatch('-?[0-9]+(?:\.[0-9]+)?', value)
+tools/check_commerce_graphframes_scenarios.py:47: DeprecationWarning: invalid escape sequence \.
+  if field.get('facets')!={'precision':18,'scale':2} or not re.fullmatch('-?(0|[1-9][0-9]*)(\.[0-9]{1,2})?',token):raise ValueError('Exact selected fixed decimal capability refused')
+tools/run_commerce_arithmetic_weft.py:444: DeprecationWarning: invalid escape sequence \.
+  if len(value)>128 or set(facets) not in ({'scale'},{'precision','scale'}) or type(facets['scale'])is not int or not 0<=facets['scale']<=38 or not re.fullmatch('-?[0-9]+(?:\.[0-9]+)?',value):raise ValueError('Exact decimal text with explicit scale required')
+tools/run_commerce_path_weft.py:198: DeprecationWarning: invalid escape sequence \.
+  and re.fullmatch('-?[0-9]+(?:\.[0-9]+)?', value)
+tools/run_pack_null_weft.py:61: DeprecationWarning: invalid escape sequence \.
+  if (type(text)is not str or len(text)>128 or not re.fullmatch('-?[0-9]+(?:\.[0-9]+)?',text)
+tools/stage_source.py:31: DeprecationWarning: invalid escape sequence \.
+  if not re.fullmatch('[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*',namespace):parser.error('Safe installed namespace required')
+ok
+test_compiler_installer_and_composition_roles (test_module_boundaries.BoundaryTests) ... ok
+test_exact_baseline_no_blanket_or_new_symbol (test_module_boundaries.BoundaryTests) ... ok
+test_installed_host_has_owned_public_edges (test_module_boundaries.BoundaryTests) ... ok
+test_model_runtime_and_consumer_producer_directions (test_module_boundaries.BoundaryTests) ... ok
+test_otel_host_owner_and_public_composition_edges_are_allowed (test_module_boundaries.BoundaryTests) ... ok
+test_otel_vendor_is_forbidden_in_every_core_location (test_module_boundaries.BoundaryTests) ... ok
+test_package_members_qualified_chain_and_native_libraries (test_module_boundaries.BoundaryTests) ... ok
+test_path_decoder_role_has_real_allow_and_deny_controls (test_module_boundaries.BoundaryTests) ... ok
+test_paths_composition_is_an_exact_host_role (test_module_boundaries.BoundaryTests) ... ok
+test_paths_keys_composition_role_is_closed (test_module_boundaries.BoundaryTests) ... ok
+test_paths_keys_consumers_and_private_mechanics_exact_boundaries (test_module_boundaries.BoundaryTests) ... ok
+test_paths_package_and_installer_have_consumer_boundaries (test_module_boundaries.BoundaryTests) ... ok
+test_policy_refuses_duplicate_unowned_and_unknown (test_module_boundaries.BoundaryTests) ... ok
+test_portable_evolution_role_allows_source_and_forbids_runtime (test_module_boundaries.BoundaryTests) ... ok
+test_real_allowed_and_forbidden_edges (test_module_boundaries.BoundaryTests) ... ok
+test_recursive_role_relative_and_alias_checks (test_module_boundaries.BoundaryTests) ... ok
+test_full_checks_renew_retention_and_source_admission (test_native_artifact_validation.NativeArtifactValidatorTests) ... ok
+test_raw_descriptor_mismatch_refuses_before_native_reads (test_native_artifact_validation.NativeArtifactValidatorTests) ... ok
+test_unknown_protocol_wrong_rows_and_missing_pins_refuse (test_native_artifact_validation.NativeArtifactValidatorTests) ... ok
+test_caller_namespace_has_complete_original_model_custody_without_mutation (test_native_csv_configuration.ConfigurationTests) ... ok
+test_cross_namespace_missing_carriers_wrong_columns_and_stale_model_refuse (test_native_csv_configuration.ConfigurationTests) ... ok
+test_actual_vector_inputs_closed_and_home_permissions_explicit (test_native_null_controls.NativeNullControlInputs) ... ok
+test_distinct_source_states_and_separate_model (test_native_null_controls.NativeNullControlInputs) ... ok
+test_external_registry_foreign_namespace_and_untrusted_writer_refuse (test_native_registry_authority.RegistryAuthorityTests) ... ok
+test_fresh_actor_and_complete_inherited_permissions_required_on_every_admission (test_native_registry_authority.RegistryAuthorityTests) ... ok
+test_evolution_original_bytes_sql_state_and_independent_oracle (test_native_schema_inventory.NativeSchemaInventoryTests) ... ok
+test_exact_two_revision_custody_and_original_single_proof_compatibility (test_native_schema_inventory.NativeSchemaInventoryTests) ... ok
+test_missing_substituted_duplicate_or_foreign_registry_refuses (test_native_schema_inventory.NativeSchemaInventoryTests) ... ok
+test_controls_unicode_and_claimed_role_remain_asserted (test_origin.OriginMappingTests) ... ok
+test_independent_exact_value_shape_and_literal_tags (test_origin.OriginMappingTests) ... ok
+test_refuses_invalid_or_resource_exhausting_origin (test_origin.OriginMappingTests) ... ok
+test_actual_clean_worker_exchange_and_reaping (test_otel_supervision.SupervisionTests) ... ERROR
+test_actual_refusal_hold_keeps_session_live_for_parent_cleanup (test_otel_supervision.SupervisionTests) ... FAIL
+test_blocked_response_is_killed_reaped_with_fixed_error (test_otel_supervision.SupervisionTests) ... ERROR
+test_busy_port_refuses_without_queue_or_interleaved_frames (test_otel_supervision.SupervisionTests) ... ERROR
+test_cleanup_cancellation_survives_ordinary_diagnostic_failure (test_otel_supervision.SupervisionTests) ... ERROR
+test_cleanup_receipt_requires_pipes_reap_and_lock (test_otel_supervision.SupervisionTests) ... ok
+test_concurrent_cleanup_cannot_reap_before_group_action (test_otel_supervision.SupervisionTests) ... ok
+test_disabled_path_has_no_discovery_or_process (test_otel_supervision.SupervisionTests) ... ok
+test_explicit_sdk_parent_is_sent_only_when_attempt_starts (test_otel_supervision.SupervisionTests) ... skipped 'selected optional SDK not installed'
+test_failed_group_termination_cannot_become_positive_on_second_disposal (test_otel_supervision.SupervisionTests) ... ok
+test_group_cleanup_precedes_reaping_and_is_one_shot (test_otel_supervision.SupervisionTests) ... ok
+test_interleaved_async_operation_bindings_are_isolated_and_restored (test_otel_supervision.SupervisionTests) ... ERROR
+test_missing_duplicate_or_false_admission_cannot_construct_run (test_otel_supervision.SupervisionTests) ... ok
+test_original_cancellation_survives_cleanup_error (test_otel_supervision.SupervisionTests) ... ERROR
+test_per_request_progress_bounds_blocked_close_before_total_deadline (test_otel_supervision.SupervisionTests) ... ERROR
+test_progress_completion_restores_shared_close_budget (test_otel_supervision.SupervisionTests) ... ERROR
+test_selector_cleanup_preserves_original_cancellation (test_otel_supervision.SupervisionTests) ... ERROR
+test_span_selection_exact_boolean_nested_restored_and_start_only (test_otel_supervision.SupervisionTests) ... ERROR
+test_startup_admission_refusal_and_post_admission_failure_are_distinct (test_otel_supervision.SupervisionTests) ... FAIL
+test_active_span_trace_cannot_be_stripped (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_actual_dependency_import_admission_precedes_provider_construction (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_actual_sdk_logs_span_counter_and_low8_remote_flags (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_actual_sdk_shutdown_preserves_primary_and_cleanup_only_cancellation (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_all20_series_cumulative_values_and_no_identity_dimensions (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_ambient_settings_and_versions_refuse_before_providers (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_cumulative_snapshot_slot_drop_counts_points_not_measurements (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_diagnostic_collect_or_send_error_cannot_mask_first_cleanup_cancellation (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_exact_c006_resource_log_timestamp_and_span_attribute_projection (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_http_response_caps_partial_redirect_cleanup_and_cancel (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_http_signal_routes_preserve_base_prefix (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_locally_lost_start_context_does_not_invent_a_log_or_outcome (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_missing_transitive_dependency_or_import_has_no_positive_admission (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_pending_spans_unknown_queue_drop_and_context_correspondence (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_retry_link_actual_context_no_simultaneous_parent_or_ambient (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_spanless_actual_sdk_logs_counter_and_immutable_selection (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_spanless_constructor_cancellation_preserved_and_context_restored (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_spanless_constructor_first_cancellation_survives_later_cancellation (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_spanless_detach_first_cancellation_beats_ordinary_constructor_failure (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_spanless_sdk_log_ignores_and_restores_valid_attached_context (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_transport_progress_precedes_io_and_completes_only_after_cleanup (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_unfinished_spanless_attempt_has_no_invented_span_loss_or_counter (test_otel_worker.SDKWorkerTests) ... skipped 'selected SDK Python3.11 environment required'
+test_actual_pipe_eof_releases_refusing_worker (test_otel_worker.WorkerProtocolTests) ... ok
+test_byte_reservations_before_serialization_and_exact_units (test_otel_worker.WorkerProtocolTests) ... ok
+test_cleanup_all_attempted_original_and_cleanup_only_identity (test_otel_worker.WorkerProtocolTests) ... ok
+test_failed_refusal_write_does_not_wait_for_parent (test_otel_worker.WorkerProtocolTests) ... ok
+test_frames_closed_bounded_duplicate_numeric_depth (test_otel_worker.WorkerProtocolTests) ... ok
+test_init_refusal_hold_follows_reply_and_preserves_read_cancellation (test_otel_worker.WorkerProtocolTests) ... ok
+test_protocol_refusal_and_primary_preserved_through_worker_cleanup (test_otel_worker.WorkerProtocolTests) ... ok
+test_settings_explicit_policy_and_no_secret_repr (test_otel_worker.WorkerProtocolTests) ... ok
+test_bounds_and_noncanonical_cursor_refuse (test_outbox.OutboxTests) ... ok
+test_exact_native_cursor_separate_from_jsonl_offset (test_outbox.OutboxTests) ... ok
+test_missing_unordered_corrupt_source_refuses (test_outbox.OutboxTests) ... ok
+test_gap_scope_payload_and_byte_offset_checkpoint_refuse (test_outbox_apply.OutboxApplyTests) ... ok
+test_native_positions_drive_schema_evolution_across_independent_byte_cursors (test_outbox_apply.OutboxApplyTests) ... ok
+test_cleanup_failure_withholds_provisional_export (test_pack_graph_release.Tests) ... ok
+test_graph_inventory_requires_complete_source_qualified_native_vector (test_pack_graph_release.Tests) ... ok
+test_medical_cannot_be_used_as_unqualified_compiler_reader (test_pack_graph_release.Tests) ... ok
+test_source_failure_still_closes_spark_and_returns_no_export (test_pack_graph_release.Tests) ... ok
+test_all_original_cases_and_raw_cells_remain (test_pack_graph_scenarios.ScenarioProfileTests) ... ok
+test_changed_original_source_refuses (test_pack_graph_scenarios.ScenarioProfileTests) ... ok
+test_changed_public_receipt_refuses_before_release (test_pack_graph_scenarios.ScenarioProfileTests) ... ok
+test_presence_not_member_null_distinction (test_pack_graph_scenarios.ScenarioProfileTests) ... ok
+test_signed64_is_finite_representation (test_pack_graph_scenarios.ScenarioProfileTests) ... ok
+test_actual_runner_preparation_selects_exact_original_left_query_and_graph (test_pack_left_weft.PackLeftTests) ... ok
+test_all_matched_original_payloads_proved_string_before_runtime (test_pack_left_weft.PackLeftTests) ... ok
+test_original_graph_oracle_order_multiplicity_and_unmatched_tags (test_pack_left_weft.PackLeftTests) ... ok
+test_original_request_opt_in_preserves_exact_query_modules (test_pack_left_weft.PackLeftTests) ... ok
+test_exact_scale_equivalence_preserves_both_lexicals (test_pack_null_decimal_oracle.DecimalOracleTests) ... ok
+test_mismatch_state_string_integer_and_multiplicity_unchanged (test_pack_null_decimal_oracle.DecimalOracleTests) ... ok
+test_no_rounding_overflow_float_or_unknown_facets (test_pack_null_decimal_oracle.DecimalOracleTests) ... ok
+test_changed_source_property_catalog_source_scope_or_full_vector_refuses (test_pack_publication_weft.Tests) ... ok
+test_complete_original_qualified_records_fields_and_sql (test_pack_publication_weft.Tests) ... ok
+test_closing_change_withholds_report (test_pack_puppygraph.CarrierTests) ... ok
+test_raw_cells_and_identity_are_not_inferred (test_pack_puppygraph.CarrierTests) ... ok
+test_client_close_failure_withholds_return (test_pack_puppygraph.LifecycleTests) ... ok
+test_wrong_edge_endpoint_refuses (test_pack_puppygraph.LifecycleTests) ... ok
+test_closed_results_and_duplicate_occurrences (test_pack_puppygraph.PackPuppyTests) ... ok
+test_complete_projection_and_nulls (test_pack_puppygraph.PackPuppyTests) ... ok
+test_counts_are_exact (test_pack_puppygraph.PackPuppyTests) ... ok
+test_native_membership_and_isolation (test_pack_puppygraph.PackPuppyTests) ... ok
+test_changed_original_scenario_bytes_and_unknown_pack_refuse (test_pack_query_cases.Tests) ... ok
+test_complete_original_sql_and_graph_expectations_stay_distinct (test_pack_query_cases.Tests) ... ok
+test_injective_qualified_field_bindings_preserve_declared_fields (test_pack_query_cases.Tests) ... ok
+test_archived_original_source_mismatches_refuse_before_graph_construction (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_changed_version_and_carrier_bag_refuse (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_complete_closing_vector_catches_replacement_during_other_table_read (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_native_cleanup_failure_withholds_report (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_native_filter_and_isolate_wiring_uses_native_columns (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_oracle_retains_parallel_self_loop_isolate_and_nonvacuous_limit (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_unqualified_runtime_or_replaced_jars_refuse (test_pack_release_graphframes.PackReleaseGraphFramesTests) ... ok
+test_aggregate_counts_and_schema_are_exact (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_grouped_order_is_native_and_verified (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_native_operator_plan_contains_all_original_cases (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_optional_witness_distinguishes_unmatched (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_preparation_mutation_refuses_before_spark (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_stop_failure_withholds_complete_report (test_pack_scenario_graphframes.ScenarioNativeTests) ... ok
+test_complete_original_carriers_and_finite_integer_cells (test_pack_scenario_puppygraph.ScenarioPuppyPreparationTests) ... ok
+test_long_bool_float_and_capacity_refuse (test_pack_scenario_puppygraph.ScenarioPuppyPreparationTests) ... ok
+test_native_duckdb_complete_parity_and_model_types (test_pack_scenario_puppygraph.ScenarioPuppyPreparationTests) ... skipped 'Existing optional DuckDB dependency required'
+test_actual_graphson_int64_wrapper_and_other_subclasses (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... skipped 'Qualified optional Gremlin3.7.3 runtime required'
+test_admission_source_mutation_refuses_before_client (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_all_original_native_translations_and_semantics (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_attempt_journal_precedes_native_and_retains_failure (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_client_close_failure_withholds_result (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_complete_closing_source_change_refuses (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_explicit_puppy_flat_profile_never_accepts_lists (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_gremlin_carrier_chunks_cover_all_cells_and_correlate (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_join_predicates_apply_before_next_scan (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_optional_vertex_branch_retains_native_multiplicity_and_missing_labels (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_role_specific_map_null_scalar_and_loss_refusals (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_unknown_protocol_refuses (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_value_map_native_edge_endpoint_refusal (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_wrong_native_edge_endpoint_refuses (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_wrong_publication_profile_refuses_before_client (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ERROR
+test_zero_pushdown_uses_admitted_scalars_and_explicit_presence (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests) ... ok
+test_complete_original_scalar_null_profiles_keep_source_tokens (test_pack_spark_sql.Tests) ... ok
+test_later_view_bag_failure_prevents_every_authored_query (test_pack_spark_sql.Tests) ... ok
+test_numeric_range_scale_float_and_family_refusals (test_pack_spark_sql.Tests) ... ok
+test_cli_passes_selected_profile_to_immutable_configuration (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_help_without_host_or_sdk_imports (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_invalid_bounds_refuse_before_paths_composition (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_invalid_profile_refuses_at_public_host_before_effects (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_profile_is_closed_and_immutable (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_separate_immutable_profile_and_finite_limits (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_unknown_cli_profile_refuses_before_configuration_or_composition (test_paths_host_configuration.PathsHostConfigurationTests) ... ok
+test_expiry_and_protocol_refusal_poison_the_interval (test_pinned_artifact_validation.PinnedValidationTests) ... ok
+test_full_parity_once_and_fresh_admission_on_every_renewal (test_pinned_artifact_validation.PinnedValidationTests) ... ok
+test_pin_failure_reentrancy_and_closing_refusal_clear_reuse (test_pinned_artifact_validation.PinnedValidationTests) ... ok
+test_complete_register_and_read_scope_holds_transaction (test_pins.PinTests) ... ok
+test_invalid_vector_and_denial (test_pins.PinTests) ... ok
+test_partial_released_and_changed_version_refuse (test_pins.PinTests) ... ok
+test_pending_cleanup_refuses_held_read_before_yield (test_pins.PinTests) ... ok
+test_actual_apply_requires_exact_delete_carrier_and_transition_policy (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_breaking_and_changed_custody_refuse_before_output (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_graph_sql_plan_all_prefixes_matches_independent_source_cells_and_replay (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_namespaces_do_not_collapse_overlapping_numeric_ids (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_new_field_absent_and_present_keep_decimal_and_registry (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_oracle_does_not_adopt_emitted_bad_property (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_prefix_topology_history_and_no_dangling_edges (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_qualified_envelopes_preserve_records_and_eight_identities (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_qualified_oracle_refuses_wrong_identity_or_cursor (test_portable_commerce_evolution.PortableEvolutionPreparationTests) ... ok
+test_changed_closed_custody_and_numeric_flags_are_refused (test_private_graph_custody.Tests) ... ok
+test_explicit_trusted_pair_preserves_every_original_manifest_string (test_private_graph_custody.Tests) ... ok
+test_partial_unknown_untrusted_or_duplicate_profile_refuses (test_private_graph_custody.Tests) ... ok
+test_present_retention_inventory_never_uses_private_fallback (test_private_graph_custody.Tests) ... ok
+test_retained_original_ack_may_be_observed_under_a_later_head (test_private_graph_custody.Tests) ... ok
+test_actual_native_original_receipts_and_reader_replay (test_profile_custody.ProfileCustodyTests) ... ok
+test_changed_byte_custody_or_numeric_xid_refuses (test_profile_custody.ProfileCustodyTests) ... ok
+test_absence_and_changed_original_receipt_refuse (test_protected_outbox_ack.Tests) ... ok
+test_close_failure_after_observed_commit_retains_uncertain_original_custody (test_protected_outbox_ack.Tests) ... ok
+test_closing_policy_commit_then_error_is_uncertain_without_false_rollback (test_protected_outbox_ack.Tests) ... ok
+test_current_authority_and_native_publication_refuse_before_ack (test_protected_outbox_ack.Tests) ... ok
+test_exact_original_receipt_and_held_pins_through_commit (test_protected_outbox_ack.Tests) ... ok
+test_known_sql_abort_rolled_back_does_not_become_unknown_commit (test_protected_outbox_ack.Tests) ... ok
+test_lost_commit_reconciles_exact_original_on_fresh_connection_without_write (test_protected_outbox_ack.Tests) ... ok
+test_lost_status_during_unknown_commit_cleanup_does_not_mask_original (test_protected_outbox_ack.Tests) ... ok
+test_postgresql_identifier_truncation_cannot_alias_service_scope (test_protected_outbox_ack.Tests) ... ok
+test_scope_and_safe_rendering_no_hidden_native_endpoints (test_protected_outbox_ack.Tests) ... ok
+test_scope_native_binding_replaced_is_not_an_authorized_noop_policy (test_protected_outbox_ack.Tests) ... ok
+test_suppressed_commit_exception_is_still_uncertain (test_protected_outbox_ack.Tests) ... ok
+test_suppressed_inner_failure_cannot_report_ack_success (test_protected_outbox_ack.Tests) ... ok
+test_unexpected_transaction_closure_after_write_is_outcome_unknown (test_protected_outbox_ack.Tests) ... ok
+test_selected_reader_and_features_are_defensive_and_explicit (test_protocol.ProtocolTests) ... ok
+test_unknown_missing_noncanonical_and_numeric_aliases_refuse (test_protocol.ProtocolTests) ... ok
+test_pinned_probe_and_schema_refusal (test_publication.NativeBackendTests) ... ok
+test_manifest_bound_lookup_and_replacement_refusal (test_publication.NativeCustodyTests) ... ok
+test_nonconforming_authorization_provider_refused (test_publication.NativeCustodyTests) ... ok
+test_denial_precedes_manifest_read (test_publication.ResolverTests) ... ok
+test_descriptor_refusals_before_native_inspection (test_publication.ResolverTests) ... ok
+test_pins_and_exact_unknown_metadata (test_publication.ResolverTests) ... ok
+test_snapshot_identity_and_version_refusals (test_publication.ResolverTests) ... ok
+test_changed_intent_and_denied_writer_refuse (test_publisher.PublisherTests) ... ok
+test_incomplete_validation_keeps_prior_publication_and_progress (test_publisher.PublisherTests) ... ok
+test_lost_commit_or_ack_reuses_original_descriptor (test_publisher.PublisherTests) ... ok
+test_missing_result_and_malformed_revision_refuse (test_publisher.PublisherTests) ... ok
+test_order_and_exact_replay (test_publisher.PublisherTests) ... ok
+test_unknown_apply_recovers_original_without_reexecution (test_publisher.PublisherTests) ... ok
+test_all_raw_carriers_and_nulls_survive_export (test_puppygraph_release_carrier.Tests) ... ERROR
+test_untrusted_release_digest_refuses_before_output_creation (test_puppygraph_release_carrier.Tests) ... ERROR
+test_wrong_incident_vertex_refuses_with_unchanged_carrier_properties (test_puppygraph_release_carrier.Tests) ... ok
+test_original_binary_intent_is_bound_without_text_conversion (test_quarantine.QuarantineTests) ... ok
+test_terminal_verification_refuses_before_database_access (test_quarantine.QuarantineTests) ... ok
+test_complete_schema_evolved_interval_matches_direct_apply (test_recovery.RecoveryTests) ... ok
+test_finite_limits_refuse_before_exposing_partial_state (test_recovery.RecoveryTests) ... ok
+test_missing_reordered_mixed_and_overlapping_intervals_refuse (test_recovery.RecoveryTests) ... ok
+test_partial_restart_requires_exact_trusted_prior_and_boundaries (test_recovery.RecoveryTests) ... ok
+test_origin_capture_and_mapping_drift_refuse (test_report_parts.ReportPartsTests) ... ok
+test_original_diagnostics_partial_meaning_and_observed_counts (test_report_parts.ReportPartsTests) ... ok
+test_rejects_incomplete_effects_and_native_meaning_drift (test_report_parts.ReportPartsTests) ... ok
+test_rejects_original_request_drift (test_report_parts.ReportPartsTests) ... ok
+test_explicit_override_and_missing_property_keep_distinct_custody (test_retention.RetentionObservationTests) ... ok
+test_native_identity_change_and_ambiguous_or_unsupported_retention_refuse (test_retention.RetentionObservationTests) ... ok
+test_fixed_intervals_and_explicit_margin (test_retention.RetentionTests) ... ok
+test_native_identity_substitution_refuses (test_retention.RetentionTests) ... ok
+test_shortened_configuration_tightens_and_longer_cannot_extend_original (test_retention.RetentionTests) ... ok
+test_unknown_missing_future_or_mismatched_snapshot_refuses (test_retention.RetentionTests) ... ok
+test_window_uses_snapshot_commit_and_minimum_data_log_duration (test_retention.RetentionTests) ... ok
+test_manifest_rechecks_after_native_commit_and_refusal_never_claims_rollback (test_retention_policy.RetentionPolicyTests) ... ok
+test_publication_custody_refuses_before_retention_or_effects (test_retention_policy.RetentionPolicyTests) ... ok
+test_singleton_discards_fetched_row_when_actual_retention_gate_expires (test_retention_policy.RetentionPolicyTests) ... ok
+test_sql_provider_checks_uuid_clock_span_and_reserved_margin (test_retention_policy.RetentionPolicyTests) ... ok
+test_successful_append_and_replay_require_fresh_admission (test_retention_policy.RetentionPolicyTests) ... ok
+test_body_and_cancellation_failures_survive_stop_failure (test_run_commerce_path_native.CompositionTests) ... ok
+test_body_failure_survives_reader_and_optional_spark_cleanup_failure (test_run_commerce_path_native.CompositionTests) ... ok
+test_compile_failure_closes_reader_and_spark (test_run_commerce_path_native.CompositionTests) ... ok
+test_oversized_original_input_refuses_before_engine_or_source (test_run_commerce_path_native.CompositionTests) ... ok
+test_post_reader_source_drift_withholds_report (test_run_commerce_path_native.CompositionTests) ... ok
+test_reader_close_failure_withholds_report_and_stops (test_run_commerce_path_native.CompositionTests) ... ok
+test_required_typed_limits_paths_and_fresh_output (test_run_commerce_path_native.CompositionTests) ... ok
+test_stop_failure_withholds_report (test_run_commerce_path_native.CompositionTests) ... ok
+test_success_only_after_reader_and_spark_close (test_run_commerce_path_native.CompositionTests) ... ok
+test_actual_arithmetic_source_guard_and_receipt_precede_capacity (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_actual_nonempty_direct_integer_is_independent_of_other_arithmetic (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_all_selected_compiled_profiles_retain_all_guard_roles (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_capture_budget_withholds_whole_result (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_closing_file_snapshot_is_checked_once_and_retained (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_complete_collection_guard_order_and_original_slots (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_empty_perhop_schema_still_required (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_exact_closed_math_and_count_branches (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_full_closing_native_vector_drift_refuses (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_guard_failure_never_executes_query (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_interval_close_failure_withholds_provisional_result (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_missing_source_port_refuses_before_provider (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_observed_schema_custody_is_not_callback_owned (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_opened_model_mismatch_refuses_before_callbacks (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_oracle_callback_and_retained_rows_are_isolated (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_original_bag_mismatch_refuses_without_repair (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_schema_owning_types_and_order_cannot_disagree_even_empty (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_suppressing_interval_cannot_publish_incomplete_body (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_tagged_scalar_value_source_and_left_absence (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_unheld_frame_port_refuses (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_validated_public_receipt_is_not_callback_owned (test_run_commerce_path_weft.PathExecutionTests) ... ok
+test_actual_run_reader_close_failure_withholds_report_and_stops (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_exact_two_jar_preflight_and_tamper_refusal (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_explicit_wrong_operator_profile_refuses_before_public_calls (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_relationship_failure_withholds_success_and_stops (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_report_drift_after_queries_withholds_report_and_stops (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_report_only_after_stop_and_no_failure_report (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_stop_failure_withholds_report (test_run_indexed_commerce_weft.LifecycleTests) ... ok
+test_alias_cancellation_survives_interval_reader_and_stop_cleanup (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_alias_suppression_cannot_release_success (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_all_eleven_original_intents_and_cleanup_before_report (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_body_cancellation_survives_reader_and_stop_failures (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_bounded_native_inventory_refuses_nonregular_and_overflow (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_each_direct_session_preserves_primary_and_finalizes (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_publish_cleanup_attempts_both_and_withholds (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_reader_suppression_cannot_release_success (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_required_settings_and_source_drift_before_engine (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_serialization_failure_creates_no_final_report (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_source_oracle_rawcells_include_parallel_and_left_distinction (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_successful_body_close_failure_withholds (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_successful_body_stop_failure_withholds (test_run_weft_path_fixture_native.FixtureNativeTests) ... ok
+test_inventory_error_rolls_back_without_masking_original_failure (test_sandbox_pins.PrivatePinTests) ... ok
+test_inventory_routes_existing_reader_and_restores_writer_in_same_transaction (test_sandbox_pins.PrivatePinTests) ... ok
+test_wrong_context_or_current_role_refuses_before_generated_operations (test_sandbox_pins.PrivatePinTests) ... ok
+test_duplicate_and_nonfinite_refused (test_schema.SchemaCustodyTests) ... ok
+test_exact_bytes (test_schema.SchemaCustodyTests) ... ok
+test_explicit_revision (test_schema.SchemaCustodyTests) ... ok
+test_refuses_corrupted_custody (test_schema.SchemaCustodyTests) ... ok
+test_unknown_source_retained (test_schema.SchemaCustodyTests) ... ok
+test_cross_revision_refuses_without_explicit_transition_and_prior_survives (test_schema_evolution.SchemaEvolutionTests) ... ok
+test_native_sql_planner_requires_same_transition_admission (test_schema_evolution.SchemaEvolutionTests) ... ok
+test_original_umf_evolution_retains_history_and_partial_evidence (test_schema_evolution.SchemaEvolutionTests) ... ok
+test_revision_dispatch_never_uses_newer_schema_as_fallback (test_schema_evolution.SchemaEvolutionTests) ... ok
+test_denial_precedes_registry_effect (test_schema_registry.RegistryTests) ... ok
+test_original_receipt_and_replay_preserve_unknown_state (test_schema_registry.RegistryTests) ... ok
+test_missing_null_unknown_and_array_refuse (test_semantic_policy.SemanticTests) ... ok
+test_original_intake_barrier_and_wrong_source_refusal (test_semantic_policy.SemanticTests) ... ok
+test_record_request_uses_admitted_ids_and_qualified_fields (test_semantic_policy.SemanticTests) ... ok
+test_required_optional_and_retained_text_admitted (test_semantic_policy.SemanticTests) ... ok
+test_schema_or_source_drift_refuses (test_semantic_policy.SemanticTests) ... ok
+test_truss_catalog_revision_is_distinct_from_owner_document_revision (test_semantic_policy.SemanticTests) ... ok
+test_unknown_availability_and_incomplete_binding_refuse (test_semantic_policy.SemanticTests) ... ok
+test_expiry_during_query_returns_no_result (test_singleton.ExpiringSingletonTests) ... ok
+test_absence_and_duplicate_identity (test_singleton.SingletonTests) ... ok
+test_custody_row_and_final_pin_refusals_return_nothing (test_singleton.SingletonTests) ... ok
+test_pinned_bound_unicode_lookup_preserves_wide_text (test_singleton.SingletonTests) ... ok
+test_timestamp_null_negative_and_signed64_precision_preserved (test_singleton.SingletonTests) ... ok
+test_truncated_missing_noncanonical_or_narrowed_timestamp_refuses (test_singleton.SingletonTests) ... ok
+test_duplicate_delivery_refuses (test_source.JsonlSourceTests) ... ok
+test_exact_complete_batch_and_independent_digest (test_source.JsonlSourceTests) ... ok
+test_incomplete_and_bad_manifests_never_emit_batch (test_source.JsonlSourceTests) ... ok
+test_invalid_json_and_control_refuse (test_source.JsonlSourceTests) ... ok
+test_limits_before_batch_emission (test_source.JsonlSourceTests) ... ok
+test_resume_offsets_do_not_narrow (test_source.JsonlSourceTests) ... ok
+test_invalid_outer_binding_refuses_before_writer (test_source_checkpoint.CheckpointTests) ... ok
+test_native_checkpoint_retained_and_exact_replay_uses_same_attempt (test_source_checkpoint.CheckpointTests) ... ok
+test_rehashed_phase_request_cannot_hide_changed_native_source_binding (test_source_checkpoint.CheckpointTests) ... ok
+test_denial_before_native_effects (test_staging.StageTests) ... ok
+test_exact_byte_roundtrip_and_bound_values (test_staging.StageTests) ... ok
+test_forged_batch_metadata_refuses (test_staging.StageTests) ... ok
+test_mismatched_readback_refuses (test_staging.StageTests) ... ok
+test_nonconforming_policy_refuses_before_native (test_staging.StageTests) ... ok
+test_retained_recovery_rejects_rehashed_metadata_and_original_drift (test_staging.StageTests) ... ok
+test_table_replacement_before_write_refuses (test_staging.StageTests) ... ok
+test_complete_composition_and_new_backend_replay_original_descriptor (test_stored_publisher.StoredPublisherTests) ... ok
+test_interrupted_apply_and_lost_ack_recover_without_reapplying (test_stored_publisher.StoredPublisherTests) ... ok
+test_lost_handle_and_missing_submission_refuse_replacement (test_stored_publisher.StoredPublisherTests) ... ok
+test_pending_commit_recovers_same_native_handle (test_stored_publisher.StoredPublisherTests) ... ok
+test_postcommit_admission_failure_preserves_row_and_no_ack (test_stored_publisher.StoredPublisherTests) ... ok
+test_wrong_source_progress_and_non_none_admission_stop_before_commit (test_stored_publisher.StoredPublisherTests) ... ok
+test_changed_original_bytes_refuse_instead_of_silently_rebinding (test_supply_chain_graph_oracle.Tests) ... ok
+test_original_nullable_parents_duplicate_events_and_source_ids_preserved (test_supply_chain_graph_oracle.Tests) ... ok
+test_changed_custody_or_incomplete_dataset_refuses (test_supply_chain_outbox_publication.Tests) ... ok
+test_genuine_record_warnings_remain_separate_from_complete_finite_dataset (test_supply_chain_outbox_publication.Tests) ... ok
+test_independent_original_oracle_preserves_decimal_tokens_and_original_endpoints (test_supply_chain_outbox_publication.Tests) ... ok
+test_each_original_input_refuses_independent_tamper (test_supply_chain_query_cases.SupplyChainQueryCases) ... ok
+test_original_queries_and_independent_lexical_bags (test_supply_chain_query_cases.SupplyChainQueryCases) ... ok
+test_returned_mutation_does_not_change_next_preparation (test_supply_chain_query_cases.SupplyChainQueryCases) ... ok
+test_deterministic_complete_transaction_and_source_isolation (test_supply_chain_source_transaction.Tests) ... ok
+test_fresh_installation_plan_and_exact_delivery_replay (test_supply_chain_source_transaction.Tests) ... ok
+test_modified_originals_and_missing_namespace_refused (test_supply_chain_source_transaction.Tests) ... ok
+test_original_rows_endpoints_and_exact_values (test_supply_chain_source_transaction.Tests) ... ok
+test_present_null_is_not_absent_and_numeric_tokens_are_exact (test_supply_chain_source_transaction.Tests) ... ok
+test_all_original_sql_model_pins_and_only_optional_encoding (test_supply_chain_weft_request.SupplyChainWeftRequest) ... ok
+test_two_component_alias_refuses (test_supply_chain_weft_request.SupplyChainWeftRequest) ... ok
+test_unknown_case_and_changed_original_bindings_refuse (test_supply_chain_weft_request.SupplyChainWeftRequest) ... ok
+test_refuses_unsupported_or_wrong_source_before_native_submission (test_truss_catalog_probe.TrussCatalogProbeTests) ... ok
+test_sql_text_preserves_opaque_bytes_without_executable_interpolation (test_truss_catalog_probe.TrussCatalogProbeTests) ... ok
+test_complete_order_original_bytes_and_fragment_replay (test_truss_feed.FeedAssemblyTests) ... ok
+test_missing_tampered_foreign_or_changed_manifest_refuses (test_truss_feed.FeedAssemblyTests) ... ok
+test_unadmitted_source_never_assembles (test_truss_feed.FeedAssemblyTests) ... ok
+test_exact_upstream_canonical_and_framed_bytes_for_all_domains (test_truss_feed.OriginalFeedVectorTests) ... ok
+test_original_v01_wire_reaches_mandatory_admission_without_hash_rewrite (test_truss_feed.OriginalFeedVectorTests) ... ok
+test_preimage_archive_or_unframed_hash_cannot_replace_complete_manifest (test_truss_feed.OriginalFeedVectorTests) ... ok
+test_v02_originals_refuse_before_any_admission (test_truss_feed.OriginalFeedVectorTests) ... ok
+test_rehashed_manifest_does_not_hide_corrupt_original_prerequisite (test_truss_feed.PrerequisiteCustodyTests) ... ok
+test_changed_binding_or_ordered_transform_meaning_is_not_repeat (test_truss_input.TrussInputTests) ... ok
+test_complete_custody_and_exact_semantic_repeat (test_truss_input.TrussInputTests) ... ok
+test_independent_complete_wire_byte_vectors (test_truss_input.TrussInputTests) ... ok
+test_noncanonical_base64_and_unknown_artifact_members_refuse (test_truss_input.TrussInputTests) ... ok
+test_refuses_source_revision_archive_members_and_numeric_drift (test_truss_input.TrussInputTests) ... ok
+test_public_umf_and_actual_duckdb_small_lifecycle (test_typed_source_example.TypedSourceExampleTests) ... ERROR
+test_actual_umf_domains_presence_and_types_refuse (test_typed_source_policy.TypedSourcePolicyTests) ... ok
+test_changed_custody_binding_and_incomplete_receipt_refuse (test_typed_source_policy.TypedSourcePolicyTests) ... FAIL
+test_exact_scalar_and_presence_public_checks (test_typed_source_policy.TypedSourcePolicyTests) ... FAIL
+test_keys_relationships_and_unknown_extensions_do_not_become_complete (test_typed_source_policy.TypedSourcePolicyTests) ... ok
+test_transport_refuses_unknown_duplicate_nested_without_private_semantics (test_typed_source_policy.TypedSourcePolicyTests) ... ok
+test_layout_schema_and_incomplete_uuid_inventory_refuse (test_weft_binding.WeftBindingTests) ... ok
+test_original_model_and_complete_publication_versions_are_bound (test_weft_binding.WeftBindingTests) ... ok
+test_install_outcome_stays_off_protocol_stdout (test_weft_cli.WeftCliTests) ... ok
+test_io_error_redacts_paths_and_contents (test_weft_cli.WeftCliTests) ... ok
+test_original_compile_stdout_and_package_free_reopen (test_weft_cli.WeftCliTests) ... ok
+test_oversize_stdin_refuses_before_opening_or_output (test_weft_cli.WeftCliTests) ... ok
+test_actual_retained_graph_bytes (test_weft_count_distinct.ControlOracle) ... ok
+test_original_authored_order_is_observable (test_weft_count_distinct.ControlOracle) ... ok
+test_actual_five_admitted_only_explicitly (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_actual_global_reaches_interval (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_global_zero_cardinality_and_exact_carrier (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_grouped_empty_and_duplicate_group_refusal (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_mutations_refuse_before_callback (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_native_capacity_refusal_withholds_user_sql (test_weft_count_distinct.CountAdmission) ... skipped 'Actual compiler fixture directory required'
+test_actual_compiled_optional_route_reaches_interval (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_custody_mutations_refuse_before_callbacks (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_exact_empty_having_and_valid_joined_plan_scope_refusal (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_global_having_zero_or_one_and_grouped_complete_tuple (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_missing_ordered_transport_refuses_before_interval_callback (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_native_actual_schema_and_ordered_cells_are_mandatory (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_pre_having_capacity_failure_withholds_user_query (test_weft_count_having.HavingAdmission) ... skipped 'Actual public compiler fixtures required'
+test_opt_in_retains_original_model_sql_and_only_selected_home (test_weft_count_having.OriginalMediaOracle) ... ok
+test_original_optional_null_group_and_exact_seeded_ids (test_weft_count_having.OriginalMediaOracle) ... ok
+test_actual_compiler_count_ir_decodes_exactly (test_weft_decode.CompiledCountTests) ... ok
+test_mutated_plan_columns_pins_and_identity_refuse (test_weft_decode.CompiledCountTests) ... ok
+test_old_string_artifact_route_unchanged (test_weft_decode.CompiledCountTests) ... ok
+test_global_count_exact_cardinality_and_carrier (test_weft_decode.CountRowCardinalityTests) ... ok
+test_selected_string_presence_and_refusals (test_weft_decode.DecodeTests) ... ok
+test_boolean_text_and_native_are_distinct (test_weft_decode.ExactScalarTests) ... ok
+test_count_requires_explicit_admission (test_weft_decode.ExactScalarTests) ... ok
+test_decimal_preserves_zero_scale_and_never_rounds (test_weft_decode.ExactScalarTests) ... ok
+test_int64_safe_integer_and_original_spelling (test_weft_decode.ExactScalarTests) ... ok
+test_string_and_nullable_unknown_facets_refuse (test_weft_decode.ExactScalarTests) ... ok
+test_unsigned_and_small_width_bounds (test_weft_decode.ExactScalarTests) ... ok
+test_filtered_and_grouped_metadata_refuse_before_rows (test_weft_decode.UnsupportedCountCompilerTests) ... ok
+test_default_route_and_bad_proof_refuse_before_provider_callback (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_limit_boolean_and_combined_null_optin_refuse (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_native_unique_and_positioned_routes_keep_exact_schema_cells (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_original_repeated_positions_and_projected_order_limit (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_real_operator_free_distinct_reaches_provider_interval (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_unknown_flag_missing_capability_and_hidden_order_refuse (test_weft_distinct.DistinctAdmission) ... skipped 'Explicit actual compiler request/artifact directory required'
+test_source_lexicals_join_bag_and_order_oracle_are_independent (test_weft_distinct.IndependentDistinctFixture) ... ok
+test_cleanup_warning_separate_from_availability (test_weft_distribution.CompositionTests) ... ok
+test_fixed_trust_and_actual_observations_forwarded (test_weft_distribution.CompositionTests) ... ok
+test_platform_refuses_before_public_ports (test_weft_distribution.CompositionTests) ... ok
+test_public_refusal_is_payload_free (test_weft_distribution.CompositionTests) ... ok
+test_requests_are_bounded_before_opening (test_weft_distribution.CompositionTests) ... ok
+test_retained_open_and_compile_need_no_original_package (test_weft_distribution.CompositionTests) ... ok
+test_exact_compiler_query_and_parameters_use_guarded_execution (test_weft_execution_guard.GuardTests) ... ok
+test_missing_duplicate_or_changed_profile_refuses_before_sql (test_weft_execution_guard.GuardTests) ... ok
+test_actual_compiled_conjunction_and_order_keep_field_custody (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_all_six_original_compiled_field_plans_admit (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_every_consumed_field_retains_schema_public_and_capacity_guards (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_guards_and_successful_cleanup_still_precede_rows (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_named_string_parameter_retains_exact_occurrence_and_slot (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_string_literal_slot_custody_and_numeric_predicate_refuse (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_unknown_arithmetic_scope_and_model_mutations_refuse_before_sql (test_weft_field_plan.FieldPlanAdmissionTests) ... ok
+test_independent_expected_integer_text_never_uses_float (test_weft_field_plan.NativeFieldRunBoundaryTests) ... ok
+test_aggregate_budget_refuses_before_next_read (test_weft_installation.InstallerTests) ... ok
+test_bounded_json_gzip_and_bool_counts_refuse (test_weft_installation.InstallerTests) ... ok
+test_changed_manifest_binary_schema_and_corpus_refuse (test_weft_installation.InstallerTests) ... ok
+test_cleanup_never_removes_replaced_foreign_output (test_weft_installation.InstallerTests) ... ok
+test_closed_record_counts_features_and_schema_inventory_refuse (test_weft_installation.InstallerTests) ... ok
+test_copy_and_final_marker_failures_leave_unavailable (test_weft_installation.InstallerTests) ... ok
+test_duplicate_index_and_path_escapes_refuse (test_weft_installation.InstallerTests) ... ok
+test_extra_directory_refuses_before_descent_or_unbounded_enumeration (test_weft_installation.InstallerTests) ... ok
+test_fifo_and_extra_directory_refuse (test_weft_installation.InstallerTests) ... ok
+test_fixture_install_and_restart_exact_binary (test_weft_installation.InstallerTests) ... ok
+test_incomplete_directory_never_available (test_weft_installation.InstallerTests) ... ok
+test_metadata_descriptor_limit_refuses_before_read (test_weft_installation.InstallerTests) ... ok
+test_missing_and_extra_artifacts_or_symlink_refuse (test_weft_installation.InstallerTests) ... ok
+test_oversized_request_refuses_before_execution (test_weft_installation.InstallerTests) ... ok
+test_postcommit_cleanup_is_pending_success_without_rollback (test_weft_installation.InstallerTests) ... ok
+test_protocol_request_and_stdout_are_unchanged_and_closing_checked (test_weft_installation.InstallerTests) ... ok
+test_restart_without_package_and_install_missing_package (test_weft_installation.InstallerTests) ... ok
+test_restart_wrong_index_refuses_before_ready_read (test_weft_installation.InstallerTests) ... ok
+test_unknown_identity_and_platform_refuse_without_callback (test_weft_installation.InstallerTests) ... ok
+test_untrusted_assembly_closure_tampering_refuses (test_weft_installation.InstallerTests) ... ok
+test_wrong_index_refuses_before_caller_package (test_weft_installation.InstallerTests) ... ok
+test_both_layouts_commit_modes_and_owned_no_clobber (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_cleanup_only_generatorexit_not_reduced_to_generic_error (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_closed_frozen_layouts_no_unchecked_names (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_exclusive_writer_no_overwrite_and_primary_identity (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_finish_preserves_cleanup_only_baseexception_attempts_all (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_foreign_ready_inode_is_not_committed_or_deleted (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_interrupted_owned_ready_link_retains_commit_in_both_layouts (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_original_bytes_validate_then_closing_and_no_result_on_drift (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_postlink_cancel_with_staging_cleanup_marks_original_both_layouts (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_precommit_and_postcommit_failures_keep_distinct_availability (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_real_deadline_kills_reaps_and_closes_owned_pipes (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_real_pipe_setup_cancel_closes_all_and_reaps (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_result_construction_failure_is_precommit (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_stderr_response_and_request_bounds (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_success_closed_stdio_descendant_stops_heartbeat (test_weft_installation_mechanics.MechanicsTests) ... ok
+test_complete_slots_and_actual_repeated_scan_inventory_before_callbacks (test_weft_left_host.LeftHostTests) ... ok
+test_full_lexical_bags_and_distinct_null_absence_states (test_weft_left_host.LeftHostTests) ... ok
+test_guard_or_closing_failure_never_releases_result (test_weft_left_host.LeftHostTests) ... ok
+test_missing_schema_callback_refuses_before_interval_or_other_callbacks (test_weft_left_host.LeftHostTests) ... ok
+test_optional_permission_removal_and_unselected_right_guard_removal_refuse (test_weft_left_host.LeftHostTests) ... ok
+test_original_membership_and_selected_module_refuse_before_callbacks (test_weft_left_host.LeftHostTests) ... ok
+test_original_real_descriptors_reach_ordered_transport_after_all_guards (test_weft_left_host.LeftHostTests) ... ok
+test_scan_record_caps_permissions_and_numeric_flags_refuse_before_callbacks (test_weft_left_host.LeftHostTests) ... ok
+test_wrong_actual_type_empty_schema_refuses_before_any_guard_or_user_sql (test_weft_left_host.LeftHostTests) ... ok
+test_empty_source_schema_retains_actual_nullable_and_complete_metadata (test_weft_left_schema.HeldSchemaTests) ... ok
+test_numeric_nullable_flag_cannot_be_reported_as_boolean (test_weft_left_schema.HeldSchemaTests) ... ok
+test_unheld_foreign_or_unbound_schema_refuses_before_native_read (test_weft_left_schema.HeldSchemaTests) ... ok
+test_capability_refuses_before_callback_without_optin (test_weft_native_null.NativeNullDecoderTests) ... ok
+test_decimal_exact_range_and_scale (test_weft_native_null.NativeNullDecoderTests) ... ok
+test_null_and_values_are_distinct (test_weft_native_null.NativeNullDecoderTests) ... ok
+test_old_default_field_facets_are_not_physical_slot_facets (test_weft_native_null.NativeNullDecoderTests) ... ok
+test_unknown_duplicate_coercion_and_absent_refuse (test_weft_native_null.NativeNullDecoderTests) ... ok
+test_original_four_and_adversarial_home_guard_proofs (test_weft_native_null.OriginalNullCompilerTests) ... skipped 'Explicit actual compiler artifacts not supplied'
+test_exact_observations_and_no_profile_fallback (test_weft_native_profile.ProfileTests) ... ok
+test_cleanup_failure_after_complete_capture_refuses_result (test_weft_path_capture.Capture) ... ok
+test_cleanup_failure_preserves_safe_primary_refusal (test_weft_path_capture.Capture) ... ok
+test_configuration_has_no_defaults_or_boolean_limits (test_weft_path_capture.Capture) ... ok
+test_empty_result_retains_native_nullable_metadata (test_weft_path_capture.Capture) ... ok
+test_exact_positions_duplicates_and_null (test_weft_path_capture.Capture) ... ok
+test_limits_refuse_entire_result_and_close (test_weft_path_capture.Capture) ... ok
+test_native_acquisition_failure_is_safe (test_weft_path_capture.Capture) ... ok
+test_native_shape_and_empty_schema (test_weft_path_capture.Capture) ... ok
+test_actual_process_transport_without_claiming_compiler_identity (test_weft_path_compiler.Compiler) ... ok
+test_binary_custody_precedes_execution (test_weft_path_compiler.Compiler) ... ok
+test_cancellation_during_pipe_wait_reaps_child_and_closes_descriptors (test_weft_path_compiler.Compiler) ... ok
+test_closing_identity_drift_refuses_complete_output (test_weft_path_compiler.Compiler) ... ok
+test_configuration_and_early_input_limits (test_weft_path_compiler.Compiler) ... ok
+test_inherited_pipe_deadline_and_owned_group_cleanup (test_weft_path_compiler.Compiler) ... ok
+test_input_cleanup_does_not_replace_cancellation (test_weft_path_compiler.Compiler) ... ok
+test_input_cleanup_failure_refuses_successful_output (test_weft_path_compiler.Compiler) ... ok
+test_utf8_output_byte_sentinel_preserves_exact_response (test_weft_path_compiler.Compiler) ... ok
+test_empty_descriptor_validation_pins_and_continuity (test_weft_path_decode.PathDecodeTests) ... ok
+test_empty_original_metadata_counterexamples (test_weft_path_decode.PathDecodeTests) ... ok
+test_json_utf8_arity_and_resource_controls (test_weft_path_decode.PathDecodeTests) ... ok
+test_literal_parallel_bag_and_duplicate_occurrences (test_weft_path_decode.PathDecodeTests) ... ok
+test_numeric_atoms_rejected_before_number_conversion (test_weft_path_decode.PathDecodeTests) ... ok
+test_presence_empty_and_bounds (test_weft_path_decode.PathDecodeTests) ... ok
+test_signed64_numeric_order_and_canonical_edges (test_weft_path_decode.PathDecodeTests) ... ok
+test_typed_keys_preserve_lexemes_and_refuse_domains (test_weft_path_decode.PathDecodeTests) ... ok
+test_duplicate_complete_edge_identity_refuses (test_weft_path_fixture.PathFixtureTests) ... ok
+test_independent_occurrence_bags (test_weft_path_fixture.PathFixtureTests) ... ok
+test_parallel_removal_changes_bag_without_target_change (test_weft_path_fixture.PathFixtureTests) ... ok
+test_complete_vector_and_isolated_alias (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_full_mapping_and_snapshot (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_receipt_numeric_work_refuses_before_callback (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_receipt_rejection_propagates (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_source_drift_before_verifier (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_verifier_non_none_is_refusal (test_weft_path_fixture_request.FixtureRequestTests) ... ok
+test_actual_apply_sql_full_rows_and_replay (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_full_states_history_and_signed_ids (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_owning_verifier_and_snapshot (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_receipt_numeric_work_refuses_before_callback (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_verifier_non_none_is_refusal (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_wrong_change_and_receipt_refuse (test_weft_path_fixture_source.AuthoredSourceTests) ... ok
+test_guard_and_query_cancellation_survive_interval_cleanup_failure (test_weft_path_interval_cleanup.IntervalCleanupTests) ... ok
+test_interval_entry_failure_precedes_native_callbacks (test_weft_path_interval_cleanup.IntervalCleanupTests) ... ok
+test_successful_body_with_cleanup_failure_withholds_result (test_weft_path_interval_cleanup.IntervalCleanupTests) ... ok
+test_suppressing_interval_cannot_swallow_original_cancellation (test_weft_path_interval_cleanup.IntervalCleanupTests) ... ok
+test_actual_plain_counts_retain_owning_arithmetic_capacity (test_weft_path_plan.PathPlanTests) ... ok
+test_all_complete_actual_compiled_profiles_and_frozen_inventory (test_weft_path_plan.PathPlanTests) ... ok
+test_binding_source_profile_and_recompile_fences (test_weft_path_plan.PathPlanTests) ... ok
+test_checks_and_envelopes_remain_closed (test_weft_path_plan.PathPlanTests) ... ok
+test_count_capacity_is_independent_and_complete (test_weft_path_plan.PathPlanTests) ... ok
+test_del_escape_budget_refuses_before_encoder (test_weft_path_plan.PathPlanTests) ... ok
+test_early_resource_bound_and_duplicate_json (test_weft_path_plan.PathPlanTests) ... ok
+test_exact_target_and_bound_relationship_population (test_weft_path_plan.PathPlanTests) ... ok
+test_left_and_positioned_correspondence (test_weft_path_plan.PathPlanTests) ... ok
+test_left_native_identity_role_is_exact_even_empty (test_weft_path_plan.PathPlanTests) ... ok
+test_owning_arithmetic_guard_is_not_optional (test_weft_path_plan.PathPlanTests) ... ok
+test_per_hop_native_schema_and_path_guard_inventory (test_weft_path_plan.PathPlanTests) ... ok
+test_schema_port_is_pinned_and_refusal_not_claim (test_weft_path_plan.PathPlanTests) ... ok
+test_missing_numeric_predicate_guard_refuses (test_weft_path_predicate_admission.NumericPredicateAdmissionTests) ... ok
+test_original_numeric_equality_requires_and_retains_owning_guards (test_weft_path_predicate_admission.NumericPredicateAdmissionTests) ... ok
+test_string_path_does_not_accept_unselected_numeric_guard (test_weft_path_predicate_admission.NumericPredicateAdmissionTests) ... ok
+test_weft_path_schema (unittest.loader._FailedTest) ... ERROR
+test_compiler_timeout_is_payload_free_at_public_cli (test_weft_paths_cli.WeftPathsCliTests) ... ok
+test_install_outcome_stays_off_protocol_stdout (test_weft_paths_cli.WeftPathsCliTests) ... ok
+test_io_error_redacts_paths_and_contents (test_weft_paths_cli.WeftPathsCliTests) ... ok
+test_original_compile_stdout_and_package_free_reopen (test_weft_paths_cli.WeftPathsCliTests) ... ok
+test_oversize_stdin_refuses_before_opening_or_output (test_weft_paths_cli.WeftPathsCliTests) ... ok
+test_fraction_and_exponent_do_not_round_through_binary_float (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_hex_input_and_duplicate_envelope_bounds (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_json_bearing_bytes_require_utf8_at_every_boundary (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_malformed_control_reaches_response_validation_without_request_parsing (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_original_namespace_versions_select_original_request_schema (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_reader_cleanup_preserves_original_cancellation (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_regular_reader_refuses_fifo_symlink_and_oversize (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_role_cannot_bypass_paths_request_validation (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_schema_failure_propagates_and_non_none_verifier_return_refuses (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_valid_paths_check_both_protocol_schemas (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_valid_role_refuses_legacy_version_and_namespace_refuses_current_version (test_weft_paths_corpus_schemas.SchemaRoutingTests) ... ok
+test_actual_observation_is_required_without_operator_override (test_weft_paths_distribution.PathsDistributionTests) ... ok
+test_compiler_bytes_are_unchanged_and_failures_have_no_fallback (test_weft_paths_distribution.PathsDistributionTests) ... ok
+test_invalid_settings_fail_before_install_effects (test_weft_paths_distribution.PathsDistributionTests) ... ok
+test_owned_schema_bundle_is_returned_without_repair (test_weft_paths_distribution.PathsDistributionTests) ... ok
+test_trusted_fixed_selection_and_restart_without_package (test_weft_paths_distribution.PathsDistributionTests) ... ok
+test_bounded_fake_transport_original_stdout_and_closing_gate (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_cancellation_and_cleanup_preserve_exact_primary (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_early_setup_cancellation_closes_all_real_owned_pipes (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_final_ready_commit_retains_schema_resources (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_install_none_refuses_before_effects (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_postcommit_cancellation_propagates_with_ready_retained (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_postcommit_cleanup_is_maintenance_success (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_precommit_verification_failure_never_available (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_restart_trust_gate_precedes_ready_read (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_successful_leader_cleanup_targets_stdio_closed_descendant (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_transport_cancellation_not_masked_by_selector_cleanup (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_transport_profile_and_request_bounds_refuse (test_weft_paths_installation.PathsInstallationTests) ... ok
+test_compiler_timeout_is_payload_free_at_public_cli (test_weft_paths_keys_cli.WeftPathsKeysCliTests) ... ok
+test_install_outcome_stays_off_protocol_stdout (test_weft_paths_keys_cli.WeftPathsKeysCliTests) ... ok
+test_io_error_redacts_paths_and_contents (test_weft_paths_keys_cli.WeftPathsKeysCliTests) ... ok
+test_original_compile_stdout_and_package_free_reopen (test_weft_paths_keys_cli.WeftPathsKeysCliTests) ... ok
+test_oversize_stdin_refuses_before_opening_or_output (test_weft_paths_keys_cli.WeftPathsKeysCliTests) ... ok
+test_actual_observation_is_required_without_operator_override (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_compiler_bytes_are_unchanged_and_failures_have_no_fallback (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_invalid_settings_fail_before_install_effects (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_old_profile_configuration_is_rejected_before_effects (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_os_errors_are_payload_free_and_cancellation_identity_survives (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_owned_schema_bundle_is_returned_without_repair (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_pins_identify_the_separate_registered_realization (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_trusted_fixed_selection_and_restart_without_package (test_weft_paths_keys_distribution.PathsKeysDistributionTests) ... ok
+test_bounded_fake_transport_original_stdout_and_closing_gate (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_cancellation_and_cleanup_preserve_exact_primary (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_early_setup_cancellation_closes_all_real_owned_pipes (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_final_ready_commit_retains_schema_resources (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_install_none_refuses_before_effects (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_postcommit_cancellation_propagates_with_ready_retained (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_postcommit_cleanup_is_maintenance_success (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_precommit_verification_failure_never_available (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_restart_trust_gate_precedes_ready_read (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_successful_leader_cleanup_targets_stdio_closed_descendant (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_transport_cancellation_not_masked_by_selector_cleanup (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_transport_profile_and_request_bounds_refuse (test_weft_paths_keys_installation.PathsKeysInstallationTests) ... ok
+test_aggregate_preflight_and_conflicting_snapshot (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_bounded_single_gzip_and_old_limits_unchanged (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_closing_drift_and_both_modes (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_current_records_inventory_producer_and_namespace_correspondence (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_explicit_frozen_config_refuses_relative_unknown_and_malformed (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_extra_directory_fifo_and_symlink_are_never_read (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_metadata_public_refusal_is_safe_and_zero_exit_is_exact (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_old_profile_and_missing_package_never_fallback (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_original_source_blob_and_inventory_validation (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_trusted_pin_gate_precedes_package_and_no_output_effect (test_weft_paths_keys_package.PathsKeysPackageTests) ... ok
+test_aggregate_preflight_no_next_read (test_weft_paths_package.PathsPackageTests) ... ok
+test_decoded_profile_bound_is_local_and_single_member (test_weft_paths_package.PathsPackageTests) ... ok
+test_exact_trie_rejects_extra_without_descending (test_weft_paths_package.PathsPackageTests) ... ok
+test_fifo_and_symlink_refuse_bounded_descriptor (test_weft_paths_package.PathsPackageTests) ... ok
+test_legacy_shape_and_missing_package_are_not_fallback (test_weft_paths_package.PathsPackageTests) ... ok
+test_numeric_duplicate_and_utf8_refusals (test_weft_paths_package.PathsPackageTests) ... ok
+test_read_primary_survives_readonly_marker_and_close_failure (test_weft_paths_package.PathsPackageTests) ... ok
+test_wrong_trust_pin_refuses_before_package_or_ready (test_weft_paths_package.PathsPackageTests) ... ok
+test_actual_provider_captures_schema_and_cells_without_asdict (test_weft_positioned_host.PositionedHostTests) ... ok
+test_all_nine_original_artifacts_and_custody (test_weft_positioned_host.PositionedHostTests) ... ok
+test_capacity_forwarding_retains_explicit_original_reader_profile (test_weft_positioned_host.PositionedHostTests) ... ok
+test_changed_obligation_column_and_scan_refuse_before_sql (test_weft_positioned_host.PositionedHostTests) ... ok
+test_closed_string_comparison_and_capability_correspondence (test_weft_positioned_host.PositionedHostTests) ... ok
+test_explicit_positional_decoder_preserves_cells_and_rejects_wrong_native_shape (test_weft_positioned_host.PositionedHostTests) ... ok
+test_native_schema_cells_and_dict_collapse_refuse (test_weft_positioned_host.PositionedHostTests) ... ok
+test_positioned_native_arrays_preserve_duplicate_labels_and_scan_occurrences (test_weft_positioned_host.PositionedHostTests) ... ok
+test_integrity_then_buffered_exact_rows_and_context_close (test_weft_query.WeftQueryTests) ... ok
+test_record_integrity_requires_explicit_host_admission_before_sql (test_weft_query.WeftQueryTests) ... ok
+test_unknown_obligation_profile_integrity_transport_and_closure_refuse (test_weft_query.WeftQueryTests) ... ok
+test_unsupported_real_count_plan_refuses_before_any_sql_with_empty_result (test_weft_query.WeftQueryTests) ... ok
+test_closed_carriers_duplicate_members_and_no_presence_fallback (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_composite_string_order_unicode_and_empty_string_preserve_lexemes (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_descriptor_and_original_pin_fences (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_empty_bound_and_marker_constraints (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_exact_original_bytes_parallel_occurrences_and_immutable_result (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_no_mutable_metadata_or_parsed_cell_aliases_escape (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_non_string_atoms_unicode_nul_arity_and_order_refuse (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_utf8_capacity_preflight_and_explicit_finite_configuration (test_weft_related_keys_decode.RelatedKeysDecodeTests) ... ok
+test_actual_artifact_callback_order_schema_and_closing_refusals (test_weft_relationship_host.RelationTests) ... ok
+test_actual_public_compiler_and_mutation_custody (test_weft_relationship_host.RelationTests) ... ok
+test_no_schema_callback_before_any_publication_effect (test_weft_relationship_host.RelationTests) ... ok
+test_original_oracle_and_exact_carrier_refusals (test_weft_relationship_host.RelationTests) ... ok
+test_original_separate_edge_identity_and_endpoints (test_weft_relationship_host.RelationTests) ... ok
+test_no_version_guess_or_profile_alias (test_whole_entity.WholeEntityTests) ... ok
+test_real_transaction_adapter_and_complete_apply (test_whole_entity.WholeEntityTests) ... ok
+test_unknown_executable_assertion_blocks (test_whole_entity.WholeEntityTests) ... ok
+test_plan_preserves_original_carriers_and_replay_is_empty (test_whole_graph_sql.WholeGraphSQLTests) ... ok
+test_unsafe_target_or_clock_refuses (test_whole_graph_sql.WholeGraphSQLTests) ... ok
+
+======================================================================
+ERROR: test_archaeology_graph_oracle (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_archaeology_graph_oracle
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/Users/erik/Projects/ashlar/tests/test_archaeology_graph_oracle.py", line 2, in <module>
+    from archaeology_graph_oracle import ROOT,original_oracle
+ModuleNotFoundError: No module named 'archaeology_graph_oracle'
+
+
+======================================================================
+ERROR: test_archaeology_outbox_publication (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_archaeology_outbox_publication
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/Users/erik/Projects/ashlar/tests/test_archaeology_outbox_publication.py", line 4, in <module>
+    from archaeology_source_transaction import ROOT as ORIGINAL,build_transaction
+ModuleNotFoundError: No module named 'archaeology_source_transaction'
+
+
+======================================================================
+ERROR: test_archaeology_source_transaction (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_archaeology_source_transaction
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/Users/erik/Projects/ashlar/tests/test_archaeology_source_transaction.py", line 3, in <module>
+    from archaeology_source_transaction import ROOT,build_transaction
+ModuleNotFoundError: No module named 'archaeology_source_transaction'
+
+
+======================================================================
+ERROR: test_bound_umf_records (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_bound_umf_records
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/Users/erik/Projects/ashlar/tests/test_bound_umf_records.py", line 7, in <module>
+    from run_schema_evolution import inputs
+ModuleNotFoundError: No module named 'run_schema_evolution'
+
+
+======================================================================
+ERROR: test_exact_carriers_original_metadata_and_single_handle (test_commerce_puppygraph.CommercePuppyPreparationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_commerce_puppygraph.py", line 11, in test_exact_carriers_original_metadata_and_single_handle
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+======================================================================
+ERROR: test_wrong_pair_refuses_before_output (test_commerce_puppygraph.CommercePuppyPreparationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_commerce_puppygraph.py", line 31, in test_wrong_pair_refuses_before_output
+    with self.assertRaises(ValueError):prepare(r,c,rs,'0'*64,out)
+  File "/Users/erik/Projects/ashlar/tools/prepare_commerce_puppygraph.py", line 13, in prepare
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+======================================================================
+ERROR: test_actual_public_upgrade_and_complete_typed_fields (test_local_weft_typed_probe.TypedPublicModelTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_local_weft_typed_probe.py", line 26, in test_actual_public_upgrade_and_complete_typed_fields
+    receipt=_public_records(UMF,Path(d),(FIXTURE/'model.umf.json').read_bytes(),rows)
+  File "/Users/erik/Projects/ashlar/tools/run_local_weft_typed_probe.py", line 50, in _public_records
+    process=subprocess.run(['bun',str(ROOT/'tools/check_umf_record_values.ts'),str(umf),UMF_PIN,str(FIXTURE/'model.umf.json'),str(output/'umf-request.json')],capture_output=True,check=True)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bun', '/Users/erik/Projects/ashlar/tools/check_umf_record_values.ts', '/private/tmp/ashlar-umf-records-c45c72a2', 'c45c72a2a8a3c4fba61c40c5927dd9091acf8cc3', '/Users/erik/Projects/ashlar/examples/end-to-end/weft-typed/model.umf.json', '/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/tmpj770gtvn/umf-request.json']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_actual_clean_worker_exchange_and_reaping (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 208, in test_actual_clean_worker_exchange_and_reaping
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_blocked_response_is_killed_reaped_with_fixed_error (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 219, in test_blocked_response_is_killed_reaped_with_fixed_error
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_busy_port_refuses_without_queue_or_interleaved_frames (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 231, in test_busy_port_refuses_without_queue_or_interleaved_frames
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_cleanup_cancellation_survives_ordinary_diagnostic_failure (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 312, in test_cleanup_cancellation_survives_ordinary_diagnostic_failure
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_interleaved_async_operation_bindings_are_isolated_and_restored (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 123, in test_interleaved_async_operation_bindings_are_isolated_and_restored
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_original_cancellation_survives_cleanup_error (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 269, in test_original_cancellation_survives_cleanup_error
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_per_request_progress_bounds_blocked_close_before_total_deadline (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 246, in test_per_request_progress_bounds_blocked_close_before_total_deadline
+    run = self.create(child)
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_progress_completion_restores_shared_close_budget (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 261, in test_progress_completion_restores_shared_close_budget
+    run = self.create(child)
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_selector_cleanup_preserves_original_cancellation (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 325, in test_selector_cleanup_preserves_original_cancellation
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_span_selection_exact_boolean_nested_restored_and_start_only (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 151, in test_span_selection_exact_boolean_nested_restored_and_start_only
+    run = self.create()
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 200, in create
+    return OtelRun(self.configuration())
+  File "/Users/erik/Projects/ashlar/src/ashlar_host/otel.py", line 125, in __init__
+    raise refusal from None
+ashlar_host.otel.OtelStartupError: diagnostics-configuration
+
+======================================================================
+ERROR: test_wrong_publication_profile_refuses_before_client (test_pack_scenario_puppygraph_queries.NativeScenarioQueryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_pack_scenario_puppygraph_queries.py", line 77, in test_wrong_publication_profile_refuses_before_client
+    directory=Path(t)/'fresh';build([{'pack':'archaeology'},{'pack':'ecology'}],'x',directory)
+  File "/Users/erik/Projects/ashlar/tools/prepare_pack_scenario_puppygraph.py", line 41, in build
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+======================================================================
+ERROR: test_all_raw_carriers_and_nulls_survive_export (test_puppygraph_release_carrier.Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_puppygraph_release_carrier.py", line 10, in test_all_raw_carriers_and_nulls_survive_export
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+======================================================================
+ERROR: test_untrusted_release_digest_refuses_before_output_creation (test_puppygraph_release_carrier.Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_puppygraph_release_carrier.py", line 28, in test_untrusted_release_digest_refuses_before_output_creation
+    with self.assertRaises(ValueError):prepare(inputs,out)
+  File "/Users/erik/Projects/ashlar/tools/prepare_puppygraph_releases.py", line 11, in prepare
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+======================================================================
+ERROR: test_public_umf_and_actual_duckdb_small_lifecycle (test_typed_source_example.TypedSourceExampleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_typed_source_example.py", line 10, in test_public_umf_and_actual_duckdb_small_lifecycle
+    out=Path(temp)/'run';summary=run(source,out)
+  File "/Users/erik/Projects/ashlar/tools/run_typed_source_example.py", line 26, in run
+    checked=subprocess.run(['bun',str(ROOT/'tools/check_typed_umf_records.ts'),str(umf_source),str(example/'typed-model.umf.json'),str(request)],capture_output=True,check=True)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bun', '/Users/erik/Projects/ashlar/tools/check_typed_umf_records.ts', '/private/tmp/ashlar-umf-records-c45c72a2', '/Users/erik/Projects/ashlar/examples/end-to-end/typed-model.umf.json', '/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/tmp_zuls0uk/run/request.json']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_weft_path_schema (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_weft_path_schema
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/Users/erik/Projects/ashlar/tests/test_weft_path_schema.py", line 6, in <module>
+    import jsonschema
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+FAIL: test_actual_refusal_hold_keeps_session_live_for_parent_cleanup (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 60, in test_actual_refusal_hold_keeps_session_live_for_parent_cleanup
+    self.assertTrue(caught.exception.dependency_admitted)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_startup_admission_refusal_and_post_admission_failure_are_distinct (test_otel_supervision.SupervisionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_otel_supervision.py", line 71, in test_startup_admission_refusal_and_post_admission_failure_are_distinct
+    self.assertIs(error.dependency_admitted, admitted)
+AssertionError: False is not True
+
+======================================================================
+FAIL: test_changed_custody_binding_and_incomplete_receipt_refuse (test_typed_source_policy.TypedSourcePolicyTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_typed_source_policy.py", line 59, in test_changed_custody_binding_and_incomplete_receipt_refuse
+    c=change('{"21":1,"22":12.50,"23":true}');policy,raw=self.policy(c)
+  File "/Users/erik/Projects/ashlar/tests/test_typed_source_policy.py", line 37, in policy
+    p=self.run_check(c);self.assertEqual(p.returncode,0,p.stderr.decode())
+AssertionError: 1 != 0 : error: Cannot find module 'ajv/dist/2020' from '/private/tmp/ashlar-umf-records-c45c72a2/src/validation/schema.ts'
+
+Bun v1.4.2 (macOS arm64)
+
+
+======================================================================
+FAIL: test_exact_scalar_and_presence_public_checks (test_typed_source_policy.TypedSourcePolicyTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/Projects/ashlar/tests/test_typed_source_policy.py", line 44, in test_exact_scalar_and_presence_public_checks
+    c=change(props);policy,receipt=self.policy(c);self.assertIsNone(policy(c));self.assertEqual(policy.request(c),request(c))
+  File "/Users/erik/Projects/ashlar/tests/test_typed_source_policy.py", line 37, in policy
+    p=self.run_check(c);self.assertEqual(p.returncode,0,p.stderr.decode())
+AssertionError: 1 != 0 : error: Cannot find module 'ajv/dist/2020' from '/private/tmp/ashlar-umf-records-c45c72a2/src/validation/schema.ts'
+
+Bun v1.4.2 (macOS arm64)
+
+
+----------------------------------------------------------------------
+Ran 1118 tests in 228.432s
+
+FAILED (failures=4, errors=22, skipped=57)

@@ -1,0 +1,147 @@
+"""Original Rust fixture source/IR Boolean correspondence; conditional, not induction."""
+import copy,hashlib,json,os,subprocess
+from pathlib import Path
+import z3
+SELF=Path('tools/security/prove-original-graph-ir.py')
+if Path(__file__).resolve()!=SELF.resolve():raise RuntimeError('Unknown formal generator source')
+ROOT=Path('/Users/erik/Projects/weft');TOOL=Path('/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def text(v):return json.dumps(v,separators=(',',':'))
+paths=[SELF,Path('tests/security/weft-source-fixture.json'),ROOT/'Cargo.toml',ROOT/'Cargo.lock',ROOT/'crates/weft-core/Cargo.toml',ROOT/'.cargo/config.toml']+sorted(p for p in (ROOT/'vendor/ahash').rglob('*') if p.is_file())+sorted((ROOT/'crates/weft-core/src').glob('*.rs'))+sorted((ROOT/'spec/upstream').glob('*.json'))+[ROOT/'crates/weft-core/examples/security_candidate_ir.rs',ROOT/'docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md',Path('docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md'),Path('docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md')]
+pins={str(p):sha(p.read_bytes()) for p in paths}
+env={**os.environ,'PATH':str(TOOL)+os.pathsep+os.environ.get('PATH',''),'CARGO_HOME':'/private/tmp/weft-toolchain/cargo'}
+command=[str(TOOL/'cargo'),'build','--offline','--locked','-p','weft-core','--example','security_candidate_ir','--target-dir','/private/tmp/umf-security-weft-bridge-target']
+r=subprocess.run(command,cwd=ROOT,env=env,capture_output=True,text=True,timeout=300)
+if r.returncode:raise RuntimeError(r.stderr)
+binary=Path('/private/tmp/umf-security-weft-bridge-target/debug/examples/security_candidate_ir');binary_digest=sha(binary.read_bytes())
+f=json.loads(Path('tests/security/weft-source-fixture.json').read_text());doc=f['resolution']['documents'][0]['document'];ontology=f['resolution']['ontology'];policy=f['policy'];ontology['version']='0.2.0';policy['version']='0.2.0';ontology['revision']='draft2';policy['ontology']['revision']='draft2'
+original=ontology['associations'];ontology['entities'] += [{k:v for k,v in a.items() if k!='endpoints'} for a in original];ontology['associations']=[{'kind':'record-members','type':a['type'],'keyId':a['keyId'],'endpoints':a['endpoints']} for a in original]
+ref={'documentId':'domain','moduleId':'m','relationshipId':'WorksOn'}
+doc['modules'][0]['relationships']=[{'id':'WorksOn','name':'WorksOn','source':[{'module':'m','element':'Staff'}],'target':[{'module':'m','element':'Project','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
+ontology['associations'][1]={'kind':'core-relationship','relationship':ref,'witness':{'kind':'opaque-existential'},'endpoints':[{'role':'staff','side':'source','target':{'documentId':'domain','moduleId':'m','elementId':'Staff'},'keyId':'pk'},{'role':'project','side':'target','target':{'documentId':'domain','moduleId':'m','elementId':'Project'},'keyId':'pk'}]}
+for rule in policy['rules']:rule['condition']={'op':'literal','value':True}
+def endpoint(name,role):return {'kind':'variable','name':name,'endpoint':role}
+def eq(a,b):return {'op':'eq','left':a,'right':b}
+nested={'op':'exists','association':ref,'as':'outer','where':{'op':'exists','association':ref,'as':'inner','where':{'op':'and','args':[eq(endpoint('outer','staff'),endpoint('inner','staff')),{'op':'not','arg':eq(endpoint('outer','project'),endpoint('inner','project'))}]}}}
+Edge=z3.DeclareSort('OriginalGraphWitness');Staff=z3.DeclareSort('StaffCompleteKey');Project=z3.DeclareSort('ProjectCompleteKey');member=z3.Function('complete_membership',Edge,z3.BoolSort());roles={'staff':z3.Function('staff_key',Edge,Staff),'project':z3.Function('project_key',Edge,Project)}
+serial=0
+def fresh():
+ global serial
+ serial+=1;return z3.Const('witness_'+str(serial),Edge)
+def source_term(t,bindings):return roles[t['endpoint']](bindings[t['name']])
+def source(e,bindings):
+ op=e['op']
+ if op=='literal':return z3.BoolVal(e['value'])
+ if op=='eq':return source_term(e['left'],bindings)==source_term(e['right'],bindings)
+ if op=='not':return z3.Not(source(e['arg'],bindings))
+ if op in ['and','or']:return (z3.And if op=='and' else z3.Or)(*[source(a,bindings) for a in e['args']])
+ if op=='exists':
+  assert e['association']==ref
+  w=fresh();return z3.Exists(w,z3.And(member(w),source(e['where'],{**bindings,e['as']:w})))
+ raise AssertionError(op)
+def ir_term(t,bindings):
+ t=t['endpoint'];assert t['association']==ref
+ assert t['carrier']['incidence']['side']==('source' if t['role']=='staff' else 'target')
+ assert t['target']=={'documentId':'domain','moduleId':'m','elementId':('Staff' if t['role']=='staff' else 'Project')} and t['keyId']=='pk'
+ return roles[t['role']](bindings[t['binding']['variable']])
+def ir(e,bindings):
+ op,value=next(iter(e.items()))
+ if op=='literal':return z3.BoolVal(value)
+ if op=='equal':return ir_term(value[0],bindings)==ir_term(value[1],bindings)
+ if op=='not':return z3.Not(ir(value,bindings))
+ if op in ['and','or']:return (z3.And if op=='and' else z3.Or)(*[ir(a,bindings) for a in value])
+ if op=='exists':
+  assert value['association']==ref and value['witness']=='opaqueExistential'
+  w=fresh();assert value['slot'] not in bindings
+  return z3.Exists(w,z3.And(member(w),ir(value['condition'],{**bindings,value['slot']:w})))
+ raise AssertionError(op)
+cases=[];artifacts=[]
+for name,condition in [('nested',nested),('negated',{'op':'not','arg':nested})]:
+ policy['rules'][0]['condition']=condition;doc_json=text(doc);request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':'0.8.0','sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
+ assert sha(binary.read_bytes())==binary_digest
+ run=subprocess.run([str(binary)],input=text(request),text=True,capture_output=True,timeout=10)
+ assert sha(binary.read_bytes())==binary_digest
+ if run.returncode:raise RuntimeError(run.stderr)
+ rules=json.loads(run.stdout);actual=rules[0]['condition'];mutant=copy.deepcopy(actual);body=mutant['not'] if name=='negated' else mutant;equal=body['exists']['condition']['exists']['condition']['and'][0]['equal'];equal[0]['endpoint']['binding']['variable']=equal[1]['endpoint']['binding']['variable']
+ authored=source(condition,{});compiled=ir(actual,{});broken=ir(mutant,{});population_witness=fresh();nonempty=z3.Exists(population_witness,member(population_witness))
+ for kind,formula,expected in [('inequivalence',authored!=compiled,z3.unsat),('valid-population',z3.And(nonempty,authored,compiled),z3.sat),('broken-correlation',z3.And(broken,z3.Not(authored)) if name=='nested' else z3.And(authored,z3.Not(broken)),z3.sat)]:
+  solver=z3.Solver();solver.set(timeout=10000);solver.add(formula);smt=solver.sexpr();result=solver.check();replay=z3.Solver();replay.set(timeout=10000);replay.from_string(smt);assert result==expected and replay.check()==expected
+  cases.append({'id':name+'/'+kind,'smt':smt,'result':str(result),'replayResult':str(result),'covers':['US-056-AC2'],'model':str(solver.model()) if result==z3.sat else None})
+ artifacts.append({'id':name,'request':request,'rules':rules,'mutant':mutant})
+# Mixed raw Ownership/opaque WorksOn source/IR correspondence. This is a
+# second independent interpretation, not execution of the Rust evaluator.
+raw_ref={'documentId':'domain','moduleId':'m','elementId':'Ownership'}
+Raw=z3.DeclareSort('RawOwnershipWitness');Resource=z3.DeclareSort('ResourceCompleteKey')
+raw_member=z3.Function('complete_ownership',Raw,z3.BoolSort())
+raw_roles={'resource':z3.Function('owner_resource_key',Raw,Resource),'project':z3.Function('owner_project_key',Raw,Project)}
+subject_key=z3.Const('authenticated_subject_key_premise',Staff)
+resource_key=z3.Const('selected_resource_key_premise',Resource)
+def mixed_fresh(kind):
+ global serial
+ serial+=1;return z3.Const('mixed_witness_'+str(serial),Raw if kind=='raw' else Edge)
+def mixed_source_term(t,bindings):
+ if t['kind']=='subject':assert t=={'kind':'subject','identity':True};return subject_key
+ if t['kind']=='resource':assert t=={'kind':'resource','identity':True};return resource_key
+ assert t['kind']=='variable';kind,w=bindings[t['name']]
+ return (raw_roles if kind=='raw' else roles)[t['endpoint']](w)
+def mixed_source(e,bindings):
+ op=e['op']
+ if op=='eq':return mixed_source_term(e['left'],bindings)==mixed_source_term(e['right'],bindings)
+ if op=='not':return z3.Not(mixed_source(e['arg'],bindings))
+ if op=='and':return z3.And(*[mixed_source(a,bindings) for a in e['args']])
+ if op=='exists':
+  assert e['association'] in [raw_ref,ref];kind='raw' if e['association']==raw_ref else 'graph';w=mixed_fresh(kind)
+  return z3.Exists(w,z3.And((raw_member if kind=='raw' else member)(w),mixed_source(e['where'],{**bindings,e['as']:(kind,w)})))
+ raise AssertionError(op)
+def mixed_ir_term(t,bindings):
+ if 'value' in t:
+  identity=t['value']['identity'];assert identity['keyId']=='pk'
+  expected='Staff' if identity['binding']=='subject' else 'Resource'
+  assert identity['binding'] in ['subject','resource'] and identity['target']=={'documentId':'domain','moduleId':'m','elementId':expected}
+  return subject_key if expected=='Staff' else resource_key
+ endpoint=t['endpoint'];kind,w=bindings[endpoint['binding']['variable']]
+ assert endpoint['association']==(raw_ref if kind=='raw' else ref) and endpoint['keyId']=='pk'
+ role=endpoint['role'];target={'staff':'Staff','resource':'Resource','project':'Project'}[role]
+ assert endpoint['target']=={'documentId':'domain','moduleId':'m','elementId':target}
+ if kind=='raw':
+  declared=next(e for e in ontology['associations'][0]['endpoints'] if e['role']==role)
+  assert endpoint['carrier']=={'members':{'fields':declared['fields']}}
+ else:assert endpoint['carrier']=={'incidence':{'side':'source' if role=='staff' else 'target'}}
+ return (raw_roles if kind=='raw' else roles)[role](w)
+def mixed_ir(e,bindings):
+ op,v=next(iter(e.items()))
+ if op=='equal':return mixed_ir_term(v[0],bindings)==mixed_ir_term(v[1],bindings)
+ if op=='not':return z3.Not(mixed_ir(v,bindings))
+ if op=='and':return z3.And(*[mixed_ir(a,bindings) for a in v])
+ if op=='exists':
+  assert v['association'] in [raw_ref,ref];kind='raw' if v['association']==raw_ref else 'graph'
+  if kind=='raw':
+   record=v['witness']['recordKey'];assert record['owner']==raw_ref and record['keyId']=='pk'
+   original_record=next(e for e in doc['modules'][0]['elements'] if e['id']=='Ownership')
+   assert record['key']==original_record['keys'][0]
+  else:assert v['witness']=='opaqueExistential'
+  assert v['slot'] not in bindings;w=mixed_fresh(kind)
+  return z3.Exists(w,z3.And((raw_member if kind=='raw' else member)(w),mixed_ir(v['condition'],{**bindings,v['slot']:(kind,w)})))
+ raise AssertionError(op)
+mixed={'op':'exists','association':raw_ref,'as':'owner','where':{'op':'and','args':[eq(endpoint('owner','resource'),{'kind':'resource','identity':True}),{'op':'exists','association':ref,'as':'assignment','where':{'op':'and','args':[eq(endpoint('assignment','staff'),{'kind':'subject','identity':True}),eq(endpoint('assignment','project'),endpoint('owner','project'))]}}]}}
+for name,condition in [('mixed',mixed),('mixed-negated',{'op':'not','arg':mixed})]:
+ policy['rules'][0]['condition']=condition;doc_json=text(doc)
+ request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':'0.8.0','sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
+ assert sha(binary.read_bytes())==binary_digest
+ run=subprocess.run([str(binary)],input=text(request),text=True,capture_output=True,timeout=10)
+ assert sha(binary.read_bytes())==binary_digest
+ if run.returncode:raise RuntimeError(run.stderr)
+ rules=json.loads(run.stdout);actual=rules[0]['condition'];mutant=copy.deepcopy(actual)
+ body=mutant['not'] if name=='mixed-negated' else mutant
+ outer=body['exists'];graph_body=outer['condition']['and'][1]['exists']['condition']['and']
+ detached=copy.deepcopy(graph_body[1]);detached['equal'][1]['endpoint']['binding']['variable']=2
+ graph_body[1]={'exists':{'slot':2,'association':raw_ref,'witness':copy.deepcopy(outer['witness']),'condition':detached}}
+ authored=mixed_source(condition,{});compiled=mixed_ir(actual,{});broken=mixed_ir(mutant,{})
+ raw_w=mixed_fresh('raw');graph_w=mixed_fresh('graph');nonempty=z3.And(z3.Exists(raw_w,raw_member(raw_w)),z3.Exists(graph_w,member(graph_w)))
+ for kind,formula,expected in [('inequivalence',authored!=compiled,z3.unsat),('valid-population',z3.And(nonempty,authored,compiled),z3.sat),('broken-correlation',z3.And(broken,z3.Not(authored)) if name=='mixed' else z3.And(authored,z3.Not(broken)),z3.sat)]:
+  solver=z3.Solver();solver.set(timeout=10000);solver.add(formula);smt=solver.sexpr();result=solver.check();replay=z3.Solver();replay.set(timeout=10000);replay.from_string(smt);assert result==expected and replay.check()==expected
+  cases.append({'id':name+'/'+kind,'smt':smt,'result':str(result),'replayResult':str(result),'covers':['US-056-AC2'],'model':str(solver.model()) if result==z3.sat else None})
+ artifacts.append({'id':name,'request':request,'rules':rules,'mutant':mutant})
+assert all(sha(Path(p).read_bytes())==digest for p,digest in pins.items())
+receipt={'status':'conditional-proof-passed','solverVersion':z3.get_version_string(),'nativeImplementationQualified':False,'sourceDigests':pins,'buildCommand':command,'binarySha256':binary_digest,'artifacts':artifacts,'cases':cases,'scope':'Four actual original Rust source-admitted draft fixtures: two opaque graph-only and two mixed raw Ownership/opaque WorksOn profiles; complete faithful Boolean membership, exact nominal role-specific complete Key correspondence and unrestricted witness populations are premises. Source lexical names and actual emitted slots preserve nested correlation and negation. Broken outer-to-inner binding or detached raw owner Project correlation yields SAT false grants and false denials under negation. Mixed profiles retain nominal Staff/Project/Resource Key sorts, qualified raw member carriers, original Record witness Key metadata and intrinsic subject/resource identities; exact projections and complete membership remain premises. Not arbitrary AST induction, actual interpreter refinement, unknown facts, authenticated grouping/cuts, original scalar codecs or native enforcement. No backend acceptance.'}
+Path('docs/helix/04-build/evidence/security/original-graph-ir-formal.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({'status':receipt['status'],'queries':len(cases)}))

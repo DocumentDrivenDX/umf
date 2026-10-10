@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "tools/security/truss-predicate-browser.ts": "52d0acf27a4d02fe89e7609a6d0c69007faef3c6e8d600878ec59c01247fb5f4",
+    "docs/helix/04-build/evidence/security/truss-policy-lowering.json": "cefa252439ec7f11c160e36b3b0dbfcfcb6e40ecded457ce94223f9b953f2cc5",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "docs/helix/04-build/evidence/security/truss-type-selection.json": "43585c2562cae0c626b8b5a225a9bffe469d9496d664e22c8b444a09bc340e7f"
+  },
+  "browser": "153.0.8010.12",
+  "originalSqlMatches": true,
+  "weakenedSqlMatches": true,
+  "typedSqlMatches": true,
+  "typedRefusals": [
+    true,
+    true
+  ],
+  "sharedHomeRefused": true,
+  "externalRequests": 0,
+  "hostGlobals": [],
+  "scope": "Actual portable Truss row-predicate lowerer in real Chromium emits exact original and weakened SQL retained from native fixture execution. No complete browser security admission, host issuer, graph/native release or production profile qualification."
+}

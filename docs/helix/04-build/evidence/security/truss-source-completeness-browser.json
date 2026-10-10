@@ -1,0 +1,222 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-source-completeness.ts": "51163293d9622edf2107f6950a3b5b638833245928a11c0e9481a8c0b32aa5c8",
+    "tools/security/truss-source-completeness-browser.ts": "1a5ae783239b10000d24145cf60a7a2bea6621f44ce7bbd52dc369287aa281e7"
+  },
+  "browser": "153.0.8010.12",
+  "programs": [
+    {
+      "input": {
+        "root": {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "keyId": "key",
+          "keyFields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "home": {
+            "schema": "physical_witness",
+            "table": "root"
+          },
+          "discriminator": {
+            "column": "kind",
+            "carrier": "text",
+            "value": "Resource'\\"
+          }
+        },
+        "carrier": {
+          "schema": "physical_witness",
+          "table": "carrier",
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "discriminator": {
+            "column": "kind",
+            "carrier": "text",
+            "value": "Resource'\\"
+          }
+        }
+      },
+      "sql": "NOT EXISTS(SELECT 1 FROM \"physical_witness\".\"root\" AS \"collection_root\" WHERE (\"collection_root\".\"kind\" OPERATOR(pg_catalog.=) E'Resource\\'\\\\'::pg_catalog.text) AND ((SELECT pg_catalog.count(*) FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'Resource\\'\\\\'::pg_catalog.text) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'Resource\\'\\\\'::pg_catalog.text) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL))))"
+    },
+    {
+      "input": {
+        "root": {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "keyId": "key",
+          "keyFields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "home": {
+            "schema": "physical_witness",
+            "table": "root"
+          },
+          "discriminator": {
+            "column": "kind",
+            "carrier": "int4",
+            "value": "3"
+          }
+        },
+        "carrier": {
+          "schema": "physical_witness",
+          "table": "carrier",
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "discriminator": {
+            "column": "kind",
+            "carrier": "int4",
+            "value": "3"
+          }
+        }
+      },
+      "sql": "NOT EXISTS(SELECT 1 FROM \"physical_witness\".\"root\" AS \"collection_root\" WHERE (\"collection_root\".\"kind\" OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) AND ((SELECT pg_catalog.count(*) FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL))))"
+    },
+    {
+      "input": {
+        "root": {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "keyId": "key",
+          "keyFields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "home": {
+            "schema": "physical_witness",
+            "table": "root"
+          },
+          "discriminator": {
+            "column": "kind",
+            "carrier": "int8",
+            "value": "9007199254740993"
+          }
+        },
+        "carrier": {
+          "schema": "physical_witness",
+          "table": "carrier",
+          "fields": [
+            {
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "id"
+              },
+              "column": "id"
+            }
+          ],
+          "discriminator": {
+            "column": "kind",
+            "carrier": "int8",
+            "value": "9007199254740993"
+          }
+        }
+      },
+      "sql": "NOT EXISTS(SELECT 1 FROM \"physical_witness\".\"root\" AS \"collection_root\" WHERE (\"collection_root\".\"kind\" OPERATOR(pg_catalog.=) E'9007199254740993'::pg_catalog.int8) AND ((SELECT pg_catalog.count(*) FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'9007199254740993'::pg_catalog.int8) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"physical_witness\".\"carrier\" AS \"original_row\" WHERE (\"original_row\".\"kind\" OPERATOR(pg_catalog.=) E'9007199254740993'::pg_catalog.int8) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL))))"
+    }
+  ],
+  "refusals": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "externalRequests": 0,
+  "hostGlobals": [],
+  "scope": "Actual portable typed physical completeness builder in Chromium versus host for text escaping, int4 and exact int8 selectors; twenty-four malformed binding refusals. No SQL execution in browser, compiler binding/issuer authentication, actual graph mapping or backend acceptance."
+}

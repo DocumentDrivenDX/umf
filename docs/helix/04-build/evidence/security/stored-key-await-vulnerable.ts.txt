@@ -1,0 +1,15 @@
+/** Experimental binding assembly, not a permit. The registered producer and
+ * original native scope/cut must be independently authenticated before calling. */
+import {createSecurityKeyNamespaceVerifier,type SecurityKeyNamespaceSelection} from './security-key-namespace';
+import {createSecurityKeyTransportVerifier,type SecurityKeyTupleProducer} from './security-key-transport';
+export async function createSecurityStoredKeyVerifier(producer:SecurityKeyTupleProducer & {bundleSha256:string},selection:{
+ source:unknown;identity:{module:string;element:string;key:string};namespace:SecurityKeyNamespaceSelection;namespaceHex:string;
+},canonicalStringArrayHex:(values:readonly string[])=>Promise<string>|string){
+ const original=structuredClone(selection),sha=producer.bundleSha256;
+ if(typeof sha!=='string'||! /^[0-9a-f]{64}$/.test(sha)||original.namespace.encoding.identity!=='umf-key-tuple-v1'||original.namespace.encoding.version!=='3.0.0'||original.namespace.encoding.sha256!==sha)throw Error('TRUSS_SECURITY_STORED_KEY_UNSUPPORTED');
+ const transport=createSecurityKeyTransportVerifier(producer,{source:original.source,identity:original.identity,namespaceHex:original.namespaceHex});
+ const namespace=createSecurityKeyNamespaceVerifier(original.namespace,canonicalStringArrayHex);
+ if(!await namespace.matches(original.namespaceHex))throw Error('TRUSS_SECURITY_STORED_KEY_UNSUPPORTED');
+ return Object.freeze({encode:transport.encode,matches:async(values:unknown,stored:{namespaceHex:string;keyHex:string})=>
+  await namespace.matches(stored.namespaceHex)&&transport.matches(values,stored)});
+}

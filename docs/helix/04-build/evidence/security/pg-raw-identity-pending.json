@@ -1,0 +1,19 @@
+{
+  "status": "native-execution-not-started",
+  "sourceDigests": {
+    "tools/security/pg-raw-identity-probe.py": "0c9af23881acd1c6f621e66631d1612f9e1014f9f0442175b52587862cd85806",
+    "tests/security/native/pg-raw-identity-oracle.json": "d672cc0e1cebd5b026783ef8d0490016f552c231e54166d3183a35cb00da4127",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
+  },
+  "attemptedCommand": [
+    "python3",
+    "tools/security/pg-raw-identity-probe.py"
+  ],
+  "terminalExitCode": 1,
+  "failureStage": "docker container inventory before creation_attempted",
+  "diagnostic": "docker container ls -a --format {{.Names}} timed out after 15 seconds",
+  "fixtureCreated": false,
+  "nativeObservations": [],
+  "scope": "Prepared exact text identity/RLS and native array framing probe. Python syntax compilation passed; native SQL and assertions have not executed. This is execution limitation evidence, not passing acceptance."
+}

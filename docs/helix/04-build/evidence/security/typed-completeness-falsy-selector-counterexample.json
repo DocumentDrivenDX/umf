@@ -1,0 +1,68 @@
+{
+  "status": "counterexample-variant-reproduced",
+  "sourceArchive": "docs/helix/04-build/evidence/security/typed-completeness-falsy-selector-counterexample-variant.ts.txt",
+  "sourceSha256": "a4c50f2fb0c28f7488eab8baf01a529265c3e7a98ebca7457374ac79a09c0612",
+  "observations": [
+    {
+      "value": null,
+      "side": "both",
+      "untyped": true
+    },
+    {
+      "value": null,
+      "side": "root",
+      "untyped": true
+    },
+    {
+      "value": null,
+      "side": "carrier",
+      "untyped": true
+    },
+    {
+      "value": false,
+      "side": "both",
+      "untyped": true
+    },
+    {
+      "value": false,
+      "side": "root",
+      "untyped": true
+    },
+    {
+      "value": false,
+      "side": "carrier",
+      "untyped": true
+    },
+    {
+      "value": 0,
+      "side": "both",
+      "untyped": true
+    },
+    {
+      "value": 0,
+      "side": "root",
+      "untyped": true
+    },
+    {
+      "value": 0,
+      "side": "carrier",
+      "untyped": true
+    },
+    {
+      "value": "",
+      "side": "both",
+      "untyped": true
+    },
+    {
+      "value": "",
+      "side": "root",
+      "untyped": true
+    },
+    {
+      "value": "",
+      "side": "carrier",
+      "untyped": true
+    }
+  ],
+  "scope": "Reconstructed variant reinstates the exact falsy-as-absent conditions identified and reproduced by Astra in the actual helper. Twelve direct Bun replays emit untyped selectors. This archive is a tested counterexample variant, not an asserted original-source snapshot or native unauthorized disclosure. Current helper browser/native evidence separately qualifies the repair."
+}

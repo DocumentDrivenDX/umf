@@ -5,10 +5,10 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 607,
+  "total": 638,
   "counts": {
-    "SATISFIED": 93,
-    "UNTESTED": 288,
+    "SATISFIED": 96,
+    "UNTESTED": 316,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
     "REVIEWED_EXCEPTION": 5
@@ -3070,7 +3070,7 @@
       "evidence": [
         "tests/core-ideals/relationship-conformance.test.ts:5",
         "tests/core/relationship-ideal.test.ts:7",
-        "tests/core/relationship-operations.test.ts:7",
+        "tests/core/relationship-operations.test.ts:19",
         "tests/core/relationship-public.test.ts:11",
         "tests/core/relationship-public.test.ts:25",
         "tests/core/relationship-public.test.ts:5",
@@ -3087,7 +3087,7 @@
       "evidence": [
         "tests/core-ideals/relationship-conformance.test.ts:5",
         "tests/core/relationship-ideal.test.ts:7",
-        "tests/core/relationship-operations.test.ts:25",
+        "tests/core/relationship-operations.test.ts:37",
         "tests/core/relationship-public.test.ts:11",
         "tests/core/relationship-public.test.ts:5",
         "tests/relationship/authored-corpus.test.ts:5",
@@ -3112,7 +3112,7 @@
         "tests/core-ideals/relationship-tablespec-discovery.test.ts:8",
         "tests/core-ideals/relationship-tablespec.test.ts:13",
         "tests/core/relationship-ideal.test.ts:17",
-        "tests/core/relationship-operations.test.ts:32"
+        "tests/core/relationship-operations.test.ts:44"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -4150,6 +4150,175 @@
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
+      "id": "US-056-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/formal-acceptance.py:6",
+        "tests/security/native/pg-raw-membership.py:2"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/native/pg-raw-membership.py:3",
+        "tests/security/native/pg-raw-pool.ts:1"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/native/pg-raw-membership.py:4"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/native/pg-raw-membership.py:6"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/native/pg-raw-membership.py:5"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-056-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/formal-acceptance.py:5",
+        "tests/security/native/pg-raw-scale.py:2",
+        "tests/security/native/reviewed-python.test.py:2"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/dependencies.test.ts:14",
+        "tests/security/dependencies.test.ts:7",
+        "tests/security/write.test.ts:13",
+        "tests/security/write.test.ts:20",
+        "tests/security/write.test.ts:32",
+        "tests/security/write.test.ts:40",
+        "tests/security/write.test.ts:5"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:21",
+        "tests/security/authority-guard.test.ts:5",
+        "tests/security/publication-custody-corpus.ts:2",
+        "tests/security/publication-custody.test.ts:3"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:50",
+        "tests/security/authority-guard.test.ts:6"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:22",
+        "tests/security/authority-guard.test.ts:31",
+        "tests/security/authority-guard.test.ts:40",
+        "tests/security/authority-guard.test.ts:58",
+        "tests/security/authority-guard.test.ts:65",
+        "tests/security/publication-custody-corpus.ts:3",
+        "tests/security/publication-custody.test.ts:4",
+        "tests/security/write.test.ts:21"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:41"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
       "id": "US-060-AC1",
       "story": "docs/helix/01-frame/user-stories/US-060-domain-pack-catalog.md",
       "status": "UNTESTED",
@@ -4357,6 +4526,33 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/domain-packs/legal-appellate.test.ts:124"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-061-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-061-legal-domain-pack.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/domain-packs/supreme-court-mirror.test.ts:4"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -5337,6 +5533,131 @@
         "scripts/public-company-browser.ts:1"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-079-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:1",
+        "tests/security/evaluate.test.ts:10",
+        "tests/security/policy.test.ts:10"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:9",
+        "tests/security/evaluate.test.ts:121",
+        "tests/security/formal-acceptance.py:3",
+        "tests/security/policy.test.ts:19"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:4",
+        "tests/security/dependencies.test.ts:22",
+        "tests/security/dependencies.test.ts:6",
+        "tests/security/evaluate.test.ts:80",
+        "tests/security/policy.test.ts:102",
+        "tests/security/policy.test.ts:48",
+        "tests/security/policy.test.ts:69",
+        "tests/security/policy.test.ts:91",
+        "tests/security/registration.test.ts:6"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:2",
+        "tests/security/evaluate.test.ts:11",
+        "tests/security/evaluate.test.ts:44",
+        "tests/security/formal-acceptance.py:2",
+        "tests/security/logic.test.ts:17",
+        "tests/security/logic.test.ts:5"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:8",
+        "tests/security/evaluate.test.ts:106",
+        "tests/security/evaluate.test.ts:12"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:3",
+        "tests/security/evaluate.test.ts:134",
+        "tests/security/evaluate.test.ts:26",
+        "tests/security/evaluate.test.ts:87",
+        "tests/security/registration.test.ts:7"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:6",
+        "tests/security/evaluate.test.ts:45",
+        "tests/security/evaluate.test.ts:69",
+        "tests/security/evaluate.test.ts:95",
+        "tests/security/logic.test.ts:29",
+        "tests/security/logic.test.ts:46"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:7",
+        "tests/security/evaluate.test.ts:135",
+        "tests/security/evaluate.test.ts:53",
+        "tests/security/formal-acceptance.py:4"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:5",
+        "tests/security/policy.test.ts:32",
+        "tests/security/policy.test.ts:82"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/logic.test.ts:53",
+        "tests/security/policy.test.ts:97"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     }
   ]
 }

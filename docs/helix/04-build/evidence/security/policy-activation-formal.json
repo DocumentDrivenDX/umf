@@ -1,0 +1,156 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "tools/security/prove-policy-activation.py": "3f0bce002bcc0cd01a215dd17f993be89b9e9e235ca279af877d4c10944da42e",
+    "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "unsupported-report-cannot-commit",
+      "violation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun report () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (not supported)\n       report\n       (distinct next_version current))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun report () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (not supported)\n       report\n       qualified\n       installed\n       (= captured current)\n       (> candidate current)\n       (= next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[captured = 0,\n candidate_protected = True,\n old_protected = True,\n candidate = 1,\n old_open = True,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n current = 0,\n supported = False,\n next_open = True,\n report = True,\n next_version = 0,\n installed = True]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun report () Bool)\n(declare-fun supported () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and (or supported report)\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (not supported)\n       report\n       qualified\n       installed\n       (= captured current)\n       (> candidate current)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (distinct next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate_protected = True,\n old_protected = True,\n current = 0,\n candidate = 1,\n old_open = True,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n next_open = True,\n supported = False,\n captured = 0,\n report = True,\n next_version = 1,\n installed = True]"
+      }
+    },
+    {
+      "id": "refusal-preserves-complete-bundle",
+      "violation": {
+        "smt": "(declare-fun old_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (not a!1)\n       (or (distinct next_version current)\n           (distinct next_protected old_protected)\n           (distinct next_open old_open)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun next_protected () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun old_open () Bool)\n(declare-fun current () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_version () Int)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (not supported)\n       qualified\n       installed\n       (= captured current)\n       (> candidate current)\n       old_open\n       old_protected\n       next_open\n       next_protected)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[captured = 0,\n candidate_protected = True,\n candidate = 1,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n current = 0,\n supported = False,\n next_open = True,\n old_open = True,\n old_protected = True,\n next_version = 0,\n installed = True]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun old_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate_protected () Bool)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_open () Bool)\n(assert (let ((a!1 (= next_protected\n              (ite (and supported\n                        qualified\n                        installed\n                        (= captured current)\n                        (> candidate current))\n                   candidate_protected\n                   false))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (not supported)\n       qualified\n       installed\n       (= captured current)\n       (> candidate current)\n       old_open\n       old_protected\n       (= next_version current)\n       (= next_open old_open)\n       a!1\n       (or (distinct next_version current)\n           (distinct next_protected old_protected)\n           (distinct next_open old_open)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[next_version = 0,\n candidate = 1,\n candidate_protected = True,\n candidate_open = True,\n next_protected = False,\n qualified = True,\n current = 0,\n next_open = True,\n supported = False,\n captured = 0,\n old_open = True,\n old_protected = True,\n installed = True]"
+      }
+    },
+    {
+      "id": "failed-installation-preserves-complete-bundle",
+      "violation": {
+        "smt": "(declare-fun old_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun installed () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (not installed)\n       (or (distinct next_version current)\n           (distinct next_protected old_protected)\n           (distinct next_open old_open)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun old_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       supported\n       qualified\n       (not installed)\n       (= captured current)\n       (> candidate current)\n       old_open\n       old_protected\n       (not (or (distinct next_version current)\n                (distinct next_protected old_protected)\n                (distinct next_open old_open))))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[captured = 0,\n candidate_protected = True,\n candidate = 1,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n current = 0,\n supported = True,\n next_open = True,\n old_open = True,\n old_protected = True,\n next_version = 0,\n installed = False]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun old_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun installed () Bool)\n(assert (let ((a!1 (= next_version\n              (ite (and supported\n                        qualified\n                        (= captured current)\n                        (> candidate current))\n                   candidate\n                   current)))\n      (a!2 (= next_protected\n              (ite (and supported\n                        qualified\n                        (= captured current)\n                        (> candidate current))\n                   candidate_protected\n                   old_protected)))\n      (a!3 (= next_open\n              (ite (and supported\n                        qualified\n                        (= captured current)\n                        (> candidate current))\n                   candidate_open\n                   old_open))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       supported\n       qualified\n       (not installed)\n       (= captured current)\n       (> candidate current)\n       a!1\n       a!2\n       a!3\n       (or (distinct next_version current)\n           (distinct next_protected old_protected)\n           (distinct next_open old_open)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate_open = True,\n candidate_protected = True,\n candidate = 1,\n current = 0,\n old_protected = False,\n old_open = False,\n next_open = True,\n next_protected = True,\n qualified = True,\n next_version = 1,\n captured = 0,\n supported = True,\n installed = False]"
+      }
+    },
+    {
+      "id": "stale-predecessor-cannot-replace-current",
+      "violation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun captured () Int)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       (< captured current)\n       (distinct next_version current))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       supported\n       qualified\n       installed\n       (< captured current)\n       (> candidate current)\n       (= next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[captured = 0,\n installed = True,\n candidate = 2,\n current = 1,\n candidate_protected = True,\n old_protected = True,\n old_open = True,\n candidate_open = True,\n next_open = True,\n next_protected = True,\n qualified = True,\n supported = True,\n next_version = 1]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun captured () Int)\n(assert (let ((a!1 (= next_version\n              (ite (and supported qualified installed (> candidate current))\n                   candidate\n                   current)))\n      (a!2 (= next_protected\n              (ite (and supported qualified installed (> candidate current))\n                   candidate_protected\n                   old_protected)))\n      (a!3 (= next_open\n              (ite (and supported qualified installed (> candidate current))\n                   candidate_open\n                   old_open))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       supported\n       qualified\n       installed\n       (< captured current)\n       (> candidate current)\n       a!1\n       a!2\n       a!3\n       (distinct next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate_protected = True,\n old_protected = True,\n captured = 0,\n candidate = 2,\n current = 1,\n old_open = True,\n candidate_open = True,\n next_open = True,\n next_protected = True,\n qualified = True,\n next_version = 2,\n supported = True,\n installed = True]"
+      }
+    },
+    {
+      "id": "atomic-visible-state-never-open-unprotected",
+      "violation": {
+        "smt": "(declare-fun next_protected () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun current () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_version () Int)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       next_open\n       (not next_protected))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun next_protected () Bool)\n(declare-fun next_open () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun current () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun next_version () Int)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       a!1\n       candidate_open\n       candidate_protected\n       next_open\n       next_protected)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate = 1,\n current = 0,\n old_protected = True,\n old_open = True,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n candidate_protected = True,\n supported = True,\n captured = 0,\n next_open = True,\n next_version = 1,\n installed = True]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun next_protected () Bool)\n(declare-fun next_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun candidate () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate_protected () Bool)\n(declare-fun current () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun old_open () Bool)\n(assert (and (>= current 0)\n     (>= captured 0)\n     (>= candidate 0)\n     (=> candidate_open candidate_protected)\n     (=> old_open old_protected)\n     supported\n     qualified\n     installed\n     (= captured current)\n     (> candidate current)\n     candidate_open\n     candidate_protected\n     (= next_version candidate)\n     (= next_open candidate_open)\n     (= next_protected false)\n     next_open\n     (not next_protected)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[old_protected = True,\n candidate = 1,\n current = 0,\n old_open = True,\n candidate_open = True,\n next_protected = False,\n qualified = True,\n candidate_protected = True,\n supported = True,\n captured = 0,\n next_open = True,\n next_version = 1,\n installed = True]"
+      }
+    },
+    {
+      "id": "successful-activation-advances-version",
+      "violation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       a!1\n       (<= next_version current))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun candidate () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(assert (let ((a!1 (and supported\n                qualified\n                installed\n                (= captured current)\n                (> candidate current))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       (= next_version (ite a!1 candidate current))\n       (= next_protected (ite a!1 candidate_protected old_protected))\n       (= next_open (ite a!1 candidate_open old_open))\n       a!1\n       (= next_version candidate)\n       (> next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate = 1,\n current = 0,\n candidate_protected = True,\n old_protected = True,\n old_open = True,\n candidate_open = True,\n next_open = True,\n next_protected = True,\n qualified = True,\n captured = 0,\n supported = True,\n next_version = 1,\n installed = True]"
+      },
+      "weakenedControl": {
+        "smt": "(declare-fun current () Int)\n(declare-fun next_version () Int)\n(declare-fun captured () Int)\n(declare-fun installed () Bool)\n(declare-fun qualified () Bool)\n(declare-fun supported () Bool)\n(declare-fun old_open () Bool)\n(declare-fun candidate_open () Bool)\n(declare-fun next_open () Bool)\n(declare-fun old_protected () Bool)\n(declare-fun candidate_protected () Bool)\n(declare-fun next_protected () Bool)\n(declare-fun candidate () Int)\n(assert (let ((a!1 (= next_version\n              (ite (and supported qualified installed (= captured current))\n                   candidate\n                   current)))\n      (a!2 (= next_protected\n              (ite (and supported qualified installed (= captured current))\n                   candidate_protected\n                   old_protected)))\n      (a!3 (= next_open\n              (ite (and supported qualified installed (= captured current))\n                   candidate_open\n                   old_open))))\n  (and (>= current 0)\n       (>= captured 0)\n       (>= candidate 0)\n       (=> candidate_open candidate_protected)\n       (=> old_open old_protected)\n       supported\n       qualified\n       installed\n       (= captured current)\n       (= candidate current)\n       a!1\n       a!2\n       a!3\n       (and supported qualified installed (= captured current))\n       (<= next_version current))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[candidate_protected = True,\n next_version = 0,\n old_protected = True,\n old_open = True,\n candidate_open = True,\n next_protected = True,\n qualified = True,\n current = 0,\n supported = True,\n captured = 0,\n next_open = True,\n candidate = 0,\n installed = True]"
+      }
+    }
+  ],
+  "acceptanceObligations": [
+    "pg-raw.B09",
+    "truss.B09",
+    "delta-raw.B09",
+    "ashlar.B09",
+    "pg-raw.L12",
+    "truss.L12",
+    "delta-raw.L12",
+    "ashlar.L12"
+  ],
+  "assumptions": [
+    "Version equality binds the complete immutable policy/mapping/native dependency/grant bundle",
+    "Support/qualification/installation predicates are truthful and independently established",
+    "All visible activation state changes occur through one atomic compare-and-swap transition",
+    "Previously admitted open profiles and admitted replacement profiles have effective protection",
+    "Versions strictly advance without reuse; every installer participates in predecessor comparison"
+  ],
+  "scope": "Single atomic transition over unbounded integer versions and abstract effective-protection/open flags. Six UNSAT violation checks, six SAT supported/refused populations and six SAT weakened-transition controls. Preservation composes inductively only if every visible transition satisfies these premises. Report is deliberately irrelevant to native admission. No real SQL transaction, compiler correspondence, deployment authority, dependency inventory, concurrency implementation, intermediate installation visibility, native rollback or backend acceptance is proved.",
+  "nativeImplementationQualified": false
+}

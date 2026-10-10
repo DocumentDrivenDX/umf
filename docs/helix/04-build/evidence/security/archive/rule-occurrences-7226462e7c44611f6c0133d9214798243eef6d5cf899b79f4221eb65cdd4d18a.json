@@ -1,0 +1,30 @@
+{
+  "status": "private-rule-occurrence-custody-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 130,
+    "failed": 0
+  },
+  "selectedPostRunSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_rule_occurrences.rs": "81ed54c8ced4b8e041c28f1353bb1ea2e1e2eaa558ae9fb4b59a5c52760d0960",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "3130863e6c071bd3dd15100dc74e22d840decc0a1fc8e3fdcfc86eb1ce41788a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "f9aab83af6791416566b8962e2f115ea78f00a8a98880bbb82d10190f35a0465",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "8dcf62ff9e477cfc2596b044d443ba374686e6896ca88c51093d800003db127f"
+  },
+  "rawOutputSha256": "0b00e07bc55169fb8b2bf8f7d08ada853a7b9fc5ab99cde75ffb2c2dbc4ca1dd",
+  "scope": "Typed borrowed rule occurrence enumeration. Selected post-run source pins are not complete frozen build custody or implementation refinement. Independent backend templates/applicability, remaining owner details, profile authentication and native evidence are open.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": []
+}

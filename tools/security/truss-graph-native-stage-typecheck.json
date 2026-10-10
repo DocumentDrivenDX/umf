@@ -1,0 +1,8 @@
+{
+  "extends": "./truss-principal-typecheck.json",
+  "compilerOptions": {
+    "types": ["node", "bun"],
+    "typeRoots": ["/private/tmp/ashlar-truss-runtime/node_modules/.bun/@types+node@26.6.4/node_modules/@types", "../../node_modules/@types"]
+  },
+  "files": ["/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-graph-native-stage.ts"]
+}

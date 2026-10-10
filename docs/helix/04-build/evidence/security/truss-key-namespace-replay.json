@@ -1,0 +1,766 @@
+{
+  "status": "passed-retained-native-oracle-replay",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-key-namespace-replay.py": "fdfb9463a5d4d7cd12e5bc299c13afc7741502f4c222adcdf4f7a4cfe04748fb",
+    "tools/security/truss-key-namespace.ts": "5b78d0f331e352b4f2eb18708e5368715ad390bf8b1a97ee0c2c88cdc10e19c2",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-namespace.ts": "97036be2d955336de8dccd08e8281269263e8c4d49e9b73cf36045a845bc6ce4",
+    "docs/helix/04-build/evidence/security/namespace-canonical-oracle.json": "ac5fd21aca1117055476836f6c8cb12588619db649f9b65af44b2426c3c0d496"
+  },
+  "observations": [
+    {
+      "id": "original-positive-profile",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "signed-minimum",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "signed-maximum",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "signed-zero",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "original-native-control-unicode-spelling",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "positive-zero",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "positive-negative",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "type-overflow",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "key-overflow",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "negative-zero",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "leading-zero",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "leading-plus",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "native-number-carrier",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "unknown-profile",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-installation",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-epoch",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-native-type",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-native-key",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-codec-pin",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "noncanonical-whitespace",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "trailing-original-byte",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "malformed-utf8",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "unknown-selection-meaning",
+      "expected": false,
+      "observed": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "original-positive-profile",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": true,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "signed-minimum",
+      "selection": {
+        "profile": "truss-key-bucket/0.2.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "-2147483648",
+        "keyNumber": "-32768",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222d32313437343833363438222c222d3332373638222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": true,
+      "canonicalValues": [
+        "truss-key-bucket/0.2.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "-2147483648",
+        "-32768",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222d32313437343833363438222c222d3332373638222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "signed-maximum",
+      "selection": {
+        "profile": "truss-key-bucket/0.2.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "2147483647",
+        "keyNumber": "32767",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2232313437343833363437222c223332373637222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": true,
+      "canonicalValues": [
+        "truss-key-bucket/0.2.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "2147483647",
+        "32767",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2232313437343833363437222c223332373637222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "signed-zero",
+      "selection": {
+        "profile": "truss-key-bucket/0.2.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "0",
+        "keyNumber": "0",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2230222c2230222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": true,
+      "canonicalValues": [
+        "truss-key-bucket/0.2.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "0",
+        "0",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e322e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2230222c2230222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "original-native-control-unicode-spelling",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "\u96ea\ud83d\ude42\u0000\n\"\\",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22e99baaf09f99825c75303030305c75303030615c225c5c222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": true,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "\u96ea\ud83d\ude42\u0000\n\"\\",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22e99baaf09f99825c75303030305c75303030615c225c5c222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "positive-zero",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "0",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2230222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "0",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2230222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "positive-negative",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "-1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c222d31222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "-1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c222d31222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "type-overflow",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "2147483648",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2232313437343833363438222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "2147483648",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2232313437343833363438222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "key-overflow",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "32768",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c223332373638222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "32768",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c223332373638222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "negative-zero",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "-0",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222d30222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "-0",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222d30222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "leading-zero",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "01",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c223031222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "01",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c223031222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "leading-plus",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "+1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222b31222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "+1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c222b31222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "native-number-carrier",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": 1,
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": null,
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "unknown-profile",
+      "selection": {
+        "profile": "truss-key-bucket/9.0.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f392e302e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/9.0.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f392e302e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "changed-installation",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "2",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "2",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "changed-epoch",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "2",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "2",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c2232222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "changed-native-type",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "2",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "2",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2232222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "changed-native-key",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "2",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "2",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2232222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "changed-codec-pin",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262225d"
+    },
+    {
+      "id": "noncanonical-whitespace",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c2022666978747572652d6f6e6c792d65706f6368222c202238623139306361382d663333652d346464342d623638342d346630336538323239323434222c202231222c202231222c2022756d662d6b65792d7475706c652d7631222c2022332e302e30222c202261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "trailing-original-byte",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d00",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "malformed-utf8",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "stored": "ff",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    },
+    {
+      "id": "unknown-selection-meaning",
+      "selection": {
+        "profile": "truss-key-bucket/0.1.0",
+        "sourceEpoch": "fixture-only-epoch",
+        "installationId": "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "typeId": "1",
+        "keyNumber": "1",
+        "encoding": {
+          "identity": "umf-key-tuple-v1",
+          "version": "3.0.0",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "extra": "unknown"
+      },
+      "stored": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d",
+      "expected": false,
+      "canonicalValues": [
+        "truss-key-bucket/0.1.0",
+        "fixture-only-epoch",
+        "8b190ca8-f33e-4dd4-b684-4f03e8229244",
+        "1",
+        "1",
+        "umf-key-tuple-v1",
+        "3.0.0",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "canonicalHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2238623139306361382d663333652d346464342d623638342d346630336538323239323434222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161225d"
+    }
+  ],
+  "freshNativeExecution": false,
+  "scope": "Current portable namespace factory on retained original native canonical outputs. Immutable selection mutation controls pass. Native producer source correspondence is retained separately; no fresh native database execution, native original namespace/registry authority or complete graph profile qualification."
+}

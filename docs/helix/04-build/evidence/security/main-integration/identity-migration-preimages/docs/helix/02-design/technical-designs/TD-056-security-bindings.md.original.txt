@@ -1,0 +1,983 @@
+---
+ddx:
+  id: TD-056
+  type: technical-design
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: US-056
+      kind: informed_by
+    - id: SD-008
+      kind: informed_by
+---
+
+# TD-056: Qualified binding admission and independent backend executions
+
+## Correlated graph endpoint proof — 2026-10-09
+
+`tools/security/prove-graph-endpoints.py` adds four conditional first-order checks for US-056-AC2 over arbitrary association witnesses and separate native object, qualified type and complete logical key domains. Exact role-specific endpoint projection and complete, sound incidence preserve correlated two-endpoint existence and its negation. Independent type-erasure, role-reversal and omitted-incidence controls produce SAT counterexamples; the corresponding safety queries are UNSAT and valid populations are SAT. All twelve pre-solve formulas replay independently.
+
+The Truss CONTRACT-012 current key direction uses `object_key_bucket`, complete namespace/key bytes and a typed `(object_id,type_id)` join. Its legacy text `object_key` lookup is baseline-only. This theorem states the endpoint correspondence obligation; it does not implement or authenticate that key/bucket projection. Native role declarations, property/edge attributes, unknown-value semantics, exact encoding and collision processing, complete installed graph bindings, authority and final release remain separate qualification work. The retained receipt explicitly marks native implementation unqualified. No graph acceptance case is closed.
+
+Astra ultra independently replayed all twelve formulas and checked all three source digests, finding no actionable defect in this declared Boolean slice. The eventual native object locator must retain the complete `(object_id,type_id)` identity rather than a bare bigint. The four checks share the same conditional equivalence; their distinct weakened controls expose separate binding failures, not four independent backend proofs. Current aggregate verification passes28 component groups,402 formula replays across21 receipts and108 evidence checks. Full backend acceptance remains26/132.
+
+### Private typed graph locator implementation
+
+Truss `packages/postgresql/src/security-graph-locator.ts` now projects native object/edge locator rows using canonical bigint/int4 TEXT carriers. It retains complete `(id,typeId)` identity, directed endpoint roles and each edge's own bigint identity. Every endpoint must resolve to one supplied typed object; duplicate object identities and duplicate edge IDs refuse. The pure projection retains distinct supplied edge identities; it does not qualify native index constraints. Inspection of the complete 0.15 owner-export DDL subsequently confirmed that UNIQUE edge_out(source_id,rel_type_id,target_id) forbids duplicate relationship/numeric-endpoint pairs. Normal allocation also relies on global shared-sequence IDs and forbids caller-supplied IDs. Equal IDs across types and supplied parallel edges remain defensive representation fixtures, not admitted native allocation populations or backend support claims. Negative and zero native IDs retain their exact spelling; no Number conversion of identities occurs.
+
+The component captures exact top-level data properties and bounded dense array index descriptors. It refuses holes, accessors, custom iterators, extra array properties and collections over4096 entries. Astra ultra reproduced an iterator bypass in the first version; the corrected bounded snapshot refuses without invoking the caller iterator. Exactly4096 objects and edges remain admitted. Astra re-reviewed the corrected implementation and found no remaining actionable defect.
+
+The owning Truss test file retains28 passing Bun tests; the real Chromium153 receipt retains25 unique matching observations with current source pins and no host globals or external requests. Aggregate verification passes30 groups, including strict standalone typing of the sibling component/tests/browser harness and UMF's own unchanged compilation boundary. Tests reside in Truss because importing sibling implementation source into UMF's main test tree crossed its rootDir boundary. This is a private candidate row-projection component, not actual native graph execution, business-key resolution, declared rel_endpoint validation, source/fact completeness, stable authority or authorization. Public typed-query admission remains refused and US-056-AC2 remains open. Next integrate original key/namespace verification and owner-backed property/relationship declarations into the actual graph projection before native oracle comparison.
+
+Declared endpoint correspondence is now implemented as a separate private candidate projection in the same module. It snapshots supplied `rel_endpoint` triples, retains exact canonical int4 relationship/type carriers, refuses duplicate or malformed declarations, and checks every supplied edge against its complete ordered relationship/source-type/target-type triple before selecting the requested relationship. A selected declaration is mandatory even for an empty collection. Known foreign relationships are separately selected; undeclared relationships and reversed endpoint roles refuse. Alternative declared endpoint-type combinations remain distinct. This validates correspondence with supplied rows, not authentic or complete original catalog declarations, logical relationship allocation, native constraints or current installed authority.
+
+The expanded corpus passes34 Bun tests and34 unique Chromium153 observations;30 aggregate component groups and109 evidence checks pass. Astra ultra independently re-reviewed this addition and found no actionable defect. Full native graph execution, business-key/namespace resolution, qualified property decoding, source/cut admission and final publication remain unfinished. No backend case or full acceptance criterion is promoted by these portable components.
+
+### Candidate complete-key bucket lookup
+
+`resolveSecurityGraphKeyLocator` now compares complete expected namespace/key bytes within the selected native type/key-number, and joins each bucket owner through `(object_id,type_id)`. It validates canonical TEXT bigint/int4/int2 carriers, positive unique storage row IDs and the native one-per-object/type/key-number constraint. Missing selected materialization, unresolved typed owners, duplicate owner rows or two owners matching the complete selected key refuse. Every supplied bucket is checked before returning; a match cannot bypass later ambiguity, malformed carriers or resource exhaustion. Native namespace/key byte limits are65536/1048576 bytes, with a16-MiB aggregate candidate budget including the expected pair. Hex carriers are nonempty, even-length and lowercase; no digest or storage ID substitutes for business-key equality.
+
+The expected tuple must originate from the registered UMF producer and independently qualified namespace selection, including correspondence of its type/key number to that namespace. The component does not establish those host premises. Chromium composition now loads the actual registered owner bundle and existing stored-key verifier, then resolves its bytes against retained native namespace/key outputs combined with explicitly constructed typed owner rows. The independent large-ID expectation and changed-stored-byte refusal pass. Constructed rows are not retained native owner evidence, and fresh native execution remains false. Astra independently checked the actual producer hash, namespace/report/native pin correspondence, all seven browser source digests and the retained-byte expectation, finding no actionable defect.
+
+The Truss corpus now passes43 Bun tests, including exact byte-limit positives and one-byte-over refusals on both expected/stored sides,4096 bucket rows and the later aggregate-bound control. The graph endpoint browser corpus retains34 observations; stored-key browser composition passes nine checks. Aggregate components pass30 groups and evidence validation passes110 checks. Actual owner-backed native graph facts, original installed source/namespace authority, qualified property decoding, general policy lowering and current-authority publication remain required. Full acceptance is unchanged26/132.
+
+**User Story:** [[US-056]] | **Feature:** FEAT-008 | **Solution Design:** [[SD-008]]
+
+## Scope
+
+Story-level realization of US-056-AC1–10; CONTRACT-052/053 govern exact surfaces.
+
+## Technical Approach
+
+Qualified binding admission and independent backend executions. Inherit complete-fact admission, mandatory restrictions and native
+refusal from SD-008. No source policy can choose a trusted issuer or native role.
+
+## Component Changes
+
+Spike files under `02-design/spikes/security/` establish bounded feasibility.
+Production components follow the existing portable-library/runtime separation;
+new package/schema/API details must conform to CONTRACT-001 and CONTRACT-052.
+Backend-specific source and receipt adoption are consumer-owned.
+
+Input: Model/policy/mapping and actual native inventory. Output: refusal or admitted native evidence.
+Authoring retains unknown source; activation requires understood meaning.
+
+## API/Interface Design
+
+Use CONTRACT-052 policy meaning and CONTRACT-053 receipt admission. Weft-owned
+lowering interfaces require pinned owner agreement before production integration;
+no invented local compiler API is silently adopted.
+
+## Security
+
+Original caller and trusted attributes are host inputs with independently
+qualified provenance. Invalid/incomplete context refuses before effects. Native
+owners, BYPASSRLS and definer dependencies are explicitly inventoried/excluded.
+Private observations cannot escape through read, error or progress surfaces.
+
+## Testing
+
+Actual-role read/write/bypass/disclosure/drift matrix for each backend. Every exercising test cites `@covers US-056-AC` with its full numeric
+criterion ID. STP-056 owns per-criterion cases; declaration-only checks do not
+qualify execution. Qualification requires zero skipped required cases.
+
+## Performance
+
+Bound semantic expressions under CONTRACT-052. Measure native policy overhead,
+plans and drain at 1k/100k/1M records; resource timeout is an explicit refusal.
+
+## Migration & Rollback
+
+Version source and bindings separately. Preserve native/unknown source and prior
+admitted installation. Failed activation closes admission or retains the prior
+profile; never remove protection while broad ordinary grants remain.
+
+## Implementation Sequence
+
+1. Create exercising contract/native fixtures and record red or not-run states.
+2. Implement the scoped component and independent expected-result comparison.
+3. Reproduce formal/native/browser checks at matching source fingerprints.
+4. Admit only the exact completed subset and publish criterion receipts.
+
+## Risks
+
+Missing native capability, incomplete authority participation or unreviewed
+compiler interface blocks that profile. Continue independent semantic validation;
+never substitute synthetic fixtures for actual consumer adoption.
+
+## Inspected compiler integration boundary (2026-10-08)
+
+The current sibling Weft source exposes `backend::Manifest`, `Capability` and
+`Obligation` with explicit host/backend ownership, pinned target/language profiles
+and evidence status. `crates/weft-core/src/backend.rs` is the inspected owner
+surface. The inspected core/runtime source contains no security policy lowering,
+masking or authorization implementation. Generic obligation parameters alone
+do not establish a lowering contract for CONTRACT-052 expressions or disclosure.
+
+A consumer integration therefore needs an explicit versioned security capability
+and lowering agreement that preserves qualified references, exact key equality,
+mandatory rule composition, complete private authorization facts, disclosed
+query representation and atomic refusal. Its emitted obligation must be checked
+by a host with authenticated authority and CONTRACT-053 lifecycle guards. No
+local SQL renderer or source-content-selected executable plugin is introduced
+by UMF. This is an open implementation dependency, not native acceptance.
+
+## PostgreSQL original actor requirement
+
+The PostgreSQL feasibility replay exposed and corrected adopted-role identity
+substitution. Native helper resolution must use the originally authenticated
+session actor, with its explicitly qualified subject mapping; current/adopted
+roles and client-authored GUCs cannot choose another subject. Actual ordinary
+connections, deliberate membership drift and a weakened-helper counterexample
+exercise this requirement. A pooled service identity requires a separately
+qualified trusted subject context; these direct-session observations do not
+establish that context or substitute for native role/bypass inventory.
+
+## Concrete compiler/host handoff gaps (2026-10-08)
+
+The inspected Weft CONTRACT-003 and backend source carry typed host/backend
+obligations from binding validation, capability assessment and emission, merging
+conflicts atomically. That is the available transport hook; arbitrary obligation
+parameters are not native verification or policy lowering. The runtime
+`compile_json` returns artifacts and never executes database operations.
+
+| Inspected owner surface | Current behavior | Required security adoption |
+| --- | --- | --- |
+| `backend.rs`: `Validated`, `Assessment`, `Emission` obligation vectors | Generic ID/parameter/owner/failure transport with conflict refusal | Versioned security obligation semantics and a registered native host checker |
+| `backend_emission.rs`: scalar validation | Output logical type, nullability, carrier and decoder must match resolved source output | Explicit security disclosure representation/result-domain profile for original/null/absence/withheld/transformed and changed output type; no silent scalar reinterpretation |
+| `model.rs`: v0.1 catalog loader | Explicit UMF 0.7.0 schema/version check | Explicit compatibility/adoption for the security extension's pinned UMF 0.8.0 documents; do not relabel/downgrade source bytes |
+| `weft-runtime::compile_json` | Compilation only, host obligations retained | Host/native authenticated context, complete private facts, native inventory, guarded execution/final release and current snapshot checks |
+
+This table scopes the inspected v0.1 loader and scalar emitter; it does not assert
+that every newer application/artifact protocol has the same version subset.
+Registered backend-owned field codecs still require explicit security result-domain
+adoption. A generic opaque codec or host-obligation flag cannot by itself qualify
+masking/query use. Public transport/result-domain changes must be explicit owner
+contract revisions and tested through Rust, Python and browser bindings. Until
+adopted, a protected profile must refuse compilation/activation rather than route
+an ordinary canonical scalar artifact through a guessed security wrapper.
+
+## Databricks original-actor preflight
+
+The live `aidev-cus` and `scope-test` profiles return the same original active
+native actor ID in the same configured workspace context. Zero distinct
+non-installer actors are available from those profiles. `databricks-actors.py`
+retains only selected native identity/context metadata and CLI/source versions;
+credentials and raw auth diagnostics are not retained. Distinct profile names
+cannot establish ordinary Staff identities, and configured context is not an
+independent server/SQL grant inventory. The previously requested disposable
+namespace and independent ordinary credentials remain required external inputs.
+
+## Versioned disclosure transport component
+
+The browser-compatible `src/extensions/security/disclosure.ts` implements
+`umf.security.disclosure/0.1.0` for ordered selected fields and bounded rows.
+Each cell retains its exact qualified field reference and one disposition:
+original typed literal (including explicit null), absent, withheld, or transformed
+with an explicit qualified output-domain reference and typed literal. Unknown
+versions, extra members, incorrect row widths/order, invalid literal domains,
+duplicate selections and invalid absence refuse the entire batch with a coarse
+error. Limits are 256 fields, 4,096 rows, 16,384 cells and the underlying core
+JSON structural limits. Empty collections retain the selected field declaration.
+
+This component validates shape and types, not authorization. In particular,
+a structurally valid original cell can pass even when a policy would withhold
+it. Native result provenance, current authority, policy disposition enforcement,
+physical row completeness and final-release guards remain the host/backend's
+responsibility. The receiver supplies the admitted interpretation; this wire
+format neither carries credentials nor asserts globally current source pins.
+Weft must explicitly adopt this representation through its versioned scalar/result
+contract before any backend support claim. No backend case is closed by this
+codec. Bun corruption/round-trip tests and real Chromium S10 observations cover
+the portable component; receipts remain in the security evidence directory.
+
+## Public PostgreSQL driver feasibility
+
+`tools/security/pg-driver.ts` executes Bun 1.4.2 SQL against the owned disposable
+PostgreSQL 17.9 fixture on an ephemeral 127.0.0.1-only port. It connects as actual
+ordinary Alice, Bob and outsider identities, checks exact resource IDs and native
+SQLSTATE 42501 for private Assignment access. Two held-transaction schedules use
+independently observed native advisory lock waits through a host-buffer release
+or discard boundary, then verify a fresh ordinary count is zero. Barrier waits
+and subprocesses have finite deadlines. TCP readiness distinguishes PostgreSQL's
+temporary initialization server; the owned container and SQL pools are closed.
+
+This is physical public-driver feasibility, not policy lowering, production
+credential management or a complete native profile. Connection loss, pooled-role
+reset, prepared artifact custody, codecs, streaming failure and complete authority
+writer participation remain separate mandatory qualification work. The Weft
+source inspection confirms its B-007 support inventory claims compiler-conformance
+for exact qualified profiles conditional on admitted authority; its test-only host
+obligation fixtures call host-supplied snapshot/query functions. Those callbacks
+and generic obligation transports do not implement the shared security model.
+The shared compiler remains the owner of lowering; no SQL compiler is added here.
+
+## Executed compiler version boundary
+
+`tools/security/weft-version-probe.py` builds the current sibling Rust owner
+compiler offline with its lockfile, in an isolated temporary target directory.
+For one qualified Truss request and one qualified Ashlar request, unchanged
+UMF 0.7.0 inputs compile. Changing only each owning document's core version to
+0.8.0 and correctly updating its exact document bytes, pin version and digest
+produces WFT-INPUT at the versioned request envelope; no SQL, parameters or
+partial logical plan is returned. Four fresh observations and pre/post source
+hashes are retained in `weft-version.json`. This is compiler transport evidence,
+not native backend or security-policy support. It does not establish compatibility
+of every core property or target query.
+
+The immediate owner integration step is explicit versioned request/schema
+admission for the security model's 0.8.0 source bundle, then catalog semantic
+admission and security input/result-domain lowering. Updating only model.rs would
+not pass the current request envelope. Prior 0.7.0 requests and artifacts must
+retain their separate versioned contract and regression corpus; never relabel
+source bytes or bypass the request validator to activate a protected profile.
+The actual Truss 0.12 source handoff independently still lacks installed native
+routine/security binding: the security worklist names sixteen known signatures,
+not complete callable/effective-right closure. The integration cannot substitute
+Weft's qualified fixture registration for that unfinished installation.
+
+## Owner security admission foundation
+
+The owning Weft repository now frames FR-19–22 and CONTRACT-005 for the security
+compiler slice. `weft-compile/0.3.0` retains the 0.2 query grammar but requires
+core08 module pins and the shared security source transport. A separate Rust
+Catalog::prepare_security validates core08 envelope/byte/identity custody using
+the exact canonical UMF schema. Existing ordinary preparation and 0.1/0.2 request
+schemas remain core07. The blocked-only 0.3 response is explicit.
+
+Five source-qualified Rust security admission tests plus the existing frontend
+and compile-envelope suites pass. They prove malformed/missing/stale transport
+refusal and that a source-custody-admitted security request never invokes backend
+composition. Well-formed 0.3 activation currently returns
+WFT-SECURITY-UNSUPPORTED without SQL/parameters/partial plan. No public compiled
+security artifact or supported core08 physical profile is claimed. Typed policy/
+ontology admission, logical and physical lowering, disclosure domains and native
+host obligations remain the next B-008 implementation work, followed by native
+Python/actual browser and all required backend evidence.
+
+## Rust policy/ontology source-shape stage
+
+Weft's SecuritySourcePacket now admits bounded exact JSON, known policy/ontology
+source shapes and exact ontology/core revision pins. Its strict selection overlays
+are reproducibly checked against canonical UMF schemas; opaque native archives
+retain bytes without authority. New refusal controls exercise duplicate JSON,
+unknown nested meaning, deep expressions and missing/stale document closure.
+Nineteen source-qualified owner tests pass. This intermediate stage remains
+separate from complete type/domain/key/variable admission and logical/physical
+lowering; protected activation is still closed before backend composition.
+
+## Qualified ontology reference closure
+
+The owner Rust stage now resolves qualified Records, stable Keys, every classified
+member, subject/context fields and association endpoints against core08 source
+custody. Duplicate or cross-document-substituted identities refuse; distinct
+qualified identities with the same local labels remain distinct. Keys retain
+ordered required components, and endpoints match declared target key domain
+shapes. Unknown selected qualifiers/units and inapplicable facets refuse.
+Twenty-five current owner tests pass, including the correlated Project fixture
+and deliberate corruptions. Complete literal/facet semantics, variable/type
+inference, logical security IR and physical/native lowering remain required before
+activation. The source stage never authenticates a fact provider or native actor.
+
+## Declared term types and coherent source stages
+
+Weft now checks rule action/target/output membership, lexical variable freshness,
+association roles, exact identity type/key equality and declared scalar domain
+shape equality. Basic literal wrappers match their declared scalar family.
+Expanded checking is bounded. Source packets retain model pins; changed or rehashed
+inputs cannot replace the prepared catalog's actual definitions. The checker
+constructs ontology closure internally from its own source/model snapshot.
+Thirty-one current owner tests pass. Exact literal/refinement validity and semantic
+truth/composition IR still precede physical lowering/native admission; this stage
+cannot authorize source-content-defined roles or current fact providers.
+
+
+## Query-use provenance before physical lowering
+
+Rust now simulates all five query-use modes and separately evaluates the selected
+original-value action. Native activation still requires an admitted immutable
+profile binding `(target, field, operator) -> exact original action`, whose source
+and physical mapping are independently qualified. The SQL client cannot select
+an unrelated granted action to obtain raw values. The current simulation request
+and source pins do not establish that profile provenance. Serialization/admission
+of these native bindings and their lowering remain open. B08 must cover profile
+tampering, unrelated-action substitution, empty selection and dependencies that
+are absent only from a false main-action branch.
+
+
+## Source-bound query-profile admission foundation
+
+Weft now has the draft `weft.security.query-profile/0.1.0` source protocol and an
+immutable Rust admission object. Primary action and selected targets are bound to
+exact retained model inputs/module selections, policy/ontology bytes and backend
+ID/version/profile/binding bytes. Original-authorized field/operator tuples require
+one exact separate declared action; missing, duplicate, extra or foreign-qualified
+bindings refuse. Request annotations are derived from that profile, and a caller's
+unrelated granted action refuses even for empty collections. An unprofiled logical
+simulation supplies a retained substitution control, not native authority.
+Compile 0.3 optionally admits the profile before the unchanged unsupported gate;
+neither admitted nor stale profiles invoke backend factories. SQL query-use
+extraction, authenticated source ownership/current authority, physical mapping
+interpretation, installed actors and release remain open.
+
+
+## Actual source SQL lineage before physical lowering
+
+The owner compiler now resolves source SQL itself and extracts qualified field
+uses from predicate/keyset operands, both join sides, groups, order fields and
+SUM arguments. Self-join occurrences remain distinct. Field-free COUNT retains
+its scans and cannot escape profile target checks. Unique projection dependencies
+coexist with the original ordered aliases/output multiplicity. A private-constructor
+profiled-query artifact retains resolved source lineage and read-only derived
+actions, with exact source reuse checks. Compile 0.3 profiles apply to that
+actual SQL before the still-closed activation gate.
+Relationship helpers explicitly refuse pending a declared typed security bridge.
+Transformed-output operator typing, physical query lowering, installed authority
+and release remain open. SQL witnesses use named fields and signed 64-bit integers
+within the existing application-read 0.2 subset; unbounded integer selection in
+that frontend remains unsupported, with its initial refusal evidence retained.
+
+
+## Compiler scan obligations for physical mapping checks
+
+The immutable profiled SQL query now carries separate obligations for every scan
+occurrence and selected action. Field-free COUNT retains full ordered resource
+and subject identities; self-joins do not merge their scan occurrences. All scoped
+permit/require/forbid conditions are visited without truth simplification, including
+separate original-value action dependencies. Correlated existence requires complete
+private association inventories, all classified association fields, association
+identity components and ordered endpoint target keys. Context attributes remain
+separate from record attributes; literal domain references do not add live reads.
+Projection and operator fields remain separate inventories from authorization facts.
+One-million-work and 16-million copied identifier-text byte limits bound derivation.
+The artifact's constructor remains private and exact source reuse checks apply.
+This inventory is input to physical mapping qualification. It does not authenticate
+private facts, prove their completeness, install native RLS/masks, reconcile
+transformed query types or authorize result release. Native B/L cases remain open.
+
+
+## Collection ordering evidence
+
+The raw PostgreSQL collection witness applies native eligibility before lookup,
+count/min/max/SUM, traversal and pagination. A native RLS-disabled control changes
+ordinary counts, demonstrating a real eligibility-dependent result. Two additional
+Z3 checks prove conditional hidden-record noninterference for three symbolic
+carrier identities: unbounded nonnegative bag multiplicities/mathematical integer
+COUNT/SUM, and every eligible page rank 0..2 under fixed public ordering. Each
+has a satisfiable positive population, UNSAT violation, and SAT weakened control.
+The page control selects raw rank before filtering and admits missing/changed
+authorized pages. Stable complete eligibility, equal eligible values and ordering
+are premises. Native overflow, NULL behavior, protected output domains, arbitrary
+ordering/collation, cursor provenance and authority freshness are not proved by
+these checks. The formal inventory grows from 18 to 20 conditional checks; native
+installation correctness remains independently evidenced and incomplete.
+
+
+## Native private-fact diagnostic limitation
+
+The owned PostgreSQL 17.9 probe confirms that default catalog privileges expose
+private Assignment population statistics to ordinary SCRAM actors. Adding Eve's
+unrelated Project-D assignment preserves all ordinary authorized resource IDs,
+but pg_class.reltuples changes 3 to 4. Revoking direct pg_class access does not
+close the path: public pg_stat_all_tables and pg_stat_get_live_tuples still expose
+the privileged estimate. Statistics are estimates, not exact physical counts; the
+probe compares actual privileged metrics rather than assuming equality with row
+population. A prototype restricting the three known families preserves authorized
+reads and blocks the selected probes. It is not a complete catalog/function/view
+closure or native backend qualification.
+
+B10 remains open. Its physical design must provide an explicit, qualified diagnostic
+allowlist or a closed query surface that ordinary subjects cannot bypass with raw
+credentials, and must retain the complete native privilege inventory. Default
+PUBLIC catalog/function grants cannot satisfy this requirement merely because
+private fact tables lack direct SELECT grants. Model semantics are not weakened
+to accept this disclosure. Explain/history/size/timing behavior remains an explicit
+unknown requiring threat-scope and native evidence.
+
+## Native complete-cut source correspondence
+
+The raw PostgreSQL witness retains an independently authored complete source cut
+for the declared Employee login binding, Project identity, Resource identity,
+Assignment endpoints/active value and Ownership endpoints. One native statement
+collects all of those exact facts. Host admission compares the native facts with
+the pinned source content before every selected collection operation, including
+empty and all-hidden selections. Matching population counts alone do not prove
+complete endpoint/value correspondence. Missing facts, required-attribute NULLs,
+changed endpoints/bindings and unavailable sources invalidate that frozen cut.
+
+The source cut is supplied by the excluded fixture installer and independently
+checked oracle. Production needs an authenticated source issuer, source revision
+and complete coverage evidence; client-authored completion flags are insufficient.
+Legitimate authority transitions require a new qualified cut and the lifecycle
+protocol. The stable-cut witness does not implement those transitions or enforce
+admission for arbitrary direct SQL. Native RLS can skip a per-row predicate on an
+empty selection; a profile promising collection refusal needs an actual statement
+admission boundary and must deny unqualified direct paths.
+
+## Managed host-helper execution custody
+
+The native witness executes its reviewed Python admission helpers from exact
+in-memory source bytes whose digest matches the case's initial source pin. The
+loader itself is checked and compiled the same way. Neither an import timestamp/
+size check nor module-authored metadata selects code or supplies the executed
+source digest. Executed managed-source bindings are retained separately from native
+database descriptors. This is content custody within a trusted reviewed host,
+not authentication of the host, issuer, model or policy.
+
+A component control reproduces stale bytecode selection after an equal-size source
+change with the original timestamp. The exact-byte loader executes the newly
+reviewed source instead. Changed source, missing/malformed pins and excessive
+source size refuse before managed body execution. Python runtime and standard
+library remain trusted versioned prerequisites. This does not qualify B12's full
+engine/model/policy/mapping/actual-role receipt or fabricated-receipt matrix.
+
+
+## Original-login subject preflight prototype
+
+For the experimental dedicated Truss ordinary-login read profile, subject
+resolution precedes application statement admission on the original checked-out
+connection. A host-selected, independently qualified private routine accepts
+SESSION_USER as PostgreSQL TEXT and returns exactly one ordered non-null TEXT
+subject-key tuple. Original response aliases, type OIDs, text format, cardinality,
+UTF-8 and carrier bounds must match the selected mapping. Configuration is copied
+before acquisition. Neither a caller label nor a same-shaped result authenticates
+the routine, model identity or authority source.
+
+The current runtime prototype admits only repeatable-read/serializable read-only
+transactions. While preflight is pending, application SQL and transaction controls
+refuse locally. Failure quarantines original custody and closes source admission;
+it must never degrade into an authorized empty collection/count. An observed
+native lock barrier independently tests that concurrent calls cannot race the
+successful preflight boundary. This is source/native component evidence under
+US-056-AC7's completeness concern, not closure of the backend acceptance criterion.
+
+Complete routine source/owner/grant/inventory qualification, typed key and native
+carrier correspondence, guard acquisition before establishing authority snapshot,
+post-acknowledgment freshness and original final-release custody remain required
+for an admitted production profile. A stable old snapshot alone does not satisfy
+US-057-AC3. No service-login caller adoption, write support or graph mapping is
+inferred from the dedicated original-login prototype.
+
+
+## Typed shared native homes
+
+A shared table needs an explicit logical-type-to-native discriminator mapping;
+table equality does not make its rows interchangeable. For a shared home, all
+selected logical types must use the same discriminator column and native carrier,
+with distinct canonical values. Subject and association witness scans must apply
+that selection before existential truth aggregation. Root eligibility must also
+bind the original row discriminator, not merely business-key component values.
+Removing type filters can fabricate membership/ownership from another declared
+association even where all column shapes and endpoint strings match.
+
+The portable PostgreSQL prototype carries native discriminator values as exact
+text with declared text/int4/int8 carriers; integer bounds use bigint. Its native
+witness qualifies only int4 shared fact projections, not actual graph adoption.
+Type tags are not logical identities: the host must prove injective correspondence
+with the original complete document/module/type identity and native catalog source.
+Native text equality/collation, composite (type,id) physical keys, business-key
+codec and endpoint-registry correspondence require explicit profile validation.
+Root parameter authority and complete collection admission remain independent of
+row predicate emission. No same-shaped projection substitutes for original
+Truss node/scalar/key/edge source and public consumer execution evidence.
+
+
+## Ordered logical keys and declared native index order
+
+Logical key order comes from original qualified field declarations. Native index
+order comes from original native descriptors and its explicit mapping declaration.
+These are separate source meanings: Truss's native type-last keys cannot be
+silently converted into an assumed type-prefix index. A selected type plus all
+logical key components must occupy the exact native key carrier set; explicit
+native order may differ while logical component order remains unchanged. Missing,
+extra, duplicated or semantically reversed field bindings refuse. Scalar predicate
+column bindings must agree with key bindings, avoiding a uniqueness check over
+one column followed by authorization reads from another.
+
+The fixed prototype admits nonnull deterministic TEXT key components and nonnull
+int4 type selectors on PostgreSQL 17.9. Shared type observations carry the full
+logical document/module/type reference, native discriminator column/value and
+complete original model source pin. Ambiguous source observations, swapped tags,
+wrong source pins and domain/constraint mismatch refuse. Trusted source resolution
+and native observation custody remain independent premises; metadata cannot
+supply its own authenticity. An actual graph business-key codec or endpoint FK
+correspondence must be proved separately before adopting this primitive into an
+installed native profile. Native key index order is retained explicitly, never
+used to infer or replace logical key identity.
+
+
+## Encoded graph business-key transport
+
+The current Truss key-bucket carrier is native BYTEA containing UTF-8
+`umf-key-tuple-v1:hex:<tuple hex>`, separate from complete namespace bytes. Reuse
+the independently registered original UMF tuple producer, never reimplement key
+meaning from JSON spelling or infer meaning from a prefix. Original source/field
+order/domain and owner verification determine canonical tuple bytes. Receipt
+shape/source revision labels alone do not authenticate the producer. Stored full
+namespace and full transport must match; digests route private enumeration only.
+Equal value payloads across different namespaces remain different selected keys.
+
+Namespace admission binds original installation/source epoch, native type/key
+selection and codec identity/version/source under its selected native profile.
+The portable transport verifier treats those independently admitted bytes as
+opaque and immutable; it cannot turn arbitrary bytes into namespace authority.
+Complete source/canonical owner value parity, typed catalog/key correspondence,
+bucket collision enumeration and native uniqueness/current-authority guards remain
+separate obligations. Installer-only native BYTEA round trips cannot establish
+protected graph writer or read-profile acceptance. Private metadata/bytes remain
+unpublished before full read admission; this component is not a post-fetch access
+filter or permission to publish a matching stored payload.
+
+### Namespace and stored-key binding spike — 2026-10-08
+
+The portable Truss namespace verifier preserves the exact native canonical eight-string vector and validates bounded scalar text and canonical int4/smallint tokens. Profile 0.1 permits positive identifiers; profile 0.2 can represent signed and zero identifiers. This is representation compatibility, not acceptance of a key definition or installation of profile 0.2. Four Z3 checks prove conditional mathematical range/render/parse properties and detect absolute-value renumbering; they do not prove the implementation, migration, or registry authority.
+
+A stored-key assembly binds the registered UMF tuple producer's bundle pin to the namespace codec pin, captures producer methods and selection before awaiting canonical verification, and requires exact namespace and tuple bytes. Original native output, foreign namespace refusal, changed caller selection, codec mismatch, and method replacement while verification is pending are checked. The canonical callback and producer remain trusted host inputs; equality cannot authenticate either input, a namespace installation, or the current authorization cut.
+
+The first namespace native probe passed 23 observations. Subsequent factory changes have current Bun and Chromium replay evidence against those retained canonical observations, not fresh native execution: Docker stopped responding before the rerun could create a fixture. The historical native receipt remains retained separately. Stored-key assembly has five current Bun checks and four real Chromium checks against retained native bucket bytes. No graph backend acceptance criterion is promoted by these component observations.
+
+### Async original-key capture correction
+
+Race controls found that the initial stored-key assembly reread caller-owned stored key/value objects after awaiting canonical namespace verification. An initially invalid stored key or value tuple could be repaired during the await and then accepted; initially valid bytes could be changed and rejected. `stored-key-await-counterexample.json` retains the pre-fix source snapshot and three failing controls. The correction copies stored bytes and evaluates original tuple correspondence synchronously at operation entry, before namespace verification waits. Unsupported clone/producer inputs refuse. Namespace authority and the final-release authorization guard remain separate prerequisites; this capture correction is not revocation correctness or a permit.
+
+Current assembly evidence expands to eight Bun checks and seven real Chromium checks, including those three interleavings against the original registered UMF producer and retained native bytes. No fresh native execution or complete backend criterion is inferred.
+
+### Astra ultra review: scoped unknown composition
+
+The owner-requested Astra ultra review found that two scoped permits were combined with OR of `IS TRUE`, allowing T to override another permit's U. CONTRACT-052 and the shared evaluator require all scoped rules to be determinate. The native pre-fix counterexample is retained with exact archived source and probe: a real-owner policy changed membership from require to permit, then deliberately removed the subject for primitive diagnostics. The emitted SQL granted RA; expected final eligibility was false. This is an invalid subject-cut diagnostic, not a claim of a valid production collection bypass.
+
+The actual Truss lowerer now guards every permit condition against NULL when multiple permits are scoped. Single-permit, require and forbid checks already exclude U. Native owner-derived variants verify both permit orders, T+U, F+U, and irrelevant actions/targets, within 78 total observations. Three conditional Z3 checks establish scoped eligibility algebra under scalar truth and scope-correspondence premises. Source pins and these mathematical checks do not prove full native deployment or complete collection admission.
+
+### Compiler-derived original field/operator boundary
+
+The actual Weft owner now exports authored source/ontology/policy/profile artifacts for all five original salary query uses: predicate, order, group, join and aggregate. All bind to the separate `querySalary` action; read permission cannot substitute. Missing, duplicate, wrong-field and read-as-original bindings refuse. A deliberately authored `unrelatedOriginal` action with broad permission creates a different source-qualified profile when selected: it cannot substitute for the installed profile.
+
+The actual portable Truss `security-query-use.ts` consumer emits a finite native application plan from the owner IR, rather than accepting caller-supplied native SQL. It consumes every extracted field/operator use, refuses protected original-value projection and unknown capabilities, and captures immutable profile/action/mapping inputs. This first consumer admits required unrefined text and signed64 integer operations, equal predicates/joins, ascending order, grouped COUNT and SUM. History/page/limit and resource-dependent original-value permissions refuse; their broader implementation remains required. Original-action conditions must be resource-independent so authorization can precede a query even with no matching rows.
+
+The native installer replays and compares the actual original owner output before generating private source views and fixed parameterless definer routines. Each routine checks the exact original action first, then executes the emitted query with compiler-derived row membership. Ordinary users cannot select the original salary view/carrier; only separately authorized Alice obtains exact authored outputs. Bob and the outsider refuse for both populated and empty query variants. Native int64 extraction refuses wrong carrier/decimal/range rather than converting through JavaScript numbers; result scalars retain native lexical text.
+
+Current evidence has 10 owner observations/six artifacts, 62 actual PostgreSQL 17.9 observations, and ten program/four refusal correspondences in Chrome 153.0.8010.12. Original routine owner, no-super/no-bypass, definer, STABLE, fixed search path and PUBLIC execute absence are independently observed. Complete source/issuer authentication, current-authority/final release, privacy closure, broad property projection and public compiler activation remain unqualified. This is a first actual owner-to-native query-use integration component, not full B08 or an actual Truss graph profile.
+
+### Query-use binding and eligible source completeness — 2026-10-08
+
+The experimental raw query home is now captured as exact original binding bytes (`truss.security.raw-query-home/0.1.0`). The portable consumer verifies binding, ontology and profile hashes, joins the profile binding to the handoff binding, checks native mapping against captured binding content, derives protection and operator/action selection from the captured ontology/profile, and captures inputs synchronously before asynchronous hashing. These establish source correspondence under the trusted original-owner premise; hashes do not establish issuer authenticity or current authority.
+
+Before every application statement, the fixed native routine requires exactly one private original carrier with non-null required native fields for each eligible root row. Original action admission and this collection check precede application filtering, including empty results. Fresh PostgreSQL 17.9 evidence passes 74 observations: missing eligible carriers refuse all ten populated/empty routines, exact restoration recovers the result, and deleting an ineligible carrier does not alter the eligible aggregate. This does not yet qualify arbitrary domains, graph storage, concurrent authority changes or full privacy closure.
+
+Real Chromium 153 matches ten native programs, refuses nine profile/capability/projection/action/mapping/source substitutions, and confirms that input mutation cannot change the captured result or repair an initially invalid mapping during asynchronous validation. The complete 132-case goal remains unchanged; B08 and the full backend acceptance criteria remain open.
+
+### Conditional original-source completeness theorem — 2026-10-08
+
+`original-source-completeness-formal.json` retains four quantified Z3 checks over arbitrary eligible resource populations. An independently stated universal specification (each eligible resource has exactly one carrier with all required fields) is equivalent to anti-existence admission. Empty application results cannot hide unavailable source; unauthorized original actions and duplicate/null carriers cannot admit. Each check has an UNSAT violation, SAT weakened control and SAT positive control. Exact native key correspondence, truthful eligible-root RLS, complete carriers, field availability, independent action authorization and a stable authority/source cut through final release are explicit premises. This proves the admission algebra, not SQL generation or backend isolation. The current 74 native observations cover missing eligible carriers and restoration, but do not establish every formal premise or all duplicate/null implementations. Full B08 and graph/native acceptance remain open.
+
+### Hidden carrier error interference counterexample and native fix — 2026-10-09
+
+The expanded native test found an actual privacy counterexample: changing only unreadable RB salary to JSON null made Alice's eligible predicate query fail. The vulnerable fixture source and observed failure are retained as `original-use-hidden-carrier-vulnerable.py.txt` and `original-use-hidden-carrier-counterexample.json`. Root RLS alone did not isolate malformed carrier evaluation in the native query.
+
+The fixed spike installer enables and forces SELECT membership RLS on the private original carrier relation, using the same compiler-derived read membership predicate. PostgreSQL catalog observations independently verify enabled/forced RLS, guardian ownership and the authored SELECT policy. Fresh PostgreSQL 17.9 evidence passes 240 observations, including all five malformed hidden-carrier variants across all ten operator/empty-result programs: eligible outputs remain unchanged and client diagnostics are empty. Restoration, eligible missing/malformed/duplicate refusal and private-source access controls also pass.
+
+Physical lowering must isolate every protected carrier before operations that can evaluate its stored values or errors; root row filtering plus a private view alone is insufficient evidence. Require either native policy on the carrier or an independently validated equivalent barrier, including hidden malformed-value regression controls. This applies to raw and graph carrier homes. The fixed authored installer is still a spike; native dependency/source sealing, concurrent authority cuts, timing/log noninterference, full backend B08/B10 and public compiler activation remain open. Full gate remains 22/132.
+
+### Captured complete physical mapping inputs — 2026-10-09
+
+Experimental raw-query-home binding 0.2.0 includes the subject and complete authored physical type mappings (root, subject and associations), in addition to the original carrier home and target. The portable consumer compares captured inputs to the exact original binding and the profile/handoff binding identity before lowering. The reviewed bridge reads physical mappings from these captured bytes. This closes the prior caller-substitution gap for completeness-root and policy association mappings; binding hashes establish correspondence, not issuer authenticity or native catalog equivalence.
+
+Actual owner export passes ten checks/six artifacts; freshly replayed native programs retain 240 passing observations. Four conditional source-completeness proofs are refreshed against the consumer source. Chromium controls additionally refuse substituted root table, association field column and subject type. Native mapping admission, schema drift/epoch, authenticated source custody and final-release guards remain host duties and open backend acceptance. Full gate remains 22/132.
+
+### Cross-source ontology/profile join — 2026-10-09
+
+The portable original-use consumer now requires the profile's ontology digest to equal the captured handoff/ontology digest, and requires the selected subject to equal the ontology subject. Individual matching source hashes alone did not establish these joins. Chromium's new substitution control changes the ontology revision and recomputes its standalone handoff hash while retaining the original profile; the consumer refuses. This is cross-source identity checking under trusted owner provenance, not source authenticity or proof that logical IR was compiled correctly. Native programs retain 240 passing observations and the four conditional completeness checks remain scoped to their explicit premises. Full backend gate stays 22/132.
+
+### Pinned compiler handoff snapshot — 2026-10-09
+
+The portable original-use consumer now requires an expected SHA-256 for the canonical complete handoff snapshot, including logical plan, application plan and query-use lineage. The reviewed fixture host computes the pin only after fresh original-owner replay; later handoff mutation refuses before rendering. This closes consumer snapshot substitution under the trusted pin-provider premise. A caller-supplied pin is not authority: public activation must establish this custody independently, and that protocol remains open.
+
+Chromium controls remove the application filter while retaining the original pin and supply a wrong handoff pin; both refuse. Existing capability/projection/action/cross-source semantic controls recompute their altered snapshot pins so their rejection still tests independent admission rules rather than only snapshot identity. Fresh native programs retain 240 passing observations and conditional completeness proof scope is unchanged. Complete compiler refinement, trusted public issuer/pin custody, native epoch admission and final release remain unqualified. Full gate stays 22/132.
+
+### Conditional hidden-carrier error isolation theorem — 2026-10-09
+
+`carrier-error-isolation-formal.json` records four quantified two-world Z3 checks. Worlds share eligible resources, original action authority and all eligible carrier validity/cardinality while hidden carrier content is unconstrained. Eligibility-limited evaluation preserves admission and carrier-error outcomes; no eligible resources means no carrier error; malformed eligible carriers cannot admit. Each check retains an UNSAT violation, SAT negative control and SAT positive control. The all-carrier evaluation mutant yields a concrete SAT hidden-error interference control corresponding to the observed PostgreSQL regression.
+
+The theorem requires exact eligibility, complete source cardinality, evaluation confined behind a truthful native barrier, faithful scalar domain checks and a stable source/authority cut. It does not prove the PostgreSQL optimizer/barrier, graph/Delta mapping, arbitrary result values, timing/log/diagnostic payload noninterference or full backend refinement. The 252 native observations remain separate empirical evidence for the fixed PostgreSQL raw spike. Required B08/B10/B15 backend cases must establish these premises rather than inheriting acceptance from an abstract proof.
+
+### Typed original-query binding readiness — 2026-10-09
+
+Fresh original inspection-owner replay confirms that the current Truss original-query consumer refuses explicitly bound Resource root discriminators with text, int4 and exact int8 carriers (including 9007199254740993). Each replay rehashes the complete physical binding into the original query profile and obtains a new original handoff before invoking the actual portable consumer; unchanged old handoff hashes are not used to fabricate this result. truss-query-typed-readiness.json retains all three sources/handoffs/refusals. This is a support-boundary observation, not actual installed graph execution or an accepted backend case.
+
+The current raw-query-home/0.2.0 binding cannot establish typed private-carrier identity. Before admitting typed graph original-query use, its replacement must independently bind the complete root and carrier type selectors and exact key correspondence. Every source/join alias must apply the selected carrier type; collection completeness must range over eligible roots of only the selected type and count carriers of that same bound type/key, before application filters. A sibling type with the same local key must neither satisfy completeness nor affect errors, grouping, ordering or sums. Missing/unknown/native-null selectors must refuse. Original resource-independent action admission needs an explicit selected-type contract: the row-predicate emitter currently requires a native root discriminator parameter even for such actions. Do not drop type constraints or synthesize a native parameter to bypass that requirement.
+
+Actual current Truss node/key/scalar/edge and history homes must come from original installed catalog correspondence, not guessed table names or synthetic projected rows. The next implementation boundary is a compiler-owned qualified typed physical binding plus independently checked native carrier/root correspondence, followed by actual Truss storage installation. This requirement does not redefine the full goal around raw-table support. All 30 Truss and all 30 Ashlar backend cases remain required and open.
+
+### Quantified typed carrier completeness — 2026-10-09
+
+prove-typed-source-completeness.py and typed-source-completeness-formal.json retain four Z3 4.15.4 conditional checks over arbitrary uninterpreted type/key domains, arbitrary eligible populations, and nonnegative carrier counts. The selected-type universal completeness specification equals anti-existence admission; a sibling carrier cannot fill a missing selected-type carrier; arbitrary sibling count/required-field changes leave admission unchanged when selected-type facts agree; and type-plus-key matching excludes a sibling's colliding local key. Every violation query is UNSAT, every weakened negative control is SAT, and every admitted positive population is SAT. The type-erased control explicitly admits a sibling carrier while the selected type has zero carriers.
+
+These checks establish the admission algebra required by the next typed physical binding. They assume truthful complete eligibility/cardinality/availability, injective native/logical identities, independent original-value authorization and a stable authority/source cut. They do not prove a binding API, native SQL emission, database error isolation, query result/group/order behavior, original-source authenticity or actual Truss/Ashlar storage refinement. No JavaScript number or invented native table identity participates. Current raw-query-home/0.2.0 typed-root refusal remains required until those physical obligations are implemented and qualified. Full backend acceptance stays 22/132.
+
+### Portable typed completeness SQL builder — 2026-10-09
+
+Implemented security-source-completeness.ts in the actual Truss PostgreSQL package and integrated it into the original-query consumer's admitted raw completeness path. The builder binds separate root/carrier selectors, exact qualified key fields and required carrier fields. It refuses one-sided typing, malformed references, duplicate logical fields or physical key/carrier columns, unsupported selector carriers and noncanonical/out-of-range integers. Integer selector transport stays lexical with exact BigInt admission and native typed SQL literals. No graph table allocation is inferred.
+
+The owned PostgreSQL 17.9 spike now executes fifteen additional physical witness controls across text, int4 and int8 selectors, including 9007199254740993. For each selector: a malformed sibling field does not block selected-type completeness; a sibling cannot fill a missing selected carrier; sibling duplicates do not block; selected duplicates refuse; an untyped carrier binding refuses before SQL. Native receipt passes 418 observations. These authored witness tables establish SQL behavior only; they are not actual installed graph stores, compiler-owned typed binding or independently qualified eligible-root/carrier RLS.
+
+The raw consumer's ten owner-derived programs remain equivalent in Chromium 153.0.8010.12, including fifteen refusal controls. This browser run exercises the integrated raw path; typed native SQL witnesses have no separate typed browser qualification yet. Fresh original-owner typed-root readiness still refuses all three selectors under raw-query-home/0.2.0, as required until the typed binding, query alias selection and typed original-action contract are implemented. Nine component groups and 78 evidence checks pass; traceability remains current at 470 criteria. Full acceptance remains 22/132.
+
+### Typed completeness browser qualification — 2026-10-09
+
+Closed the explicitly recorded browser gap for the physical typed completeness builder. truss-source-completeness-browser.ts builds the actual Truss helper as browser ES modules, executes it in Chromium 153.0.8010.12, and retains three exact host/browser SQL correspondences for text escaping, int4 and int8 selector 9007199254740993. Eight independent malformed-input variants refuse with the declared unsupported result: absent carrier selector, signed64 overflow, noncanonical integer, empty qualified reference, duplicate qualified carrier field, duplicate physical carrier column, NUL namespace and unknown selector carrier. The browser has no Bun/process/Buffer globals and makes zero external requests. Source hashes and exact inputs/SQL/refusal outcomes are retained in truss-source-completeness-browser.json.
+
+This establishes portable SQL generation/refusal behavior for this helper, alongside separately retained native typed witness SQL execution. It does not establish compiler-owned typed binding, typed application alias selection, original-action admission, root/carrier RLS, source authenticity or actual graph storage installation. Typed original-query admission remains refused under raw-query-home/0.2.0. No additional required backend case is accepted; the full gate remains 22/132.
+
+### Astra typed-builder review and malformed selector repair — 2026-10-09
+
+Direct inspection first found null/absent physical metadata escaping as incidental JavaScript TypeErrors; the helper now normalizes capture/generation failures to TRUSS_SECURITY_SOURCE_COMPLETENESS_UNSUPPORTED. Astra independently identified the stronger P2 defect: falsy provided selectors (null, false, zero or empty string) were interpreted as omitted and emitted untyped TRUE predicates. The helper now treats only undefined/absence as untyped, validates every provided selector as an object, and compares selector presence explicitly.
+
+Chromium 153.0.8010.12 passes three exact typed SQL correspondences and 24 malformed input refusals, including all twelve both/root-only/carrier-only falsy combinations. Astra's direct Bun re-review confirms those twelve refusals, preserves valid omitted raw selectors, and reports no further actionable type/key SQL or proof-scope defect. Native PostgreSQL 17.9 still passes 418 observations; original raw-path browser correspondence passes ten programs/fifteen controls; typed owner readiness still refuses three profiles. Nine component groups, 79 evidence checks and the 470-criterion traceability check pass.
+
+Retained typed-completeness-falsy-selector-counterexample-variant.ts.txt and its focused JSON receipt reproduce twelve untyped outputs when the identified conditions are reinstated. This is explicitly a reconstructed tested variant, not a claimed original source snapshot. Original historical receipt fingerprints were refreshed before an immutable pre-fix archive could be retained, so no original-byte archive correspondence is asserted. The defect and repair do not promote any graph/backend case. Current source/issuer/installed storage and typed query admission obligations remain open; full acceptance remains 22/132.
+
+### Original Truss graph correspondence boundary — 2026-10-09
+
+Current-source inspection retains four original source/contract pins in truss-graph-correspondence-readiness.json. stageNewCatalogCohort returns provisional_new_catalog_staging_only; its allocated rows do not establish committed current catalog admission. The native new-catalog collector independently reconciles Record/Field storage IDs and creation revisions with original archived declarations. Default property home selection applies only to absent binding under ADR-002; explicit home interpretation remains separate. CONTRACT-007 requires business-key components distinct from opaque object storage IDs, object/type_id/props and edge/rel_type_id/props correspondence, canonical allocated property member names, and independently qualified state/node/scalar joins for row homes.
+
+Therefore a typed security binding must retain original current catalog/layout custody and explicit native property-home correspondence, rather than reconstructing flat column maps from a provisional allocation or review-only schema export. Record type IDs, relationship type IDs and association-owner type IDs are separate identities. JSON-home scalar extraction and ordered key-component materialization must use original property catalog IDs and original native codecs; row homes must preserve complete state/presence/absence/domain guarantees. Carrier construction must retain its own type/key/source proof through eligibility, original-value use and final publication. The current flat SecurityPhysicalType.fields column subset and raw-query-home/0.2.0 do not realize those graph obligations.
+
+Next implementation must close original admitted catalog/layout observation, property-home projection/codec correspondence and business-key materialization together with the typed compiler binding. Typed completeness SQL alone cannot qualify actual graph queries. This is source-derived readiness evidence only, not executed current graph state, source authentication or additional accepted cases. Full gate remains 22/132; all graph and Delta requirements remain intact.
+
+### Graph storage/business-key correspondence algebra — 2026-10-09
+
+prove-graph-key-correspondence.py retains three Z3 4.15.4 conditional checks in graph-key-correspondence-formal.json using separate uninterpreted storage-identity and logical-business-key domains. A truthful original-key projection preserves equality selection; separately qualified selected-key uniqueness excludes equal business keys on distinct storage owners; changing unrelated storage identities cannot change logical selection when original keys agree. Each safety violation is UNSAT, weakened control SAT and positive population SAT. An unqualified storage-ID cast has a counterexample selecting the wrong original key. Distinct storage IDs without the independently admitted key constraint permit equal business keys.
+
+The selected-key uniqueness premise applies only within the separately qualified logical type/key namespace, not globally across all graph objects. Projection truth, original catalog/property/codec correspondence and native key namespace uniqueness must be established by implementation evidence; this algebra does not prove them. No SQL, JSON/row codec, compiler projection, graph installation or backend case is accepted by this proof. The typed binding port must consume compiler-owned property decoding and original native correspondence rather than casting object storage IDs or implementing a parallel guessed decoder. Full backend gate remains 22/132.
+
+### Private insert-counter diagnostic counterexample — 2026-10-09
+
+Extended the actual owned PostgreSQL 17.9 private-fact probe beyond the prior three known restricted diagnostic families. pg_catalog.pg_stat_get_tuples_inserted(oid) remains executable by Alice, Bob and outsider and exposes the private Assignment insert count. A second unrelated Eve Assignment advances that count exactly once for all three ordinary identities while each independently checked authorized Resource set stays unchanged. Restricting that exact additional function blocks ordinary invocation without changing authorized reads. pg-private-diagnostics.json now retains 21 observations including both worlds and the scoped restriction.
+
+All catalog privilege changes occur only in the disposable owned fixture. These database-wide PUBLIC restrictions are a prototype, not a selected multi-tenant production deployment or a proved per-user policy. Restricting four known families does not establish complete metadata/statistics/function/view closure. pg-raw.B10 and US-056-AC8 remain open; direct private-table SELECT denial cannot qualify them. The next backend implementation must inventory and qualify the complete ordinary diagnostic surface and deployment scope, or refuse ordinary paths that cannot meet the selected privacy guarantee. Full acceptance remains 22/132.
+
+### Deny-first native diagnostic candidate — 2026-10-09
+
+Extended the owned PostgreSQL 17.9 diagnostic spike with a separately scoped candidate: ordinary subjects have no direct SELECT on security_raw relations/views or pg_catalog relations/views and no explicit EXECUTE on pg_catalog routines; the excluded guardian receives the built-in execution capability required by the private fixed-search-path read routine. Ordinary callers receive only that routine's explicit EXECUTE for this read surface. Forced resource RLS and SESSION_USER-based membership still govern its original authorized rows. Existing direct-RLS profile evidence is neither silently replaced nor promoted by this candidate.
+
+Alice, Bob and outsider retain their actual ordinary native identity and exact authored authorized rows. Each refuses six known direct-root/catalog-view/cumulative-statistics/relation-size/private-EXPLAIN probes without output. Independent assessor ACL queries confirm zero effective SELECT privileges on all selected pg_catalog and security_raw relations/views, zero effective explicit EXECUTE privileges on catalog routines, and no CREATE in pg_catalog or public for each actor. pg-private-diagnostics.json now retains 27 observations. All catalog PUBLIC ACL changes are isolated to the disposable owned database.
+
+These native ACL and row outcomes are stronger than a growing list of individual statistics revocations, but do not establish full diagnostic closure: implicit operator/type/language/extension behavior, other command surfaces, owner/dependency/role change closure, deployment isolation, approved client compatibility, current authority and final delivery still need independent qualification. Full graph and Delta implementation remains required. pg-raw.B10/US-056-AC8 and the full gate remain open at 22/132.
+
+### Deny-first native command and wrapper controls — 2026-10-09
+
+The separate PostgreSQL 17.9 candidate now revokes ordinary direct EXECUTE on security_raw helpers and regrants only the admitted protected-read routine for this surface. Guardian retains its own helper authority and the separately excluded built-in execution capability. Existing direct-RLS profile behavior is unchanged outside this candidate's disposable fixture.
+
+For Alice, Bob and outsider, COPY of private Assignment, JSON EXPLAIN of the private table, direct allowed() invocation, and a caller-owned temporary SECURITY DEFINER function forwarding to the private statistics getter all refuse with no output. The temporary wrapper runs under its ordinary owner's rights and cannot acquire the guardian capability. Separately, nonexecuting JSON EXPLAIN of the admitted definer read call remains identical after an unrelated Eve Assignment is added and analyzed; exact authorized rows also remain identical for all three identities. Native receipt now retains 33 observations.
+
+These tests address actual native command and caller-wrapper paths and a specific observable plan boundary. They do not prove timing, executing EXPLAIN, every implicit operator/type/language/extension surface, privilege/dependency drift, public runtime activation or streaming/final-release custody. pg-raw.B10 remains open; no raw, graph or Delta case is promoted. Full acceptance stays 22/132.
+
+### Native operator/function ACL boundary — 2026-10-09
+
+The owned PostgreSQL 17.9 candidate now tests an installer-created unary operator in the ordinary reachable security_raw namespace, backed directly by the denied pg_stat_get_tuples_inserted(oid) function. Alice, Bob and outsider all refuse both direct function and operator invocation with no output. An explicit temporary per-role EXECUTE grant then makes the identical operator return the exact assessor-observed private count for all three identities, proving the operator/control is live rather than malformed. The grant is revoked and the operator removed before fixture cleanup. pg-private-diagnostics.json now retains 39 observations.
+
+This establishes native behavior for that exact operator/getter/role path and the value of its explicit function privilege boundary. It does not establish every operator, cast/type, language/extension or changed dependency under a full deployment. The positive control intentionally admits the diagnostic only inside the owned disposable fixture and is retained as a negative privacy profile. pg-raw.B10 remains open; full acceptance remains 22/132.
+
+### Native raw PostgreSQL scale and statement-budget evidence — 2026-10-09
+
+pg-raw-scale.py executes the actual forced-RLS raw fixture at 1,000, 100,000 and 1,000,000 additional Resources, with deterministic complete A/B ownership. All three original ordinary identities match independent authorized counts and exact boundary identity/value samples at every scale. Actual total stored rows are independently checked, including the five baseline Resources. Full protected Alice and excluded-assessor EXPLAIN ANALYZE JSON plans are retained in pg-raw-scale.json; the assessor is explicitly outside ordinary protection.
+
+The latest run records protected/assessor execution times of 5.796/0.050 ms, 592.880/2.505 ms and 6176.115/14.193 ms at the three sizes. These are distinct access paths and output populations on one owned host, not a general percentage-overhead promise or SLA. The protected function checks membership per source row. A selected native 1 ms statement timeout on the million-row aggregate refuses with SQLSTATE 57014 and no stdout/partial aggregate. Every native subprocess is bounded and only the original UUID-labeled fixture is removed after source correspondence checks.
+
+This completes empirical scale-plan and database-statement-budget observations for the authored raw component. It does not prove portable runtime cancellation/drain, reusable connection cleanup, streaming/final-publication custody, arbitrary workload budgets, complete diagnostic closure or actual graph/Delta performance. pg-raw.B16/US-056-AC10 remain open until the admitted runtime/backend profile exercises those obligations. No required case is promoted; full acceptance stays 22/132. Nine component groups, 82 evidence checks and the 470-criterion traceability check pass.
+
+### Actual scale runtime and bounded response window — 2026-10-09
+
+The owned raw PostgreSQL17.9 scale fixture now executes million-row ordinary aggregates through actual Truss pg-runtime/pg8.16.3 with original memory/disk protocol correspondence. The first positive run failed into quarantine under the fixed 5000ms response window while the protected native plan measured 6201.223ms; close masked the preceding exception. scale-fixed-deadline-failure.json retains source archives and original uncertain journals. It does not assert an independently captured exact deadline event or native SQLSTATE for that failure.
+
+CONTRACT-053 now defines the experimental originalResponseTimeoutMs option (default5000, selectedinteger1..60000). Runtime construction validates and captures it synchronously; originalQuery also validates the bounded window. Expiry remains uncertain transport custody, never native cancellation/rollback acknowledgment. The scale fixture selects30000ms to admit the known positive workload, separately from the native1ms statement budget. Invalid zero/negative/oversized/fractional/nonfinite/string/null selections refuse. Response timing remains subject to host event-loop/transport scheduling; no arbitrary-workload SLA or completed cancellation is asserted.
+
+Fresh pg-raw-scale.json passes three scale stages (1k/100k/1M additional resources plus the authored baseline), native CLI timeout, and39 actual-runtime observations across76 original journaled queries. All ordinary actors return exact text aggregate counts. The million-row native budget returns57014 withzeroDataRows andReadyE; a following statement returns25P02, and only explicitROLLBACK restores the same nativePID and exact authorized baseline IDs. The ownerless recovery control now uses the actual RO key rather than the erroneous R0 spelling found by Astra. Selected cancellation context still refuses beforeBEGIN.
+
+Latest paired protected/excluded-assessor plan times are5.780/0.055ms,595.005/2.316ms and6140.543/9.776ms. They are distinct access paths/output populations on one host, not a percentage-overhead guarantee. B16 remains unregistered pending an independent scale oracle, freshgate UUID/case binding, complete actual native inventory and explicit external runtime source-binding policy. Astra confirms the exact B16 assertion can be exercised at this authored stable cut without waiting for unrelated graph/Delta, diagnostic or revocation-streaming cases; those full requirements remain separately open. No case is promoted by this component receipt.
+
+### Raw PostgreSQL B16 accepted at authored stable cut — 2026-10-09
+
+Implemented and freshly accepted pg-raw.B16 under STP-056/US-056-AC10. The reviewed runner tests exact total resource populations1000/100000/1000000, independently authored aggregate counts and samples for three ordinary SCRAM identities, paired protected/excluded-assessor native plans and actual pg-runtime execution at every scale. The million-row native1ms budget produces57014 withzeroDataRows/ReadyE; subsequent use produces25P02 until explicitROLLBACK, after which the same original nativePID returns authorized baseline IDs. Unsupported cancellation context refuses before nativeBEGIN. The recovery candidates include the actual ownerless RO record.
+
+pg-raw-B16.json retains133 exercising observations, native objects/RLS/policies/routines/roles/membership/grants/indexes/constraints/authentication, all three plans and54/54/76 original journaled queries. Eighty-three source pins include every adapter module, independent oracle and selected managed dependency source:14 packages/70 JS/JSON files. Actual driver resolution is observed from both the UMF probe and Truss runtime importer. Astra caught and repaired the initial importer-origin gap and oracle-budget drift risk; supported statement budget/error states are validated and consumed, recovery expectations are consumed, and exact required populations are enforced. Re-review found no remaining actionable source/evidence-binding/native-inventory defect before the fresh gate.
+
+The gate explicitly permits shared pg-runtime and task-managed dependency sources for raw PostgreSQL, as specified by CONTRACT-053; this does not imply graph storage qualification or authenticate source issuers by hashes. The complete gate now accepts23/132 required cases and leaves109 missing/failed. All28 complete security acceptance criteria remain open; AC10 still has other required evidence/implementations. B16 establishes only this authored raw workload at a stable cut, not arbitrary workloads, timing SLAs, streaming/final delivery, complete diagnostic closure or graph/Delta behavior. The older pg-raw-scale.json component uses additional populations plus baseline and is distinct from the exact-total B16 acceptance receipt.
+
+
+### Native hash collision and conditional key refinement — 2026-10-09
+
+CONTRACT-052 requires complete typed Key identity rather than a hash alone; CONTRACT-053 requires exact native correspondence. The independently frozen PostgreSQL 17.9 corpus now includes `hash-key-13383` and `hash-key-42423`. Separate original native evaluations verify both `pg_catalog.hashtext` results as exact text `-1315717682` before the collision test proceeds. The native fixture stores generated routing hashes, retains full resource IDs in primary/foreign key constraints, and indexes candidate hashes. Forced RLS consults a private helper that compares both candidate hash and complete resource ID before accepting Project assignment. Ordinary SCRAM Alice/Bob see their respective resources; outsider sees none. Replacing that predicate with hash-only equality leaks both resources to both assigned actors; restoring exact equality restores the oracle. All three profiles independently check outsider denial.
+
+The source-current identity receipt passes 52 native observations. This adds a fixed real native hash collision to the preceding scalar/composite resource and qualified subject witnesses. It does not qualify arbitrary hash algorithms, hash-based subject enrollment, cross-home/graph identity or public compiler admission. Full pg-raw.B13 remains required and unaccepted.
+
+`tools/security/prove-hash-key.py` and `hash-key-formal.json` retain two conditional Z3 4.15.4 checks over an unbounded uninterpreted complete-identity domain, arbitrary authorization predicate and deterministic non-injective hash. Independently stated direct authorization equals existential lookup with hash plus exact identity. The violation is UNSAT; a colliding positive population and a hash-only false-positive control are SAT. Complete truthful identity equality, the same hash semantics on each side, complete current facts and native eligible-only evaluation remain physical/authority premises. This is a refinement of the abstract lookup expression, not a proof of the SQL implementation or complete compiler/backend.
+
+Aggregate components pass nine groups; evidence validation now includes the new proof receipt and passes 86 checks. The full acceptance state remains 23/132, with 109 required cases missing/failed and all 28 complete security criteria open.
+
+
+### Raw PostgreSQL B13 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.B13 under US-056-AC1 with 144 observations. The fixed PostgreSQL 17.9 raw profile uses non-null ordered TEXT identity components, explicit C collation and exact session-bound subjects. It does not hash subject identities. Scalar case, normalization-distinct and supplementary Unicode, delimiter-bearing composite keys, equal Staff labels in distinct namespaces, and a real native hashtext collision remain isolated. Genuine case-distinct quoted/unquoted table homes carry equal local resource labels with opposite Project ownership. Deliberately lossy delimiter, subject-label and hash-only policies disclose both resources to assigned actors; exact restoration recovers the independent oracle. No general compiler activation or graph/lifecycle support follows from this case.
+
+The public actual pg-runtime decoder independently exercises scalar/composite/hash/quoted homes and unfiltered final corpus reads for three ordinary SCRAM actors. It retains 81 original queries with exact memory/disk request-frame-outcome correspondence and unique complete custody. Missing and duplicate-replacement controls refuse. Exact independent schema/table/routine privileges and effective column permissions are asserted, including no authority-table writes; all 16 installed identity/authority fact sets are independently compared. Native columns/collations, ordered constraints/FKs, generated hash expressions, routines/policies, role attributes/membership, authentication, encodings, client build and image identity are retained. Eighty-six source bindings include actual adapter modules and the selected managed pg8.16.3 closure (14 packages/70 files); actual resolution from both probe and importer matches the selected entry.
+
+Astra ultra identified the quoted-home, decoder, full-fact, privilege-assertion and journal-bijection gaps, then found no actionable issue after the fresh 143-observation component replay. The first gate attempt refused duplicate relative/absolute source-path bindings; the second refused unordered JSONB member serialization in one private fact comparison. Both attempts and source archives are retained as b13-registration-path-failure.json / b13-registration-json-order-failure.json. The corrected runner pins one exact test-source spelling and applies the membership runner's existing unordered-object normalization to evidence, preserving arrays/scalars and original journal bytes. The third fresh full gate accepted B13.
+
+Current full acceptance is 24/132, with 108 required cases missing/failed. All 28 complete security criteria remain open. Ten component command groups pass, including repeatable strict identity-runtime TypeScript checking; evidence validation passes 88 checks and the 470-criterion ledger is current. B13 qualifies the authored raw identity assertion at fixed stable cuts. Arbitrary cross-home/hash algorithms, authenticated enrollment/issuers, complete native/compiler refinement, live concurrent authority/final publication, full raw backend and actual graph/Delta acceptance remain independently required.
+
+
+### Installed routine body source correspondence — 2026-10-09
+
+The persistent raw probe now compares native pg_proc.prosrc against exact body bytes extracted from the three fingerprinted fixture SQL files in installation order. The reviewed parser admits only named functions with literal dollar-quoted bodies; the later revoke_alice replacement supersedes its earlier definition. The exact qualified set contains nine routines. Native enumeration covers every routine in both protected schemas, so an extra overload or routine changes the observed list and refuses correspondence. Existing independent signature/owner/definer/settings/ACL checks remain separately required.
+
+A transactional control replaces only the retirement body with an unconditional return. It rejects the source baseline, matches an explicitly authored one-body mutation and demonstrates that a name-only assessor would miss the change. Rollback restores all bodies; each of the five final schedule cuts independently repeats complete correspondence. Eight complete expected/native body snapshots and two drift/control observations are retained. Evidence validation requires all ten assertion identities and all nine typed body records at each snapshot.
+
+The native run passes1431 unique matching observations across five schedules, with90 current source digests. Astra ultra independently extracted all routine bodies, confirmed the later override and exact mutation/restoration/final snapshots, and found no actionable defect. This is installed-source correspondence for the reviewed PostgreSQL17.9 fixture subset, not independent semantic correctness, general SQL parsing, complete resolution/dependency inventory or public native admission. B12 and L03 remain unregistered; full backend acceptance remains26/132 and the original goal stays active. Twenty-seven component groups and107 evidence checks pass. Astra independently checked the source-coverage expression and rejected thirteen missing, duplicate or malformed evidence variants, finding no actionable defect.
+
+### Original catalog staging and native graph locators — 2026-10-09
+
+`truss-graph-native-stage.json` retains a fresh PostgreSQL 17.9 rollback-only spike through the actual Truss pg-runtime. The original registered UMF record preparation and catalog staging allocate Employee, Project, their properties and keys, and the directed WorksOn relationship from the original authored document. Native object and edge rows retain exact TEXT bigint/int locators and property bags. The private graph projection resolves complete `(object_id,type_id)` endpoints against the native declared relationship triple. A reversed endpoint insertion with both typed objects present and a fresh numeric route fails specifically with `23503 / edge_endpoint_types_fk`; savepoint rollback restores the complete edge inventory.
+
+All eleven distinct observations match independently stated expectations. The bootstrap public head remains revision zero, and the operation commit barrier remains ALWAYS, deferrable and initially deferred. Explicit rollback removes the provisional catalog, objects, edges and original operation. The source inventory retains 754 current digests, selected pg dependencies and the resolved Ajv compilation closure; actual pg resolution from both probe and runtime importer matches the selected driver entry. Astra ultra independently checked the receipt, all 88 Ajv files loaded during schema compilation, endpoint refusal and restoration, and cleanup behavior, reporting no remaining actionable defect in this component.
+
+This is owner-export layout 0.15 and original UMF record 0.7 evidence. Fixture object/edge creation uses excluded installer-supplied IDs, including equal numeric object IDs in different types. Normal allocation requires the shared sequence and prohibits caller-supplied IDs. The complete native DDL's UNIQUE `edge_out(source_id,rel_type_id,target_id)` prohibits duplicate relationship/numeric-endpoint pairs; preservation of supplied edge identities in a pure projection does not establish native parallel-edge support. No ordinary subject enforcement, committed catalog, original key-bucket materialization, property codec, policy compiler, authenticated authority/source cut or full graph backend acceptance follows.
+
+The next physical composition must derive complete key bytes with the original registered value producer and derive the namespace from the actual allocated type/key definition and admitted namespace context. It must persist membership through `runtime_stage_object_key`, observe the resulting typed native owner, and compare complete namespace/key bytes before graph selection. `operation-generation-observer` must accompany this persistence: key mutation advances both the bucket guard and original operation generation and invalidates prior readiness/seal/application state. Evidence must capture and recheck the final generation after mutation; pre-mutation catalog observations cannot establish final readiness. The unfinished commit barrier remains a separate publication obligation and must not be bypassed to qualify this rollback-only component.
+
+Current aggregate verification passes 31 component groups and 111 evidence checks. Full acceptance remains 26/132 required cases, with all 28 complete security criteria open.
+
+### Original business-key/native graph composition — 2026-10-09
+
+The next fresh `truss-graph-native-stage.json` supersedes the preceding eleven-observation source checkpoint with seventeen matching observations and 762 current source digests. It installs the original operation-generation observer, native canonical string/tree producers and original object-key staging routine alongside catalog staging. The first composition attempt correctly refused the archived 0.7 document at the current 0.8 key-tuple producer boundary. The corrected path uses the registered record producer's verified reversible transition target, retains the original 0.7 archival source, and independently asserts source correspondence, target version and an empty residual inventory. No relabelled or independently reconstructed source substitutes for this transition.
+
+Actual staged/native key definitions agree on each owner type, original `code-key` identity and allocated key number. Native canonical namespace bytes include those type/key allocations and the original registered value-producer digest. The original current-core producer encodes Alice and Project-A; `runtime_stage_object_key` stores each complete namespace/key pair for its typed native owner. The native full bucket inventory agrees with the staged expected bytes, and private graph lookup resolves the two distinct typed locators despite equal fixture numeric IDs. The two key insertions advance the original operation generation from eleven to thirteen; each original key guard reaches generation one. The native endpoint reversal refusal, complete edge restoration, unchanged public head, retained deferred commit barrier and original rollback observations still pass.
+
+Namespace epoch and installation selections remain explicitly excluded fixture premises. This composition does not authenticate namespace authority, qualify ordinary subject enforcement or publish the provisional catalog. It does not prove complete compiler refinement, all-key population completeness, final readiness/cut authority, collision/concurrency behavior or full native key lifecycle. Current source evidence passes 31 component groups and 111 evidence checks; full backend acceptance remains 26/132.
+
+### Ordered-key and current observation controls — 2026-10-09
+
+Astra ultra verified the seventeen-observation composition and identified two missing evidence obligations: ordered native key/qualified field correspondence and explicit liveness of the post-key catalog observation. The corrected fresh receipt now retains 25 unique matching observations with 763 current source bindings. `runtime_collect_new_catalog_inventory` verifies the archived fields, ordered key property IDs, owners and relationship endpoints; its complete output matches an independently constructed inventory. Substituting a sibling type's property into the Employee key refuses with `55000`; savepoint rollback restores the complete original inventory.
+
+The original report document basis is captured before key staging. After staging, rechecking it refuses with `55000`. A freshly collected basis passes the native observation recheck before typed graph lookup and again after the duplicate-key control. Attempting Project-A's full key on Project-B refuses with `23505`; rollback restores complete bucket bytes, bucket guard routes/generations and original operation generation. Expected namespace, key bytes, type and key-number substitutions each refuse against the freshly captured native bucket/owner rows. Final transaction rollback additionally verifies zero key buckets and key guards. These are current-observation checks within the excluded installer transaction, not final readiness, public issuance or committed ordinary graph enforcement. Component and evidence gates pass 31 groups and 111 checks; full backend acceptance remains 26/132.
+
+Astra independently inspected the original journal outcomes: the substituted field UPDATE affects one row before the collector rejects ordered-Key correspondence; the earlier generation eleven refuses while generation thirteen rechecks successfully; and the duplicate insertion reaches the intended full-byte identity conflict. The review identified incomplete before/after state capture. The refreshed runner now retains complete native bucket, guard and operation records as opaque `to_jsonb(row)::text` values, including original context bytes and all operation fields. No JSON numeric parsing participates in this equality check. The fresh native replay again passes all 25 observations; current component and evidence gates remain 31/111.
+
+The final narrow Astra review confirms all nine bucket fields, three guard fields and sixteen operation fields are captured, with no remaining actionable defect in this declared composition. Concurrent Truss source work invalidated one captured digest, and the evidence gate correctly refused it. A fresh native run supersedes that stale receipt: all 25 observations pass with 764 current source digests. The component replay passes 31 groups and the evidence gate passes 111 checks. The increased dependency inventory does not expand the support scope.
+
+### Native property values feed original key encoding — 2026-10-09
+
+The fresh native graph component now retains 28 matching observations. For the original selected required singular string JSON key fields, it reads `props::text` from the exact `(object_id,type_id)` owner, selects the property ID allocated from the qualified original field declaration, requires an own string member, and validates the resulting UMF literal with the registered value producer against the original reversible transition target. Key encoding consumes this native literal and separately compares its result with encoding the independently expected original value. The complete native inventory already checks ordered key properties and qualified field ownership before this decoding.
+
+Actual native savepoint mutations remove the member, store JSON null, a boolean, an exact large integer JSON token, or only a sibling type's property ID. Every selected-field decoding refuses, and rollback restores the complete native property inventory. Numeric JSON values are unsupported in this slice and cannot become a key token or native identity. This does not qualify general scalar/property codecs, nullable/multiple/row homes, all-key materialization, ordinary access, source completeness or property-row mutation observation. In particular the installed catalog/key generation observers do not establish complete object-property mutation tracking; the excluded installer transaction and explicit restoration are not a public stable source cut. Component and evidence verification passes 31 groups and 111 checks. Full acceptance remains 26/132.
+
+Astra identified that the first decoder used host JSON parsing before rejecting the numeric member, rounding the native `9007199254740993` token despite failing closed. The corrected decoder obtains PostgreSQL TEXT bag/member kinds and conditionally extracts only a native JSON string. Missing, null, boolean and numeric values never enter host numeric parsing or original key encoding. The original registered field validator consumes only the selected string literal. The refreshed native replay passes all 28 observations with 764 current source bindings; component and evidence verification remains 31/111. The earlier numeric parsing path is not qualified.
+
+Astra's corrected-source and original-journal re-review confirms the integer control returns only `["object","number",""]`; refusal precedes literal construction and original field validation. The initial complete-bag comparison parses only the independently known all-string fixture before any mutation. The review found no remaining actionable defect within this declared selected string-property component.
+
+### Complete fixture key population and fail-closed publication — 2026-10-09
+
+The original native graph fixture now materializes keys for all three objects: Employee Alice and both Project-A and Project-B. Each object's native string value passes original UMF field validation and encoding under its actual catalog type/key allocation. The complete native bucket inventory and all three typed owner resolutions match expectations. Three key insertions advance the operation generation from eleven to fourteen; all three guards have generation one. This is the complete selected fixture population, not a general all-key planning or source-completeness proof.
+
+A native savepoint removes exactly Project-A's bucket. A fresh bucket read retains Alice and Project-B, and lookup of the missing complete Project-A key refuses. Rollback restores all complete native bucket/guard/operation rows and the original generation-fourteen observation rechecks. Astra inspected the corresponding original journal and confirmed this control reaches the selected missing-materialization case. Adding Project-B's own bucket exposed an ambiguity in the prior duplicate-key control: one-per-object uniqueness could mask a missing semantic duplicate check. The corrected control first deletes exactly Project-B's bucket inside its savepoint, then requires both `23505` and `original full-byte key identity conflicts` when assigning Project-A's key. Rollback restores the complete three-bucket state.
+
+The spike also forces the installed deferred operation barrier to fire with `SET CONSTRAINTS ... IMMEDIATE` inside a savepoint. It requires both `55000` and `complete runtime finalizer is not installed`; rollback restores complete key/guard/operation state and the original observation still rechecks. The barrier remains installed and enabled. This demonstrates the unfinished component's refusal, not a complete commit/finalizer implementation or public graph profile admission.
+
+The fresh receipt retains 34 matching observations and 764 current source digests. Component verification passes 31 groups and evidence verification passes 111 checks. Authenticated namespace authority, complete mutation/source custody, ordinary enforcement and catalog publication remain open. Full backend acceptance remains 26/132.
+
+Astra's final narrow review independently confirms deletion of Project-B bucket three before the exact full-byte conflict, the exact missing-finalizer refusal, complete native state restoration and successful generation-fourteen rechecks. It found no remaining actionable defect in these controls or their declared rollback-only scope.
+
+### Correlated native membership and split-witness counterexample — 2026-10-09
+
+The native fixture now contains two Employees and two Projects with separate WorksOn edges, Alice-to-A and Bob-to-B. All four original business keys originate in the actual required-string property bags and registered UMF producer, and complete bucket lookup resolves the typed source and target locators for each membership query. A same-edge native EXISTS query returns true only for the two authored assignments. A deliberately weakened pair of independent endpoint EXISTS queries returns true for all four combinations, including Alice-to-B and Bob-to-A. The complete native edge projection retains both original directed triples. Four key insertions now advance the operation generation to fifteen; original observation rechecks and all earlier negative/restoration/barrier controls still pass.
+
+The graph endpoint formal receipt adds a fifth conditional check over arbitrary association witnesses: independent source/target existence admits a SAT false grant where correlated existence is false. Correlated logical/native equivalence still has an UNSAT violation and a SAT valid population under complete sound incidence and exact typed key projection premises. Fifteen retained formulas replay for this receipt; the aggregate replayer now checks 405 formulas across 21 receipts. The checks share conditional equivalence and expose distinct weakened bindings; they are not five independent proofs of the backend. The native query is an inspected membership kernel, not generated policy SQL or a compiler-refinement proof. The fresh native receipt passes 36 observations with 764 current source bindings; component/evidence checks pass 31/111. Full backend acceptance remains 26/132.
+
+### Next compiler adapter: original graph fact sources
+
+The next implementation must build logical entity and association sources from owner-backed allocated native metadata before feeding the existing policy expression/effect lowering. Entity identity components must come from the original ordered key fields and qualified property homes, with complete original namespace/key bucket correspondence. Association endpoints must join through both native object ID and type ID and retain the original declared relationship allocation/direction. Native object or edge IDs cannot be cast into original business keys.
+
+The lowerer must consume an internally issued derived-source plan or one complete WITH program; a generated SQL view name cannot stand in for admitted native storage. Existing raw-table lowering remains independently qualified. Graph associations without an original logical Key must not receive an invented key from edge storage IDs; unsupported association identity uses must refuse. Complete source coverage, missing/null/wrong-kind behavior, property-domain semantics and unknown composition remain explicit admission obligations. The generated policy spike must compare active/inactive, sibling-project, other-staff and no-owner results against an independent original-source oracle. Original namespace/installation authority and a complete accepted catalog/finalizer remain separate requirements for ordinary activation; this adapter cannot bypass them.
+
+### Original association Record to native property owner — 2026-10-09
+
+Astra's compiler-path review identified a prerequisite: prior relationship staging left `rel_def.assoc_type_id` unset, so original ontology Assignment/Ownership Records could not become edge property owners through matching names. The private authored relationship stage now accepts the original core `associationRecord` reference, resolves its already allocated Record in the same archived document, new revision and document ordinal, checks an explicitly selected Key on that owner, and persists the resolved association type. The complete native inventory independently re-resolves the original reference and selected owner Key and compares the actual association type; absence requires NULL. This does not adopt the separately versioned relationship-intent extension or infer a mapping between unrelated ontology Records and graph relationships.
+
+The updated original fixture explicitly authors Assignment's active boolean, code string and code Key, then binds WorksOn to that original Record/Key. UMF's source validator refused the attempted keyless association before native effects; it requires authored endpoint Keys. BareWorksOn retains absent association ownership and is staged first so WorksOn relationship ID two differs from Assignment property-owner type one. Complete original catalog inventory verifies both branches and all ordered key/qualified property definitions. Substitution of the Employee owner passes the native FK but the independent collector refuses exactly `55000 / stored original association Record owner correspondence`; rollback restores the original inventory. Both native edge property-owner declarations match the original Assignment fields.
+
+The selected association Key remains meaning in the archived original reference, not a new native selected-key column. Future consumers must retain it and independently qualify edge business-key materialization; neither edge ID nor relationship ID establishes it. This implementation establishes provisional catalog property ownership, not edge key uniqueness/lifecycle, endpoint-to-association-field mapping, general property decoding, compiled active-membership policy, current authority or ordinary graph enforcement. The deferred finalizer barrier remains intact.
+
+The fresh native receipt passes 41 unique observations with 764 current source digests. Astra's final review independently verified the distinct domains, NULL branch, source-selected owner Key and incorrect-owner refusal, finding no remaining actionable defect in this declared new same-document cohort. Component checks pass 31 groups and evidence checks pass 111. The source-only graph readiness inspection was refreshed after the collector change and retains its non-runtime scope. Full backend acceptance remains 26/132.
+
+### Private candidate graph source construction — 2026-10-09
+
+The new portable private `security-graph-source` component constructs fixed native object/edge projections from captured type/property-owner IDs and bounded property metadata. It accepts only selected required singular string/boolean JSON fields. The separate validity expression checks active nonprovisional Record ownership, exact property owner/home/scalar/requiredness/cardinality and, for an edge, the native relationship association owner. Metadata checks remain independent of whether data rows exist. Invalid or absent native values project NULL without filtering the original row; validity must succeed before a consumer uses the projection. This validity is not complete source admission or a stable cut.
+
+Only native fixed tables, qualified pg_catalog operators/types/functions and escaped column identifiers enter the generated SQL. Canonical signed IDs are quoted TEXT casts, preserving native domains without ambient unary-minus resolution. Private WeakSet issuance distinguishes this constructor's immutable result from a copied SQL-shaped object; it confers no source/catalog/issuer authority. Caller-supplied arbitrary SQL is not an input. Exact own data metadata and bounded dense collection descriptors are captured before construction; accessors, unknown fields and custom iterators refuse.
+
+The original native graph spike executes the actual generated edge projection and validity SQL against source-backed Assignment active/code properties. It compares complete typed physical endpoints and original values, retaining PostgreSQL's Boolean TEXT carriers `t`/`f`. A native missing-field mutation makes validity false; savepoint rollback restores the complete native edge records. The fresh receipt now retains 45 matching observations and 765 source bindings. Seven Bun tests pass 24 assertions. Chromium 153 independently constructs matching source/validity SQL from the retained native-executed input and exercises seven controls without external requests; its receipt explicitly claims no fresh native execution.
+
+Astra reproduced an array-proxy bound bypass in the first constructor: repeated reads of `.length` admitted 257 fields despite a 256 ceiling. The corrected constructor captures the own length descriptor once and loops only that bound. Bun and Chromium regression controls verify original bounded output with zero length-getter calls. Astra also identified ambient JSON operator resolution; both `->` and `->>` are now explicitly pg_catalog-qualified. Corrected-source re-review remains separate evidence from the initial findings.
+
+The existing policy lowerer has not yet adopted this source plan. Full typed endpoint-to-original-key joins, association Key materialization, original UMF scalar/facet validation, whole-source coverage, error isolation, current authority/cut custody and ordinary activation remain required. The constructor's validity expression cannot replace those obligations, and no policy/backend case is promoted. Aggregate component checks pass 33 groups; evidence checks pass 112. Full backend acceptance remains 26/132.
+
+Astra's corrected-source review found no remaining actionable defect in the declared constructor subset and confirmed the seven Chromium controls and native SQL journals. A concurrent catalog-document-order source edit invalidated one native source pin; the evidence gate correctly refused that stale receipt. Native execution was refreshed successfully (45 observations), followed by dependent Chromium evidence (seven checks). The final evidence validation passes all 112 checks against the refreshed sources. These results do not establish complete compiler refinement or backend acceptance.
+
+### Same-witness assignment attribute refinement — 2026-10-09
+
+The graph endpoint proof now includes US-056-AC2 checks for the total Boolean `active` attribute. With complete sound incidence, exact typed endpoint/key correspondence and exact attribute correspondence, logical active membership equals native active membership when the attribute is tested on the same association witness. The violation is UNSAT and an admitted population is SAT. A weakened conjunction of matching endpoint existence with independently witnessed active-assignment existence is SAT while the logical policy denies. Omitting the active test also admits a SAT false grant. These controls identify required compiler tests: a matching inactive assignment plus an unrelated active assignment must deny, and an isolated matching inactive assignment must deny.
+
+This extension is an abstract refinement obligation, not generated SQL correspondence. Missing/unknown attributes, source validity, UMF facets, current authority and transaction cut remain separate obligations; the proof assumes a total Boolean attribute. The endpoint receipt now contains seven checks and 21 formulas. Fresh aggregate replay passes 411 queries across 21 receipts; all 33 component groups and 112 evidence gates pass. Native backend acceptance remains 26/132. Astra independently replayed all six new formulas, confirmed matching source pins and found no actionable defect. Both weakened controls remain SAT even when every association has the fixed Staff-to-Project endpoint types. This confirms that the attribute controls expose witness/attribute mistakes independently of type erasure.
+
+### Native same-witness attribute control — 2026-10-09
+
+The original native graph fixture now executes the membership kernel over the actual constructed edge source after its validity query succeeds. Both endpoints are resolved through original full-byte key buckets to complete typed locators. A single SQL statement tests the source/target locators and `active IS TRUE` on the same projected row. Alice-to-A grants, Bob-to-B denies despite an existing inactive assignment, and both cross pairs deny. A weakened query retains correlated endpoints but independently witnesses any active assignment; Bob-to-B incorrectly grants using Alice's unrelated active row. The earlier endpoint-only kernel independently shows the omitted-attribute false grant.
+
+The first run executed the added checks but the parent refused its 47 observations against an unchanged 45-observation completeness bound. The bound was corrected and the entire disposable fixture replayed, passing all 47 unique observations. Dependent Chromium construction evidence was refreshed (seven checks); component groups pass 33 and evidence gates pass 112. This inspected kernel is still not emitted by the policy lowerer, does not establish ordinary read enforcement, and does not promote backend acceptance. Original current namespace/cut/source admission and activation remain open. Astra confirmed all 47 unique observations and 765 current source pins, inspected the original native journals and refreshed Chromium receipt, and found no actionable defect in this declared kernel scope.
+
+### Candidate endpoint business-key source — 2026-10-09
+
+The private graph source constructor now composes an issued edge source with separately captured source/target Key selections: native type ID, key number and exact namespace bytes. Aggregate lateral joins select buckets by complete typed owner and original namespace/key number, preserve each original edge, and expose encoded key bytes only for exactly one matching bucket. Separate validity requires exactly one bucket for each endpoint, the original source validity, and active key definitions even for an empty edge population. Namespace/key selection correspondence and current authority remain host obligations; issuance alone supplies neither.
+
+Five added native observations verify valid endpoint keys against independently retained original tuple bytes, then remove Project B's bucket: validity becomes false while Bob's original edge remains present with a null target key. Savepoint rollback restores both projections. Type comparisons use native int4 and object comparisons int8, avoiding text-collation identity. Source metadata accessors, malformed namespace bytes, key-number overflow, copied sources and object sources refuse in Bun. Nine tests pass 33 assertions; strict compilation passes. Fresh native evidence passes 52 observations, components 33 groups and evidence gates 112. Refreshed Chromium's seven checks cover the underlying source constructor, not this endpoint wrapper.
+
+Failed attempts are retained in this qualification: reserved derived aliases were accidentally added to the native column list (42703), then the strict text decoder refused the intentional null. The aliases were removed from native projection; the missing-key control now transports only TEXT/null projection cells through native row_to_json text. Astra identified and corrected the int4 comparison requirement before the final native replay. A subsequent gate syntax error from the added observation list was corrected and component/gate evidence rerun. Multiple-bucket cardinality, empty-population metadata refusal and independent wrapper browser checks still require native/browser controls. This is not policy compiler refinement or full backend acceptance; 26/132 remains unchanged. Astra confirmed the corrected native comparisons, all 52 unique observations and 765 current source pins, including native missing-bucket NULL preservation and rollback, and found no remaining actionable defect in the declared subset. Duplicate cardinality and wrapper browser qualification remain open.
+
+### Endpoint source empty-population and browser qualification — 2026-10-09
+
+The native fixture now removes all edges inside a savepoint and independently checks that the original endpoint-key source remains valid, while an otherwise identical source selecting nonexistent Employee key number 32767 fails validity. Thus empty data cannot suppress this key-definition metadata obligation. Rollback restores the original endpoint key projections. Astra identified that the initial 55-observation receipt did not independently observe the empty population. The fixture now records an exact native edge count of zero and an empty generated endpoint-key projection before checking invalid metadata. Fresh native execution passes 57 unique observations.
+
+The native receipt now retains the wrapper's actual executed SQL/validity SQL and source/target Key selections. Chromium independently constructs both the base source and wrapper, compares their programs to retained native programs, and refuses copied source issuance and malformed namespace bytes. Ten browser checks pass without external requests. This demonstrates portable construction correspondence, not new browser-native execution or namespace authentication. All 33 component groups and 112 evidence gates pass. Multiple-bucket native controls, compiler adoption, current authority/cut custody and ordinary enforcement remain open; backend acceptance stays 26/132. Astra confirmed independent empty-population isolation, all 57 native observations and ten Chromium checks with current source pins, and found no remaining actionable defect in this change. Duplicate-cardinality native coverage remains explicitly open.
+
+### Native endpoint bucket uniqueness — 2026-10-09
+
+The original installed qualified-property-0.15 layout declares `object_key_bucket_one_per_object UNIQUE(object_id,type_id,key_num)`. Thus more than one bucket matching a selected endpoint cannot inhabit this intact layout, even across namespaces. The fixture attempts an INSERT SELECT of Project B's complete original bucket (type/key/owner, original namespace/key/context bytes); PostgreSQL refuses with SQLSTATE 23505 and that exact constraint. Savepoint rollback restores opaque complete buckets, guard generations and operation state. No constraint is disabled or dropped.
+
+This closes the native duplicate-prevention control for the selected layout; it does not execute the wrapper's defensive count-greater-than-one branch or qualify a differently installed layout. Fresh execution passes 59 unique native observations; dependent Chromium passes ten checks, components 33 groups, and evidence gates 112. Native mapping, compiler refinement, authenticated namespace/cut custody and ordinary activation remain separate obligations. Full backend acceptance remains 26/132. Astra confirmed all 59 unique observations and 765 current source pins against original native frames, including exact constraint refusal and restoration of four buckets, four guards and the operation record. No actionable defect was found; the defensive multiple-match branch remains explicitly unexecuted.
+
+### Candidate graph source input to predicate lowering — 2026-10-09
+
+The private predicate lowerer now accepts a separate SecurityPredicateType with either a raw table home or an issued candidate graph source home. SecurityPhysicalType remains raw-only for existing native-key/source-completeness consumers. Association quantifiers and scanned subject lookups use source subqueries; emitted predicates include local validity checks for scanned candidate sources. Copied source objects and source metadata accessors refuse. Two Bun tests pass seven assertions. Initial broader typechecking exposed downstream raw-home assumptions and UMF rootDir crossing; the separate predicate type and Truss-local test location correct those integration errors. Component verification has expanded to 34 groups.
+
+Astra found no demonstrated bypass in this association-source subset. SQL validity conjunction is not an execution-order or diagnostic-containment barrier. Outer resource sources represented only by parameters, and subject sources unused by the condition, still require separate host preflight. Original issuer, namespace, complete source and stable-cut admission remain mandatory; these guards cannot replace them. Tests currently use an explicitly authored logical IR fixture, not a newly admitted original compiler graph packet. Actual original-compiler graph correspondence remains open.
+
+The shared lowerer revision invalidates earlier source fingerprints: policy lowering, existence truth, typed selection, native-key/original-use, associated formal/browser evidence and typed readiness need refresh. The evidence gate currently fails freshness checks; earlier green counts are historical and cannot qualify this revision. Graph native/browser construction was replayed during development, but the final explanatory source comment requires another closure refresh. No backend case is promoted; full acceptance remains 26/132. Required next work is refreshing affected evidence and executing original compiler output against the constructed graph sources.
+
+### Shared lowerer dependency refresh — 2026-10-09
+
+Fresh disposable PostgreSQL replays now pass policy lowering (49 observations), typed selection (28), three-valued existence (78), native key correspondence (44), original query-use (418) and graph staging (59). Probe source closures now explicitly include the graph-source module imported by the lowerer; predicate/original-use browser closures include it as well. One initial native-key replay refused evidence because a prerequisite typed-selection receipt changed during capture; subsequent execution followed the completed prerequisite and passed. Refusals and successful reruns are distinguished rather than accepting stale fingerprints.
+
+### Original graph compiler source-admission gap — 2026-10-09
+
+`truss-graph-compiler-input.ts` invokes the retained original Rust compiler binary over the exact graph cohort, using the original UMF preparation producer's reversible 0.7-to-0.8 interpretation with no residuals. The inspection policy asks whether any Assignment has active=true. It supplies an endpoint-free Assignment ontology rather than falsely treating Assignment-code as a Staff/Project endpoint. The compiler returns WFT-SECURITY-SOURCE at model admission. The selected ontology 0.1 schema requires at least one endpoint, and CONTRACT-052 requires each endpoint's ordered fields to be association Record members. The graph's original core WorksOn Relationship carries its typed endpoints separately from its association Record. That Record contains only active/code members. The receipt retains the exact request, original transition, diagnostic, binary/schema/source pins and explicitly refuses backend qualification.
+
+This reveals an outstanding shared semantic design obligation, not merely a SQL emitter gap. A separately versioned ontology must support both member-field-backed endpoints and core-Relationship-backed endpoints. The latter must pin the qualified Relationship, directed source/target role, selected endpoint Record and Key, and its associationRecord correspondence. A graph edge and a relational junction must lower to the same correlated logical association witness without inventing Record members or reinterpreting attributes as endpoints. Core relationship source selections lacking an explicit Key require a separately admitted ontology Key selection; target Key and association Key must retain original selections. Undirected and multi-type endpoints require explicit role/type semantics and may refuse until defined. Existing ontology 0.1 meaning and refusal behavior must remain unchanged. The prospective version number and migration API remain to be defined; no new public grammar is claimed here.
+
+Required acceptance tests include original Relationship/association correspondence, absent association Record, wrong direction/type/Key, stale source pins, duplicate/missing endpoint carriers and native original-Key projection. Compiler derivation must carry those obligations to the physical source boundary. The existing conditional endpoint theorem supplies a refinement target but does not establish the new grammar or compiler. This gap must be addressed before the intended original compiler-to-graph membership execution can be claimed. The qualified-refusal spike is now registered with strict compilation in the component runner and separately checked by the evidence validator. Full backend acceptance remains 26/132.
+
+Astra independently validated the retained policy and ontology against the selected schemas: the policy passes and the ontology has exactly one error, association endpoints minItems=1. Source/model/transition/request pins match with no residuals. Its next-path audit identified a second admission obligation: the current original compiler ontology interpreter accepts Key members only id/name/fields, while all three selected graph Keys preserve primary=true. That original Key meaning must be admitted or explicitly refused by a qualified compiler version; it must not be stripped to obtain a pass. The retained refusal remains correctly limited to the earlier source-shape gate. Compiler ontology source is now pinned alongside its selected schema and source-admission implementation.
+
+Final Astra review confirms 773 current source pins, original model/transition/request correspondence, 38 passing component groups and 113 passing evidence gates, with no remaining actionable defect in the qualified refusal spike. The future endpoint form must preserve same-witness correlation and require each endpoint Key to be compatible with the selected entity identity; it cannot silently switch Keys during lowering. This establishes outstanding compiler admission work, not graph enforcement or backend acceptance.
+
+SPIKE-009 now defines the separately versioned relationship selector direction,
+including distinct Relationship/Record reference domains and bare opaque witness
+restrictions. Its executable draft source-selection analysis passes fourteen
+controls; Astra verified 769 current pins and found no actionable defect. The
+component-result gate was strengthened after a strict-compile failure exposed
+that freshness alone did not establish command success. Corrected replay passes
+forty component groups and all 115 phase checks. No public ontology support or
+backend case is promoted; acceptance remains 26/132.
+
+The private portable relationship normalizer now retains original Key metadata
+and association member references in frozen plans, checks endpoint Keys against
+selected entity identity, and restricts bare witnesses to endpoint/existential
+capabilities. SPIKE-009 records full source validation, authority/cut admission
+and public typing/compiler obligations. Astra's reproduced direct-call Key bound
+defect was corrected with Unicode code-point limits matching the schema. Its
+corrected-source review found no remaining actionable issue. Five Bun tests pass
+26 assertions; fourteen source-selector controls, sixteen real Chromium checks,
+42 component groups and all 116 phase checks pass. No backend case is promoted.
+
+Dependent Chromium replays pass three predicate programs, ten graph-source controls, five native-key checks and ten original query-use programs with fifteen refusal controls. Typed-readiness replays retain three qualified original-owner refusals. The component runner now includes the previously omitted existence-truth and type-selection formal generators, preventing stale receipts after lowerer revisions. All 36 component groups and 112 evidence gates pass against current sources. These refreshes verify retained subsets and do not establish original compiler graph adoption or ordinary enforcement. Full backend acceptance remains 26/132. Astra independently verified current native/browser receipt pins and matching observations, the executable graph-source dependency closures, all 36 component runs with 174 current pins, and 112 unique passing phase checks. Its interim audit found no actionable issue; final wording review remains pending. There is no accepted truss.* backend case in this checkpoint.
+
+Latest SPIKE-009 review retains complete selected Relationship and association
+Record snapshots in deeply frozen, caller-isolated plans. These selected-source
+archives do not constitute complete semantic closure or authority. Future
+admission must resolve field definitions, classifications and enforcement-relevant
+extensions, or refuse unsupported meaning. Seven Bun tests pass 43 assertions;
+14 selector controls, 21 Chromium checks, 42 component groups and 116 phase checks
+pass. Astra independently verified archive isolation and current receipt pins,
+with no actionable defect in the private subset. Public ontology/compiler
+integration and ordinary native enforcement remain open. Acceptance remains
+26/132, with no accepted Truss backend case.
+
+## Conditional atomic activation model — 2026-10-09
+
+The native routine-writer counterexample in the PostgreSQL raw test plan now
+demonstrates why complete-bundle atomicity is a premise requiring implementation
+evidence. A helper replacement can commit after successful comparison despite
+the installer's resource-table lock; the installer can then publish a new
+version whose authorization behavior differs from the compared profile. A
+qualified implementation must stabilize routine, role, grant and mapping
+dependencies through activation commit, with every authorized mutation path
+participating or denied by the admitted privilege profile. Version-row and
+selected fact-table serialization alone are insufficient. This counterexample
+does not refute the conditional algebra; it refutes treating those table locks
+as a physical realization of its complete-bundle atomic transition.
+
+The next native increment enforces participation for `CREATE FUNCTION` using
+a database event trigger and the same exclusive transaction advisory guard in
+a private installer wrapper. The guard is acquired before predecessor/profile
+comparison and retained through commit. Native observation verifies that an
+otherwise uncoordinated helper replacement waits on that exact guard, resumes
+after installer commit and can roll back without altering the installed
+profile. This realizes one dependency-writer boundary of the premise, not
+complete-bundle refinement. Other DDL tags, shared role changes, guard
+administration, committed-writer generation advancement and all public or
+bypassing admission paths still require explicit controls and evidence.
+
+`tools/security/prove-policy-activation.py` makes the B09/L12 activation
+obligations explicit for each of the four backend profiles. A candidate commits
+only when supported, qualified and successfully installed, its captured
+predecessor equals the current complete bundle, and its version strictly
+advances. Report mode has no effect on this admission decision. The modeled
+atomic transition replaces version, effective protection and open-access state
+together; otherwise it preserves the prior bundle.
+
+The retained `policy-activation-formal.json` has six UNSAT violation checks,
+six SAT populations and six SAT explicit faulty-transition controls. They cover
+unsupported report activation, complete-bundle preservation on refusal and
+installation failure, stale predecessor replacement, visible unprotected access
+and version reuse. The corrected controls retain nonnegative version domains
+and safe prior/candidate profiles; unsupported and failed-install examples
+force all other admission guards true.
+
+These are conditional algebraic properties, not installer verification. Version
+equality must bind the complete immutable policy/mapping/native dependency/grant
+bundle. All installers must use serialized predecessor comparison, support and
+qualification predicates must be truthful, and all externally visible
+installation states must follow the atomic transition or close access. A
+backend transaction spanning only part of the bundle cannot inherit this proof.
+Native mid-install visibility, privilege/routine replacement, concurrent
+installers, rollback and administrative repair remain required B09/L12 tests.
+No backend case is promoted by the receipt.
+
+Astra ultra found and corrected two initial proof defects: arbitrary-state SAT
+controls were replaced with explicit faulty transitions, and positive populations
+now isolate the intended guards. The tool freezes its fixed source and governing
+contract before formula construction and rechecks bytes before publishing. Astra
+independently replayed all 18 corrected formulas and checked both current pins,
+finding no remaining actionable defect in the conditional activation algebra.
+
+Consolidated replay initially encountered `unknown` on existing quantified
+publisher-state satisfiability examples. Three failed component checkpoints are
+retained as `components-policy-activation-publisher-timeout[-second|-third]-20261009.json`
+in the security evidence directory. The released-publisher enroll positive
+population now supplies an explicit all-absent, zero-buffer/lock witness.
+Publisher/custody solving and saved-formula replay now use separate Z3 contexts,
+translating the same assertions for generation; universal safety and expected
+results are unchanged. The 60-group component run passes, and retained-formula
+audit passes 563 formulas across 32 receipts using Z3 4.15.4. This is parser/solver
+agreement under the recorded premises, not generator/native refinement.

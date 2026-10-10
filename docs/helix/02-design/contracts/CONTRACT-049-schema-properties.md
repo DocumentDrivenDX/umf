@@ -36,6 +36,41 @@ expressions and automatic alias resolution remain outside this contract.
 
 ## Normative Surface
 
+Original core0.8 kind inspection uses read-only inspect-core-kind result7.0.0
+and its dedicated schema. Known, unknown and unspecified roles retain original
+source and exact pointers. Earlier source versions retain their result versions.
+Historical kind authoring remains version-scoped and does not admit core0.8.
+This inspection compatibility does not establish native classification, storage
+enforcement or complete core0.8 inspector coverage.
+
+Original core0.8 nullability inspection uses read-only inspect-core-nullability
+result6.0.0, distinguishing known, unknown, missing and inapplicable meanings.
+Earlier versions and historical nullability authoring retain their scoped
+contracts. Inspection never infers native absence carriers or enforced defaults.
+
+Original core0.8 cardinality inspection uses read-only inspect-core-cardinality
+result5.0.0. Known container shape and original item references remain separate
+from native storage; unknown, missing and inapplicable meanings are retained.
+Historical cardinality authoring and result versions remain version-scoped.
+
+Original core0.8 Key inspection and stable-ID lookup use read-only result3.0.0.
+Ordered component references and uninterpreted qualifier paths remain attached
+to the original source. Historical Key/member authoring still excludes core0.8;
+inspection and lookup do not establish native uniqueness or enforcement.
+
+Original core0.8 relationship inspection and stable-ID lookup use read-only
+result2.0.0, retaining exact endpoints and uninterpreted qualifier/lifecycle
+paths. Receipt verification recomputes this read-only result against its source.
+Historical relationship authoring remains version-scoped; no native ownership
+or referential enforcement follows from these observations.
+
+Original core0.8 facet inspection uses read-only result4.0.0. Minimum/maximum
+length, collection size and exact typed numeric ranges are interpreted alongside
+precision/scale and integer width. Unknown groups, nested qualifiers and length
+units retain exact paths; interpreted groups exclude those unknown members.
+Historical facet authoring remains version-scoped. Historical projection bridges
+refuse newer bounds rather than silently omitting them.
+
 | Member | Scope and shape | Meaning |
 | --- | --- | --- |
 | title | document/module/element string | Display label; never identity. |

@@ -1,0 +1,157 @@
+{
+  "status": "passed",
+  "versions": {
+    "bun": "1.4.2",
+    "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+  },
+  "sourceDigests": {
+    "src/extensions/security/authority-guard.ts": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "tools/security/pg-driver.ts": "18842848b8a91e7451fda18b80522b7803eb8c8eef3f81c373f2ad2106a5dcac",
+    "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce",
+    "docs/helix/02-design/spikes/security/native.py": "0a8521cab89117d0733b2531de45e031649db03eec8cf209c28b277f97f2d919",
+    "docs/helix/02-design/spikes/security/postgresql.sql": "245b6ef1980a54c7d8a5a32e4c9175209eb1046773cb8417aaa38fcfd2971fa4"
+  },
+  "observations": [
+    {
+      "id": "driver-read-umf_security_alice",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "actor": "umf_security_alice",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ]
+    },
+    {
+      "id": "driver-read-umf_security_bob",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "actor": "umf_security_bob",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ]
+    },
+    {
+      "id": "driver-read-umf_security_outsider",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "actor": "umf_security_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "driver-private-facts",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "driver-buffer-release",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "expected": {
+        "waiting": true,
+        "output": [
+          "RA"
+        ],
+        "after": "0"
+      },
+      "observed": {
+        "waiting": true,
+        "output": [
+          "RA"
+        ],
+        "after": "0"
+      }
+    },
+    {
+      "id": "driver-buffer-discard",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "expected": {
+        "waiting": true,
+        "output": [],
+        "after": "0"
+      },
+      "observed": {
+        "waiting": true,
+        "output": [],
+        "after": "0"
+      }
+    },
+    {
+      "id": "driver-data-connection-loss",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "expected": {
+        "waitingAfterLoss": true,
+        "bufferInvalidatedBeforeDrain": true,
+        "after": "0"
+      },
+      "observed": {
+        "waitingAfterLoss": true,
+        "bufferInvalidatedBeforeDrain": true,
+        "after": "0"
+      },
+      "nativeFailureCode": "ERR_POSTGRES_SERVER_ERROR",
+      "scope": "Separate live coordinator protects a lost data connection; coordinator failure/distributed custody remain unqualified"
+    },
+    {
+      "id": "driver-coordinator-loss-native-only-negative-control",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "expected": {
+        "retainedAfterAck": true,
+        "after": "0"
+      },
+      "observed": {
+        "retainedAfterAck": true,
+        "after": "0"
+      },
+      "scope": "Native-only guard is unsafe when host buffer outlives coordinator"
+    },
+    {
+      "id": "driver-coordinator-loss-participating-host-guard",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "expected": {
+        "retainedAfterAck": false,
+        "after": "0"
+      },
+      "observed": {
+        "retainedAfterAck": false,
+        "after": "0"
+      },
+      "scope": "Single-realm participating host guard; all native writers and distributed custody remain unqualified"
+    }
+  ],
+  "scope": "Bun SQL ordinary-session raw PostgreSQL fixture and held-transaction buffer release/discard and independently guarded data-connection loss; no production lowering, full driver failure matrix or backend acceptance"
+}

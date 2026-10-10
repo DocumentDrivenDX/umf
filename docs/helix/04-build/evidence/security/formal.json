@@ -1,0 +1,461 @@
+{
+  "solver": "Z3",
+  "solverVersion": "4.15.4",
+  "command": "/private/tmp/umf-security-proof-venv/bin/python3 docs/helix/02-design/spikes/security/prove.py",
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/prove.py": "6bd069c0d11dea43a3bad43be92523fcaa14ccac9beca92e1f18b03d572b2bd1",
+    "docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
+    "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2"
+  },
+  "cases": [
+    {
+      "id": "composition-safety",
+      "covers": [
+        "US-055-AC4"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded Boolean composition",
+      "assumptions": [],
+      "counterexampleQuery": "(declare-fun forbidden () Bool)\n(declare-fun required () Bool)\n(declare-fun complete () Bool)\n(declare-fun permit () Bool)\n(assert (and permit required (not forbidden) complete (or (not required) forbidden)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "",
+      "weakenedControlQuery": "(declare-fun required () Bool)\n(declare-fun permit () Bool)\n(assert (and permit (not required)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[required = False, permit = True]",
+      "status": "passed"
+    },
+    {
+      "id": "incomplete-refusal",
+      "covers": [
+        "US-055-AC6"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded Boolean complete-cut admission",
+      "assumptions": [],
+      "counterexampleQuery": "(declare-fun complete () Bool)\n(declare-fun forbidden () Bool)\n(declare-fun required () Bool)\n(declare-fun permit () Bool)\n(assert (and permit required (not forbidden) complete (not complete)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "",
+      "weakenedControlQuery": "(declare-fun complete () Bool)\n(declare-fun forbidden () Bool)\n(declare-fun required () Bool)\n(declare-fun permit () Bool)\n(assert (and permit required (not forbidden) (not complete)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[forbidden = False,\n required = True,\n permit = True,\n complete = False]",
+      "status": "passed"
+    },
+    {
+      "id": "write-both-states",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded Boolean update obligations",
+      "assumptions": [],
+      "counterexampleQuery": "(declare-fun new () Bool)\n(declare-fun owner_change () Bool)\n(declare-fun fields () Bool)\n(declare-fun old () Bool)\n(assert (and old new fields owner_change (not new)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "",
+      "weakenedControlQuery": "(declare-fun new () Bool)\n(declare-fun owner_change () Bool)\n(declare-fun fields () Bool)\n(declare-fun old () Bool)\n(assert (and old fields owner_change (not new)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[old = True,\n new = False,\n owner_change = True,\n fields = True]",
+      "status": "passed"
+    },
+    {
+      "id": "epoch-stale-snapshot-refusal",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded integer equality admission; trusted non-MVCC clock and complete writer protocol assumed",
+      "assumptions": [
+        "snapshot_epoch >= 0",
+        "clock_epoch >= snapshot_epoch"
+      ],
+      "counterexampleQuery": "(declare-fun snapshot_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= snapshot_epoch 0))\n(assert (>= clock_epoch snapshot_epoch))\n(assert (and (= snapshot_epoch clock_epoch) (distinct snapshot_epoch clock_epoch)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun snapshot_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= snapshot_epoch 0))\n(assert (>= clock_epoch snapshot_epoch))\n",
+      "weakenedControlQuery": "(declare-fun snapshot_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= snapshot_epoch 0))\n(assert (>= clock_epoch snapshot_epoch))\n(assert (and (>= snapshot_epoch 0) (< snapshot_epoch clock_epoch)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[snapshot_epoch = 0, clock_epoch = 1]",
+      "status": "passed"
+    },
+    {
+      "id": "epoch-rollback-gap-refusal",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded integer rollback-gap refusal; recovery/availability and installed helper implementation not proven",
+      "assumptions": [
+        "committed_epoch >= 0",
+        "clock_epoch >= committed_epoch"
+      ],
+      "counterexampleQuery": "(declare-fun committed_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= committed_epoch 0))\n(assert (>= clock_epoch committed_epoch))\n(assert (and (= committed_epoch clock_epoch) (< committed_epoch clock_epoch)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun committed_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= committed_epoch 0))\n(assert (>= clock_epoch committed_epoch))\n",
+      "weakenedControlQuery": "(declare-fun committed_epoch () Int)\n(declare-fun clock_epoch () Int)\n(assert (>= committed_epoch 0))\n(assert (>= clock_epoch committed_epoch))\n(assert (and (>= committed_epoch 0) (< committed_epoch clock_epoch)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[committed_epoch = 0, clock_epoch = 1]",
+      "status": "passed"
+    },
+    {
+      "id": "logical-flat-graph-correspondence",
+      "covers": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "layer": "formal",
+      "scope": "Finite: 2 Staff, 2 Projects, 3 resources; zero/one owner; complete exact mapped facts",
+      "assumptions": [
+        "staff >= 0",
+        "staff < 2",
+        "resource >= 0",
+        "resource < 3",
+        "And(owner_0 >= -1, owner_0 < 2)",
+        "And(owner_1 >= -1, owner_1 < 2)",
+        "And(owner_2 >= -1, owner_2 < 2)",
+        "flat_0_0 == assignment_0_0",
+        "flat_0_1 == assignment_0_1",
+        "flat_1_0 == assignment_1_0",
+        "flat_1_1 == assignment_1_1",
+        "graph_assignment_0_0 == assignment_0_0",
+        "graph_assignment_0_1 == assignment_0_1",
+        "graph_assignment_1_0 == assignment_1_0",
+        "graph_assignment_1_1 == assignment_1_1",
+        "graph_owner_0_0 == (owner_0 == 0)",
+        "graph_owner_0_1 == (owner_0 == 1)",
+        "graph_owner_1_0 == (owner_1 == 0)",
+        "graph_owner_1_1 == (owner_1 == 1)",
+        "graph_owner_2_0 == (owner_2 == 0)",
+        "graph_owner_2_1 == (owner_2 == 1)"
+      ],
+      "counterexampleQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n(assert (let ((a!1 (or (and (= staff 0) (= resource 0) (= owner_0 0) assignment_0_0)\n               (and (= staff 0) (= resource 0) (= owner_0 1) assignment_0_1)\n               (and (= staff 0) (= resource 1) (= owner_1 0) assignment_0_0)\n               (and (= staff 0) (= resource 1) (= owner_1 1) assignment_0_1)\n               (and (= staff 0) (= resource 2) (= owner_2 0) assignment_0_0)\n               (and (= staff 0) (= resource 2) (= owner_2 1) assignment_0_1)\n               (and (= staff 1) (= resource 0) (= owner_0 0) assignment_1_0)\n               (and (= staff 1) (= resource 0) (= owner_0 1) assignment_1_1)\n               (and (= staff 1) (= resource 1) (= owner_1 0) assignment_1_0)\n               (and (= staff 1) (= resource 1) (= owner_1 1) assignment_1_1)\n               (and (= staff 1) (= resource 2) (= owner_2 0) assignment_1_0)\n               (and (= staff 1) (= resource 2) (= owner_2 1) assignment_1_1))))\n(let ((a!2 (distinct a!1\n                     (or (and (= staff 0) (= resource 0) (= owner_0 0) flat_0_0)\n                         (and (= staff 1) (= resource 0) (= owner_0 0) flat_1_0)\n                         (and (= staff 0) (= resource 1) (= owner_1 0) flat_0_0)\n                         (and (= staff 1) (= resource 1) (= owner_1 0) flat_1_0)\n                         (and (= staff 0) (= resource 2) (= owner_2 0) flat_0_0)\n                         (and (= staff 1) (= resource 2) (= owner_2 0) flat_1_0)\n                         (and (= staff 0) (= resource 0) (= owner_0 1) flat_0_1)\n                         (and (= staff 1) (= resource 0) (= owner_0 1) flat_1_1)\n                         (and (= staff 0) (= resource 1) (= owner_1 1) flat_0_1)\n                         (and (= staff 1) (= resource 1) (= owner_1 1) flat_1_1)\n                         (and (= staff 0) (= resource 2) (= owner_2 1) flat_0_1)\n                         (and (= staff 1) (= resource 2) (= owner_2 1) flat_1_1))))\n      (a!3 (distinct a!1\n                     (or (and (= resource 0)\n                              graph_owner_0_0\n                              (= staff 0)\n                              graph_assignment_0_0)\n                         (and (= resource 0)\n                              graph_owner_0_0\n                              (= staff 1)\n                              graph_assignment_1_0)\n                         (and (= resource 0)\n                              graph_owner_0_1\n                              (= staff 0)\n                              graph_assignment_0_1)\n                         (and (= resource 0)\n                              graph_owner_0_1\n                              (= staff 1)\n                              graph_assignment_1_1)\n                         (and (= resource 1)\n                              graph_owner_1_0\n                              (= staff 0)\n                              graph_assignment_0_0)\n                         (and (= resource 1)\n                              graph_owner_1_0\n                              (= staff 1)\n                              graph_assignment_1_0)\n                         (and (= resource 1)\n                              graph_owner_1_1\n                              (= staff 0)\n                              graph_assignment_0_1)\n                         (and (= resource 1)\n                              graph_owner_1_1\n                              (= staff 1)\n                              graph_assignment_1_1)\n                         (and (= resource 2)\n                              graph_owner_2_0\n                              (= staff 0)\n                              graph_assignment_0_0)\n                         (and (= resource 2)\n                              graph_owner_2_0\n                              (= staff 1)\n                              graph_assignment_1_0)\n                         (and (= resource 2)\n                              graph_owner_2_1\n                              (= staff 0)\n                              graph_assignment_0_1)\n                         (and (= resource 2)\n                              graph_owner_2_1\n                              (= staff 1)\n                              graph_assignment_1_1)))))\n  (or a!2 a!3))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n",
+      "weakenedControlQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n(assert (distinct (or (and (= staff 0) (= resource 0) (= owner_0 0) assignment_0_0)\n              (and (= staff 0) (= resource 0) (= owner_0 1) assignment_0_1)\n              (and (= staff 0) (= resource 1) (= owner_1 0) assignment_0_0)\n              (and (= staff 0) (= resource 1) (= owner_1 1) assignment_0_1)\n              (and (= staff 0) (= resource 2) (= owner_2 0) assignment_0_0)\n              (and (= staff 0) (= resource 2) (= owner_2 1) assignment_0_1)\n              (and (= staff 1) (= resource 0) (= owner_0 0) assignment_1_0)\n              (and (= staff 1) (= resource 0) (= owner_0 1) assignment_1_1)\n              (and (= staff 1) (= resource 1) (= owner_1 0) assignment_1_0)\n              (and (= staff 1) (= resource 1) (= owner_1 1) assignment_1_1)\n              (and (= staff 1) (= resource 2) (= owner_2 0) assignment_1_0)\n              (and (= staff 1) (= resource 2) (= owner_2 1) assignment_1_1))\n          (or (and (= resource 0)\n                   graph_owner_0_0\n                   (= staff 0)\n                   graph_assignment_0_0)\n              (and (= resource 0)\n                   graph_owner_0_0\n                   (= staff 1)\n                   graph_assignment_0_1)\n              (and (= resource 0)\n                   graph_owner_0_1\n                   (= staff 0)\n                   graph_assignment_1_0)\n              (and (= resource 0)\n                   graph_owner_0_1\n                   (= staff 1)\n                   graph_assignment_1_1)\n              (and (= resource 1)\n                   graph_owner_1_0\n                   (= staff 0)\n                   graph_assignment_0_0)\n              (and (= resource 1)\n                   graph_owner_1_0\n                   (= staff 1)\n                   graph_assignment_0_1)\n              (and (= resource 1)\n                   graph_owner_1_1\n                   (= staff 0)\n                   graph_assignment_1_0)\n              (and (= resource 1)\n                   graph_owner_1_1\n                   (= staff 1)\n                   graph_assignment_1_1)\n              (and (= resource 2)\n                   graph_owner_2_0\n                   (= staff 0)\n                   graph_assignment_0_0)\n              (and (= resource 2)\n                   graph_owner_2_0\n                   (= staff 1)\n                   graph_assignment_0_1)\n              (and (= resource 2)\n                   graph_owner_2_1\n                   (= staff 0)\n                   graph_assignment_1_0)\n              (and (= resource 2)\n                   graph_owner_2_1\n                   (= staff 1)\n                   graph_assignment_1_1))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[resource = 2,\n graph_assignment_1_0 = False,\n owner_0 = -1,\n graph_assignment_0_1 = True,\n staff = 0,\n owner_2 = 1,\n owner_1 = -1,\n graph_assignment_0_0 = True,\n graph_assignment_1_1 = True,\n graph_owner_0_0 = False,\n graph_owner_1_1 = False,\n assignment_1_0 = False,\n graph_owner_1_0 = False,\n graph_owner_0_1 = False,\n flat_1_0 = False,\n assignment_0_0 = True,\n graph_owner_2_0 = False,\n flat_1_1 = True,\n graph_owner_2_1 = True,\n flat_0_1 = True,\n flat_0_0 = True,\n assignment_0_1 = True,\n assignment_1_1 = True]",
+      "status": "passed"
+    },
+    {
+      "id": "assignment-removal",
+      "covers": [
+        "US-055-AC5",
+        "US-057-AC3"
+      ],
+      "layer": "formal",
+      "scope": "Finite: 2 Staff, 2 Projects, 3 resources; zero/one owner; complete exact mapped facts; only grant depends on assignment",
+      "assumptions": [
+        "staff >= 0",
+        "staff < 2",
+        "resource >= 0",
+        "resource < 3",
+        "And(owner_0 >= -1, owner_0 < 2)",
+        "And(owner_1 >= -1, owner_1 < 2)",
+        "And(owner_2 >= -1, owner_2 < 2)",
+        "flat_0_0 == assignment_0_0",
+        "flat_0_1 == assignment_0_1",
+        "flat_1_0 == assignment_1_0",
+        "flat_1_1 == assignment_1_1",
+        "graph_assignment_0_0 == assignment_0_0",
+        "graph_assignment_0_1 == assignment_0_1",
+        "graph_assignment_1_0 == assignment_1_0",
+        "graph_assignment_1_1 == assignment_1_1",
+        "graph_owner_0_0 == (owner_0 == 0)",
+        "graph_owner_0_1 == (owner_0 == 1)",
+        "graph_owner_1_0 == (owner_1 == 0)",
+        "graph_owner_1_1 == (owner_1 == 1)",
+        "graph_owner_2_0 == (owner_2 == 0)",
+        "graph_owner_2_1 == (owner_2 == 1)"
+      ],
+      "counterexampleQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n(assert (and (or (and (= staff 0) (= resource 0) (= owner_0 0) assignment_0_0)\n         (and (= staff 0) (= resource 0) (= owner_0 1) assignment_0_1)\n         (and (= staff 0) (= resource 1) (= owner_1 0) assignment_0_0)\n         (and (= staff 0) (= resource 1) (= owner_1 1) assignment_0_1)\n         (and (= staff 0) (= resource 2) (= owner_2 0) assignment_0_0)\n         (and (= staff 0) (= resource 2) (= owner_2 1) assignment_0_1)\n         (and (= staff 1) (= resource 0) (= owner_0 0) assignment_1_0)\n         (and (= staff 1) (= resource 0) (= owner_0 1) assignment_1_1)\n         (and (= staff 1) (= resource 1) (= owner_1 0) assignment_1_0)\n         (and (= staff 1) (= resource 1) (= owner_1 1) assignment_1_1)\n         (and (= staff 1) (= resource 2) (= owner_2 0) assignment_1_0)\n         (and (= staff 1) (= resource 2) (= owner_2 1) assignment_1_1))\n     (not assignment_0_0)\n     (not assignment_0_1)\n     (not assignment_1_0)\n     (not assignment_1_1)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n",
+      "weakenedControlQuery": "(declare-fun staff () Int)\n(declare-fun resource () Int)\n(declare-fun owner_0 () Int)\n(declare-fun owner_1 () Int)\n(declare-fun owner_2 () Int)\n(declare-fun assignment_0_0 () Bool)\n(declare-fun flat_0_0 () Bool)\n(declare-fun assignment_0_1 () Bool)\n(declare-fun flat_0_1 () Bool)\n(declare-fun assignment_1_0 () Bool)\n(declare-fun flat_1_0 () Bool)\n(declare-fun assignment_1_1 () Bool)\n(declare-fun flat_1_1 () Bool)\n(declare-fun graph_assignment_0_0 () Bool)\n(declare-fun graph_assignment_0_1 () Bool)\n(declare-fun graph_assignment_1_0 () Bool)\n(declare-fun graph_assignment_1_1 () Bool)\n(declare-fun graph_owner_0_0 () Bool)\n(declare-fun graph_owner_0_1 () Bool)\n(declare-fun graph_owner_1_0 () Bool)\n(declare-fun graph_owner_1_1 () Bool)\n(declare-fun graph_owner_2_0 () Bool)\n(declare-fun graph_owner_2_1 () Bool)\n(assert (>= staff 0))\n(assert (< staff 2))\n(assert (>= resource 0))\n(assert (< resource 3))\n(assert (and (>= owner_0 (- 1)) (< owner_0 2)))\n(assert (and (>= owner_1 (- 1)) (< owner_1 2)))\n(assert (and (>= owner_2 (- 1)) (< owner_2 2)))\n(assert (= flat_0_0 assignment_0_0))\n(assert (= flat_0_1 assignment_0_1))\n(assert (= flat_1_0 assignment_1_0))\n(assert (= flat_1_1 assignment_1_1))\n(assert (= graph_assignment_0_0 assignment_0_0))\n(assert (= graph_assignment_0_1 assignment_0_1))\n(assert (= graph_assignment_1_0 assignment_1_0))\n(assert (= graph_assignment_1_1 assignment_1_1))\n(assert (= graph_owner_0_0 (= owner_0 0)))\n(assert (= graph_owner_0_1 (= owner_0 1)))\n(assert (= graph_owner_1_0 (= owner_1 0)))\n(assert (= graph_owner_1_1 (= owner_1 1)))\n(assert (= graph_owner_2_0 (= owner_2 0)))\n(assert (= graph_owner_2_1 (= owner_2 1)))\n(assert (let ((a!1 (not (or (and (= staff 0)\n                         (= resource 0)\n                         (= owner_0 0)\n                         assignment_0_0)\n                    (and (= staff 0)\n                         (= resource 0)\n                         (= owner_0 1)\n                         assignment_0_1)\n                    (and (= staff 0)\n                         (= resource 1)\n                         (= owner_1 0)\n                         assignment_0_0)\n                    (and (= staff 0)\n                         (= resource 1)\n                         (= owner_1 1)\n                         assignment_0_1)\n                    (and (= staff 0)\n                         (= resource 2)\n                         (= owner_2 0)\n                         assignment_0_0)\n                    (and (= staff 0)\n                         (= resource 2)\n                         (= owner_2 1)\n                         assignment_0_1)\n                    (and (= staff 1)\n                         (= resource 0)\n                         (= owner_0 0)\n                         assignment_1_0)\n                    (and (= staff 1)\n                         (= resource 0)\n                         (= owner_0 1)\n                         assignment_1_1)\n                    (and (= staff 1)\n                         (= resource 1)\n                         (= owner_1 0)\n                         assignment_1_0)\n                    (and (= staff 1)\n                         (= resource 1)\n                         (= owner_1 1)\n                         assignment_1_1)\n                    (and (= staff 1)\n                         (= resource 2)\n                         (= owner_2 0)\n                         assignment_1_0)\n                    (and (= staff 1)\n                         (= resource 2)\n                         (= owner_2 1)\n                         assignment_1_1)))))\n  (and a!1 (or (>= owner_0 0) (>= owner_1 0) (>= owner_2 0)))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[resource = 0,\n owner_0 = 0,\n owner_1 = -1,\n owner_2 = -1,\n graph_assignment_0_0 = False,\n staff = 0,\n graph_assignment_1_1 = True,\n graph_assignment_1_0 = True,\n graph_assignment_0_1 = True,\n graph_owner_0_0 = True,\n graph_owner_1_1 = False,\n assignment_1_0 = True,\n graph_owner_1_0 = False,\n graph_owner_0_1 = False,\n flat_1_0 = True,\n assignment_0_0 = False,\n graph_owner_2_0 = False,\n flat_1_1 = True,\n graph_owner_2_1 = False,\n flat_0_1 = True,\n flat_0_0 = False,\n assignment_0_1 = True,\n assignment_1_1 = True]",
+      "status": "passed"
+    },
+    {
+      "id": "revocation-drain-order",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded integer event ordering; shared guard release precedes exclusive acquisition",
+      "assumptions": [
+        "admit < release",
+        "acquire >= release",
+        "acknowledge >= acquire",
+        "later > acknowledge"
+      ],
+      "counterexampleQuery": "(declare-fun release () Int)\n(declare-fun admit () Int)\n(declare-fun acquire () Int)\n(declare-fun acknowledge () Int)\n(declare-fun later () Int)\n(assert (< admit release))\n(assert (>= acquire release))\n(assert (>= acknowledge acquire))\n(assert (> later acknowledge))\n(assert (and (> release acknowledge)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun release () Int)\n(declare-fun admit () Int)\n(declare-fun acquire () Int)\n(declare-fun acknowledge () Int)\n(declare-fun later () Int)\n(assert (< admit release))\n(assert (>= acquire release))\n(assert (>= acknowledge acquire))\n(assert (> later acknowledge))\n",
+      "weakenedControlQuery": "(declare-fun release () Int)\n(declare-fun admit () Int)\n(declare-fun acquire () Int)\n(declare-fun acknowledge () Int)\n(declare-fun later () Int)\n(assert (< admit release))\n(assert (>= acknowledge acquire))\n(assert (> later acknowledge))\n(assert (> release acknowledge))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[admit = 0,\n acquire = 0,\n release = 1,\n later = 1,\n acknowledge = 0]",
+      "status": "passed"
+    },
+    {
+      "id": "protected-disposition-required",
+      "covers": [
+        "US-055-AC7",
+        "US-056-AC6"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded Boolean disclosure admission; no implicit protected-field original",
+      "assumptions": [],
+      "counterexampleQuery": "(declare-fun disposition () Bool)\n(declare-fun protected () Bool)\n(declare-fun complete () Bool)\n(declare-fun forbidden () Bool)\n(declare-fun required () Bool)\n(declare-fun permit () Bool)\n(assert (and permit\n     required\n     (not forbidden)\n     complete\n     (or (not protected) disposition)\n     protected\n     (not disposition)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "",
+      "weakenedControlQuery": "(declare-fun disposition () Bool)\n(declare-fun protected () Bool)\n(declare-fun complete () Bool)\n(declare-fun forbidden () Bool)\n(declare-fun required () Bool)\n(declare-fun permit () Bool)\n(assert (and permit required (not forbidden) complete protected (not disposition)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[protected = True,\n disposition = False,\n forbidden = False,\n required = True,\n permit = True,\n complete = True]",
+      "status": "passed"
+    },
+    {
+      "id": "qualified-identity-separation",
+      "covers": [
+        "US-055-AC2"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded SMT string tuple identity; native collation/encoding is a binding assumption",
+      "assumptions": [],
+      "counterexampleQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun label () String)\n(declare-fun module () String)\n(declare-fun doc2 () String)\n(declare-fun doc1 () String)\n(assert (and (distinct doc1 doc2)\n     (= (QualifiedRef doc1 module label) (QualifiedRef doc2 module label))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "",
+      "weakenedControlQuery": "(declare-fun label () String)\n(declare-fun doc2 () String)\n(declare-fun doc1 () String)\n(assert (and (distinct doc1 doc2) (= label label)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[doc1 = \"!0!\", doc2 = \"!1!\"]",
+      "status": "passed"
+    },
+    {
+      "id": "tri-state-scoped-unknown-refusal",
+      "covers": [
+        "US-055-AC6"
+      ],
+      "layer": "formal",
+      "scope": "Complete enumeration of one permit/require/forbid over F,T,U; unknown always refuses",
+      "assumptions": [
+        "And(permit_truth >= 0, permit_truth <= 2)",
+        "And(require_truth >= 0, require_truth <= 2)",
+        "And(forbid_truth >= 0, forbid_truth <= 2)"
+      ],
+      "counterexampleQuery": "(declare-fun permit_truth () Int)\n(declare-fun require_truth () Int)\n(declare-fun forbid_truth () Int)\n(assert (and (>= permit_truth 0) (<= permit_truth 2)))\n(assert (and (>= require_truth 0) (<= require_truth 2)))\n(assert (and (>= forbid_truth 0) (<= forbid_truth 2)))\n(assert (and (distinct permit_truth 2)\n     (distinct require_truth 2)\n     (distinct forbid_truth 2)\n     (= permit_truth 1)\n     (= require_truth 1)\n     (= forbid_truth 0)\n     (or (= permit_truth 2) (= require_truth 2) (= forbid_truth 2))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun permit_truth () Int)\n(declare-fun require_truth () Int)\n(declare-fun forbid_truth () Int)\n(assert (and (>= permit_truth 0) (<= permit_truth 2)))\n(assert (and (>= require_truth 0) (<= require_truth 2)))\n(assert (and (>= forbid_truth 0) (<= forbid_truth 2)))\n",
+      "weakenedControlQuery": "(declare-fun permit_truth () Int)\n(declare-fun require_truth () Int)\n(declare-fun forbid_truth () Int)\n(assert (and (>= permit_truth 0) (<= permit_truth 2)))\n(assert (and (>= require_truth 0) (<= require_truth 2)))\n(assert (and (>= forbid_truth 0) (<= forbid_truth 2)))\n(assert (and (= permit_truth 1) (= require_truth 1) (= forbid_truth 2)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[permit_truth = 1, require_truth = 1, forbid_truth = 2]",
+      "status": "passed"
+    },
+    {
+      "id": "mask-order-invariance",
+      "covers": [
+        "US-055-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Finite abstract disclosure domain; original cannot cancel transformed/withheld",
+      "assumptions": [
+        "And(mask1 >= 0, mask1 <= 5)",
+        "And(mask2 >= 0, mask2 <= 5)"
+      ],
+      "counterexampleQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5))))\n      (a!3 (ite (= mask2 0)\n                mask1\n                (ite (= mask1 0) mask2 (ite (= mask2 mask1) mask2 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1)))\n      (a!4 (ite (= mask1 4) mask2 (ite (or (= mask2 5) (= mask1 5)) 5 a!3))))\n  (distinct (ite (or (= mask1 1) (= mask2 1)) 1 (ite (= mask1 4) mask2 a!2))\n            (ite (or (= mask2 1) (= mask1 1)) 1 (ite (= mask2 4) mask1 a!4))))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n",
+      "weakenedControlQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (and (distinct mask1 mask2) (= mask1 0) (= mask2 2)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[mask2 = 2, mask1 = 0]",
+      "status": "passed"
+    },
+    {
+      "id": "withholding-dominates",
+      "covers": [
+        "US-055-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Finite abstract disclosure domain; typed transforms are independently validated",
+      "assumptions": [
+        "And(mask1 >= 0, mask1 <= 5)",
+        "And(mask2 >= 0, mask2 <= 5)"
+      ],
+      "counterexampleQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1))))\n(let ((a!3 (distinct (ite (or (= mask1 1) (= mask2 1))\n                          1\n                          (ite (= mask1 4) mask2 a!2))\n                     1)))\n  (and (or (= mask1 1) (= mask2 1)) a!3)))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n",
+      "weakenedControlQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (and (= mask1 1) (= mask2 0) (distinct mask1 mask2)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[mask2 = 0, mask1 = 1]",
+      "status": "passed"
+    },
+    {
+      "id": "false-permit-no-obligation",
+      "covers": [
+        "US-055-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Finite abstract disposition composition; only true permits contribute",
+      "assumptions": [
+        "And(mask1 >= 0, mask1 <= 5)",
+        "And(mask2 >= 0, mask2 <= 5)"
+      ],
+      "counterexampleQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(declare-fun true_permit () Bool)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1))))\n(let ((a!3 (ite true_permit\n                (ite (or (= mask1 1) (= mask2 1)) 1 (ite (= mask1 4) mask2 a!2))\n                mask1)))\n  (and (not true_permit) (distinct a!3 mask1))))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n",
+      "weakenedControlQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(declare-fun true_permit () Bool)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1))))\n(let ((a!3 (distinct (ite (or (= mask1 1) (= mask2 1))\n                          1\n                          (ite (= mask1 4) mask2 a!2))\n                     mask1)))\n  (and (not true_permit) a!3)))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[mask1 = 0, mask2 = 1, true_permit = False]",
+      "status": "passed"
+    },
+    {
+      "id": "mask-associativity",
+      "covers": [
+        "US-055-AC7"
+      ],
+      "layer": "formal",
+      "scope": "Finite 6-value disclosure algebra; three or more rules via associativity",
+      "assumptions": [
+        "And(mask1 >= 0, mask1 <= 5)",
+        "And(mask2 >= 0, mask2 <= 5)",
+        "And(mask3 >= 0, mask3 <= 5)"
+      ],
+      "counterexampleQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(declare-fun mask3 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (and (>= mask3 0) (<= mask3 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5))))\n      (a!6 (ite (= mask2 0)\n                mask3\n                (ite (= mask3 0) mask2 (ite (= mask2 mask3) mask2 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1)))\n      (a!7 (ite (= mask3 4) mask2 (ite (or (= mask2 5) (= mask3 5)) 5 a!6))))\n(let ((a!3 (ite (or (= mask1 1) (= mask2 1)) 1 (ite (= mask1 4) mask2 a!2)))\n      (a!8 (ite (or (= mask2 1) (= mask3 1)) 1 (ite (= mask2 4) mask3 a!7))))\n(let ((a!4 (ite (= a!3 0) mask3 (ite (= mask3 0) a!3 (ite (= a!3 mask3) a!3 5))))\n      (a!9 (ite (= mask1 0)\n                a!8\n                (ite (= a!8 0) mask1 (ite (= mask1 a!8) mask1 5)))))\n(let ((a!5 (ite (= mask3 4) a!3 (ite (or (= a!3 5) (= mask3 5)) 5 a!4)))\n      (a!10 (ite (= a!8 4) mask1 (ite (or (= mask1 5) (= a!8 5)) 5 a!9))))\n  (distinct (ite (or (= a!3 1) (= mask3 1)) 1 (ite (= a!3 4) mask3 a!5))\n            (ite (or (= mask1 1) (= a!8 1)) 1 (ite (= mask1 4) a!8 a!10)))))))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(declare-fun mask3 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (and (>= mask3 0) (<= mask3 5)))\n",
+      "weakenedControlQuery": "(declare-fun mask1 () Int)\n(declare-fun mask2 () Int)\n(declare-fun mask3 () Int)\n(assert (and (>= mask1 0) (<= mask1 5)))\n(assert (and (>= mask2 0) (<= mask2 5)))\n(assert (and (>= mask3 0) (<= mask3 5)))\n(assert (let ((a!1 (ite (= mask1 0)\n                mask2\n                (ite (= mask2 0) mask1 (ite (= mask1 mask2) mask1 5)))))\n(let ((a!2 (ite (= mask2 4) mask1 (ite (or (= mask1 5) (= mask2 5)) 5 a!1))))\n(let ((a!3 (ite (or (= mask1 1) (= mask2 1)) 1 (ite (= mask1 4) mask2 a!2))))\n(let ((a!4 (ite (= a!3 0) mask3 (ite (= mask3 0) a!3 (ite (= a!3 mask3) a!3 5)))))\n(let ((a!5 (ite (= mask3 4) a!3 (ite (or (= a!3 5) (= mask3 5)) 5 a!4))))\n(let ((a!6 (distinct a!3\n                     (ite (or (= a!3 1) (= mask3 1))\n                          1\n                          (ite (= a!3 4) mask3 a!5)))))\n  (and (= mask1 2) (= mask2 3) (= mask3 1) a!6))))))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[mask2 = 3, mask1 = 2, mask3 = 1]",
+      "status": "passed"
+    },
+    {
+      "id": "query-profile-exact-original-action",
+      "covers": [
+        "US-055-AC8"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded qualified lookup/action labels; authentic immutable profile and exact actual query-use extraction are premises, not native authentication proofs",
+      "assumptions": [
+        "query_operator >= 0",
+        "query_operator <= 4",
+        "profile_original_action(query_target,\n                        query_field,\n                        query_operator) !=\nprimary_query_action",
+        "action_granted(profile_original_action(query_target,\n                                       query_field,\n                                       query_operator))"
+      ],
+      "counterexampleQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun primary_query_action () String)\n(declare-fun profile_original_action (QualifiedRef QualifiedRef Int) String)\n(declare-fun query_field () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(declare-fun action_granted (String) Bool)\n(declare-fun claimed_original_action () String)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (distinct (profile_original_action query_target query_field query_operator)\n          primary_query_action))\n(assert (action_granted (profile_original_action\n                  query_target\n                  query_field\n                  query_operator)))\n(assert (and (= claimed_original_action\n        (profile_original_action query_target query_field query_operator))\n     (distinct claimed_original_action primary_query_action)\n     (action_granted claimed_original_action)\n     (distinct claimed_original_action\n               (profile_original_action query_target query_field query_operator))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun primary_query_action () String)\n(declare-fun profile_original_action (QualifiedRef QualifiedRef Int) String)\n(declare-fun query_field () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(declare-fun action_granted (String) Bool)\n(declare-fun claimed_original_action () String)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (distinct (profile_original_action query_target query_field query_operator)\n          primary_query_action))\n(assert (action_granted (profile_original_action\n                  query_target\n                  query_field\n                  query_operator)))\n(assert (and (= claimed_original_action\n        (profile_original_action query_target query_field query_operator))\n     (distinct claimed_original_action primary_query_action)\n     (action_granted claimed_original_action)))\n",
+      "weakenedControlQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun primary_query_action () String)\n(declare-fun profile_original_action (QualifiedRef QualifiedRef Int) String)\n(declare-fun query_field () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(declare-fun action_granted (String) Bool)\n(declare-fun claimed_original_action () String)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (distinct (profile_original_action query_target query_field query_operator)\n          primary_query_action))\n(assert (action_granted (profile_original_action\n                  query_target\n                  query_field\n                  query_operator)))\n(assert (and (distinct claimed_original_action\n               (profile_original_action query_target query_field query_operator))\n     (distinct claimed_original_action primary_query_action)\n     (action_granted claimed_original_action)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[query_target = QualifiedRef(\"\", \"\", \"\"),\n query_operator = 4,\n query_field = QualifiedRef(\"!0!\", \"\", \"\"),\n claimed_original_action = \"B\",\n primary_query_action = \"\",\n action_granted = [else -> True],\n profile_original_action = [else -> \"A\"]]",
+      "status": "passed"
+    },
+    {
+      "id": "query-profile-qualified-use-tuple",
+      "covers": [
+        "US-055-AC2",
+        "US-055-AC8"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded document/module/element tuples and five operators; label-only or operator-omitting lookup has a satisfiable substitution control",
+      "assumptions": [
+        "query_operator >= 0",
+        "query_operator <= 4",
+        "entry_operator >= 0",
+        "entry_operator <= 4"
+      ],
+      "counterexampleQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun entry_operator () Int)\n(declare-fun entry_field () QualifiedRef)\n(declare-fun query_field () QualifiedRef)\n(declare-fun entry_target () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (>= entry_operator 0))\n(assert (<= entry_operator 4))\n(assert (and (= query_target entry_target)\n     (= query_field entry_field)\n     (= query_operator entry_operator)\n     (or (distinct query_target entry_target)\n         (distinct query_field entry_field)\n         (distinct query_operator entry_operator))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun entry_operator () Int)\n(declare-fun entry_field () QualifiedRef)\n(declare-fun query_field () QualifiedRef)\n(declare-fun entry_target () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (>= entry_operator 0))\n(assert (<= entry_operator 4))\n(assert (and (= query_target entry_target)\n     (= query_field entry_field)\n     (= query_operator entry_operator)))\n",
+      "weakenedControlQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun entry_operator () Int)\n(declare-fun entry_field () QualifiedRef)\n(declare-fun query_field () QualifiedRef)\n(declare-fun entry_target () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (>= entry_operator 0))\n(assert (<= entry_operator 4))\n(assert (and (= (project2 query_target) (project2 entry_target))\n     (= (project2 query_field) (project2 entry_field))\n     (or (distinct query_target entry_target)\n         (distinct query_field entry_field)\n         (distinct query_operator entry_operator))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[query_target = QualifiedRef(\"\", \"\", \"\"),\n entry_target = QualifiedRef(\"\", \"A\", \"\"),\n query_field = QualifiedRef(\"\", \"\", \"\"),\n entry_field = QualifiedRef(\"\", \"A\", \"\"),\n entry_operator = 1,\n query_operator = 0]",
+      "status": "passed"
+    },
+    {
+      "id": "query-profile-exact-source-reuse",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "layer": "formal",
+      "scope": "Unbounded exact retained source strings with an unconstrained digest function; byte/string equality survives a hypothetical digest collision, but current native source authority remains a premise",
+      "assumptions": [
+        "Length(retained_source) > 0",
+        "Length(current_source) > 0"
+      ],
+      "counterexampleQuery": "(declare-fun retained_source () String)\n(declare-fun current_source () String)\n(declare-fun source_digest (String) String)\n(assert (> (str.len retained_source) 0))\n(assert (> (str.len current_source) 0))\n(assert (and (= (source_digest retained_source) (source_digest current_source))\n     (= retained_source current_source)\n     (distinct retained_source current_source)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun retained_source () String)\n(declare-fun current_source () String)\n(declare-fun source_digest (String) String)\n(assert (> (str.len retained_source) 0))\n(assert (> (str.len current_source) 0))\n(assert (and (= (source_digest retained_source) (source_digest current_source))\n     (= retained_source current_source)))\n",
+      "weakenedControlQuery": "(declare-fun retained_source () String)\n(declare-fun current_source () String)\n(declare-fun source_digest (String) String)\n(assert (> (str.len retained_source) 0))\n(assert (> (str.len current_source) 0))\n(assert (and (= (source_digest retained_source) (source_digest current_source))\n     (distinct retained_source current_source)))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[current_source = \"B\",\n retained_source = \"A\",\n source_digest = [else -> \"A\"]]",
+      "status": "passed"
+    },
+    {
+      "id": "collection-aggregate-hidden-noninterference",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "layer": "formal",
+      "scope": "Three ordered carrier identities, unbounded nonnegative bag multiplicities and mathematical integer payloads; stable complete eligibility and equal eligible payloads/multiplicities imply COUNT/SUM noninterference. Native arithmetic overflow, NULL and masked operator domains remain separate obligations",
+      "assumptions": [
+        "collection_ma0 >= 0",
+        "collection_ma1 >= 0",
+        "collection_ma2 >= 0",
+        "collection_mb0 >= 0",
+        "collection_mb1 >= 0",
+        "collection_mb2 >= 0",
+        "Implies(collection_e0,\n        And(collection_ma0 == collection_mb0,\n            collection_va0 == collection_vb0))",
+        "Implies(collection_e1,\n        And(collection_ma1 == collection_mb1,\n            collection_va1 == collection_vb1))",
+        "Implies(collection_e2,\n        And(collection_ma2 == collection_mb2,\n            collection_va2 == collection_vb2))"
+      ],
+      "counterexampleQuery": "(declare-fun collection_ma0 () Int)\n(declare-fun collection_ma1 () Int)\n(declare-fun collection_ma2 () Int)\n(declare-fun collection_mb0 () Int)\n(declare-fun collection_mb1 () Int)\n(declare-fun collection_mb2 () Int)\n(declare-fun collection_vb0 () Int)\n(declare-fun collection_va0 () Int)\n(declare-fun collection_e0 () Bool)\n(declare-fun collection_vb1 () Int)\n(declare-fun collection_va1 () Int)\n(declare-fun collection_e1 () Bool)\n(declare-fun collection_vb2 () Int)\n(declare-fun collection_va2 () Int)\n(declare-fun collection_e2 () Bool)\n(assert (>= collection_ma0 0))\n(assert (>= collection_ma1 0))\n(assert (>= collection_ma2 0))\n(assert (>= collection_mb0 0))\n(assert (>= collection_mb1 0))\n(assert (>= collection_mb2 0))\n(assert (=> collection_e0\n    (and (= collection_ma0 collection_mb0) (= collection_va0 collection_vb0))))\n(assert (=> collection_e1\n    (and (= collection_ma1 collection_mb1) (= collection_va1 collection_vb1))))\n(assert (=> collection_e2\n    (and (= collection_ma2 collection_mb2) (= collection_va2 collection_vb2))))\n(assert (let ((a!1 (distinct (+ (ite collection_e0 (* collection_ma0 collection_va0) 0)\n                        (ite collection_e1 (* collection_ma1 collection_va1) 0)\n                        (ite collection_e2 (* collection_ma2 collection_va2) 0))\n                     (+ (ite collection_e0 (* collection_mb0 collection_vb0) 0)\n                        (ite collection_e1 (* collection_mb1 collection_vb1) 0)\n                        (ite collection_e2 (* collection_mb2 collection_vb2) 0)))))\n  (or (distinct (+ (ite collection_e0 collection_ma0 0)\n                   (ite collection_e1 collection_ma1 0)\n                   (ite collection_e2 collection_ma2 0))\n                (+ (ite collection_e0 collection_mb0 0)\n                   (ite collection_e1 collection_mb1 0)\n                   (ite collection_e2 collection_mb2 0)))\n      a!1)))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun collection_ma0 () Int)\n(declare-fun collection_ma1 () Int)\n(declare-fun collection_ma2 () Int)\n(declare-fun collection_mb0 () Int)\n(declare-fun collection_mb1 () Int)\n(declare-fun collection_mb2 () Int)\n(declare-fun collection_vb0 () Int)\n(declare-fun collection_va0 () Int)\n(declare-fun collection_e0 () Bool)\n(declare-fun collection_vb1 () Int)\n(declare-fun collection_va1 () Int)\n(declare-fun collection_e1 () Bool)\n(declare-fun collection_vb2 () Int)\n(declare-fun collection_va2 () Int)\n(declare-fun collection_e2 () Bool)\n(assert (>= collection_ma0 0))\n(assert (>= collection_ma1 0))\n(assert (>= collection_ma2 0))\n(assert (>= collection_mb0 0))\n(assert (>= collection_mb1 0))\n(assert (>= collection_mb2 0))\n(assert (=> collection_e0\n    (and (= collection_ma0 collection_mb0) (= collection_va0 collection_vb0))))\n(assert (=> collection_e1\n    (and (= collection_ma1 collection_mb1) (= collection_va1 collection_vb1))))\n(assert (=> collection_e2\n    (and (= collection_ma2 collection_mb2) (= collection_va2 collection_vb2))))\n(assert (and collection_e0\n     (> collection_ma0 0)\n     (not collection_e1)\n     (> collection_ma1 0)))\n",
+      "weakenedControlQuery": "(declare-fun collection_ma0 () Int)\n(declare-fun collection_ma1 () Int)\n(declare-fun collection_ma2 () Int)\n(declare-fun collection_mb0 () Int)\n(declare-fun collection_mb1 () Int)\n(declare-fun collection_mb2 () Int)\n(declare-fun collection_vb0 () Int)\n(declare-fun collection_va0 () Int)\n(declare-fun collection_e0 () Bool)\n(declare-fun collection_vb1 () Int)\n(declare-fun collection_va1 () Int)\n(declare-fun collection_e1 () Bool)\n(declare-fun collection_vb2 () Int)\n(declare-fun collection_va2 () Int)\n(declare-fun collection_e2 () Bool)\n(assert (>= collection_ma0 0))\n(assert (>= collection_ma1 0))\n(assert (>= collection_ma2 0))\n(assert (>= collection_mb0 0))\n(assert (>= collection_mb1 0))\n(assert (>= collection_mb2 0))\n(assert (=> collection_e0\n    (and (= collection_ma0 collection_mb0) (= collection_va0 collection_vb0))))\n(assert (=> collection_e1\n    (and (= collection_ma1 collection_mb1) (= collection_va1 collection_vb1))))\n(assert (=> collection_e2\n    (and (= collection_ma2 collection_mb2) (= collection_va2 collection_vb2))))\n(assert (or (distinct (+ collection_ma0 collection_ma1 collection_ma2)\n              (+ collection_mb0 collection_mb1 collection_mb2))\n    (distinct (+ (* collection_ma0 collection_va0)\n                 (* collection_ma1 collection_va1)\n                 (* collection_ma2 collection_va2))\n              (+ (* collection_mb0 collection_vb0)\n                 (* collection_mb1 collection_vb1)\n                 (* collection_mb2 collection_vb2)))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[collection_e0 = False,\n collection_e1 = False,\n collection_e2 = False,\n collection_va0 = -3,\n collection_va2 = 1,\n collection_mb0 = 9,\n collection_ma0 = 8,\n collection_vb0 = -5,\n collection_mb1 = 8,\n collection_mb2 = 8,\n collection_vb2 = -8,\n collection_vb1 = 3,\n collection_va1 = 7,\n collection_ma1 = 15,\n collection_ma2 = 9]",
+      "status": "passed"
+    },
+    {
+      "id": "collection-page-hidden-noninterference",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "layer": "formal",
+      "scope": "Three unique publicly ordered identities and any selected eligible rank 0..2; stable complete eligibility/order makes eligibility-before-page invariant to hidden presence. A LIMIT/OFFSET-before-filter control admits changed/empty authorized pages. Native ordering/collation, cursor provenance and current authority remain premises",
+      "assumptions": [
+        "page_index >= 0",
+        "page_index < 3",
+        "Implies(collection_e0, page_pa0 == page_pb0)",
+        "Implies(collection_e1, page_pa1 == page_pb1)",
+        "Implies(collection_e2, page_pa2 == page_pb2)"
+      ],
+      "counterexampleQuery": "(declare-fun page_index () Int)\n(declare-fun page_pb0 () Bool)\n(declare-fun page_pa0 () Bool)\n(declare-fun collection_e0 () Bool)\n(declare-fun page_pb1 () Bool)\n(declare-fun page_pa1 () Bool)\n(declare-fun collection_e1 () Bool)\n(declare-fun page_pb2 () Bool)\n(declare-fun page_pa2 () Bool)\n(declare-fun collection_e2 () Bool)\n(assert (>= page_index 0))\n(assert (< page_index 3))\n(assert (=> collection_e0 (= page_pa0 page_pb0)))\n(assert (=> collection_e1 (= page_pa1 page_pb1)))\n(assert (=> collection_e2 (= page_pa2 page_pb2)))\n(assert (let ((a!1 (= (+ (ite (and page_pa0 collection_e0) 1 0)) page_index))\n      (a!2 (= (+ (ite (and page_pa0 collection_e0) 1 0)\n                 (ite (and page_pa1 collection_e1) 1 0))\n              page_index))\n      (a!4 (= (+ (ite (and page_pb0 collection_e0) 1 0)) page_index))\n      (a!5 (= (+ (ite (and page_pb0 collection_e0) 1 0)\n                 (ite (and page_pb1 collection_e1) 1 0))\n              page_index)))\n(let ((a!3 (ite (and (and page_pa0 collection_e0) (= 0 page_index))\n                0\n                (ite (and (and page_pa1 collection_e1) a!1)\n                     1\n                     (ite (and page_pa2 collection_e2 a!2) 2 (- 1)))))\n      (a!6 (ite (and (and page_pb0 collection_e0) (= 0 page_index))\n                0\n                (ite (and (and page_pb1 collection_e1) a!4)\n                     1\n                     (ite (and page_pb2 collection_e2 a!5) 2 (- 1))))))\n  (distinct a!3 a!6))))\n",
+      "result": "unsat",
+      "populationResult": "sat",
+      "populationQuery": "(declare-fun page_index () Int)\n(declare-fun page_pb0 () Bool)\n(declare-fun page_pa0 () Bool)\n(declare-fun collection_e0 () Bool)\n(declare-fun page_pb1 () Bool)\n(declare-fun page_pa1 () Bool)\n(declare-fun collection_e1 () Bool)\n(declare-fun page_pb2 () Bool)\n(declare-fun page_pa2 () Bool)\n(declare-fun collection_e2 () Bool)\n(assert (>= page_index 0))\n(assert (< page_index 3))\n(assert (=> collection_e0 (= page_pa0 page_pb0)))\n(assert (=> collection_e1 (= page_pa1 page_pb1)))\n(assert (=> collection_e2 (= page_pa2 page_pb2)))\n(assert (and (not collection_e0)\n     collection_e1\n     page_pa0\n     (not page_pb0)\n     page_pa1\n     page_pb1))\n",
+      "weakenedControlQuery": "(declare-fun page_index () Int)\n(declare-fun page_pb0 () Bool)\n(declare-fun page_pa0 () Bool)\n(declare-fun collection_e0 () Bool)\n(declare-fun page_pb1 () Bool)\n(declare-fun page_pa1 () Bool)\n(declare-fun collection_e1 () Bool)\n(declare-fun page_pb2 () Bool)\n(declare-fun page_pa2 () Bool)\n(declare-fun collection_e2 () Bool)\n(assert (>= page_index 0))\n(assert (< page_index 3))\n(assert (=> collection_e0 (= page_pa0 page_pb0)))\n(assert (=> collection_e1 (= page_pa1 page_pb1)))\n(assert (=> collection_e2 (= page_pa2 page_pb2)))\n(assert (let ((a!1 (and page_pa1 collection_e1 (= (+ (ite page_pa0 1 0)) page_index)))\n      (a!2 (and page_pa2\n                collection_e2\n                (= (+ (ite page_pa0 1 0) (ite page_pa1 1 0)) page_index)))\n      (a!3 (and page_pb1 collection_e1 (= (+ (ite page_pb0 1 0)) page_index)))\n      (a!4 (and page_pb2\n                collection_e2\n                (= (+ (ite page_pb0 1 0) (ite page_pb1 1 0)) page_index))))\n  (distinct (ite (and page_pa0 collection_e0 (= 0 page_index))\n                 0\n                 (ite a!1 1 (ite a!2 2 (- 1))))\n            (ite (and page_pb0 collection_e0 (= 0 page_index))\n                 0\n                 (ite a!3 1 (ite a!4 2 (- 1)))))))\n",
+      "weakenedControlResult": "sat",
+      "weakenedCounterexample": "[page_index = 2,\n page_pa2 = True,\n page_pa1 = True,\n page_pa0 = True,\n collection_e0 = False,\n page_pb0 = False,\n collection_e2 = True,\n page_pb1 = True,\n page_pb2 = True,\n collection_e1 = True]",
+      "status": "passed"
+    }
+  ],
+  "nativeInstallationProven": false,
+  "scope": "Conditional formal proofs, not complete extension/backend acceptance"
+}

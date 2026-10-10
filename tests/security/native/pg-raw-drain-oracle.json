@@ -1,0 +1,45 @@
+{
+  "version": "0.1.0",
+  "engine": "170009",
+  "lockKey": "10070019",
+  "reader": "umf_sec_alice",
+  "revoker": "umf_sec_revoker",
+  "bufferedIds": [
+    "RA",
+    "RAB"
+  ],
+  "afterIds": [],
+  "schedules": [
+    {
+      "id": "publish",
+      "protected": true,
+      "publishedIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "discard",
+      "protected": true,
+      "publishedIds": []
+    },
+    {
+      "id": "early-unlock-control",
+      "protected": false,
+      "publishedIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "backend-loss-control",
+      "protected": false,
+      "backendLoss": true,
+      "publishedIds": [
+        "RA",
+        "RAB"
+      ]
+    }
+  ],
+  "scope": "One participating raw realm: ordinary reader holds session advisory shared lease beyond data commit until a controlled consumer acknowledges final publication/discard; ordinary revoker takes exclusive transaction lease and acknowledges after commit. Independent/nonparticipating writers, coordinator failure and general release paths remain separate requirements. Native-session loss is an unsafe negative control; persistent publisher refusal is still required before L03 acceptance."
+}

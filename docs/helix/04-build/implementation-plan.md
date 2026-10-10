@@ -5782,3 +5782,3908 @@ refusal alongside previous single-table evidence in
 same focused browser check was rerun outside the sandbox. No native SQL, cloud
 compute, migration or protocol admission is claimed. Ashlar's existing pinned
 single-table generator remains compatible; consumer repinning is separate work.
+## Shared security execution goal (2026-10-08)
+
+Owner authorization covers requirements/design, bounded formal/native spikes, robust backend plans and an active goal to make implementations pass all allocated tests. Governed slice: FR-45, FEAT-008, US-079–057, CONTRACT-062/063, SD-008 and TD/STP-079–057.
+
+1. Specify meaning and qualified binding admission; retain formal assumptions.
+2. Execute a small independent oracle/formal/physical-mapping spike.
+3. Implement portable extension validation/evaluation and verify Bun/Chromium.
+4. Integrate policy lowering through Weft owner interfaces without a compiler fork.
+5. Qualify raw PostgreSQL, actual Truss, raw Delta and actual Ashlar independently, including mandatory restrictions, private facts, bags and native bypass.
+6. Execute writes/history/revocation/derived-copy schedules and publish per-AC evidence.
+
+No synthetic spike closes actual Truss/Ashlar or production deployment acceptance. Missing native capability/access is a recorded gate, not a skipped pass. Progress/evidence lives in `evidence/security/`; no unrelated existing gate is waived.
+
+Production implementation has begun with bounded portable truth/composition,
+defensive runtime validation and a fresh-runner process/output boundary.
+The portable package now includes policy/ontology schemas, preservation and
+typed pinned-document closure with bounded correlated expression validation.
+It passes focused Bun and real Chromium checks at retained fingerprints.
+The portable host-attested fact evaluator now executes bounded correlated
+expressions, collection refusal, typed disclosure and protected query-use admission.
+Fresh required cases S01–S12 pass; all 120 backend cases remain open.
+Immutable read registration now pins policy/ontology/core source revisions and
+refuses content-changing revision reuse. This in-process helper does not
+authenticate callers or establish native authority. Consumer lowering/admission, independently authenticated fact
+providers and native lifecycle qualification follow. Databricks aidev-cus
+authentication was observed successfully; an isolated target and ordinary-actor
+qualification are not yet established. See
+[scoped execution evidence](evidence/security/README.md).
+
+Shared lifecycle implementation now includes the bounded single-realm authority
+guard. Focused Bun/Chromium schedules verify final-release drain, new generation,
+queued versus active cancellation, uncertain-transition closure and generation
+reuse refusal. All native writer participation and native lifecycle cases remain
+open; an application lock alone cannot qualify any backend.
+
+Semantic write admission now implements complete original/proposed states,
+changed-field checks and separate ownership/policy-attribute actions, with
+coherent current authority cuts and finite aggregate check budgets. It has Bun
+and Chromium evidence; native effects/atomicity and actual backend L01/L02 remain
+open. Failed initial write typecheck evidence is retained separately; the
+coverage-variable narrowing was corrected before the fresh verification replay.
+
+Typed dependency analysis now strengthens write admission: live policy fields,
+key/endpoint components and association inventories are derived from complete
+meaning. Missing target policy-field classification refuses; tests retain the
+omission/denial/permitted progression. This component is browser-compatible;
+actual backend writer inventories and compiler lowering remain open.
+
+A separate native PostgreSQL epoch candidate now executes seven ordinary-session
+freshness/absence controls. It rejects a first protected RR read after acknowledgment
+and non-MVCC rollback gaps, and denies direct private epoch/clock reads. Two added
+scoped algebra checks accompany the native observations. Integration must ensure
+explicit admission for zero-row operations, complete native writer participation,
+clock custody and independently reconciled recovery; all native/backend cases
+remain open. Disposable startup failure/readiness retry is retained.
+
+Live Databricks actor preflight now confirms both configured profiles resolve
+to the same original actor, leaving zero distinct non-installer identities.
+Independent ordinary credentials and target namespace remain required external
+inputs. TD-056 records exact available Weft obligation transport and unresolved
+model-version, disclosure-result-domain and native host-checker adoption. No
+profile name, generic obligation or opaque codec is treated as native authority.
+
+
+A native PostgreSQL application-buffer witness now extends the drain candidate
+past SQL transaction commit. Session guards block revocation until explicit host
+release/discard. A weakened early native close reproduces acknowledgment with
+revoked rows still buffered. Production connection-loss/stream cancellation and
+public-driver integration therefore remain required; five lifecycle witnesses
+are qualified feasibility evidence, not backend acceptance. Source/effect receipts
+and fresh native/epoch replays are retained in the security evidence directory.
+
+
+Public Bun SQL/PostgreSQL driver feasibility now has six exact ordinary-connection
+and buffered release/discard observations. Source/typecheck, native SQLSTATE,
+finite barrier deadlines and exact disposable-container cleanup are retained.
+This strengthens the physical integration seam; Weft security lowering and full
+backend acceptance remain open. Failed error-code/readiness attempts are retained,
+with TCP initialization readiness corrected before the passing replay.
+
+
+The PostgreSQL public driver candidate now exercises native data-connection loss
+under an independently held coordinator guard. Its seven source-qualified
+observations pass; host buffer invalidation precedes drain/acknowledgment and a
+fresh ordinary connection sees revoked access removed. Evidence publication now
+requires successful cleanup. Coordinator failure, complete native writer custody
+and production compiler/host integration remain open; no native AC is closed.
+
+
+Coordinator-loss controls now compare the native-only weakened design against
+the implemented shared single-realm host guard using actual Bun SQL/native PID
+termination. Nine driver observations pass; the positive transition producer
+stays queued through host-buffer invalidation, while the weakened design actually
+acknowledges with a live revoked buffer. This qualifies the scoped host/native
+schedule only. All-native-writer participation and distributed profile admission
+remain required; all 120 backend acceptance cases stay open.
+
+
+A fresh isolated owner Rust build now executes four compiler model-version
+controls. Original qualified Truss/Ashlar core07 requests compile; correctly
+re-pinned core08 variants refuse at the public request envelope with no partial
+SQL/plan. The next security compiler integration must therefore version request
+admission before catalog/source/result lowering; changing the loader alone cannot
+admit the security model. Exact owner source/corpus/binary custody is retained.
+Truss native routine/security installation and Databricks independent identities
+remain separate unresolved foundations, not synthetic profile passes.
+
+
+Weft-owned B-008 has begun with FR-19–22/CONTRACT-005 and the explicit 0.3 security
+transport/core08 custody foundation. Fifteen fresh owner Rust admission/frontend/
+envelope tests pass, including no backend-factory invocation for unsupported
+activation. Existing ordinary core07 contracts remain separate. Complete security
+semantic/IR/result-domain/backend/host execution and language-binding parity remain
+required; no native case is closed by this foundation.
+
+
+The owning Rust compiler now admits bounded policy/ontology source shapes and
+exact model/ontology revision closure, preserving source bytes and opaque native
+archives. Reproducible canonical/strict-overlay correspondence and nineteen owner
+admission/frontend/envelope tests pass. Full ontology/domain/variable interpretation,
+security IR/result-domain/backend lowering and host/native language-parity acceptance
+remain open. The prior broad Rust checkpoint reached terminal exit0 before this
+source-packet stage; current targeted checks qualify the new stage separately.
+
+
+Weft now has exact ontology reference/key/member/endpoint closure with qualified
+cross-document identity and selected-domain-shape refusal. The current twenty-five
+owner security/frontend/envelope tests pass; distinct equal local IDs do not merge.
+Complete literal/facet interpretation, policy variable/type checking, logical/physical
+security lowering and native host/actor qualification remain open. Unsupported
+activation still occurs before the backend factory; no backend AC is closed.
+
+
+The owner compiler now checks declared policy term types, lexical variables,
+qualified identity/scalar domains and action/disclosure membership. Source/model
+stage reuse is coherent: changed and rehashed inputs cannot replace prepared
+catalog definitions. Thirty-one current owner tests pass. Complete literal/facet
+semantics, truth/composition IR, physical lowering and native host/binding parity
+remain open; unsupported activation still precedes backend composition.
+
+
+The current Rust admission stage now validates exact integer/decimal coefficients,
+binary tokens, Unicode scalar lengths, finite-width numeric bounds, range emptiness,
+allowed-value identity, examples and defaults for the admitted scalar singleton
+subset. Thirty-four targeted owner tests pass, including fractional/overflow
+refusals and equivalent numeric enum duplicates. Constant/transform checking uses
+this same validator. Source-bound receipts retain commands and observations.
+This remains admission evidence: truth/composition IR, physical lowering, binding
+parity and native qualification remain required. The acceptance gate remains
+12/132; none of the 120 backend cases is discharged by these component checks.
+
+
+The owner compiler now constructs an immutable type-admitted logical security plan
+with qualified scalar/type/key references, exact retained literal wrappers,
+explicit effects and disclosure dispositions. Nested existential bindings use
+distinct slots while retaining outer correlation. Targeted tests inspect the
+Project membership chain, refuse unbound terms and reject reuse with mutated
+prepared definitions. Truth evaluation/composition and physical lowering remain
+open; the public 0.3 compile response remains blocked-only. These observations
+are component evidence, not backend acceptance closure.
+
+The current owner replay passes 46 tests: ten library unit tests (including the
+private-definition mutation witness), six compile-envelope, four frontend,
+twenty-three security-admission and three exact-literal tests. The initial
+integration-test attempt incorrectly accessed private Catalog definitions and
+failed compilation; its receipt is retained as
+`evidence/security/weft-admission-ir-test-access-failure.json`. The repaired unit
+witness exercises that state inside the crate without making it public.
+
+
+Rust now implements pure scoped rule composition over the admitted logical plan:
+unknown-first refusal, permit/require/forbid decisions, protected-field obligation
+coverage, withholding dominance and exact typed transform conflicts. Transform
+identity/version are explicit in the IR. An independently executed TypeScript
+oracle supplies 120 truth vectors and 27 decision combinations; the owner tests
+check every vector and rule-reversal invariance. These caller-truth simulations
+do not admit authority cuts or evaluate fact-dependent expressions. Native
+authentication, logical expression evaluation, physical lowering and final release
+remain open, and no backend acceptance case is closed.
+
+The current owner replay passes 51 tests, including five composition tests and
+120 TypeScript-derived truth vectors plus 27 decision vectors. Projection-specific
+checks preserve unprotected-key reads and reject duplicate selections. Exact mask
+identity distinguishes adjacent values above 2^53 and accepts equivalent numeric
+tokens/signed zero. A new test initially used `integer` instead of the canonical
+`integerToken` wrapper and correctly failed source admission; the failed receipt
+is retained as `evidence/security/weft-admission-composition-test-wrapper-failure.json`.
+The evidence tool's first corpus integration also used a tuple where a Path was
+required; that tooling error was corrected before retaining a successful receipt.
+The 132-case backend acceptance gate remains open at 12 semantic cases passing.
+
+
+The owner Rust evaluator now computes bounded fact-dependent expression truths
+over explicit simulated cuts, including exact qualified tuple identity, endpoint
+identity, scalar equality, correlated existential bindings and strong Kleene
+operators. Preflight covers all scoped branches and selected targets even for
+empty collections. Coverage omissions, stale metadata, ambiguous subjects,
+duplicate private identities, key/field mismatch and budget exhaustion refuse.
+Twenty freshly executed TypeScript scenarios check Project membership and whole-
+collection refusal correspondence. Independent owner tests retain nested same-type
+relations and bag multiplicity. This is conditional simulation: caller assertions
+do not establish native authority, and results contain dispositions without
+released values. Query-use, writes, binding parity, native codec correspondence,
+physical lowering and backend actor qualification remain required. Unsupported
+activation still precedes backend factories; the 132-case acceptance gate remains
+open at twelve semantic cases passing.
+
+The fresh owner replay passes 55 tests: nineteen library tests, six compile-
+envelope, four frontend, twenty-three admission and three exact-literal tests.
+The twenty Project scenarios match the portable evaluator. A large-key witness
+admits one/eight resource rows but refuses nine when repeated identity copying
+exhausts the work budget; no previously admitted prefix is returned. Logical
+identity remains an exact qualified component structure, with native codec and
+physical correspondence explicitly unqualified.
+
+
+The portable evaluator and owner Rust simulation now admit all five query-use
+operators, separate original-value permissions and complete cross-action
+dependencies. An empty collection cannot skip prohibited-field or original-action
+preflight. Seventy-five cross-language scenarios pass; real Chromium repeats
+fifteen new empty-query observations (25 evaluation observations total). Native
+query execution remains open: CONTRACT-063 and all four B08 procedures require
+source-qualified exact field/operator/action bindings and unrelated-action
+substitution controls before execution. The simulation's explicit action labels
+are conditional inputs, not native provenance. The first broader run caught a
+TypeScript narrowing error and sandboxed loopback listen failure; repaired
+component and browser replays pass, with failures retained in
+`evidence/security/components-query-narrowing-failure.json` and
+`evidence/security/acceptance-query-browser-listen-failure.json`.
+
+
+The owner compiler now admits immutable source-bound query profiles with complete
+qualified field/operator/original-action bindings. It derives the exact action
+and refuses caller substitution by a different granted action, including empty
+collections. Profile reuse retains raw model inputs/module selections and exact
+policy/ontology/backend-binding sources. Valid profiles still hit the unsupported
+activation gate; stale profiles refuse earlier and neither calls a backend
+factory. A new Rust fixture initially conflicted mutable/immutable borrows; its
+failed build receipt remains in
+`evidence/security/weft-admission-query-profile-test-borrow-failure.json`.
+
+Formal analysis now retains eighteen conditional checks, adding exact original-
+action lookup, qualified target/field/operator separation and exact-source reuse
+even under an abstract digest collision. Each new check has a satisfiable admitted
+population and a satisfiable weakened counterexample. These prove contract-model
+invariants under stated premises, not Rust machine correctness, authenticated
+source ownership, actual SQL-use extraction or installed database enforcement.
+All native backend acceptance remains open.
+
+The current owner replay passes sixty tests: twenty-two library tests, six
+compile-envelope, four frontend, twenty-five admission and three exact-literal
+tests. All eighteen scoped solver checks pass with SAT populations and weakened
+controls. The freshly executed semantic gate passes S01–S12; all 120 native
+backend cases remain missing, leaving acceptance at 12/132. Component/type/schema
+checks and the 26-check retained-evidence audit also pass. This checkpoint closes
+no native backend criterion and does not release a security compiler profile.
+
+
+Weft now extracts actual field/operator lineage from its resolved SQL tree and
+applies source-bound profiles before native activation. Tests inspect all five
+operators and both self-join occurrences, retain keyset dependencies and
+field-free count scans, and preserve ordered alias outputs after dependency
+deduplication. Actual protected predicates and out-of-profile counts refuse
+without backend factories. The resulting profiled-query artifact has a private
+constructor and read-only source-derived uses. An initial SQL fixture selected
+unbounded integers outside the existing application's 0.2 numeric subset; that
+refusal remains in `evidence/security/weft-admission-query-extraction-width-failure.json`.
+Fresh positive SQL witnesses explicitly use authored names and signed 64-bit
+integers. Relationship bridges, transformed operator typing, physical lowering,
+installed source authority and native release remain unqualified.
+
+The current owner replay passes 66 tests: twenty-six library tests, six compile-
+envelope, four frontend, twenty-seven admission and three exact-literal tests.
+The ordinary-version bridge probe passes. The concurrent component replay
+passed both typechecks and the schema audits, but its acceptance-ledger test
+exceeded the 15-second deadline; the failed receipt is retained as
+`evidence/security/components-ledger-timeout.json`. The isolated replay also exceeded the deadline. The three full-ledger audits
+now have explicit 60-second test deadlines; security unit-test deadlines remain
+15 seconds and the audit assertions are unchanged. The bounded replay passes all four component checks, including 59 tests and
+1,931 assertions.
+All 26 retained evidence checks remain fresh; freshness alone does not establish
+a passing test result. The actual SQL/profile connection is source-level
+admission only. Native SQL lowering and enforcement remain open, and the full
+acceptance gate remains 12/132 with 120 backend cases missing.
+
+## Per-scan physical-mapping obligation foundation
+
+The owner compiler now derives immutable obligations from the admitted profiled
+SQL query, separately for each scan occurrence and selected action. Source and
+subject keys retain their ordered components even for field-free COUNT. Scoped
+rule conditions are visited without truth simplification; an original-value
+query action retains its own correlated dependencies, including false branches.
+Private association inventories retain every classified field and endpoint target
+key. Context dependencies, live record attributes, projection fields and query
+operator fields remain distinct; constant domain references add no live fact read.
+The derivation charges globally bounded work and identifier text. Qualified reuse
+continues to require exact source/model/module-selection snapshots.
+
+The fresh owner replay passes 69 tests: 29 library, six compile-envelope, four
+frontend, 27 admission and three exact-literal tests. New witnesses cover both
+self-join occurrences, field-free COUNT, complete Ownership/Assignment inventories
+and endpoint identities, original-action false branches, context separation and
+bounded work/text refusal. The ordinary-version probe passes four observations;
+all four component checks pass (59 tests, 1,931 assertions; typechecks and 60-package/
+349-schema audits). All 26 evidence-freshness checks succeed. These are conditional
+compiler inventory/admission results, not native completeness or enforcement proof.
+Physical mapping validation, transformed query types, native lowering, installed
+source authority and final release remain open. The acceptance gate remains
+12/132 with 120 native backend cases missing; no security criterion is closed.
+
+
+## First native raw-table acceptance runner
+
+The previously missing `pg-raw.B01` runner now installs and removes an owned
+disposable PostgreSQL 17.9 raw-table RLS fixture, with ordinary Alice, Bob and
+outsider login connections, a private non-login/non-superuser policy helper owner,
+and a separate authored fact/result oracle. The retained execution covers active/
+inactive assignments, sibling Projects sharing a company, no owner and multiple
+owners; direct private-fact reads refuse. Exact installed catalog metadata and
+actual ordinary actor attributes are retained rather than installer-role claims.
+The initial sandbox run could not access the Docker socket; the authorized
+escalated disposable run and fresh gate replay succeed. No preexisting installation
+is modified, and owned-fixture cleanup completes before success publication.
+
+The fresh gate now has 13/132 passing cases: twelve semantic cases and this native
+read-membership case. Its intentional failure retains 119 missing native cases.
+This is stable-cut raw-table membership evidence only; compiler mapping integration,
+current-authority ordering, other native controls and all actual graph-backend
+cases remain open. No full security acceptance criterion is closed.
+
+Final verification of this increment: the B01 gate receipt has 28 passing
+observations and retains 13 native relations/indexes, 12 columns and 12 constraints,
+plus policies, routine source, roles, memberships and actual actor identities.
+The four component checks pass again; all 27 evidence-freshness/allocation checks
+succeed, including the new native execution. These checks do not alter the
+119-case native deficit or close any full security acceptance criterion.
+
+
+## Native collection acceptance and conditional noninterference
+
+`pg-raw.B03` now executes ordinary native lookup/list/count/min/max/SUM, secured
+resource-to-Project traversal, offset paging and keyset paging on the owned raw
+fixture. Authored per-actor vectors cover active membership and all-hidden actors;
+explicit missing lookups and empty count/aggregate/traversal/page queries are
+also exercised. Raw fact junctions remain private. The secured barrier view
+requires source eligibility and active target-Project membership; its actual
+definition/settings and columns join the retained catalog inventory.
+A native weakened control disables RLS only in this disposable installation and
+exposes five rows to ordinary counts. Restoring RLS restores exact eligibility.
+The first lookup run failed because psql renders SQL NULL as empty text; explicit
+JSON null now preserves the lookup outcome. The failed gate is retained as
+`evidence/security/acceptance-pgraw-lookup-null-failure.json`.
+
+Two new Z3 checks establish hidden-record noninterference for mathematical
+COUNT/SUM over three symbolic carrier identities with unbounded nonnegative bag
+multiplicities/integer payloads, and for any eligible page rank 0..2 under fixed
+public ordering. Positive populations are SAT, violations UNSAT and weakened
+unfiltered-aggregate/page-before-filter controls SAT. Complete stable
+eligibility, equal eligible values and public order are premises; native overflow,
+NULL/masked operator domains, arbitrary ordering/collation, cursor provenance and
+current authority remain independently unproved. The formal suite now has 20
+conditional checks, not a proof of installed backend correctness.
+
+Fresh replay passes twelve semantic cases plus pg-raw.B01 (29 observations) and
+pg-raw.B03 (77 observations). The full gate remains intentionally failed at
+14/132 with 118 missing native cases. No full security criterion is closed.
+
+The four component checks pass after this increment (59 tests, 1,931 assertions,
+both TypeScript checks and schema audits). All 28 evidence-freshness/allocation
+checks pass. The 14/132 gate remains the acceptance authority; these component
+and freshness results do not close the 118-case native deficit.
+
+
+## Independently authenticated native actors and privileged controls
+
+The raw fixture now uses unique, separately generated SCRAM credentials over TCP
+for ordinary actors. Credential values travel through private environment/stdin. Neither generated
+secret values nor their stored verifiers enter retained source, arguments, receipts
+or native catalog inventories.
+The excluded installer/assessor retains local container-host access; this is an
+explicit host exclusion, not production authentication qualification. Receipts
+retain actual TCP authentication rules and native SCRAM-storage boolean outcomes.
+
+`pg-raw.B14` verifies that the excluded administrator actually has native superuser/
+bypass attributes and reads all five resources under forced RLS. Ordinary actors
+are not administrator/guardian members, cannot SET ROLE or SET SESSION AUTHORIZATION
+to either authority (native SQLSTATE 42501), and cannot authenticate as the
+administrator using their own credentials. The first boolean-scalar run failed
+because psql rendered f/t; explicit JSON encoding fixes the transport. That failure
+is retained as `evidence/security/acceptance-pgraw-privilege-boolean-failure.json`.
+Owned cleanup also reconciles an uncertain creation result by exact generated name
+and run label before deletion. Successful publication follows completed cleanup.
+
+The fresh gate passes twelve semantic cases plus pg-raw.B01 (31 observations),
+B03 (79 observations) and B14 (51 observations), all replayed with authenticated
+ordinary SCRAM connections. It remains intentionally failed at 15/132 with 117
+missing native cases. Complete role/pool and definer closure, host authentication,
+current-authority ordering, compiler/physical mapping integration, protected-field
+controls and actual graph backends remain open. No full security criterion closes.
+
+Final verification: all four component checks pass (59 tests, 1,931 assertions,
+both TypeScript checks and schema audits), and all 29 evidence-freshness/allocation
+checks pass. The authoritative acceptance gate remains 15/132, with 117 missing
+native cases; no production or complete backend qualification is inferred.
+
+
+## Native definer and name-resolution qualification
+
+`pg-raw.B06` now exercises temporary shadow employee/assignment/ownership tables,
+caller search-path changes, a caller-defined always-true predicate and caller-owned
+SECURITY DEFINER wrappers through actual ordinary SCRAM sessions. Direct, caller-
+predicate and wrapped reads retain the independent authorized resource IDs.
+Protected overload creation, body replacement and SECURITY INVOKER alteration
+refuse with native SQLSTATE 42501. PUBLIC EXECUTE grant attempts are judged by
+their actual installed ACL effect, including PostgreSQL's possible no-op warning.
+Actual temporary routine owners/settings/native definitions are retained as
+inventory diagnostics; authored output vectors remain separate correctness oracles.
+
+The excluded assessor then replaces only this owned fixture's helper with an
+unqualified pg_temp-first lookup. The same ordinary temporary-shadow attack now
+exposes all five resources for all three ordinary actors. Exact native definition
+restoration is checked and restores the authorized IDs. This is a substantive
+physical counterexample to weakened name resolution, not a simulated trust flag.
+The passing case retains 59 observations and actual caller routine inventories.
+
+The fresh gate passes twelve semantic cases and four native raw-table cases
+(B01, B03, B06, B14): 16/132, with 116 native cases still missing. This qualifies
+the selected fixture routine surface only; complete PostgreSQL routine/extension
+closure, role/pool closure, host current-authority enforcement, protected-property
+semantics, compiler/physical source integration and actual graph backends remain
+open. No full security acceptance criterion is closed.
+
+Final verification: all four component checks pass (59 tests, 1,931 assertions,
+both TypeScript checks and schema audits); all 30 evidence-freshness/allocation
+checks pass. The authoritative gate remains 16/132 with 116 missing native cases.
+The 20 conditional formal checks and earlier owner-compiler evidence remain scoped;
+no complete backend or production qualification is inferred.
+
+
+## Native private-carrier and direct-storage boundary
+
+The raw fixture now has a private JSONB/retained-bytea carrier and a dependent FK
+child carrier. Native columns/constraints/owners/ACLs and independently authored
+private seed facts are retained. JSONB object keys are compared canonically;
+array ordering and scalar/retained byte tokens remain exact. This does not claim
+native inheritance or partition closure.
+
+`pg-raw.B04` exercises each ordinary SCRAM actor against private table direct/list/
+count/COPY, private joins/aggregates and retained-byte projections; these refuse
+with native SQLSTATE 42501 and no stdout values. Public SELECT ONLY and COPY
+return the exact authorized public rows. Server-file read/write and COPY PROGRAM
+refuse against files confined to the owned container. A temporary private-carrier
+SELECT grant exposes all private bags/bytes despite parent RLS, proving that
+carrier privileges are independently necessary. Revocation restores denial before
+the secure native inventory and successful result are published.
+
+The fresh gate passes twelve semantic and five native raw cases: 17/132, with
+115 native cases still missing. Current raw observation counts are B01=33, B03=81,
+B04=119, B06=61 and B14=53. Protected-field publication/masking, dynamic carrier
+drift admission, external endpoints, current-authority and actual graph-storage
+implementations remain independently unqualified. No full security criterion closes.
+
+Final verification: all four component checks pass (59 tests, 1,931 assertions,
+both TypeScript checks and schema audits), and all 31 evidence-freshness/allocation
+checks pass. The authoritative acceptance gate remains 17/132, with 115 missing
+native cases. No complete backend or production qualification is inferred.
+
+
+## Native typed field publication and portable codec crossing
+
+`pg-raw.B07` now publishes resource-ID/note/salary cells through the native secured
+view and `umf.security.disclosure/0.1.0`: original JSON null, absent property,
+withheld without value, and explicit string-domain constant transformation remain
+distinct. Native frames match independently authored per-actor vectors and decode
+through the portable UMF codec against a separately revised model/ontology/policy
+fixture. Codec acceptance proves shape/domain only; native RLS and independent
+output vectors separately establish this fixture's authorized publication.
+The initial fixture omitted the required extensions envelope and was rejected;
+it was corrected without weakening any validator. The helper also passes its
+dedicated TypeScript check. Native/runtime receipt versions include PostgreSQL,
+Python, Bun, core 0.8.0, security 0.1.0 and the disclosure wire version.
+
+A native note encoder rejects unknown bag/note domains rather than coercing them.
+LEFT JOIN retains a resource with a missing required carrier so it fails instead
+of silently vanishing. Numeric-note and missing-carrier controls fail the entire
+aggregate JSON publication with no stdout rows, and restoration recovers exact
+frames. Private bag and retained bytes remain inaccessible to ordinary actors.
+The successful B07 receipt has 49 observations and scoped native routine/view
+inventories. Direct streaming, all query-use modes/transforms, arbitrary codecs,
+source authority and final release remain separate unqualified B/L obligations.
+
+The fresh gate now passes twelve semantic and six native raw cases: 18/132,
+with 114 native cases still missing. The 20 formal checks remain conditional;
+no full security acceptance criterion or complete backend qualification closes.
+
+Final verification: all four component checks pass (59 tests, 1,931 assertions,
+both TypeScript checks and schema audits), and all 32 evidence-freshness/allocation
+checks pass. The authoritative gate remains 18/132 with 114 missing native cases;
+no complete backend, source-authority or production qualification is inferred.
+
+## Native private-fact diagnostic counterexample
+
+The owned PostgreSQL 17.9 fixture reproduces an authorization-fact population
+leak under ordinary SCRAM identities. Adding an unrelated staff assignment and
+running ANALYZE leaves every actor's authorized resource IDs unchanged, while
+public pg_class.reltuples changes from 3 to 4. Native live-tuple statistics expose
+an assessor-confirmed estimate changing from 3 to 5; estimates are not treated as
+exact physical row counts. Direct private-table denial therefore does not establish
+private-fact confidentiality.
+
+The retained `pg-private-diagnostics.json` counterexample has twelve observations
+and exact fixture/probe source custody. A restricted prototype revokes access to
+pg_class, two statistics views and pg_stat_get_live_tuples(oid), closing the three
+tested diagnostic paths while preserving authorized resource output. This is not
+a complete diagnostic inventory or proof: alternate views/functions, size,
+EXPLAIN, history and timing remain unqualified. CONTRACT-063 and TD-056 now make
+that closure an explicit physical admission obligation. `pg-raw.B10` remains a
+counterexample-found case without a passing implementation command; no acceptance
+case or criterion is closed by the prototype.
+
+Final verification for this diagnostic investigation: all four component checks
+pass; the 470-criterion traceability ledger is current; all 33 retained-evidence
+freshness/allocation checks pass. The refreshed gate still passes 18/132 required
+cases and fails on 114 missing native cases. Its formal runner retains twenty
+conditional passing checks, not an unconditional proof of diagnostic closure.
+All 28 complete security acceptance criteria remain open. The implementation goal
+remains active; B10 requires a complete admitted diagnostic surface and independent
+positive/negative native evidence before qualification.
+
+## Native ordinary-principal connection-pool role isolation
+
+`pg-raw.B05` now runs actual Bun SQL pools over unique owned PostgreSQL SCRAM
+endpoints. It checks three ordinary principals against owner/internal and native
+file/program role inheritance/adoption, including an internal private-carrier
+privilege that cannot be inherited. Native membership admin/inherit/set options
+are retained. A separately granted lower role proves reset is exercised rather
+than vacuously tested against a role that cannot be adopted.
+
+The same native PID restores its pinned session/current principal and exact
+independent authorized IDs after role-changing commit and SQLSTATE 22012 abort.
+No result escapes an aborted lease or a failed final reset. A weakened no-reset
+lease leaves the lower role active; subsequent secure admission restores the
+principal. Pools are dedicated to native ordinary logins; this is not shared
+service-login attestation or a complete connection-loss/lifecycle qualification.
+Component source custody now recursively includes native test files, and the new
+pool helper plus the disclosure helper have an explicit TypeScript check.
+
+The first full pool gate replay rejected the primary receipt solely for different
+JSON object-member ordering: Python confirmed equal expected/observed values,
+while the gate correctly refused its exact serialized comparison. The rejected
+gate is retained as `acceptance-pgraw-pool-order-failure.json`. Primary object keys
+are now canonicalized, matching the existing native JSONB/disclosure convention;
+array ordering, exact scalar values and the gate itself are unchanged. Fresh
+replay is required before counting this case as passing.
+
+Fresh pool verification now passes B05 with 93 observations on PostgreSQL 17.9 /
+Bun 1.4.2. The authoritative gate passes twelve semantic and seven raw-native
+cases: 19/132, with 113 native cases still missing. All five component checks pass
+(59 tests / 1,931 assertions, dedicated native-helper and driver TypeScript checks,
+both project TypeScript configurations and schema audits). The 470-criterion
+traceability ledger is current; all 34 evidence-freshness/allocation checks pass.
+Twenty formal checks remain conditional. All 28 complete security criteria remain
+open, including the independently reproduced B10 diagnostic leak. The full
+implementation goal remains active.
+
+### Host-owned original preparation foundation — 2026-10-09
+
+`tools/security/truss-original-preparation.ts` adds a host-only preparation
+boundary: verify trusted host executable/source pins, freshly invoke the
+original mapping compiler on exact request bytes, lower only its returned
+handoff with the existing Truss original-use consumer, recheck source pins,
+then issue an opaque local handle. Client handoffs and qualification flags are
+not preparation inputs. Handles cannot be copied or adopted by another
+preparer; exposed request/handoff data are copies. This selected Resource
+profile retains the existing consumer's private source/action obligations.
+
+Strict TypeScript checking and two Bun tests with nine assertions pass against
+the actual owner executable. Controls cover positive preparation, copied and
+cross-preparer handles, exposed-copy edits, owner refusal and stale executable
+pins. Astra review is pending. The foundation is not yet connected to the
+existing native original-use harness or public installation, and trusted host
+filesystem/configuration custody remains a premise. Source-to-native authority,
+complete obligation implementation and positive security activation remain
+open. Original acceptance remains 26/132; no consolidated refresh is claimed
+for these newly added source files.
+
+## Native installed-inventory drift admission
+
+`pg-raw.B11` now pins independent native catalog descriptors by value and compares
+a fresh capture before query execution. Seven actual owned mutations cover owner,
+private grant, membership, definer mode, RLS predicate, column mapping and bypass
+attribute. All ordinary actors must refuse with zero protected queries while the
+inventory differs; exact restoration recovers independently authored resource IDs.
+A no-admission private grant control exposes the actual protected carrier, proving
+the drift assertion detects a consequential bypass. Missing inventory and failed
+buffered/lazy output publish no rows. Full changed native inventories are retained.
+
+The host helper requires an externally stable cut and a trusted independent
+provider; matching metadata is neither authentication nor complete qualification.
+This does not establish concurrent DDL/final-release guards, full diagnostic closure
+or production compiler/model correspondence. B10 and lifecycle cases remain open.
+
+Fresh verification passes B11 with 90 observations and all seven changed native
+inventories retained. The authoritative gate now passes twelve semantic and eight
+raw-native cases: 20/132, with 112 native cases still missing. All five component
+checks pass (59 tests / 1,931 assertions plus TypeScript/schema checks), the
+470-criterion ledger is current and all 35 evidence-freshness/allocation checks
+pass. Formal coverage remains twenty conditional checks; no complete security
+criterion, backend profile or production admission is qualified. The full goal
+remains active.
+
+## Native incomplete-authority collection admission
+
+The targeted B15 replay passes seven corruptions of the independently retained
+source cut. Native exact Employee/Project/Resource/Assignment/Ownership facts must
+match before all selected collection operators, including empty and outsider
+selections. No protected operation runs under an incomplete cut, and exact
+restoration recovers independent vectors. Missing inactive facts are detected even
+when visible rows stay unchanged. A same-count A-to-D replacement admits RD to an
+unguarded Alice read, showing that population counts do not establish completeness.
+
+Two initial controls failed and are retained: the endpoint negative oracle omitted
+RD, and PostgreSQL refused the type mutation because the secured view depends on
+active. The first oracle is corrected; a native-installable required NULL control
+exercises unknown input without dropping the view. Both failures remain scoped
+historical evidence, not passing acceptance. Full fresh gate replay is required.
+
+This host witness pins source content by value; it does not authenticate a
+production issuer or establish dynamic cut transitions, complete direct-path
+admission or concurrent authority/release guards. Those obligations remain open.
+
+Fresh full replay passes B15 with 414 observations. The authoritative gate now
+passes twelve semantic and nine raw-native cases: 21/132, with 111 native cases
+still missing. All five component checks pass (59 tests / 1,931 assertions and
+TypeScript/schema checks), the 470-criterion ledger is current and all 36 retained
+source-freshness/allocation checks pass. Twenty formal checks remain conditional.
+All 28 complete security criteria remain open, including authenticated production
+source completeness, current-authority transitions and direct-path admission.
+The full implementation goal remains active.
+
+## Managed Python helper source custody
+
+Six component checks reproduce a real equal-size/equal-timestamp stale-bytecode
+control and verify that native admission helper execution uses the exact source
+bytes bound by the case. Changed source, absent/malformed pins and excessive
+source size refuse; module-authored digest metadata cannot replace the computed
+executed digest. B11/B15 now check and compile the loader and selected admission
+helper directly from the verified buffers, bypassing import bytecode selection.
+Actual executed managed-source digests are retained with the native witness.
+
+This closes a content-custody gap in the test/host boundary without asserting that
+an earlier native run actually selected stale code. Trusted reviewed code and the
+versioned Python runtime/stdlib remain prerequisites. B12's broader native receipt,
+issuer, model/policy/mapping correspondence and fabricated-receipt controls remain
+unimplemented. Full gate replay is required before claiming fresh case evidence.
+
+Fresh custody replay retains both exact executed managed-source bindings in B11
+and B15, with all existing implemented cases passing. The authoritative gate stays
+21/132, with 111 native cases missing; this hardening does not create another
+passing backend case. All six component checks pass, including six Python custody
+tests, 59 Bun tests / 1,931 assertions, TypeScript and schema audits. The ledger is
+current and all 38 freshness/allocation/managed-source correspondence checks pass.
+Twenty formal checks remain conditional and all 28 complete security criteria
+remain open. The implementation goal remains active.
+
+## Native typed association binding admission
+
+The targeted B02 native replay passes five mapping refusals and three actual
+native endpoint/key/enforcement mutations. The qualified home/type/role selection
+is pinned by value; independent descriptors bind ordered primary keys, exact FK
+target homes/columns, validation/deferral/actions and active enforcement triggers.
+The wrong-target control is fully validated and uses identical A/B/D TEXT labels
+in a different logical type. Native traversal remains unchanged, proving output
+vectors alone do not establish typed correspondence. Reversed native key order
+and disabled FK triggers likewise require independent admission refusal.
+
+All selected ordinary actors refuse before protected traversal and recover exact
+independent vectors after restoration. RAB's two owner-junction identities remain
+distinct. A reversed but SQL-valid TEXT join silently loses rows without admission.
+The supported subset is natural raw-junction identity with nonnullable deterministic
+TEXT keys and nondeferrable/no-action FKs. Actual graph stores, broader key/edge
+identity domains, production source/query correspondence and concurrent mapping
+changes remain unqualified. Full fresh gate replay is required.
+
+Fresh full replay passes B02 with 88 observations and retained native key/FK/
+trigger descriptors. The gate now passes twelve semantic and ten raw-native
+cases: 22/132, with 110 native cases still missing. All six component checks pass
+(six Python custody tests, 59 Bun tests / 1,931 assertions and TypeScript/schema
+audits). The 470-criterion ledger is current; all 40 freshness/allocation/managed
+source-correspondence checks pass. Formal coverage remains twenty conditional
+checks. All 28 complete security criteria and complete backend profiles remain
+open; the full implementation goal stays active.
+
+## Actual Truss ordinary-login runtime integration
+
+The user-owned Truss repository now has an optional ordinary-principal boundary
+in its actual pg-runtime package. Original frames verify native session/effective
+actor, NOSUPERUSER/NOBYPASSRLS and UTF8 context at checkout, after BEGIN and before
+safe pool reuse. Role/session/settings reset occurs at checkout/release. Wrong
+identity, privileged login, incompatible encoding and changed bypass flags close
+new source admission and retain original quarantine. Generic unselected sources
+keep their prior semantics; profile selection remains an explicit trusted-host task.
+
+The owned PostgreSQL 17.9 / pg 8.16.3 / Bun 1.4.2 component passes 42 observations
+with three SCRAM-authenticated ordinary actors, same-PID reuse after commit/abort
+and explicit quarantined transport cleanup. The native test exposed unsupported
+ParameterStatus responses during context reset; the wire adapter now preserves
+those bounded UTF8 name/value/raw-byte reports without substituting for original
+command completion. Four wire tests pass with twelve assertions. An initial
+cleanup masked the original failure; explicit quarantine cleanup now preserves it.
+A legacy counter uses its supported SET command instead of unsupported generic
+RESET command-count handling. Both issues are documented in Truss's build plan.
+
+The source compiles with existing cached pinned pg/Node declarations through an
+explicit typecheck configuration; the default uninstalled-workspace attempt failed
+and does not qualify the source. `truss-principal.json` retains actual runtime,
+wire, fixture and probe source custody and original context reports. This is a
+real Truss host component on raw relational fixtures, not an installed graph
+security profile or a passing Truss B/L case. Native 0.13 graph protection, shared
+service identities, transaction-mode poolers and full current-authority/release
+remain open. The complete objective is unchanged.
+
+Final actual-runtime verification: the 42-observation native component receipt is
+fresh, all eight component checks pass (actual Truss source/probe typecheck, four
+wire tests / twelve assertions, six Python custody tests, 59 Bun tests / 1,931
+assertions and existing TypeScript/schema audits), and all 41 retained freshness/
+allocation/source-correspondence checks pass. The 470-criterion ledger is current.
+The authoritative acceptance gate remains 22/132 with 110 missing native cases;
+its implemented source fingerprints remain current. No Truss graph case or complete
+security criterion closes through this component work. The full goal remains active.
+
+## Actual Truss context-journal provenance controls
+
+The native actual-runtime probe now passes 53 observations using both the public
+Truss disk journal and an independent memory capture of original request/frame/
+outcome bytes. Offline inspection confirms complete originals and consecutive
+exact local ordinals. Malformed ParameterStatus and missing command completion
+are invalid; missing outcomes are incomplete with raw originals retained.
+
+The omission control removes a well-formed ParameterStatus and still obtains a
+structurally complete response. Full independent original-content comparison
+rejects its correspondence. This exposes the precise remaining provenance
+constraint: complete structure is not source authenticity or transaction/replay
+permission. Private native originals and damaged copies remain under the owned
+directory retained in `truss-principal.json`; startup/password frames are excluded.
+No Truss graph case or full receipt-security criterion is accepted by this work.
+
+
+### Truss journal component verification closure — 2026-10-08
+
+The actual Truss PostgreSQL runtime probe now retains 141 original query journals across nine local leases and passes 53 observations on the owned PostgreSQL 17.9 ordinary-principal fixture. Independent captured requests, raw protocol frames, and terminal outcomes correspond to the inspected originals. Malformed ParameterStatus and missing CommandComplete refuse; missing terminal outcomes remain incomplete with raw bytes retained. Removing a well-formed ParameterStatus yields a structurally complete journal but fails independent original-content correspondence: structural inspection does not establish authenticity or complete provenance. No graph B12 or other backend acceptance case is credited by this component evidence.
+
+Refreshed component verification passes all eight commands with unchanged source digests; evidence validation passes 41 checks; the acceptance ledger remains current at 470 criteria. The authoritative security gate remains 22/132, with 110 required native cases missing and all 28 complete security acceptance criteria open. The implementation goal remains active. Evidence: `evidence/security/truss-principal.json`, `evidence/security/components.json`; backend obligations: `../03-test/security/truss.md`.
+
+
+### Native protected-field query-use separation — 2026-10-08
+
+Added and executed `tools/security/pg-mask-query.py` on owned PostgreSQL 17.9
+ordinary SCRAM identities. Thirty-two observations retain fixed positive
+filter/order/group/join/aggregate outcomes on an Alice-only native salary-use
+surface and native refusals on the public masked surface and ungranted actors.
+The weakened output-only-mask view leaks hidden salary selection to Bob, who
+lacks raw salary query permission; a hidden-value mutation changes weak results
+without changing permitted public publication, and restoration recovers the
+original selection. The native security-barrier flag cannot repair a pre-mask
+predicate that already uses the protected value. This narrows the compiler's next
+physical design obligation: prove original field-use lineage against separate
+semantic permissions before selecting/lowering its native surface.
+
+Evidence is `evidence/security/pg-mask-query.json`; the first diagnostic-format
+failure is retained as `pg-mask-query-initial-error-format.json`. This is component
+evidence and a reproduced counterexample, not a passing pg-raw.B08 receipt.
+The full security gate remains 22/132, with 110 required cases missing and all
+28 complete criteria open. The implementation goal remains active.
+
+Final verification for this increment: eight component commands pass with unchanged source digests; 42 retained-evidence freshness/allocation checks pass; acceptance traceability remains current at 470 criteria. No native acceptance case was credited by the query-use component or weakened-control witness.
+
+
+### Constant-mask query algebra formal increment — 2026-10-08
+
+The preceding native query-use witness is now paired with five independent Z3 noninterference checks in `evidence/security/mask-query-formal.json`, reproducible with `/private/tmp/umf-security-proof-venv/bin/python3 tools/security/prove-mask-query.py`. Before/after published fields are separately symbolic and constrained to the constant-mask profile; original hidden values can differ. With two stable resource identities and shared complete eligibility, each predicate/order/group/join/aggregate violation is UNSAT. Positive populations are SAT, and weakening each operator to use original hidden values produces a SAT counterexample. Stable ordering includes identity tie-breaking. These are explicitly conditional finite proofs; actual compiler lineage, installed policy, arbitrary transformations, native NULL/domain/error/timing behavior and concurrent authority remain unproven. The native query-use spike and mathematical abstraction remain separate evidence. B08 and the overall 22/132 acceptance gate remain open. The goal is active.
+
+
+### Native empty-query and separate-grant revocation controls — 2026-10-08
+
+Expanded the actual PostgreSQL protected-query component to 51 observations. Ungranted Bob/outsider queries refuse all five original salary uses under constant-false predicates or LIMIT 0 (42501, no stdout). Alice has independent exact positive empty count and collection vectors. A committed revocation of her separate native query surface also refuses the five empty modes on newly connected ordinary sessions, while her masked publication remains exact; restoring the grant restores the authored aggregate 433. This establishes native privilege admission despite empty populations for this fixed fixture, not concurrent generation/guard/cache semantics. The owned container was removed before publishing `evidence/security/pg-mask-query.json`. Refreshing the five conditional algebra checks binds their receipt to current probe source without claiming native proof. Compiler-owned original action/field lineage and complete dependency binding remain the B08 qualification gap. No case or criterion was marked complete; the active goal and 22/132 required gate remain unchanged.
+
+
+### PostgreSQL prepared-query privilege recheck — 2026-10-08
+
+The native protected-query component now passes 57 observations. A bounded interactive ordinary Alice transport prepares the salary aggregate once, returning the authored sum 433. After the excluded assessor commits revocation of the separate salary-query grant, EXECUTE on that original native session refuses with SQLSTATE 42501 and no stdout result. Restoring the exact grant allows the same prepared statement to return 433 again; independently captured backend PID equality establishes connection continuity. Request/response boundaries use explicit native markers, selector-based reads, five-second deadlines and a one-MiB capture bound; the ordinary transport closes before owned-container cleanup and receipt publication. Password delivery stays on private stdin and is not retained. Evidence is `evidence/security/pg-mask-query.json`. This closes the prepared-query stale privilege component for this fixed PostgreSQL 17.9 surface, not B08 or L09 in full: original compiler lineage, semantic cursor/cache binding, concurrent guard drain and final application-buffer release remain unproven. The active goal and authoritative 22/132 acceptance gate remain unchanged.
+
+
+### Actual compiler-to-mapping handoff component — 2026-10-08
+
+Implemented `SecurityProfiledQuery::mapping_handoff_json` in the actual Weft Rust owner under its CONTRACT-005, exporting experimental `weft.security.mapping-handoff/0.1.0`. The immutable compiler artifact rechecks exact model/policy/ontology/profile/backend-binding sources, then retains the complete original resolved application plan, exact source pins, extracted field/operator/derived original-action uses and per-scan/action typed ordered identity and private fact obligations. Target-key maps are arrays of qualified target/keyId/ordered-field tuples; original output order, aliases, multiplicity and substituted parameter meaning remain in the resolved plan. Deterministic exports above 16 million bytes refuse. Tests prove source/backend mismatch refusal, retained plan meaning and separate original-action obligations. This is a concrete physical-mapping input, not an execution credential or a public compiler activation. Security lowering and Rust/Python/browser/native qualification remain open; the authoritative gate stays 22/132. Owner execution evidence: `evidence/security/weft-admission.json`; upstream governing contract: `/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md`. The goal remains active.
+
+Handoff verification closure: actual-owner replay passes 70 Rust tests plus the independent 75-case evaluation and 147-vector composition inputs; eight component commands pass. The actual compiled-runtime version probe rebuilds successfully and passes four original/core08 boundary observations. Forty-three retained-evidence checks pass and the 470-criterion ledger remains current. No security activation or native case is credited by these component checks.
+
+
+### Compiler mapping handoff scan identity coverage — 2026-10-08
+
+The actual Weft Rust owner test now verifies the serialized field-free COUNT self-join handoff, not just the in-memory obligation collector. Both s0/s1 occurrences survive with their own join uses and read-action closure. Each retains the membership/reader rule IDs, complete Assignment/Ownership associations and typed ordered identities for Assignment, Ownership, Project, Resource and Staff despite having no projected fields. Native-action absence is explicit JSON null rather than a fabricated original-action label. Fresh owner replay passes 71 Rust tests and independent evaluation/composition oracles; compiled-runtime version boundary is refreshed against these source bytes. This is compiler handoff component evidence only. Physical mapping installation, backend enforcement and final-release admission remain open; no required case or criterion is marked passed. The goal remains active.
+
+
+### Executable original-owner handoff transport — 2026-10-08
+
+Added an actual Weft Rust example that accepts bounded strict inspection input, prepares source definitions, resolves the SQL, admits the exact query profile and emits the original-owner mapping handoff. `tools/security/weft-handoff-probe.py` builds it offline and retains two emitted packets (scalar resource predicate and field-free COUNT self-join) in `evidence/security/weft-handoff.json`. Nine checks include protected original-value use refusal, stale backend/model pin refusal, unknown version/member, duplicate JSON and 32-million-byte input budget refusal; every failed request emits no stdout packet. Source fixture names and signed64 domains are explicitly authored inputs, not a production binding. Source/schema and executable digests are retained. These packets enable real physical mapping tests to consume original compiler output; no host issuer, execution authority, public compiler activation or native lowering is claimed. Actual-owner test/version evidence and component receipts are refreshed. The full security goal remains active and the 22/132 gate remains unchanged.
+
+
+### Original compiler identities to native PostgreSQL mapping — 2026-10-08
+
+Extended the actual Rust inspection probe to retain an explicitly separate
+natural-key profile, alongside its unchanged surrogate-key artifacts. It now
+passes ten transport checks and retains three original compiler packets. The
+new native mapping probe passes ten observations: original surrogate identities
+refuse, natural composite tuples match actual ordered PostgreSQL primary keys,
+and missing/reversed components refuse. A deliberately swapped Project/Staff
+home demonstrates key-shape insufficiency. Composed selected-home/FK/endpoint
+validation rejects it before ordinary native operations. Three ordinary fixture
+self-join counts retain independent exact actor vectors. All helper code is
+executed from source-verified original in-memory bytes using the reviewed loader,
+with executed source digests retained. Owned container cleanup precedes receipt
+publication. Evidence: `evidence/security/weft-handoff.json` and
+`evidence/security/pg-compiler-keys.json`.
+
+This advances actual compiler-to-physical identity correspondence. It is not
+security SQL lowering, complete policy/fact-domain mapping, generic graph table
+discrimination or release qualification. No required case is additionally
+credited: the authoritative gate remains 22/132 and the goal remains active.
+
+
+### Compiler-required fact domains and fresh handoff provenance — 2026-10-08
+
+Extended original-compiler/native correspondence to all required action fact
+groups and scan query/projection fields within the declared unrefined required
+single-value TEXT/BOOLEAN subset. The owned PostgreSQL witness now has 19
+observations. Missing Assignment.active binding refuses. Two actual alternate
+Assignment tables retain ordered PK/FK semantics but change active to TEXT or
+nullable BOOLEAN: key/endpoint correspondence alone passes, required-field
+correspondence refuses. Original typed mapping and independent actor self-join
+counts remain exact. Refinements, other domains, optional/multivalue codecs and
+context providers are not inferred. Physical type equality never establishes
+trusted semantic issuer/attribute meaning.
+
+The runner freshly executes the source/binary-pinned actual Rust inspection
+transport for both original surrogate and separate natural models, comparing
+complete emitted packets with retained originals before native mapping checks.
+Executable digest participates in receipt freshness. Original helpers still
+execute source-verified same-memory bytes; native container cleanup precedes
+publication. Evidence: `evidence/security/pg-compiler-keys.json`. Eight component
+commands pass. This is mapping provenance/domain evidence, not native security
+policy lowering or complete B/L acceptance. The goal stays active, with the
+authoritative gate unchanged at 22/132.
+
+
+### Actual normalized security rules in compiler handoff — 2026-10-08
+
+Implemented serialization of the actual Weft Rust admitted security IR, and
+advanced the experimental handoff to `weft.security.mapping-handoff/0.2.0`.
+The `securityLogicalPlan` member is versioned `weft.security.logical-ir/0.1.0`.
+It retains all original admitted rules, permit/require/forbid effects, actions,
+qualified targets, typed identity/endpoint/field/context/constant terms, declared
+domains and exact literal wrappers, ordered expression structure, lexical
+existential correlation slots and ordered disclosure dispositions. There is no
+admitted-plan JSON deserializer or caller-constructed annotation substitute.
+Backend mapping now has the normalized logical policy as well as scan/action
+dependency closure; no second policy parser is required for physical translation.
+
+Actual-owner tests verify mandatory versus permit effect, withheld disclosure,
+Ownership slot 0, nested Assignment slot 1, correctly bound active field and
+Boolean constant/domain. The compiler example retains three new-version packets;
+ten transport checks pass. Native key/fact/endpoint replay passes 20 observations
+with fresh original-compiler correspondence and explicit legacy-version refusal.
+Owner admission tests, rebuilt runtime version boundary and eight component
+commands pass. This establishes IR export and version custody, not installed
+policy SQL, complete issuer/current-authority/fact trust or final release. All
+full criteria remain open and the active goal's authoritative gate stays 22/132.
+
+
+### Actual Truss normalized-IR to native RLS translation — 2026-10-08
+
+Implemented backend-owned portable `packages/postgresql/src/security-predicate.ts`
+in Truss and a host inspection bridge. It translates actual source-qualified
+Weft normalized rule trees to correlated schema/operator-qualified PostgreSQL
+row predicates. Permit/require/forbid truth conditions and unknown-preserving
+existence CASEs are explicit. Unsupported domain/context/shape/depth/output and
+shared-type-home-without-discriminator inputs refuse. The public backend factory
+and compiler security activation remain closed.
+
+Native replay `tools/security/truss-policy-lowering-probe.py` passes 49
+observations on the owned PostgreSQL 17.9 raw-table fixture. Generated source
+implements exact original-actor Project membership under forced RLS. A complete
+explicit native login roster includes the unassigned outsider. Native privileges
+publish resource IDs only, denying unmapped columns, prior disclosure views and
+private assignments. The actual Rust owner emits a weakened source requirement
+as a permit; its generated native function exposes all five IDs to all actors.
+Exact original generated-definition restoration recovers all independent vectors.
+Actual routine owner/login/super/bypass/definer/STRICT/stability/search-path/PUBLIC
+ACL and forced-RLS/column grants are independently captured and compared.
+Managed helper bytes and fresh original compiler packets precede translation;
+owned fixture cleanup precedes the passing receipt.
+
+Real Chromium 148.0.7778.96 emits the exact native-tested original and weakened
+SQL from the same portable source, with no host globals or external requests,
+and verifies shared-home refusal. Evidence is `evidence/security/truss-policy-lowering.json`
+and `evidence/security/truss-predicate-browser.json`. Initial normalized-domain
+refusal and NULL transport failures remain separate nonpassing diagnostics.
+Qualified JSON truth envelopes and the declared native helper STRICT boundary
+are used by the passing replay.
+
+This proves scoped native row-policy translation witnesses, not a complete
+security backend or typed Truss graph installation. Field publication/query-use
+lowering, complete issuer/fact/current-authority protocol, native privacy
+closure, writes/history/cache/stream/guard/release and production profiles remain
+open. No required B/L case or full criterion is marked accepted; the
+authoritative gate remains 22/132 and the goal remains active.
+
+Final verification for the row-predicate increment: 49 native observations, exact original/weakened real-Chromium SQL correspondence plus shared-home refusal, nine component commands and 47 evidence freshness/allocation checks pass. The final strict browser-harness lookup issue is corrected with explicit fixture validation. Current 470-criterion ledger checks pass. No full backend criterion or graph case is inferred from these scoped results.
+
+
+### Native unknown existence and conditional proof — 2026-10-08
+
+Executed actual Rust source variants for negative membership existence and
+unknown-witness forbid through the actual Truss row emitter. The new owned-native
+probe has 63 observations, including the 49-observation foundation. Known-subject
+negative membership complements are authored independently. Deliberately removing
+the unassigned subject mapping creates unknown witnesses for RA/RAB/RB; the
+source-compiled negative/forbid primitive decisions deny. A disposable naive
+SQL EXISTS counterexample collapses unknown to false and grants those decisions.
+Original source-generated function and complete roster restore exactly before
+normal final checks and container cleanup. Missing-subject primitive diagnostics
+are explicitly outside admitted whole-collection context; that context must
+refuse at the host boundary.
+
+The companion Z3 replay proves three conditional finite checks over two optional
+T/F/U witnesses, including empty populations: Kleene-OR versus native CASE
+existence algebra, unknown-negation refusal and unknown-forbid refusal. Each
+violation is UNSAT with SAT populations and SAT naive-EXISTS counterexamples.
+Complete identical stable witnesses/scalar truth correspondence remain premises;
+installed SQL or compiler correctness is not proven by the symbolic model.
+Evidence: `evidence/security/truss-existence-truth.json` and
+`evidence/security/existence-truth-formal.json`. The original native lowerer and
+real-browser source remain unchanged and retain their qualified evidence.
+The full 22/132 gate and all complete criteria remain open; the goal is active.
+
+Verification for the unknown-existence increment: nine component commands pass; all 49 evidence freshness/allocation checks pass; acceptance traceability is current at 470 criteria. These checks do not promote diagnostic results to complete backend acceptance. The authoritative gate remains 22/132, with 110 required native cases missing and all 28 complete security acceptance criteria open.
+
+
+### Ordinary subject preflight component — 2026-10-08
+
+The actual Truss pg-runtime has an optional `ordinarySubject` selection paired
+with a pinned `ordinaryPrincipal`. Before BEGIN can return successfully, original
+native protocol must report exactly one non-null TEXT key tuple, in the selected
+column order, from a fully qualified private routine invoked with SESSION_USER.
+Column aliases, original type OIDs/text format, cardinality, UTF-8 and finite key
+byte bounds are checked. Selection is copied before acquisition. Only stable
+repeatable-read/serializable read-only transactions admit this experimental
+selection; read-committed and writable requests refuse before native BEGIN.
+Subject check failure retains quarantine and closes source admission. No
+application query, including an empty scan/count, can run on that failed lease.
+
+`tools/security/truss-subject-probe.py` independently exercises the actual source
+on an owned PostgreSQL 17.9 fixture with three original SCRAM ordinary logins.
+Private mapping publication is unavailable. Positive empty counts are valid only
+after admission. Missing/duplicate/null/wrong-native-type/wrong-column/error
+responses reject before application SQL; composite keys retain exact original
+column order and Unicode values, while reversed order rejects. Original query
+journals independently retain all preflight attempts and show empty queries only
+for admitted leases. The existing ordinary-principal 53-observation probe replays.
+
+This fills a host preflight gap, not complete backend admission. Trusted exact
+routine source/owner/ACL/inventory qualification, model-key correspondence,
+current-authority generation and revocation guard remain external premises.
+An attacker-controlled same-shaped routine is not an authenticated mapping.
+Stable snapshots alone cannot establish current authority after acknowledgment.
+Actual Truss typed graph adoption, complete facts, field publication and lifecycle
+cases remain open; no full B15 or security criterion is accepted. Evidence:
+`docs/helix/04-build/evidence/security/truss-subject.json`. Full gate remains 22/132.
+
+
+Subject preflight concurrency refinement: eight additional native observations
+raise this component to 58. An independently observed PostgreSQL advisory-lock
+wait proves the original preflight is pending. Concurrent application SQL, BEGIN,
+COMMIT, ROLLBACK and release refuse locally without submission. After native lock
+release, admission completes and the original empty count returns zero. Eleven
+original one-key preflight attempts and only four admitted empty-count submissions
+are retained (composite attempts are separately checked). The original principal
+53-observation replay passes at the same modified runtime source. This establishes
+pending-admission exclusion, not revocation barriers/current-authority admission.
+
+Final subject-preflight verification: 58 native subject observations and 53 original principal observations pass; nine component commands pass; all 50 evidence freshness/allocation checks pass; the 470-criterion acceptance ledger is current. Native originals include 149 subject-probe journal requests. No full backend case or criterion is promoted; the gate remains 22/132 and the goal remains active.
+
+
+### Explicit shared-home type selection — 2026-10-08
+
+The actual portable Truss PostgreSQL row emitter now accepts explicit native
+row discriminators. Shared homes require every logical type to select the same
+native discriminator column/carrier with distinct canonical values; absent,
+overlapping, mixed-column and mixed-carrier mappings refuse. int4/int8 values
+remain canonical decimal text and are range-checked with bigint, never stored
+as JavaScript numbers. Typed resource lowering also requires the original native
+row-type parameter immediately after ordered key parameters; omitting it refuses.
+Subject and every association witness scan select their declared row type before
+three-valued existential aggregation. Raw unique-home SQL remains byte-identical.
+
+`tools/security/truss-type-selection-probe.py` retains 28 observations on owned
+PostgreSQL 17.9 shared native fact projections with int4 discriminators. The
+original Rust handoff is replayed with its exact binary/source digest. Deliberate
+same-ID/different-type subject rows and wrong-relationship endpoint tuples cannot
+supply witnesses. All three original ordinary actors match authored eligibility,
+wrong root types return no eligible rows, and private facts remain unpublished.
+Seven malformed mapping controls refuse before SQL. Erasing only association
+filters causes Alice to read RB through wrong-relationship witnesses; exact
+restoration recovers every actor vector. NULL root inputs cannot grant.
+
+Real Chromium 153.0.8010.12 runs the actual portable module and matches all three
+native-tested predicates (original raw, weakened raw, explicit typed projection),
+plus shared-home-without-selection, missing root selection and overlap refusal.
+The original 49 native row-lowering and 63 unknown-existence observations replay
+at the new backend source; the existing three conditional existence proofs replay.
+Two further Z3 checks establish typed witness fold versus filter-before-CASE
+algebra and refusal on wrong/missing root tags. Each violation is UNSAT, with SAT
+positive populations and SAT type-erased controls. Truthful injective native tag
+correspondence and complete stable witness/scalar truth sets are premises.
+
+This native projection is synthetic, not the current installed Truss graph
+node/scalar/key/edge layout. TEXT/int8 discriminator execution, business-key codecs,
+current property-carrier decoding, graph catalog identity and native endpoint
+registry correspondence remain unqualified. Existing raw key correspondence
+cannot automatically validate a shared (type,id) primary key as an id-only key;
+an explicit typed native key bridge is required. Root parameter authenticity,
+source/issuer/fact/current-authority/guard/privacy/lifecycle admission remain open.
+No required graph case or full criterion is credited; gate remains 22/132.
+Evidence: `truss-type-selection.json`, `type-selection-formal.json` and refreshed
+`truss-predicate-browser.json` under the security build evidence directory.
+
+Final typed-home verification: 28 new native observations, two new conditional formal checks, three exact native/browser predicate matches on Chromium 153.0.8010.12, nine component commands and all 52 evidence freshness/allocation checks pass. Original raw 49-observation and unknown-existence 63-observation native probes and three conditional existence proofs are current. Acceptance traceability remains current at 470 criteria. No complete graph/backend criterion is promoted; gate remains 22/132 with 110 required native cases missing and all 28 complete criteria open. The goal stays active.
+
+
+### Typed logical/native key correspondence — 2026-10-08
+
+The actual portable Truss backend now has `security-native-key.ts`, a synchronous
+key correspondence check over original admitted compiler declarations and original
+native inventory. Required unrefined TEXT key fields must match complete qualified
+field references in authored order. Predicate field columns and key columns must
+agree. Shared homes require distinct canonical int4 type selections, original
+native catalog type/column observations and matching complete model source pins.
+Native columns must have exact nonnull/deterministic TEXT domains; type columns
+must be nonnull INTEGER. The validated native primary key must contain exactly the
+selected discriminator and logical key carriers. An explicit
+`nativePrimaryKeyColumns` preserves native index order separately from logical
+component order; absent that declaration, the fixed type-prefix/default order
+must match exactly. No silent component permutation or omitted type is allowed.
+Malformed facet arrays and non-boolean native key flags refuse interpretation.
+
+`tools/security/truss-native-key-probe.py` records 44 observations on owned
+PostgreSQL 17.9 original descriptors and a synthetic native type catalog/fact
+projection. Actual original Rust source/handoff/binary are replayed and pinned.
+Eighteen malformed mapping/source/domain/metadata controls refuse. Native key
+reordering, VARCHAR replacement, wrong type catalog entries and changed source
+pins refuse before predicate emission and restore exactly. Equal keys in three
+entity types and equal endpoints in two association types coexist. Explicitly
+reviewed native composite order and type-last primary keys validate without
+changing logical component order or emitted predicates; prior mappings reject
+those same changed native orders. The same owner module validates original raw
+TEXT keys and emits the byte-identical original native-tested raw predicate.
+
+Real Chromium 153.0.8010.12 runs the same portable checker: raw and typed positive
+inputs plus three key-order/type-source/predicate-column mismatch refusals pass,
+with no host globals or external requests. Z3 has three conditional checks over
+two ordered unbounded string components and unbounded type tags: canonical typed
+logical/native tuple correspondence, distinct namespaces and declared component
+order. Violations are UNSAT with SAT populations and type-erased/reversed controls.
+Truthful injective tag correspondence and scalar equality remain premises; the
+symbolic model does not prove compiler/code/native installation or catalog origin.
+
+An initial raw refusal control targeted descriptor table zero (unselected Company)
+instead of Staff. That test error is retained in
+`truss-native-key-raw-control-failure.json`; controls now resolve Staff's exact
+mapped home. It does not justify requiring every unrelated table to be part of
+the declared key dependency closure. Complete authority inventory is independent.
+
+This remains a key correspondence component, not actual Truss graph admission.
+Original graph business-key codecs, node/current-state/property carriers, native
+catalog/source authenticity, ordered endpoint/FK registry, complete issuer/facts,
+current authority and final release remain open. Original stable inventory/cut is
+a host premise; passing caller-supplied metadata cannot authenticate it. Public
+security activation remains unavailable and no backend criterion is credited.
+Evidence: `truss-native-key.json`, `truss-native-key-browser.json` and
+`type-key-formal.json` under the security build evidence directory. Full gate
+remains 22/132, all complete criteria open; the goal stays active.
+
+Final typed-key verification: 44 native key/catalog/declared-order observations, five real-Chromium raw/typed/refusal checks on version 153.0.8010.12, three conditional symbolic key checks, nine component commands and all 56 freshness/allocation/managed-source checks pass. Acceptance traceability is current at 470 criteria. Canonical symbolic tuple proofs do not prove all native index-order implementations; explicit order changes have separate native execution evidence. No graph/backend full criterion is promoted. Full gate remains 22/132 with 110 required native cases missing and all 28 complete criteria open; the goal remains active.
+
+
+### Original UMF tuple / native key-bucket transport — 2026-10-08
+
+The actual portable Truss `security-key-transport.ts` captures independently
+registered original UMF encode/verify functions plus copied model/key/namespace
+selection. It requires the original current-core 3.0.0 `umf-key-tuple-v1` receipt,
+reverified by its owner, and derives exact UTF-8 storage bytes for
+`umf-key-tuple-v1:hex:<lowercase tuple hex>`. The native one-MiB encoded transport
+bound and 64-KiB namespace bound apply. Full namespace and full encoded transport
+must match together. A prefix, digest, caller-provided receipt shape or equal
+value bytes in another namespace never establishes selected key correspondence.
+The producer and original namespace authority remain independently qualified host
+premises; the portable constructor cannot authenticate supplied methods or bytes.
+
+`tools/security/truss-key-transport-probe.py` loads the exact original 0.15 owner
+export in owned PostgreSQL 17.9 and uses actual native canonical string/tree
+helpers. Seventeen observations pass with the registered 9e4bed3e UMF value
+producer: ordered decimal `12.340`, Unicode `雪🙂` and integer token
+`9007199254740993` match the independent original tuple oracle. Exact transport
+bytes round-trip through the actual `object_key_bucket` BYTEA columns. Two native
+memberships have identical key payload/digest but different complete namespace
+bytes. The second namespace is deliberately unadmitted. Three original ordinary
+roles lack schema access and direct bucket queries refuse with SQLSTATE 42501.
+All fixture credentials remain private; owned native cleanup precedes receipt.
+
+Real Chromium 153.0.8010.12 executes the actual owner bundle and portable backend
+module. Four checks pass: exact expected encoding, original native bytes, foreign
+namespace refusal and changed-payload refusal. No host globals or external
+requests occur. This is original codec/native transport evidence, not a new formal
+proof of the encoder, installed namespace authority or whole graph implementation.
+
+Initial native source-completeness and ordinary namespace-lookup failures are
+retained in `truss-key-transport-initial-refusals.json`; failed source snapshots
+were not retained, so that diagnostic does not establish source-qualified failed
+case receipts. Final fixture definitions retain required original document source
+references and canonical type lineage. They remain installer-only fixtures:
+`accepted_document` labels do not establish protected catalog acceptance, owner
+property/key parity, original namespace/codec authorization or protected writer
+execution. The actual object property bodies are incomplete and the second
+namespace intentionally invalid; no successful complete graph operation is claimed.
+
+Current `runtime_stage_object_key` admits only an already-encoded envelope shape;
+its protected producer must separately establish complete source/codec/namespace
+and canonical value correspondence. Security binding cannot accept arbitrary hex
+payloads merely because that prefix passed. Actual graph business-key uniqueness,
+full bucket collision/source inventory, native endpoint joins, complete canonical
+facts, original-role/current-authority/guard and privacy closure remain open.
+Evidence: `truss-key-transport.json` and `truss-key-transport-browser.json`.
+No required graph case or complete criterion is promoted; full gate stays 22/132.
+
+Final key-transport verification: 17 original-owner/native transport observations, four real-Chromium checks on 153.0.8010.12, nine component commands and all 58 evidence freshness/allocation/managed-source checks pass. Current acceptance traceability remains 470 criteria. The original 0.15 owner-export table constraints and byte carrier are exercised, but protected graph producer/namespace authority, owner-key parity and full profile remain unqualified. No required backend case or complete criterion is promoted; gate remains 22/132, 110 required cases missing and all 28 complete criteria open. The goal remains active.
+
+### Security namespace binding follow-through — 2026-10-08
+
+Implemented portable exact-canonical namespace verification and stored-key assembly in Truss, retaining source/identity/producer capture before async verification. Current Bun namespace replay passes 23 checks; current Chrome 153 namespace replay passes 23 checks. Four Z3 checks establish conditional native integer-domain representation properties. Stored-key assembly passes five Bun controls (including caller method replacement while pending) and four real Chromium controls against original registered UMF codec and retained native 0.15 bucket bytes.
+
+The initial namespace probe executed 23 observations on PostgreSQL 17.9 before the factory change. A fresh native rerun could not start because OrbStack Docker inventory/info calls timed out; no fixture was created by that attempt and no daemon restart was performed. Preserve its historical receipt and qualify current results as retained native oracle replay (`freshNativeExecution: false`). This does not establish namespace registry authority, live signed/zero key definitions, complete graph parity, protected actor custody or final-release authority guards. Full gate stays 22/132, all 28 security acceptance criteria open; goal remains active.
+
+Final current-source verification for this increment: all nine aggregate component command groups passed; phase evidence validation passed 64 checks with zero failures. Validation confirms retained-source correspondence and allocation, not native admission or completeness. Namespace and stored-key replay receipts remain explicitly qualified as non-fresh native execution.
+
+### Raw identity carrier collision follow-through — 2026-10-08
+
+Prepared an independent native ordinary-actor probe over the actual raw forced-RLS resource keys: case-sensitive text, NFC/NFD-distinct strings, supplementary Unicode and delimiter differences, plus a lossy-case negative control and native array NULL/empty/framing controls. This targets part of required B13 while preserving its remaining cross-home/hash/composite authorization obligations. Python compilation passed; Docker inventory again timed out after 15 seconds before creation was attempted. The process is terminal with exit 1; no restart, fixture or passing native receipt is claimed. The exact-source pending receipt records zero native observations. Full gate and goal remain unchanged.
+
+### Original tuple capture race corrected — 2026-10-08
+
+The async stored-key assembly initially awaited canonical namespace verification before rereading caller-owned values and stored key bytes. Executed adversarial controls found three counterexamples: repairing an initially invalid key or value tuple could be accepted, and changing initially valid bytes could alter the decision. Retained `stored-key-await-counterexample.json` and the pre-fix source snapshot. Fixed the actual portable Truss assembly to capture stored bytes and decide tuple correspondence synchronously before any await, with unsupported inputs refusing. Current actual-owner replay passes eight Bun checks and seven Chrome 153 checks. All replay evidence retains its explicit non-fresh-native scope; no backend case/criterion promotion or revocation proof is claimed.
+
+### Native execution critical-path audit — 2026-10-08
+
+Rechecked live Docker info: bounded eight-second timeout, terminal, no daemon restart. Fresh authorized Databricks profile and current-user calls complete: both configured profiles remain valid but authenticate the same installer actor, with zero distinct ordinary actors. The initial sandbox network failure was followed by successful permitted network observations; it is not an authentication failure claim. No workspace data/permissions were modified.
+
+Current evidence validator passes 64 source/allocation checks. Full gate remains 22/132; missing required cases are pg-raw 20, Truss 30, delta-raw 30 and Ashlar 30. All 28 complete security ACs remain open. Requirements/design, conditional formal analysis and portable component progress do not qualify missing native cases. Remaining implementation/integration work is still required, including protected graph enforcement, writes, privacy closure and authority through final release.
+
+Repeated native environment blockers now prevent the next required execution/integration step: Docker/OrbStack must recover for owned PostgreSQL fixtures; hosted qualification requires installer plus two distinct ordinary Databricks actors in the same disposable context. Requested engine recovery or explicit OrbStack restart authorization (may interrupt unrelated containers), and configured profile names only for distinct hosted actors. Goal is blocked pending these external prerequisites; it is not complete and its scope/acceptance gate is unchanged. Resume by executing the current namespace and raw identity probes, then advancing full required backend cases with acceptance-linked native evidence.
+
+### Owner-requested Astra ultra review and fixes — 2026-10-08
+
+OrbStack recovery was verified live (Docker 29.4.0). Prepared probes executed successfully on owned PostgreSQL 17.9 fixtures: namespace 23 observations, exact raw TEXT identity 16 observations. The owner explicitly requested an Astra ultra review; that reviewer read current code, contracts and evidence without edits. Four actionable findings were verified and addressed:
+
+1. Scoped composition: a real-owner two-permit policy with T and U emitted an eligible SQL result despite CONTRACT-062 indeterminacy. Native pre-fix RA diagnostic returned true where false was expected. Archived source/probe and the counterexample receipt retain the evidence. Added multiple-scoped-permit NULL guards; actual owner/native tests cover both permit orders, false competing permit, and unknown rules outside selected actions or types. Expanded native truth probe passes 78 observations. Three new conditional scoped-composition Z3 checks pass with UNSAT violations and SAT weakening controls.
+2. Original response custody: actual runtime permitted overlapping operations to install competing wrappers on one original socket parser. Added per-lease exclusion covering begin/execute/control/commit/rollback/release including reset. An independently observed native advisory-lock wait proves all competitors refuse without new original journal submission. Both principal-only and unconfigured sources preserve original response, subsequent query and healthy next checkout. Expanded runtime/subject probe passes 82 observations; principal regression remains 53.
+3. Passing evidence counts: fresh gate now records an `accepted` outcome only after complete receipt and original source validation. Phase counts derive from accepted outcomes, not bare zero exits. Four isolated executions of the actual gate verify valid receipt acceptance and zero-exit malformed, omitted-assertion and stale-source refusals. No full fixture gate is claimed, because those one-case controls intentionally leave criteria unallocated.
+4. Leading evidence summary: labeled early spike counts historical and added current qualification/version summary. No historical source receipt was silently repinned.
+
+Refreshed affected native lowerer (49), typed projection (28), native key correspondence (44), subject (82), principal (53), conditional proofs and real Chrome 153 predicate/key correspondence. The complete fresh acceptance run executes and accepts the existing 22 cases; all remaining 110 still fail for missing required implementations. All 28 complete ACs remain open. The next integration priority remains compiler-owned action/field/operator enforcement on raw PostgreSQL and an actual Truss store/catalog/actor/complete-authority/publication boundary; synthetic shared-table projections are not a substitute for graph acceptance. Databricks distinct-actor prerequisites remain unresolved independently of restored PostgreSQL execution.
+
+Astra ultra independently re-reviewed all four fixes and found no remaining defects in them. It verified current source hashes against affected native/browser/regression receipts and the gate's 22 accepted executions with zero accepted failures/timeouts. Final refreshed component verification passes nine command groups; current phase validation passes 68 checks with zero failures; the 470-criterion ledger is current. The passingFreshCases list additionally requires current fingerprint correspondence, so historical accepted runs cannot inflate current totals after source changes. Complete backend acceptance and all 28 criteria remain open; work resumes along compiler-derived field/operator and actual graph-native integration, rather than narrowing the goal to these reviewed fixes.
+
+### First compiler-to-native query-use integration and unbounded logic — 2026-10-08
+
+The owner's formal-logic question was answered by inspecting current retained Z3 evidence: conditional semantics and refinement models exist; they do not prove the complete system. Added a first-order unbounded witness-population existence theorem, independently specified as a least upper bound. Three Z3 4.15.4 checks pass with UNSAT violations and SAT positive/weakened controls. Identical complete stable witnesses and scalar correspondence remain explicit premises; SQL/compiler/issuer/final-release implementation is not proven.
+
+Advanced the missing raw field/operator critical path: actual owner compilation derives protected salary predicate/order/group/join/aggregate bindings to querySalary and refuses malformed bindings. A broadly permitted unrelated action is retained as a separately selected profile identity, not substitute authority. Added actual portable Truss finite application/query-use lowering and reviewed host bridge. Native installer freshly replays exact owner artifacts, emits private source and fixed query routines, checks the bound action before any native application query, and applies compiler-derived row membership. All five populated/empty variants pass their authored Alice outputs and deny Bob/outsider; direct original sources remain private. Native role/routine metadata is independently observed. 10 owner checks, 62 native observations, ten actual Chromium program matches and four refusals pass.
+
+Initial capability whitelist omitted the parser's filter capability; the initial predicate bridge refused without native effects. Added the implemented filter capability and re-executed native/browser checks. This did not weaken unsupported operations. Protected original projection, unknown capabilities, foreign profile and missing original action refuse. Integer input and output remain native/exact lexical carriers.
+
+Scope remains fixed raw fixture, inspection-owner source and resource-independent original-value permissions; history/limit/page, resource-dependent permissions and broader physical domains remain unimplemented. No full B08, actual graph case, current-authority/issuer/privacy/final-release or public activation claim. Full goal and 132-case gate remain unchanged.
+
+Final checks for this increment: nine aggregate component commands pass, including strict TypeScript for new owner bridges/browser consumer; all 72 current evidence checks pass; acceptance traceability remains current at 470 criteria. Native/browser receipts retain current source pins. No required backend case is promoted and no acceptance criterion is closed by these component results.
+
+### Query-use binding and eligible source completeness — 2026-10-08
+
+The experimental raw query home is now captured as exact original binding bytes (`truss.security.raw-query-home/0.1.0`). The portable consumer verifies binding, ontology and profile hashes, joins the profile binding to the handoff binding, checks native mapping against captured binding content, derives protection and operator/action selection from the captured ontology/profile, and captures inputs synchronously before asynchronous hashing. These establish source correspondence under the trusted original-owner premise; hashes do not establish issuer authenticity or current authority.
+
+Before every application statement, the fixed native routine requires exactly one private original carrier with non-null required native fields for each eligible root row. Original action admission and this collection check precede application filtering, including empty results. Fresh PostgreSQL 17.9 evidence passes 74 observations: missing eligible carriers refuse all ten populated/empty routines, exact restoration recovers the result, and deleting an ineligible carrier does not alter the eligible aggregate. This does not yet qualify arbitrary domains, graph storage, concurrent authority changes or full privacy closure.
+
+Real Chromium 153 matches ten native programs, refuses nine profile/capability/projection/action/mapping/source substitutions, and confirms that input mutation cannot change the captured result or repair an initially invalid mapping during asynchronous validation. The complete 132-case goal remains unchanged; B08 and the full backend acceptance criteria remain open.
+
+### Conditional original-source completeness theorem — 2026-10-08
+
+`original-source-completeness-formal.json` retains four quantified Z3 checks over arbitrary eligible resource populations. An independently stated universal specification (each eligible resource has exactly one carrier with all required fields) is equivalent to anti-existence admission. Empty application results cannot hide unavailable source; unauthorized original actions and duplicate/null carriers cannot admit. Each check has an UNSAT violation, SAT weakened control and SAT positive control. Exact native key correspondence, truthful eligible-root RLS, complete carriers, field availability, independent action authorization and a stable authority/source cut through final release are explicit premises. This proves the admission algebra, not SQL generation or backend isolation. The current 74 native observations cover missing eligible carriers and restoration, but do not establish every formal premise or all duplicate/null implementations. Full B08 and graph/native acceptance remain open.
+
+Verification for this theorem increment: four conditional proof checks pass; nine aggregate component command groups pass; phase evidence validation passes 73 checks; the acceptance ledger remains current at 470 criteria. Full backend gate remains 22/132, with no backend criterion promoted by the theorem.
+
+### Malformed original carrier refusal — 2026-10-08
+
+The fixed private PostgreSQL query routine now normalizes caught execution errors to an authored 42501 refusal before results are returned. Added eligible-carrier controls for null, text sentinel, fractional number, signed64 overflow and object values across all ten populated/empty application routines, plus exact restoration. Fresh PostgreSQL 17.9 receipt passes 125 observations. These controls require no output, 42501, and absence of the sentinel/cast diagnostic categories in ordinary-client stderr. This is not a general proof of diagnostic noninterference; cancellation/assertion exceptions, timing, logs, concurrent mutation and complete physical admission remain unqualified. The boundary is the explicitly authored fixed spike installer, not an activated production compiler/runtime API. B08/B10 and graph criteria remain open.
+
+### Duplicate original-source cardinality controls — 2026-10-08
+
+Fresh PostgreSQL 17.9 evidence now passes 138 observations. Owner-authored replacement of the private original view duplicates the eligible RAB projection while retaining base-table primary keys. All ten populated/empty query routines refuse before results; exact restoration recovers the aggregate. Duplicating ineligible RB leaves the eligible aggregate unchanged, followed by restoration. This concretely exercises the exactly-one-carrier branch of the conditional completeness theorem. The mutation is an authored fixture owner change: it does not demonstrate authenticated source installation, native dependency sealing, current-epoch/source drift admission or concurrent stable-cut enforcement. Full B08/B10 and actual graph backend cases remain unqualified.
+
+### Hidden carrier error interference counterexample and native fix — 2026-10-09
+
+The expanded native test found an actual privacy counterexample: changing only unreadable RB salary to JSON null made Alice's eligible predicate query fail. The vulnerable fixture source and observed failure are retained as `original-use-hidden-carrier-vulnerable.py.txt` and `original-use-hidden-carrier-counterexample.json`. Root RLS alone did not isolate malformed carrier evaluation in the native query.
+
+The fixed spike installer enables and forces SELECT membership RLS on the private original carrier relation, using the same compiler-derived read membership predicate. PostgreSQL catalog observations independently verify enabled/forced RLS, guardian ownership and the authored SELECT policy. Fresh PostgreSQL 17.9 evidence passes 240 observations, including all five malformed hidden-carrier variants across all ten operator/empty-result programs: eligible outputs remain unchanged and client diagnostics are empty. Restoration, eligible missing/malformed/duplicate refusal and private-source access controls also pass.
+
+Physical lowering must isolate every protected carrier before operations that can evaluate its stored values or errors; root row filtering plus a private view alone is insufficient evidence. Require either native policy on the carrier or an independently validated equivalent barrier, including hidden malformed-value regression controls. This applies to raw and graph carrier homes. The fixed authored installer is still a spike; native dependency/source sealing, concurrent authority cuts, timing/log noninterference, full backend B08/B10 and public compiler activation remain open. Full gate remains 22/132.
+
+### Captured complete physical mapping inputs — 2026-10-09
+
+Experimental raw-query-home binding 0.2.0 includes the subject and complete authored physical type mappings (root, subject and associations), in addition to the original carrier home and target. The portable consumer compares captured inputs to the exact original binding and the profile/handoff binding identity before lowering. The reviewed bridge reads physical mappings from these captured bytes. This closes the prior caller-substitution gap for completeness-root and policy association mappings; binding hashes establish correspondence, not issuer authenticity or native catalog equivalence.
+
+Actual owner export passes ten checks/six artifacts; freshly replayed native programs retain 240 passing observations. Four conditional source-completeness proofs are refreshed against the consumer source. Chromium controls additionally refuse substituted root table, association field column and subject type. Native mapping admission, schema drift/epoch, authenticated source custody and final-release guards remain host duties and open backend acceptance. Full gate remains 22/132.
+
+### Cross-source ontology/profile join — 2026-10-09
+
+The portable original-use consumer now requires the profile's ontology digest to equal the captured handoff/ontology digest, and requires the selected subject to equal the ontology subject. Individual matching source hashes alone did not establish these joins. Chromium's new substitution control changes the ontology revision and recomputes its standalone handoff hash while retaining the original profile; the consumer refuses. This is cross-source identity checking under trusted owner provenance, not source authenticity or proof that logical IR was compiled correctly. Native programs retain 240 passing observations and the four conditional completeness checks remain scoped to their explicit premises. Full backend gate stays 22/132.
+
+### Pinned compiler handoff snapshot — 2026-10-09
+
+The portable original-use consumer now requires an expected SHA-256 for the canonical complete handoff snapshot, including logical plan, application plan and query-use lineage. The reviewed fixture host computes the pin only after fresh original-owner replay; later handoff mutation refuses before rendering. This closes consumer snapshot substitution under the trusted pin-provider premise. A caller-supplied pin is not authority: public activation must establish this custody independently, and that protocol remains open.
+
+Chromium controls remove the application filter while retaining the original pin and supply a wrong handoff pin; both refuse. Existing capability/projection/action/cross-source semantic controls recompute their altered snapshot pins so their rejection still tests independent admission rules rather than only snapshot identity. Fresh native programs retain 240 passing observations and conditional completeness proof scope is unchanged. Complete compiler refinement, trusted public issuer/pin custody, native epoch admission and final release remain unqualified. Full gate stays 22/132.
+
+### Exact original integer boundaries and aggregate widening — 2026-10-09
+
+Fresh PostgreSQL 17.9 evidence passes 252 observations. Added signed64 minimum/maximum carriers across all ten operator/empty programs and exact restoration. Actual owner IR declares each SUM argument signed64 but its nullable integer result has no integer-width facet. PostgreSQL's numeric SUM result therefore preserves the admitted result: summing two signed64 maxima yields lexical `18446744073709551614`, and summing minimum plus maximum yields `-1`. Stored boundary values are authored as native numeric SQL literals; outputs stay text and never pass through JS Number. This qualifies the fixed integer subset only, not arbitrary aggregate facets/domains, protected projection, complete backend acceptance or issuer/current-cut guarantees. Full gate remains 22/132.
+
+### Backend regression protocol propagation — 2026-10-09
+
+Expanded all four required backend plans with acceptance-linked original-carrier isolation procedures: hidden malformed-value noninterference, eligible missing/malformed/duplicate whole-request refusal, type/key separation, actual native metadata, drift/migration custody, explicit concurrent release barriers and exact integer transport. Truss/Ashlar require actual graph registries/homes; Delta requires its selected native compute/policy tuple. The observed raw PostgreSQL counterexample is motivation only and is not transferred as backend acceptance. Graph original-use lowering remains unsupported pending original root discriminator and guarded source integration. Full 132-case scope and 22 current accepted cases remain unchanged.
+
+### Conditional hidden-carrier error isolation theorem — 2026-10-09
+
+`carrier-error-isolation-formal.json` records four quantified two-world Z3 checks. Worlds share eligible resources, original action authority and all eligible carrier validity/cardinality while hidden carrier content is unconstrained. Eligibility-limited evaluation preserves admission and carrier-error outcomes; no eligible resources means no carrier error; malformed eligible carriers cannot admit. Each check retains an UNSAT violation, SAT negative control and SAT positive control. The all-carrier evaluation mutant yields a concrete SAT hidden-error interference control corresponding to the observed PostgreSQL regression.
+
+The theorem requires exact eligibility, complete source cardinality, evaluation confined behind a truthful native barrier, faithful scalar domain checks and a stable source/authority cut. It does not prove the PostgreSQL optimizer/barrier, graph/Delta mapping, arbitrary result values, timing/log/diagnostic payload noninterference or full backend refinement. The 252 native observations remain separate empirical evidence for the fixed PostgreSQL raw spike. Required B08/B10/B15 backend cases must establish these premises rather than inheriting acceptance from an abstract proof.
+
+### Original-query epoch integration and stale-snapshot control — 2026-10-09
+
+Fixed authored native original-use routines now check private table/sequence authority generation before original-action admission, source completeness and application execution. An actual ordinary TCP/SCRAM connection establishes repeatable-read with a returned snapshot barrier; installer commits Assignment revocation plus generation advancement before the first protected read. The old connection refuses without output. A fresh connection after exact assignment restoration and another generation advance succeeds. Native generation is independently observed as lexical `2` after revocation. Fresh PostgreSQL 17.9 evidence passes 256 observations.
+
+The first integration run failed stale-snapshot refusal because the newly created sequence's first nextval reused generation 1. The vulnerable source is retained as `original-use-epoch-initialization-vulnerable.py.txt`; initialization now explicitly sets generation 1 as already called, matching the existing epoch spike. No stale-row output was retained from that failing assertion, so this record does not claim its exact returned value. Fixed evidence tests actual advancement and refusal.
+
+This is explicit installer-controlled authority mutation and stale-snapshot rejection, not exhaustive authority-change detection or drain coordination. The sequence is non-MVCC and nontransactional; abort/advance may conservatively refuse until repaired. No guard through final client release, revocation acknowledgment/drain, public activation, native source custody or full L06 qualification is claimed. Full gate remains 22/132.
+
+### Epoch rollback and ordinary custody controls — 2026-10-09
+
+Fresh original-use PostgreSQL 17.9 evidence passes 270 observations. A sequence advance inside a rolled-back authority transaction persists while the epoch row rolls back; the next fresh ordinary request refuses with no output. Explicit installation of a new generation restores the expected aggregate. Alice, Bob and outsider independently cannot read the epoch table, read the sequence, invoke nextval or call the private epoch helper. This verifies conservative mismatch refusal and least-privilege custody in the fixed installer.
+
+Repair is an explicit assessor/installer action; no public recovery API or automatic acknowledgment is claimed. Authority changes remain manually enumerated in this spike, and no drain/final-release barrier or exhaustive authority invalidation is established. Link these controls to B05/L06/L11/L12/L13 qualification without promoting those cases. Full gate remains 22/132.
+
+### Guarded native buffer/publication integration — 2026-10-09
+
+Actual UMF SecurityAuthorityGuard now participates in a reviewed native pipeline spike around the original compiler-derived PostgreSQL aggregate. The ordinary query completes and decodes exact lexical output, then waits at an explicit publication barrier while the read callback still holds its guard. A participating change queues; its callback has not started, and an independent native assessor query confirms Assignment remains active. Publication completes before change callback admission; revocation and epoch advancement commit, and the next guarded ordinary query sees no eligible rows. A guarded restoration recovers the expected result. Six new observations produce 276 native observations overall.
+
+The initial test oracle expected the word true, whereas psql's ordinary boolean carrier is t; correcting that lexical oracle and rerunning passes. No native safety failure is claimed for that oracle mismatch.
+
+This demonstrates one-process read/change participation through buffered publication, not a production transport receipt, distributed/native-exclusive lock, all authority writers, streaming, cancellation/crash or final byte delivery. Public issuer/source/guard custody and exhaustive mutation participation remain open; L03/L05 are not promoted. Full gate stays 22/132.
+
+### Guarded publication/transition failure controls — 2026-10-09
+
+Extended the actual UMF guard/native publication pipeline with two failure paths. A buffered native result whose publication callback throws rejects the read and releases the guard, allowing the previously queued participating revocation to commit; subsequent protected reads have no eligible resources. A participating change that commits native revocation then throws an acknowledgment error produces SECURITY_TRANSITION_UNKNOWN, closes the guard, refuses subsequent reads before any native query, and refuses self-repair through that closed guard. Native assessor observation verifies committed revocation; separate explicit assessor restoration recovers the raw fixture.
+
+Fresh PostgreSQL 17.9 aggregate receipt passes 287 observations. These are controlled single-process callback failures, not process crash, network acknowledgment ambiguity, distributed custody, final bytes delivered, all native writers or production recovery qualification. No L03/L11/L12 criterion is closed by the component. Full gate stays 22/132.
+
+### Queued revocation cancellation and retry — 2026-10-09
+
+Actual UMF guard/native pipeline now includes an AbortSignal-cancelled authority change queued behind a buffered read. The queue rejects with SECURITY_GUARD_REFUSED; the mutation callback never starts, an independent native observation confirms Assignment still active, and the active guarded read returns its original exact result. An explicit later participating retry commits revocation and the next protected read is empty. Restoration is separate and guarded. Fresh PostgreSQL 17.9 aggregate receipt passes 292 observations.
+
+This qualifies cancellation before change callback admission only. Cancellation of a callback already executing, process crash, distributed/native-exclusive coordination, canceled native transactions and full guard participation remain open. No revocation acknowledgment is emitted for the cancelled request. Full gate stays 22/132.
+
+### Conditional publication-drain induction — 2026-10-09
+
+`publication-drain-formal.json` records four Z3 checks over unbounded abstract reader and pending-publication counts. Empty initialization plus every admitted reader/buffer/publication/release/change transition preserves pending publications <= retained reader guards and authority change => no retained reader. The invariant excludes publication outstanding at change admission/acknowledgment. A premature lease-release mutant produces a SAT counterexample. All checks retain UNSAT violations and SAT negative/positive controls.
+
+Every operation must retain its own lease through publication, every authority mutation must use the same coordinator, callback settlement must be truthful, and coordinator transitions must be atomic/serialized. Global counts abstract individual lease custody; those premises are not proved by the theorem. No TypeScript implementation refinement, all-native-writer seal, distributed participation, streaming/final-byte completion, crashes or liveness/fairness is established. Current native guard pipeline tests remain separate scoped component evidence. Full gate remains 22/132.
+
+### Separate-connection native publication drain — 2026-10-09
+
+Added actual PostgreSQL coordination across separate native connections: an ordinary TCP/SCRAM read transaction acquires an explicitly authored shared transaction advisory lock, queries the compiler-derived routine and holds its lexical decoded result. A separate installer transaction attempts the matching exclusive advisory lock before assignment revocation/epoch advancement. The assessor observes PostgreSQL pg_stat_activity advisory wait and independently observes active Assignment while the read lease is retained. Publication precedes reader COMMIT; reader exits without diagnostics; revoker then commits and returns acknowledgment. A fresh ordinary read is empty, and explicit restoration recovers the fixture. Fresh aggregate receipt passes 302 observations.
+
+The lock key is fixed coordination metadata, not a native resource identity. This proves the authored participating transactions' drain ordering and native lease lifetime through controlled publication. It does not seal all mutators, prove source/role lock custody, enforce lock use in public activation, cover distributed application buffers beyond the declared lease, final byte delivery, streaming, crashes, cancellation/deadlines or full L03/L05 acceptance. The original test's bounded deadline and actual native lock-wait observation establish ordering; elapsed sleep is not used as evidence. Conditional publication-drain proof source pins are refreshed, but the theorem does not verify advisory-lock implementation. Full gate remains 22/132.
+
+### Native DML writer participation in the fixture — 2026-10-09
+
+The fixed installer now creates statement triggers on employee, project, resource, Assignment junction, Ownership junction and private original carrier tables. BEFORE INSERT/UPDATE/DELETE/TRUNCATE acquires the selected exclusive transaction advisory lock; AFTER advances the non-MVCC generation and epoch row. PostgreSQL catalog evidence independently verifies all twelve enabled triggers and their selected routines. The separate native revoker now omits both explicit lock acquisition and explicit epoch advancement: its update blocks under the retained reader lease, and the trigger alone advances generation after drain. Fresh PostgreSQL 17.9 receipt passes 304 observations, retaining prior query/domain/privacy/epoch/guard controls.
+
+This enforces participation for ordinary SQL DML on the six authored fixture tables with these enabled triggers. It does not seal trigger/role/function/schema changes, disabled-trigger or replication paths, excluded owner/admin bypass, independent native data sources, all selected graph homes, public read-lease acquisition, statement snapshot semantics beyond tested cuts or final client delivery. Protected read methods must still retain the native lease; ordinary direct invocation alone does not establish final-release drain. Installer/source inventory admission and comprehensive writer/read-path closure remain open. Conditional proofs retain updated source pins without claiming native-code verification. Full gate remains 22/132.
+
+### Native revocation lock timeout — 2026-10-09
+
+While the ordinary native reader holds its publication lease and a revoker is independently observed waiting in PostgreSQL, a second revoker executes an Assignment update with native lock_timeout=100ms. The trigger-enforced lock wait returns 55P03, no output/acknowledgment, and the connection ends without committing. Independent native observations show Assignment and epoch unchanged. Publication then completes and the original waiting revoker commits successfully. Fresh PostgreSQL 17.9 receipt passes 307 observations.
+
+This verifies bounded native lock timeout without authority effects for the authored transaction, not elapsed-time ordering, canceled active callbacks, process crash/connection loss, complete deadline budget containment, distributed acknowledgment or production recovery. No drain acknowledgment is issued on timeout. The full required backend scope remains unchanged at 22/132 accepted cases. Conditional drain proof source pins are refreshed without native implementation proof claims.
+
+### Protected-routine automatic native lease — 2026-10-09
+
+The fixed native original-query routines acquire the selected shared transaction advisory lock before epoch checking, original-action admission, completeness validation and query evaluation. The ordinary retained read transaction no longer calls an explicit lock helper. After the query-result barrier, independent PostgreSQL pg_locks/pg_stat_activity observations confirm the ordinary reader's granted ShareLock on the selected coordination key. Trigger-only revocation still waits and timeout remains without acknowledgment/effects until publication and reader commit. Fresh PostgreSQL 17.9 receipt passes 308 observations.
+
+Moving the catalog observation after the actual buffered-result barrier avoids timing-based lease evidence. Epoch checking follows acquisition so old data/authority snapshots cannot masquerade as current solely by obtaining a new lease. Autocommit releases the transaction before later application publication; production hosts must retain the admitted native transaction through their declared final-release boundary and qualify all read surfaces. This is a fixed authored installer protocol, not a public physical/compiler activation or complete source/role/mutator/graph closure. Full gate remains 22/132; conditional proof pins are refreshed without native code verification claims.
+
+### Native backend-loss buffer-drain counterexample — 2026-10-09
+
+Actual native negative control establishes an ordinary retained transaction, invokes the compiler-derived aggregate and holds its exact lexical result in the live client. Assessor terminates only that owned reader backend. Trigger-enforced Assignment revocation now commits before the client drains its buffered result; the old buffer remains available. Client subsequently detects connection failure. `original-use-native-lease-loss-counterexample.json` points to immutable retained evidence (`original-use-native-lease-loss-evidence.json`, SHA pinned). Fresh aggregate receipt has 313 passing observations, including successful observation of this unsafe mechanism boundary; those five counterexample observations are not acceptance of its drain behavior. No unauthorized publication is executed.
+
+A native transaction lock alone cannot establish the CONTRACT-063 application-buffer final-release rule under backend loss. Production needs separately demonstrated publisher/lease participation that survives loss of the native session, or must refuse revocation acknowledgment while publication drain is unknown. Merely detecting the connection error later, retrying epoch admission or discarding the result in a cooperative client does not prove that all publication paths were drained before acknowledgment. Cleanup must distinguish dead publication owner from a live owner whose database session died; bounded uncertainty must not be reported as successful revocation. The conditional drain theorem's lease-through-publication premise is violated by treating this lost native lock as the sole lease. Native schema lock/read/DML results remain useful, but full L03/L11 acceptance remains open. Full gate stays 22/132.
+
+### Persistent enrolled publication lease spike — 2026-10-09
+
+Added a private persistent publication-lease registry and a separately enrolled aggregate wrapper to the fixed raw PostgreSQL fixture. A trusted issuer registers original actor/native backend before the wrapper executes. Unenrolled ordinary callers refuse, and all three ordinary actors cannot read the registry. Native writer triggers acquire the exclusive guard then refuse while any unresolved enrolled publication exists. Writers using repeatable-read are explicitly unsupported and refuse before effects, preventing an old writer snapshot from treating unseen leases as absent. The current ordinary read profile remains separately tested; this enrolled wrapper is not a public activation.
+
+Actual enrolled reader buffers its compiler-derived aggregate, then the assessor terminates its backend. Its persistent publication record remains. Revocation returns 42501 with no acknowledgment; independent native observations prove Assignment and epoch unchanged while the live client retains the old buffer. Only after client failure is observed, trusted publisher explicitly discards its buffer and issuer clears the lease does a later native revocation commit. Fresh receipt passes 333 observations, retaining the unregistered native-lock-loss counterexample as a negative control.
+
+This closes the observed backend-loss interleaving in the enrolled authored spike under trusted registration/release, not the whole system. Current binding uses actor/native PID; PID reuse, session incarnation/opaque token custody, public issuer authentication, lease recovery/owner-death proof, complete read enrollment, streaming/final bytes, DDL/trigger drift and graph/Delta implementation remain open. Cleanup is never inferred from backend disappearance or elapsed timeout. The unregistered base routine remains a spike control and cannot qualify publication custody. Conditional proof source pins are refreshed without claiming verification of registry snapshots or SQL implementation. Full backend gate remains 22/132.
+
+### Exact issuer-created publication ID — 2026-10-09
+
+The enrolled native aggregate wrapper now takes a UUID publication ID and requires the private row to match that ID, original native actor and backend PID. The trusted issuer captures the exact native RETURNING lease_id text and passes it through without numeric conversion. The actual enrolled ordinary session tests wrong and NULL IDs under savepoint controls; neither returns a result. Its exact ID then succeeds, and persistent backend-loss refusal/explicit trusted release still pass. Fresh PostgreSQL 17.9 receipt has 335 observations.
+
+Opaque ID matching strengthens enrollment but does not authenticate the issuer, prove UUID entropy, provide public token custody or prove native session incarnation/PID-reuse safety. An old known token plus a reused PID must not be treated as a new publisher; actual incarnation/fresh-enrollment binding remains open. Private token values are not copied into observation receipts. The separately admitted public read/release protocol, immutable lease fields, cleanup evidence and recovery remain unqualified. Full gate stays 22/132; conditional proof source pins are refreshed without native source refinement claims.
+
+### Native backend-start binding and metadata capability — 2026-10-09
+
+The enrolled publication row now includes a native timestamptz backend-start value captured by the issuer from pg_stat_activity. The wrapper requires exact native equality for the current backend alongside UUID, original actor and PID. Controlled incarnation mismatch keeps those three other fields valid but substitutes -infinity: no result escapes. Restoring the actual native backend-start value admits the query. Values remain native timestamps; no JS Date or timestamp string conversion is used.
+
+Initial direct stats lookup under the guardian role withheld metadata, so the valid enrolled request failed closed with Publication custody unavailable. The selected fixture now explicitly grants pg_read_all_stats to the internal guardian and uses pg_stat_activity; native checks establish that Alice, Bob and outsider cannot inherit this capability. Fresh PostgreSQL 17.9 receipt passes 339 observations. This additional capability is part of this fixture's qualified subset, not a default public role grant or a least-privilege production role proof.
+
+Backend-start matching detects the tested mismatch; it is not a formal proof of globally unique session incarnation under clock/PID reuse, metadata-source authenticity or public token custody. Production must qualify the native identity source and isolate/retain its required capability. Issuer authorization, immutable lease/enrollment fields, reused tokens, owner cleanup, all read paths and final delivery remain open. Full gate stays 22/132; conditional proof pins are refreshed without native code verification claims.
+
+### Isolated native incarnation metadata capability — 2026-10-09
+
+Replaced the fixture guardian's broad pg_read_all_stats membership with a dedicated umf_sec_incarnation NOLOGIN/NOSUPERUSER/NOBYPASSRLS owner of the private stable, fixed-search-path original_backend_incarnation helper. It returns only the current backend's native start timestamp. Guardian receives only EXECUTE on that exact helper. Independent catalog evidence verifies stats capability on the helper owner, absence on guardian, restricted definer metadata, no PUBLIC EXECUTE and no resource/publication-registry SELECT for the helper role. Alice, Bob and outsider cannot invoke the helper or inherit the helper role; they also retain no stats membership. Enrolled wrong-incarnation refusal and restored admission still pass. Fresh PostgreSQL 17.9 receipt has 346 observations.
+
+The prior guardian-wide metadata grant is historical spike evidence and is superseded by this isolated fixture capability. This is not a complete production privilege/dependency inventory or native metadata authenticity/uniqueness proof. Public issuer/cleanup/session/token custody, source drift and actual graph/Delta profiles remain open. Full gate stays 22/132; conditional source-isolation proof pins are refreshed without backend refinement claims.
+
+### Exact publication release and sibling-owner counterexample — 2026-10-09
+
+Two actual ordinary Alice publisher sessions enroll independently, buffer their admitted aggregate and lose only their native backends. The first tested cleanup still deleted by original actor; the exact-release-retains-sibling-publication control failed. Vulnerable source and actual failed control are retained in original-publication-actor-cleanup-vulnerable.ts.txt and original-publication-actor-cleanup-counterexample.json. The failing control did not retain its returned count, so no exact failed count is claimed.
+
+Fixed cleanup deletes only the first exact publication UUID after its explicit trusted buffer discard. The second private lease remains, its live client still holds the original buffer, and another revocation refuses 42501 without acknowledgment or authority effects. Only after the second client detects native loss, discards its own buffer and releases its own UUID can revocation commit. Fresh PostgreSQL 17.9 evidence passes 354 observations. This closes the observed actor-wide cleanup interleaving in the authored enrolled spike, not public issuer/release authenticity, immutable lease history/token reuse, recovery, final delivery or graph/Delta custody. Full gate remains 22/132.
+
+### Terminal publication lease history — 2026-10-09
+
+Explicit exact release now marks the retained UUID row released instead of deleting it. Native primary-key history rejects attempted re-enrollment of the same UUID; release-state trigger rejects revival, deletion and truncation. Pending enrollment uses a partial actor/backend uniqueness index so terminal history does not block a future distinct lease. The query wrapper and writer-drain check consider pending rows only. Two-publisher exact release still retains the sibling blocker, and both terminal rows remain afterward. Fresh PostgreSQL 17.9 receipt passes 359 observations, including five terminal history controls.
+
+These constraints apply to the enabled authored fixture triggers and ordinary DML paths. Pending record binding fields remain mutable under the trusted fixture issuer; immutable enrollment, privileged source/trigger changes, recovery/history retention bounds, public token/issuer custody and graph/Delta implementation remain open. Terminal UUID retention is not an authenticated lease protocol by itself. Conditional proof pins are refreshed without backend verification claims. Full gate stays 22/132. A read-only Astra re-review of the accumulated source/proof/protocol changes has been requested under the owner's existing review instruction.
+
+### Publication retirement snapshot fence — 2026-10-09
+
+Astra identified an unmodeled lease-retirement schedule. Actual PostgreSQL 17.9 replay confirmed that a retained ordinary repeatable-read snapshot could reuse a UUID already marked released; terminating that backend then allowed revocation while its second result buffer survived in the test host. Neither result was delivered to a consumer. The vulnerable source, full 370-observation run and focused counterexample are archived as original-publication-stale-retirement-* under the security evidence directory. Terminal history alone does not establish current admission.
+
+The authored enrolled spike now requires read-committed retirement, takes the same exclusive native coordinator lock, and advances the non-MVCC sequence plus transactional authority epoch before pending->released. A live protected repeatable-read transaction prevents retirement acknowledgment (bounded lock timeout, unchanged pending state/epoch). After its native lease ends, retirement advances the epoch; an older idle repeatable-read snapshot refuses its first protected query, and a fresh snapshot refuses a terminal token. Trusted publication drain still precedes native lease termination and exact issuer retirement. Fresh native evidence passes 374 observations. The P2 discard evidence now retains explicit expected/observed booleans.
+
+publication-retirement-formal.json contains four Z3 4.15.4 conditional algebra checks with SAT negative controls for unfenced terminal-state admission and retirement under retained readers. It assumes serialized lock participation and truthful snapshot/non-MVCC epoch comparison; it does not verify SQL ordering, runtime refinement, rollback/recovery, immutable enrollment, authenticated issuers, final delivery or full backend implementations. Existing publication-drain proof remains qualified separately. US-057-AC2/3/5/7 remain open; full acceptance remains 22/132. Astra re-review of the repaired protocol is pending.
+
+Astra re-review of the repaired schedule found no remaining demonstrated bypass under the stated trusted-issuer and immutable-identity premises. Both lock orderings are explained conditionally: a retained protected read lock excludes retirement, and an earlier retirement invalidates an older eligibility snapshot at the post-lock epoch check. Actual opposite-order lock-wait and retirement-rollback schedules remain additional refinement work; no complete backend claim follows. Chromium 153.0.8010.12 correspondence passes all ten programs and fifteen refusal controls.
+
+Retirement repair verification completed: nine component groups pass; evidence freshness/allocation validation passes 76 checks with zero failures; acceptance traceability remains current at 470 criteria. Fresh full security gate executes and accepts 22 cases, reports 110 missing required implementations, and remains failed across 132 required cases/28 allocated criteria. No component or formal receipt was promoted to backend acceptance.
+
+### Retirement rollback and opposite lock order — 2026-10-09
+
+Extended the same authored PostgreSQL 17.9 enrolled spike to execute both refinement controls requested by Astra. A rolled-back retirement restores the pending row and transactional epoch, while the native sequence advancement survives. Both the retained ordinary repeatable-read snapshot and a fresh ordinary statement refuse without a result. The fixture then explicitly advances a new coordinated generation, verifies the same still-pending lease can read, discards its buffer, and retires the exact UUID. This trusted fixture recovery is not a public recovery protocol or issuer qualification.
+
+In the opposite ordering, an ordinary repeatable-read snapshot is established before retirement, but has no protected read lease yet. The separate retirement transaction updates the lease and retains its exclusive native coordinator lock. Independent pg_stat_activity/pg_locks observations establish that the ordinary protected query waits on that advisory lock and the retiring backend owns it. Retirement commits; the waiting reader then refuses without any result buffer under the obsolete snapshot. Native receipt truss-original-use.json now passes 395 observations, including ten opposite-order and eleven rollback controls.
+
+publication-retirement-formal.json now has five conditional Z3 algebra checks. The new rollback check shows transactional epoch restoration cannot admit old or fresh snapshots while the non-MVCC generation remains strictly advanced; its rewound-generation negative control is SAT. This does not prove actual SQL, recovery, multi-lease custody or backend refinement. Chromium 153.0.8010.12 still matches ten programs and fifteen refusal controls. US-057-AC2/3/5/7 and the full 132-case backend gate remain open; these are actual scoped refinement observations, not additional accepted backend cases.
+
+### Immutable pending publication enrollment — 2026-10-09
+
+The authored PostgreSQL 17.9 lease trigger now refuses changes to a pending row's UUID, original actor, native PID or native backend incarnation. Four actual issuer-side ordinary UPDATE attempts each fail 42501 without result, followed by independent catalog comparisons confirming the original exact binding remains pending and unchanged. The wrong-incarnation admission control now enrolls an initially invalid incarnation, verifies ordinary refusal, retires that exact UUID and creates a distinct correctly bound UUID; it no longer rewrites an existing enrollment. Terminal history retains both that invalid enrollment and the two drained publisher enrollments. Native receipt passes 403 observations; Chromium 153.0.8010.12 still matches ten programs and fifteen refusal controls.
+
+This qualifies enabled authored triggers against ordinary DML on the owned raw fixture. It does not authenticate insertion metadata, restrict a superuser/owner from replacing triggers or tables, establish a production issuer/recovery API, or implement actual graph/Delta custody. Conditional proof premises are unchanged: immutable identity is now separately observed in this fixture, not discharged for every backend. US-057 lifecycle acceptance remains open and the full gate remains 22/132.
+
+### Typed original-query binding readiness — 2026-10-09
+
+Fresh original inspection-owner replay confirms that the current Truss original-query consumer refuses explicitly bound Resource root discriminators with text, int4 and exact int8 carriers (including 9007199254740993). Each replay rehashes the complete physical binding into the original query profile and obtains a new original handoff before invoking the actual portable consumer; unchanged old handoff hashes are not used to fabricate this result. truss-query-typed-readiness.json retains all three sources/handoffs/refusals. This is a support-boundary observation, not actual installed graph execution or an accepted backend case.
+
+The current raw-query-home/0.2.0 binding cannot establish typed private-carrier identity. Before admitting typed graph original-query use, its replacement must independently bind the complete root and carrier type selectors and exact key correspondence. Every source/join alias must apply the selected carrier type; collection completeness must range over eligible roots of only the selected type and count carriers of that same bound type/key, before application filters. A sibling type with the same local key must neither satisfy completeness nor affect errors, grouping, ordering or sums. Missing/unknown/native-null selectors must refuse. Original resource-independent action admission needs an explicit selected-type contract: the row-predicate emitter currently requires a native root discriminator parameter even for such actions. Do not drop type constraints or synthesize a native parameter to bypass that requirement.
+
+Actual current Truss node/key/scalar/edge and history homes must come from original installed catalog correspondence, not guessed table names or synthetic projected rows. The next implementation boundary is a compiler-owned qualified typed physical binding plus independently checked native carrier/root correspondence, followed by actual Truss storage installation. This requirement does not redefine the full goal around raw-table support. All 30 Truss and all 30 Ashlar backend cases remain required and open.
+
+### Quantified typed carrier completeness — 2026-10-09
+
+prove-typed-source-completeness.py and typed-source-completeness-formal.json retain four Z3 4.15.4 conditional checks over arbitrary uninterpreted type/key domains, arbitrary eligible populations, and nonnegative carrier counts. The selected-type universal completeness specification equals anti-existence admission; a sibling carrier cannot fill a missing selected-type carrier; arbitrary sibling count/required-field changes leave admission unchanged when selected-type facts agree; and type-plus-key matching excludes a sibling's colliding local key. Every violation query is UNSAT, every weakened negative control is SAT, and every admitted positive population is SAT. The type-erased control explicitly admits a sibling carrier while the selected type has zero carriers.
+
+These checks establish the admission algebra required by the next typed physical binding. They assume truthful complete eligibility/cardinality/availability, injective native/logical identities, independent original-value authorization and a stable authority/source cut. They do not prove a binding API, native SQL emission, database error isolation, query result/group/order behavior, original-source authenticity or actual Truss/Ashlar storage refinement. No JavaScript number or invented native table identity participates. Current raw-query-home/0.2.0 typed-root refusal remains required until those physical obligations are implemented and qualified. Full backend acceptance stays 22/132.
+
+### Portable typed completeness SQL builder — 2026-10-09
+
+Implemented security-source-completeness.ts in the actual Truss PostgreSQL package and integrated it into the original-query consumer's admitted raw completeness path. The builder binds separate root/carrier selectors, exact qualified key fields and required carrier fields. It refuses one-sided typing, malformed references, duplicate logical fields or physical key/carrier columns, unsupported selector carriers and noncanonical/out-of-range integers. Integer selector transport stays lexical with exact BigInt admission and native typed SQL literals. No graph table allocation is inferred.
+
+The owned PostgreSQL 17.9 spike now executes fifteen additional physical witness controls across text, int4 and int8 selectors, including 9007199254740993. For each selector: a malformed sibling field does not block selected-type completeness; a sibling cannot fill a missing selected carrier; sibling duplicates do not block; selected duplicates refuse; an untyped carrier binding refuses before SQL. Native receipt passes 418 observations. These authored witness tables establish SQL behavior only; they are not actual installed graph stores, compiler-owned typed binding or independently qualified eligible-root/carrier RLS.
+
+The raw consumer's ten owner-derived programs remain equivalent in Chromium 153.0.8010.12, including fifteen refusal controls. This browser run exercises the integrated raw path; typed native SQL witnesses have no separate typed browser qualification yet. Fresh original-owner typed-root readiness still refuses all three selectors under raw-query-home/0.2.0, as required until the typed binding, query alias selection and typed original-action contract are implemented. Nine component groups and 78 evidence checks pass; traceability remains current at 470 criteria. Full acceptance remains 22/132.
+
+### Typed completeness browser qualification — 2026-10-09
+
+Closed the explicitly recorded browser gap for the physical typed completeness builder. truss-source-completeness-browser.ts builds the actual Truss helper as browser ES modules, executes it in Chromium 153.0.8010.12, and retains three exact host/browser SQL correspondences for text escaping, int4 and int8 selector 9007199254740993. Eight independent malformed-input variants refuse with the declared unsupported result: absent carrier selector, signed64 overflow, noncanonical integer, empty qualified reference, duplicate qualified carrier field, duplicate physical carrier column, NUL namespace and unknown selector carrier. The browser has no Bun/process/Buffer globals and makes zero external requests. Source hashes and exact inputs/SQL/refusal outcomes are retained in truss-source-completeness-browser.json.
+
+This establishes portable SQL generation/refusal behavior for this helper, alongside separately retained native typed witness SQL execution. It does not establish compiler-owned typed binding, typed application alias selection, original-action admission, root/carrier RLS, source authenticity or actual graph storage installation. Typed original-query admission remains refused under raw-query-home/0.2.0. No additional required backend case is accepted; the full gate remains 22/132.
+
+### Astra typed-builder review and malformed selector repair — 2026-10-09
+
+Direct inspection first found null/absent physical metadata escaping as incidental JavaScript TypeErrors; the helper now normalizes capture/generation failures to TRUSS_SECURITY_SOURCE_COMPLETENESS_UNSUPPORTED. Astra independently identified the stronger P2 defect: falsy provided selectors (null, false, zero or empty string) were interpreted as omitted and emitted untyped TRUE predicates. The helper now treats only undefined/absence as untyped, validates every provided selector as an object, and compares selector presence explicitly.
+
+Chromium 153.0.8010.12 passes three exact typed SQL correspondences and 24 malformed input refusals, including all twelve both/root-only/carrier-only falsy combinations. Astra's direct Bun re-review confirms those twelve refusals, preserves valid omitted raw selectors, and reports no further actionable type/key SQL or proof-scope defect. Native PostgreSQL 17.9 still passes 418 observations; original raw-path browser correspondence passes ten programs/fifteen controls; typed owner readiness still refuses three profiles. Nine component groups, 79 evidence checks and the 470-criterion traceability check pass.
+
+Retained typed-completeness-falsy-selector-counterexample-variant.ts.txt and its focused JSON receipt reproduce twelve untyped outputs when the identified conditions are reinstated. This is explicitly a reconstructed tested variant, not a claimed original source snapshot. Original historical receipt fingerprints were refreshed before an immutable pre-fix archive could be retained, so no original-byte archive correspondence is asserted. The defect and repair do not promote any graph/backend case. Current source/issuer/installed storage and typed query admission obligations remain open; full acceptance remains 22/132.
+
+### Original Truss graph correspondence boundary — 2026-10-09
+
+Current-source inspection retains four original source/contract pins in truss-graph-correspondence-readiness.json. stageNewCatalogCohort returns provisional_new_catalog_staging_only; its allocated rows do not establish committed current catalog admission. The native new-catalog collector independently reconciles Record/Field storage IDs and creation revisions with original archived declarations. Default property home selection applies only to absent binding under ADR-002; explicit home interpretation remains separate. CONTRACT-007 requires business-key components distinct from opaque object storage IDs, object/type_id/props and edge/rel_type_id/props correspondence, canonical allocated property member names, and independently qualified state/node/scalar joins for row homes.
+
+Therefore a typed security binding must retain original current catalog/layout custody and explicit native property-home correspondence, rather than reconstructing flat column maps from a provisional allocation or review-only schema export. Record type IDs, relationship type IDs and association-owner type IDs are separate identities. JSON-home scalar extraction and ordered key-component materialization must use original property catalog IDs and original native codecs; row homes must preserve complete state/presence/absence/domain guarantees. Carrier construction must retain its own type/key/source proof through eligibility, original-value use and final publication. The current flat SecurityPhysicalType.fields column subset and raw-query-home/0.2.0 do not realize those graph obligations.
+
+Next implementation must close original admitted catalog/layout observation, property-home projection/codec correspondence and business-key materialization together with the typed compiler binding. Typed completeness SQL alone cannot qualify actual graph queries. This is source-derived readiness evidence only, not executed current graph state, source authentication or additional accepted cases. Full gate remains 22/132; all graph and Delta requirements remain intact.
+
+### Graph storage/business-key correspondence algebra — 2026-10-09
+
+prove-graph-key-correspondence.py retains three Z3 4.15.4 conditional checks in graph-key-correspondence-formal.json using separate uninterpreted storage-identity and logical-business-key domains. A truthful original-key projection preserves equality selection; separately qualified selected-key uniqueness excludes equal business keys on distinct storage owners; changing unrelated storage identities cannot change logical selection when original keys agree. Each safety violation is UNSAT, weakened control SAT and positive population SAT. An unqualified storage-ID cast has a counterexample selecting the wrong original key. Distinct storage IDs without the independently admitted key constraint permit equal business keys.
+
+The selected-key uniqueness premise applies only within the separately qualified logical type/key namespace, not globally across all graph objects. Projection truth, original catalog/property/codec correspondence and native key namespace uniqueness must be established by implementation evidence; this algebra does not prove them. No SQL, JSON/row codec, compiler projection, graph installation or backend case is accepted by this proof. The typed binding port must consume compiler-owned property decoding and original native correspondence rather than casting object storage IDs or implementing a parallel guessed decoder. Full backend gate remains 22/132.
+
+### Private insert-counter diagnostic counterexample — 2026-10-09
+
+Extended the actual owned PostgreSQL 17.9 private-fact probe beyond the prior three known restricted diagnostic families. pg_catalog.pg_stat_get_tuples_inserted(oid) remains executable by Alice, Bob and outsider and exposes the private Assignment insert count. A second unrelated Eve Assignment advances that count exactly once for all three ordinary identities while each independently checked authorized Resource set stays unchanged. Restricting that exact additional function blocks ordinary invocation without changing authorized reads. pg-private-diagnostics.json now retains 21 observations including both worlds and the scoped restriction.
+
+All catalog privilege changes occur only in the disposable owned fixture. These database-wide PUBLIC restrictions are a prototype, not a selected multi-tenant production deployment or a proved per-user policy. Restricting four known families does not establish complete metadata/statistics/function/view closure. pg-raw.B10 and US-056-AC8 remain open; direct private-table SELECT denial cannot qualify them. The next backend implementation must inventory and qualify the complete ordinary diagnostic surface and deployment scope, or refuse ordinary paths that cannot meet the selected privacy guarantee. Full acceptance remains 22/132.
+
+### Deny-first native diagnostic candidate — 2026-10-09
+
+Extended the owned PostgreSQL 17.9 diagnostic spike with a separately scoped candidate: ordinary subjects have no direct SELECT on security_raw relations/views or pg_catalog relations/views and no explicit EXECUTE on pg_catalog routines; the excluded guardian receives the built-in execution capability required by the private fixed-search-path read routine. Ordinary callers receive only that routine's explicit EXECUTE for this read surface. Forced resource RLS and SESSION_USER-based membership still govern its original authorized rows. Existing direct-RLS profile evidence is neither silently replaced nor promoted by this candidate.
+
+Alice, Bob and outsider retain their actual ordinary native identity and exact authored authorized rows. Each refuses six known direct-root/catalog-view/cumulative-statistics/relation-size/private-EXPLAIN probes without output. Independent assessor ACL queries confirm zero effective SELECT privileges on all selected pg_catalog and security_raw relations/views, zero effective explicit EXECUTE privileges on catalog routines, and no CREATE in pg_catalog or public for each actor. pg-private-diagnostics.json now retains 27 observations. All catalog PUBLIC ACL changes are isolated to the disposable owned database.
+
+These native ACL and row outcomes are stronger than a growing list of individual statistics revocations, but do not establish full diagnostic closure: implicit operator/type/language/extension behavior, other command surfaces, owner/dependency/role change closure, deployment isolation, approved client compatibility, current authority and final delivery still need independent qualification. Full graph and Delta implementation remains required. pg-raw.B10/US-056-AC8 and the full gate remain open at 22/132.
+
+### Deny-first native command and wrapper controls — 2026-10-09
+
+The separate PostgreSQL 17.9 candidate now revokes ordinary direct EXECUTE on security_raw helpers and regrants only the admitted protected-read routine for this surface. Guardian retains its own helper authority and the separately excluded built-in execution capability. Existing direct-RLS profile behavior is unchanged outside this candidate's disposable fixture.
+
+For Alice, Bob and outsider, COPY of private Assignment, JSON EXPLAIN of the private table, direct allowed() invocation, and a caller-owned temporary SECURITY DEFINER function forwarding to the private statistics getter all refuse with no output. The temporary wrapper runs under its ordinary owner's rights and cannot acquire the guardian capability. Separately, nonexecuting JSON EXPLAIN of the admitted definer read call remains identical after an unrelated Eve Assignment is added and analyzed; exact authorized rows also remain identical for all three identities. Native receipt now retains 33 observations.
+
+These tests address actual native command and caller-wrapper paths and a specific observable plan boundary. They do not prove timing, executing EXPLAIN, every implicit operator/type/language/extension surface, privilege/dependency drift, public runtime activation or streaming/final-release custody. pg-raw.B10 remains open; no raw, graph or Delta case is promoted. Full acceptance stays 22/132.
+
+### Native operator/function ACL boundary — 2026-10-09
+
+The owned PostgreSQL 17.9 candidate now tests an installer-created unary operator in the ordinary reachable security_raw namespace, backed directly by the denied pg_stat_get_tuples_inserted(oid) function. Alice, Bob and outsider all refuse both direct function and operator invocation with no output. An explicit temporary per-role EXECUTE grant then makes the identical operator return the exact assessor-observed private count for all three identities, proving the operator/control is live rather than malformed. The grant is revoked and the operator removed before fixture cleanup. pg-private-diagnostics.json now retains 39 observations.
+
+This establishes native behavior for that exact operator/getter/role path and the value of its explicit function privilege boundary. It does not establish every operator, cast/type, language/extension or changed dependency under a full deployment. The positive control intentionally admits the diagnostic only inside the owned disposable fixture and is retained as a negative privacy profile. pg-raw.B10 remains open; full acceptance remains 22/132.
+
+### Native raw PostgreSQL scale and statement-budget evidence — 2026-10-09
+
+pg-raw-scale.py executes the actual forced-RLS raw fixture at 1,000, 100,000 and 1,000,000 additional Resources, with deterministic complete A/B ownership. All three original ordinary identities match independent authorized counts and exact boundary identity/value samples at every scale. Actual total stored rows are independently checked, including the five baseline Resources. Full protected Alice and excluded-assessor EXPLAIN ANALYZE JSON plans are retained in pg-raw-scale.json; the assessor is explicitly outside ordinary protection.
+
+The latest run records protected/assessor execution times of 5.796/0.050 ms, 592.880/2.505 ms and 6176.115/14.193 ms at the three sizes. These are distinct access paths and output populations on one owned host, not a general percentage-overhead promise or SLA. The protected function checks membership per source row. A selected native 1 ms statement timeout on the million-row aggregate refuses with SQLSTATE 57014 and no stdout/partial aggregate. Every native subprocess is bounded and only the original UUID-labeled fixture is removed after source correspondence checks.
+
+This completes empirical scale-plan and database-statement-budget observations for the authored raw component. It does not prove portable runtime cancellation/drain, reusable connection cleanup, streaming/final-publication custody, arbitrary workload budgets, complete diagnostic closure or actual graph/Delta performance. pg-raw.B16/US-056-AC10 remain open until the admitted runtime/backend profile exercises those obligations. No required case is promoted; full acceptance stays 22/132. Nine component groups, 82 evidence checks and the 470-criterion traceability check pass.
+
+### Actual Truss runtime native-budget recovery — 2026-10-09
+
+Extended the actual pg-runtime ordinary-principal component, with original in-memory/disk protocol correspondence, to test a supplied cancellation context and a native statement timeout separately. Cancellation remains unsupported: begin refuses before any original native query or BEGIN. A normal transaction then sets a selected native 1 ms budget and calls pg_sleep; original native response proves SQLSTATE 57014, zero DataRow frames, ReadyForQuery E and server_error journal outcome. A subsequent application statement receives 25P02, proving the failed transaction was not silently treated as recovered.
+
+Only explicit original-connection ROLLBACK restores the lease. A new transaction on the same native PID and original effective principal returns exact authorized Resource IDs, then rolls back/releases normally. No transport quarantine is asserted for this fully observed native server error; no cancellation or rollback result is inferred from deadline expiry alone. The native Truss principal receipt passes 65 observations, including complete original journal request/frame/outcome and consecutive custody evidence. Nine component groups pass.
+
+This qualifies selected native server-budget recovery on the existing original runtime, not AbortSignal delivery, concurrent cancellation, uncertain transport/commit recovery, portable resource-budget admission, final-publication or full B16/backend acceptance. Current runtime principal preflight reads pg_roles directly; it therefore cannot be combined unchanged with the deny-first candidate that removes all ordinary catalog SELECT. That candidate needs an original qualified private principal observation mechanism without weakening actual caller/bypass/reset checks. Both profiles and this compatibility gap remain explicit. Full gate stays 22/132.
+
+### Private principal observer native candidate — 2026-10-09
+
+The deny-first PostgreSQL 17.9 fixture now executes a least-privilege private principal observer. Its non-login, non-superuser, non-bypass owner can SELECT pg_roles and execute exactly current_setting(text), text(boolean) and nameeq(name,name); it has no private Assignment SELECT or retained schema CREATE privilege. The zero-argument fixed-search-path SECURITY DEFINER helper selects SESSION_USER internally. Original and effective caller identities are observed outside that helper, so SET ROLE remains visible rather than becoming the helper owner. Ordinary users still cannot read pg_roles, call current_setting directly or supply another actor to the helper.
+
+Fresh pg-private-diagnostics.json retains 61 observations, including original/effective identity, lower-role visibility, RESET ROLE/SESSION AUTHORIZATION/ALL restoration, changed client encoding, and installer-only BYPASSRLS/SUPERUSER positive controls restored immediately. Initial native failures identified explicit boolean-to-text and name equality dependencies. Outside-helper identity uses native name carriers: casting those identities to TEXT requires a further ordinary function privilege under the deny-first ACL. The candidate does not grant that privilege. Any runtime integration must qualify the two native name response fields and the three TEXT observer fields explicitly; weakening caller, bypass or encoding checks is not an integration strategy.
+
+This is native feasibility evidence for the principal-observation obligation in CONTRACT-063 and the compatibility gap identified under US-056-AC8. Actual pg-runtime still uses direct pg_roles preflight; no public private-observer option or deployment admission is implemented. Current owner/dependency/ACL custody, change invalidation, complete diagnostic closure, graph/Delta enforcement and final publication remain open. No required backend case is promoted; full acceptance remains 22/132. Astra review of the candidate is requested under the existing owner instruction.
+
+### Principal observation review and native response validation — 2026-10-09
+
+Astra ultra reviewed the private principal candidate and source-current 61-observation receipt; no demonstrated bypass was found. Review supports a scoped runtime port with exact native carriers, independently observed routine metadata and pooled failure controls. Added the requested independent installer inspection of pg_proc and expanded ACLs: isolated observer owner, SECURITY DEFINER, STABLE, zero arguments, fixed search_path=pg_catalog, no PUBLIC EXECUTE and selected ordinary EXECUTE. Fresh native privacy receipt now records 62 observations. This metadata is installation evidence inside the owned fixture, not persistent deployment authenticity or change closure.
+
+The actual Truss pg-runtime direct principal path now requires all five RowDescription fields to have native TEXT OID 25 and wire text format 0, in addition to exact ordered names, one complete row and original/effective caller, privilege and UTF8 checks. Native principal replay passes 65 observations; subject replay passes 82 observations. No private-observer runtime option is yet delivered. The proposed port still requires native name OIDs 19 for its first two outside-definer caller fields, TEXT OIDs 25 for the remaining three, and pooled reset/missing/altered helper/elevated actor/LATIN1 controls. US-056-AC5/8, complete backend requirements and full acceptance remain open at 22/132.
+
+### Actual private principal/subject runtime composition — 2026-10-09
+
+Actual Truss pg-runtime now accepts the experimental ordinaryPrincipalObserver selection defined by CONTRACT-063. It captures qualified identifiers synchronously, requires a pinned principal and uses the selected zero-argument helper without fallback. Original/effective caller identity remains outside the definer; ordered OIDs [19,19,25,25,25], text format, one complete UTF8 row, actual caller pin, non-superuser/non-bypass and UTF8 encoding remain mandatory. Missing/malformed/unavailable observations close admission with original quarantine custody.
+
+Fresh truss-private-principal.json passes 81 native observations on the owned PostgreSQL 17.9 restricted fixture, with actual pg8.16.3 protocol and independently retained memory/disk journal correspondence. Three ordinary actors return independent oracle-authorized rows; pooled reacquisition preserves native PID and restores effective identity. Missing, bad-shape, false privilege declaration, empty/multiple observations, wrong pin, elevated native actor, changed encoding and altered SECURITY INVOKER helper refuse. Independent pg_proc/ACL metadata remains explicit. A direct-catalog principal profile also refuses under this selected restriction rather than silently activating.
+
+Astra found an integration regression: principal OID selection had also changed subject output validation. It is repaired: subject outputs always require TEXT OID25. Native combined tests admit valid TEXT output and refuse NAME, absent and ambiguous keys. The selected actorCarrier=name passes actual SESSION_USER without an ordinary name-to-text function grant; text remains the default. Unknown/null/falsy input carrier selections refuse before acquisition. The fixture observer owner, not ordinary users, receives the conversion dependency required by its TEXT subject result. Astra re-review of current source and source-current 81-observation evidence reports no remaining actionable defect within this component scope.
+
+Existing direct principal and subject native replays pass 65 and 82 observations; nine component groups pass. This implements the previously missing runtime composition path, not authenticated deployment/change custody, complete diagnostic closure, actual graph catalog/codec/security adoption, Delta implementation, final delivery or full backend acceptance. US-056-AC5/8 and all unaccepted backend cases remain required.
+
+
+Verification after private-observer composition: twenty Z3 4.15.4 conditional checks are refreshed against CONTRACT-062/063. The complete 132-case gate freshly executes the implemented runners and remains failed with 110 missing/failed required cases (22 accepted); all 28 complete security criteria remain open. Evidence validation passes 83 checks, aggregate components pass nine command groups, and the 470-criterion traceability ledger is current. New runtime component evidence does not replace those required backend cases.
+
+### Actual scale runtime and bounded response window — 2026-10-09
+
+The owned raw PostgreSQL17.9 scale fixture now executes million-row ordinary aggregates through actual Truss pg-runtime/pg8.16.3 with original memory/disk protocol correspondence. The first positive run failed into quarantine under the fixed 5000ms response window while the protected native plan measured 6201.223ms; close masked the preceding exception. scale-fixed-deadline-failure.json retains source archives and original uncertain journals. It does not assert an independently captured exact deadline event or native SQLSTATE for that failure.
+
+CONTRACT-063 now defines the experimental originalResponseTimeoutMs option (default5000, selectedinteger1..60000). Runtime construction validates and captures it synchronously; originalQuery also validates the bounded window. Expiry remains uncertain transport custody, never native cancellation/rollback acknowledgment. The scale fixture selects30000ms to admit the known positive workload, separately from the native1ms statement budget. Invalid zero/negative/oversized/fractional/nonfinite/string/null selections refuse. Response timing remains subject to host event-loop/transport scheduling; no arbitrary-workload SLA or completed cancellation is asserted.
+
+Fresh pg-raw-scale.json passes three scale stages (1k/100k/1M additional resources plus the authored baseline), native CLI timeout, and39 actual-runtime observations across76 original journaled queries. All ordinary actors return exact text aggregate counts. The million-row native budget returns57014 withzeroDataRows andReadyE; a following statement returns25P02, and only explicitROLLBACK restores the same nativePID and exact authorized baseline IDs. The ownerless recovery control now uses the actual RO key rather than the erroneous R0 spelling found by Astra. Selected cancellation context still refuses beforeBEGIN.
+
+Latest paired protected/excluded-assessor plan times are5.780/0.055ms,595.005/2.316ms and6140.543/9.776ms. They are distinct access paths/output populations on one host, not a percentage-overhead guarantee. B16 remains unregistered pending an independent scale oracle, freshgate UUID/case binding, complete actual native inventory and explicit external runtime source-binding policy. Astra confirms the exact B16 assertion can be exercised at this authored stable cut without waiting for unrelated graph/Delta, diagnostic or revocation-streaming cases; those full requirements remain separately open. No case is promoted by this component receipt.
+
+
+Post-deadline verification: existing principal, subject and combined private-observer replays pass65/82/81 native observations with current runtime/source/typecheck pins. Nine component command groups pass. Twenty Z3 conditional checks are refreshed against the amended contracts. The complete gate freshly remains22/132 accepted,110 missing/failed required cases andall28 security acceptance criteria open; the470-criterion ledger is current. B16 registration is the next implementation task, with actual driver and scale observations now available but no acceptance substitution.
+
+### Raw PostgreSQL B16 accepted at authored stable cut — 2026-10-09
+
+Implemented and freshly accepted pg-raw.B16 under STP-056/US-056-AC10. The reviewed runner tests exact total resource populations1000/100000/1000000, independently authored aggregate counts and samples for three ordinary SCRAM identities, paired protected/excluded-assessor native plans and actual pg-runtime execution at every scale. The million-row native1ms budget produces57014 withzeroDataRows/ReadyE; subsequent use produces25P02 until explicitROLLBACK, after which the same original nativePID returns authorized baseline IDs. Unsupported cancellation context refuses before nativeBEGIN. The recovery candidates include the actual ownerless RO record.
+
+pg-raw-B16.json retains133 exercising observations, native objects/RLS/policies/routines/roles/membership/grants/indexes/constraints/authentication, all three plans and54/54/76 original journaled queries. Eighty-three source pins include every adapter module, independent oracle and selected managed dependency source:14 packages/70 JS/JSON files. Actual driver resolution is observed from both the UMF probe and Truss runtime importer. Astra caught and repaired the initial importer-origin gap and oracle-budget drift risk; supported statement budget/error states are validated and consumed, recovery expectations are consumed, and exact required populations are enforced. Re-review found no remaining actionable source/evidence-binding/native-inventory defect before the fresh gate.
+
+The gate explicitly permits shared pg-runtime and task-managed dependency sources for raw PostgreSQL, as specified by CONTRACT-063; this does not imply graph storage qualification or authenticate source issuers by hashes. The complete gate now accepts23/132 required cases and leaves109 missing/failed. All28 complete security acceptance criteria remain open; AC10 still has other required evidence/implementations. B16 establishes only this authored raw workload at a stable cut, not arbitrary workloads, timing SLAs, streaming/final delivery, complete diagnostic closure or graph/Delta behavior. The older pg-raw-scale.json component uses additional populations plus baseline and is distinct from the exact-total B16 acceptance receipt.
+
+
+### Composite identity native witness and verification — 2026-10-09
+
+The original `tools/security/pg-raw-identity-probe.py` now retains 32 PostgreSQL 17.9 observations. Four independently authored two-component namespace/resource pairs exercise delimiter collisions, empty components, equal resource labels across namespaces and normalization-distinct Unicode. Actual composite primary/foreign keys and forced RLS use exact component equality; ordinary SCRAM Alice/Bob connections see their respective Project-owned rows and the outsider sees none. A deliberately delimiter-concatenated policy exposes both colliding resources to both assigned readers. Restoring exact component equality restores separate visibility. This is a fixed authored native installer witness, not compiler admission, hash routing, subject-composite coverage, arbitrary cross-home correspondence or full pg-raw.B13 acceptance.
+
+`pg-raw-identity-component.json` pins the original probe, fixture helper, baseline SQL, new composite SQL and independent oracle. The earlier Docker-unavailable attempt remains historical evidence; the present OrbStack replay succeeds. Refreshed gate-receipt regression passes four controls; aggregate components pass nine command groups; evidence validation passes 85 checks and the 470-criterion ledger is current. Complete backend acceptance remains 23/132, with 109 required cases missing/failed and all 28 complete security criteria open.
+
+
+### Qualified composite subject identity — 2026-10-09
+
+The identity component now passes 41 native PostgreSQL 17.9 observations. The independent oracle assigns two distinct namespace/Staff identities to original SCRAM Alice and Bob logins, with respective Project A/B assignments. Composite subject primary keys and assignment foreign keys preserve the complete identity. The private RLS helper binds SESSION_USER to its subject and joins assignments using both namespace and subject ID. Both ordinary actors receive their respective resource and the outsider receives none. Deliberately omitting the subject namespace makes both assigned actors receive both delimiter-pair resources; restoring the exact join restores the independent oracle outcomes. The outsider is checked in the unsafe and restored profiles too.
+
+This exercises the complete-identity premise of the retained logical key correspondence analysis at one fixed native corpus. It does not prove universal native/compiler refinement or authenticated subject enrollment. Source-current `pg-raw-identity-component.json` retains all 41 observations. Aggregate components pass nine groups and evidence validation passes 85 checks. Hash-routing collisions, wider cross-home identity and admitted compiler lowering remain open; no full B13 promotion or acceptance-count change is made. The full gate remains 23/132 accepted, 109 required cases missing/failed, and all 28 complete security criteria open.
+
+
+### Native hash collision and conditional key refinement — 2026-10-09
+
+CONTRACT-062 requires complete typed Key identity rather than a hash alone; CONTRACT-063 requires exact native correspondence. The independently frozen PostgreSQL 17.9 corpus now includes `hash-key-13383` and `hash-key-42423`. Separate original native evaluations verify both `pg_catalog.hashtext` results as exact text `-1315717682` before the collision test proceeds. The native fixture stores generated routing hashes, retains full resource IDs in primary/foreign key constraints, and indexes candidate hashes. Forced RLS consults a private helper that compares both candidate hash and complete resource ID before accepting Project assignment. Ordinary SCRAM Alice/Bob see their respective resources; outsider sees none. Replacing that predicate with hash-only equality leaks both resources to both assigned actors; restoring exact equality restores the oracle. All three profiles independently check outsider denial.
+
+The source-current identity receipt passes 52 native observations. This adds a fixed real native hash collision to the preceding scalar/composite resource and qualified subject witnesses. It does not qualify arbitrary hash algorithms, hash-based subject enrollment, cross-home/graph identity or public compiler admission. Full pg-raw.B13 remains required and unaccepted.
+
+`tools/security/prove-hash-key.py` and `hash-key-formal.json` retain two conditional Z3 4.15.4 checks over an unbounded uninterpreted complete-identity domain, arbitrary authorization predicate and deterministic non-injective hash. Independently stated direct authorization equals existential lookup with hash plus exact identity. The violation is UNSAT; a colliding positive population and a hash-only false-positive control are SAT. Complete truthful identity equality, the same hash semantics on each side, complete current facts and native eligible-only evaluation remain physical/authority premises. This is a refinement of the abstract lookup expression, not a proof of the SQL implementation or complete compiler/backend.
+
+Aggregate components pass nine groups; evidence validation now includes the new proof receipt and passes 86 checks. The full acceptance state remains 23/132, with 109 required cases missing/failed and all 28 complete security criteria open.
+
+
+### Raw PostgreSQL B13 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.B13 under US-056-AC1 with 144 observations. The fixed PostgreSQL 17.9 raw profile uses non-null ordered TEXT identity components, explicit C collation and exact session-bound subjects. It does not hash subject identities. Scalar case, normalization-distinct and supplementary Unicode, delimiter-bearing composite keys, equal Staff labels in distinct namespaces, and a real native hashtext collision remain isolated. Genuine case-distinct quoted/unquoted table homes carry equal local resource labels with opposite Project ownership. Deliberately lossy delimiter, subject-label and hash-only policies disclose both resources to assigned actors; exact restoration recovers the independent oracle. No general compiler activation or graph/lifecycle support follows from this case.
+
+The public actual pg-runtime decoder independently exercises scalar/composite/hash/quoted homes and unfiltered final corpus reads for three ordinary SCRAM actors. It retains 81 original queries with exact memory/disk request-frame-outcome correspondence and unique complete custody. Missing and duplicate-replacement controls refuse. Exact independent schema/table/routine privileges and effective column permissions are asserted, including no authority-table writes; all 16 installed identity/authority fact sets are independently compared. Native columns/collations, ordered constraints/FKs, generated hash expressions, routines/policies, role attributes/membership, authentication, encodings, client build and image identity are retained. Eighty-six source bindings include actual adapter modules and the selected managed pg8.16.3 closure (14 packages/70 files); actual resolution from both probe and importer matches the selected entry.
+
+Astra ultra identified the quoted-home, decoder, full-fact, privilege-assertion and journal-bijection gaps, then found no actionable issue after the fresh 143-observation component replay. The first gate attempt refused duplicate relative/absolute source-path bindings; the second refused unordered JSONB member serialization in one private fact comparison. Both attempts and source archives are retained as b13-registration-path-failure.json / b13-registration-json-order-failure.json. The corrected runner pins one exact test-source spelling and applies the membership runner's existing unordered-object normalization to evidence, preserving arrays/scalars and original journal bytes. The third fresh full gate accepted B13.
+
+Current full acceptance is 24/132, with 108 required cases missing/failed. All 28 complete security criteria remain open. Ten component command groups pass, including repeatable strict identity-runtime TypeScript checking; evidence validation passes 88 checks and the 470-criterion ledger is current. B13 qualifies the authored raw identity assertion at fixed stable cuts. Arbitrary cross-home/hash algorithms, authenticated enrollment/issuers, complete native/compiler refinement, live concurrent authority/final publication, full raw backend and actual graph/Delta acceptance remain independently required.
+
+
+### Raw write action fold component — 2026-10-09
+
+Under US-057-AC1, CONTRACT-062 and TD-057, the PostgreSQL 17.9 raw write fixture now retains 246 observations across 29 independently authored vectors in pg-raw-write-component.json. Its three non-null TEXT fields require object actions, changed-field actions and distinct changeOwner/changePolicy grants. Inline owner_project is both ownership and a live policy dependency. Native scenarios isolate original/proposed membership, original/proposed ownership and policy actions, and missing original/proposed writeValue grants across owner changes. Missing writeId refuses a rename; a positive rename succeeds without unrelated changeOwner permission. An active reader with all field permissions but no update grant sees zero updated rows for a no-op. Unchanged value does not require writeValue; a forbidden NULL transition refuses before the NOT NULL constraint.
+
+A dependent data-modifying CTE processes an authorized mutation before a forbidden mutation. A private nontransactional sequence independently witnesses that processing; complete committed business snapshots remain unchanged after refusal. This sequence is excluded integrity instrumentation, not business state or a claim of zero diagnostic effects. Ordinary actors cannot write private grant facts, TRUNCATE, disable the trigger or read that sequence.
+
+write-fold-formal.json retains nine Z3 4.15.4 conditional checks: the independent quantified obligation specification equals the expanded selected-state enforcement model, and ownership, policy-change, changed identity-field and changed value-field actions are separately necessary at OLD and NEW. Every violation is UNSAT, permitted populations SAT and weakened controls SAT. Complete current session-bound authority, truthful classifications, exact non-null text semantics and faithful native execution remain premises. This is not a proof of actual SQL/compiler refinement, nullable profiles, concurrent revocation or publication.
+
+Ten aggregate component command groups pass; evidence validation passes 90 checks and the 470-criterion ledger is current. L01 is not registered or accepted: original public pg-runtime decoder/journal custody, explicit same-session failed-transaction rollback/recovery and complete native inventory remain next requirements. Full acceptance remains 24/132 with 108 required cases missing/failed and all 28 complete security criteria open. Actual graph and Delta implementations remain in scope.
+
+
+### Raw write explicit session recovery component — 2026-10-09
+
+Astra ultra found no actionable defect in the 246-observation/29-vector action fold and nine conditional proofs. A subsequent explicit ordinary SCRAM session recovery probe now brings pg-raw-write-component.json to 253 observations. Eve processes an authorized WA write, receives 42501 on a forbidden WE ownership change, and then receives 25P02 for a query in the failed transaction. Explicit ROLLBACK restores the complete business snapshot. Native TEXT backend PID observations before failure, after rollback and after a fresh successful no-op transaction agree; the fresh transaction is also explicitly rolled back. The private excluded sequence witnesses two authorized mutation executions. This is psql session evidence, not public pg-runtime journal or native protocol acknowledgment evidence. Original driver custody and complete inventory remain prerequisites to L01 acceptance. Ten component groups, 90 evidence checks and the 470-criterion traceability check pass. Full acceptance remains 24/132 and the full goal remains active.
+
+Astra ultra re-reviewed the source-current 253-observation session component and found no actionable defect within its declared psql scope. Public-driver protocol custody remains open.
+
+
+### Raw write original runtime composition — 2026-10-09
+
+The source-current pg-raw-write-component.json now passes 718 observations across the same 29 independently authored write vectors. tools/security/pg-raw-write-runtime.ts imports the actual Truss pg-runtime and executes each vector as an ordinary SCRAM actor against the owned PostgreSQL 17.9 loopback fixture. A fixed validated RETURNING boundary selects original id, owner_project and value carriers. Decoded columns, TEXT cells, affected-row text and command labels match the independent oracle; successful commands receive explicit committed acknowledgment. Rejected commands yield 42501, then 25P02 inside the failed transaction, explicit rolled_back acknowledgment, a fresh transaction with the same native TEXT backend PID, and another explicit rollback. Healthy release observes no quarantine.
+
+The component retains 525 original query journals. Exact memory/disk request, frame and terminal-outcome correspondence is bijective; missing-custody and duplicate-replacement controls refuse for every vector. Both importer and probe resolve the independently selected managed pg8.16.3 driver. Eighty-five pinned sources include the actual runtime modules, selected dependency closure, reviewed collector, fixture and independent oracle. The excluded host compares complete committed business snapshots and private approval counts after every runtime vector. It explicitly restores the authored seed and private sequence between the separate runtime and psql phases; this is not an ordinary mutation or rollback path. The preceding psql session controls also replay successfully.
+
+Strict TypeScript verification is added to the aggregate component runner; eleven groups pass. Evidence validation passes 90 checks and the 470-criterion ledger is current. Complete independent native inventory, physical/refinement and current-authority coordination remain required before L01 registration. Full acceptance remains 24/132, with 108 required cases missing/failed and all 28 complete security criteria open; actual graph and Delta implementations remain required. Astra ultra review of this new runtime composition is pending.
+
+
+### Raw write inventory and rejected-response controls — 2026-10-09
+
+Astra ultra found one verification gap in the preceding runtime component: execute throwing and journal bijection did not separately exclude DataRow frames before ErrorResponse. Retained originals showed no actual disclosure. The corrected runtime selects the unique original write statement/custody and asserts server_error, zero DataRow/CommandComplete frames, one 42501 ErrorResponse and one final ReadyForQuery E. A compatible three-TEXT-field RowDescription/DataRow is injected only into an independent in-memory inspection. Native ResponseIngress feed/finish accepts that protocol-valid response, while the security assertion refuses it. Original journals are unchanged.
+
+The excluded-host pg-write-inventory.py collector records the write schema's objects, columns, constraints, routines, policies, roles and memberships; it independently checks exact object/routine/policy names, guardian-owned forced RLS, three non-null TEXT/C resource columns, native PK/FK, enabled BEFORE mutation trigger, SECURITY DEFINER ownership and fixed search_path, and exact selected-state policy expressions/commands. Every ordinary actor's effective schema, table, column, routine and sequence privileges is compared against an independent allowlist; private grants and instrumentation have no ordinary access, and ordinary CREATE/TRUNCATE/REFERENCES/TRIGGER rights are absent. Host authentication is SCRAM; image and client build are retained. Recollection after both runtime and psql phases matches the complete collected installation metadata at this authored stable cut.
+
+The source-current component now passes 863 observations across 29 vectors. Eleven aggregate command groups, 90 evidence checks and the 470-criterion traceability check pass. These are scoped installation and response observations; full dependency/authority inventory qualification and Astra review remain required before L01 registration. Native/compiler refinement, live concurrent authority/final publication and actual graph/Delta implementation remain required. Full acceptance is unchanged at 24/132 with 108 missing/failed required cases and all 28 complete security criteria open.
+
+
+### Raw write review corrections and L01 registration — 2026-10-09
+
+Astra ultra found that the first 863-observation inventory receipt retained 20 expected/observed mismatches despite status=passed: enriching a mutable privilege object after comparison changed earlier evidence. That historical receipt is preserved as write-inventory-alias-failure.json with status=failed and explicit qualification. The runner now copies both observation sides and rejects any final mismatch or duplicate observation ID before publication. A dependency-inventory attempt also refused a host variable-name collision before recording success; the corrected collector uses separate names for dependency descriptors and column privilege expectations.
+
+The fresh corrected component passed 961 matching observations with unique IDs and current source hashes. It records original security_raw schema/objects/columns/key/login constraints, guardian ownership, non-elevated ordinary roles and a non-login guardian, and effective table/column privileges on employee, m2m_employee_project and project. Ordinary enrollment/assignment/project mutation probes refuse. Complete enrollment, assignment, action-grant and Project fact sets are independently compared after both execution phases. Installation metadata is independently recollected across the two phases. Astra ultra found no remaining implementation blocker for the fixed L01 assertion; partial-row and receipt-aliasing findings are resolved.
+
+pg-raw.L01 is now registered with the reviewed original test source, independent oracle and exact 87-source implementation closure. The runner preserves the gate-supplied UUID/case binding, checks its exact selected source set, adds ordinaryActor and a canonical nativeInventory digest, retains managed-source execution metadata and serializes observations canonically. The complete 132-case gate and a separate component refresh are executing; registration alone does not imply acceptance. General compiler/refinement, live authority/final publication, every other lifecycle case and actual graph/Delta implementation remain required.
+
+
+### Raw PostgreSQL L01 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.L01 under US-057-AC1 with 962 matching observations, its preserved gate UUID and exact 87-source bindings. The independently authored PostgreSQL17.9 raw profile exercises create/delete/update and ownership-changing writes across original/proposed states, changed-field actions and separate changeOwner/changePolicy permissions. Native hidden-original zero-row commands remain indistinguishable from absent targets. Dependent multirow refusal preserves the complete committed business snapshot, with excluded private sequence instrumentation demonstrating prior authorized processing. Direct ordinary authority mutations, trigger disable and TRUNCATE refuse.
+
+The actual public pg-runtime decodes native RETURNING values/counts and commits permitted commands; rejected commands retain zero data/command frames, 42501 then25P02, explicit rollback acknowledgment and same-native-PID recovery. All525 original query journals have bijective request/frame/outcome custody, with missing/duplicate and protocol-valid partial-row controls. Both execution phases retain independent full authority fact comparisons and installation descriptors, including original enrollment/assignment/project key/login constraints and ordinary effective table/column privileges. NativeInventory ordinaryActor/digest, executed managed-source metadata, SCRAM, image/client and dependency resolution are retained. A separate source-current component passes961 observations. Astra ultra found no remaining implementation or registration defect after the archived receipt-aliasing failure and partial-row/dependency corrections.
+
+The complete gate now accepts25/132 required cases and leaves107 missing/failed. All28 complete security acceptance criteria remain open. Eleven aggregate command groups,91 evidence checks and the470-criterion traceability check pass. L01 qualifies this authored stable-cut raw assertion; it does not accept L02 or any other remaining case, general compiler lowering/refinement, live concurrent authority/final publication, or actual graph/Delta implementations. The full original goal remains active.
+
+
+### Raw L02 field-authority component and registration — 2026-10-09
+
+The additive L02 fixture preserves the accepted L01 source/corpus and requires US-057-AC1 field-authority behavior under TD-057. Jules has active A/B membership and object, ownership-change and policy-change grants, but lacks writeOwner at B. Separate OLD/NEW owner changes refuse; the same actor's value-only update at B permits. Existing baseline ID/value/policy cases and independent Dave/Frank positive controls show unchanged ownership/policy fields do not require those extra actions. Actual runtime and plain SQL execution retain complete authority/effect snapshots, native inventory, original responses, transaction recovery and private mutation-denial controls.
+
+Astra requested the same-actor positive control and explicit read qualification. The ordinary PostgreSQL WHERE/RETURNING profile requires read visibility at selected write states. Every actor's native read/create/update/delete grid across A/B/D is independently compared with enrollment, active assignments and authored grants; write eligibility implies read permission in this corpus. TD-057 and receipts explicitly exclude write-without-read and full SQL/compiler admission from the symbolic fold. Eleven Z3 conditional checks add distinct OLD/NEW owner-field necessity to the independently quantified authorization algebra.
+
+The first additional seed attempt was correctly refused by guardian-owned forced RLS. The corrected excluded installer step seeds the two new rows while the mutation trigger is disabled, then re-enables it before ordinary execution; no ordinary privilege or policy is weakened. Fresh pg-raw-field-write-component.json passes1119 matching observations with unique IDs across34 vectors and retains source-current proof evidence. Twelve component groups,93 evidence checks and the470-criterion ledger pass. Astra ultra found no remaining scope/isolation blocker to fixed-profile registration.
+
+pg-raw.L02 now binds the original field-write test, independent oracle and exact88-source closure, preserving its case/run UUID, complete inventory and canonical observation requirements. The complete132-case gate is executing; L02 registration does not yet imply acceptance. Full acceptance before that result remains25/132, with107 required cases missing/failed and all28 complete criteria open. General compiler/refinement, live concurrent authority/final publication, graph/Delta and every remaining required case stay in scope.
+
+
+### Raw PostgreSQL L02 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.L02 under US-057-AC1 with1120 matching observations, its preserved fresh case/run UUID and exact88-source closure. The34-vector fixed three-non-null-TEXT-field corpus runs through actual pg-runtime and ordinary SQL. It retains separate OLD/NEW owner-field refusals with object, membership, ownership-change and policy-change grants present; the same actor's value-only success at the forbidden-owner Project confirms field isolation. Existing identity/value/policy refusals, unchanged-field positive controls, independent complete business/authority facts, original native response custody, explicit transaction recovery and before/after installation/privilege checks remain exercised.
+
+Native action grids independently verify the selected raw WHERE/RETURNING read precondition for all11 ordinary actors. Semantic read/write actions remain distinct; write-without-read is unqualified for this wrapper. Eleven conditional Z3 checks establish the independent authorization algebra under stated premises, not SQL/compiler admission or concurrent authority. The source-current standalone component retains1119 matching unique observations and595 original query journals. Astra ultra found no remaining scope/isolation blocker after the same-actor and read-precondition refinements.
+
+The complete gate now accepts26/132 required cases, leaving106 missing/failed and all28 complete security criteria open. Twelve aggregate command groups,94 evidence checks and the470-criterion traceability check pass. L02 accepts its declared fixed raw field-authority assertion only. L03 revocation/drain, all other unaccepted raw cases, general compiler/refinement, live concurrent authority/final publication and actual graph/Delta implementations remain required. The full goal stays active.
+
+### Raw L03 consumer drain and backend-loss counterexample — 2026-10-09
+
+The source-current pg-raw-drain-component.json retains145 matching unique observations across four schedules through actual Truss pg-runtime and ordinary PostgreSQL17.9 reader/revoker identities. Publish and discard retain a native session guard after data transaction commit until the parent consumes the actual delivery bytes and acknowledges final receipt. Independent native lock and assignment observations show the revoker waiting before that acknowledgment. Original request/frame/outcome journal correspondence and missing/duplicate custody controls remain exercised.
+
+Early unlock and exact reader-backend termination are deliberately unsafe controls: revocation commits while host-buffered rows remain deliverable. Native session loss is therefore not a publication drain. The separate persistent-publication-formal.json retains four conditional Z3 checks for initialized and preserved durable custody, backend-loss refusal and acknowledgment excluding a live buffer. Its single-publisher atomic model does not prove SQL/TypeScript refinement, registry installation, issuer authenticity, multiple publishers or recovery/liveness; nativeImplementationQualified remains false.
+
+Astra ultra required private telemetry, EOF output inspection and exact terminal-event validation. Private runtime receipts use0600 files in0700 directories. The corrected verifier rejects both delayed output and rows embedded in an otherwise successful completion event, with actual subprocess negative controls for both failures. Astra found no remaining defect in that fix and independently verified145 matching source-current observations. Thirteen component groups,96 evidence checks and the470-criterion ledger pass.
+
+L03 remains unregistered: persistent native publisher custody surviving backend loss, authenticated enrollment/retirement and complete native inventory/fact comparisons are required next. The full acceptance count remains26/132,106 missing/failed, with all28 complete criteria open. Actual Ashlar/Truss graph enforcement, remaining backend cases and general compiler/refinement remain part of the unchanged goal.
+
+### Actual runtime persistent publication component — 2026-10-09
+
+pg-raw-persistent-drain-component.json passes119 matching unique observations across healthy publication and exact native reader-backend termination followed by consumer discard. An excluded trusted fixture issuer enrolls a UUID bound to original actor, native PID and native backend_start. The ordinary actual pg-runtime reader invokes a separately enrolled routine; one successful admission atomically changes enrolled to pending before the data transaction commits. A repeated same-token read in a fresh transaction refuses42501 with no data/command frames and explicit rollback. The durable row remains unresolved independently of native connection lifetime.
+
+The ordinary revoker acquires the exclusive native guard, uses a supported read-committed authority snapshot and refuses42501 while unresolved custody remains. Original refusal evidence binds the exact revoke statement and retains no data/command frames, one42501 error, ReadyE and explicit rollback. After backend loss, independent native assignment observation remains active while the actual host still retains buffered rows. Actual consumer acknowledgment precedes buffer clearing; native guard release permits a refusal, not revocation acknowledgment. Only after explicit trusted issuer retirement does a new ordinary native transaction revoke and commit. A fresh ordinary read then returns no rows.
+
+Astra's initial review found overlapping admission/retirement and helper-owner ACL issues. Single-use native enrollment plus exclusive retirement fencing addresses repeat admission; the helper's guardian EXECUTE grant now follows ownership transfer. The first runtime integration attempts failed closed on the parameter carrier, helper privilege and unsupported SAVEPOINT decoding; controls now use supported begin/rollback commands. Concurrent refusal custody no longer uses the last inserted journal record. Fourteen component groups,97 evidence checks and the470-criterion traceability ledger pass. Astra independently reviewed the corrected sources and119-observation receipt and found no new safety or verifier defect in the two authored committed-admission schedules. Single-use is qualified to committed admission: rollback can undo the enrolled-to-pending claim, so rollback/replay custody remains an open requirement.
+
+This is an unregistered authored component, not L03 acceptance or proof of SQL refinement. Complete independent inventory and business/authority fact comparisons, missing/unknown/terminal and identity-mismatch controls, ordinary registry/helper access isolation, isolation-level refusal and multiple simultaneous publisher controls remain required. Public issuer authentication, every read/release and authority writer path, process-owner loss/recovery and actual graph/Delta implementations remain open. Full acceptance remains26/132 with all28 complete criteria open; the original goal remains active.
+
+### Persistent custody rollback/replay and isolated refusal controls — 2026-10-09
+
+The expanded actual pg-runtime component passes249 matching unique source-current observations across three schedules. Its new rollback/replay schedule retains the original result after read rollback; an independent native observer confirms durable enrolled custody and unchanged authority. Replay creates a second retained host buffer before admission commits. Exact backend termination then allows the ordinary revoker to acquire its guard, but unresolved custody still yields42501/no acknowledgment. Both host buffers remain until actual consumer discard acknowledgment; explicit issuer retirement precedes successful retry. This qualifies the authored rollback/replay path, not every savepoint, cancellation, process failure or publisher-owner cleanup path.
+
+All four ordinary identities independently lack private registry SELECT/INSERT/UPDATE/DELETE/TRUNCATE, helper EXECUTE and native stats capability. Actual attempts refuse42501. RR/serializable reads and writers refuse with their specific native isolation-guard messages. Terminal revival/delete/TRUNCATE fail and preserve the exact private binding; null and unknown UUIDs refuse. On the original still-live native reader, a retired token refuses with the specific custody error and no data/command frames, then rollback recovers the same PID. Private token values are not copied into public observations.
+
+Astra found two masked controls in the first238-observation version: NULL-token isolation refusal could be caused by missing custody, and terminal reuse on a different backend could be caused by native binding mismatch. The249-observation replay adds isolation-specific native reasons and original-backend terminal reuse. Astra re-reviewed the249-observation corrections: both control-isolation findings are resolved, all observations match with unique IDs and current source hashes, and no additional defect was found. Fourteen component groups and97 evidence checks pass. Complete inventory/fact qualification, otherwise-valid actor/PID/incarnation mismatch controls, multiple publishers, public issuer authentication and full read/writer/release closure remain open. L03 stays unregistered and full acceptance stays26/132; all28 complete criteria remain open.
+
+### Independent simultaneous publisher custody — 2026-10-09
+
+The persistent actual pg-runtime component now passes336 matching unique source-current observations across four schedules. Two independent ordinary Alice native sessions enroll distinct UUID/PID/backend_start bindings, buffer their own protected rows and commit their data transactions. Exact primary-backend termination and primary consumer discard/retirement leave the sibling's durable row pending. The actual ordinary revoker's next transaction refuses with original42501 Publisher drain unavailable, no data/command frames and explicit rollback; the assessor independently confirms authority remains active. Only a separate sibling consumer discard acknowledgment followed by exact sibling retirement allows the subsequent native revocation commit. Both terminal rows remain.
+
+Astra found that the intermediate330-observation verifier reported final buffer liveness from the primary alone and sibling drain as a constant. The corrected336-observation replay derives sibling drain from the actual sibling buffer, reports final revocation across both buffers and requires both empty before the final native retry. A retained-sibling control demonstrates that the primary-only view appears drained while the actual aggregate remains live. Astra re-reviewed the336-observation fix and found the sibling-buffer gap closed, all observations matching with unique IDs/current hashes and no additional defect. Fourteen component groups and97 evidence checks pass.
+
+This qualifies the authored live sibling versus lost-primary schedule, not all publisher-owner/session loss combinations, unbounded concurrent publisher SQL refinement or recovery. Otherwise-valid identity mismatch controls, complete native inventory/business/authority fact qualification, public issuer authentication and every admission/release/mutator path remain required. L03 remains unregistered; the full26/132 acceptance count and all28 open complete criteria remain unchanged.
+
+### Complete authored business and authority facts around custody schedules — 2026-10-09
+
+The source-current persistent component passes432 matching unique observations across four schedules. Independent excluded native queries now compare all eight authored relational fact sets against the separately retained membership oracle: company, Project, employee/native-login enrollment, employee-Project assignment, resource, resource-Project ownership and both private/child carriers. Comparisons run at each restored initial cut, after native revocation refusal, after pending-sibling refusal and after successful revocation. The final expected set changes only Alice's active assignment flags; other authority and business facts must remain exact. Native ordering is explicit under C collation, JSON carrier meaning is compared structurally and retained bytes use exact hexadecimal representation.
+
+Fourteen component groups and97 evidence checks pass. Independent review of this full-fact addition is pending. These comparisons qualify the authored fact universe, not arbitrary schema inventory, native authority authentication or full writer closure. Otherwise-valid actor/PID/incarnation mismatch controls, complete native effective privilege/ownership/policy inventory, public issuer authentication, every admission/release/mutator path and graph/Delta implementation remain required. L03 stays unregistered; acceptance remains26/132 and all28 complete criteria remain open.
+
+Astra confirmed the eight-table comparison logic and432 matching unique source-current observations, but found the healthy publication schedule's refusal boundary lacked its own full-fact observation. The corrected fresh replay adds that comparison before retirement/retry and passes440 matching observations across four schedules. Thus every authored revocation-refusal boundary is checked independently. Astra re-reviewed the440-observation correction and found no remaining defect: all eight fact sets are checked immediately after healthy refusal and before retirement/retry, observations match, IDs are unique and hashes are current. Fourteen component groups and97 evidence checks pass; no inventory or L03 acceptance is inferred.
+
+### Ordinary effective table and column privilege inventory — 2026-10-09
+
+The persistent component now passes449 matching unique source-current observations across four schedules. An independently authored expected matrix covers all four ordinary actors across eight raw tables, both raw views and the private publisher registry. Native catalogs enumerate every table/view and column in the two admitted schemas, with explicit deterministic ordering. The assessor checks SELECT/INSERT/UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER at table level and SELECT/INSERT/UPDATE/REFERENCES for each exact authored column. The raw resource and two views retain ordinary reader SELECT; no ordinary raw authority/private-registry mutation privilege is admitted. The complete matrix is re-observed after every schedule.
+
+A native negative control temporarily grants revoker UPDATE(active) on assignment inside the excluded installer's transaction. The same native assessor observes table-level UPDATE still false, column-level UPDATE true and mismatch against the independent baseline matrix. The transaction rolls back; a separate fresh observation matches the original privileges, and later raw/drain installation descriptors remain unchanged. Thus checking only table privilege cannot satisfy this component's column qualification.
+
+Fourteen component groups and97 evidence checks pass. Independent review of this addition is pending. This qualifies authored ordinary table/column privilege expectations, not complete schema/routine/role/RLS-policy inventory, authentic issuer deployment or full read/mutator/release closure. Otherwise-valid identity mismatch controls and the remaining native inventory work still precede L03 registration. Full acceptance stays26/132 and all28 complete criteria remain open.
+
+Astra found the449-observation matrix omitted PostgreSQL17's eighth table privilege, MAINTAIN, documented in the [PostgreSQL17 privilege catalog](https://www.postgresql.org/docs/17/ddl-priv.html). The corrected native and expected lists include MAINTAIN=false for every ordinary relation. A transactional native GRANT MAINTAIN makes the full matrix refuse, while removing MAINTAIN from both sides demonstrates the older seven-action assessor would pass. Rollback and a separate fresh observation restore the authored profile. The corrected replay passes453 matching unique source-current observations across four schedules. Astra re-reviewed the fix and found MAINTAIN checked throughout, the native negative control and restoration sound, and no additional defect. Fourteen component groups and97 evidence checks pass. The intermediate seven-action scope is incomplete for PostgreSQL17 and does not establish full privilege qualification.
+
+### Role, schema and routine entry expectations — 2026-10-09
+
+The persistent component passes479 matching unique source-current observations across four schedules. An independently authored native entry matrix enumerates six declared role capability profiles, both protected schema owners and each role's effective USAGE/CREATE, and all six exact routine signatures. Routine expectations include owner, SECURITY DEFINER status, fixed pg_catalog search path, absence of PUBLIC EXECUTE and effective EXECUTE for all six roles. The isolated non-login incarnation owner alone inherits native stats access; guardian helper execution remains explicit. Ordinary reader and revoker entry capabilities are independently distinct. The entry matrix is re-observed after every schedule alongside the complete relation/column and authored business/authority fact checks.
+
+Four transactional negative controls change PUBLIC helper execution, outsider schema CREATE, outsider inheritance of the guardian owner role, and an unexpected public routine. Each independently observed native capability differs from the authored matrix; rollback followed by a fresh observation restores the profile. The owner-membership control verifies effective inherited capability, not only direct ACL text. Astra independently reviewed the479-observation entry addition and found no new defect; the targeted capability changes and separate rollback restorations are exercised, all observations match with unique IDs and current hashes. Fourteen component groups and97 evidence checks pass.
+
+This qualifies the declared role flags/schema permissions/routine entry subset. Additional role settings and grant-option closure, independently expected RLS/policy/trigger/constraint metadata, native incarnation identity-mismatch controls, public issuer authentication and all admission/release/mutator paths remain required for complete profile qualification. L03 remains unregistered; full acceptance stays26/132 with all28 complete criteria open.
+
+### Independently expected enforcement metadata — 2026-10-09
+
+The persistent component passes509 matching unique source-current observations across four schedules. Independent expectations now enumerate all eleven authored table/view owners, kinds, RLS/forced-RLS flags and security-barrier view options; both exact resource policy role lists, commands, permissiveness, predicates and check expressions; and both publisher history/retirement trigger definitions. Trigger expectations include enabled state, event/timing/row type, condition, UPDATE-column list, argument bytes, deferrability, transition-table names and exact routine signature. All are independently re-observed initially and after every schedule.
+
+Five transactional native controls remove forced RLS, add a PUBLIC true policy, disable retirement, change publisher ownership and replace the same named/event trigger with WHEN(false). Each demonstrates its actual weakened metadata, is refused by the expected matrix, rolls back and is followed by a separate complete expected observation. The false-condition control prevents name/type-only trigger checking from hiding skipped retirement enforcement.
+
+Astra independently reviewed the509-observation evidence and found no new safety/evidence defect; observations match, IDs are unique and source hashes current. Fourteen component groups and97 evidence checks pass. This qualifies authored enforcement metadata, not all native constraints/settings/grant options or SQL/source refinement. Native actor/PID/incarnation mismatch controls, public issuer authentication and complete admission/release/mutator closure remain required. In particular the baseline's direct raw reader surfaces are not qualified as durable enrolled publication paths by these wrapper schedules. L03 remains unregistered and full acceptance stays26/132 with all28 complete criteria open.
+
+### Otherwise-valid native identity binding controls — 2026-10-09
+
+The persistent component passes552 matching unique source-current observations across four schedules. Three separate UUID enrollments bind to the same actual ordinary Alice reader, varying only actor, native PID or native backend_start. The wrong actor names existing Bob; the wrong PID is the independently captured live revoker PID; wrong incarnation uses native timestamptz -infinity without JS timestamp conversion. Independent native comparisons establish exactly one failed equality per enrollment, with other identity facts and enrolled state intact.
+
+The original actual pg-runtime reader attempts each token in supported read-committed transactions. Original request/frame/outcome custody establishes one specific42501 Publisher custody unavailable error, no data/command frames, ReadyE and explicit rollback. Each row remains enrolled after refusal. The same original PID then uses a distinct correctly bound enrollment successfully, ruling out missing wrapper permission, lost session or general fixture failure as the refusal cause.
+
+The excluded test issuer has original no-output evidence for the three control requests. With no reader transaction/session guard and no returned buffer, it conservatively marks those rows pending and explicitly retires them, retaining terminal UUID history before normal publication schedules proceed. This test-only cleanup is not proof of a public cancellation/issuer protocol or a rule that enrolled state implies no buffered output; the rollback/replay schedule already demonstrates why that inference is unsafe.
+
+Astra independently reviewed the552-observation addition and found no new safety/evidence defect, with matching unique observations and current hashes. Fourteen component groups and97 evidence checks pass. Broader native incarnation uniqueness, issuer authentication, complete role/settings/constraints/grant-option inventory and all admission/release/mutator paths remain open. Direct baseline read surfaces are still outside durable wrapper qualification. L03 remains unregistered; full acceptance stays26/132 with all28 complete criteria open.
+
+### Schema and routine delegation expectations — 2026-10-09
+
+The persistent component passes570 matching unique source-current observations across four schedules. The entry matrix now independently checks schema USAGE/CREATE and routine EXECUTE grant options for all six declared roles. Owners retain their inherent delegation capability; ordinary roles and the guardian's separately granted incarnation-helper execution lack grant options. Native inquiry follows the [PostgreSQL17 access privilege functions](https://www.postgresql.org/docs/17/functions-info.html#FUNCTIONS-INFO-ACCESS-TABLE).
+
+Two transactional controls add WITH GRANT OPTION to already-admitted Alice schema usage and enrolled-routine execution. Ordinary access remains true, so removing the new grant-option fields makes the old expected matrix pass. The full matrix instead detects delegation and refuses; rollback and fresh observations restore the expected profile. Actual ordinary Alice GRANT attempts to give the enrolled routine to outsider and raw-schema usage to revoker produce native no-grant warnings and no output. Separate complete entry observations confirm no capability changes.
+
+Fourteen component groups and97 evidence checks pass. Astra independently reviewed the570-observation addition and found no new evidence defect; controls isolate delegation, restoration and ordinary no-grant behavior, with unique matching observations and current hashes. This qualifies schema/routine delegation expectations, not table/column/default-grant or role administrative-option closure. Remaining native inventory, public issuer and complete admission/release/mutator paths still precede L03 registration. Full acceptance stays26/132 and all28 complete criteria remain open.
+
+### Effective table and column delegation expectations — 2026-10-09
+
+The persistent component passes584 matching unique source-current observations across four schedules. Independent ordinary-role expectations now include effective grant options for all eight table privileges and all four privileges per authored column across the eleven admitted relations. All ordinary grant options must be false; ordinary resource/view SELECT remains separately admitted. These checks run at the initial and final schedule inventories and after negative-control restoration.
+
+Transactional table SELECT and column SELECT(id) WITH GRANT OPTION controls preserve ordinary SELECT while exposing delegation. The full assessor refuses each changed matrix; stripping only the grant-option fields demonstrates that the older permission-only matrix would pass. Rollback followed by an independent observation restores the profile. Actual ordinary Alice GRANT attempts for table and column SELECT to revoker produce no-grant diagnostics, with complete privilege matrices independently unchanged afterward.
+
+Astra independently reviewed the584-observation addition and found no new defect, with unique matching observations and current source hashes. Fourteen component groups and97 evidence checks pass. Role administrative options, default grants and remaining native settings/constraints, public issuer authentication and complete admission/release/mutator paths remain open. L03 is still unregistered; full acceptance stays26/132 with all28 complete criteria open.
+
+### Exact native membership options and ordinary escalation refusal — 2026-10-09
+
+The persistent component passes629 matching unique source-current observations across four schedules. The membership assessor independently expects the sole scoped native grant: pg_read_all_stats to the isolated non-login incarnation owner, granted by postgres with ADMIN=false, INHERIT=true and SET=true. It enumerates all native grants touching a declared role, including grantor and each option, at initial and final schedule cuts. The option semantics follow [PostgreSQL17 role membership](https://www.postgresql.org/docs/17/role-membership.html).
+
+Three transactional controls independently enable ADMIN or disable INHERIT/SET. Each rejects the expected inventory, exposes the changed native option and verifies every other membership fact unchanged before rollback. Separate observations confirm rollback restores the complete expected grant set. All four ordinary identities attempt to grant the guardian role to outsider and to SET ROLE to guardian/incarnation. Every attempt refuses42501 with no output; exact native membership observations remain unchanged after each actor's attempts.
+
+Astra independently reviewed the629-observation addition and found no defect; observations match with unique IDs and current hashes. Fourteen component groups and97 evidence checks pass. Default grants, remaining native settings/constraints, authenticated issuer and full admission/release/mutator closure remain required. L03 remains unregistered; full acceptance stays26/132 with all28 complete criteria open.
+
+### Ordinary runtime credential bundle — 2026-10-09
+
+The persistent publication probe previously passed every fixture credential, including the excluded PostgreSQL installer credential, to the ordinary runtime child. It now passes only the authored reader and revoker credentials. The runtime refuses an unexpected actor key, missing required actor or empty/non-string password before endpoint and journal setup. Exact sorted key arrays are compared structurally; delimiter-joined names are not an identity representation. Each schedule retains only the exact actor names in its observation, never credential values.
+
+Four retained synthetic subprocess controls verify extra-installer, missing-revoker, empty-password and combined-key bundles refuse with the exact bundle error and no stdout before invalid endpoint setup. The source-current native component passes637 unique matching observations across four schedules; fourteen component groups and97 evidence checks pass. This constrains the explicit actor bundle, not inherited environment, host filesystem or complete process-secret isolation. L03 remains unregistered and full acceptance remains26/132. Authenticated enrollment/retirement and complete direct-read, release and authority-mutation participation remain open.
+
+Astra ultra independently reviewed the final credential-boundary change and found no actionable defect. It confirmed637 matching unique observations and all87 current source digests.
+
+### Denied unenrolled raw reads and enrolled fresh reads — 2026-10-09
+
+CONTRACT-063 requires uncoordinated disclosure paths to refuse. The persistent integration fixture now revokes ordinary table, function and schema grants in security_raw. Independent table/column and schema/routine inventories expect no ordinary raw access at initial and final cuts. Guardian still executes the enrolled ID projection under forced resource RLS and original SESSION_USER. The original raw membership/write profiles remain separate; their general direct-query behavior is not supplied by this fixed Alice ID-projection component.
+
+All four ordinary actors refuse SELECT on every authored raw table/view (40 checks) and COPY/cursor/helper paths (16 checks). The actual Truss runtime additionally exercises seven direct paths in each of four schedules: one original server-error attempt, no data/command-success frames, native42501, ReadyE, rollback and unchanged native PID. A failed replay exposed an incorrect ReadyForQuery field accessor in the new test; the accessor was corrected to the existing decoder representation before the successful replay.
+
+The post-revocation freshness read no longer bypasses custody. A distinct UUID binds its original native actor/PID/backend_start, the enrolled query returns the expected empty result after revocation, COMMIT retains pending custody, and the excluded issuer retires only after the actual empty-result completion event. Native pending and released states are independently observed. Table/column grant-option controls explicitly normalize their newly added access when testing option-only omission; schema grant-option isolation uses the drain schema where Alice retains USAGE.
+
+The current component passes945 unique matching source-current observations across four schedules, fourteen component groups and97 evidence checks. This is progress on uncoordinated-read denial for the authored projection, not general relational query/disclosure compilation or complete L03 acceptance. Public authenticated enrollment/retirement, wider authority-writer/release closure, remaining native inventory, actual graph stores and other backend cases remain required. L03 stays unregistered; full acceptance remains26/132 and the original goal stays active.
+
+Astra ultra found no actionable defect in the final change and verified945 unique matching observations, all87 current source digests and224 original-runtime direct-path assertions.
+
+### Enrolled public-value, ownership and disclosure projection — 2026-10-09
+
+The authored enrolled raw projection now returns four fields: resource ID, public value, authorized Project ownership context and typed disclosure cells. It composes the existing forced-RLS resource table with the security-barrier ownership and disclosure views inside the same guarded durable claim. Ordinary raw privileges remain absent. Alice sees only Project A ownership for RA and RAB, even though RAB also has Project B ownership in native facts. The independent expected public values and disclosure cells come from the retained literal membership oracle; they are not computed from native query results.
+
+Actual Truss buffers retain all four native TEXT carriers, including JSON encoded ownership and disclosure. Typed JSON decoding preserves original-null, absent, withheld and transformed cells; object key order is normalized solely for structural comparison. Initial buffering, rollback/replay, independent sibling buffering and the actual consumer publication compare the complete projection, not only IDs. Parent-controlled consumer delivery also independently compares the full payload. Post-revocation enrollment still returns no rows and commits pending custody before explicit terminal retirement.
+
+This extends the integration component's useful relational semantics without admitting unenrolled direct access. It does not implement a general query/disclosure compiler, all actors' projection profiles, actual graph storage mappings, public authenticated enrollment/retirement or complete physical refinement. Those remain part of the original goal. Astra ultra found no actionable security defect and confirmed full carrier preservation and independent expected semantics. An obsolete oracle phrase describing an ID-only projection was corrected and native evidence replayed to preserve source freshness. L03 remains unregistered; acceptance remains26/132.
+
+Final source-current replay passes945 matching unique observations across four schedules; fourteen component groups and97 evidence checks pass.
+
+### Unbounded token/count durable-custody induction — 2026-10-09
+
+A new Z3 proof supplements the earlier single-publisher Boolean proof with unbounded integer-indexed token identities and unbounded nonnegative per-token retained buffer counts. Its invariant states that every live buffer retains unresolved custody, terminal tokens have no custody or buffer, and a revocation event excludes every live buffer. Eight modeled atomic transitions individually preserve the invariant: enrollment, read/replay, commit/rollback, backend loss, complete consumer drain, unlock, retirement and revocation. Further checks cover terminal non-reuse, independent sibling preservation, sibling exclusion of revocation and backend-loss retention.
+
+All fourteen cases retain an UNSAT violation query, a SAT unsafe control and a SAT valid population. Controls include forgotten durable custody and a primary-only revocation assessment that overlooks a live sibling. New enrollment/read resets the event acknowledgment marker; this permits new post-acknowledgment operations rather than permanently closing the realm. Fresh eligible policy cuts are an explicit separate premise, not established by this count model.
+
+The proof assumes a complete truthful durable registry, authenticated enrollment/retirement, truthful drain of all buffers for the exact token, atomic serialized protocol transitions, complete writer participation and fresh native authority observations. Integer identities and counts abstract UUID/native identity binding, payloads and transport ownership. Source digests link the authored persistent SQL/runtime/oracle for traceability; they do not prove refinement. Native SQL/TypeScript refinement, current-policy correctness, crash recovery and liveness/fairness remain open. The proof is linked to US-057-AC2 and remains conditional component evidence, not L03 acceptance.
+
+The proof command is part of component validation; its source freshness, unique case IDs, exact expected solver outcomes and explicit nativeImplementationQualified=false are checked by the evidence validator. Fifteen component groups and99 evidence checks pass. Existing native component evidence remains945 observations across four schedules. Acceptance stays26/132 and the full goal remains active.
+
+Astra ultra identified a retained-formula replay defect in the first proof receipt: post-solve SMT serialization included Z3 internal model-converter declarations, and26 of42 formulas did not parse independently. Formula results were not contradicted, but that receipt was insufficient as standalone replay evidence. The prover now serializes before solving and requires a fresh solver to parse and reproduce every retained formula result before writing the receipt. All42 formulas replay with expected outcomes; the validator checks their replay outcomes. Positive preservation populations now explicitly include live buffers for read/replay, commit/rollback, backend loss and unlock, and multiple buffers for consumer drain. The eight preservation cases share one custody-forgetting negative control; they are not eight transition-specific mutants. Final fourteen formal cases, fifteen component groups and99 evidence checks pass.
+
+Astra ultra re-reviewed the corrected proof, independently parsed and solved all42 retained formulas to their recorded results, confirmed five current source digests and found no remaining actionable defect.
+
+### Retained formal-formula replay audit and hash/key correction — 2026-10-09
+
+Following the quantified custody serialization defect, a fresh-solver audit examined the selected saved smt/result leaves in the formal receipt directory. It found four nonparseable hash/key SAT formulas containing undeclared uninterpreted model constants. The hash/key prover now captures pre-solve SMT and requires fresh parsing and reproduction of every outcome before retaining its two conditional cases. This corrects reproducibility evidence; the original UNSAT/SAT theorem results were not refuted.
+
+The retained audit scans19 formal receipts and reproduces147 selected formulas from eight receipts. Per-receipt counts explicitly identify eleven receipts without selected smt/result leaves: some use alternate query fields, others omit serialized formulas. They remain outside this audit, and expanded replay coverage remains required. Legacy selected formulas can contain Z3 model-converter annotations ignored with parser diagnostics; the result concerns parsed assertions, not strict SMT-LIB conformance. Neither replay nor source hashes validate formula-to-generator correspondence, assumptions or physical implementation refinement.
+
+Astra identified two verifier issues during review: absolute/relative self-path mismatch caused coverage to fail closed, and nonempty/unique result checks could accept truncated coverage. The audit now guards and retains its reviewed relative self path; the validator independently derives the exact saved leaf ID/result map and requires exact coverage, uniqueness and matching outcomes. Missing-leaf and duplicate-leaf controls refuse. Astra independently replayed all147 selected formulas, confirmed all20 audit source digests and found no remaining actionable defect in the qualified scope.
+
+Seventeen component groups and101 evidence checks pass. Native persistent evidence remains945 observations across four schedules. Expanded formal replay coverage and full implementation refinement remain open; no backend case is promoted. Full acceptance remains26/132 and the original goal remains active.
+
+### Expanded saved-formula replay coverage — 2026-10-09
+
+The replay audit and independent exact-coverage verifier now recognize the older query/result field pairs used by the main semantic, mask-query and existence-truth receipts. This exposed a nonparseable main semantic weakened-control formula caused by post-solve model-converter serialization. The main prover now captures all three queries before solving and requires fresh solver replay before retaining its twenty cases. Its source change correctly invalidated prior S12 gate evidence, so the full acceptance gate was launched to refresh it rather than modifying stored gate results.
+
+The eight remaining formula-less formal receipts now retain pre-solve SMT and fresh replay results in their existing safety/control/population records. No formulas, assumptions or scope claims were changed in those generators. The resulting audit independently reproduces321 formulas across all nineteen selected receipts; none lacks a selected saved formula. Some legacy formulas still contain ignored parser annotations, so strict SMT-LIB conformance remains outside this replay claim. Formula-to-generator correspondence, policy assumptions and native/compiler/runtime refinement remain separately required.
+
+Astra ultra independently replayed all321 formulas, confirmed exact receipt counts and current source digests, tested omitted coverage rejection and found no actionable defect. Twenty-six component groups pass. The original full acceptance refresh completed with26 of132 cases accepted and106 missing/failed; S12 evidence is fresh again. All101 evidence checks pass. The full gate remains failed because the original required backend scope is incomplete. No extra backend case or full criterion is claimed accepted, and the original goal remains active.
+
+### Independent durable-publisher integrity inventory — 2026-10-09
+
+The persistent raw component now compares independent authored expectations for all five publisher columns (native type, NOTNULL, default, identity and generated flags), exact UUID primary-key and state-domain constraints (keys, definition, validation and deferral), and the authored btree index (keys, uniqueness, primary/valid/ready/immediate flags, predicate and expressions). Initial and final cuts and every control restoration retain full expected/native snapshots. Transactional controls drop the primary key or state check, permit NULL state or add a state default; each rejects the baseline, matches an independently constructed control snapshot and restores the exact profile after rollback.
+
+Actual excluded native insert attempts reject invalid state23514, NULL state/ID23502 and duplicate UUID23505. SQLSTATE checks match the anchored verbose native ERROR line. The duplicate is one atomic multirow INSERT in the fresh owned fixture, and all refused insert transactions leave the publisher table empty before schedules. UUID history and ordinary privilege controls remain separately exercised.
+
+Astra recommended retaining full queried integrity facts instead of only equality Booleans; the final receipt includes all thirteen snapshots, including independently expected control mutations. The source-current native probe passes980 matching unique observations across four schedules; twenty-six component groups and101 evidence checks pass. This qualifies the authored publisher metadata and tested integrity refusals, not all raw constraints, operator classes, default grants/settings, authenticated issuer custody or complete admission/release/authority-writer participation. L03 remains unregistered; full acceptance stays26/132 and the goal remains active.
+
+Astra ultra confirmed980 matching unique observations, all87 current source digests and thirteen complete integrity snapshots, and found no remaining actionable defect in this scoped addition.
+
+### Guard-before-tuple private publisher retirement — 2026-10-09
+
+The persistent SQL component now exposes a private guardian-owned SECURITY DEFINER retire_publisher(uuid) routine, with fixed pg_catalog search path, no PUBLIC/ordinary EXECUTE and read-committed-only admission. It acquires the exclusive realm guard before updating the exact pending UUID to released, and refuses missing or terminal identifiers. Normal excluded fixture retirement paths use this routine. This is a private issuer primitive, not authenticated public enrollment/retirement or proof of truthful consumer acknowledgment.
+
+The earlier direct UPDATE path could acquire the publisher tuple lock before its history trigger waited for the realm guard, opposite the enrolled read's guard-before-tuple order. Two actual owned PostgreSQL contention controls run while Alice retains her original shared guard and the actual ordinary revoker waits for the exclusive guard. The old tuple-first UPDATE prevents an independent FOR UPDATE NOWAIT probe; the private guard-first routine leaves that row available while waiting. Both retirement attempts then refuse with native lock-timeout55P03, leave custody pending and preserve all business facts. Ordinary invocation and unsupported snapshot refusals remain checked, and independent routine/privilege inventories include the new private entry.
+
+Astra caught a verifier timing gap: a successful row probe after retirement timeout could falsely demonstrate availability during waiting. The corrected controls capture the exact native decimal-text retirement PID and require both the owned process to remain live and that same PID/app/actor to remain blocked on the same exclusive advisory guard immediately after the row probe. Astra confirmed the fix and independently verified1009 unique matching observations and87 current source digests, finding no remaining actionable defect. Twenty-six component groups and101 evidence checks pass.
+
+These observations establish the authored lock-ordering improvement, not general deadlock freedom, native/compiler refinement, public issuer custody or complete writer/release participation. The trigger still protects excluded direct mutations, which are outside the ordinary profile. L03 remains unregistered, full acceptance stays26/132 and the original goal remains active.
+
+### Native-bound private enrollment and queue-safe admission — 2026-10-09
+
+The persistent component now has a guardian-owned enroll_publisher(uuid,name,integer,timestamptz) routine with fixed pg_catalog resolution, read-committed-only admission and no PUBLIC/ordinary EXECUTE. Its native realm guard participates in writer exclusion. Nonnull UUID/PID/backend_start and the authored Alice profile are mandatory. A separate private incarnation-role stats helper compares supplied actor, PID, native backend_start and client-backend kind against PostgreSQL's actual backend observation; only guardian can execute that helper. Primary, sibling and post-revocation fixture enrollments now call this primitive instead of directly inserting valid publisher rows. Deliberately malformed raw rows remain explicit excluded test injections for read-boundary mismatch controls.
+
+Native controls reject three otherwise-valid actor/PID/incarnation mismatches and four NULL components with exact42501 and no new custody, reject active UUID duplication and terminal UUID reuse with23505 while preserving their states, and independently compare successful native identity bindings. Ordinary calls to both new routines and unsupported enrollment snapshots refuse. Native routine/privilege inventories enumerate both new entries.
+
+Astra identified a circular-wait regression in the first implementation: a reader held its session shared guard while awaiting a separate issuer's shared acquisition, which can wait behind a queued exclusive writer that is itself waiting for the reader. Enrollment now commits before the reader acquires its session guard. To also avoid nested-admission stalls while another publication remains live, the enrollment primitive uses native try-shared acquisition and explicit42501 Publisher enrollment guard unavailable rather than waiting. An actual queued-writer control distinguishes this admission refusal from native55P03 timeout and verifies no token, unchanged publisher count and unchanged original reader/writer guard states. Public issuer retry and recovery remain unimplemented; refusal is conservative, not automatic retry or weak admission.
+
+All four schedules independently observe no granted reader shared guard after committed enrollment, then invoke a separate actual ordinary revoker before signaling the child to acquire its guard. Revocation refuses on the specific durable-custody condition, enrollment remains enrolled and all eight authored business relations stay unchanged. These forty-four checks demonstrate the intervening-writer gap is closed in this authored component.
+
+Final native evidence passes1103 matching unique observations across four schedules, with all87 source digests current. Twenty-six component groups and101 evidence checks pass. Astra ultra re-reviewed the ordering, private identity validation and all forty-four intervening-writer assertions, finding no remaining actionable defect. These private primitives do not establish public issuer authentication, broker all-buffer drain truth, complete retry/recovery, generalized query profiles or all writer/release paths. L03 remains unregistered and full acceptance stays26/132; the original goal remains active.
+
+
+### Private retirement state admission — 2026-10-09
+
+The persistent raw probe now attempts private retirement of the actual enrolled UUID before the runtime acquires its shared guard, plus NULL and unknown UUIDs. Each attempt must refuse with an anchored native verbose ERROR42501, the specific Publisher retirement unavailable diagnostic and no result output. After each refusal an independent native query compares the original actor, PID and backend_start binding and requires state enrolled. Each schedule also attempts a second retirement of its released post-revocation token, requiring the same refusal and preserved released history. These thirty-two additional assertions cover all four existing schedules.
+
+The source-current native component passes1135 matching unique observations across four schedules; twenty-six component groups and101 evidence checks pass. This qualifies the private routine's authored state admission and refusal preservation. The unbounded custody model currently combines enrolled and pending as unresolved custody; these finer native state restrictions are additional observations, not a state-refinement theorem. Public issuer authentication, truthful all-buffer retirement, recovery, generalized query profiles and complete writer/release participation remain open. L03 remains unregistered, full backend acceptance stays26/132 and the original goal remains active. Astra ultra independently verified all1135 unique matching observations, four schedules and87 current source digests and found no actionable defect. Repeated terminal retirement checks state preservation; full binding preservation is separately checked for enrolled refusal controls.
+
+
+### Explicit publisher-state conditional proof — 2026-10-09
+
+publisher-state-formal.json retains fourteen Z3 cases and forty-two pre-solve formulas, each independently parsed and replayed. The unbounded integer-token model distinguishes absent, enrolled, pending and released custody with nonnegative retained-buffer counts. Empty initialization and nine modeled atomic transitions preserve custody. An admitted claim rollback restores enrolled from pending while keeping host buffers; a subsequent read can accumulate another buffer. The exact state projection unresolved=(enrolled or pending), terminal=released satisfies the existing abstract custody invariant. Specific admission mutants remove the relevant state restriction and yield counterexamples for enrolled retirement, repeated terminal retirement and terminal reenrollment. The nine preservation cases share one custody-forgetting mutant and are not nine distinct mutation tests.
+
+An initially unconstrained SAT population returned unknown under the solver deadline. Transition populations now supply explicit array witnesses with the authored live or multiple-buffer counts; safety formulas and unbounded domains were unchanged. The final fourteen cases require UNSAT safety queries and SAT control/population queries, including fresh replay of all retained formulas. Twenty-seven component groups pass; the independent audit reproduces363 saved formulas across twenty formal receipts and all103 evidence checks pass.
+
+This is conditional model induction and state-invariant projection, not transition-by-transition refinement to the other model or verification of SQL/TypeScript execution. Commit is a modeled stutter; rollback covers an admitted claim rollback only, not arbitrary nested transactions or enrollment rollback. Abstract locks do not model PostgreSQL queues. Truthful complete enrollment and all-buffer drain, authenticated issuer, serialized transitions, participating writer guard and fresh authority observations remain premises. Public issuer/recovery and full physical/backend qualification remain open. Astra ultra independently replayed all42 saved formulas, verified all three current source digests, confirmed the exact invariant projection and intended admission mutants, and found no actionable defect. The explicit witnesses constrain only SAT populations; universal preservation formulas remain unchanged. No additional backend case is accepted; the full gate remains26/132 and the original goal stays active.
+
+
+### Publisher-state transition correspondence — 2026-10-09
+
+The explicit-state generator now loads the actual multipublisher custody model and substitutes unresolved=(enrolled or pending), terminal=released, and the same retained counts, locks and acknowledgment event. Nine additional cases require each concrete modeled transition to satisfy its mapped abstract transition. Commit and claim rollback map to commit-or-rollback; read maps to read-or-replay; the other operations map to their corresponding abstract operations. These checks retain UNSAT correspondence violations, SAT concrete populations and SAT controls that deliberately add one to the projected next buffer count. The controls test a broken projection, not nine native implementation mutants.
+
+Z3 returned unknown for some lambda-array SAT queries. Array equalities in the mapped abstract formula are now expressed extensionally as equality at every integer index, with beta reduction through simplify. This preserves array equality semantics and avoids accepting an unknown solver result. The twenty-three explicit-state cases retain sixty-nine independently replayable pre-solve queries. Twenty-seven component groups and103 evidence checks pass; the whole retained audit now covers390 formulas across twenty receipts.
+
+This establishes transition correspondence between the two authored mathematical models under their recorded premises. It does not establish SQL/runtime refinement, PostgreSQL queues or snapshots, authenticated issuer and truthful all-buffer retirement, arbitrary nested/enrollment rollback, recovery or full backend acceptance. Earlier statements that transition correspondence was unproved are historical and superseded only for these two models. Astra ultra independently replayed all69 saved queries, rebuilt all nine transition implications with UNSAT violations, verified current source digests and confirmed the projection and extensional equality transformation. No actionable defect remained. Full acceptance remains26/132 and the original goal remains active.
+
+
+### Dedicated authenticated host issuer capability — 2026-10-09
+
+The persistent fixture now defines a distinct LOGIN host issuer with NOSUPERUSER, NOBYPASSRLS, NOCREATEROLE, NOCREATEDB and NOREPLICATION. Its protected-schema grants are drain USAGE and EXECUTE on the two guardian-owned enrollment/retirement routines without grant options. It has no business or publisher table/column privileges, no stats membership, no incarnation/helper/read/revocation EXECUTE and no privileged role membership. The independent effective inventory now covers seven selected roles and includes issuer table/column privileges and grant options across all eleven protected relations. Ordinary reader/revoker roles cannot SET ROLE to the issuer.
+
+Normal primary, sibling and post-revocation enrollment and retirement now connect separately with the host issuer's SCRAM credential. Enrollment still obtains exact decimal-text PID and native timestamp text from the excluded assessor, then supplies that binding to the private native-validation routine. Nine actual issuer login identity checks require session_user=current_user=issuer and no superuser/bypass attributes. Ten issuer attempts refuse native42501 for publisher/raw reads, raw writes, stats helpers, protected read/revocation, privileged role switches and reader delegation. The original runtime child continues receiving only reader and revoker credentials; the issuer credential remains in the fixture host context. Malformed identity injection and drift/lock controls remain explicit excluded administration.
+
+The source-current native component passes1158 unique matching observations across four schedules, twenty-seven component groups and103 evidence checks pass. This reduces routine-operation privilege from fixture superuser to a separately authenticated restricted host role. The trusted host can still falsely retire a drained-looking token, and the assessor still supplies enrollment identity: this is not a public broker, truthful all-buffer retirement service, production host isolation, complete recovery/query/writer profile or L03 acceptance. Astra ultra review is pending. Full acceptance remains26/132 and the original goal remains active.
+
+
+Astra's issuer review found no privilege or credential-handoff defect, but requested direct evidence for the SCRAM claim. The probe now retains ordered native pg_hba_file_rules host facts, requires every selected host rule to use scram-sha-256 without errors and an all-database/all-user127.0.0.1 rule, and rejects a separately attempted issuer TCP login with a fresh wrong password and the issuer-specific authentication diagnostic. The original issuer credential is restored in finally and subsequent normal successful issuer logins remain required. Local installer trust remains an explicit exclusion. Each final schedule cut independently compares the entire ordered host-rule snapshot. The first authentication addition failed an installation comparison because of a new inventory field; the base inventory comparison and separate authentication stability assertion have been corrected. Final refreshed native evidence passes1164 unique matching observations across four schedules, including all four complete host-rule stability comparisons. Twenty-seven component groups and103 evidence checks pass. Astra ultra verified1164 unique matching observations, all four complete authentication-rule comparisons and87 current source digests, confirmed wrong-password refusal plus subsequent successful issuer logins and found no remaining actionable finding.
+
+
+### Authenticated issuer refusal preservation — 2026-10-09
+
+The existing enrolled, NULL, unknown and repeated-terminal retirement controls now authenticate through the restricted host issuer rather than the excluded administrator. Exact native42501, retirement-specific diagnostic, no output and independent selected-binding/state assertions remain mandatory. An additional native snapshot reads every publisher row and all five columns in native UUID order immediately before and after each refusal. Sixteen added checks compare the full registry, including unrelated retained history, across the four schedules. Private UUID values stay in assessor memory; observations retain the equality result rather than exposing those values.
+
+This strengthens evidence for the actual host issuer's refusal paths without proving truthful positive retirement or a public broker. The native run passes1180 unique matching observations across four schedules; twenty-seven component groups and103 evidence checks pass. Astra ultra independently verified all sixteen complete-registry comparisons and87 current source digests, retained error/binding assertions and qualified scope, finding no actionable defect. No backend acceptance case is added; the full gate remains26/132 and the original goal remains active.
+
+
+### Authenticated issuer enrollment refusal preservation — 2026-10-09
+
+The probe now factors native actor/PID/incarnation observation into the issuer enrollment statement builder. The three otherwise-valid binding mismatches, four NULL components, active and terminal UUID duplication and busy queued-writer enrollment execute via the restricted authenticated issuer. Test overrides are fixed reviewed SQL expressions, not a public input parser; malformed raw identity injection remains excluded administration. Existing exact42501/23505 diagnostics, guard-specific busy refusal, selected binding/state/count checks and successful issuer identity assertions remain mandatory.
+
+Sixteen additional complete-registry comparisons cover these enrollment refusals across the existing four schedules. Each compares every row and all five binding/state fields before and after the attempt without publishing private UUIDs into observation receipts. This supports the actual issuer's tested refusal paths; it does not establish public issuer input validation, identity-observer isolation, truthful all-buffer retirement, recovery or complete backend admission. The source-current native run passes1196 unique matching observations across four schedules; twenty-seven component groups and103 evidence checks pass. Astra ultra independently verified all sixteen new registry comparisons and87 current source digests, exercised all seven mismatch/NULL argument variants and found no actionable defect. No new backend case is claimed; full acceptance stays26/132 and the original goal remains active.
+
+
+### Owned host publication buffers — 2026-10-09
+
+A candidate SecurityPublicationCustody component now owns copyJson snapshots behind opaque in-process buffer handles. Sealing forbids new retention; retirement calls the trusted native callback only after sealing and draining every registered buffer. Asynchronous consumer callbacks retain their buffers through resolution. Duplicate/forged/foreign handles and discard during delivery refuse. Backend loss never disposes host buffers. Consumer rejection or uncertain native retirement quarantines the publisher, refusing subsequent retirement/retry. The component rejects accessor-bearing payloads without invoking getters and bounds live buffers at128.
+
+The independently authored twenty-four-observation corpus exercises retained first/replay buffers, pending consumer acknowledgment, data-copy isolation with large identity text and null, remaining-buffer retirement refusal, exact native-callback count, terminal reuse refusal, foreign/forged handles, consumer/native uncertainty and payload/buffer bounds. Bun and actual Chromium153.0.8010.12 reproduce identical results without Node/Bun globals or external requests in browser execution. Twenty-seven component groups and105 evidence checks pass. The source is not yet exported from the public root or connected to the actual native publication runtime.
+
+This is a host component for buffers routed through one instance. It cannot account for arbitrary host copies, authenticate consumer acknowledgment, recover a lost process or prove issuer/native writer closure. Consumer callback resolution must mean the host's declared final-release boundary, and the native callback remains trusted. Claims of truthful global drain or completed native/backend acceptance would therefore be premature. Integration with the enrolled native runtime and corresponding physical evidence remains required. Astra ultra review is pending. Full backend acceptance stays26/132 and the original goal remains active.
+
+
+Astra reproduced a Proxy reflection-trap reentrancy defect in the first host component: copyJson could invoke a trap that sealed/retired the empty publisher before retain inserted its buffer. Retention now guards the copy window, rejects nested retention/sealing and rechecks publisher state and capacity after copying. The guard resets in finally. Five new Proxy controls prove seal/retirement refusal during copying, zero premature native callback calls, retirement refusal while the resulting buffer remains live and one callback only after disposal. Bun and Chromium153.0.8010.12 pass the expanded twenty-nine-observation corpus. This repairs the observed admission window; it does not claim arbitrary host-copy or native/backend qualification. Astra also identified that the first foreign-handle test used a retired target, allowing state rejection to mask ownership rejection. The revised control targets an open publisher with a live local buffer, verifies foreign refusal preserves that custody and allows retirement only after local disposal. Bun and Chromium now pass31 unique matching observations. Twenty-seven component groups and105 evidence checks pass. Astra ultra verified all six current browser source digests and found no remaining actionable finding in the stated component scope. Native integration remains required.
+
+
+### Managed custody in the original native publication runtime — 2026-10-09
+
+The actual pg-runtime consumer now imports SecurityPublicationCustody and retains copied four-carrier rows behind opaque handles for primary, rollback/replay, sibling and fresh post-revocation reads. Primary custody seals after all authored replay buffers are registered. Actual publication projects the owned managed payload and waits for the parent's receipt acknowledgment while custody remains live. Discard schedules keep managed payloads until that same declared discard acknowledgment; replay handles drain separately before retirement. The existing original buffers are cleared only after this boundary.
+
+Only the managed retirement callback now emits the existing drained request and waits for the restricted issuer's native retirement acknowledgment. Sibling and empty fresh reads use the same admission/drain/retirement discipline. New runtime checks attempt retirement while owned buffers are live, while consumer acknowledgment is pending and before even an empty buffer has been explicitly released; exactly one retirement request must follow each drain. The child still has only reader/revoker credentials. The native source closure now pins the custody implementation and JSON-copy/type dependencies in addition to the original pg-runtime/driver sources.
+
+This connects the candidate component to the authored actual native schedules, not a general public broker. Original private journal/assessor copies and arbitrary host copies remain outside the routed publication custody claim; callback resolution still relies on the declared fixture consumer boundary. Process recovery, complete read/query/writer closure, authenticated public broker and L03/full backend admission remain open. Typecheck passes; the actual native run passes1227 unique matching observations across four schedules, including31 managed-custody checks. Twenty-seven component groups and105 evidence checks pass. Astra ultra independently verified all90 current source digests, acknowledgment-before-drain/issuer ordering and separate replay/sibling obligations, finding no actionable defect in this scoped integration. Full acceptance remains26/132 and the original goal stays active.
+
+
+### Native consumer-failure quarantine — 2026-10-09
+
+A fifth, final native schedule now delivers the original managed payload and receives an explicit consumer-release failure rather than acknowledgment. The callback rejects; host custody reports unknown and refuses retirement with zero issuer requests. The original payload remains retained through that failure boundary. A fresh actual ordinary writer attempt retains original request/response custody and must refuse42501 Publisher drain unavailable with no DataRow/CommandComplete, error ReadyForQuery and rollback. The lost original reader also refuses further use and is quarantined.
+
+The child exits its run through transport cleanup and then completes the original journal bijection checks. The independent parent skips every retirement path, observes durable pending custody and all eight unchanged business relations before exit, and confirms pending state and ordinary revocation refusal after child shutdown. Owned fixture destruction is excluded cleanup and supplies no drain acknowledgment or recovery claim. The schedule remains last so its deliberately unresolved custody is never silently repaired to admit a later scenario.
+
+Astra found that inherited terminal-history/revoked labels were misleading for this pending/active outcome. The refreshed source uses state-neutral final authority and explicit pending-history/binding/other-backend labels. Evidence validation now requires all five named schedules and eight critical failure assertion identities in addition to unique matching observations. The source-current native execution passes1421 unique matching observations across five schedules; twenty-seven component groups and106 evidence checks pass. Astra ultra independently verified all90 current source digests, five schedules and eight critical failure checks, confirmed no drain/retirement acknowledgment in the failure transcript and post-shutdown revocation refusal, and found no remaining actionable finding. Full backend acceptance stays26/132; public broker, general failure/recovery and L03 qualification remain open and the original goal remains active.
+
+
+### Installed routine body source correspondence — 2026-10-09
+
+The persistent raw probe now compares native pg_proc.prosrc against exact body bytes extracted from the three fingerprinted fixture SQL files in installation order. The reviewed parser admits only named functions with literal dollar-quoted bodies; the later revoke_alice replacement supersedes its earlier definition. The exact qualified set contains nine routines. Native enumeration covers every routine in both protected schemas, so an extra overload or routine changes the observed list and refuses correspondence. Existing independent signature/owner/definer/settings/ACL checks remain separately required.
+
+A transactional control replaces only the retirement body with an unconditional return. It rejects the source baseline, matches an explicitly authored one-body mutation and demonstrates that a name-only assessor would miss the change. Rollback restores all bodies; each of the five final schedule cuts independently repeats complete correspondence. Eight complete expected/native body snapshots and two drift/control observations are retained. Evidence validation requires all ten assertion identities and all nine typed body records at each snapshot.
+
+The native run passes1431 unique matching observations across five schedules, with90 current source digests. Astra ultra independently extracted all routine bodies, confirmed the later override and exact mutation/restoration/final snapshots, and found no actionable defect. This is installed-source correspondence for the reviewed PostgreSQL17.9 fixture subset, not independent semantic correctness, general SQL parsing, complete resolution/dependency inventory or public native admission. B12 and L03 remain unregistered; full backend acceptance remains26/132 and the original goal stays active. Twenty-seven component groups and107 evidence checks pass. Astra independently checked the source-coverage expression and rejected thirteen missing, duplicate or malformed evidence variants, finding no actionable defect.
+
+### Registration failure atomicity and capacity controls — 2026-10-09
+
+The in-process registration corpus now exercises a late ontology revision conflict
+after a new policy candidate has been considered. A differently populated policy
+with the same new revision then registers successfully, demonstrating that the
+refused candidate did not reserve its pending policy pin. Existing handles retain
+withholding. Forty unsupported candidates leave all 32 registration slots usable;
+the next valid registration refuses while every issued handle keeps its controls.
+
+`tests/security/registration.test.ts` passes four tests with 86 assertions.
+Strict TypeScript passes. Chromium 153.0.8010.12 records ten registration outcomes
+without mismatches in `evidence/security/logic-browser.json`. Astra independently
+checks that premature-pinning and refused-registration-charge mutants fail the
+controls. Its requested browser refinement now requires the exact
+SECURITY_REVISION_REUSE, SECURITY_INTERPRETATION and SECURITY_REGISTRATION_BOUND
+codes, preventing unrelated exceptions from satisfying failure-stage expectations.
+
+These controls qualify in-process registration atomicity and the 32-handle limit,
+not the separate 512-pin/text budgets, authenticated facts or native activation.
+The pre-refinement complete acceptance replay is terminal with all 26 registered
+cases passing and 106 required cases unimplemented. A fresh complete replay for
+the final reviewed corpus and a component replay are running; that older aggregate
+must not certify the subsequently refined browser source. All 132 original cases
+and the full backend goal remain required.
+
+The final reviewed registration corpus now has a terminal complete acceptance
+replay: all 26 registered cases pass; 106 original required cases remain
+unimplemented. The 59-group component replay also passes. Its regenerated
+candidate-condition/proof-input receipt bytes require a dependent native/browser
+replay; the broader validator currently reports those two stale checks among 150.
+No previous aggregate total certifies that pending dependent evidence.
+
+The dependent replay is now terminal: 213 PostgreSQL candidate observations and
+36 Chromium artifact matches pass. The final broader validator reports 150
+checks with zero failures. This restores freshness at the scoped component
+boundary; it does not close any of the 106 unimplemented acceptance cases.
+
+### Atomic security activation proof and isolated replay — 2026-10-09
+
+The B09/L12 design now retains six conditional activation invariants with
+explicit mutant transitions and isolated positive populations. Corrected
+source-pinned activation receipt has 18 fresh Z3 4.15.4 queries. Astra reviewed
+the activation algebra and source custody with no remaining actionable finding.
+See TD-056 for premises, initial review corrections and retained failed aggregate
+attempts. Publisher SAT example grounding and per-formula context isolation
+leave universal safety predicates unchanged. Astra independently checked 84 regenerated assertion comparisons and both formerly unstable triplets, finding no remaining actionable issue in that correction.
+
+Terminal verification passes 60 component command groups and 563 retained
+formulas across 32 receipts. Regenerated condition inputs have fresh dependent
+PostgreSQL 17.9 evidence (213 observations) and Chromium 153.0.8010.12 evidence
+(36 artifacts). Current consolidated validator passes all 151 checks. Backend
+activation/native refinement is still unfinished; no case or complete acceptance
+criterion is closed by this conditional proof increment.
+
+### Profile-checked native activation checkpoint — 2026-10-09
+
+The PostgreSQL 17.9 activation component now retains 128 unique observations,
+including 123 matching expected/observed pairs and five native custody records,
+with seven current source pins. The private profile comparison checks catalog,
+authority facts and version together; helper-body, grant, assignment and column
+drift refuse before installation. Repeatable-read and serializable activation
+refuse explicitly. A read-committed installer waiting for the exact assignment
+table lock observes the writer's committed fact change and refuses the stale
+profile, preserving policy and version. Full fact restoration is checked.
+Astra ultra reviewed the final receipt and found no remaining actionable issue
+in this scoped component. See the PostgreSQL raw test plan for the excluded
+assessor role, failed-attempt provenance and admission limitations.
+
+After the 60-group component execution, dependent condition evidence was freshly
+executed: 213 native PostgreSQL observations and 36 Chromium 153.0.8010.12
+artifacts pass. The consolidated evidence validator passes all 155 checks with
+no failures. Retained formal replay remains 563 formulas across 32 receipts.
+This checkpoint supersedes the earlier consolidated check counts for current
+evidence only. Catalog/role writer participation, authenticated complete-bundle
+admission and SQL/runtime refinement remain open; B09/L12 are not accepted.
+The original 132-case scope is unchanged, with 26 accepted and 106 outstanding;
+the full implementation goal remains active.
+
+### Routine dependency race reproduced — 2026-10-09
+
+Fresh PostgreSQL activation execution passes 137 observations, retaining an
+excluded owner routine replacement after profile comparison and before commit.
+The version advances while the ordinary outsider gains all five authored rows.
+Exact helper restoration recovers the prior complete profile with only version
+advanced. The raw backend test plan and TD-056 now record this physical
+counterexample to treating selected relation locks as complete dependency
+serialization. Full B09/L12 acceptance remains open.
+
+Astra found and the implementation corrected a blocking observer read and a
+validator gap accepting missing assertion payloads or mutually falsified empty
+disclosure arrays. The new gate requires eight complete assertion records with
+independent expected outcomes and original-oracle resource IDs. One 60-group
+component execution passed before this validator correction; the final source
+refresh and dependent native/browser evidence are still being executed. No
+current consolidated success is claimed by this entry. Original acceptance
+remains 26/132 and the goal remains active.
+
+Final verification of the routine-race increment completed after the validator
+correction: all 60 component groups, 213 dependent PostgreSQL observations,
+36 Chromium artifacts and 156 consolidated evidence checks pass. Astra ultra
+independently exercised the actual corrected gate with the unchanged receipt
+and 16 adversarial in-memory mutations; the receipt passed and every mutation
+refused. Seven activation source pins remain current. This supersedes the
+pending verification statement above, without promoting B09/L12 or changing
+the original backend acceptance count. The next implementation obligation is
+enforced participation or denial of dependency writers through commit.
+
+### Enforced routine-writer participation — 2026-10-09
+
+The activation spike now installs a database-local CREATE FUNCTION event trigger
+and a private serialized installer wrapper sharing an exclusive transaction
+advisory guard. Fresh native execution passes 148 observations, including exact
+helper-writer blocking through installer commit, resumed writer rollback,
+complete profile preservation and independent ordinary result vectors. The
+counterexample remains retained before the guard is introduced. The new
+validator gate derives expected helper body from the original fixture and
+checks exact custody and normalized complete profile preservation.
+
+All 60 component groups pass. Dependent native/browser refresh and the final
+157-check consolidated gate are pending, as is Astra's review of this guard
+increment. This does not cover role changes, other DDL, guard administration,
+committed-writer generation advancement or public/bypassing installer paths.
+Full B09/L12 and original acceptance remain open at 26/132; the goal is active.
+
+Astra confirmed the native mechanism but reproduced a verifier gap that allowed
+the two added routines' signatures or bodies to change in the receipt while
+passing the baseline comparison. The validator now binds both exact signatures
+and canonical PostgreSQL definitions to bodies extracted from the authored
+source SQL before excluding these routines. Its scoped guard check passes;
+the consolidated attempt remains failed only on stale component/browser
+receipts. A new source-bound component refresh is running, and dependent
+native/browser execution must follow before final consolidated success.
+
+Final source-bound verification now passes all 60 component groups, 213
+dependent PostgreSQL observations, 36 Chromium artifacts and 157 consolidated
+evidence checks. Astra independently checked the actual corrected gate against
+eight separate signature/body/key/return-type mutations of the two new routines;
+all refused, while the unchanged 148-observation receipt passed. All seven
+activation source pins are current. No actionable finding remains in this
+scoped guard increment. These terminal results supersede the pending refresh
+and review statements above. B09 still requires actual native refusal of
+unsupported path/mask/history/composition semantics in report mode, rather
+than this routine-writer synchronization witness. Original full acceptance is
+unchanged at 26/132 and the implementation goal remains active.
+
+### Actual compiler factory-boundary witness — 2026-10-09
+
+`activation-compiler-witness.rs` invokes the actual owner Weft compiler with an
+observation callback at its backend-factory boundary. A fresh offline locked
+build and `activation-compiler-boundary.py` replay pass nine source-bound
+observations. A legacy positive control reaches that callback. A supported constant-mask
+source passes semantic source admission and stops at the closed activation
+gate; changing only its transform name refuses at source admission. Public security,
+allowCandidate, unsupported path/mask, an invalid history-profile input,
+a prohibited protected-field predicate and an unknown report option refuse without callback invocation or
+executable output. Exact diagnostic codes, requests, response packets, build
+command and current source/binary digests are retained in
+`evidence/security/activation-compiler-boundary.json`.
+
+The invalid history-profile input and unknown report options refuse at transport validation; they are not
+implemented history/report semantics. The witness neither installs nor proves
+native preservation. Astra identified the real integration boundary as fresh
+owner source/plan/query-profile admission, followed by complete consumer
+obligations and an opaque prepared handle before acquiring the installation
+connection. Row-predicate success alone cannot discharge disclosure obligations;
+the existing original/deny templates cannot represent arbitrary candidate bytes.
+The next native bridge must preserve these distinctions and independently
+compare the installed bundle before/after semantic refusal. Full positive
+activation, B09 and original 132-case acceptance remain open. The new witness
+is not yet included in the consolidated gate; its addition also makes the prior
+component-source receipt stale until refreshed. Astra review is pending.
+
+### Fresh compiler refusal alongside native preservation — 2026-10-09
+
+The PostgreSQL activation spike now executes all nine owner compiler witness
+requests while the original protected fixture is installed. Fresh native runs
+pass 197 observations, retaining complete compiler requests/results and the
+initial native inventory/authority/version profile. Each of eight refusal
+cases preserves that complete profile and version 1; all 24 ordinary actor
+reads match the independent membership oracle. The factory positive control is
+noninstalling, and existing native installation controls remain separate. No
+compiler response selects an original/deny installation template.
+
+Astra independently checked the initial 197-observation receipt and all 82
+source pins. Its review found that equal truncated baseline/profile records
+could pass the first verifier. The gate now requires source-authored catalog
+coverage, original-oracle authority facts, complete record fields, exact RLS
+and policy semantics, and the original helper signature/body before checking
+preservation. The corrected scoped check passes; the consolidated gate is
+pending source refresh. The compiler witness is now one of 61 component command
+groups. After that run, refresh the native activation receipt (its compiler
+input receipt is regenerated), dependent native condition and Chromium evidence,
+then rerun the 158-check consolidated validator. Astra's final review of the
+completeness correction is pending.
+
+This is refusal/native-preservation evidence, not a compiler-to-installer
+admission protocol. Historical semantics, conflicting-disclosure composition,
+supported positive compiler activation and complete source/writer admission
+remain required for B09. Original acceptance remains 26/132; the full goal is
+active.
+
+### Compiler refusal/native preservation terminal checkpoint — 2026-10-09
+
+Ordered final execution passes 61 component command groups, 197 PostgreSQL
+activation/refusal observations, 213 dependent native condition observations,
+36 Chromium artifacts and all 158 consolidated evidence checks. The activation
+receipt was refreshed after compiler receipt regeneration, and all 82 source
+pins are current. Astra verified the actual completeness gate against 685
+omission variants plus erased definitions and disabled RLS; every variant
+refused and the actual baseline passed. These results supersede the pending
+verification and review notes for the refusal/native-preservation increment.
+No compiler result is admitted to installation; B09 and complete positive
+activation remain unfinished. Original full acceptance remains 26/132 and the
+implementation goal remains active.
+
+### Trusted original preparation integration — 2026-10-09
+
+This supersedes the pending foundation note. The original-use host CLI now
+accepts only a request, selects its profile from trusted host configuration,
+freshly invokes the actual owner, and issues a local handle only after the
+Truss consumer accepts. Caller handoffs, qualification flags and profile pins
+are rejected. Three Bun tests with thirteen assertions and strict TypeScript
+checking pass, including actual owner success followed by consumer refusal.
+
+The native runner freezes the preparation module and complete selected lowerer
+closure before process launch. Astra identified a missing explicit comparison
+between the independent owner replay and internal preparation; all twelve
+programs now assert exact handoff and ontology/binding/profile source JSON
+correspondence before SQL installation. The refreshed PostgreSQL 17.9 receipt
+passes 501 observations with 85 current source pins. Chromium passes twelve
+program correspondences and fifteen refusal controls. Astra independently
+verified the correction and found no remaining actionable defect.
+
+The dependent typed-binding test host now selects each independently replayed
+typed profile and uses the same preparation boundary. Text, int4 and int8
+carriers still reach the consumer and refuse with the intended unsupported
+query-use diagnostic. Astra independently replayed these controls. The fixed
+raw profile of the main host CLI is unchanged. All 62 component groups pass.
+
+These handles establish local preparation custody under trusted host source,
+executable and filesystem configuration. They do not supply native credentials,
+authentication, current inventory/fact admission or public policy installation.
+B08/B09 and full backend acceptance remain open at 26/132. The implementation
+goal remains active; the final consolidated refresh is recorded below.
+
+### Trusted preparation terminal checkpoint — 2026-10-09
+
+The completed ordered refresh passes all 158 consolidated evidence checks,
+62 component command groups, 501 original-use native observations, twelve
+original-use Chromium programs with fifteen refusals, 197 activation
+observations, 213 dependent native condition observations and 36 condition
+Chromium artifacts. The typed-readiness stale-source finding is resolved by
+an actual replay through the updated host boundary; receipts were regenerated,
+not repinned. Astra found no actionable defect in the final integration or
+typed-refusal correction. Acceptance remains 26/132; no backend case was
+promoted and the full implementation goal remains active.
+
+### Preparation precedes native fixture acquisition — 2026-10-09
+
+The original-use native host now prepares all twelve programs before its first
+Docker listing/create or SQL call. It retains the independently compared
+programs for subsequent installation and rechecks every captured source hash
+immediately before native acquisition. Unsupported unrelated profiles and
+protected projections are exercised before acquisition, requiring the actual
+Truss unsupported-query-use diagnostic, nonzero exit and no output. The receipt
+retains request and original process stdout/stderr/exit evidence. The
+creation-attempt flag independently records no fixture creation; zero native
+call ordering is additionally qualified by reviewed source and the separate
+intercepted replay, rather than inferred solely from that flag.
+
+PostgreSQL 17.9 passes 515 native observations; Chromium passes twelve programs
+and fifteen refusals. Astra independently executed the actual preparation
+prefix while intercepting direct Python Docker/psql dispatch: twelve programs,
+44 checks, 27 executed owner/bridge subprocess records, zero native dispatches
+and three interceptor self-controls pass. The full 85-source closure and exact
+review command are retained in
+`evidence/security/original-preparation-acquisition-review.json`. Interception
+does not observe arbitrary OS-level descendants; trusted executable/source and
+filesystem custody remain premises. Astra's overly broad initial refusal
+finding is corrected by requiring and retaining the intended diagnostic.
+
+All 62 component groups and 197 activation observations pass after this source
+change. This is executable trusted-host ordering, not public compiler adoption,
+native installation authorization or completed B08/B09. Acceptance remains
+26/132 and the full implementation goal remains active. The dependent native,
+browser and consolidated evidence refresh follows this checkpoint.
+
+### Preparation/acquisition terminal checkpoint — 2026-10-09
+
+Final ordered refresh passes all 158 consolidated evidence checks, 62 component
+groups, 515 original-use native observations, twelve original-use Chromium
+programs with fifteen refusals, 197 activation observations, 213 native
+condition observations and 36 condition Chromium artifacts. Astra's retained
+independent preflight review has 85 current source pins and no remaining
+finding. The prior pending dependent refresh is superseded by these actual
+terminal executions. Original full acceptance remains 26/132; the goal is
+active and public compiler/native installation admission remains unfinished.
+
+### Original owner security backend critical path — 2026-10-09
+
+Astra's critical-path audit identifies the next implementation boundary in
+Weft, rather than another UMF host wrapper. The actual public compiler discards
+the admitted profiled security query and always refuses; ordinary backend
+Plan/Context types cannot carry complete policy/disposition/dependency meaning,
+and response 0.3 is blocked-only. The full goal requires a security-specific
+owner/backend/result contract followed by real compiler-to-installer execution
+for raw PostgreSQL B08/B09. Actual Truss graph adoption also retains its separate
+unfinished commit finalizer; no raw fixture substitutes for that backend.
+
+The owning Weft CONTRACT-005 now contains the reviewed planned boundary. It
+requires actual immutable owner-admitted Catalog/logical policy/resolved and
+profiled query views, exact source identities, complete per-scan/action
+obligations, dispositions, an explicitly registered security interface and no
+ordinary fallback. Native admission remains separate from compilation. It
+permits isolated staging while preserving the prior protected installation,
+then requires independent installed correspondence before atomic activation.
+Astra corrected an initial bootstrap cycle and required valid owner-admitted
+source whose backend obligations are unsupported, separately from malformed
+source refusals. Both findings are resolved. The amendment was applied through
+approved scoped filesystem escalation, with prior contract bytes preserved by
+an exact before-hash guard. No compiler code or public activation gate changed.
+
+Compiled response version/schema and the exact security registration API are
+explicit design items still to resolve before dispatch implementation. The
+first executable target must cover all B08 modes/operators, empty queries,
+complete dependency refusal, supported positive lowering, B09 valid-source
+physical refusal, rollback/concurrent changes and independently observed
+installed ordinary behavior through the same public entrypoint/installer.
+The goal remains the original 132 cases, with 26 accepted.
+
+Actual owner Rust replay passes three groups; conditional graph proof replay
+passes twelve queries; actual Truss candidate graph staging passes 88 native
+observations. Dependent selector/compiler/condition receipts were regenerated
+through execution after their stale-source guards refused the old contract.
+Astra verified the applied amendment and current Rust/formal source closure;
+final component/native/browser/consolidated refresh is pending below.
+
+### Owner contract boundary terminal checkpoint — 2026-10-09
+
+All 158 consolidated evidence checks pass after actual dependent replays:
+three owner Rust command groups, twelve conditional graph queries, 88 native
+candidate graph-stage observations, 62 component groups, 197 native activation
+observations, 213 native condition observations and 36 condition Chromium
+artifacts. Additional source-dependent Chromium refreshes pass 13 candidate
+endpoint, 144 association, 33 relationship and 22 graph-source checks. Earlier
+stale-source refusals are superseded only by these terminal executions;
+no stored receipt was repinned. Astra verified the amended owner contract and
+resolved its two findings. The closed public compiler is unchanged. Full
+acceptance remains 26/132; next resolve the exact security compiled-result schema
+and registration API before implementing the public compiler/installer path.
+The full implementation goal remains active.
+
+### Reviewed security compiler protocol draft — 2026-10-09
+
+The owning Weft CONTRACT-005 now defines draft compile 0.4, security backend
+0.1 registration, an owned lowering return, typed result contracts and tagged
+result cells. Four new versioned transport schemas accompany the amendment;
+older interfaces and the public compiler's security refusal remain unchanged.
+The installation preserved prior contract bytes and refused source drift or
+existing-schema overwrite. This is design readiness, not implemented dispatch.
+
+Astra's review resolved missing exact result-contract serialization/hash binding,
+missing constant-mask configuration and normalized rule/target/field linkage,
+underspecified return/manifest/candidate selection, and unbounded recursive
+cell batches. Native admission stays independent and cannot be granted by a
+compiled success flag. Candidate selection cannot erase unsupported semantics
+or incomplete obligations. Cell parsing must bound bytes, depth and nodes and
+release no prefix of a refused batch; runtime enforcement is still required.
+
+The retained `tools/security/weft-protocol-conformance.ts` passes 54 transport
+shape/custody checks and strict TypeScript checking. It admits only the installed
+runner/schema paths, parses frozen captured inputs, pins the complete Ajv
+executable dependency closure and Bun executable, then checks unchanged bytes
+before publication. Independent evidence validation requires the exact source
+set and complete ID-to-Boolean expectation table. The separately retained
+mutant runner executes captured helper bytes and rejects every omitted source,
+every reversed expectation and duplicate/unrelated controls: 607 checks pass.
+Astra's evidence-binding findings are resolved; review and execution receipts
+are retained under `docs/helix/04-build/evidence/security/weft-protocol-*.json`.
+These synthetic transport positives do not establish owner/native admission.
+
+After the final source changes, actual dependent replays pass: three owner Rust
+command groups, twelve conditional graph proof queries, 88 native graph-stage
+observations, 62 component groups, 197 native activation observations, 213 native
+condition observations and 36 condition Chromium artifacts. Additional Chromium
+refreshes pass 13 endpoint, 144 association, 33 relationship and 22 graph-source
+checks. All 159 consolidated evidence checks pass with current source pins.
+Earlier stale component/condition receipts and unchanged-source refusals are
+superseded only by those terminal executions, not by editing their fingerprints.
+
+Next implement the private-constructor security context and explicit Rust
+registry against this contract, preserving zero callback calls on owner refusal
+and prohibiting ordinary fallback. Complete semantic/coverage validation before
+admitting a compiled result, then connect real raw PostgreSQL lowering and the
+transactional installer through the same public entrypoint. Runtime cell-domain,
+duplicate-member/budget checks, installed correspondence, graph commit finalizer
+and other backend acceptance remain unfinished. Formal proofs remain conditional
+on their models; no general logical-to-native refinement is claimed. Original
+full acceptance remains 26/132 and the implementation goal remains active.
+
+### Actual Rust security registration boundary — 2026-10-10
+
+Weft now implements the compile 0.4 Rust security-factory entrypoint, a separate
+explicit security registry, the private-constructor immutable owner context and
+owned lowering/result/obligation declaration types. Actual bounded policy,
+ontology, logical query and query-profile admission precede context construction.
+The factory receives the original admitted objects, including complete existing
+scan/action obligations; source reuse and exact query-object correspondence are
+checked. Registration is distinct from ordinary backend composition, with exact
+backend ID/version and target-profile membership. Legacy 0.3 refusal and ordinary
+compile behavior remain covered by the current owner compatibility tests.
+
+This increment admits registration only. Manifest parsing checks closed
+structure, exact version tuple, bounds and declaration/reference integrity.
+Neither registration nor target membership establishes binding, session/domain,
+capability or complete semantic coverage. `SecurityBackend::lower` is never
+called: the compiler still returns LOWERING-UNSUPPORTED after registration until
+independent physical/result/dependency validators exist. No compiled success or
+native installation is introduced. Python/browser security registration remains
+separate unfinished host adoption.
+
+Six additional owner integration tests cover actual callback ordering and owner
+object identity, projection and field-free count dependencies, source/profile
+refusals, missing or mismatched registration, ordinary fallback prohibition,
+closed manifest negatives, and all three manifest statuses with both candidate
+option values. Astra reproduced a warning-only callback Diagnostic violating the
+blocked-response schema. The fix preserves valid bounded error diagnostics and
+replaces malformed severity/code/phase/message/span with a fixed bounded error;
+eleven actual public-entrypoint controls and Astra's relinked external client
+verify the correction. The external private-context-substitution compile-fail
+control passes. The owner replay now retains four command groups, including
+60 library tests, 48 security-admission tests and the documentation negative.
+Review evidence is `weft-security-registration-review.json`.
+
+Fresh owner version/handoff/original-use and typed-refusal foundations were
+executed after the final Rust change. Astra independently regenerated the
+preparation review: 91 current pins, twelve programs, 44 assertions and zero
+direct parent native dispatch attempts before preparation, with the previous
+receipt retained by hash. Actual original-use native replay passes 515
+observations; original-use Chromium passes twelve programs and fifteen refusals.
+Conditional graph proof replay passes twelve queries, and actual candidate graph
+staging passes 88 observations. No general compiler-to-native refinement or
+source authentication follows from these scoped observations.
+
+The initially attempted component refresh could not resolve missing offline
+Cargo registry entries. Locked workspace/witness fetches restored the metadata;
+actual subsequent execution passes all 62 groups with unchanged sources. The
+source-dependent native activation/condition and Chromium refreshes pass 197,
+213 and 36 observations/artifacts. Additional compiler-key, predicate, type/key,
+transport and namespace native foundations and their dependent browser/stored-key
+replays were executed after stale-source validation identified the dependency
+closure. All 159 consolidated evidence checks now pass. Protocol transport and
+its receipt-mutant corpus remain 54 and 607 passing checks respectively; no
+receipt was qualified by editing its fingerprints.
+
+Next implement independently complete selected capability/binding, result-domain
+and scan/action/disposition coverage validation, then actual raw PostgreSQL
+lowering and atomic native installation through this public owner entrypoint.
+The graph commit finalizer, authenticated native admission, result-cell runtime
+validation and other backend cases remain required. Original full acceptance
+remains 26/132; the full implementation goal is active.
+
+### Owner-derived result envelope design spike — 2026-10-10
+
+SPIKE-010 defines the next private owner requirement boundary: explicit primary
+action, complete scan/action rule joins, separate disclosed/original-authorized
+operator modes, and ordered outputs from the actual application plan. Direct
+field domains remain revision-qualified model domains. COUNT/SUM stay explicit
+unresolved result requirements until their relational/disclosed semantics are
+validated; a first direct-field checker cannot silently skip them. Requirement
+expansion must charge work/text budgets before cloning. Existing opaque manifest
+domain objects remain declarations; a closed matching grammar and binding/session
+interpretation still precede physical dispatch.
+
+The conservative permit-disposition union is an allowed-outcome envelope, never
+permission for the backend to choose an outcome. All runtime scoped rules,
+Unknown refusal, protected defaults, withheld precedence, conflicts and exact
+normalized transform equality remain required. The Z3 4.15.4 analysis executes
+29 selected bounded checks: twelve UNSAT searches, twelve explicit nonvacuity SAT
+populations and five SAT weakening/omission controls. Every retained pre-solve
+formula is parsed/replayed in a fresh solver context. The 47 captured source and
+runtime pins remain unchanged. This conditional abstract model does not prove
+Rust extraction, literal normalization, result presence/encoding or native SQL.
+
+Astra independently replayed all 29 formulas and verified all 47 pins after
+fixes to SMT capture, duplicate misleading mutant labels and nonvacuity evidence.
+Its final scoped review is clean. Receipts are `result-envelope-proof.json` and
+`result-envelope-astra-review.json`; no original acceptance case is promoted.
+Next implement private owner-issued requirements and direct-field declaration
+correspondence tests, then complete aggregate/capability/binding/native gates.
+Compiler lowering stays closed and full acceptance remains 26/132.
+
+### Actual private owner requirement inventory — 2026-10-10
+
+Weft now constructs SecurityRequirements inside the private backend context after
+exact source/profile/binding and actual query identity rechecks, before registration
+dispatch. The new `security_requirements` module retains immutable borrowed
+scan/action inventories and complete actual Rule objects, explicit
+Disclosed/OriginalAuthorized operator modes, the primary action from the admitted
+profile, and every ordered actual application Output occurrence. Rule conditions,
+disclosures, keys, fields, context and complete association requirements remain
+available without cloning their trees. Public callers cannot construct,
+deserialize or replace the owner requirement inventory.
+
+The counted derivation ledger refuses at one million visits or sixteen million
+selected identifier bytes before retaining further entries. It does not bound
+every comparison or CPU instruction; upstream parser/container bounds remain
+required. COUNT/SUM are preserved requirements rather than admitted result
+contracts. Every registration still ends at the existing lowering refusal gate.
+The governing owner CONTRACT-005 records the module/construction boundary.
+
+Actual Rust verification passes 62 library and 49 security-admission tests. New
+cases exercise repeated output aliases, COUNT/self-join scan occurrences, SUM's
+nullable computed integer domain distinct from its signed64 source argument,
+admitted predicate/aggregate original-action modes, full false-permit/forbid Rule
+identity, and exhaustion during actual admitted COUNT requirement derivation.
+The owner evidence replay retains four command groups, including the new external
+private-inventory substitution compile-fail control. Astra's installed-source
+review is clean; receipt: `owner-requirements-astra-review.json`.
+
+All source-dependent owner, component, native and browser producers were actually
+replayed after the final source change. The component suite remains 62 passing
+groups; original-use native/Chromium evidence remains 515 observations and twelve
+programs/fifteen refusals; native activation/condition remains 197/213. Graph
+staging, key/predicate/transport and dependent browser/stored-key witnesses were
+also replayed. Astra independently refreshed preparation preflight (92 fresh
+pins, twelve programs/44 assertions, zero direct parent native acquisition) and
+all 29 result-envelope formulas/47 proof pins, retaining prior reviews by hash.
+The final consolidated validator passes all 159 checks with fresh sources.
+
+Next implement owner-checked ordered result declaration correspondence, complete
+disposition/domain validation and closed capability/binding matching. Runtime
+cells, actual physical compiler lowering, atomic installation, graph finalization
+and all remaining backend cases remain required. No original acceptance case was
+promoted; full acceptance is 26/132 and the original goal remains active.
+
+### Pure direct-field result declaration correspondence — 2026-10-10
+
+The actual Weft private owner context now exposes a pure declaration checker.
+It compares every ordered direct-field output with its actual scan occurrence,
+exact revision-qualified source and model domain, and the complete conservative
+permit disclosure inventory. Equivalent exact constants retain every class
+source; distinct classes and Withheld remain declared. Optional Original
+presence, Absent, aggregates and incomplete or extra outcomes refuse. A valid
+declaration does not issue an executable artifact or permit runtime release.
+Public compilation still reaches the unconditional lowering refusal gate.
+
+Astra ultra feedback was implemented: normalized numeric payload is charged
+against the aggregate byte budget even for short exponent tokens, and caller
+lookup/domain/literal failures use LOWERING-UNSUPPORTED while initial source
+custody diagnostics propagate. Isolated mutations assert that diagnostic.
+Actual owner execution passes four command groups, 63 library tests and 55
+security-admission tests. Dedicated controls include 256 accepted outcomes, 257
+required outcomes refusing despite a truncated caller declaration, and COUNT
+refusal both alone and beside a valid field. CONTRACT-005 owns the boundary;
+STP-056 records partial component coverage and remaining dedicated controls.
+
+Astra's final source review is clean within scope, retains eleven reviewed pins
+and independently audits 408 admission pins. It explicitly attributes Cargo
+execution to the parent. Receipt: `owner-result-checker-astra-review.json`.
+The abstract 29-query/47-pin result-envelope proof remains conditional and does
+not establish Rust extraction or general physical compiler refinement.
+
+After the final code correction, all dependent producers were actually replayed:
+owner/transport/refusal controls, twelve graph proof queries, 88 native graph
+staging observations, 62 component groups, and native/browser query, activation,
+condition, graph-input, key and transport witnesses. Stored-key replay remains
+explicitly non-native. Astra refreshed preparation evidence with 93 current
+pins, twelve programs and 44 matching assertions, preserving the previous
+review by hash. The consolidated evidence validator passes all 159 checks.
+
+No original required backend case is promoted; acceptance remains 26/132.
+Next complete dedicated correspondence controls, capability/binding matching,
+runtime cells/presence and physical lowering before atomic native installation
+and graph finalization. The original implementation goal remains active.
+
+### Protected default and null declaration regression — 2026-10-10
+
+Added an actual admitted-source owner control for protected optional salary with
+no disclosure and with explicit constant null. Invented Original refuses in both
+configurations. Transformed(null) passes declaration correspondence; Absent and
+Withheld substitutions refuse LOWERING-UNSUPPORTED. Both variants reach the
+owner callback and retain public backend-required refusal. Implementation bytes
+are unchanged. Rust verification passes 63 library/56 security-admission tests
+and all four owner command groups. STP-056 records the partial R03/R09 evidence.
+
+Astra reviewed the actual control, refreshed eleven review pins and audited all
+408 admission pins, attributing execution to the parent. Prior reviews are
+archived by hash. All dependent owner/proof/staging/component/native/browser
+producers were actually replayed; preparation evidence has 93 current pins,
+twelve programs and 44 matching assertions. Consolidated validation passes all
+159 checks. Stored-key replay remains explicitly non-native. No runtime presence,
+cell selection or backend case is accepted by this declaration-only regression.
+Acceptance stays 26/132 and the original goal remains active.
+
+### Runtime JSON bounds foundation — 2026-10-10
+
+Implemented private checked_json_bounded with explicit UTF8 byte, root-depth-one
+and value-node limits, decoded duplicate detection and complete final parsing.
+Ordinary checked_json preserves its existing limits. Three Rust tests exercise
+exact/over byte limits including UTF8/whitespace, depth/node accounting, nested
+escaped duplicates and malformed syntax. Actual owner verification passes four
+command groups, 66 library and 56 security-admission tests. CONTRACT-005 records
+raw-entry allocation and the absence of any runtime-cell/release consumer.
+STP-056 records the component scope and still-required production-bound tests.
+
+Astra's source review is clean within scope; owner-bounded-json-astra-review.json
+retains source pins and independently audits 408 admission pins while attributing
+Rust execution to the parent. Final-source owner/proof/staging/component/native
+and browser producers were actually replayed. Preparation evidence passes with
+93 current pins, twelve programs and 44 matching assertions. Consolidated
+validation passes all 159 checks. Historical reviews remain archived by hash.
+
+The next consumer must enforce production cell bounds, exact contract custody,
+row shape, selected domain and constant equality before policy selection/current
+authority/final release can be admitted. No original backend case closes,
+acceptance remains 26/132 and the original goal remains active.
+
+### Pure owner-context runtime cell correspondence — 2026-10-10
+
+Implemented private security_result_cells and the public owner-context pure
+check_result_cells method. It rechecks actual declaration/source correspondence,
+exact retained contract bytes/hash and full structural equality, then validates
+a closed version/hash/rows envelope, ordered row width, selected outcome tag,
+model-domain literal and exact normalized constant equality. Both JSON inputs
+use 32MiB/depth64/1000000-node bounds; rows cap at4096. No executable artifact,
+checked batch or release capability is returned. Public lowering stays closed.
+
+Actual owner tests exercise complete/empty batches, custody mismatches, duplicate
+contract/batch members, width/tag/member errors, invalid/null domains, equivalent
+numeric tokens, different valid masks, signed64 overflow, value on Withheld and
+Transformed(null). Astra feedback corrected reused budget errors to result-phase
+WFT-LIMIT. Real2/6-cell positives and8-cell aggregate refusal use individually
+valid1M strings with JSON below32MiB. Rust verification passes66 library and57
+security-admission tests plus all four owner command groups. CONTRACT-005 owns
+the boundary and STP-056 records component observations and remaining controls.
+
+Astra's final installed-source review is clean within scope; receipt
+owner-result-cells-astra-review.json retains14 reviewed pins and independently
+audits409 admission pins, explicitly attributing Rust execution to the parent.
+After the final diagnostic fix, all dependent owner/proof/staging/component/native
+and browser producers were actually replayed. Preparation now includes94 current
+pins,12 programs and44 matching assertions; prior review archived by hash.
+Consolidated validation passes all159 checks. Stored-key replay remains non-native.
+
+Production exact byte/depth/node/row boundaries, actual policy-authorized outcome
+selection, native codec/source correspondence, current authority and guarded
+release remain open, as do physical compiler lowering/atomic installation and
+backend coverage. No original case closes; acceptance stays26/132 and the goal
+remains active.
+
+### Original PostgreSQL string rows to owner cells — 2026-10-10
+
+Added the experimental security_cell_inspection Rust example. Its closed input
+retains compile-request JSON and native-row JSON; a fresh source-admitted owner
+callback derives ordered Original direct-field declarations, encodes only string
+rows and invokes the actual cell checker. Output is correspondence counts/hashes
+and releasedRows0. Compilation must still end in backend-required refusal. It
+has no database connection, installer, checked batch or release token.
+
+The original PostgreSQL17.9 probe now captures exact binary psql stdout under
+the ordinary SCRAM role for predicate/order/join populated and empty samples.
+Trailing LF survives strict UTF8 decoding into the bridge; its retained-input
+hash equals the original captured bytes. Null/wrong-width mutations refuse with
+parsed exact code/phase and empty stdout. The final native run passes539 unique
+matching observations, including six byte captures and twelve bridge refusals.
+
+Astra feedback was implemented: selected build inputs are frozen before Cargo,
+bytes and exact inventory/config presence rechecked afterward and at later
+boundaries, then the produced binary is captured separately. The206 selected
+build-input pins and244 total native pins are current. Cargo dependency/cache
+artifacts, platform linker/SDK and environment remain explicit trusted premises;
+no complete hermetic-build or host-tamper proof is claimed.
+
+Astra independently audited the retained539 observations, six captures, source
+request conversion, actual owner output identity, independently authored
+declaration SHA and twelve exact diagnostics; scoped review is clean. Receipt:
+original-cell-bridge-astra-review.json. Its updated preparation guard independently
+ran one exact Cargo build,13 owner executions and14 host bridges, with44 matching
+assertions, two build-guard refusal controls and zero direct native acquisition.
+Previous preparation evidence is archived by hash.
+
+Components pass62 groups; refreshed conditional carrier formulas pass4 queries,
+and formal replay passes563 formulas across32 receipts without claiming compiler
+refinement. All dependent native/browser producers were actually replayed after
+final sources; consolidated validation passes159 checks. Existing Rust owner
+evidence remains66 library/57 security-admission tests. Stored-key replay remains
+non-native. STP-056 records the native-link subset and remaining controls.
+
+This links original fixture string values to owner cell interpretation, not
+protected/native aggregate codecs, policy-selected mask truth, coherent current
+authority or guarded release. B07/B08/B09 remain open and no original backend
+case is promoted. Full acceptance remains26/132; the goal stays active.
+
+
+### Conditional result selection checkpoint — 2026-10-10
+
+The actual Weft owner now checks supplied per-row scan/action/rule truths against
+its immutable source-bound requirements before accepting the selected cell
+outcome. Every required action must Permit, and ordered outputs retain their
+actual scan occurrence even for self-joins. Existing conservative declaration
+and exact cell/domain/custody checks precede selection. Original, Withheld and
+exact normalized constant transforms are matched to the existing composition
+fold; no caller-selected potential outcome can bypass that fold.
+
+Astra ultra feedback is implemented and independently reviewed. Isolated
+controls now refuse a failing secondary original-use action with unchanged
+permitting primary actions, a failing later row after a valid first row, and
+selection-ledger exhaustion after valid declaration and 4096 small-cell checks.
+The new secondary fixture initially used an invalid singular action property;
+strict source admission rejected it before dispatch. It was corrected to the
+actual actions array before the final passing replay. The contract names the
+selected byte categories charged and excludes uncharged composition inspection,
+normalization and CPU/allocation. Actual owner verification passes four groups,
+66 library and58 security-admission tests, with410 current source pins.
+Review: owner-result-selection-astra-review.json (19 review pins); execution is
+parent-attributed, not an independent Rust replay or compiler refinement proof.
+
+All downstream evidence producers were replayed against frozen final sources.
+Components pass62 groups; formal replay passes563 formulas across32 receipts.
+The isolated PostgreSQL17.9 original native run retains539 matching observations,
+six exact captured byte streams and twelve bridge refusals. Its245 source pins
+and207 selected build inputs are current. Astra independently audited the native
+receipt and bridge correspondence without native reacquisition. Updated
+preparation independently passes12 programs/44 assertions, one exact Cargo
+build,13 owner executions and14 host bridges, with zero direct native acquisition;
+previous reviews are archived by hash. The complete native/browser pipeline
+finishes with159 consolidated checks passing. Stored-key replay remains non-native.
+
+STP-056 links these partial controls to the result correspondence test plan and
+B07/B08/B09. Supplied truths can be infeasible under actual source conditions;
+this is conditional simulation, not authenticated fact evaluation or authorization.
+Original-value row provenance, correlated actual facts, compatible current
+native authority and guarded release remain open. Empty batches grant no query
+permission. Public compiler lowering stays closed and no release token or checked
+batch is issued. No original backend case is promoted: acceptance remains26/132
+and the implementation goal remains active.
+
+
+### Evaluated scoped-fact/value correspondence checkpoint — 2026-10-10
+
+The actual Weft owner now exposes `check_simulated_fact_selection`. A closed
+versioned row envelope binds every fact to its actual owner scan and exact target.
+The existing finite Record interpreter eagerly preflights every required rule,
+then evaluates each actual scan/action/rule from one supplied simulated cut.
+Only those internally evaluated truths reach the conditional selection check.
+Original cells also equal their scan fact's exact normalized field value under
+complete declared field coverage. Repeated identities in bag/self-join rows,
+the subject and association population must retain one normalized field/absence
+assignment. The method returns unit only; no checked batch or release token.
+
+Actual owner controls exercise Original and conditionally masked outputs in
+single-scan/self-join contexts, Project/Staff membership, missing/inactive
+associations, incomplete dependencies including empty batches, stale caller
+generation, work exhaustion, duplicates/missing fields/foreign scans, later-row
+coherence and distinct-scan swaps. Missing projected Original values and coverage
+are isolated from policy preflight. Identical and numerically equivalent scoped /
+population assignments pass; conflicting Resource or subject assignments refuse.
+The distinct-row self-join fixture uses a satisfiable tautological join condition;
+the method itself still does not evaluate query predicates or join provenance.
+
+Astra ultra found metadata amplification before the downstream selection ledger.
+Generated truth-map rule/action/scan IDs are now charged before cloning against
+a separate one-million-visit/sixteen-million-byte ledger. An admitted129-rule
+fixture with128-byte rule IDs passes512 repeated rows;1024 individually valid
+small rows refuse this metadata ledger at WFT-SECURITY-EVALUATION/model after
+successful declaration/cell checks. Parser limits are per cut/rows text, while
+the4M input byte limit is combined. Underlying literal/source diagnostics retain
+their original boundaries. One test initially used unsupported leading-zero
+numeric syntax; it correctly refused and was changed to supported exact `1e2`
+before the final passing replay. No language support claim was broadened.
+
+Final actual owner evidence passes four groups,66 library and60 security-admission
+tests with410 current pins. Astra's clean scoped review has21 pins and nine
+observations in owner-fact-selection-astra-review.json; Rust execution remains
+parent-attributed. The earlier owner-result-selection review remains historical,
+not silently repinned after its governing contract changed. STP-056 records the
+partial R01/R02/R04/R05/R07/R11/R12 and B07/B08/B09 correspondence controls.
+
+All affected producer evidence was regenerated from frozen final sources.
+Components pass62 groups; formal replay passes563 formulas across32 receipts
+without compiler/interpreter refinement claims. The native/browser pipeline
+passes159 consolidated checks. The PostgreSQL17.9 fixture retains539 observations,
+six exact byte captures and twelve bridge refusals, with245 current source pins
+and207 selected build inputs. Astra independently audits that retained native
+receipt without native reacquisition. Independent preparation passes12 programs /
+44 assertions, one exact Cargo build,13 owner executions and14 host bridges;
+zero direct native acquisition. Prior preparation/native reviews are archived
+by hash. Stored-key replay remains non-native.
+
+The new evaluated-fact API has actual Rust evidence; the native bridge still
+checks its prior Original string-cell inspection subset. No native fact capture,
+new browser/WASM API parity, authenticated issuer/census, actual query result
+completeness, empty-result query-wide original-action admission, current authority
+or guarded release is qualified by this checkpoint. Supplied trust/coverage /
+generation remain caller assertions. Native graph witnesses outside the existing
+Record interpreter refuse. Public compiler lowering stays closed. No original
+backend case closes: acceptance remains26/132 and the full goal stays active.
+
+### Captured native facts and strict object carriers — 2026-10-10
+
+The new experimental `security_fact_inspection` owner executable consumes exact
+native row text plus captured model facts, evaluates the admitted Record policy
+conditions for each actual query scan, and checks result selection and Original
+field values without releasing rows. The isolated PostgreSQL 17.9 producer
+`tools/security/pg-owner-fact-selection.py` passed63 observations across6captures:
+Alice/Bob single scans, Cartesian selfjoins containing distinct resource
+identities, and empty single scans. It checks the complete authored typed fixture
+census, rejects a real native string-valued salary mutation, and retains swapped
+selfjoin scope, incomplete coverage, stale generation, inactive membership and
+substituted Original value controls. Helper execution and SQL use frozen reviewed
+bytes; selected build inputs/config presence are checked around the build and
+native acquisition. This is selected source correspondence within trusted build
+and fixture premises, not a hermetic or authenticated build.
+
+Astra ultra independently reproduced Serde positional-array admission and the
+feedback was implemented: both inspection envelopes require object roots, and
+the new fact path additionally requires object carriers for cut/scoped roots,
+facts, field values, coverage and qualified references before decoding. The
+legacy standalone simulator is unchanged. Actual owner admission replay passed
+66 library/60 security tests, including11 nested-carrier mutations. Foundation
+replays passed6 owner-dispatch producer groups,12 original graph conditions,
+88 native graph observations,62 protocol/component observations,4 carrier
+controls and563 formal observations across32 retained proofs. These remain
+qualified component/model results rather than production backend proofs.
+
+The retained `owner-fact-bridge-astra-review.json` independently audits all63
+unique observations,236 current source pins and208 selected build inputs. It
+replays6 captured positives and12 independently reconstructed array-carrier
+mutants against the pinned actual owner binary and independently derives every
+result-contract hash. The original native producer also passed545 observations,
+including6captures and18 bridge refusals after the outer-array correction.
+Review receipts retain source/build premises and execution evidence; previous
+reviews remain historical when their pins no longer match.
+
+Native fact capture is now evidenced for this fixed raw fixture. Separate native
+connections do not establish one authenticated coherent cut or protection against
+ABA changes. Trust, generation, coverage and mapping assertions remain fixture
+premises. Actual query result completeness, compiler lowering refinement,
+authenticated issuer/current authority, guarded release, arbitrary native codecs,
+graph property projection and browser/WASM parity of the new API remain open.
+No original backend case is promoted: acceptance remains26/132 and the full goal
+stays active. See STP-056 and the retained receipts for partial AC correspondence.
+
+Astra's original-cell audit also passed545 unique matching observations,
+246 current source pins,208 selected build inputs,6 exact captures and18 exact
+refusals. The22-command dependent native/browser replay passed its execution
+producers; its final freshness check identified only the component receipt's
+pin of the changed validator. That component producer is replayed rather than
+editing retained hashes. The validator now includes freshness checks for the new
+native fact receipt and independent fact bridge review; those checks preserve
+its existing limited source freshness/allocation scope.
+
+Final dependency-order refresh passed:62 component commands, followed by197
+activation observations,213 candidate-condition native observations and36
+browser artifacts against their regenerated inputs. The consolidated evidence
+validator passed all161 checks with no failures. No retained source hashes were
+manually repaired and no backend acceptance case changed.
+
+### Security registration object grammar — 2026-10-10
+
+The next critical compiler boundary is selected capability/binding admission,
+not another supplied-fact inspection wrapper. Astra's source audit confirms
+that registry selection currently checks backend/version/target identity but
+logicalDomain, resultDomain, constraints, target settings and bindingProfile
+remain uninterpreted declarations. SPIKE-010 requires a closed versioned matching
+grammar before dispatch. The next implementation must derive every actual
+scan/action/rule/operator/output requirement, including false branches, ordered
+Keys, association and context dependencies; interpret complete selected domains,
+bindings/settings/constraints and obligation parameters; and preserve candidate
+restrictions. Its admission result must be private and immutable. Physical,
+result and native-obligation validation remain required before successful lower
+and compiled response emission. The following milestone is an actual registered
+raw PostgreSQL backend whose public compiled artifact reaches the real installer
+unchanged, with ordinary execution and B08/B09 refusal/rollback evidence.
+
+The audit also found a concrete registry grammar defect. The actual Rust
+regression reproduced acceptance of six positional struct carriers: manifest,
+source profile, target profile, capability, language profile and obligation.
+`security-manifest-carrier-counterexample.json` retains that historical pre-fix
+execution and exact source hashes; those hashes are intentionally historical.
+The owner parser now requires object carriers before Serde decoding. It preserves
+opaque domain, target-setting and obligation-parameter JSON rather than changing
+unknown meanings. The focused regression checks exact nested arrays/objects/nulls
+in all four opaque payloads and refusal of all six positional carriers through
+both parser and registry. Actual owner replay passed4 producer groups,66 library
+and61 security tests. This corrects declaration admission, not capability
+coverage or native enforcement. The public lower gate remains closed and no
+original acceptance case is promoted; the full132-case goal stays active.
+
+Astra independently executed the final focused Rust regression, retaining464
+current source/runtime/review pins in `security-manifest-carrier-astra-review.json`.
+All six refusals and all four opaque-payload equality assertions passed. The
+owner foundation was regenerated after that final test change, then Astra's
+independent preparation replay passed12 programs/44 assertions with246 current
+source pins and208 selected build inputs, one exact Cargo build,13 owner and14
+bridge executions, and zero direct native acquisition. Final native fact capture
+passed63 observations/6captures; Astra's independent fact audit replayed6positives
+and12malformed carriers against the fresh actual binary and verified all236
+source pins/208 build inputs. Previous changed-source reviews are archived by
+hash; the pre-fix counterexample remains explicitly historical. Graph evidence
+passes12 conditional queries and88 native staging observations, and formal replay
+passes563 observations across32 retained qualified proofs.
+
+Final current-source replay passed all22 dependent native/browser/evidence
+commands. The original native producer passed545 observations and Astra's
+independent audit verified246 source pins/208 selected build inputs,6 exact
+byte captures and18 refusals. Component production passes62 commands against
+regenerated graph inputs. The consolidated validator now also checks freshness
+of the independent manifest review and passes162 checks with no failures.
+Acceptance remains26/132. The matching grammar in SPIKE-010 is still an explicit
+next design item, not a supported capability inferred from opaque declarations.
+
+### Security matching checkpoint — 2026-10-10
+
+SPIKE-010 now proposes complete action-fold, operator and output bundles as the
+unit of selected capability matching, with compatible interpreted semantic
+profiles and a distinct versioned Record-home binding. Carrier correspondence
+requires bidirectional complete selected-Key population equality, no extra or
+duplicate rows, and normalized field coherence. This remains a design proposal;
+closed logical/result-domain grammars and actual owner-private interpretation
+are unfinished. Obligation parameter transport custody remains explicit work.
+
+The new capability-bundle proof retains ten laws / thirty formulas, including
+explicit guard-deleted candidate/status/constraint matchers and a compatible
+positive population in which two capabilities each cover only their own complete
+bundle. Astra ultra feedback was implemented, then all thirty formulas replayed
+independently (ten UNSAT, twenty SAT) with current source pins and a clean review
+within the abstract scope. Exact mappings and complete bundles are predicates,
+not proved Rust derivation, native correspondence or authentication. Evidence:
+`evidence/security/capability-bundle-coverage-formal.json` and
+`evidence/security/capability-bundle-coverage-astra-review.json`; partial
+traceability is US-056-AC6/AC7, with zero backend cases promoted.
+
+Full retained formal replay passes593 formulas across33 receipts. The refreshed
+component producer passes62 commands; regenerated dependent native activation
+and graph-condition checks pass197 and213 observations respectively, and the
+Chromium graph-condition consumer passes36 artifacts. Consolidated evidence
+validation passes165 checks. Acceptance remains26/132; public lowering remains
+closed. Next implement and independently test owner-derived bundle and closed
+binding/profile interpretation before any backend lowering dispatch.
+
+### Owner semantic matching implementation checkpoint — 2026-10-10
+
+The private Weft Rust module `security_semantic_coverage.rs` now interprets the
+closed logical/result-domain grammar described in SPIKE-010. It borrows the
+actual owner scan/action Rules and full relational application plan, checks
+complete action bundles without partial-capability union, retains every scan
+and ordered output position, and refuses computed/optional results under this
+first direct-result profile. Its selected-target list restricts action/application
+roots; it is explicitly not the field/domain/ordered-Key/endpoint/provider
+binding inventory. Exact interface and all five source-profile values, target
+applicability, eligibility and selected unknown meaning are rechecked.
+
+Astra ultra found and the implementation corrected indirect source-tuple trust,
+unbudgeted lookup/copy/matching work and wrong-phase selected-target diagnostics.
+The single ledger charges source and selected metadata before copies, indexes
+only selected owner modules, and bounds condition traversal and matching. Six
+actual Rust tests cover grammar mutants, complete-rule nonunion, explicit status
+and source substitutions, duplicate output positions, selfjoin occurrences,
+field-free COUNT refusal, false-branch exact19-node/6-depth/2-Exists bounds, and
+exact/minus-one/zero work/text ledgers. Astra independently ran all six tests;
+772 source/config/runtime pins remained unchanged. Evidence is
+`evidence/security/owner-semantic-coverage-astra-review.json`; this is partial
+US-056-AC6/AC7 declaration correspondence, not backend implementation or native
+admission. The module remains private and disconnected from public dispatch.
+
+Final source-frozen owner foundation passes72 library tests,61 security admission
+tests and the other existing frontend/envelope/literal/doc groups. All six
+owner/protocol producers pass, including607 protocol evidence controls. Refreshed
+component production passes62 commands. All22 dependent native/browser/evidence
+commands pass; original native capture has545 observations, fact capture has63
+observations/six captures, graph staging has88 observations, and the consolidated
+validator passes167 checks. Formal replay remains593 formulas across33 qualified
+receipts. Current independent reviews verify the manifest carrier, preparation
+acquisition, fact bridge and conditional matching laws against final source pins.
+
+Acceptance remains26/132. No native case was promoted. Next implement the closed
+Record-home binding interpretation against actual owner domains and ordered
+Keys/endpoints, target settings and complete obligation-parameter custody; then
+compose physical/result/obligation validation before any lowering dispatch.
+
+Astra's final original-cell audit also independently executes all six retained
+capture packets and eighteen reconstructed null/width/positional refusals
+against the pinned current owner binary (24 executions). It verifies247 native
+source pins and209 selected build inputs, with unchanged inventory/config and
+binary bytes. The current review records exact input hashes and process outputs;
+its prior audit-only receipt is archived by hash. No Cargo or direct native
+acquisition occurs in that independent replay. Consolidated validation remains
+167 checks passed after the final review update.
+
+
+#### PostgreSQL Record-home design and correspondence spike (owner-directed continuation)
+
+The first proposed physical declaration is closed in
+`../02-design/spikes/security/record-homes-v0.1.schema.json`. It applies equally
+to raw tables and selected typed relation/view populations, with explicit ordered
+natural/composite Keys and endpoint maps. Astra review required separating
+same-type authoritative/carrier source reuse from distinct-type partitioning,
+exact PostgreSQL17.9/UTF8/C declarations, known-literal traversal independent of
+live fields, required-output restrictions and aggregate interpreter budgets.
+These changes are captured in SPIKE-010; different codecs, contexts and overlapping
+native type populations remain explicit additional-interpreter work.
+
+The executable shape experiment and conditional correspondence laws retain
+separate evidence in `evidence/security/record-home-shape-execution.json` and
+`evidence/security/record-home-correspondence-formal.json`. Ten conditional laws
+retain violation UNSAT, weakened-control SAT and positive-population SAT formulas
+and fresh replay. They cover qualified identities, ordered Keys, complete domain
+metadata, endpoint role/target/selected-Key membership, same-type source reuse,
+bidirectional carrier population/multiplicity, field coherence, UTF8 bytes and
+known literals in dead branches. Domain normalization, canonical native images
+and authenticated source meaning are premises, not established implementations.
+
+Next implement the private Rust binding interpreter against the actual owner
+catalog and complete requirements, with pre-copy parsing/normalization budgets
+and adversarial tests. Keep native source/column/image/population/authentication
+and current-authority obligations explicit; do not enable lowering until physical,
+result and complete obligation-parameter custody checks compose. This checkpoint
+promotes no backend case: acceptance remains26/132 and the original132-case plan
+is unchanged.
+
+Final executed checkpoint: shape389 checks, including10 deliberately
+schema-valid but owner/native-unqualified inputs; strict TypeScript passes.
+Astra fixes isolate each home/carrier path mutation, test an actual root array,
+freeze the recursive installed Ajv closure and Bun before import, and retain
+captured schema/core bytes with inventory/hash rechecks. Astra independently
+repeats all389 outcomes (549 pins) and replays all30 new SMT formulas in fresh
+contexts (43 pins). Copied-producer and foreign-cwd executions both refuse
+before receipt publication. Current reviews have no remaining findings and
+archive their predecessors by hash. The existing semantic review executes all
+six focused Rust tests against772 unchanged pins; the capability review replays
+30 fresh formulas against43 pins.
+
+Source-frozen component execution passes63 commands, including an explicit
+strict check for the new shape runner. Formal replay passes623 formulas across
+34 qualified receipts. The affected PostgreSQL17.9 activation and condition
+producers pass197 and213 observations respectively, and Chromium153.0.8010.12
+comparison passes36 artifacts. Consolidated evidence validation passes175
+checks. No Rust physical binding interpreter or lowering dispatch was added in
+this design checkpoint; original backend acceptance remains26/132.
+
+### Private owner Record-home correspondence — 2026-10-10
+
+The private Weft Rust checker now matches the proposed declaration against the
+actual selected owner catalog and complete action/scan dependencies. It checks
+revision-qualified identities, ordered selected Keys and association endpoints,
+source-domain/codec correspondence, source reuse and partition declarations,
+query carriers, subject declarations and known literal native images. The exact
+spike schema is embedded with provenance; public lowering remains closed.
+
+The initial Astra review found uncharged repeated Key/model-pin/endpoint-role
+searches and discriminator tests whose carrier mismatch could mask the intended
+refusal. Searches now charge each comparison; discriminator controls use matching
+carrier sources and include an admitted in-range counterpart. The parent focused
+Rust run passes11 tests, including work/text exhaustion, exact integer bounds,
+false-branch literal/context checks and same-domain composite endpoint ordering.
+Independent execution and downstream evidence freshness are still pending at
+this checkpoint. Earlier receipts must not be treated as current merely because
+the focused tests pass.
+
+Declaration correspondence does not establish native source contents, complete
+populations, authentication, privilege closure, installed enforcement or release
+custody. Computed result interpretation and complete obligation-parameter custody
+remain separate requirements. This checkpoint promotes no backend case; the
+original132-case plan and26/132 acceptance count remain unchanged.
+
+Final executed checkpoint for this slice: Astra independently passes all11
+Record-home tests plus the charged-reader test against776 unchanged pins, with
+no remaining findings. See
+[evidence/security/owner-record-homes-astra-review.json](evidence/security/owner-record-homes-astra-review.json).
+The owner foundation passes84 library tests,61 security-admission tests and the
+frontend/envelope/literal/documentation groups. Exact source-schema correspondence
+passes. The semantic, manifest, shape, formal, preparation, fact-bridge and
+original-value independent reviews were refreshed through actual execution;
+prior receipts were archived by hash.
+
+Dependent evidence first refused stale graph sources, then passed after the
+original compiler proof and native graph foundation were reexecuted. The frozen
+component suite passes63 commands; formal replay passes623 formulas across34
+selected receipts. The22-command downstream replay completes, including
+PostgreSQL17.9 activation197 and condition213 observations and Chromium
+153.0.8010.12 comparison36 artifacts. Stored-key replay remains explicitly a
+retained-native replay rather than fresh native execution. Consolidated evidence
+validation passes177 checks, including fresh independent owner correspondence
+and exact embedded-schema checks. Original backend acceptance remains26/132.
+
+Next compose complete obligation-parameter custody and checked result semantics
+with the private correspondence gate, then qualify authenticated native source,
+population/domain/privilege/current-authority enforcement before opening public
+lowering. Conditional logical laws and declaration checks do not discharge these
+remaining physical/runtime acceptance obligations.
+
+### Immutable obligation custody and faithful JSON boundaries — 2026-10-10
+
+The private Rust registry now retains the exact original security declaration
+from one callback invocation. Selected obligation custody borrows that immutable
+registration, preserves every selected capability origin and requires complete
+parameter/owner/failure-code equality for repeated obligation IDs. Each repeated
+comparison charges the shared resource ledger. This implements declaration
+custody only: unknown parameter content remains uninterpreted and public
+security lowering remains closed.
+
+Astra found that ordinary JSON objects with Serde's reserved-looking marker
+keys could be silently decoded into different values. Raw-tree construction and
+opaque-slot restoration now preserve these objects across ordinary/security
+manifests, selected fact/request/context/scoped-row readers and Databricks
+relationship mappings. Non-object roots and object-carried enum variants refuse
+with diagnostics. Positive counterparts and mutation controls exercise the
+actual readers/compiler, rather than treating raw byte retention as sufficient.
+
+The owner foundation passes97 core-library and61 security-admission tests plus
+its frontend/envelope/literal/documentation groups. Databricks passes1 library,
+7 binding and18 compiler tests. Astra independently repeats the97 and26 tests
+and18 fresh conditional custody formulas; no scoped findings remain. See
+[evidence/security/owner-obligation-custody-astra-review.json](evidence/security/owner-obligation-custody-astra-review.json).
+Those formulas model custody laws and controls, not a proof of the Rust parser
+or native enforcement. They trace to US-056-AC7 and US-056-AC10.
+
+The new evidence gate checks current review sources, exact formula hashes and
+outcomes, and anchored complete libtest summaries with exact counts. The initial
+substring implementation accepted inflated counts; the corrected gate refuses
+inflated/reordered counts, ignored tests and altered formula identity/hash/outcome.
+The shape receipt now scopes its flag to qualification by that probe, avoiding
+an obsolete global claim that no private binding interpreter exists.
+
+Frozen component execution passes64 commands. Formal replay passes641 formulas
+across35 selected receipts. Original graph proof12, native graph88 and owner
+fact selection63 observations/six captures pass. Independent preparation, fact
+and original-value replay receipts have been refreshed through actual execution
+and their predecessors archived by hash. The22-command downstream native/browser replay completes, including PostgreSQL
+17.9 activation197 and condition213 observations and Chromium153.0.8010.12
+comparison36 artifacts. Stored-key replay remains explicitly retained native
+evidence, not fresh native execution. Consolidated evidence validation passes181
+checks with no failures, including the new independent custody gate.
+
+Original backend acceptance remains26/132. Next implement semantic obligation
+parameter profiles and checked result semantics, then qualify authenticated
+native source populations, privilege closure and current-authority enforcement
+before opening lowering. Preserving an obligation is not discharging it.
+
+### Closed declaration projection — 2026-10-10
+
+The next private owner slice interprets the exact registered obligation
+parameters under the draft
+[admission-obligation profile](../02-design/spikes/security/admission-obligation-v0.1.md).
+It reconstructs the complete selected declaration inventory without a new 0.4
+parameter member and retains original IDs/failure codes and capability origins.
+Unknown fields/versions, incompatible owner/site declarations, missing selected
+prerequisites and cycles refuse before returning an inventory. The source/case
+identity strings still require independent actual-plan and native-case coverage
+checks; no enforcement claim or public lowering is added.
+
+Astra found that original obligation IDs followed the registry's codepoint bound
+while prerequisites followed the new UTF8 byte bound. Projection now checks the
+original ID's byte bound too; source-admitted4096-byte and4098-byte controls
+isolate that correction. Cross-selected-capability prerequisite closure and a
+diamond/shared-prerequisite DAG plus isolated-cycle refusal strengthen coverage.
+The initial test helper placement caused a compile failure; helpers are now in
+the correct private test module and the actual complete core suite passes103
+tests with unchanged captured sources. See
+[evidence/security/weft-obligation-projection.json](evidence/security/weft-obligation-projection.json).
+
+The formal experiment passes12 fresh formula checks. The directed four-node
+Kahn model includes all sixteen symbolic edges and checks completion against a
+rank-defined DAG; it is not an arbitrary-size algorithm theorem or Rust proof.
+Its cyclic-population controls are not mutated algorithm controls. Closed
+projection and native-admission predicates remain explicit modeled premises.
+Astra independently passes all103 core tests and12 fresh-context formulas.
+Both scheduling orders agree with an independent transitive-closure cycle
+detector on all65536 four-node graphs (543 acyclic), with no disagreements.
+[evidence/security/owner-obligation-projection-astra-review.json](evidence/security/owner-obligation-projection-astra-review.json)
+retains841 unchanged pins. This finite oracle does not prove arbitrary-size
+Rust refinement. The broader source-dependent refresh now completes through actual execution:
+66 component commands;653 saved formulas across36 selected receipts; the
+22-command PostgreSQL/browser replay; and187 consolidated evidence checks with
+no failures. PostgreSQL17.9 activation197 and condition213 observations and
+Chromium153.0.8010.12 comparison36 artifacts pass. The independent custody,
+Record-home, semantic, manifest, shape/formal, preparation, fact and original-cell
+reviews were reexecuted, with predecessors archived by hash. The component
+rerun changed the retained parallel libtest output; the dependent projection
+review was actually reexecuted against those final receipt bytes. Stored-key
+replay remains retained-native evidence rather than fresh native execution. No backend case is
+promoted and original acceptance stays26/132.
+
+Next bind projected semanticSources and evidenceCaseIds to compiler-derived
+requirements and independently required native cases, then compose result,
+physical binding and capability checks before emission. String identities and
+a consistent prerequisite DAG do not establish those correspondences. Native
+source populations, authentication, privilege closure/current authority and
+guarded final release still need executable backend qualification. The original
+132-case plan is unchanged; this checkpoint leaves the goal active.
+
+### Compiler-owned obligation source correspondence — 2026-10-10
+
+The private context projection now derives canonical compact JSON tuple IDs
+from actual owner requirements and requires exact union equality with declared
+semanticSources. It retains source/model pins, selected modules, scan/action/rule
+dependencies, ordered key components, stored/context channels, projection/query
+fields, operator modes and output positions. Self-join occurrences and repeated
+output positions stay separate. No native case meaning or site enforcement is
+inferred from this correspondence. See the
+[source annex](../02-design/spikes/security/obligation-source-correspondence-v0.1.md).
+
+Actual complete core execution passes108 tests with current captured sources.
+New controls omit each issued source independently, add/substitute foreign
+sources, preserve self-join and COUNT requirements, check canonical tuple
+escaping/UTF8 limits, and refuse actual-context work/text exhaustion. Initial
+fixture construction failed compilation because SecurityManifest deliberately
+lacks Serialize; the fixture now explicitly constructs original declaration
+JSON without broadening the public API. The first operator fixture used a
+prohibited protected salary field; an admitted key predicate/order counterpart
+now isolates the correspondence behavior. Astra requested an independently authored complete expected inventory and
+canonical spelling, context/original-authorized/composite-order controls. These
+now pass: exact hand-authored fixture paths, pretty-JSON alias refusal, same-field
+stored/context IDs, both query operator modes/action scopes and forward/reversed
+same-domain Key positions. Primitive encoder budgets pass at exactly2visits and
+6bytes and refuse either one-unit shortage. These are finite tested witnesses,
+not arbitrary extraction/native refinement.
+
+Five conditional laws/15 fresh formula checks pass. They use unbounded source
+relations and algebraic scoped/channel/key-position identities, not a proof of
+JSON encoding, actual inventory extraction, compiler/native refinement or
+required native evidence. The first replay exposed an SMT accessor/free-variable
+name collision; unique accessor names fix the serialized replay.
+
+Astra ultra independently executed108/108 core tests, replayed15/15 formulas
+in fresh solver contexts and checked six valid-domain SAT populations. All843
+source pins remained unchanged and no findings remain within the declared
+source-lineage scope. The retained receipt is
+[evidence/security/owner-obligation-source-correspondence-astra-review.json](evidence/security/owner-obligation-source-correspondence-astra-review.json).
+Source correspondence does not establish required evidence-case coverage,
+per-capability enforcement-site assignment, native enforcement or Permit for an
+original-authorized action.
+
+The new proof and independent review are now mandatory consolidated-validator
+checks; the component runner includes the new formal producer. The first current
+validator execution reports191 checks with38 failures: older source-dependent
+receipts and dependent coverage checks correctly remain stale pending actual
+execution. The previous187-check checkpoint is historical. The owner admission
+refresh passes with canonicalSchemaMatches=true; projection12, custody18,
+Record-home30 and capability30 formulas and389 shape observations have also
+been reexecuted successfully. Independent prior-scope reviews and remaining
+component/native/browser refreshes are in progress. Original acceptance remains
+26/132; no case is promoted and public lowering stays closed. The full original
+132-case goal remains active.
+
+
+#### Source-correspondence consolidated refresh—2026-10-10
+
+Astra identified two validator coverage defects during integration. The new
+review gate accepted truncated/unrelated observations and omitted or zero-position
+SAT populations; it now requires all nine independently specified observation
+IDs/values, six exact population IDs and canonical nonempty names/positions1/2.
+The semantic review gate accepted contradictory libtest summaries despite ten
+passing name lines; it now requires the anchored10passed/0failed/0ignored/
+0measured/98filtered summary from the current108-test library. An intermediate
+extra-parenthesis syntax error was corrected before final execution. Python
+syntax validation uses a writable temporary cache after the system cache path
+refused a write.
+
+All prior owner/shape/formal reviews have been actually reexecuted, including
+108 core,26 Databricks,11 Record-home,10 semantic and manifest carrier scopes.
+Owner dispatch/version/handoff/original-use/readiness/protocol producers pass;
+independent preparation executes12 programs/44 assertions. Graph IR12 queries,
+native graph88 checks and PostgreSQL fact selection63 checks/six captures pass.
+The expanded component suite passes all67 commands; formal replay passes668
+formulas across37 receipts. Rerunning the parent projection producer changes
+its retained execution bytes, so the two independent reviews that pin that
+receipt are being actually rerun. Native/browser downstream refresh and final
+consolidated validation remain pending; these scoped successes do not promote
+any of the original132 required backend cases.
+
+
+The first downstream refresh stopped at truss-original-use-probe.py line291
+when an ordinary fixture PostgreSQL call exceeded the existing15-second command
+timeout. It produced no passing receipt; the remaining21 downstream commands
+were not executed by that attempt. A retry retains the same assertions and
+limits. The independent gate review has meanwhile passed23 negative/baseline
+controls, and both parent-receipt-dependent108-test reviews were actually rerun
+against the final component receipt; no predecessor was repinned.
+
+
+#### Verified source-correspondence checkpoint—2026-10-10
+
+The unchanged downstream retry completed all22 commands successfully. Original
+query-use545 checks, activation197 native checks, condition213 native checks and
+36 Chromium artifacts passed; the remaining scoped key/policy/type/transport
+and browser probes also passed. The stored-key oracle replay explicitly remains
+freshNativeExecution=false and is not described as a fresh native execution.
+Astra independently replayed six captured cells and18 refusal controls against
+current252 pins/214 build inputs, with no native acquisition of its own. The
+initial15-second PostgreSQL timeout remains recorded above.
+
+Final consolidated validation passes191/191 checks with zero failures after
+actual producer and independent-review execution. The expanded component suite
+passes67 commands and the formal audit replays668 formulas across37 receipts.
+Current evidence:
+[phase-validation.json](evidence/security/phase-validation.json),
+[components.json](evidence/security/components.json),
+[formal-replay-audit.json](evidence/security/formal-replay-audit.json),
+[source correspondence review](evidence/security/owner-obligation-source-correspondence-astra-review.json),
+[evidence gate review](evidence/security/obligation-evidence-gate-astra-review.json).
+
+This checkpoint qualifies the reviewed logical source-correspondence experiment
+and retained evidence within each stated subset. It does not establish arbitrary
+Rust/compiler/native refinement, required evidence-case or per-site coverage,
+source authentication, current authority, public lowering or full installed
+backend security. Original backend acceptance remains26/132; no promotions.
+Next derive independently required obligation kinds/evidence-case coverage and
+compose semantic, physical, capability and authority gates before qualifying
+public lowering and admitting additional original backend cases. The full
+132-case implementation goal remains active.
+
+
+### Owner-issued semantic capability allocation—2026-10-10
+
+The preceding191-check checkpoint is historical after this implementation.
+Original required backend acceptance remains26/132 and the full goal is active.
+Astra's next-gate design review established that actual owner contexts cannot
+issue deployment-case sufficiency. Independent profile issuance must preserve
+original obligation identity, failure/owner semantics and required prerequisite
+edges; a DAG alone does not establish correct sequencing. The draft
+[assignment annex](../02-design/spikes/security/obligation-assignment-v0.1.md)
+captures these constraints without admitting native cases.
+
+Implemented the substantive first issuer prerequisite in Rust: private
+OwnerCoverage retains every complete selected capability candidate for each
+actual scan/action scope and the whole application. It borrows the immutable
+registration and actual context, and retains exact charged selected IDs.
+Astra found that zero-edge selections initially disappeared; the fix preserves
+a valid selected Staff-only capability with no obligations in a Resource query.
+Actual tests compare equal assignment edges but distinct selected inventories.
+No public constructor/transport/lowering is added. Independent required
+case/site/kind/profile issuance and relational admission remain unfinished.
+
+Five new actual-context/retention tests pass: complete candidate sets and reverse
+selection order; self-join/action/application separation; original-authorized
+versus read action scopes; registration callback drift plus zero-edge selection
+custody; exact measured traversal and edge limits/refusals. Full core113 tests
+pass with source-pinned retained execution in
+[weft-semantic-allocation.json](evidence/security/weft-semantic-allocation.json).
+All original fixture files are included in this producer's source inventory.
+
+Seven conditional laws/21 formulas pass and replay in fresh solver contexts.
+Astra identified an initially weak collapsed-scope negative control; explicit
+defective occurrence/action projections now collide while original datatype
+scopes stay distinct. Positive populations for complete capabilities, whole
+application and native conjuncts now exercise successful admission as modeled,
+preventing an always-refusing model from satisfying every control. These laws
+assume correctly derived complete/selected predicates; no Rust/native refinement
+or deployment evidence is proven.
+
+The new two producers are integrated into the planned69-command component
+suite, and consolidated validation now requires fresh allocation execution,
+formal proof and independent review. Original projection expected count is113;
+semantic review expects15 tests/98filtered with explicit passing names. Those
+broader receipts require actual refresh; the last executed prior validator191
+reported38 stale/dependent failures after this source change. Astra independent
+113-test/21-formula review is pending. No case is promoted.
+
+
+Astra independently passed113 core tests,21 fresh-context formula replays and
+five concrete successful/selection/projection population checks with845 source,
+runtime and config pins unchanged. The retained
+[allocation review](evidence/security/owner-semantic-allocation-astra-review.json)
+reports no remaining implementation findings and no native acquisition or
+acceptance promotions. Original source/registration authentication and backend
+case/site/kind issuance remain unresolved as stated in the annex.
+
+Integration review found that deleting retained observation/population tables
+still passed. The gate now requires all eight observation IDs and independently
+expected values plus five exact population IDs/model values. Python structural
+equality initially admitted true/false as1/0; canonical closed-JSON comparison
+now distinguishes these carriers (and integer/float spellings). Both allocation
+and original source-review observation helpers use the strict comparison. Current
+validator executes197 checks: all six new allocation checks pass;44 older
+source-dependent/dependent execution checks remain stale or require actual
+113/15-test refresh. Do not reuse the prior191-check green record as current
+qualification. The planned69-command integrated refresh is not yet executed.
+
+
+The final independent evidence-gate audit passes132 frozen-AST mutation/baseline
+controls across six unchanged inputs, including observation/population omissions,
+raw summary/test-name/hash/ID contradictions and boolean/numeric aliases. These
+are validator controls, not the132 original backend acceptance cases. Receipt:
+[owner-semantic-allocation-gate-astra-review.json](evidence/security/owner-semantic-allocation-gate-astra-review.json).
+No remaining scoped findings; no Cargo or native acquisition by that audit.
+Current consolidated execution still reports197 checks/44 older stale or
+unrefreshed failures with all six allocation checks passed. Native/backend
+acceptance remains26/132 and the full goal stays active. Next execute the actual
+source-dependent refresh, then compose the retained owner allocation and exact
+source instances with independently issued backend-profile obligation contracts;
+do not infer selected inventories from obligation origins or evidence unions.
+
+
+### Verified allocation integrated refresh—2026-10-10
+
+Actual source-dependent refresh closes the stale-receipt gap recorded above.
+Owner admission passes with canonicalSchemaMatches=true. All existing custody,
+projection, source, Record-home, semantic15, manifest, shape and capability
+reviews were independently executed against current113-test sources, with
+predecessors archived and no repinning. Preparation independently executes12
+programs/44 assertions with one explicit Cargo build and no native acquisition.
+Graph IR12, native graph88 and PostgreSQL fact63/six captures pass; the independent
+fact bridge replays six positives/twelve carrier refusals on current captures.
+
+The expanded component runner actually passes69 commands. Formal replay passes
+689 formulas across38 receipts. After the final producer receipts, Astra actually
+reexecutes three113-test suites with48 formula replays, the65,536-graph oracle,
+and11 concrete population checks. Auxiliary evidence-gate reviews pass23 and132
+mutation/baseline controls against the final bytes; these counts are not backend
+acceptance cases.
+
+The complete22-command downstream native/browser sequence passes on its first
+attempt this refresh. It includes545 original query-use observations,197 native
+activation checks,213 native condition checks and36 Chromium artifacts, plus the
+remaining scoped policy/key/type/transport and browser probes. Stored-key replay
+still declares freshNativeExecution=false. Astra's final cell audit checks the
+fresh545 receipt and independently replays six captured-byte positives/eighteen
+refusals with252 sourcepins/214 build inputs current, without Cargo or native
+reacquisition by that audit.
+
+Consolidated validation now passes197/197 checks, zero failures:
+[phase-validation.json](evidence/security/phase-validation.json).
+The same record explicitly retains productionAcceptance=open, requiredCases=132
+and26 passingFreshCases. No original case is promoted; public lowering stays
+closed. These current scoped results do not establish arbitrary compiler/native
+refinement, profile/issuer authentication, required native case/site/kind
+coverage, current authority, installed complete graph protection or final release.
+
+Next bind canonical owner source instances to retained owner scope assignments,
+then independently issue backend-profile obligation contracts and validate
+original identity/owner/failure/prerequisite and capability/source/site/case
+coverage before composing the remaining native/authority/activation/release
+gates. The full original132-case implementation goal remains active.
+
+
+Astra's next-step design review identified that assignment atoms must also retain
+required scope: the earlier five-part proposal can collapse Application/read/
+original-authorized demands for one capability/source/case. The new draft
+[source-demand binding design](../02-design/spikes/security/source-demand-binding-v0.1.md)
+explicitly corrects that future assignment interface before implementation.
+It retains source→AND-scopes→alternative-complete-capabilities, exact coverage
+custody and zero-edge selection. Original-authorized operators require Application,
+primary and original action; query-field sources collect every actual operator
+action for their exact occurrence/field. Executable mapping and trusted profile
+issuance remain pending. Existing frozen implementation/proof inputs are unchanged;
+the197-check source-current checkpoint remains qualified within its stated scope.
+
+Astra's final review also fixes the quantifier: choose a complete capability
+per scope covering every required source, rather than choosing fragments per
+source. The annex now enumerates all issued prefixes, conservative global-source
+custody across all actual scopes, direct-output occurrence binding, accumulated
+operator demands and independent profile requirements. Edges are derived beside
+source issuance from retained context, never by parsing backend source strings.
+The six-coordinate relation explicitly supersedes the earlier private draft;
+no existing transport is silently reinterpreted. These design changes leave
+the frozen executable/proof inputs unchanged. Implementation and its independent
+expected-map, omission, swapped-scope, disjoint-alternative and budget controls
+are the next work item; acceptance remains26/132.
+
+### Private source-demand issuer—2026-10-10
+
+Implemented canonical source-to-scope binding beside the owner source traversal.
+OwnerSourceDemands borrows the exact OwnerCoverage and its scope keys/candidate
+sets; no backend source parsing or independent constructor is exposed. Required
+primary/original/Application scopes accumulate for actual operator uses, output
+scopes follow the actual expression occurrence, action dependencies retain their
+owning scan/action and global source custody retains all actual scopes. This
+issuer does not choose capabilities or interpret backend obligation assignments.
+
+The complete118-test core suite actually passes. Five new controls independently
+specify the full baseline source/scope map, accumulate two original actions and
+remove each required scope, preserve self-join output/false-branch ownership,
+retain differing complete candidate sets and selected zero-edge capabilities,
+and exercise exact work/text bounds plus a real256-by25665,536-edge retention
+population. The edge population is a private primitive, not a full native or
+compiler-context qualification. A hand-authored legacy source ledger confirms
+that source-only derivation skips the newly added demand-only comparisons.
+
+Astra review found and corrected that source-only availability regression and
+requested the distinct-candidate, zero-edge and original-scope omission controls.
+Its evidence review then found an incomplete selected input inventory and an
+omission/time-of-check gap in the new gate. The corrected producer enumerates
+all selected core sources, owner contract/schema trees, external test fixtures,
+upstream/vendor/toolchain inputs and four config-presence entries, with pre/post
+file-set and symlink-target checks. The final actual118-test receipt retains736
+selected source/build pins. This is selected-input custody, not a hermetic Cargo
+dependency-cache or aggregate resource theorem. Development failures and earlier
+receipts are archived; no receipt is silently repinned.
+
+The new formal producer actually proves five conditional finite laws with15
+retained/replayed SMT formulas. The scoped gate independently replays all15 and
+passes five checks over the exact inventories, raw test summary/names, captured
+receipt bytes and qualification boundaries. Its original-use omission model
+specifically drops original authorization; Rust controls remove every actual
+required scope. These results do not prove arbitrary-size matching, Rust/native
+refinement, authenticated profile/evidence or native execution. Receipts:
+[Rust execution](evidence/security/weft-source-demands.json),
+[formal laws](evidence/security/source-demands-formal.json),
+[scoped validation](evidence/security/source-demands-validation.json).
+
+The prior197/197 integrated checkpoint is now historical: an actual freshness
+run after the Rust/contract changes reports197 checks with35 stale/unrefreshed
+failures. RequiredCases remains132, passingFreshCases26 and production acceptance
+open. The new three commands are added to the component sequence for the next
+actual refresh; that expanded sequence has not yet been executed. Update the
+integrated gate and predecessor118-test expectations, actually refresh their
+producers/reviews/native/browser dependencies, then implement the scoped original
+obligation matcher and independent backend-profile requirement issuer. No backend
+case is promoted and the full goal stays active.
+
+Final local custody strengthening loads the inventory helper from its exact
+captured bytes after the invocation guard, pins that captured digest and refuses
+later changes; the gate likewise validates captured receipt/helper snapshots.
+The actual118-test producer and five-check/fifteen-replay gate pass again after
+this change. The component sequence now contains72 planned commands. A final
+integrated freshness execution after that sequence edit reports197 checks with36
+stale/unrefreshed failures (the preceding35-failure observation remains historical);
+required132 and passingFresh26 remain unchanged. Full expanded integration and
+its authenticated/native qualification remain pending.
+
+Astra's final independent read-only audit finds no remaining scoped defect. It
+actually reruns nine in-memory controls against the gate's freshness-check AST:
+baseline passes; shrinking to six pins/deleting configs, empty configs, omitted
+production schema, omitted external fixture, omitted backend source, integer
+config-presence aliases, extra config keys and invented symlink targets refuse.
+Reviewed bytes remain unchanged and all736 Rust pins/four proof pins/four gate
+input hashes match. This audit does not independently rerun Rust or formulas.
+Final Rust receipt SHA256 is
+8038697147ba89d4c542096b44b0d88612cc4fb8f42f894bb98ae9374352d611;
+scoped validation SHA256 is
+bad868ad17f7076c3bbe4ab1779490684c33678b6eace5fdc46b2d6fbbe3ef02.
+
+### Source-demand integration refresh in progress—2026-10-10
+
+The main validator now actually invokes the captured-byte scoped source-demand
+gate and adds its five closed check IDs, retaining the independent native/no-
+promotion boundary. The predecessor projection and allocation runners require
+the actual118-test core and use the reviewed complete selected-input inventory
+plus their own runner source, with pre/post file-set/config/symlink checks. Both
+actual suites pass; owner admission passes four checks with canonical schema
+correspondence. Five predecessor formal producers and the allocation producer
+actually rerun126 conditional formulas across their six receipts.
+
+The semantic review gate now requires the exact anchored19-name inventory and
+99 filtered tests. Astra found the intermediate count-only/old15-name gap; all
+four source-demand names are now independently mandatory. Component validation
+also requires the exact current72-command inventory rather than any passing
+subset. The expanded component sequence has not yet run at this checkpoint.
+
+Astra actually executes the independent initial review batch: custody118 core
+plus26 Databricks and18 formula replays; Record homes11 plus one shared reader;
+semantic19/99; manifest six carrier/four opaque controls; shape389 with10 schema-
+valid/unqualified cases; correspondence30 plus two invocation refusals; and
+capability30. Its16 in-memory integration/semantic controls pass, including
+omitted/substituted new test names and nonzero scoped child gate. No remaining
+scoped integration finding is reported. These independent reviews retain actual
+execution and predecessor archives; they do not promote native/backend cases.
+
+The six owner-dispatch refresh commands actually pass: version4, handoff10 with
+three compiler artifacts, original-use10/six artifacts, typed refusal3, protocol
+shape54 and evidence controls607. The main integrated execution currently has202
+checks, all five source-demand checks passing, with30 stale/unrefreshed failures
+at its captured checkpoint. Subsequent review receipts are now refreshed; final
+integration is still pending. Required132, passingFresh26 and production open
+remain binding. Preparation's independent current-source execution is live in
+agent-owned session48932; parent defers Cargo until that execution is terminal.
+
+### Verified source-demand integrated checkpoint—2026-10-10
+
+The preparation session recorded above is terminal:12 programs/44 assertions,
+one authorized offline Cargo build,13 owner executions/14 host bridges and no
+native reacquisition by that independent audit. Parent subsequently actually
+refreshes original graph IR12, native graph-stage88 and PostgreSQL fact63/six
+captures. Astra's fact bridge actually replays six positives/twelve carrier
+refusals against those current captures;242 source pins/214 build inputs match.
+
+The expanded component sequence actually passes all72 commands. Formal replay
+actually checks704 saved formulas across39 selected receipts. After these final
+producer bytes stabilize, Astra independently executes three complete118-test
+core runs and replays projection12/source15/allocation21 formulas. Projection
+also exhausts65,536 four-node graphs/543 DAGs; source and allocation retain six
+and five concrete population controls respectively. Each review retains849
+source/runtime pins and archived predecessor bytes. No receipt is repinned.
+
+The source/semantic/main gate review actually passes199 in-memory controls,
+including all72 component omissions/all71 adjacent reorderings, duplicate and
+foreign commands, numeric aliases for exit/timeout values, exact19 semantic
+names and five-check scoped gate composition. Allocation gate review passes132
+controls; a separate read-only subaudit rejects722 component-gate mutants.
+These are evidence-validator controls, not the original132 backend cases.
+
+The full22-command native/browser sequence actually passes on its first attempt
+this refresh. It includes545 original query-use observations,197 activation
+checks,213 native condition checks/36 Chromium artifacts and the remaining
+scoped association/relationship/type/key/transport/browser probes. Stored-key
+replay explicitly retains freshNativeExecution=false. Astra's final cell audit
+actually replays six captured-byte positives/eighteen refusals on fresh545,
+with252 source pins/214 selected build inputs matching and no Cargo/native
+reacquisition by that review.
+
+Consolidated validation now passes202/202 with zero failures:
+[phase-validation.json](evidence/security/phase-validation.json).
+The five new source-demand checks are included and passing. The same authoritative
+record retains productionAcceptance=open, requiredCases=132 and26
+passingFreshCases. The prior36/30-failure observations are historical checkpoints,
+not current failures. All processes above are terminal and Cargo is released.
+
+Next implement the scoped original-obligation matcher with six-coordinate
+identity and complete-capability-per-scope choice, then independently issue
+backend-profile kinds/sites/cases/failure/prerequisite requirements before native
+evidence, authority, activation and release composition. Source-demand issuance
+and exact evidence correspondence do not themselves authenticate an issuer,
+establish native case sufficiency, prove general compiler/native refinement or
+qualify installed complete graph protection. Public lowering remains closed;
+no original backend case is promoted and the full implementation goal stays active.
+
+### Exact selection prerequisite and scoped-subject correction—2026-10-10
+
+Astra ultra reviewed the next matcher boundary and identified that unscoped
+admission-obligation0.1 cannot represent paired source/scope demands or mandatory
+selected-wide deployment obligations. The new
+[private0.2 design](../02-design/spikes/security/scoped-obligation-matching-v0.2.md)
+keeps0.1 projection unchanged, separates Semantic and SelectedCapability subjects,
+and requires exact independent full contracts/atoms plus ∀scope ∃capability
+∀required-source complete alternatives. Unchosen selected obligations stay
+mandatory. Matcher/profile issuer and their formal receipts remain unfinished.
+
+Weft original custody now retains the exact selected set borrowed from the
+immutable manifest, including capabilities with no obligations. An actual new
+regression verifies unchanged obligation inventories cannot substitute for exact
+selection, caller selection storage can be discarded, backend callback drift
+cannot change retained IDs, and duplicate selections refuse. Actual full core
+passes119/119, zero failures; [raw evidence](evidence/security/custody-exact-selection.json)
+retains command/output and an explicitly limited Rust source pin; the later
+design digest is identified separately. Astra ultra read-only review found no
+custody defect; its nonempty/homogeneous subject-list and complete-profile
+accounting clarifications are incorporated. This scoped run is
+not complete build custody, native acquisition or integrated refresh.
+
+The preceding202-check integrated checkpoint is historical after these source
+edits. Do not repin it or call it current; producers, formal gates and dependent
+evidence need actual refreshed execution after matcher implementation. Original
+acceptance remains26/132, production open, public lowering closed, goal active.
+
+### Private paired-subject decoder—2026-10-10
+
+Weft original custody now exposes a separate private0.2 declaration decoder.
+It preserves borrowed originals/all origins, closed typed paired subjects and
+owner-compatible sites, validates the entire original prerequisite DAG, and
+charges origin×subject×case expansion before returning any complete result.
+It accepts at most4096 expanded atoms and phase-local1m visits/16m text bytes.
+No public transport conversion, native evidence or independent profile matching
+is supplied by this step. Existing0.1 projection is unchanged.
+
+Three new actual-registry controls cover paired semantic/selected-wide positives,
+original pointer/provenance retention, exact/minus-one measured work/text budgets,
+successful legacy0.1 projection with scoped refusal, eight malformed declaration
+mutants, missing/self-cyclic prerequisites, exact4096 expansion,4097 boundary refusal and8192 refusal
+from repeated origins. Astra read-only review identified a UTF8 byte-limit gap
+because registration counts characters. The decoder now validates every selected
+capability, including empty-obligation capabilities; actual2048é/4096-byte
+positives and2049é/4098-byte refusals pass for both variants. Exact independently
+authored subject assertions and measured budget controls also pass. Full Rust core actually passes122/122 with zero failures:
+[scoped raw evidence](evidence/security/scoped-obligation-decoder.json).
+This selected-source receipt is deliberately narrower than complete build
+custody or integrated freshness. Prior119 and202 checkpoints are historical.
+The next work is independently issued requirements plus exact full contract/atom
+matching and complete capability choice per scope, followed by new formal
+receipts and actual dependent evidence refresh. Original acceptance remains
+26/132; production open, public lowering closed, implementation goal active.
+
+### Scoped-obligation relation proof experiment—2026-10-10
+
+The new `tools/security/prove-scoped-obligations.py` actually executes12 laws/36
+SMT checks with fresh-context replay, using Z3 in the existing proof environment.
+Ten finite laws check paired source/scope identity against equal marginals,
+mandatory zero-edge selected-wide duty (including isolated missing profile and
+deployment predicates), mandatory unchosen origins, full failure/prerequisite
+contracts, subject variant identity, complete-capability choice, and independent
+release gates. Each has violationUNSAT, weakened negativeSAT and populated
+positiveSAT. These are conditional guard/formula checks, not issuer/extraction
+or Rust refinement proofs.
+
+Two further laws quantify over arbitrary typed atoms with original obligation,
+origin, typed subject, site and case coordinates. Under independently supplied
+pointwise required/declared equality no required atom can be omitted and no
+surplus atom added. Their negative controls use closed populated relations
+with distinct origins/cases swapped, preserving every individual coordinate
+projection while violating exact correspondence. Typed Semantic subjects retain
+source/scope pairs; SelectedCapability retains its separate requirement ID.
+This does not prove unbounded whole-capability assignment, independent requirement
+completeness/authentication or native physical semantics.
+
+[Formal receipt](evidence/security/scoped-obligations-formal.json) retains formulas,
+SAT witnesses, solver version, source digests and explicit scope exclusions.
+Independent Astra review is terminal and clean within the conditional scope:
+[review receipt](evidence/security/scoped-obligations-astra-review.json) retains
+36 independent fresh-context replays (12UNSAT/24SAT) and42 unchanged
+source/runtime pins. Parent also separately replays all36 retained formulas
+and checks the three producer source pins. Earlier8/24 and10/30 executions
+are archived by digest; an interrupted obsolete review publishes no result. Matcher/profile issuer and actual integrated refresh
+remain open. Original132-case scope remains binding;26 passing backend cases
+are unchanged, production open, public lowering closed, goal active.
+
+### Conditional actual-owner scoped matcher—2026-10-10
+
+Implemented private Weft `security_obligation_matching.rs` against an explicitly
+independently authored trusted RequiredPremise0.1. It borrows actual owner
+demands, original custody and expected profile, checks exact registration/target/
+complete selection, preserves every original contract/origin and compares full
+typed atoms. Semantic claims require actual demanded edges and eligible origins;
+selected-wide claims require that origin's explicit profile requirement.
+Complete alternatives are chosen per scope over every demanded source.
+No profile authentication, native enforcement or public admission is issued.
+
+Actual full Rust core passes124/124 with zero failures:
+[raw scoped evidence](evidence/security/scoped-obligation-matching.json).
+First compilation of the integration fixture failed because the private registry
+handle was not Copy; copying its immutable borrowed references now keeps custody
+without exposing a constructor. Subsequent actual runs pass. The tests include
+every-atom omission, contract/selection/zero-edge drift, extra atoms,
+exact/minus-one measured matcher budgets and same-marginal subject swaps.
+Astra's requested semantic populations have mutually agreeing declarations and
+requirements: split whole-scope sources refuse, distinct complete read/Application
+origins pass, and foreign source/scope claims refuse. These reach semantic
+matching rather than merely testing mismatched expected sets.
+
+Required premise issuance is still explicitly trusted and private. Independent
+production profile derivation/authentication, obligation-kind/case sufficiency,
+native evidence and authority/activation/release composition remain unfinished.
+Selected source pins are not full build custody; the prior integrated202 and
+122 checkpoints are historical. New source edits require actual formal/dependent
+evidence refresh, never repinning. Original acceptance remains26/132,
+production open, public lowering closed, goal active.
+
+Astra final read-only matcher review is clean within the explicit trusted-premise
+scope. Parent's124 Rust passes remain parent-attributed; Astra runs no Rust or
+native acquisition. Its refreshed independent formal review actually replays
+all36 saved SMT formulas in fresh contexts (12UNSAT/24SAT), with42 captured
+source/runtime pins unchanged; predecessor review is archived by digest.
+Measured exact/minus-one matcher budgets establish exhaustion controls, not an
+independently derived complete ledger or aggregate CPU/memory bound. Neither
+review establishes issuer completeness or Rust/formula/native refinement.
+
+Next implement independently issued backend requirements with exact profile/
+context/registration custody and original132-case mapping; add shared original-ID
+origin controls and profile authentication/evidence admission, then execute actual
+formal/native/browser/integrated refresh. No stored receipt is repinned.
+
+### Shared-origin controls and issuer completeness boundary—2026-10-10
+
+Actual full Rust core again passes124/124 after extending the existing
+actual-owner matcher fixture. Shared IDs/identical original parameters retain
+both capability origins with unchanged contract count and both source-complete
+alternatives. Removing each second-origin atom refuses even with the first
+alternative complete. An actual zero-edge capability with its obligations removed
+retains selection but refuses its independently required deployment contract.
+[Raw scoped evidence](evidence/security/shared-origin-matching.json) records
+the parent run and limited source pin; Astra's read-only review finds these
+controls nonvacuous. No independent Rust/native acquisition by that review.
+
+Astra's subsequent issuer review identifies that source-complete alternatives
+are insufficient for several independent kinds per source. Codec at A and privacy
+at B can match all selected originals globally while neither capability alone
+completes all kinds. Current RequiredPremise0.1 is explicitly source-level;
+production issuance must use a separate versioned kind/occurrence demand inventory
+and match a whole capability's complete template expansion for every instance.
+The [issuer design](../02-design/spikes/security/backend-requirement-issuer-v0.2.md)
+retains original132 cases and records missing exact kind/site/failure/prerequisite
+mappings as deliberate unknowns that refuse issuance. Case names/layers and planned
+IDs never infer authority or evidence. Typed demands must derive beside actual
+source construction, not by parsing encoded source IDs.
+
+Actual `prove-kind-completeness.py` passes3 conditional finite laws/9 formulas
+with fresh-context replay: same-source kind fragmentation counterexample,
+different instance-complete alternatives across scopes, and independent native
+evidence. Its negative control models the current source-only limitation rather
+than claiming the new matcher implemented. Existing scoped relation proof is
+actually rerun12/36 after the annex change; predecessor receipts are archived.
+Independent formal/design review is pending. Typed issuer, kind matcher, complete
+production profile mapping/authentication and actual integrated/native refresh
+remain open. Original acceptance stays26/132; production open, lowering closed,
+goal active. Prior source-pinned124/202 checkpoints are historical after edits.
+
+Astra proof review caught a producer output-path defect: the initial kind proof
+wrote its three-law payload to source-demands-formal.json. The misplaced bytes
+and prior source-demand bytes are preserved with explicit role/provenance in
+[kind-proof-receipt-routing-correction.json](evidence/security/kind-proof-receipt-routing-correction.json).
+The kind path is corrected and both producers are actually rerun into distinct
+receipts (kind3/9, source-demand5/15); no digest repinning is used.
+Its annex review also identified missing B10 in the proposed family checklist.
+An explicit private-authorization-fact confidentiality/ordinary-observation
+isolation family now retains B10 separately from generic custody. All original
+30 backend duties remain mandatory. Kind proof must rerun after that annex edit.
+
+Final independent Astra review is terminal and clean after both corrections.
+It actually replays kind9 (3UNSAT/6SAT), scoped36 (12UNSAT/24SAT) and restored
+source-demand15 formulas in fresh contexts, verifies current pins and preserved
+routing/archive hashes, and confirms the explicit B10 family. The parent also
+separately validates all three current receipt source digests and replays all60
+formulas with zero failures.
+[Kind review](evidence/security/kind-completeness-astra-review.json) and
+[scoped review](evidence/security/scoped-obligations-astra-review.json) retain
+conditional scope and exclude native/Rust refinement and backend qualification.
+No original acceptance case is promoted. The actual next implementation is
+typed kind/occurrence demand custody and full per-capability instance expansion
+matching, then independently registered profile mappings and authentication.
+Current source-complete correspondence must not be relabeled kind-complete.
+
+
+### Private kind/occurrence matching checkpoint
+
+Implemented a separate versioned private InstancePremise and match_instances
+boundary while preserving source-level RequiredPremise0.1. Exact semantic atom
+partitioning, shared-original kind/occurrence consistency and complete
+per-scope capability alternatives are required. The independently complete
+trusted premise remains an explicit assumption; production issuer and profile
+authentication are not supplied.
+
+Actual full core execution passes125 tests with zero failures. Astra ultra
+read-only review requested three isolated controls, all implemented and reviewed
+clean: same-kind distinct occurrences, shared-origin identity mutation retaining
+a complete alternative, and one-case omission from a populated expansion.
+[Execution receipt](evidence/security/kind-instance-matching.json) records selected
+post-run source pins, not complete frozen build custody. The previous integrated
+202-check checkpoint is historical after these source changes.
+
+Actually reran kind3/9, source-demand5/15 and scoped12/36 formal checks after final
+pinned edits. These are conditional logical laws, not Rust/native refinement.
+Independent replay review is separately retained when complete. Original backend
+acceptance remains26/132, production open, lowering closed and goal active.
+Next: issue typed kind/occurrence events from actual owner semantics, register
+independent complete backend templates and assertion mappings, authenticate the
+profile, and execute refreshed backend acceptance/integration evidence.
+
+Independent Astra replay is terminal and clean: all60 current formulas pass in
+fresh contexts (20UNSAT/40SAT); exact source digest inventories match and51
+captured source/runtime pins remain unchanged.
+[Combined review](evidence/security/kind-instance-astra-review.json) preserves
+parent attribution of Rust execution and excludes native qualification. Earlier
+individual reviews remain historical. No original acceptance promotion.
+
+
+### Typed owner event lineage implementation
+
+Retained explicit OwnerEventKind categories at all18 owner traversal sites,
+with exact source/demand/event projection and borrowed coverage custody. Stored
+Field and Context channels are distinct. Event-copy work/text charging and
+category-alias refusal are verified; legacy source-only ledger remains checked.
+Actual full core126 tests pass with zero failures. Astra identified the missing
+actual Context branch control; it is now exercised through registered coverage.
+[Execution receipt](evidence/security/owner-events.json) qualifies selected
+post-run pins and excludes complete build custody, refinement and native claims.
+
+This is event lineage, not full obligation-kind issuance: next extract typed
+field/domain/disclosure/operator details and define complete independent template
+applicability/mappings. Original backend acceptance26/132 remains unchanged;
+production open, lowering closed, goal active. Earlier source-pinned reviews and
+integrated202-check evidence are historical when their pins changed.
+
+Astra's final event-lineage review is terminal and clean. It independently
+replays24 current source/kind formulas in fresh contexts (8UNSAT/16SAT), checks49
+selected source/runtime pins unchanged, and records parent attribution of126
+Rust tests. [Review receipt](evidence/security/owner-events-astra-review.json)
+excludes native qualification, general issuer/refinement claims and original
+acceptance promotion. Previous combined reviews remain historical.
+
+
+### Actual rule semantic custody implementation
+
+Rule events retain exact borrowed immutable owner Rule objects, preserving all
+conditions/domain literals/dispositions and distinct scan/action occurrences.
+Identity-key encoding and retention are charged; conflicts refuse,4096map ceiling.
+Actual full core126 tests pass with independently authored rule IDs, original
+pointer equality, and populated false-branch/self-join scope controls.
+[Execution receipt](evidence/security/rule-event-custody.json) records selected
+post-run pins and excludes complete build custody/general refinement claims.
+
+This advances typed issuance inputs but is not a completed issuer: enumerate
+condition/disclosure paths, retain remaining identity/operator/output details,
+author independent backend templates and authenticate profiles before native
+qualification. Original26/132 acceptance remains unchanged; production open,
+lowering closed, goal active. Earlier event/source reviews are historical where
+source pins changed. Actual producer/formal reruns and independent review follow.
+
+Final refinement implements Astra's isolated pointer/ledger and dual-action
+recommendations. Actual full core128 tests pass, zero failures. Independent
+6visit/74byte retention limits and both minus-one controls pass; eight actual
+rule occurrences across two scans/two actions/two rules preserve original
+pointers and exact scope. Previous126 receipt/raw are archived by content hash.
+Complete model domains remain in retained context, not all embedded in Rule.
+No original acceptance promotion or native qualification.
+
+Final independent Astra review is terminal and clean: source15+kind9 formulas
+replay in fresh contexts (8UNSAT/16SAT),52 selected source/runtime pins remain
+unchanged, and exact pointer/budget/eight-occurrence controls are inspected.
+[Review receipt](evidence/security/rule-event-astra-review.json) verifies the
+parent-attributed128-test raw log and post-run pins; no independent Cargo/native
+execution or build/refinement qualification is claimed. Original26/132 remains.
+
+
+### Typed rule occurrence enumeration checkpoint
+
+Implemented private borrowed RuleOccurrences keyed by source and typed structural
+path. All conditions/operands/ordered disclosures retain actual immutable owner
+payloads, including false/empty nodes and repeated positions. Actual full core130
+passes, zero failures, with independent20/80/44-entry fixtures, pointer/scope
+custody and4096/4097,64/65 and exact/minus-one budget controls.
+[Execution receipt](evidence/security/rule-occurrences.json) qualifies selected
+post-run pins, not complete frozen build custody or Rust/native refinement.
+
+Formal address laws retain ordered index, namespace and source-coordinate identity
+in an algebraic model, not a traversal/refinement proof. Exact backend template
+applicability, other owner details, authenticated profiles and native acceptance
+still remain. Original acceptance26/132, production open, lowering closed and
+goal active. Previous source-pinned reviews are historical where edited.
+
+Final occurrence refinement passes131 core tests, zero failures. Astra's
+requested exact operand/nested Exists payload-pointer controls and independent
+10visit/37byte(64bit) path-copy ledger pass, including both minus-one refusals.
+Depth64 is explicitly64child edges/65expression levels; positions zero-based.
+Previous130 receipt/raw archived by hash. Actual formal producers rerun after
+final sources/docs; index/namespace/source erasure controls remain conditional
+algebraic laws, not Rust refinement or traversal completeness.
+
+Final independent Astra review is terminal and clean:33 formulas replay in fresh
+contexts (11UNSAT/22SAT),56 selected source/runtime pins remain unchanged. Exact
+payload pointers, Exists slot/association details, independent10/37 ledger and
+boundaries are reviewed. [Review receipt](evidence/security/rule-occurrences-astra-review.json)
+verifies parent-attributed131 tests and four post-run pins; it excludes full
+build custody, Rust refinement, complete issuer and native qualification.
+Original acceptance26/132 remains unchanged and goal remains active.
+
+
+### Native private planner observation checkpoint
+
+Extended the actual PostgreSQL17.9 disposable private-fact probe from68 to94
+observations. Ordinary caller debug GUCs expose internal private relation plans
+through client stderr despite the deny-first catalog/routine ACL candidate.
+Unrelated1000-row private population changes alter estimates while authored
+ordinary results remain fixed. Routine-local all-three off settings preserve
+exact traces and rows across another1000-row private change; individual weakening
+restores disclosure. Native body/owner/ACL/proconfig and caller SET restoration
+controls pass. Initial table-name detection was corrected to exact native OIDs
+before final positive/negative evidence.
+
+Astra's source-custody finding is implemented: freeze helper, plan, oracle and
+complete declared closure before exec; execute captured helper inputs/SQL; retain
+transformed-prefix digest and final byte guards. Actual final session3445 exits0
+and owned container cleanup completes. The selected native evidence is
+[pg-private-diagnostics.json](evidence/security/pg-private-diagnostics.json).
+The [annex](../02-design/spikes/security/pg-planner-observation-v0.1.md) records
+physical requirements and open prepared/cache/closure/drift work. Original B10
+remains counterexample-found;26/132 acceptance, production open, lowering closed
+and goal active. Earlier integrated source-pinned checkpoints remain historical.
+
+Diagnostic comparison covers exact decoded stderr text and retained UTF-8
+transcripts from text-mode subprocess capture; it is not raw native-wire custody.
+Astra verifies the five-source declared helper closure, reconstructed executed
+prefix digest and21 retained diagnostic log hashes; final review follows.
+
+Final Astra native-design/custody review is terminal and clean. Its36 independent
+read-only checks verify five frozen source inputs and reconstructed helper prefix,
+all21 transcript hashes/content,26 planner-stage records within94 observations,
+authored rows, caller-setting restoration, nine isolated weakenings and native
+wrapper inventory.34 selected review/source/docs/runtime/log pins stay unchanged.
+[Review receipt](evidence/security/pg-private-planner-astra-review.json) retains
+parent attribution of native execution and excludes B10 promotion/full closure.
+Prepared/cached guard mutation and admission drift integration remain next work.
+Original26/132 acceptance and active goal remain unchanged.

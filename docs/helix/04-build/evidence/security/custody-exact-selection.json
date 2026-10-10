@@ -1,0 +1,37 @@
+{
+  "status": "scoped-custody-regression-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 119,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0
+  },
+  "rawOutputSha256": "e3db7c87a55dd68586a715396ae5868d0f910467f5cbb8fafd4b194bacf87d5c",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "440af6c2116315fc277fe1fa1960dfcbd35aafcd61f9de70073ad06d65d31993"
+  },
+  "scope": "Exact immutable selected-capability retention only; selected pins are not a complete build-custody inventory. Matcher/profile issuer not implemented. Prior integrated checkpoint requires actual refresh.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": [],
+  "subsequentDesignSha256": "8cfa297bb0fc53cb4bd3b2bf9289f6588aa66c32d4029587a4b16a54b5233e11",
+  "review": {
+    "reviewer": "Astra ultra",
+    "scope": "read-only custody implementation and draft annex",
+    "independentCargoRun": false,
+    "result": "custody clean; two grammar/profile precision points incorporated"
+  }
+}

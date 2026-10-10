@@ -1228,3 +1228,4 @@ first-class source artifact collections and Documents/Imaging/Other browser view
 The [plan](04-build/artifact-collections-plan.md) and
 [evidence](04-build/evidence/artifact-collections.md) qualify reference validation,
 rights-aware download links and the updated packs.
+Security planning: [shared security feature](01-frame/features/FEAT-008-shared-security.md), [semantic contract](02-design/contracts/CONTRACT-062-security-semantics.md), and [design](02-design/solution-designs/SD-008-shared-security.md). Native qualification is separate from spike results.

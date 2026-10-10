@@ -1,0 +1,59 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "source": "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-assertion-reconciliation.ts",
+  "sourceSha256": "b7b90445fdd848febe4bd20c4865ef8dbe22799dfcc4ea9904814da81ab33b42",
+  "proofSha256": "28d3df7b1f9a6299142361c3a57918709dfad74951dbca257ef526c23aacbe0a",
+  "sourcesUnchanged": true,
+  "queries": [
+    {
+      "id": "closed_has_registered_composition",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let (($x25 (not registered_exact_composition)))\n(let (($x23 (= unresolved 0)))\n(let (($x24 (and registered_exact_composition $x23)))\n(and $x24 $x25)))))\n(check-sat)\n",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "closed_has_total_resolved_partition",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n(let (($x23 (= unresolved 0)))\n(let (($x24 (and registered_exact_composition $x23)))\n(and $x24 (and (distinct original_occurrences ?x20) true))))))\n(check-sat)\n",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "unknown_occurrence_prevents_closure",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let (($x23 (= unresolved 0)))\n(let (($x24 (and registered_exact_composition $x23)))\n(let (($x29 (> unresolved 0)))\n(and $x29 $x24)))))\n(check-sat)\n",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "missing_registration_prevents_closure",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let (($x23 (= unresolved 0)))\n(let (($x24 (and registered_exact_composition $x23)))\n(let (($x25 (not registered_exact_composition)))\n(and $x25 $x24)))))\n(check-sat)\n",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "mutant_ignoring_unknowns_has_counterexample",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let (($x29 (> unresolved 0)))\n(and registered_exact_composition $x29)))\n(check-sat)\n",
+      "replayResult": "sat",
+      "model": "[assertion_components = 0,\n metadata = 0,\n original_occurrences = 1,\n unresolved = 1,\n assertion_roots = 0,\n registered_exact_composition = True]"
+    },
+    {
+      "id": "mutant_ignoring_registration_has_counterexample",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_occurrences () Int)\n(declare-fun assertion_roots () Int)\n(declare-fun assertion_components () Int)\n(declare-fun metadata () Int)\n(declare-fun unresolved () Int)\n(declare-fun registered_exact_composition () Bool)\n(assert\n (>= original_occurrences 0))\n(assert\n (<= original_occurrences 16384))\n(assert\n (>= assertion_roots 0))\n(assert\n (>= assertion_components 0))\n(assert\n (>= metadata 0))\n(assert\n (>= unresolved 0))\n(assert\n (let ((?x20 (+ (+ assertion_roots assertion_components) metadata)))\n (= original_occurrences (+ ?x20 unresolved))))\n(assert\n (let (($x23 (= unresolved 0)))\n(let (($x25 (not registered_exact_composition)))\n(and $x25 $x23))))\n(check-sat)\n",
+      "replayResult": "sat",
+      "model": "[assertion_components = 0,\n metadata = 0,\n original_occurrences = 0,\n assertion_roots = 0,\n unresolved = 0,\n registered_exact_composition = False]"
+    }
+  ],
+  "scope": "Actual selected Boolean closure gate under exact registered composition and total disjoint original-occurrence count premises. Does not prove census correctness, classification semantics, profile authenticity, complete report capacity, enforcement, publication or native authorization.",
+  "premises": [
+    "Source census and disposition enumerate the same original occurrences exactly once",
+    "Each occurrence receives one faithful assertion/component/metadata/unavailable disposition",
+    "Count arithmetic is exact within the admitted 16384-node bound"
+  ],
+  "nativeImplementationQualified": false
+}

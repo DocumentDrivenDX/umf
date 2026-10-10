@@ -1,0 +1,30 @@
+{
+  "status": "private-scoped-declaration-decoder-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 122,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0
+  },
+  "rawOutputSha256": "9789f5b44db96f4c4c87c5d912a0c2d50abf0add13d652b0767114d92b42f593",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "a51cfbd1c842ed3dde1ff67930645d70aa5d03f2b0be991122106a5cfa250c8e"
+  },
+  "scope": "Bounded private0.2 declaration grammar and original custody only. Pin is not complete build-custody inventory. Independent profile, matcher, formal proof and integrated refresh remain open.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": []
+}

@@ -1,0 +1,73 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-graph-key-correspondence.py": "e813d04db4b5b26ce0b529dd58b8101406e315d1270ee8faf70f864ec81a1b5d"
+  },
+  "cases": [
+    {
+      "id": "original-key-projection-preserves-selection",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun admitted_key_projection (NativeStorageIdentity) LogicalBusinessKey)\n(assert (and (forall ((storage_a NativeStorageIdentity))\n       (= (admitted_key_projection storage_a) (original_business_key storage_a)))\n     (= (admitted_key_projection storage_a) requested_key)\n     (distinct (original_business_key storage_a) requested_key)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun unqualified_storage_id_cast\n             (NativeStorageIdentity)\n             LogicalBusinessKey)\n(assert (and (= (unqualified_storage_id_cast storage_a) requested_key)\n     (distinct (original_business_key storage_a) requested_key)))\n",
+        "replayResult": "sat",
+        "witness": "[storage_a = NativeStorageIdentity!val!0,\n requested_key = LogicalBusinessKey!val!1,\n original_business_key = [else -> LogicalBusinessKey!val!0],\n unqualified_storage_id_cast = [else ->\n                                LogicalBusinessKey!val!1]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun admitted_key_projection (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(assert (and (forall ((storage_a NativeStorageIdentity))\n       (= (admitted_key_projection storage_a) (original_business_key storage_a)))\n     (= (admitted_key_projection storage_a) requested_key)))\n",
+        "replayResult": "sat",
+        "witness": "[storage_a = NativeStorageIdentity!val!0,\n requested_key = LogicalBusinessKey!val!0,\n original_business_key = [else -> LogicalBusinessKey!val!0],\n admitted_key_projection = [else ->\n                            original_business_key(Var(0))]]"
+      }
+    },
+    {
+      "id": "selected-key-uniqueness-requires-independent-premise",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(declare-fun storage_a () NativeStorageIdentity)\n(assert (let ((a!1 (forall ((storage_a NativeStorageIdentity)\n                    (storage_b NativeStorageIdentity))\n             (=> (= (original_business_key storage_a)\n                    (original_business_key storage_b))\n                 (= storage_a storage_b)))))\n  (and a!1\n       (distinct storage_a storage_b)\n       (= (original_business_key storage_a) (original_business_key storage_b)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(declare-fun storage_a () NativeStorageIdentity)\n(assert (and (distinct storage_a storage_b)\n     (= (original_business_key storage_a) (original_business_key storage_b))))\n",
+        "replayResult": "sat",
+        "witness": "[storage_b = NativeStorageIdentity!val!1,\n storage_a = NativeStorageIdentity!val!0,\n original_business_key = [else -> LogicalBusinessKey!val!0]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(declare-fun storage_a () NativeStorageIdentity)\n(assert (let ((a!1 (forall ((storage_a NativeStorageIdentity)\n                    (storage_b NativeStorageIdentity))\n             (=> (= (original_business_key storage_a)\n                    (original_business_key storage_b))\n                 (= storage_a storage_b)))))\n  (and a!1\n       (distinct storage_a storage_b)\n       (distinct (original_business_key storage_a)\n                 (original_business_key storage_b)))))\n",
+        "replayResult": "sat",
+        "witness": "[storage_b = NativeStorageIdentity!val!1,\n storage_a = NativeStorageIdentity!val!0,\n original_business_key = [NativeStorageIdentity!val!0 ->\n                          LogicalBusinessKey!val!0,\n                          else -> LogicalBusinessKey!val!1]]"
+      }
+    },
+    {
+      "id": "unrelated-storage-renaming-preserves-logical-selection",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun admitted_key_projection (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(assert (and (forall ((storage_a NativeStorageIdentity))\n       (= (admitted_key_projection storage_a) (original_business_key storage_a)))\n     (= (original_business_key storage_a) (original_business_key storage_b))\n     (distinct (= (admitted_key_projection storage_a) requested_key)\n               (= (admitted_key_projection storage_b) requested_key))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun unqualified_storage_id_cast\n             (NativeStorageIdentity)\n             LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(assert (and (= (original_business_key storage_a) (original_business_key storage_b))\n     (distinct (= (unqualified_storage_id_cast storage_a) requested_key)\n               (= (unqualified_storage_id_cast storage_b) requested_key))))\n",
+        "replayResult": "sat",
+        "witness": "[storage_b = NativeStorageIdentity!val!1,\n requested_key = LogicalBusinessKey!val!1,\n storage_a = NativeStorageIdentity!val!0,\n original_business_key = [else -> LogicalBusinessKey!val!0],\n unqualified_storage_id_cast = [NativeStorageIdentity!val!1 ->\n                                LogicalBusinessKey!val!2,\n                                else ->\n                                LogicalBusinessKey!val!1]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-sort LogicalBusinessKey 0)\n(declare-sort NativeStorageIdentity 0)\n(declare-fun requested_key () LogicalBusinessKey)\n(declare-fun admitted_key_projection (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_a () NativeStorageIdentity)\n(declare-fun original_business_key (NativeStorageIdentity) LogicalBusinessKey)\n(declare-fun storage_b () NativeStorageIdentity)\n(assert (and (forall ((storage_a NativeStorageIdentity))\n       (= (admitted_key_projection storage_a) (original_business_key storage_a)))\n     (= (original_business_key storage_a) (original_business_key storage_b))\n     (= (admitted_key_projection storage_a) requested_key)))\n",
+        "replayResult": "sat",
+        "witness": "[storage_b = NativeStorageIdentity!val!1,\n storage_a = NativeStorageIdentity!val!0,\n requested_key = LogicalBusinessKey!val!0,\n original_business_key = [else -> LogicalBusinessKey!val!0],\n admitted_key_projection = [NativeStorageIdentity!val!0 ->\n                            LogicalBusinessKey!val!0,\n                            NativeStorageIdentity!val!1 ->\n                            LogicalBusinessKey!val!0,\n                            else ->\n                            original_business_key(Var(0))]]"
+      }
+    }
+  ],
+  "scope": "Uninterpreted separate native-storage and business-key domains. Truthful original-key projection preserves logical equality selection and invariance under unrelated storage identity changes. Distinct storage IDs alone impose no business-key uniqueness; an unqualified storage-ID cast can select the wrong original key. Uniqueness requires a separately qualified selected namespace/key constraint. This establishes correspondence obligations, not a JSON/row codec, compiler projection, original catalog authentication, native namespace uniqueness, actual graph implementation or backend acceptance."
+}

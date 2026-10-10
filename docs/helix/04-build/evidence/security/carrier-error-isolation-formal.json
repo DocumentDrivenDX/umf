@@ -1,0 +1,95 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-carrier-error-isolation.py": "201021ff91e81fbb3cc1f6a37a2ff84290c0101c8d2bf373744af3d8d28a8392",
+    "tools/security/truss-original-use-probe.py": "bb863c118ba5a72b5426aee2a3574e012f7b8518fdbc862212f6be80b4b7c392"
+  },
+  "cases": [
+    {
+      "id": "hidden-carrier-change-preserves-admission",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_a resource) (= (count_a resource) 1)))))\n      (a!2 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_b resource) (= (count_b resource) 1))))))\n  (distinct (and original_action_authorized a!1)\n            (and original_action_authorized a!2))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (distinct (exists ((resource Int)) (not (valid_a resource)))\n                     (exists ((resource Int)) (not (valid_b resource))))))\n  (and a!1\n       (forall ((resource Int)) (= (eligible resource) (= resource 0)))\n       (forall ((resource Int)) (valid_a resource))\n       (forall ((resource Int)) (= (valid_b resource) (distinct resource 1)))\n       (forall ((resource Int)) (= (count_a resource) 1))\n       (forall ((resource Int)) (= (count_b resource) 1))\n       original_action_authorized)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n count_b = [else ->\n            If(Or(Var(0) == 0,\n                  And(Not(Var(0) == 0), Not(Var(0) == 1)),\n                  And(Not(Var(0) == 0), Var(0) == 1)),\n               1,\n               5)],\n eligible = [else -> Var(0) == 0],\n valid_b = [else -> Not(And(Not(Var(0) == 0), Var(0) == 1))],\n valid_a = [else -> True],\n count_a = [else ->\n            If(Or(Var(0) == 0,\n                  And(Not(Var(0) == 0), Not(Var(0) == 1)),\n                  And(Not(Var(0) == 0), Var(0) == 1)),\n               1,\n               6)]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_a resource) (= (count_a resource) 1)))))\n      (a!2 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_b resource) (= (count_b resource) 1))))))\n  (and original_action_authorized\n       a!1\n       original_action_authorized\n       a!2\n       (forall ((resource Int)) (= (eligible resource) (= resource 0)))\n       (forall ((resource Int)) (valid_a resource))\n       (forall ((resource Int)) (= (valid_b resource) (distinct resource 1)))\n       (forall ((resource Int)) (= (count_a resource) 1))\n       (forall ((resource Int)) (= (count_b resource) 1))\n       original_action_authorized)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n count_b = [else ->\n            If(Or(Var(0) == 1,\n                  And(Not(Var(0) == 1), Not(Var(0) == 0)),\n                  And(Not(Var(0) == 1), Var(0) == 0)),\n               1,\n               4)],\n eligible = [else -> And(Not(Var(0) == 1), Var(0) == 0)],\n valid_a = [else -> True],\n valid_b = [else -> Not(Var(0) == 1)],\n count_a = [else ->\n            If(Or(Var(0) == 1,\n                  And(Not(Var(0) == 1), Not(Var(0) == 0)),\n                  And(Not(Var(0) == 1), Var(0) == 0)),\n               1,\n               5)]]"
+      }
+    },
+    {
+      "id": "hidden-malformed-change-preserves-error-outcome",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (exists ((resource Int))\n             (and (eligible resource) (not (valid_a resource)))))\n      (a!2 (exists ((resource Int))\n             (and (eligible resource) (not (valid_b resource))))))\n  (distinct a!1 a!2)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (distinct (exists ((resource Int)) (not (valid_a resource)))\n                     (exists ((resource Int)) (not (valid_b resource))))))\n  (and a!1\n       (forall ((resource Int)) (= (eligible resource) (= resource 0)))\n       (forall ((resource Int)) (valid_a resource))\n       (forall ((resource Int)) (= (valid_b resource) (distinct resource 1)))\n       (forall ((resource Int)) (= (count_a resource) 1))\n       (forall ((resource Int)) (= (count_b resource) 1))\n       original_action_authorized)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n count_b = [else ->\n            If(Or(Var(0) == 0,\n                  And(Not(Var(0) == 0), Var(0) == 1),\n                  And(Not(Var(0) == 0), Not(Var(0) == 1))),\n               1,\n               5)],\n eligible = [else -> Var(0) == 0],\n count_a = [else ->\n            If(Or(Var(0) == 0,\n                  And(Not(Var(0) == 0), Var(0) == 1),\n                  And(Not(Var(0) == 0), Not(Var(0) == 1))),\n               1,\n               6)],\n valid_b = [else -> Not(And(Not(Var(0) == 0), Var(0) == 1))],\n valid_a = [else -> True]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (exists ((resource Int))\n             (and (eligible resource) (not (valid_a resource)))))\n      (a!2 (exists ((resource Int))\n             (and (eligible resource) (not (valid_b resource))))))\n  (and (not a!1)\n       (not a!2)\n       (forall ((resource Int)) (= (eligible resource) (= resource 0)))\n       (forall ((resource Int)) (valid_a resource))\n       (forall ((resource Int)) (= (valid_b resource) (distinct resource 1)))\n       (forall ((resource Int)) (= (count_a resource) 1))\n       (forall ((resource Int)) (= (count_b resource) 1))\n       original_action_authorized)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n count_b = [else ->\n            If(Or(And(Not(Var(0) == 1), Not(Var(0) == 0)),\n                  Var(0) == 1,\n                  And(Not(Var(0) == 1), Var(0) == 0)),\n               1,\n               5)],\n eligible = [else -> And(Not(Var(0) == 1), Var(0) == 0)],\n valid_b = [else -> Not(Var(0) == 1)],\n valid_a = [else -> True],\n count_a = [else ->\n            If(Or(And(Not(Var(0) == 1), Not(Var(0) == 0)),\n                  Var(0) == 1,\n                  And(Not(Var(0) == 1), Var(0) == 0)),\n               1,\n               6)]]"
+      }
+    },
+    {
+      "id": "empty-eligible-population-has-no-carrier-error",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (exists ((resource Int))\n             (and (eligible resource) (not (valid_b resource))))))\n  (and (forall ((resource Int)) (not (eligible resource))) a!1)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (and (forall ((resource Int)) (not (eligible resource)))\n     (exists ((resource Int)) (not (valid_b resource)))\n     (not (valid_b 1))))\n",
+        "replayResult": "sat",
+        "witness": "[valid_b = [else -> False],\n valid_a = [else -> False],\n eligible = [else -> False],\n count_b = [else -> 2],\n count_a = [else -> 3]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (exists ((resource Int))\n             (and (eligible resource) (not (valid_b resource))))))\n  (and (forall ((resource Int)) (not (eligible resource)))\n       (not a!1)\n       (not (valid_b 1)))))\n",
+        "replayResult": "sat",
+        "witness": "[valid_b = [else -> False],\n valid_a = [else -> False],\n eligible = [else -> False],\n count_b = [else -> 0],\n count_a = [else -> 2]]"
+      }
+    },
+    {
+      "id": "eligible-malformed-source-refuses",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_b resource) (= (count_b resource) 1))))))\n  (and original_action_authorized a!1 (eligible 0) (not (valid_b 0)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (and original_action_authorized (eligible 0) (not (valid_b 0))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n count_b = [else -> 0],\n eligible = [else -> True],\n valid_b = [else -> False],\n valid_a = [else -> False],\n count_a = [else -> 0]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun count_b (Int) Int)\n(declare-fun count_a (Int) Int)\n(declare-fun valid_b (Int) Bool)\n(declare-fun valid_a (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((resource Int))\n  (=> (eligible resource)\n      (and (= (valid_a resource) (valid_b resource))\n           (= (count_a resource) (count_b resource))))))\n(assert (forall ((resource Int))\n  (and (>= (count_a resource) 0) (>= (count_b resource) 0))))\n(assert (let ((a!1 (forall ((resource Int))\n             (=> (eligible resource)\n                 (and (valid_b resource) (= (count_b resource) 1))))))\n  (and (not (and original_action_authorized a!1))\n       (eligible 0)\n       (not (valid_b 0)))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = False,\n count_b = [else -> 0],\n eligible = [else -> True],\n valid_b = [else -> False],\n valid_a = [else -> False],\n count_a = [else -> 0]]"
+      }
+    }
+  ],
+  "scope": "Quantified two-world abstraction over arbitrary resource populations. Worlds agree on eligible carrier validity/cardinality, selected eligibility and original-action authority; hidden carriers are unconstrained. Eligibility-limited evaluation preserves admission and carrier-error outcomes; all-carrier evaluation admits a SAT interference control matching the retained native counterexample. Exact eligible-set mapping, complete carriers, evaluation confined behind a truthful native barrier, stable source/authority cut and faithful scalar domain checks are explicit premises. Abstract resource indices/counts are not native key/value conversions. Does not prove PostgreSQL optimizer/RLS, observable result values, timing/log/error-message noninterference, native source admission, graph/Delta implementation or complete backend refinement."
+}

@@ -1,0 +1,86 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-persistent-publication.py": "1a68fea22a46ffcf7658ed7ee43bbab2e6b2c032731ec308b930c99a836dcba7",
+    "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2",
+    "tools/security/pg-raw-drain-runtime.ts": "d7e0c0a6efea0174614e7ea1f9c1bf0dd811ca179d3c1dd4a27eef5d07198040",
+    "tests/security/native/pg-raw-drain-oracle.json": "af30088049c200274222f46238ce220481484f9ca4e150f3c9636f9336cda870"
+  },
+  "cases": [
+    {
+      "id": "initial-custody",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun durable_publisher () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun native_lock () Bool)\n(assert (let ((a!1 (and (=> buffer_live durable_publisher)\n                (=> revocation_ack\n                    (and (not buffer_live) (not durable_publisher))))))\n  (and (not buffer_live)\n       (not durable_publisher)\n       (not native_lock)\n       (not revocation_ack)\n       (not a!1))))\n",
+        "model": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun durable_publisher () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(assert (let ((a!1 (and (=> buffer_live durable_publisher)\n                (=> revocation_ack\n                    (and (not buffer_live) (not durable_publisher))))))\n  (and buffer_live (not durable_publisher) (not a!1))))\n(model-add buffer_live () Bool true)\n(model-add durable_publisher () Bool false)\n",
+        "model": "[buffer_live = True, durable_publisher = False]"
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun durable_publisher () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun native_lock () Bool)\n(assert (and (not buffer_live)\n     (not durable_publisher)\n     (not native_lock)\n     (not revocation_ack)\n     (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))))\n(model-add buffer_live () Bool false)\n(model-add durable_publisher () Bool false)\n(model-add native_lock () Bool false)\n(model-add revocation_ack () Bool false)\n",
+        "model": "[revocation_ack = False,\n native_lock = False,\n buffer_live = False,\n durable_publisher = False]"
+      }
+    },
+    {
+      "id": "transitions-preserve-custody",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun next_buffer () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun native_lock () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun durable_publisher () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(assert (let ((a!1 (and (=> next_buffer next_publisher)\n                (=> next_ack (and (not next_buffer) (not next_publisher))))))\n  (and (=> buffer_live durable_publisher)\n       (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n       (or (and (not revocation_ack)\n                (not buffer_live)\n                next_buffer\n                next_publisher\n                next_lock\n                (= next_ack revocation_ack))\n           (and (= next_buffer buffer_live)\n                (= next_publisher durable_publisher)\n                (= next_lock native_lock)\n                (= next_ack revocation_ack))\n           (and (= next_buffer buffer_live)\n                (= next_publisher durable_publisher)\n                (not next_lock)\n                (= next_ack revocation_ack))\n           (and (not next_buffer)\n                (not next_publisher)\n                (= next_lock native_lock)\n                (= next_ack revocation_ack))\n           (and (not buffer_live)\n                (= next_buffer buffer_live)\n                (= next_publisher durable_publisher)\n                (not next_lock)\n                (= next_ack revocation_ack))\n           (and (not native_lock)\n                (not durable_publisher)\n                (= next_buffer buffer_live)\n                (= next_publisher durable_publisher)\n                (= next_lock native_lock)\n                next_ack))\n       (not a!1))))\n",
+        "model": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun next_buffer () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun durable_publisher () Bool)\n(assert (let ((a!1 (and (=> next_buffer next_publisher)\n                (=> next_ack (and (not next_buffer) (not next_publisher))))))\n  (and (=> buffer_live durable_publisher)\n       (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n       buffer_live\n       durable_publisher\n       (= next_buffer buffer_live)\n       (not next_publisher)\n       (not next_lock)\n       (= next_ack revocation_ack)\n       (not a!1))))\n(model-add revocation_ack () Bool false)\n(model-add buffer_live () Bool true)\n(model-add durable_publisher () Bool true)\n(model-add next_buffer () Bool true)\n(model-add next_publisher () Bool false)\n(model-add next_lock () Bool false)\n(model-add next_ack () Bool false)\n",
+        "model": "[revocation_ack = False,\n next_publisher = False,\n next_lock = False,\n next_ack = False,\n buffer_live = True,\n durable_publisher = True,\n next_buffer = True]"
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun next_buffer () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun durable_publisher () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     (= next_buffer buffer_live)\n     (= next_publisher durable_publisher)\n     (not next_lock)\n     (= next_ack revocation_ack)\n     buffer_live\n     (=> next_buffer next_publisher)\n     (=> next_ack (and (not next_buffer) (not next_publisher)))))\n(model-add durable_publisher () Bool true)\n(model-add buffer_live () Bool true)\n(model-add revocation_ack () Bool false)\n(model-add next_buffer () Bool true)\n(model-add next_publisher () Bool true)\n(model-add next_lock () Bool false)\n(model-add next_ack () Bool false)\n",
+        "model": "[revocation_ack = False,\n next_publisher = True,\n next_lock = False,\n next_ack = False,\n durable_publisher = True,\n buffer_live = True,\n next_buffer = True]"
+      }
+    },
+    {
+      "id": "backend-loss-excludes-revocation-ack",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun durable_publisher () Bool)\n(declare-fun next_buffer () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     (= next_buffer buffer_live)\n     (= next_publisher durable_publisher)\n     (not next_lock)\n     (= next_ack revocation_ack)\n     buffer_live\n     (not next_lock)\n     (not next_publisher)))\n",
+        "model": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun next_buffer () Bool)\n(declare-fun durable_publisher () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     buffer_live\n     durable_publisher\n     (= next_buffer buffer_live)\n     (not next_publisher)\n     (not next_lock)\n     (= next_ack revocation_ack)\n     buffer_live\n     (not next_lock)\n     (not next_publisher)))\n(model-add durable_publisher () Bool true)\n(model-add buffer_live () Bool true)\n(model-add revocation_ack () Bool false)\n(model-add next_buffer () Bool true)\n(model-add next_publisher () Bool false)\n(model-add next_lock () Bool false)\n(model-add next_ack () Bool false)\n",
+        "model": "[revocation_ack = False,\n next_publisher = False,\n next_lock = False,\n next_ack = False,\n durable_publisher = True,\n buffer_live = True,\n next_buffer = True]"
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun next_publisher () Bool)\n(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun next_ack () Bool)\n(declare-fun next_lock () Bool)\n(declare-fun durable_publisher () Bool)\n(declare-fun next_buffer () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     (= next_buffer buffer_live)\n     (= next_publisher durable_publisher)\n     (not next_lock)\n     (= next_ack revocation_ack)\n     buffer_live\n     next_publisher))\n(model-add durable_publisher () Bool true)\n(model-add buffer_live () Bool true)\n(model-add revocation_ack () Bool false)\n(model-add next_buffer () Bool true)\n(model-add next_publisher () Bool true)\n(model-add next_lock () Bool false)\n(model-add next_ack () Bool false)\n",
+        "model": "[revocation_ack = False,\n next_publisher = True,\n next_lock = False,\n next_ack = False,\n durable_publisher = True,\n buffer_live = True,\n next_buffer = True]"
+      }
+    },
+    {
+      "id": "acknowledgment-excludes-live-buffer",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun durable_publisher () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     revocation_ack\n     buffer_live))\n",
+        "model": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun durable_publisher () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun native_lock () Bool)\n(declare-fun buffer_live () Bool)\n(assert (and buffer_live (not native_lock) revocation_ack (not durable_publisher)))\n(model-add buffer_live () Bool true)\n(model-add native_lock () Bool false)\n(model-add revocation_ack () Bool true)\n(model-add durable_publisher () Bool false)\n",
+        "model": "[revocation_ack = True,\n native_lock = False,\n buffer_live = True,\n durable_publisher = False]"
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun buffer_live () Bool)\n(declare-fun revocation_ack () Bool)\n(declare-fun durable_publisher () Bool)\n(assert (and (=> buffer_live durable_publisher)\n     (=> revocation_ack (and (not buffer_live) (not durable_publisher)))\n     revocation_ack\n     (not buffer_live)))\n(model-add durable_publisher () Bool false)\n(model-add buffer_live () Bool false)\n(model-add revocation_ack () Bool true)\n",
+        "model": "[revocation_ack = True,\n durable_publisher = False,\n buffer_live = False]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "scope": "Single admitted publisher Boolean protocol: live buffer implies unresolved durable publisher custody; every revoker requires native lock exclusion AND no durable publisher before acknowledgment. Backend loss changes native lock only, never publication custody. Consumer drain retires custody only after actual final delivery/discard acknowledgment. Safety properties are inductive for modeled transitions. Premises: truthful complete durable registry, authenticated enrollment/retirement, fresh native writer observations, atomic participating writer guard and complete release paths. Does not verify SQL/TS refinement, caller/lease issuer authenticity, native registry implementation, PID/incarnation correspondence, process death recovery, multiple publishers, liveness/fairness or backend acceptance. Current lock-only native component is the unsafe negative control, not this persistent implementation."
+}

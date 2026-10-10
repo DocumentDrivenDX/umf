@@ -1,0 +1,233 @@
+{
+  "status": "passed",
+  "covers": [
+    "US-056-AC2"
+  ],
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-locator.ts": "337f48ea85dcb4c1a4359a0dee8cb0e8bbc0a4a873c3f8e96130ae8e80c28d04",
+    "tools/security/truss-graph-locator-browser.ts": "4e26222356fab4ee701bac301f20dcd4cdc32e66344b4db61c644a802dfb04e1",
+    "/Users/erik/Projects/truss/tests/security-graph-locator.test.ts": "9cc4bc3697051095d01e193e66be4043004399af66f8ef03935d4d23f53b4a1a"
+  },
+  "browser": "153.0.8010.12",
+  "observations": [
+    {
+      "id": "typed-original-endpoints",
+      "expected": [
+        {
+          "id": "10",
+          "relationshipId": "3",
+          "source": {
+            "id": "9007199254740993",
+            "typeId": "1"
+          },
+          "target": {
+            "id": "9007199254740993",
+            "typeId": "2"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "id": "10",
+          "relationshipId": "3",
+          "source": {
+            "id": "9007199254740993",
+            "typeId": "1"
+          },
+          "target": {
+            "id": "9007199254740993",
+            "typeId": "2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "parallel-edge-identities",
+      "expected": [
+        "10",
+        "11"
+      ],
+      "observed": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "id": "directed-role-order",
+      "expected": [
+        "2",
+        "1"
+      ],
+      "observed": [
+        "2",
+        "1"
+      ]
+    },
+    {
+      "id": "overflow",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "rounded-number",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "noncanonical",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "negative-zero",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unresolved-full-tuple",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-object",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-edge-id",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "accessor-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "accessor-not-executed",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "owned-typed-projection",
+      "expected": "1",
+      "observed": "1"
+    },
+    {
+      "id": "frozen-projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "objects-custom-iterator-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "objects-iterator-not-invoked",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "objects-sparse-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "edges-custom-iterator-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "edges-iterator-not-invoked",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "edges-sparse-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "object-limit-admitted",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "object-over-limit-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "edge-limit-admitted",
+      "expected": 4096,
+      "observed": 4096
+    },
+    {
+      "id": "edge-over-limit-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "absent-input-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-declared-relationship",
+      "expected": [
+        "10"
+      ],
+      "observed": [
+        "10"
+      ]
+    },
+    {
+      "id": "independent-foreign-relationship",
+      "expected": [
+        "11"
+      ],
+      "observed": [
+        "11"
+      ]
+    },
+    {
+      "id": "declared-empty-association",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "missing-selected-declaration-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "undeclared-role-reversal-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "undeclared-edge-relationship-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-endpoint-declaration-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "declaration-iterator-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "declaration-iterator-not-invoked",
+      "expected": 0,
+      "observed": 0
+    }
+  ],
+  "hostGlobals": [],
+  "externalRequests": 0,
+  "scope": "Actual Chromium execution of private portable native-locator validation and typed endpoint projection. Independently stated expected tuples/refusals, exact TEXT native carriers and parallel edge identities. No database execution, original row/catalog authority, business-key/codec resolution, complete graph facts, policy decision or backend acceptance."
+}

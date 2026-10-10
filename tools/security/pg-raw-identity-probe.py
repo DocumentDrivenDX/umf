@@ -1,0 +1,209 @@
+"""Native raw/composite key witness; no compiler or full backend qualification.
+@covers US-056-AC1
+"""
+import hashlib,json,os,uuid,tempfile
+from pathlib import Path
+if Path(__file__).resolve()!=Path('tools/security/pg-raw-identity-probe.py').resolve():raise RuntimeError('Unknown identity test source')
+runner=Path('tests/security/native/pg-raw-membership.py')
+CASE=os.environ.get('UMF_SECURITY_CASE_ID')
+if CASE not in [None,'pg-raw.B13']:raise RuntimeError('Unknown identity case binding')
+if CASE=='pg-raw.B13':
+ supplied_run=os.environ.get('UMF_SECURITY_RUN_ID','')
+ if str(uuid.UUID(supplied_run))!=supplied_run:raise RuntimeError('Fresh B13 run binding required')
+else:os.environ['UMF_SECURITY_RUN_ID']=str(uuid.uuid4())
+os.environ['UMF_SECURITY_CASE_ID']='pg-raw.B01'
+# Reuse only reviewed fixture setup/connection helpers, not model-provided code.
+source_bytes=runner.read_bytes();source=source_bytes.decode('utf-8')
+marker='receipt=None\ntry:\n'
+if source.count(marker)!=1:raise RuntimeError('Reviewed fixture helper boundary changed')
+prefix=source.split(marker)[0]
+context={'__name__':'fixture_helpers'}
+exec(compile(prefix,str(runner),'exec'),context)
+run_id=context['run_id'];name=context['name'];command=context['command'];require=context['require'];sql=context['sql'];value=context['value']
+sources={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path('tools/security/pg-raw-identity-probe.py'),runner,Path('tests/security/native/pg-raw-membership.sql'),Path('tests/security/native/pg-raw-membership-oracle.json'),Path('tests/security/native/pg-raw-composite-identity.sql'),Path('tests/security/native/pg-raw-hash-identity.sql'),Path('tests/security/native/pg-raw-identity-oracle.json'),Path('tools/security/pg-inventory.py')]}
+dependency_inventory=json.loads(Path('tests/security/native/pg-runtime-dependency-inventory.json').read_text())
+for p in ['tools/security/pg-raw-identity-runtime.ts','tools/security/pg-runtime-dependencies.py','tests/security/native/pg-runtime-dependency-inventory.json',*dependency_inventory['files'],*['/Users/erik/Projects/truss/packages/pg-runtime/src/'+f for f in ['index.ts','native-query.ts','wire.ts','journal.ts']],'/Users/erik/Projects/truss/packages/pg-runtime/package.json']:
+ sources[p]=hashlib.sha256(Path(p).read_bytes()).hexdigest()
+collector_path='tools/security/pg-runtime-dependencies.py';collector_bytes=Path(collector_path).read_bytes()
+if hashlib.sha256(collector_bytes).hexdigest()!=sources[collector_path]:raise RuntimeError('Unpinned dependency collector')
+collector={'__name__':'reviewed_identity_dependencies'};exec(compile(collector_bytes,collector_path,'exec'),collector)
+if collector['inventory']()!=dependency_inventory:raise RuntimeError('Selected managed dependency inventory differs')
+if sources[str(runner)]!=hashlib.sha256(source_bytes).hexdigest():raise RuntimeError('Fixture source changed before capture')
+if CASE:os.environ['UMF_SECURITY_CASE_ID']=CASE
+else:os.environ.pop('UMF_SECURITY_CASE_ID',None)
+observations=[];receipt=None
+try:
+ names=require(command(['docker','container','ls','-a','--format','{{.Names}}'])).splitlines()
+ if name in names:raise RuntimeError('Refusing preexisting fixture')
+ context['creation_attempted']=True
+ context['container']=require(command(['docker','run','-d','--name',name,'--label','umf.security.run='+run_id,'--publish','127.0.0.1::5432','-e','POSTGRES_HOST_AUTH_METHOD=scram-sha-256','-e','POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust','-e','POSTGRES_PASSWORD','postgres:17.9'],env={**os.environ,'POSTGRES_PASSWORD':context['credentials']['postgres']}))
+ import time
+ deadline=time.monotonic()+25
+ while command(['docker','exec',context['container'],'pg_isready','-h','127.0.0.1','-U','postgres'],timeout=3).returncode:
+  if time.monotonic()>deadline:raise TimeoutError('Readiness deadline')
+  time.sleep(.1)
+ require(sql(Path('tests/security/native/pg-raw-membership.sql').read_text()))
+ for actor in context['oracle']['actors']:require(sql("ALTER ROLE "+actor+" PASSWORD '"+context['credentials'][actor]+"';"))
+ version=value("SELECT json_build_object('version',version(),'number',current_setting('server_version_num'));")
+ if version['number']!='170009':raise RuntimeError('Unqualified engine version')
+
+ corpus=json.loads(Path('tests/security/native/pg-raw-identity-oracle.json').read_text())
+ def literal(v):return "pg_catalog.convert_from(pg_catalog.decode('"+v.encode('utf-8').hex()+"','hex'),'UTF8')"
+ for pair in corpus['pairs']:
+  left,right=pair['left'],pair['right']
+  require(sql("INSERT INTO security_raw.resource VALUES ("+literal(left)+",'allowed'),("+literal(right)+",'denied'); INSERT INTO security_raw.m2m_resource_project VALUES ("+literal(left)+",'A'),("+literal(right)+",'B');"))
+  selected="SELECT pg_catalog.to_json(ARRAY(SELECT id FROM security_raw.resource WHERE id IN ("+literal(left)+","+literal(right)+") ORDER BY id COLLATE \"C\"))"
+  observations.append({'id':pair['id']+':alice','expected':[left],'observed':value(selected,'umf_sec_alice')})
+  observations.append({'id':pair['id']+':bob','expected':[right],'observed':value(selected,'umf_sec_bob')})
+  observations.append({'id':pair['id']+':outsider','expected':[],'observed':value(selected,'umf_sec_outsider')})
+ # Independent deliberately lossy equality exposes both resources: the corpus
+ # must distinguish a byte-preserving carrier from a normalization shortcut.
+ for pair in corpus['normalizationControls']:
+  selected="SELECT pg_catalog.to_json(ARRAY(SELECT id FROM security_raw.resource WHERE "+pair['expression']+" ORDER BY id COLLATE \"C\"))"
+  observed=value(selected)
+  observations.append({'id':pair['id'],'expected':pair['expected'],'observed':observed})
+ for test in corpus['tupleControls']:
+  observations.append({'id':test['id'],'expected':test['expected'],'observed':value('SELECT pg_catalog.to_json('+test['sql']+')')})
+ require(sql(Path('tests/security/native/pg-raw-composite-identity.sql').read_text()))
+ for pair in corpus['compositePairs']:
+  left,right=pair['left'],pair['right']
+  def row(key):return '('+','.join(literal(v) for v in key)+')'
+  require(sql('INSERT INTO security_raw.composite_resource VALUES '+row(left)+','+row(right)+'; INSERT INTO security_raw.composite_owner VALUES '+row(left)[:-1]+",'A'),"+row(right)[:-1]+",'B');"))
+  selected='SELECT pg_catalog.to_json(ARRAY(SELECT ARRAY[namespace,id] FROM security_raw.composite_resource WHERE (namespace,id) IN ('+row(left)+','+row(right)+') ORDER BY namespace COLLATE "C",id COLLATE "C"))'
+  for actor,expected in [('umf_sec_alice',[left]),('umf_sec_bob',[right]),('umf_sec_outsider',[])]:
+   observations.append({'id':pair['id']+':'+actor,'expected':expected,'observed':value(selected,actor)})
+ # An intentionally delimiter-concatenated policy must leak the collision pair
+ # under the same ordinary actors, rather than only compare abstract tuples.
+ require(sql('SET ROLE umf_sec_guardian; CREATE OR REPLACE FUNCTION security_raw.composite_allowed(text,text) RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$ SELECT EXISTS(SELECT 1 FROM security_raw.composite_owner o JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id JOIN security_raw.employee e ON e.id=a.employee_id WHERE o.namespace||\'|\'||o.id=$1||\'|\'||$2 AND a.active AND e.native_login=session_user::text) $$; RESET ROLE;'))
+ collision=corpus['compositePairs'][0]
+ selected='SELECT pg_catalog.to_json(ARRAY(SELECT ARRAY[namespace,id] FROM security_raw.composite_resource WHERE (namespace,id) IN ('+row(collision['left'])+','+row(collision['right'])+') ORDER BY namespace COLLATE "C",id COLLATE "C"))'
+ for actor in ['umf_sec_alice','umf_sec_bob']:
+  observations.append({'id':'lossy-composite-policy:'+actor,'expected':sorted([collision['left'],collision['right']]),'observed':value(selected,actor)})
+ require(sql('SET ROLE umf_sec_guardian; CREATE OR REPLACE FUNCTION security_raw.composite_allowed(text,text) RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$ SELECT EXISTS(SELECT 1 FROM security_raw.composite_owner o JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id JOIN security_raw.employee e ON e.id=a.employee_id WHERE o.namespace=$1 COLLATE "C" AND o.id=$2 COLLATE "C" AND a.active AND e.native_login=session_user::text) $$; RESET ROLE;'))
+ for actor,key in [('umf_sec_alice',collision['left']),('umf_sec_bob',collision['right'])]:
+  observations.append({'id':'restored-composite-policy:'+actor,'expected':[key],'observed':value(selected,actor)})
+ # Bind the original native login to a qualified composite subject, then join
+ # assignments using both components. Same Staff label must not merge actors.
+ for subject in corpus['compositeSubjects']:
+  key=subject['key']
+  require(sql('INSERT INTO security_raw.composite_subject VALUES '+row(key)[:-1]+','+literal(subject['actor'])+'); INSERT INTO security_raw.composite_assignment VALUES '+row(key)[:-1]+','+literal(subject['project'])+',true);'))
+ def subject_policy(exact):
+  subject_join='a.subject_id=e.id COLLATE "C"'
+  if exact:subject_join+=' AND a.subject_namespace=e.namespace COLLATE "C"'
+  return 'SET ROLE umf_sec_guardian; CREATE OR REPLACE FUNCTION security_raw.composite_allowed(text,text) RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$ SELECT EXISTS(SELECT 1 FROM security_raw.composite_owner o JOIN security_raw.composite_assignment a ON a.project_id=o.project_id JOIN security_raw.composite_subject e ON '+subject_join+' WHERE o.namespace=$1 COLLATE "C" AND o.id=$2 COLLATE "C" AND a.active AND e.native_login=session_user::text) $$; RESET ROLE;'
+ for exact,label in [(True,'qualified-subject'),(False,'lossy-subject-label'),(True,'restored-qualified-subject')]:
+  require(sql(subject_policy(exact)))
+  for actor,key in [('umf_sec_alice',collision['left']),('umf_sec_bob',collision['right']),('umf_sec_outsider',None)]:
+   expected=[] if key is None else ([key] if exact else sorted([collision['left'],collision['right']]))
+   observations.append({'id':label+':'+actor,'expected':expected,'observed':value(selected,actor)})
+ quoted=next(p for p in corpus['compositePairs'] if p['id']==corpus['quotedResourcePairId'])
+ require(sql('INSERT INTO security_raw."QuotedResource" VALUES '+row(quoted['left'])+'; INSERT INTO security_raw.quotedresource VALUES '+row(quoted['right'])+';'))
+ for actor in context['oracle']['actors']:
+  for table,columns,key,allowed_actor in [('"QuotedResource"','"Tenant","ResourceID"',quoted['left'],'umf_sec_alice'),('QuotedResource','tenant,resourceid',quoted['right'],'umf_sec_bob')]:
+   observations.append({'id':'quoted-home:'+table+':'+actor,'expected':[key] if actor==allowed_actor else [],'observed':value('SELECT coalesce(json_agg(json_build_array('+columns+')),\'[]\'::json) FROM security_raw.'+table,actor)})
+ # Frozen independently discovered PostgreSQL 17.9 hashtext collision. Hash
+ # equality is verified natively before it can serve as a collision control.
+ h=corpus['hashCollision'];left,right=h['left'],h['right']
+ if left==right or h['engine']!=version['number'] or h['algorithm']!='pg_catalog.hashtext':raise RuntimeError('Invalid hash collision oracle')
+ for key in [left,right]:
+  observations.append({'id':'original-hash:'+key,'expected':h['hashText'],'observed':value('SELECT pg_catalog.to_json(pg_catalog.hashtext('+literal(key)+')::text)')})
+ if any(o['expected']!=o['observed'] for o in observations):raise RuntimeError('Collision prerequisite failed')
+ require(sql(Path('tests/security/native/pg-raw-hash-identity.sql').read_text()))
+ require(sql('INSERT INTO security_raw.hash_resource(id) VALUES ('+literal(left)+'),('+literal(right)+'); INSERT INTO security_raw.hash_owner(resource_id,project_id) VALUES ('+literal(left)+",'A'),("+literal(right)+",'B');"))
+ selected='SELECT pg_catalog.to_json(ARRAY(SELECT id FROM security_raw.hash_resource ORDER BY id COLLATE "C"))'
+ for exact,label in [(True,'hash-with-key'),(False,'unsafe-hash-only'),(True,'restored-hash-with-key')]:
+  if label!='hash-with-key':
+   equality=' AND o.resource_id=$1 COLLATE "C"' if exact else ''
+   require(sql('SET ROLE umf_sec_guardian; CREATE OR REPLACE FUNCTION security_raw.hash_allowed(text) RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$ SELECT EXISTS(SELECT 1 FROM security_raw.hash_owner o JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id JOIN security_raw.employee e ON e.id=a.employee_id WHERE o.routing_hash=pg_catalog.hashtext($1)'+equality+' AND a.active AND e.native_login=session_user::text) $$; RESET ROLE;'))
+  for actor,key in [('umf_sec_alice',left),('umf_sec_bob',right),('umf_sec_outsider',None)]:
+   expected=[] if key is None else ([key] if exact else sorted([left,right]))
+   observations.append({'id':label+':'+actor,'expected':expected,'observed':value(selected,actor)})
+ if any(o['expected']!=o['observed'] for o in observations):raise RuntimeError('Original identity carrier oracle mismatch')
+ # Independently compare every installed identity/authority fact, not merely
+ # the pair-filtered authorized rows. Order is irrelevant to private fact sets.
+ facts=json.loads(json.dumps(context['oracle']['facts']))
+ for pair in corpus['pairs']:
+  facts['resource'] += [[pair['left'],'allowed'],[pair['right'],'denied']]
+  facts['m2m_resource_project'] += [[pair['left'],'A'],[pair['right'],'B']]
+ facts['composite_resource']=[key for p in corpus['compositePairs'] for key in [p['left'],p['right']]]
+ facts['composite_owner']=[[*p[side],project] for p in corpus['compositePairs'] for side,project in [('left','A'),('right','B')]]
+ facts['composite_subject']=[[*s['key'],s['actor']] for s in corpus['compositeSubjects']]
+ facts['composite_assignment']=[[*s['key'],s['project'],True] for s in corpus['compositeSubjects']]
+ facts['"QuotedResource"']=[quoted['left']];facts['quotedresource']=[quoted['right']]
+ facts['hash_resource']=[[key,h['hashText']] for key in [left,right]]
+ facts['hash_owner']=[[left,h['hashText'],'A'],[right,h['hashText'],'B']]
+ columns={'company':'id','project':'id,company_id','employee':'id,native_login','m2m_employee_project':'employee_id,project_id,active','resource':'id,value','m2m_resource_project':'resource_id,project_id','resource_private_carrier':"resource_id,bag,encode(retained,'hex')",'resource_child_carrier':'resource_id,private_value','composite_resource':'namespace,id','composite_owner':'namespace,id,project_id','composite_subject':'namespace,id,native_login','composite_assignment':'subject_namespace,subject_id,project_id,active','"QuotedResource"':'"Tenant","ResourceID"','quotedresource':'tenant,resourceid','hash_resource':'id,routing_hash::text','hash_owner':'resource_id,routing_hash::text,project_id'}
+ def ordered_facts(rows):return sorted(rows,key=lambda r:json.dumps(r,sort_keys=True,ensure_ascii=False))
+ for table,expected in facts.items():
+  observed=value('SELECT coalesce(json_agg(json_build_array('+columns[table]+')),\'[]\'::json) FROM security_raw.'+table)
+  observations.append({'id':'original-facts:'+table,'expected':ordered_facts(expected),'observed':ordered_facts(observed)})
+ endpoint=require(command(['docker','port',context['container'],'5432/tcp']))
+ if not endpoint.startswith('127.0.0.1:') or not endpoint.split(':')[1].isdigit():raise RuntimeError('Owned loopback endpoint required')
+ journal_directory=tempfile.mkdtemp(prefix='umf-pgraw-identity-journal-',dir='/private/tmp');os.chmod(journal_directory,0o700)
+ actual=command(['bun','tools/security/pg-raw-identity-runtime.ts'],timeout=60,env={**os.environ,'NODE_PATH':'/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules','UMF_TRUSS_PORT':endpoint.split(':')[1],'UMF_TRUSS_ACTORS':json.dumps(context['credentials']),'UMF_TRUSS_JOURNAL_DIRECTORY':journal_directory})
+ runtime=json.loads(require(actual))
+ if runtime['status']!='passed' or runtime['driverEntry']!=dependency_inventory['entry']:raise RuntimeError('Unqualified actual identity runtime')
+ for o in runtime['observations']:observations.append({'id':'runtime:'+o['id'],'expected':o['expected'],'observed':o['observed']})
+ inventory_path='tools/security/pg-inventory.py';inventory_bytes=Path(inventory_path).read_bytes()
+ if hashlib.sha256(inventory_bytes).hexdigest()!=sources[inventory_path]:raise RuntimeError('Unpinned original inventory source')
+ inventory_module={'__name__':'reviewed_identity_inventory'};exec(compile(inventory_bytes,inventory_path,'exec'),inventory_module)
+ native=value(inventory_module['INVENTORY_SQL']);native['ordinaryActor']=[]
+ for actor in context['oracle']['actors']:
+  identity=value("SELECT json_build_object('sessionUser',session_user,'currentUser',current_user,'superuser',(SELECT rolsuper FROM pg_roles WHERE rolname=session_user),'bypassRls',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user));",actor)
+  expected={'sessionUser':actor,'currentUser':actor,'superuser':False,'bypassRls':False}
+  observations.append({'id':'ordinary-identity:'+actor,'expected':expected,'observed':identity});native['ordinaryActor'].append(identity)
+ observations.append({'id':'ordinary-memberships','expected':[],'observed':native['memberships']})
+ for name in ['resource','composite_resource','hash_resource']:
+  protected=next(o for o in native['objects'] if o['name']==name)
+  observations.append({'id':'forced-rls:'+name,'expected':[True,True,'umf_sec_guardian'],'observed':[protected['rls'],protected['force'],protected['owner']]})
+ native['authentication']=value("SELECT json_agg(json_build_object('type',type,'method',auth_method,'error',error)) FROM pg_hba_file_rules;")
+ hosts=[r for r in native['authentication'] if r['type'].startswith('host')]
+ observations.append({'id':'ordinary-scram','expected':True,'observed':bool(hosts) and all(r['method']=='scram-sha-256' and r['error'] is None for r in hosts)})
+ native['indexes']=value("SELECT json_agg(json_build_object('table',tablename,'name',indexname,'definition',indexdef) ORDER BY indexname) FROM pg_indexes WHERE schemaname='security_raw';")
+ native['factSources']={table:{'columns':columns[table],'expected':ordered_facts(expected)} for table,expected in facts.items()}
+ native['effectivePrivileges']={}
+ for actor in context['oracle']['actors']:
+  role=literal(actor)
+  native['effectivePrivileges'][actor]=value("SELECT json_build_object('schema',json_build_object('usage',has_schema_privilege("+role+",'security_raw','USAGE'),'create',has_schema_privilege("+role+",'security_raw','CREATE')),'tables',(SELECT json_agg(json_build_object('name',c.relname,'select',has_table_privilege("+role+",c.oid,'SELECT'),'insert',has_table_privilege("+role+",c.oid,'INSERT'),'update',has_table_privilege("+role+",c.oid,'UPDATE'),'delete',has_table_privilege("+role+",c.oid,'DELETE')) ORDER BY c.relname) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='security_raw' AND c.relkind IN ('r','v')),'routines',(SELECT json_agg(json_build_object('name',p.proname,'identity',pg_get_function_identity_arguments(p.oid),'execute',has_function_privilege("+role+",p.oid,'EXECUTE')) ORDER BY p.proname) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='security_raw'))")
+ native['encodings']={actor:value("SELECT json_build_object('server',current_setting('server_encoding'),'client',current_setting('client_encoding'))",actor) for actor in context['oracle']['actors']}
+ for actor,actual_grants in native['effectivePrivileges'].items():
+  expected_grants={'schema':{'usage':True,'create':False},'tables':[{'name':table,'select':table in corpus['allowedReadHomes'],'insert':False,'update':False,'delete':False} for table in sorted([t.strip('"') for t in facts]+['resource_disclosure','resource_project'])],'routines':corpus['allowedRoutines']}
+  observations.append({'id':'exact-effective-privileges:'+actor,'expected':expected_grants,'observed':json.loads(json.dumps(actual_grants))})
+  column_grants=value("SELECT json_agg(json_build_object('table',c.relname,'column',a.attname,'select',has_column_privilege("+literal(actor)+",c.oid,a.attnum,'SELECT'),'insert',has_column_privilege("+literal(actor)+",c.oid,a.attnum,'INSERT'),'update',has_column_privilege("+literal(actor)+",c.oid,a.attnum,'UPDATE'),'references',has_column_privilege("+literal(actor)+",c.oid,a.attnum,'REFERENCES')) ORDER BY c.relname,a.attnum) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='security_raw' AND c.relkind IN ('r','v') AND a.attnum>0 AND NOT a.attisdropped")
+  expected_columns=[{'table':r['table'],'column':r['column'],'select':r['table'] in corpus['allowedReadHomes'],'insert':False,'update':False,'references':False} for r in column_grants]
+  observations.append({'id':'exact-column-privileges:'+actor,'expected':expected_columns,'observed':column_grants})
+  native['effectivePrivileges'][actor]['columns']=column_grants
+  observations.append({'id':'ordinary-UTF8:'+actor,'expected':{'server':'UTF8','client':'UTF8'},'observed':native['encodings'][actor]})
+ native['clientVersion']=require(command(['docker','exec',context['container'],'psql','--version']))
+ native['imageId']=require(command(['docker','inspect','--format','{{.Image}}',context['container']]))
+ native['excludedInstaller']='postgres'
+ native['executedManagedSourceDigests']={str(runner):sources[str(runner)],inventory_path:sources[inventory_path],collector_path:sources[collector_path]}
+ native['runtimeArtifacts']=runtime;native['managedDependencyInventory']=dependency_inventory
+ native['modelSource']=sources['tests/security/native/pg-raw-membership-oracle.json']
+ native['policyMappingSources']={p:sources[p] for p in ['tests/security/native/pg-raw-membership.sql','tests/security/native/pg-raw-composite-identity.sql','tests/security/native/pg-raw-hash-identity.sql']}
+ native['digest']=hashlib.sha256(json.dumps(native,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+ if any(o['expected']!=o['observed'] for o in observations):raise RuntimeError('Identity native inventory control mismatch')
+ if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=d for p,d in sources.items()):raise RuntimeError('Identity source changed')
+ receipt={'status':'passed','runId':run_id,'sourceDigests':sources,'versions':{'postgresql':version},'observations':observations,'nativeInventory':native,'scope':'Original raw TEXT resource keys and two-component resource/subject keys through native forced RLS and SCRAM ordinary actors. Exact case, Unicode, delimiter and qualified subject witnesses; fixed native hashtext collision with hash-plus-full-key authorization, hash-only leak and restoration. Fixed authored installer, not admitted compiler lowering, arbitrary cross-home/hash-algorithm identity, graph or full backend qualification.'}
+ if CASE:
+  selected_case=next(c for c in json.loads(Path('docs/helix/03-test/security/cases.json').read_text())['cases'] if c['id']==CASE)
+  selected_paths=[selected_case['testSource'],selected_case['oracleSource'],*selected_case['implementationSources']]
+  if set(selected_paths)!=set(sources):raise RuntimeError('Identity plan source bindings differ')
+  receipt.update({'id':CASE,'backend':'pg-raw','command':selected_case['command'],'covers':selected_case['covers']})
+  receipt['observations']=[{'assertionId':CASE+':'+o['id'],'expected':json.loads(json.dumps(o['expected'],sort_keys=True)),'observed':json.loads(json.dumps(o['observed'],sort_keys=True))} for o in observations]
+  receipt['observations'].append({'assertionId':CASE,'expected':True,'observed':all(o['expected']==o['observed'] for o in observations)})
+
+finally:
+ container=context.get('container')
+ if container is None and context.get('creation_attempted'):
+  listing=require(command(['docker','container','ls','-a','--format','{{.ID}} {{.Names}}']))
+  matches=[line.split()[0] for line in listing.splitlines() if len(line.split())==2 and line.split()[1]==name]
+  if len(matches)>1:raise RuntimeError('Ambiguous fixture ownership')
+  if matches:container=matches[0]
+ if container:
+  if require(command(['docker','inspect','--format','{{index .Config.Labels "umf.security.run"}}',container]))!=run_id:raise RuntimeError('Fixture ownership differs')
+  require(command(['docker','rm','-f',container]))
+if receipt is None:raise RuntimeError('Missing identity evidence')
+output=selected_case['evidence'] if CASE else 'docs/helix/04-build/evidence/security/pg-raw-identity-component.json'
+Path(output).write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt,separators=(',',':')) if CASE else json.dumps({'status':receipt['status'],'observations':len(observations),'scope':receipt['scope']}))

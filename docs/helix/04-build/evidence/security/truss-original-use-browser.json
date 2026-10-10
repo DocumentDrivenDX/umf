@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "docs/helix/04-build/evidence/security/truss-original-use.json": "74459fe2e57c6310cba2f50957fd5533016c20227c02db5e60952c7cbe182a7f",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts": "796ba775eb864b0ad1b93702072b149490ab175427a5eb280a0598296bb335b0",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "tools/security/truss-original-use-browser.ts": "2a7c0bd357359dee4c6f14b4e902d7dec38e87ab3cce45fbe747ad6e0d54770f"
+  },
+  "browser": "153.0.8010.12",
+  "nativeProgramMatches": 12,
+  "refusals": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "captureStable": true,
+  "repairRefused": true,
+  "hostGlobals": [],
+  "externalRequests": 0,
+  "scope": "Actual portable native application/query-use consumer in real Chromium. Twelve programs equal current native-installed SQL/admission/output metadata and issued preflight-plus-query return fragments, including two-column populated/empty results; foreign profile, unknown capability, protected original projection and missing original-action label refuse. No source/issuer authentication, live browser native privilege/cut/guard or complete backend acceptance."
+}

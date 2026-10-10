@@ -661,3 +661,9 @@ Consumer-specific extension models and execution semantics remain in their
 consumer repositories. Python MUST preserve unknown content and distinguish
 structural validity from semantic completeness. TableSpec MUST derive its
 compiler view from the shared document and refuse unsupported execution meaning.
+
+## Shared security slice (owner direction, 2026-10-08)
+
+### Subsystem: Extensions and Partial Participation
+
+- **FR-45** — Authors must express shared role-, attribute- and ontology-relationship-based security independently of flat relational or typed graph storage. Preserve native/unknown policies and qualify logical decisions, field disclosure, writes, history and revocation through explicit backend bindings and acceptance evidence. FEAT-008 and US-079, US-056 and US-057 govern the slice. Native execution remains consumer-owned; security core admission remains separate.

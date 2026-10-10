@@ -1,3 +1,6 @@
+import properties from '../../spec/core/schema-properties-document.schema.json';
+import schemaV2 from '../../spec/core/relationship-operation-v2.schema.json';
+export {default as coreRelationshipOperationV2Schema} from '../../spec/core/relationship-operation-v2.schema.json';
 import {copyJson} from './json';
 import {UmfError,type Document,type Json,type Diagnostic} from './types';
 import {validateDocument} from '../validation/document';
@@ -11,11 +14,11 @@ type Source=Document|RelationshipCandidate;
 interface OperationContext {diagnostics:Diagnostic[];residuals:[]}
 export interface CoreRelationshipDeclaration extends OperationContext {operation:'declare-core-relationship';version:'1.0.0';source:RelationshipCandidate;target:RelationshipCandidate;identity:RelationshipModuleIdentity;request:CoreRelationshipRequest;provenance:{origin:'authored';idealPath:string;basis:'explicit-author-declaration';nativePath:null}}
 export type CoreRelationshipMeaning={state:'missing'}|{state:'legacy';value:Json}|{state:'known'|'partial';relationships:CoreRelationship[];uninterpretedPaths:string[]};
-export interface CoreRelationshipInspection extends OperationContext {operation:'inspect-core-relationships';version:'1.0.0';source:Source;identity:RelationshipModuleIdentity;path:string;meaning:CoreRelationshipMeaning;provenance:'unverified'}
-export interface CoreRelationshipLookup extends OperationContext {operation:'lookup-core-relationship';version:'1.0.0';source:RelationshipCandidate;identity:CoreRelationshipIdentity;path:string;relationship:CoreRelationship;uninterpretedPaths:string[];provenance:'unverified'}
+export interface CoreRelationshipInspection extends OperationContext {operation:'inspect-core-relationships';version:'1.0.0'|'2.0.0';source:Source;identity:RelationshipModuleIdentity;path:string;meaning:CoreRelationshipMeaning;provenance:'unverified'}
+export interface CoreRelationshipLookup extends OperationContext {operation:'lookup-core-relationship';version:'1.0.0'|'2.0.0';source:Source;identity:CoreRelationshipIdentity;path:string;relationship:CoreRelationship;uninterpretedPaths:string[];provenance:'unverified'}
 export type CoreRelationshipOperation=CoreRelationshipDeclaration|CoreRelationshipInspection|CoreRelationshipLookup;
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships])validator.addSchema(s);
-const check=validator.compile(schema),identityCheck=validator.compile(schema.$defs.identity),lookupCheck=validator.compile(schema.$defs.lookupIdentity),requestCheck=validator.compile(schema.$defs.request);
+const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships,properties])validator.addSchema(s);
+const check=validator.compile(schema),checkV2=validator.compile(schemaV2),identityCheck=validator.compile(schema.$defs.identity),lookupCheck=validator.compile(schema.$defs.lookupIdentity),requestCheck=validator.compile(schema.$defs.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const equal=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
 const endpoint=(ref:RelationshipEndpoint)=>JSON.stringify([ref.module,ref.element,...('key'in ref?[ref.key]:[])]);
@@ -24,7 +27,8 @@ function finish<T>(r:T):T&OperationContext {
  const context=r as {source:Source;target?:Source},document=context.target??context.source;
  const validation=document.umf==='0.7.0'?validateRelationshipCandidate(document):validateDocument(document);
  const copied=copyJson({...r,diagnostics:validation.diagnostics,residuals:[]});
- if(!check(copied))throw new UmfError('RELATIONSHIP_RESULT',JSON.stringify(check.errors));return copied as unknown as T&OperationContext;
+ const selected=(r as {version?:string}).version==='2.0.0'?checkV2:check;
+ if(!selected(copied))throw new UmfError('RELATIONSHIP_RESULT',JSON.stringify(selected.errors));return copied as unknown as T&OperationContext;
 }
 function locate(input:Source,identityInput:RelationshipModuleIdentity){
  const source=copyJson(input) as unknown as Source,identity=copyJson(identityInput) as unknown as RelationshipModuleIdentity;
@@ -38,17 +42,17 @@ const unknown=(l:ReturnType<typeof locate>,path:string)=>l.validation.diagnostic
 export function inspectCoreRelationships(input:Source,identity:RelationshipModuleIdentity):CoreRelationshipInspection {
  const l=locate(input,identity);let meaning:CoreRelationshipMeaning={state:'missing'};
  if(Object.hasOwn(l.module,'relationships')){
-  if(l.source.umf!=='0.7.0')meaning={state:'legacy',value:copyJson(l.module.relationships)};
+  if(l.source.umf!=='0.7.0'&&l.source.umf!=='0.8.0')meaning={state:'legacy',value:copyJson(l.module.relationships)};
   else {const uninterpretedPaths=unknown(l,l.path);meaning={state:uninterpretedPaths.length?'partial':'known',relationships:copyJson(l.module.relationships) as unknown as CoreRelationship[],uninterpretedPaths};}
  }
- return finish({operation:'inspect-core-relationships',version:'1.0.0',source:l.source,identity:l.identity,path:l.path,meaning,provenance:'unverified'});
+ return finish({operation:'inspect-core-relationships',version:l.source.umf==='0.8.0'?'2.0.0':'1.0.0',source:l.source,identity:l.identity,path:l.path,meaning,provenance:'unverified'});
 }
 export function lookupCoreRelationship(input:Source,identityInput:CoreRelationshipIdentity):CoreRelationshipLookup {
  const identity=copyJson(identityInput) as unknown as CoreRelationshipIdentity;if(!lookupCheck(identity))throw new UmfError('RELATIONSHIP_IDENTITY','Expected stable relationship ID');
- const l=locate(input,{module:identity.module});if(l.source.umf!=='0.7.0')throw new UmfError('RELATIONSHIP_VERSION','Explicit relationship migration required');
+ const l=locate(input,{module:identity.module});if(l.source.umf!=='0.7.0'&&l.source.umf!=='0.8.0')throw new UmfError('RELATIONSHIP_VERSION','Explicit relationship migration required');
  const values=(l.module.relationships??[]) as CoreRelationship[],index=values.findIndex(r=>r.id===identity.id);if(index<0)throw new UmfError('RELATIONSHIP_MISSING','Stable relationship ID does not resolve');
  const path=l.path+'/'+index;
- return finish({operation:'lookup-core-relationship',version:'1.0.0',source:l.source as RelationshipCandidate,identity,path,relationship:values[index]!,uninterpretedPaths:unknown(l,path),provenance:'unverified'});
+ return finish({operation:'lookup-core-relationship',version:l.source.umf==='0.8.0'?'2.0.0':'1.0.0',source:l.source,identity,path,relationship:values[index]!,uninterpretedPaths:unknown(l,path),provenance:'unverified'});
 }
 export function declareCoreRelationship(input:Source,identity:RelationshipModuleIdentity,requestInput:CoreRelationshipRequest):CoreRelationshipDeclaration {
  const request=copyJson(requestInput) as unknown as CoreRelationshipRequest;if(!requestCheck(request))throw new UmfError('RELATIONSHIP_REQUEST','Expected complete known authored relationship');
@@ -68,7 +72,7 @@ export function declareCoreRelationship(input:Source,identity:RelationshipModule
  return finish({operation:'declare-core-relationship',version:'1.0.0',source:l.source as RelationshipCandidate,target,identity:l.identity,request,provenance:{origin:'authored',idealPath:l.path+'/'+(index<0?values.length:index),basis:'explicit-author-declaration',nativePath:null}});
 }
 export function verifyCoreRelationshipOperation(input:CoreRelationshipOperation,current:Source):CoreRelationshipOperation {
- const receipt=copyJson(input) as unknown as CoreRelationshipOperation;if(!check(receipt))throw new UmfError('RELATIONSHIP_RECEIPT','Malformed relationship operation');
+ const receipt=copyJson(input) as unknown as CoreRelationshipOperation;if(!(receipt.version==='2.0.0'?checkV2:check)(receipt))throw new UmfError('RELATIONSHIP_RECEIPT','Malformed relationship operation');
  const expected=receipt.operation==='declare-core-relationship'?declareCoreRelationship(receipt.source,receipt.identity,receipt.request):receipt.operation==='lookup-core-relationship'?lookupCoreRelationship(receipt.source,receipt.identity):inspectCoreRelationships(receipt.source,receipt.identity);
  if(!equal(expected,receipt))throw new UmfError('RELATIONSHIP_RECEIPT','Operation differs from retained source/request');
  if(!equal(current,'target'in receipt?receipt.target:receipt.source))throw new UmfError('RELATIONSHIP_STALE','Current document changed after operation');return receipt;

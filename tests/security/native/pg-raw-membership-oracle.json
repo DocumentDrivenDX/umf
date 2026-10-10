@@ -1,0 +1,1241 @@
+{
+  "version": "pg-raw-membership-oracle/0.1.0",
+  "actors": {
+    "umf_sec_alice": {
+      "ids": [
+        "RA",
+        "RAB"
+      ],
+      "rows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    "umf_sec_bob": {
+      "ids": [
+        "RAB",
+        "RB"
+      ],
+      "rows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    "umf_sec_outsider": {
+      "ids": [],
+      "rows": []
+    }
+  },
+  "facts": {
+    "company": [
+      [
+        "C"
+      ]
+    ],
+    "project": [
+      [
+        "A",
+        "C"
+      ],
+      [
+        "B",
+        "C"
+      ],
+      [
+        "D",
+        "C"
+      ]
+    ],
+    "employee": [
+      [
+        "Alice",
+        "umf_sec_alice"
+      ],
+      [
+        "Bob",
+        "umf_sec_bob"
+      ]
+    ],
+    "m2m_employee_project": [
+      [
+        "Alice",
+        "A",
+        true
+      ],
+      [
+        "Alice",
+        "B",
+        false
+      ],
+      [
+        "Bob",
+        "B",
+        true
+      ]
+    ],
+    "resource": [
+      [
+        "RA",
+        "A-only"
+      ],
+      [
+        "RAB",
+        "multiple-owners"
+      ],
+      [
+        "RB",
+        "B-only"
+      ],
+      [
+        "RD",
+        "unassigned-sibling"
+      ],
+      [
+        "RO",
+        "ownerless"
+      ]
+    ],
+    "m2m_resource_project": [
+      [
+        "RA",
+        "A"
+      ],
+      [
+        "RAB",
+        "A"
+      ],
+      [
+        "RAB",
+        "B"
+      ],
+      [
+        "RB",
+        "B"
+      ],
+      [
+        "RD",
+        "D"
+      ]
+    ],
+    "resource_private_carrier": [
+      [
+        "RA",
+        {
+          "salary": 100,
+          "note": null
+        },
+        "7365637265742d41"
+      ],
+      [
+        "RAB",
+        {
+          "salary": 333
+        },
+        "7365637265742d4142"
+      ],
+      [
+        "RB",
+        {
+          "salary": 200,
+          "note": "hidden"
+        },
+        "7365637265742d42"
+      ],
+      [
+        "RD",
+        {
+          "salary": 444
+        },
+        "7365637265742d44"
+      ],
+      [
+        "RO",
+        {
+          "salary": 555
+        },
+        "7365637265742d4f"
+      ]
+    ],
+    "resource_child_carrier": [
+      [
+        "RA",
+        "child-secret-A"
+      ],
+      [
+        "RAB",
+        "child-secret-AB"
+      ],
+      [
+        "RB",
+        "child-secret-B"
+      ],
+      [
+        "RD",
+        "child-secret-D"
+      ],
+      [
+        "RO",
+        "child-secret-O"
+      ]
+    ]
+  },
+  "scope": "Stable disposable cut, any active owner Project permits read; sibling company membership alone confers no permission. Expected result rows are authored independently of the native predicate.",
+  "collections": {
+    "umf_sec_alice": {
+      "lookupRA": [
+        "RA",
+        "A-only"
+      ],
+      "lookupRB": null,
+      "count": 2,
+      "aggregate": {
+        "count": 2,
+        "min": "RA",
+        "max": "RAB",
+        "valueLengthSum": 21
+      },
+      "traversal": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ]
+      ],
+      "pages": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        []
+      ],
+      "keysetAfterRA": [
+        "RAB"
+      ],
+      "allHidden": [],
+      "empty": [],
+      "missingLookup": null,
+      "emptyCount": 0,
+      "emptyAggregate": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "valueLengthSum": 0
+      },
+      "emptyTraversal": [],
+      "emptyPage": []
+    },
+    "umf_sec_bob": {
+      "lookupRA": null,
+      "lookupRB": [
+        "RB",
+        "B-only"
+      ],
+      "count": 2,
+      "aggregate": {
+        "count": 2,
+        "min": "RAB",
+        "max": "RB",
+        "valueLengthSum": 21
+      },
+      "traversal": [
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ]
+      ],
+      "pages": [
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        []
+      ],
+      "keysetAfterRA": [
+        "RAB",
+        "RB"
+      ],
+      "allHidden": [],
+      "empty": [],
+      "missingLookup": null,
+      "emptyCount": 0,
+      "emptyAggregate": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "valueLengthSum": 0
+      },
+      "emptyTraversal": [],
+      "emptyPage": []
+    },
+    "umf_sec_outsider": {
+      "lookupRA": null,
+      "lookupRB": null,
+      "count": 0,
+      "aggregate": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "valueLengthSum": 0
+      },
+      "traversal": [],
+      "pages": [
+        [],
+        [],
+        []
+      ],
+      "keysetAfterRA": [],
+      "allHidden": [],
+      "empty": [],
+      "missingLookup": null,
+      "emptyCount": 0,
+      "emptyAggregate": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "valueLengthSum": 0
+      },
+      "emptyTraversal": [],
+      "emptyPage": []
+    }
+  },
+  "weakenedCount": 5,
+  "privileged": {
+    "administrator": {
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "superuser": true,
+      "bypassRls": true
+    },
+    "rows": [
+      [
+        "RA",
+        "A-only"
+      ],
+      [
+        "RAB",
+        "multiple-owners"
+      ],
+      [
+        "RB",
+        "B-only"
+      ],
+      [
+        "RD",
+        "unassigned-sibling"
+      ],
+      [
+        "RO",
+        "ownerless"
+      ]
+    ],
+    "ordinaryInheritedAuthority": false,
+    "ordinaryAdoptionDenied": true
+  },
+  "definer": {
+    "umf_sec_alice": {
+      "protectedIds": [
+        "RA",
+        "RAB"
+      ],
+      "forwardedIds": [
+        "RA",
+        "RAB"
+      ],
+      "callerPredicateIds": [
+        "RA",
+        "RAB"
+      ],
+      "callerFakePredicate": true,
+      "publicExecute": false,
+      "protectedDefinitionChangesDenied": true
+    },
+    "umf_sec_bob": {
+      "protectedIds": [
+        "RAB",
+        "RB"
+      ],
+      "forwardedIds": [
+        "RAB",
+        "RB"
+      ],
+      "callerPredicateIds": [
+        "RAB",
+        "RB"
+      ],
+      "callerFakePredicate": true,
+      "publicExecute": false,
+      "protectedDefinitionChangesDenied": true
+    },
+    "umf_sec_outsider": {
+      "protectedIds": [],
+      "forwardedIds": [],
+      "callerPredicateIds": [],
+      "callerFakePredicate": true,
+      "publicExecute": false,
+      "protectedDefinitionChangesDenied": true
+    }
+  },
+  "storage": {
+    "umf_sec_alice": {
+      "copyRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "publicOnlyRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "privateProbesDenied": true,
+      "serverFileProbesDenied": true
+    },
+    "umf_sec_bob": {
+      "copyRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "publicOnlyRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "privateProbesDenied": true,
+      "serverFileProbesDenied": true
+    },
+    "umf_sec_outsider": {
+      "copyRows": [],
+      "publicOnlyRows": [],
+      "privateProbesDenied": true,
+      "serverFileProbesDenied": true
+    }
+  },
+  "disclosure": {
+    "umf_sec_alice": {
+      "version": "umf.security.disclosure/0.1.0",
+      "target": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Resource"
+      },
+      "fields": [
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "note"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "salary"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "disposition": "original",
+            "value": {
+              "string": "RA"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "note"
+            },
+            "disposition": "original",
+            "value": null
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "withheld"
+          }
+        ],
+        [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "disposition": "original",
+            "value": {
+              "string": "RAB"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "note"
+            },
+            "disposition": "absent"
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "transformed",
+            "outputType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "value": {
+              "string": "restricted"
+            }
+          }
+        ]
+      ]
+    },
+    "umf_sec_bob": {
+      "version": "umf.security.disclosure/0.1.0",
+      "target": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Resource"
+      },
+      "fields": [
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "note"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "salary"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "disposition": "original",
+            "value": {
+              "string": "RAB"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "note"
+            },
+            "disposition": "absent"
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "transformed",
+            "outputType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "value": {
+              "string": "restricted"
+            }
+          }
+        ],
+        [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "disposition": "original",
+            "value": {
+              "string": "RB"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "note"
+            },
+            "disposition": "original",
+            "value": {
+              "string": "hidden"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "withheld"
+          }
+        ]
+      ]
+    },
+    "umf_sec_outsider": {
+      "version": "umf.security.disclosure/0.1.0",
+      "target": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Resource"
+      },
+      "fields": [
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "note"
+        },
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "salary"
+        }
+      ],
+      "rows": []
+    }
+  },
+  "pool": {
+    "umf_sec_alice": {
+      "protectedRoleInherited": false,
+      "protectedAdoptionDenied": true,
+      "pinnedIdentity": true,
+      "sameNativeSession": true,
+      "baselineIds": [
+        "RA",
+        "RAB"
+      ],
+      "committed": {
+        "current": "umf_sec_pool_low",
+        "ids": []
+      },
+      "afterCommitIds": [
+        "RA",
+        "RAB"
+      ],
+      "abortedWithoutRelease": true,
+      "afterAbortIds": [
+        "RA",
+        "RAB"
+      ],
+      "weakenedCurrent": "umf_sec_pool_low",
+      "weakenedIds": [],
+      "restoredIds": [
+        "RA",
+        "RAB"
+      ],
+      "abortCode": "22012",
+      "abortedRole": "umf_sec_pool_low"
+    },
+    "umf_sec_bob": {
+      "protectedRoleInherited": false,
+      "protectedAdoptionDenied": true,
+      "pinnedIdentity": true,
+      "sameNativeSession": true,
+      "baselineIds": [
+        "RAB",
+        "RB"
+      ],
+      "committed": {
+        "current": "umf_sec_pool_low",
+        "ids": []
+      },
+      "afterCommitIds": [
+        "RAB",
+        "RB"
+      ],
+      "abortedWithoutRelease": true,
+      "afterAbortIds": [
+        "RAB",
+        "RB"
+      ],
+      "weakenedCurrent": "umf_sec_pool_low",
+      "weakenedIds": [],
+      "restoredIds": [
+        "RAB",
+        "RB"
+      ],
+      "abortCode": "22012",
+      "abortedRole": "umf_sec_pool_low"
+    },
+    "umf_sec_outsider": {
+      "protectedRoleInherited": false,
+      "protectedAdoptionDenied": true,
+      "pinnedIdentity": true,
+      "sameNativeSession": true,
+      "baselineIds": [],
+      "committed": {
+        "current": "umf_sec_pool_low",
+        "ids": []
+      },
+      "afterCommitIds": [],
+      "abortedWithoutRelease": true,
+      "afterAbortIds": [],
+      "weakenedCurrent": "umf_sec_pool_low",
+      "weakenedIds": [],
+      "restoredIds": [],
+      "abortCode": "22012",
+      "abortedRole": "umf_sec_pool_low"
+    }
+  },
+  "inventoryDrift": {
+    "owner": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "grant": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "membership": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "routine": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "policy": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "columnMapping": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    },
+    "bypassAttribute": {
+      "detected": true,
+      "executedUnderDrift": 0,
+      "restored": true
+    }
+  },
+  "authorityCut": {
+    "employee": [
+      [
+        "Alice",
+        "umf_sec_alice"
+      ],
+      [
+        "Bob",
+        "umf_sec_bob"
+      ]
+    ],
+    "project": [
+      [
+        "A"
+      ],
+      [
+        "B"
+      ],
+      [
+        "D"
+      ]
+    ],
+    "resource": [
+      [
+        "RA"
+      ],
+      [
+        "RAB"
+      ],
+      [
+        "RB"
+      ],
+      [
+        "RD"
+      ],
+      [
+        "RO"
+      ]
+    ],
+    "assignment": [
+      [
+        "Alice",
+        "A",
+        true
+      ],
+      [
+        "Alice",
+        "B",
+        false
+      ],
+      [
+        "Bob",
+        "B",
+        true
+      ]
+    ],
+    "ownership": [
+      [
+        "RA",
+        "A"
+      ],
+      [
+        "RAB",
+        "A"
+      ],
+      [
+        "RAB",
+        "B"
+      ],
+      [
+        "RB",
+        "B"
+      ],
+      [
+        "RD",
+        "D"
+      ]
+    ]
+  },
+  "authorityCollections": {
+    "umf_sec_alice": {
+      "list": [
+        "RA",
+        "RAB"
+      ],
+      "count": 2,
+      "aggregate": {
+        "count": 2,
+        "min": "RA",
+        "max": "RAB",
+        "valueLengthSum": 21
+      },
+      "page": [
+        "RA"
+      ],
+      "traversal": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ]
+      ],
+      "emptyList": [],
+      "emptyCount": 0,
+      "emptyPage": []
+    },
+    "umf_sec_bob": {
+      "list": [
+        "RAB",
+        "RB"
+      ],
+      "count": 2,
+      "aggregate": {
+        "count": 2,
+        "min": "RAB",
+        "max": "RB",
+        "valueLengthSum": 21
+      },
+      "page": [
+        "RAB"
+      ],
+      "traversal": [
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ]
+      ],
+      "emptyList": [],
+      "emptyCount": 0,
+      "emptyPage": []
+    },
+    "umf_sec_outsider": {
+      "list": [],
+      "count": 0,
+      "aggregate": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "valueLengthSum": 0
+      },
+      "page": [],
+      "traversal": [],
+      "emptyList": [],
+      "emptyCount": 0,
+      "emptyPage": []
+    }
+  },
+  "authorityCorruption": {
+    "missingActiveAssignment": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "missingInactiveAssignment": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "missingOwner": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "wrongSubjectBinding": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "sameCountWrongEndpoint": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "missingRequiredSource": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    },
+    "nullRequiredAttribute": {
+      "executedUnderCorruption": 0,
+      "restored": true
+    }
+  },
+  "unguardedAuthorityRows": {
+    "missingActiveAssignment": [],
+    "missingInactiveAssignment": [
+      "RA",
+      "RAB"
+    ],
+    "missingOwner": [
+      "RA"
+    ],
+    "wrongSubjectBinding": [],
+    "sameCountWrongEndpoint": [
+      "RD"
+    ],
+    "nullRequiredAttribute": []
+  },
+  "associationSelection": {
+    "types": [
+      {
+        "logicalType": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Employee"
+        },
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "employee"
+        },
+        "keyColumns": [
+          "id"
+        ]
+      },
+      {
+        "logicalType": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Project"
+        },
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "project"
+        },
+        "keyColumns": [
+          "id"
+        ]
+      },
+      {
+        "logicalType": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "resource"
+        },
+        "keyColumns": [
+          "id"
+        ]
+      }
+    ],
+    "definitions": [
+      {
+        "logicalType": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "m2m_employee_project"
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "logicalType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Employee"
+            },
+            "columns": [
+              "employee_id"
+            ]
+          },
+          {
+            "role": "project",
+            "logicalType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "columns": [
+              "project_id"
+            ]
+          }
+        ]
+      },
+      {
+        "logicalType": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Ownership"
+        },
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "m2m_resource_project"
+        },
+        "endpoints": [
+          {
+            "role": "resource",
+            "logicalType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "columns": [
+              "resource_id"
+            ]
+          },
+          {
+            "role": "project",
+            "logicalType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "columns": [
+              "project_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "mapping": {
+      "version": "pg-raw-association-map/0.1.0",
+      "associations": [
+        {
+          "logicalType": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "m2m_employee_project"
+          },
+          "endpoints": [
+            {
+              "role": "staff",
+              "logicalType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Employee"
+              },
+              "columns": [
+                "employee_id"
+              ]
+            },
+            {
+              "role": "project",
+              "logicalType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "columns": [
+                "project_id"
+              ]
+            }
+          ],
+          "keyColumns": [
+            "employee_id",
+            "project_id"
+          ]
+        },
+        {
+          "logicalType": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "m2m_resource_project"
+          },
+          "endpoints": [
+            {
+              "role": "resource",
+              "logicalType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Resource"
+              },
+              "columns": [
+                "resource_id"
+              ]
+            },
+            {
+              "role": "project",
+              "logicalType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "columns": [
+                "project_id"
+              ]
+            }
+          ],
+          "keyColumns": [
+            "resource_id",
+            "project_id"
+          ]
+        }
+      ]
+    }
+  },
+  "associationMappingRefusals": {
+    "reversedDirection": {
+      "executed": 0,
+      "refused": true
+    },
+    "wrongLogicalType": {
+      "executed": 0,
+      "refused": true
+    },
+    "wrongEndpointColumn": {
+      "executed": 0,
+      "refused": true
+    },
+    "duplicateRole": {
+      "executed": 0,
+      "refused": true
+    },
+    "reversedIdentityKey": {
+      "executed": 0,
+      "refused": true
+    }
+  },
+  "associationNativeRefusals": {
+    "wrongNativeTarget": {
+      "executed": 0,
+      "refused": true,
+      "restored": true
+    },
+    "reversedNativeKey": {
+      "executed": 0,
+      "refused": true,
+      "restored": true
+    },
+    "disabledForeignKeyEnforcement": {
+      "executed": 0,
+      "refused": true,
+      "restored": true
+    }
+  }
+}

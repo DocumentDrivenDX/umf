@@ -1,0 +1,29 @@
+{
+  "id": "result-envelope-astra-review",
+  "reviewer": "/root/astra_security_review",
+  "requestedModel": "Astra ultra",
+  "status": "clean-within-scope",
+  "sources": {
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "687d0c3129c3c8a3ac3bcc10a24cfabdc4159a71d736b920bb2e86a2af7fe63d",
+    "tools/security/prove-result-envelope.py": "4b028ded6ea8feefb6d887f3413d30d4bbc159b0667979feea14d1a4b4ea7272",
+    "docs/helix/04-build/evidence/security/result-envelope-proof.json": "df9469c7a36fc20019b0fc3c8b53dc16557227435b83275fd4077355df99fe5c"
+  },
+  "observations": {
+    "independentFreshContextReplays": 29,
+    "unsat": 12,
+    "sat": 17,
+    "currentProofSourcePins": 47,
+    "postSolveModelCommands": 0
+  },
+  "resolvedFindings": [
+    "Retain pre-solve declarative SMT and independently parse/replay it.",
+    "Replace repeated misleading extraction-mutant labels with one abstract omission control.",
+    "Retain explicit positive protected-field populations for each selected bound and outcome.",
+    "Separate model-definition sanity checks and bounded envelope coverage from implementation/native refinement."
+  ],
+  "scope": "SPIKE-010 abstract result envelope and proposed owner derivation only",
+  "ownerImplementationQualified": false,
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "next": "Implement private owner-derived requirements and ordered result validation; preserve LOWERING-UNSUPPORTED until remaining semantic and native gates exist."
+}

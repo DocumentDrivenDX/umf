@@ -1,3 +1,4 @@
+import {historicalCoreFacetPatch} from '../model/facets';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
@@ -46,7 +47,7 @@ export function projectFacetsToSqlServer(input:Author,options:FacetsSqlServerReq
  if(author.operation==='declare-core-facets'){
   const meaning=inspectCoreFacets(source,author.identity).meaning;
   if(meaning.state==='known'||meaning.state==='partial'){
-   intended=meaning.interpreted;
+   intended=historicalCoreFacetPatch(meaning.interpreted);
    if(meaning.state==='partial')loss(path+'/facets',meaning.facets,'Unknown facet qualifiers remain attached; no native interpretation is fabricated');
   }
  }else if(element.facets!==undefined)loss(path+'/facets',element.facets,'A Field-kind declaration does not establish authorship of facet members');

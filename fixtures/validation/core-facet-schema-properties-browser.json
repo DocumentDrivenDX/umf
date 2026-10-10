@@ -1,0 +1,21 @@
+{
+  "scope": "Original core0.8 read-only facet inspection, exact retained output parity and serialization; no native enforcement qualification",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "inspections": 10,
+    "authorRefusals": 10,
+    "recoveries": 20,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-facet-schema-properties-browser.ts": "953acce9eb9358ab4a46bc74ec54146015310c652a2c01ec3d45300bc23786f3",
+    "src/model/facets.ts": "3ec3b7fa1a08b01212ec87a2911659e252c2e74c091df75b07a7d9d9988bc77b",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/schema-properties.ts": "c09523e523969cbda7eac3bad6a9678c5c25ac093095dd653c8b1c04dfd1daab",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
+    "spec/core/facet-operation-v4.schema.json": "6e8729e3c4eb28a45e0cc5199303208be87b2ace86e23d957661ac31f5e46083",
+    "spec/core/schema-properties-document.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "dist/umf.js": "372c9116f97ae24805406e5a8a6883d4ac46fb6b9508cfc7e1df957bac98cfba"
+  }
+}

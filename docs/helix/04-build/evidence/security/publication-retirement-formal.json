@@ -1,0 +1,115 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-publication-retirement.py": "94bf9f44123e1b5769d133592b5110270d3689f11bc6f1baddbd395349c975f4"
+  },
+  "cases": [
+    {
+      "id": "terminal-state-requires-freshness-fence",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(declare-fun current_pending () Bool)\n(assert (and snapshot_pending\n     (not current_pending)\n     (< snapshot_epoch current_epoch)\n     snapshot_pending\n     (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(declare-fun current_pending () Bool)\n(assert (and snapshot_pending\n     (not current_pending)\n     (= snapshot_epoch current_epoch)\n     snapshot_pending\n     (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[current_epoch = 0,\n snapshot_epoch = 0,\n snapshot_pending = True,\n current_pending = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(declare-fun current_pending () Bool)\n(assert (and snapshot_pending\n     current_pending\n     (= snapshot_epoch current_epoch)\n     snapshot_pending\n     (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[current_epoch = 0,\n snapshot_epoch = 0,\n snapshot_pending = True,\n current_pending = True]"
+      }
+    },
+    {
+      "id": "retirement-excludes-retained-native-reader",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun reader_lock () Bool)\n(declare-fun current_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (not reader_lock)\n     (= next_epoch (+ current_epoch 1))\n     reader_lock))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending reader_lock (= next_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[current_epoch = 0,\n next_epoch = 0,\n reader_lock = True,\n current_pending = True]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending (not reader_lock) (= next_epoch (+ current_epoch 1))))\n",
+        "replayResult": "sat",
+        "witness": "[next_epoch = 0,\n current_epoch = -1,\n reader_lock = False,\n current_pending = True]"
+      }
+    },
+    {
+      "id": "retirement-invalidates-older-snapshot",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(declare-fun current_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (not reader_lock)\n     (= next_epoch (+ current_epoch 1))\n     (<= snapshot_epoch current_epoch)\n     snapshot_pending\n     (= snapshot_epoch next_epoch)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun snapshot_pending () Bool)\n(declare-fun current_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (= snapshot_epoch current_epoch)\n     (= next_epoch current_epoch)\n     snapshot_pending))\n",
+        "replayResult": "sat",
+        "witness": "[snapshot_pending = True,\n next_epoch = 0,\n current_epoch = 0,\n snapshot_epoch = 0,\n current_pending = True]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (not reader_lock)\n     (= next_epoch (+ current_epoch 1))\n     (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[next_epoch = 0,\n current_epoch = -1,\n snapshot_epoch = -1,\n reader_lock = False,\n current_pending = True]"
+      }
+    },
+    {
+      "id": "rolled-back-retirement-remains-closed",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun current_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(assert (and snapshot_pending\n     (= snapshot_epoch current_epoch)\n     (> next_epoch current_epoch)\n     (= snapshot_epoch next_epoch)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun current_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(assert (and snapshot_pending\n     (= snapshot_epoch current_epoch)\n     (= next_epoch current_epoch)\n     (= snapshot_epoch next_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[next_epoch = 0,\n snapshot_epoch = 0,\n current_epoch = 0,\n snapshot_pending = True]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(assert (and snapshot_pending\n     (= snapshot_epoch current_epoch)\n     (> next_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[next_epoch = 1,\n current_epoch = 0,\n snapshot_epoch = 0,\n snapshot_pending = True]"
+      }
+    },
+    {
+      "id": "post-retirement-old-snapshot-cannot-admit",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun snapshot_pending () Bool)\n(declare-fun current_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (not reader_lock)\n     (= next_epoch (+ current_epoch 1))\n     (= snapshot_epoch current_epoch)\n     snapshot_pending\n     snapshot_pending\n     (= snapshot_epoch next_epoch)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun current_pending () Bool)\n(declare-fun snapshot_pending () Bool)\n(assert (and snapshot_pending (not current_pending) (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[current_epoch = 0,\n snapshot_epoch = 0,\n snapshot_pending = True,\n current_pending = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun current_epoch () Int)\n(declare-fun snapshot_epoch () Int)\n(declare-fun next_epoch () Int)\n(declare-fun reader_lock () Bool)\n(declare-fun current_pending () Bool)\n(assert (and current_pending\n     (not reader_lock)\n     (= next_epoch (+ current_epoch 1))\n     (= snapshot_epoch current_epoch)))\n",
+        "replayResult": "sat",
+        "witness": "[next_epoch = 0,\n current_epoch = -1,\n snapshot_epoch = -1,\n reader_lock = False,\n current_pending = True]"
+      }
+    }
+  ],
+  "scope": "Abstract single-lease retirement/snapshot algebra with arbitrary integer epochs. Retirement requires absence of retained reader locks and strictly advances the authoritative epoch. Admission checks epoch equality after shared-lock acquisition. Snapshot-visible pending state alone has a SAT counterexample after terminal retirement. A rolled-back transactional epoch with strictly advanced non-MVCC generation refuses admission, including fresh snapshots; this models conservative closure, not a recovery implementation. Premises: serialized shared/exclusive coordinator participation, truthful native snapshot epoch, non-MVCC current epoch, immutable enrolled identity, no epoch reuse, trusted publication drain before retirement, and all admission routes checking the fence. This does not prove actual SQL ordering, native isolation, compiler/runtime refinement, rollback/recovery, multi-lease custody, crashes or backend acceptance. The authored PostgreSQL 17.9 spike has separately tested scoped retirement evidence; this algebra does not verify that implementation."
+}
