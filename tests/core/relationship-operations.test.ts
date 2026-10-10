@@ -3,6 +3,18 @@ import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 import {relationshipOperationCases,relationshipRequest} from '../../scripts/core-relationship-operation-cases';
 import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from '../../src/model/relationships';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+test('original0.8 relationship inspection and lookup retain unknown lifecycle and endpoint qualifiers',()=>{
+ const source:any=relationshipCandidate();source.umf='0.8.0';
+ const relationship=source.modules[0].relationships[0];relationship.targetLifecycle='future-lifecycle';relationship.target[0].future={opaque:true};
+ const inspection=inspectCoreRelationships(source,{module:'m'}),lookup=lookupCoreRelationship(source,{module:'m',id:relationship.id});
+ expect(inspection.version).toBe('2.0.0');expect(lookup.version).toBe('2.0.0');expect(inspection.source).toEqual(source);
+ expect(inspection.meaning.state).toBe('partial');expect(lookup.relationship).toEqual(relationship);
+ expect(lookup.uninterpretedPaths).toContain('/modules/0/relationships/0/targetLifecycle');
+ expect(lookup.uninterpretedPaths).toContain('/modules/0/relationships/0/target/0/future');
+ expect(verifyCoreRelationshipOperation(lookup,source)).toEqual(lookup);
+ const validRequest=relationshipRequest({...relationship,targetLifecycle:'independent'});
+ let refusalCode='';try{declareCoreRelationship(source,{module:'m'},validRequest);}catch(error){refusalCode=(error as {code:string}).code;}expect(refusalCode).toBe('RELATIONSHIP_VERSION');
+});
 
 // @covers US-045-AC1
 test('candidate authoring and stable lookup expose all authored shapes with verified serialized receipts',()=>{

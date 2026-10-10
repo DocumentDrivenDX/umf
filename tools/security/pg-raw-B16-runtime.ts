@@ -1,0 +1,101 @@
+/** Actual raw PostgreSQL scale runtime; @covers US-056-AC10. No graph claim. */
+import {createPgConnectionSource,decodeResponseFrame,createFileQueryJournal,inspectOriginalQueryFile} from '/Users/erik/Projects/truss/packages/pg-runtime/src/index';
+import {readdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const oracle=JSON.parse(readFileSync('tests/security/native/pg-raw-scale-oracle.json','utf8'));
+if(oracle.budgets.statementTimeoutMs!==1||oracle.expectedTimeoutSqlstate!=='57014'||oracle.expectedFailedSqlstate!=='25P02')throw Error('Unsupported authored native budget profile');
+const stage=oracle.stages.find((s:any)=>String(s.totalResources)===process.env.UMF_SCALE_TOTAL);if(!stage)throw Error('Unknown authored scale stage');
+const dependencies=JSON.parse(readFileSync('tests/security/native/pg-runtime-dependency-inventory.json','utf8'));
+const observedDriverEntries={probe:fileURLToPath(import.meta.resolve('pg')),runtimeImporter:fileURLToPath(import.meta.resolve('pg',pathToFileURL('/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts').href))};
+if(Object.values(observedDriverEntries).some(entry=>entry!==dependencies.entry))throw Error('Unqualified native driver resolution');
+if(process.env.NODE_PG_FORCE_NATIVE)throw Error('Native alternate pg driver unsupported');
+const journalDirectory=process.env.UMF_TRUSS_JOURNAL_DIRECTORY;if(!journalDirectory)throw Error('Missing private owned journal directory');
+const diskJournal=createFileQueryJournal(journalDirectory);
+const memoryRecords=new Map<string,{request:unknown,frames:string[],outcome?:string}>();
+const actors=JSON.parse(process.env.UMF_TRUSS_ACTORS??'{}') as Record<string,string>;
+const port=Number(process.env.UMF_TRUSS_PORT);
+if(!Number.isInteger(port)||port<1||port>65535)throw Error('Missing owned endpoint');
+const observations:unknown[]=[];const parameterStatuses:unknown[]=[];
+const journal={begin(text:string,values:readonly (string|null)[],custody:{lease:string,ordinal:string}){
+ const id=JSON.stringify([custody.lease,custody.ordinal]);if(memoryRecords.has(id))throw Error('Duplicate original local query custody');
+ const memory={request:{text,values:[...values],custody:{...custody}},frames:[] as string[],outcome:undefined as string|undefined};memoryRecords.set(id,memory);
+ const disk=diskJournal.begin(text,values,custody);
+ return {frame(bytes:Uint8Array){memory.frames.push(Buffer.from(bytes).toString('hex'));disk.frame(bytes);if(bytes[0]===83){const frame=decodeResponseFrame(bytes,{maxFrameBytes:1048576,maxFields:2048});parameterStatuses.push(frame.fields[0]);}},finish(outcome:'response_complete'|'server_error'|'uncertain'){memory.outcome=outcome;disk.finish(outcome);}};
+}};
+function check(id:string,expected:unknown,observed:unknown){observations.push({id,expected,observed});if(JSON.stringify(expected)!==JSON.stringify(observed))throw Error('Native runtime component mismatch: '+id);}
+const configure=(actor:string)=>({host:'127.0.0.1',port,database:'postgres',user:actor,password:actors[actor],max:1,connectionTimeoutMillis:5000,application_name:'truss-ordinary-component'});
+const begin={isolation:'read_committed' as const,accessMode:'read_write' as const};
+const execute=(connection:any,sql:string)=>connection.execute({sql,parameters:[]});
+for(const deadline of [0,-1,60001,1.5,NaN,Infinity,'30000',null]){
+ let refused=false;try{createPgConnectionSource(configure('umf_sec_alice'),{originalResponseTimeoutMs:deadline as any});}catch{refused=true;}
+ check('invalid-original-deadline:'+String(deadline),true,refused);
+}
+for(const actor of ['umf_sec_alice','umf_sec_bob','umf_sec_outsider']){
+ const h=createPgConnectionSource(configure(actor),{ordinaryPrincipal:actor,journal,originalResponseTimeoutMs:oracle.budgets.originalResponseTimeoutMs});
+ try{
+  const c=await h.source.acquire();await c.begin(begin);
+  let unsupported='';
+  // A cancellation context is refused on an unused transaction before SQL.
+  await c.rollback();
+  const before=memoryRecords.size;
+  try{await c.begin({...begin,cancellation:new AbortController().signal} as any);}catch(e){unsupported=(e as Error).message;}
+  check(actor+':unsupported-cancellation','Unsupported transaction options',unsupported);
+  check(actor+':unsupported-no-native-query',before,memoryRecords.size);
+  await c.begin(begin);
+  const exact=(await execute(c,'SELECT count(*) FROM security_raw.resource')).rows;
+  const expected=stage.actors[actor].count;
+  check(actor+':exact-million-count',[[{state:'text',text:expected}]],exact);
+  await execute(c,"SET application_name='changed-for-component'");await c.commit();await c.release();check(actor+':healthy',0,h.quarantinedCount());
+ }finally{if(h.quarantinedCount())await h.shutdownQuarantinedTransports();else await h.close();}
+}
+if(stage.totalResources===1000000){
+const h=createPgConnectionSource(configure('umf_sec_alice'),{ordinaryPrincipal:'umf_sec_alice',journal,originalResponseTimeoutMs:oracle.budgets.originalResponseTimeoutMs});
+try{
+ const c=await h.source.acquire();await c.begin(begin);
+ const pidRows=(await execute(c,'SELECT pg_backend_pid()::text')).rows;
+ await execute(c,"SET LOCAL statement_timeout='"+String(oracle.budgets.statementTimeoutMs)+"ms'");
+ let code='';try{await execute(c,'SELECT count(*) FROM security_raw.resource');}catch(e){code=(e as {code?:string}).code??'';}
+ check('million-native-timeout',oracle.expectedTimeoutSqlstate,code);
+ const r=[...memoryRecords.values()].find(r=>(r.request as any).text==='SELECT count(*) FROM security_raw.resource'&&r.outcome==='server_error');
+ if(!r)throw Error('Missing native timeout custody');
+ const frames=r.frames.map(hex=>decodeResponseFrame(Buffer.from(hex,'hex'),{maxFrameBytes:1048576,maxFields:2048}));
+ check('timeout-zero-original-data-rows',0,frames.filter(f=>f.kind==='D').length);
+ check('timeout-original-failed-ready',['E'],frames.filter(f=>f.kind==='Z').map(f=>f.fields[0]?.status));
+ let next='';try{await execute(c,"SELECT 'must-not-run'");}catch(e){next=(e as {code?:string}).code??'';}
+ check('timeout-transaction-remains-failed',oracle.expectedFailedSqlstate,next);
+ check('timeout-no-transport-ambiguity',0,h.quarantinedCount());
+ check('timeout-explicit-rollback','rolled_back',await c.rollback());
+ await c.begin(begin);check('timeout-same-original-session',pidRows,(await execute(c,'SELECT pg_backend_pid()::text')).rows);
+ if(!oracle.recoveryCandidates.every((id:unknown)=>typeof id==='string'&&/^[A-Z]+$/.test(id)))throw Error('Unsupported recovery key');
+ check('timeout-recovery-authorized-boundaries',oracle.recoveredAliceIds.map((id:string)=>[{state:'text',text:id}]),(await execute(c,"SELECT id FROM security_raw.resource WHERE id IN ("+oracle.recoveryCandidates.map((id:string)=>"'"+id+"'").join(',')+") ORDER BY id")).rows);
+ await c.rollback();await c.release();
+}finally{if(h.quarantinedCount())await h.shutdownQuarantinedTransports();else await h.close();}
+}
+const originalFiles=readdirSync(journalDirectory).filter(name=>name.endsWith('.jsonl'));const leases=new Map<string,bigint[]>();let withStatus:string|undefined;let fullCorrespondence=true;
+for(const file of originalFiles){
+ const path=join(journalDirectory,file),inspection=inspectOriginalQueryFile(path,{maxBytes:16777216});
+ if(inspection.state!=='complete'||!inspection.request||!inspection.frames)throw Error('Original disk journal response unavailable');
+ const {custody}=inspection.request;const expected=memoryRecords.get(JSON.stringify([custody.lease,custody.ordinal]));
+ if(!expected||JSON.stringify(expected)!==JSON.stringify({request:inspection.request,frames:inspection.frames,outcome:inspection.outcome}))fullCorrespondence=false;
+ const ordinals=leases.get(custody.lease)??[];ordinals.push(BigInt(custody.ordinal));leases.set(custody.lease,ordinals);
+ if(inspection.frames.some(hex=>hex.startsWith('53')))withStatus=path;
+}
+check('disk-journal-query-count',memoryRecords.size,originalFiles.length);check('disk-original-request-frame-outcome-correspondence',true,fullCorrespondence);
+check('disk-custody-consecutive',true,[...leases.values()].every(ordinals=>ordinals.sort((a,b)=>a<b?-1:a>b?1:0).every((n,i)=>n===BigInt(i))));
+check('disk-context-reports-present',true,withStatus!==undefined);
+if(!withStatus)throw Error('Missing native reset ParameterStatus journal');
+const originalText=readFileSync(withStatus,'utf8'),originalRecords=originalText.trimEnd().split('\n').map(line=>JSON.parse(line));
+const damaged=(name:string,records:unknown[])=>{const path=join(journalDirectory,name+'.damaged.jsonl');writeFileSync(path,records.map(record=>JSON.stringify(record)).join('\n')+'\n',{flag:'wx',mode:0o600});return inspectOriginalQueryFile(path,{maxBytes:16777216});};
+const missingOutcome=damaged('missing-outcome',originalRecords.slice(0,-1));check('disk-missing-outcome','incomplete',missingOutcome.state);check('disk-missing-outcome-raw-retained',true,missingOutcome.originalHex.length>0);
+const malformed=JSON.parse(JSON.stringify(originalRecords));const statusRecord=malformed.find((record:any)=>record.kind==='frame'&&record.hex.startsWith('53'));
+const bytes=Buffer.from(statusRecord.hex,'hex').subarray(0,-1);bytes.writeUInt32BE(bytes.length-1,1);statusRecord.hex=bytes.toString('hex');
+const bad=damaged('malformed-status',malformed);check('disk-malformed-status','invalid',bad.state);check('disk-malformed-status-raw-retained',true,bad.originalHex.length>0);
+const noCompletion=damaged('status-without-command',originalRecords.filter((record:any)=>record.kind!=='frame'||!record.hex.startsWith('43')));check('disk-status-does-not-replace-command','invalid',noCompletion.state);
+// Structural validation alone cannot detect a deleted well-formed context report.
+// Independent retained original correspondence must detect the changed content.
+const omitted=damaged('omitted-status',originalRecords.filter((record:any)=>record.kind!=='frame'||!record.hex.startsWith('53')));
+check('disk-omission-structural-only','complete',omitted.state);check('disk-omission-content-correspondence',false,omitted.originalHex===Buffer.from(originalText).toString('hex'));
+const journalEvidence={originalQueries:originalFiles.length,leases:leases.size,privateDirectory:journalDirectory,structuralValidationNotAuthenticity:true};
+
+console.log(JSON.stringify({driverEntry:observedDriverEntries.runtimeImporter,observedDriverEntries,status:'passed',observations,parameterStatuses,journalEvidence,scope:'Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification'}));

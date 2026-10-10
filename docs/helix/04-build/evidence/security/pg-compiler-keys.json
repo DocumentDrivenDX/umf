@@ -1,0 +1,730 @@
+{
+  "status": "key-component-passed-counterexample-reproduced",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-compiler-key-probe.py": "637089fe770f53db0969acab4345e6ed5d444e3be8666a5f75762e1e8a8e4014",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-compiler-keys.py": "b2e294ca2696c5c8810f6131d04c3bf4779565d0cf76e7510849076e8a34283e",
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff": "10ed6eeaf06b2f687cf2716a14d2792badd39109d4dfeed762c43e88f09a2ca6"
+  },
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "runId": "5b06362e-19f2-4526-af48-6f2d47a7f345",
+  "observations": [
+    {
+      "id": "count-self-join:fresh-original-compiler-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "natural-count-self-join:fresh-original-compiler-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "original-surrogate-key-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "explicit-natural-key-profile",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "legacy-handoff-version-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "missing-composite-component",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reversed-key-mapping",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "same-shape-wrong-type-home-counterexample",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "natural-endpoint-key-composition",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-type-home-composition-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "all-required-fact-field-domains",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-required-active-binding",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "assignment-text:keys-and-endpoints-only",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "assignment-text:full-field-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "assignment-nullable:keys-and-endpoints-only",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "assignment-nullable:full-field-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "original-field-profile-still-admitted",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:ordinary-self-join-count",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "umf_sec_bob:ordinary-self-join-count",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "umf_sec_outsider:ordinary-self-join-count",
+      "expected": 0,
+      "observed": 0
+    }
+  ],
+  "nativeInventory": {
+    "engine": "170009",
+    "tables": [
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "assignment_nullable"
+        },
+        "columns": [
+          {
+            "name": "employee_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "project_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "notNull": false,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "employee_id",
+              "project_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "employee_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "employee"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          },
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "project_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "project"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "assignment_text"
+        },
+        "columns": [
+          {
+            "name": "employee_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "project_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "active",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "employee_id",
+              "project_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "employee_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "employee"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          },
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "project_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "project"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "company"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "id"
+            ]
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "employee"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "native_login",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": false,
+            "validated": true,
+            "columns": [
+              "native_login"
+            ]
+          },
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "id"
+            ]
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "m2m_employee_project"
+        },
+        "columns": [
+          {
+            "name": "employee_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "project_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "employee_id",
+              "project_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "employee_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "employee"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          },
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "project_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "project"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "m2m_resource_project"
+        },
+        "columns": [
+          {
+            "name": "resource_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "project_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "resource_id",
+              "project_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "project_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "project"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          },
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "resource_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "resource"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "project"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "company_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "company_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "company"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "resource"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "id"
+            ]
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "resource_child_carrier"
+        },
+        "columns": [
+          {
+            "name": "resource_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "private_value",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "resource_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "resource_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "resource"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "security_raw",
+          "table": "resource_private_carrier"
+        },
+        "columns": [
+          {
+            "name": "resource_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "bag",
+            "type": "jsonb",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "retained",
+            "type": "bytea",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "resource_id"
+            ]
+          }
+        ],
+        "foreignKeys": [
+          {
+            "validated": true,
+            "deferrable": false,
+            "update": "a",
+            "delete": "a",
+            "columns": [
+              "resource_id"
+            ],
+            "target": {
+              "catalog": "postgres",
+              "schema": "security_raw",
+              "table": "resource"
+            },
+            "targetColumns": [
+              "id"
+            ],
+            "triggers": [
+              "O",
+              "O",
+              "O",
+              "O"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "executedManagedSourceDigests": {
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-compiler-keys.py": "b2e294ca2696c5c8810f6131d04c3bf4779565d0cf76e7510849076e8a34283e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da"
+  },
+  "scope": "Fresh actual Rust count/self-join handoff replays compared with PostgreSQL 17.9 ordered text primary keys. Original surrogate association IDs refuse; independently declared natural-composite keys admit. Missing/reversed components refuse. Key shape alone accepts a same-shape wrong type-home; composing ordered native foreign-key/endpoint binding refuses it. Required text/boolean fact fields admit only matching nonnull native domains; TEXT-encoded or nullable active flags refuse despite valid keys/FKs. Native self-join counts are separate fixture witnesses, not compiler policy lowering or full backend acceptance."
+}

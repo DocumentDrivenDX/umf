@@ -1,0 +1,30 @@
+{
+  "status": "conditional-private-instance-matching-tests-passed",
+  "cwd": "/Users/erik/Projects/weft",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "summary": {
+    "passed": 125,
+    "failed": 0
+  },
+  "rawOutputSha256": "9d64b054d207b895135b102e93614936572689d49cbb92eb7036902c625eb159",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "dab5dcd078f128790c73a053f98afcf5cce343d758a8840841022b2371f47f60",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "571e3131fe5b67eb402ff4e5b87eda249d6867440eeb7fd0cf3ae419cd9a10bf"
+  },
+  "scope": "Selected pins captured after actual execution; not a complete frozen build inventory or Rust refinement proof. Independently complete trusted instance inventory is assumed; owner issuer/profile authentication/native discharge remain open.",
+  "promotedAcceptanceCases": [],
+  "freshNativeExecution": false
+}

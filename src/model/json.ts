@@ -25,7 +25,7 @@ export function copyJsonCharged(input: unknown,charge?:(visits:number)=>void): J
     for (const [key, descriptor] of Object.entries(descriptors)) {
       if (Array.isArray(value) && key === 'length') continue;
       if (!descriptor.enumerable || !('value' in descriptor)) throw new UmfError('NON_JSON', 'Hidden fields and accessors cannot be serialized faithfully', path + '/' + pointer(key));
-      if (Array.isArray(value) && !/^(0|[1-9][0-9]*)$/.test(key)) throw new UmfError('NON_JSON', 'Non-index array property', path);
+      if (Array.isArray(value) && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= 0xffff_ffff || Number(key) >= value.length)) throw new UmfError('NON_JSON', 'Non-index array property', path);
       const item = visit(descriptor.value, path + '/' + pointer(key), depth + 1);
       Object.defineProperty(result, key, { value: item, enumerable: true, writable: true, configurable: true });
     }

@@ -1,0 +1,771 @@
+{
+  "status": "draft-candidate-browser-passed",
+  "nativeImplementationQualified": false,
+  "sourceDigests": {
+    "src/extensions/security/relationship-candidate.ts": "e9ef75387e3075814006718a232d166b7d8f76d87f250621b7293e824fae6835",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "docs/helix/04-build/evidence/security/relationship-selector-spike.json": "401e96d72b9301fca081b637ddfec818b0193206a3d8e3d236e3ef42ffa35169",
+    "tools/security/relationship-candidate-browser.ts": "cee327d78d63a5a9126d2cdbe052a0d080e7fb74b8bfc87bb213e3cae0f55dd4"
+  },
+  "browser": "153.0.8010.12",
+  "externalRequests": 0,
+  "observations": [
+    {
+      "id": "original-plan-correspondence",
+      "expected": {
+        "kind": "candidate-relationship-semantics/0.1",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "sourceRelationship": {
+          "id": "WorksOn",
+          "name": "WorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "associationRecord": {
+            "module": "m",
+            "element": "Assignment",
+            "key": "code-key"
+          }
+        },
+        "witness": {
+          "kind": "record-key",
+          "type": {
+            "documentId": "security-graph-candidate",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          "key": {
+            "id": "code-key",
+            "name": "code-key",
+            "fields": [
+              {
+                "module": "m",
+                "element": "Assignment-code"
+              }
+            ],
+            "primary": true
+          },
+          "sourceRecord": {
+            "id": "Assignment",
+            "kind": "record",
+            "members": [
+              {
+                "module": "m",
+                "element": "Assignment-active"
+              },
+              {
+                "module": "m",
+                "element": "Assignment-code"
+              }
+            ],
+            "keys": [
+              {
+                "id": "code-key",
+                "name": "code-key",
+                "fields": [
+                  {
+                    "module": "m",
+                    "element": "Assignment-code"
+                  }
+                ],
+                "primary": true
+              }
+            ],
+            "extensions": {}
+          },
+          "attributes": [
+            {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Assignment-active"
+            },
+            {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Assignment-code"
+            }
+          ]
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "side": "source",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Employee"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Employee-code"
+                }
+              ],
+              "primary": true
+            }
+          },
+          {
+            "role": "project",
+            "side": "target",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Project-code"
+                }
+              ],
+              "primary": true
+            }
+          }
+        ]
+      },
+      "observed": {
+        "kind": "candidate-relationship-semantics/0.1",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "sourceRelationship": {
+          "id": "WorksOn",
+          "name": "WorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "associationRecord": {
+            "module": "m",
+            "element": "Assignment",
+            "key": "code-key"
+          }
+        },
+        "witness": {
+          "kind": "record-key",
+          "type": {
+            "documentId": "security-graph-candidate",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          "key": {
+            "id": "code-key",
+            "name": "code-key",
+            "fields": [
+              {
+                "module": "m",
+                "element": "Assignment-code"
+              }
+            ],
+            "primary": true
+          },
+          "sourceRecord": {
+            "id": "Assignment",
+            "kind": "record",
+            "members": [
+              {
+                "module": "m",
+                "element": "Assignment-active"
+              },
+              {
+                "module": "m",
+                "element": "Assignment-code"
+              }
+            ],
+            "keys": [
+              {
+                "id": "code-key",
+                "name": "code-key",
+                "fields": [
+                  {
+                    "module": "m",
+                    "element": "Assignment-code"
+                  }
+                ],
+                "primary": true
+              }
+            ],
+            "extensions": {}
+          },
+          "attributes": [
+            {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Assignment-active"
+            },
+            {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Assignment-code"
+            }
+          ]
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "side": "source",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Employee"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Employee-code"
+                }
+              ],
+              "primary": true
+            }
+          },
+          {
+            "role": "project",
+            "side": "target",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Project-code"
+                }
+              ],
+              "primary": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "bare-plan-correspondence",
+      "expected": {
+        "kind": "candidate-relationship-semantics/0.1",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "BareWorksOn"
+        },
+        "sourceRelationship": {
+          "id": "BareWorksOn",
+          "name": "BareWorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        "witness": {
+          "kind": "opaque-existential"
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "side": "source",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Employee"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Employee-code"
+                }
+              ],
+              "primary": true
+            }
+          },
+          {
+            "role": "project",
+            "side": "target",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Project-code"
+                }
+              ],
+              "primary": true
+            }
+          }
+        ]
+      },
+      "observed": {
+        "kind": "candidate-relationship-semantics/0.1",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "BareWorksOn"
+        },
+        "sourceRelationship": {
+          "id": "BareWorksOn",
+          "name": "BareWorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        "witness": {
+          "kind": "opaque-existential"
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "side": "source",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Employee"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Employee-code"
+                }
+              ],
+              "primary": true
+            }
+          },
+          {
+            "role": "project",
+            "side": "target",
+            "target": {
+              "documentId": "security-graph-candidate",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "key": {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Project-code"
+                }
+              ],
+              "primary": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "bare-term-exists",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "bare-term-endpoint",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "bare-term-identity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bare-term-attribute",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bare-term-count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bare-term-distinct",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bare-term-disclose",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "copied-plan-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "entity-key-mismatch-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "accessor-refusal",
+      "expected": {
+        "refused": true,
+        "calls": 0
+      },
+      "observed": {
+        "refused": true,
+        "calls": 0
+      }
+    },
+    {
+      "id": "key-bound-endpoint-4096",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "key-bound-endpoint-4097",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "key-bound-witness-4096",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "key-bound-witness-4097",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unsupported-source-undirected",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unsupported-source-plural-source",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unsupported-source-plural-target",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unsupported-source-duplicate-relationship",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "source-annotation-retention",
+      "expected": {
+        "opaque": [
+          "keep"
+        ],
+        "frozen": true
+      },
+      "observed": {
+        "opaque": [
+          "keep"
+        ],
+        "frozen": true
+      }
+    },
+    {
+      "id": "selected-endpoint",
+      "expected": {
+        "kind": "entity-identity",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "role": "staff",
+        "side": "source",
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Employee"
+        },
+        "key": {
+          "id": "code-key",
+          "name": "code-key",
+          "fields": [
+            {
+              "module": "m",
+              "element": "Employee-code"
+            }
+          ],
+          "primary": true
+        }
+      },
+      "observed": {
+        "kind": "entity-identity",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "role": "staff",
+        "side": "source",
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Employee"
+        },
+        "key": {
+          "id": "code-key",
+          "name": "code-key",
+          "fields": [
+            {
+              "module": "m",
+              "element": "Employee-code"
+            }
+          ],
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "selected-record-identity",
+      "expected": {
+        "kind": "record-identity",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "key": {
+          "id": "code-key",
+          "name": "code-key",
+          "fields": [
+            {
+              "module": "m",
+              "element": "Assignment-code"
+            }
+          ],
+          "primary": true
+        }
+      },
+      "observed": {
+        "kind": "record-identity",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "key": {
+          "id": "code-key",
+          "name": "code-key",
+          "fields": [
+            {
+              "module": "m",
+              "element": "Assignment-code"
+            }
+          ],
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "selected-record-attribute",
+      "expected": {
+        "kind": "record-attribute",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "field": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment-active"
+        }
+      },
+      "observed": {
+        "kind": "record-attribute",
+        "relationship": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "relationshipId": "WorksOn"
+        },
+        "type": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "field": {
+          "documentId": "security-graph-candidate",
+          "moduleId": "m",
+          "elementId": "Assignment-active"
+        }
+      }
+    },
+    {
+      "id": "selected-attribute-freeze",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-missing-role",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-wrong-field-owner",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-foreign-field",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-unknown-qualifier",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-copied-plan",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-bare-identity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-refusal-bare-attribute",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selected-accessor-refusal",
+      "expected": {
+        "refused": true,
+        "calls": 0
+      },
+      "observed": {
+        "refused": true,
+        "calls": 0
+      }
+    }
+  ],
+  "scope": "Portable private draft normalization and witness term capability checks in real Chromium; source-authenticated runtime witnesses, public ontology, policy/compiler integration and native enforcement remain unqualified."
+}

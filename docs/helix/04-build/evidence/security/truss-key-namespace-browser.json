@@ -1,0 +1,131 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-namespace.ts": "97036be2d955336de8dccd08e8281269263e8c4d49e9b73cf36045a845bc6ce4",
+    "tools/security/truss-key-namespace-browser.ts": "571743124fc5097fa5db405263269e00afc3b7341bfbf5547ba997babd39f908",
+    "docs/helix/04-build/evidence/security/truss-key-namespace-replay.json": "6e83061e2648f12be626514b457b3f9a0e5d38b953ac262dfd5833de581c5ac4"
+  },
+  "browser": "153.0.8010.12",
+  "observed": {
+    "results": [
+      {
+        "id": "original-positive-profile",
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "signed-minimum",
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "signed-maximum",
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "signed-zero",
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "original-native-control-unicode-spelling",
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "positive-zero",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "positive-negative",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "type-overflow",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "key-overflow",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "negative-zero",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "leading-zero",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "leading-plus",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "native-number-carrier",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "unknown-profile",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "changed-installation",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "changed-epoch",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "changed-native-type",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "changed-native-key",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "changed-codec-pin",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "noncanonical-whitespace",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "trailing-original-byte",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "malformed-utf8",
+        "observed": false,
+        "expected": false
+      },
+      {
+        "id": "unknown-selection-meaning",
+        "observed": false,
+        "expected": false
+      }
+    ],
+    "hostGlobals": []
+  },
+  "externalRequests": 0,
+  "scope": "Actual portable Truss namespace grammar/correspondence in real Chromium using immutable replay of original native canonical outputs. Signed/positive domains, exact canonical spelling and copied selection verified. Original producer/current native authority, actual zero/nonpositive definitions and protected graph/profile admission remain unqualified."
+}

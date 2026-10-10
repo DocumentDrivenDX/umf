@@ -1,3 +1,7 @@
+import properties from '../../spec/core/schema-properties-document.schema.json';
+import schemaV4 from '../../spec/core/facet-operation-v4.schema.json';
+export {default as coreFacetOperationV4Schema} from '../../spec/core/facet-operation-v4.schema.json';
+import type {CoreLiteral} from './schema-literals';
 import relationships from '../../spec/core/relationship-document.schema.json';
 import schemaV3 from '../../spec/core/facet-operation-v3.schema.json';
 export {default as coreFacetOperationV3Schema} from '../../spec/core/facet-operation-v3.schema.json';
@@ -13,12 +17,14 @@ import legacy from '../../spec/core/schema.json';import fields from '../../spec/
 export {default as coreFacetOperationSchema} from '../../spec/core/facet-operation.schema.json';
 export interface CoreFacetIdentity {module:string;element:string}
 export interface CoreFacetPatch {length?:{max:number;unit:'unicode-scalar'|'byte'};precision?:number;scale?:number;integerWidth?:{bits:number;signed:boolean}}
-export interface CoreFacets {length?:{max:number;unit:string;[key:string]:unknown};precision?:number;scale?:number;integerWidth?:{bits:number;signed:boolean;[key:string]:unknown};[key:string]:unknown}
-export type CoreFacetMeaning={state:'missing'|'inapplicable'}|{state:'legacy';value:Json}|{state:'known'|'partial';facets:CoreFacets;interpreted:CoreFacetPatch;uninterpretedPaths:string[]};
-export interface CoreFacetInspection {operation:'inspect-core-facets';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;identity:CoreFacetIdentity;path:string;meaning:CoreFacetMeaning;provenance:'unverified'}
+export interface CoreFacetInterpreted {length?:{min?:number;max?:number;unit:'unicode-scalar'|'byte'};precision?:number;scale?:number;integerWidth?:{bits:number;signed:boolean};collectionSize?:{min?:number;max?:number};range?:{min?:CoreLiteral;max?:CoreLiteral;minInclusive?:boolean;maxInclusive?:boolean}}
+export interface CoreFacets {length?:{min?:number;max?:number;unit:string;[key:string]:unknown};precision?:number;scale?:number;integerWidth?:{bits:number;signed:boolean;[key:string]:unknown};[key:string]:unknown}
+export type CoreFacetMeaning={state:'missing'|'inapplicable'}|{state:'legacy';value:Json}|{state:'known'|'partial';facets:CoreFacets;interpreted:CoreFacetInterpreted;uninterpretedPaths:string[]};
+export interface CoreFacetInspection {operation:'inspect-core-facets';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;identity:CoreFacetIdentity;path:string;meaning:CoreFacetMeaning;provenance:'unverified'}
 export interface CoreFacetDeclaration {operation:'declare-core-facets';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;target:Document;identity:CoreFacetIdentity;request:CoreFacetPatch;provenance:{origin:'authored';idealPath:string;binding:{id:'umf.core.facets.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'};basis:'explicit-author-declaration';nativePath:null}}
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships])validator.addSchema(s);
-const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3);const checker=(version:unknown)=>version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;const checkRequest=validator.compile({$defs:schema.$defs,$ref:'#/$defs/request'});
+const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships,properties])validator.addSchema(s);
+const checkV4=validator.compile(schemaV4),checkInterpreted=validator.compile({$defs:schemaV4.$defs,$ref:'#/$defs/bounds'});
+const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3);const checker=(version:unknown)=>version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;const checkRequest=validator.compile({$defs:schema.$defs,$ref:'#/$defs/request'});
 function finish<T extends {version:string}>(value:T):T{const copied=copyJson(value),check=checker(value.version);if(!check(copied))throw new UmfError('CORE_FACET_RESULT',JSON.stringify(check.errors));return copied as T;}
 function locate(input:Document,identityInput:CoreFacetIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreFacetIdentity;
@@ -32,17 +38,25 @@ function locate(input:Document,identityInput:CoreFacetIdentity){
 export function inspectCoreFacets(input:Document,identity:CoreFacetIdentity):CoreFacetInspection {
  const located=locate(input,identity),{source,element,path}=located;let meaning:CoreFacetMeaning={state:'missing'};
  if(Object.hasOwn(element,'facets')){
-  if(source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0')meaning={state:'legacy',value:copyJson(element.facets)};
+  if(source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0'&&source.umf!=='0.8.0')meaning={state:'legacy',value:copyJson(element.facets)};
   else{
-   const value=copyJson(element.facets) as unknown as CoreFacets,interpreted:CoreFacetPatch={};
-   if(value.length&&(value.length.unit==='unicode-scalar'||value.length.unit==='byte'))interpreted.length={max:value.length.max,unit:value.length.unit};
+   const value=copyJson(element.facets) as unknown as CoreFacets,interpreted:CoreFacetInterpreted={};
+   if(value.length&&(value.length.unit==='unicode-scalar'||value.length.unit==='byte'))interpreted.length={...(value.length.max!==undefined?{max:value.length.max}:{}),...(source.umf==='0.8.0'&&value.length.min!==undefined?{min:value.length.min}:{}),unit:value.length.unit};
    if(value.integerWidth)interpreted.integerWidth={bits:value.integerWidth.bits,signed:value.integerWidth.signed};
    if(value.precision!==undefined){interpreted.precision=value.precision;interpreted.scale=value.scale!;}
-   const uninterpretedPaths=validateFacetElement(element,path.slice(0,-7)).diagnostics.filter(d=>d.severity==='warning').map(d=>d.path);
+   if(source.umf==='0.8.0'){
+    for(const group of ['collectionSize','range'] as const){
+     const raw=value[group] as Record<string,Json>|undefined;if(!raw)continue;
+     const selected:Record<string,Json>={};
+     for(const key of group==='range'?['min','max','minInclusive','maxInclusive']:['min','max'])if(Object.hasOwn(raw,key))selected[key]=copyJson(raw[key]!);
+     Object.assign(interpreted,{[group]:selected});
+    }
+   }
+   const uninterpretedPaths=(source.umf==='0.8.0'?validateDocument(source).diagnostics.filter(d=>d.path.startsWith(path+'/')):validateFacetElement(element,path.slice(0,-7)).diagnostics).filter(d=>d.severity==='warning').map(d=>d.path);
    meaning={state:uninterpretedPaths.length?'partial':'known',facets:value,interpreted,uninterpretedPaths};
   }
- }else if((source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0'))&&element.kind!=='field')meaning={state:'inapplicable'};
- return finish({operation:'inspect-core-facets',version:source.umf==='0.7.0'?'3.0.0':source.umf==='0.6.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
+ }else if((source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0'||source.umf==='0.8.0'))&&element.kind!=='field')meaning={state:'inapplicable'};
+ return finish({operation:'inspect-core-facets',version:source.umf==='0.8.0'?'4.0.0':source.umf==='0.7.0'?'3.0.0':source.umf==='0.6.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
 }
 /** Patch known groups only; omitted groups and unknown nested qualifiers remain attached. */
 export function declareCoreFacets(input:Document,identity:CoreFacetIdentity,options:CoreFacetPatch):CoreFacetDeclaration {
@@ -63,6 +77,13 @@ export function declareCoreFacets(input:Document,identity:CoreFacetIdentity,opti
  return finish({operation:'declare-core-facets',version:source.umf==='0.7.0'?'3.0.0':source.umf==='0.6.0'?'2.0.0':'1.0.0',source,target,identity:located.identity,request,provenance:{origin:'authored',idealPath:path,binding:{id:'umf.core.facets.authoring',version:source.umf==='0.7.0'?'3.0.0':source.umf==='0.6.0'?'2.0.0':'1.0.0'},basis:'explicit-author-declaration',nativePath:null}});
 }
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical(value[key]!)).join(',')+'}':JSON.stringify(value);
+/** Historical projection bridge: refuses newer bounds rather than dropping them. */
+export function historicalCoreFacetPatch(input:CoreFacetInterpreted):CoreFacetPatch {
+ const value=copyJson(input) as unknown as CoreFacetInterpreted;
+ if(!checkInterpreted(value))throw new UmfError('CORE_FACET_PROJECTION_INPUT','Expected closed interpreted facet groups');
+ if(value.collectionSize!==undefined||value.range!==undefined||value.length?.min!==undefined||value.length&&value.length.max===undefined)throw new UmfError('CORE_FACET_PROJECTION_VERSION','Historical facet projection cannot represent schema-properties bounds');
+ return {...(value.length?{length:{max:value.length.max!,unit:value.length.unit}}:{}),...(value.integerWidth?{integerWidth:copyJson(value.integerWidth) as {bits:number;signed:boolean}}:{}),...(value.precision!==undefined?{precision:value.precision,scale:value.scale!}:{})};
+}
 /** Receipt consistency and current-document check, not source authentication. */
 export function verifyCoreFacetDeclaration(input:CoreFacetDeclaration,current:Document):CoreFacetDeclaration {
  const receipt=copyJson(input) as unknown as CoreFacetDeclaration;

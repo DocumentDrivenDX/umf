@@ -1,0 +1,145 @@
+{
+  "id": "kind-completeness-astra-review",
+  "status": "qualified-conditional-formal-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T11:31:12.592703+00:00",
+  "sourceDigests": {
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "5c1ed7103034524cae9655e06bf2a1fb4d409ac9a8a7361b14490c8ce22e6014",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json": "2248a1d2887bdc487e13544ac6b9d8ee785a32a55b0e8aab4c038d277285be34",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "676101a8c36e7fd626469f26adc529a773d667f2dc6add82dfb4107281a668f2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "21cd5b26a3c838e2580301e0b6ce850d26afca587c9e3f6f28b34083983efcb1",
+    "/private/tmp/kind-completeness-astra-review.py": "f3810c3bd131598c4caab3249b3fcbfad4eb864528e9aa9f8d2d5aba185221cb",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/kind-completeness-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "f3810c3bd131598c4caab3249b3fcbfad4eb864528e9aa9f8d2d5aba185221cb",
+    "source": "\"\"\"Independent replay of the saved finite kind-completeness design experiment.\"\"\"\nimport hashlib, importlib.util, json, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF = Path('/private/tmp/kind-completeness-astra-review.py')\nif Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF or len(sys.argv) != 1:\n    raise RuntimeError('Unknown exact review invocation')\nPROOF = ROOT / 'docs/helix/04-build/evidence/security/kind-completeness-formal.json'\nSCRIPT = ROOT / 'tools/security/prove-kind-completeness.py'\nANNEX = ROOT / 'docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md'\nRUST = Path('/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs')\nOUT = ROOT / 'docs/helix/04-build/evidence/security/kind-completeness-astra-review.json'\nsha = lambda b: hashlib.sha256(b).hexdigest()\nspec = importlib.util.find_spec('z3')\nassert spec and spec.origin\nsolver_root = Path(spec.origin).resolve().parent\npaths = {SELF, PROOF, SCRIPT, ANNEX, RUST, Path(sys.executable).resolve()}\npaths.update(p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc')\nfrozen = {str(p): p.read_bytes() for p in sorted(paths)}\nprior = OUT.read_bytes() if OUT.exists() else None\nproof = json.loads(frozen[str(PROOF)])\nassert proof['sourceDigests'] == {str(p): sha(frozen[str(p)]) for p in [SCRIPT, ANNEX, RUST]}\nassert proof['status'] == 'conditional-proof-passed' and proof['sourcesUnchanged'] is True\nassert proof['nativeImplementationQualified'] is False and proof['acceptanceCasesPromoted'] == []\nlaws = ['same-source-kinds-cannot-fragment-across-origins',\n        'different-scopes-may-use-different-instance-complete-origins',\n        'instance-completeness-cannot-discharge-native-evidence']\nassert [c['id'] for c in proof['cases']] == laws\nimport z3\nrows = []\nfor case in proof['cases']:\n    for kind, expected in [('violation', 'unsat'), ('negativeControl', 'sat'), ('positivePopulation', 'sat')]:\n        q = case[kind]\n        assert q['result'] == expected and q['replayResult'] == expected\n        ctx = z3.Context()\n        solver = z3.Solver(ctx=ctx)\n        solver.set(timeout=30000)\n        solver.from_string(q['smt'])\n        observed = str(solver.check())\n        if observed != expected:\n            raise RuntimeError(case['id'] + '/' + kind + ': ' + observed)\n        rows.append({'id': case['id'] + '/' + kind, 'expected': expected, 'observed': observed,\n                     'smtSha256': sha(q['smt'].encode()), 'freshContext': True})\n        del solver, ctx\nif any(Path(p).read_bytes() != b for p, b in frozen.items()):\n    raise RuntimeError('Captured source/runtime changed')\nif (OUT.read_bytes() if OUT.exists() else None) != prior:\n    raise RuntimeError('Previous review changed')\nr = {\n    'id': 'kind-completeness-astra-review',\n    'status': 'qualified-conditional-formal-review-passed',\n    'reviewer': '/root/astra_security_review',\n    'generatedAt': datetime.now(timezone.utc).isoformat(),\n    'sourceDigests': {p: sha(b) for p, b in frozen.items()},\n    'sourcesUnchanged': True,\n    'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n                     'sourceSha256': sha(frozen[str(SELF)]), 'source': frozen[str(SELF)].decode()},\n    'formalReplay': {'receipt': str(PROOF), 'sha256': sha(frozen[str(PROOF)]),\n                     'solverVersion': z3.get_version_string(), 'formulaCount': len(rows), 'observations': rows},\n    'sourceReview': [\n        'The first law fixes one source, two independent kinds and two origins. The split population makes the old source-presence rule succeed while neither origin covers both kinds. Its positive population forces both kinds at one origin.',\n        'The second law fixes two scopes and opposite complete origins, distinguishing per-scope choice from an incorrect single global-origin intersection.',\n        'The third law keeps instance completeness true while deleting only the native-evidence conjunct; its positive population requires both conditions.',\n        'The annex separates RequiredPremise0.1 source completeness from a future typed kind/occurrence inventory and separately registered profile. Exact site/failure/prerequisite mappings and issuer authentication remain explicitly open.',\n    ],\n    'remainingFindings': [],\n    'scope': 'Independent fresh-context replay of nine saved SMT formulas plus read-only producer/design inspection. These are three finite Boolean design laws, with three UNSAT properties and six SAT positive/mutant controls. They model a fixed two-kind/two-origin counterexample, two-scope alternatives and a separate native conjunct. No arbitrary-population theorem, typed occurrence extraction, profile completeness/authentication, implemented kind matcher, Rust refinement or native enforcement is established. The source-only Rust matcher is pinned for lineage, not executed or proved by this review. The producer, Cargo and native fixtures were not run. Solver package and Python executable bytes are retained; system libraries/platform remain trusted premises.',\n    'nativeImplementationQualified': False,\n    'acceptanceCasesPromoted': [],\n    'acceptanceCriteria': ['US-056-AC7', 'US-056-AC10'],\n}\nif prior is not None:\n    h = sha(prior)\n    archive = OUT.with_name(OUT.stem + '-prior-' + h[:16] + '.json')\n    if archive.exists() and archive.read_bytes() != prior:\n        raise RuntimeError('Archive collision')\n    if not archive.exists():\n        archive.write_bytes(prior)\n    r['previousReceipt'] = {'path': str(archive), 'sha256': h, 'scope': 'Historical only.'}\nOUT.write_text(json.dumps(r, indent=2) + '\\n')\nprint(json.dumps({'status': r['status'], 'formulas': len(rows), 'unsat': sum(o['observed'] == 'unsat' for o in rows),\n                  'sat': sum(o['observed'] == 'sat' for o in rows), 'sourcePins': len(frozen),\n                  'sourcesUnchanged': True, 'output': str(OUT), 'sha256': sha(OUT.read_bytes())}))\n"
+  },
+  "formalReplay": {
+    "receipt": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json",
+    "sha256": "2248a1d2887bdc487e13544ac6b9d8ee785a32a55b0e8aab4c038d277285be34",
+    "solverVersion": "4.15.4",
+    "formulaCount": 9,
+    "observations": [
+      {
+        "id": "same-source-kinds-cannot-fragment-across-origins/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "7ea5dbe40eb5b05b8f72e864b63125fb9ce625e3c895a63312699b077660dfd4",
+        "freshContext": true
+      },
+      {
+        "id": "same-source-kinds-cannot-fragment-across-origins/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "54a22745ac5647378f4026ecf6af9b7f5bc8c870fc126bb97b145046e3061ee4",
+        "freshContext": true
+      },
+      {
+        "id": "same-source-kinds-cannot-fragment-across-origins/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f3697c4d945d522b4f6c3d8024a2be362a4ab416c06683e8cb004cf4503f94ab",
+        "freshContext": true
+      },
+      {
+        "id": "different-scopes-may-use-different-instance-complete-origins/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "87ce3286da471de6d76e178bb7f1605cfa2ed436918f67a7406b49d61486402e",
+        "freshContext": true
+      },
+      {
+        "id": "different-scopes-may-use-different-instance-complete-origins/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "4e86c63363c85b24e41cba4a327cc37b32c0d395d6a0a1a857bdec4119a25a06",
+        "freshContext": true
+      },
+      {
+        "id": "different-scopes-may-use-different-instance-complete-origins/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9c3cfc373dcdcba97f4138a18099c22738cd75597dc569e84ea8e1e3ac863062",
+        "freshContext": true
+      },
+      {
+        "id": "instance-completeness-cannot-discharge-native-evidence/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "1c50b6be9d443f7e80deaba433fc24bad21f53659e67f385ca768d25ae0d2d14",
+        "freshContext": true
+      },
+      {
+        "id": "instance-completeness-cannot-discharge-native-evidence/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9ef619e57664475332dca938301f881134b7276d3624b98ce315f020f3263d5b",
+        "freshContext": true
+      },
+      {
+        "id": "instance-completeness-cannot-discharge-native-evidence/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "49aa8da3935e58b7847f1593a7e30832d9e4f0a5fa093a7d950ade178c43b9c2",
+        "freshContext": true
+      }
+    ]
+  },
+  "sourceReview": [
+    "The first law fixes one source, two independent kinds and two origins. The split population makes the old source-presence rule succeed while neither origin covers both kinds. Its positive population forces both kinds at one origin.",
+    "The second law fixes two scopes and opposite complete origins, distinguishing per-scope choice from an incorrect single global-origin intersection.",
+    "The third law keeps instance completeness true while deleting only the native-evidence conjunct; its positive population requires both conditions.",
+    "The annex separates RequiredPremise0.1 source completeness from a future typed kind/occurrence inventory and separately registered profile. Exact site/failure/prerequisite mappings and issuer authentication remain explicitly open."
+  ],
+  "remainingFindings": [],
+  "scope": "Independent fresh-context replay of nine saved SMT formulas plus read-only producer/design inspection. These are three finite Boolean design laws, with three UNSAT properties and six SAT positive/mutant controls. They model a fixed two-kind/two-origin counterexample, two-scope alternatives and a separate native conjunct. No arbitrary-population theorem, typed occurrence extraction, profile completeness/authentication, implemented kind matcher, Rust refinement or native enforcement is established. The source-only Rust matcher is pinned for lineage, not executed or proved by this review. The producer, Cargo and native fixtures were not run. Solver package and Python executable bytes are retained; system libraries/platform remain trusted premises.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "acceptanceCriteria": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ]
+}

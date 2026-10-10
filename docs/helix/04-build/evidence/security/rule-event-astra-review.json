@@ -1,0 +1,487 @@
+{
+  "id": "rule-event-astra-review",
+  "status": "qualified-rule-event-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T11:57:30.839717+00:00",
+  "sourceDigests": {
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "af2e12631098fac92160f5771d656a3551a20842bdb8c9d24469296dc772f6aa",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md": "e15678519812cf153e092efbe952d2061020e8b06f1b271cb660a987b10968a6",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json": "4043a60e458243d17f7781622ce09ef4f44bdcaa529f6f426644f9409615dda5",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/rule-event-custody.json": "44b4c5553bb9cf9ea224ed538b21a2fa4690efb6c59b65cfcbd813e8a7d51bf0",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/source-demands-formal.json": "6dea51806d28a6dae35b429f0b910ee444c3d845b6306e519bf4636ee33f0617",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "85a72af332ea09ae33b6daac9494ea6d499e82322c8cf5b4e4c9dc0478ba36b1",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-source-demands.py": "538c86a50d47573913062f4ad956bab38c117690998b4ab15129f1bd23e20c30",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "3130863e6c071bd3dd15100dc74e22d840decc0a1fc8e3fdcfc86eb1ce41788a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "06f995cea6f98dfac0e19b1a0d876090fadadc9a7ee543bc1b6a2761748f63be",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "bcacdc84de19ba38e32abd86413bbc067f98e017bde9baf054839c8794ddb4f2",
+    "/private/tmp/rule-event-astra-review.py": "d908f1c609d743190c11179e25ea70519c1955bc28f5aa00b0b1dc3423fc5c3f",
+    "/private/tmp/security-rule-event-core.log": "f5832654533bed9a3fab27395f3337fac5fd3ea43ee9360b1fc4f3bc3acb594d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/rule-event-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "d908f1c609d743190c11179e25ea70519c1955bc28f5aa00b0b1dc3423fc5c3f",
+    "source": "\"\"\"Independent read-only owner-event audit and saved-SMT replay; no Cargo/native.\"\"\"\nimport hashlib, importlib.util, json, re, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nOWNER = Path('/Users/erik/Projects/weft')\nSELF = Path('/private/tmp/rule-event-astra-review.py')\nif Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF or len(sys.argv) != 1:\n    raise RuntimeError('Unknown exact review invocation')\nBASE = ROOT / 'docs/helix/04-build/evidence/security'\nOUT = BASE / 'rule-event-astra-review.json'\nLOG = Path('/private/tmp/security-rule-event-core.log')\nsha = lambda b: hashlib.sha256(b).hexdigest()\ngroups = [\n    ('source-demands-formal', [\n        'whole-capability-before-source-quantifier',\n        'different-scopes-may-use-different-complete-capabilities',\n        'original-use-needs-primary-original-and-application',\n        'equal-marginals-cannot-substitute-scoped-edges',\n        'source-correspondence-cannot-discharge-native-execution',\n    ], [ROOT / 'tools/security/prove-source-demands.py',\n        ROOT / 'docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md',\n        OWNER / 'crates/weft-core/src/security_obligation_sources.rs',\n        OWNER / 'crates/weft-core/src/security_semantic_coverage.rs']),\n    ('kind-completeness-formal', [\n        'same-source-kinds-cannot-fragment-across-origins',\n        'different-scopes-may-use-different-instance-complete-origins',\n        'instance-completeness-cannot-discharge-native-evidence',\n    ], [ROOT / 'tools/security/prove-kind-completeness.py',\n        ROOT / 'docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md',\n        OWNER / 'crates/weft-core/src/security_obligation_matching.rs']),\n]\nspec = importlib.util.find_spec('z3')\nassert spec and spec.origin\nsolver_root = Path(spec.origin).resolve().parent\ndef solver_files():\n    return {p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'}\nruntime_paths = solver_files()\npaths = {SELF, LOG, BASE / 'rule-event-custody.json', OWNER / 'crates/weft-core/src/security_ir.rs', OWNER / 'crates/weft-core/src/security_requirements.rs', Path(sys.executable).resolve(), *runtime_paths,\n         OWNER / 'docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md'}\nfor name, laws, source_paths in groups:\n    paths.add(BASE / (name + '.json'))\n    paths.update(source_paths)\nfrozen = {str(p): p.read_bytes() for p in sorted(paths)}\nprior = OUT.read_bytes() if OUT.exists() else None\nhistorical_paths = [BASE / 'owner-events-astra-review.json', BASE / 'kind-instance-astra-review.json',\n                    BASE / 'kind-completeness-astra-review.json',\n                    BASE / 'scoped-obligations-astra-review.json']\nhistorical = {str(p): p.read_bytes() for p in historical_paths if p.exists()}\nimport z3\nassert z3.get_version_string() == '4.15.4'\nformal_observations, receipt_audits = [], []\nfor name, laws, source_paths in groups:\n    path = BASE / (name + '.json')\n    raw = frozen[str(path)]\n    proof = json.loads(raw)\n    expected_pins = {str(p): sha(frozen[str(p)]) for p in source_paths}\n    assert proof['sourceDigests'] == expected_pins, name + ': source inventory/digest mismatch'\n    assert proof['status'] == 'conditional-proof-passed' and proof['sourcesUnchanged'] is True\n    assert proof['nativeImplementationQualified'] is False and proof['acceptanceCasesPromoted'] == []\n    assert proof['solverVersion'] == '4.15.4'\n    assert [c['id'] for c in proof['cases']] == laws\n    for case in proof['cases']:\n        assert case['covers'] == ['US-056-AC7', 'US-056-AC10']\n        for kind, expected in [('violation', 'unsat'), ('negativeControl', 'sat'), ('positivePopulation', 'sat')]:\n            query = case[kind]\n            assert query['result'] == expected and query['replayResult'] == expected\n            ctx = z3.Context()\n            solver = z3.Solver(ctx=ctx)\n            solver.set(timeout=30000)\n            solver.from_string(query['smt'])\n            observed = str(solver.check())\n            if observed != expected:\n                raise RuntimeError(name + '/' + case['id'] + '/' + kind + ': ' + observed)\n            formal_observations.append({'id': name + '/' + case['id'] + '/' + kind,\n                'receipt': name, 'law': case['id'], 'queryKind': kind,\n                'expected': expected, 'observed': observed,\n                'smtSha256': sha(query['smt'].encode()), 'freshContext': True})\n            del solver, ctx\n    receipt_audits.append({'path': str(path), 'sha256': sha(raw),\n        'lawCount': len(laws), 'formulaCount': len(laws) * 3,\n        'sourceDigests': expected_pins, 'exactSourceInventoryMatched': True})\nassert len(formal_observations) == 24 and len({o['id'] for o in formal_observations}) == 24\nassert sum(o['observed'] == 'unsat' for o in formal_observations) == 8\nassert sum(o['observed'] == 'sat' for o in formal_observations) == 16\n\n# Review calculations and assertions qualify inspected source/test artifacts only.\nrule_tokens = ['rule', 's0', 'read', 'reader']\nid_bytes = json.dumps(rule_tokens, separators=(',', ':')).encode()\nassert len(id_bytes) == 29\ncharges = [('four token visits', 4, sum(len(x.encode()) for x in rule_tokens)),\n           ('encoded ID', 1, len(id_bytes)), ('retained rule-map ID', 1, len(id_bytes))]\nassert (sum(c[1] for c in charges), sum(c[2] for c in charges)) == (6, 74)\nlog = frozen[str(LOG)].decode()\nsummaries = re.findall(r'^test result: ok\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored; (\\d+) measured; (\\d+) filtered out; finished in [0-9.]+s$', log, re.M)\nassert summaries == [('128', '0', '0', '0', '0')]\ntest_names = [\n    'security_obligation_sources::tests::rule_retention_requires_exact_owner_pointer_and_independent_copy_budget',\n    'security_semantic_coverage::tests::rule_event_custody_retains_both_scan_and_action_coordinates',\n    'security_semantic_coverage::tests::issued_source_demands_keep_output_selfjoin_and_false_branch_ownership',\n    'security_semantic_coverage::tests::issued_source_demands_match_independent_complete_fixture_map_and_exact_budgets',\n]\nfor name in test_names:\n    assert len(re.findall(r'^test ' + re.escape(name) + r' \\.\\.\\. ok$', log, re.M)) == 1\nparent_path = BASE / 'rule-event-custody.json'\nparent = json.loads(frozen[str(parent_path)])\nassert parent['status'] == 'private-rule-semantic-custody-tests-passed'\nassert parent['summary'] == {'passed':128, 'failed':0}\nassert type(parent['exitCode']) is int and parent['exitCode'] == 0\nassert parent['rawOutputSha256'] == sha(frozen[str(LOG)])\nassert parent['selectedPostRunSourcePins'] == {str(p):sha(frozen[str(p)]) for p in [\n    OWNER / 'crates/weft-core/src/security_obligation_sources.rs',\n    OWNER / 'crates/weft-core/src/security_semantic_coverage.rs']}\nassert parent['freshNativeExecution'] is False and parent['promotedAcceptanceCases'] == []\nexpected_rule_ids = [json.dumps(['rule',scan,action,name], separators=(',',':'))\n    for scan in ['s0','s1'] for action in ['read','query-original'] for name in ['reader','membership']]\nobservations = [\n    {'id':'actual-immutable-owner-rule-custody', 'expected':True, 'observed':True,\n     'method':'Read-only source inspection: private rule_events stores borrowed actual Rule pointers with coverage/context lifetime; conditions, effects, actions, target and dispositions remain on original Rule without cloning. Model dependencies remain reachable through context.'},\n    {'id':'independent-rule-retention-ledger', 'expected':{'work':6,'bytes':74},\n     'observed':{'work':sum(c[1] for c in charges),'bytes':sum(c[2] for c in charges)},\n     'charges':[{'operation':n,'work':w,'bytes':b} for n,w,b in charges],\n     'method':'Independent arithmetic for literal four-token ID; parent test has (6,74) pass, (5,74)/(6,73) refusals. No independent Rust execution.'},\n    {'id':'same-pointer-repeat-and-separately-allocated-equal-rule-refusal', 'expected':True,'observed':True,\n     'method':'Read-only review of direct retain_rule regression: equality and pointer-distinctness asserted before mutation; repeated original pointer accepted and equal clone refused at same ID. Only private intermediates mutate before Err.'},\n    {'id':'two-scans-two-actions-two-rules-complete-occurrences', 'expected':sorted(expected_rule_ids), 'observed':sorted(expected_rule_ids),\n     'method':'Read-only review of actual registered-context fixture; independent eight-ID inventory compared to issued map; each entry matches original plan pointer and singleton exact scan/action scope. Parent pass line checked.'},\n    {'id':'false-branch-custody-and-golden-rule-keys', 'expected':True,'observed':True,\n     'method':'Actual fixture retains And(false, original populated condition) by exact plan pointer at both self-join occurrences. Single-scan golden independently names reader and membership IDs.'},\n    {'id':'legacy-ledger-and-atomic-boundary', 'expected':True,'observed':True,\n     'method':'Read-only source inspection: retain_rule immediately returns on assignments None; ID encoding and retention charged before insertion; 4096 map/source bounds. No public partial inventory is returned on error.'},\n    {'id':'conditional-lineage-scope-only', 'expected':True,'observed':True,\n     'method':'Borrowed rule payload is not complete semantic kind/occurrence enumeration, independent template issuance, authenticated qualification, Rust refinement or native enforcement.'},\n]\nassert solver_files() == runtime_paths\nif any(Path(p).read_bytes() != data for p, data in frozen.items()):\n    raise RuntimeError('Captured input/runtime changed')\nif any(Path(p).read_bytes() != data for p, data in historical.items()):\n    raise RuntimeError('Historical review changed')\nif (OUT.read_bytes() if OUT.exists() else None) != prior:\n    raise RuntimeError('Previous owner-event review changed')\nreceipt = {\n    'id': 'rule-event-astra-review', 'status': 'qualified-rule-event-review-passed',\n    'reviewer': '/root/astra_security_review', 'generatedAt': datetime.now(timezone.utc).isoformat(),\n    'sourceDigests': {p: sha(data) for p, data in frozen.items()}, 'sourcesUnchanged': True,\n    'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n        'sourceSha256': sha(frozen[str(SELF)]), 'source': frozen[str(SELF)].decode()},\n    'formalReplay': {'solverVersion': z3.get_version_string(), 'formulaCount': 24,\n        'unsatCount': 8, 'satCount': 16, 'receipts': receipt_audits, 'observations': formal_observations},\n    'observations': observations,\n    'parentRustExecution': {'attribution': 'Parent-produced log; inspected only, not independently executed by this review.',\n        'path': str(LOG), 'sha256': sha(frozen[str(LOG)]), 'log': log,\n        'summary': {'passed': 128, 'failed': 0, 'ignored': 0, 'measured': 0, 'filtered': 0},\n        'requiredPassLines': test_names, 'independentlyExecuted': False, 'parentReceiptPath': str(parent_path), 'parentReceiptSha256': sha(frozen[str(parent_path)]),\n        'buildSourceCustodyQualifiedByThisReview': False},\n    'historicalReviews': [{'path': p, 'sha256': sha(data), 'preservedUnchanged': True,\n        'scope': 'Historical only; no pin refresh or freshness assertion.'} for p, data in historical.items()],\n    'scope': 'Read-only review of current private borrowed rule-event custody, source identity and scan/action coordinates, pointer-conflict refusal, phase-local budgets and new isolated controls. Independently replayed all15 source-demand and9 kind-completeness saved SMT formulas in separate fresh contexts, with exact closed law IDs, outcomes and current proof source path/digest inventories. These eight finite conditional Boolean laws do not prove rule extraction, arbitrary cardinalities, Rust refinement, independently complete typed kind/occurrence or case inventories, profile authentication or native enforcement. The 128-test Rust log and selected post-run parent pins are parent-attributed only, with no complete Rust build-custody claim. No Cargo, producer or native fixture was run. Review/runtime pins cover selected audited inputs, not a complete Rust build closure. Python executable and selected complete Z3 package files are pinned; platform/dynamic system libraries remain trusted. No complete semantic issuance, release authority or backend acceptance is established.',\n    'remainingFindings': [], 'nativeImplementationQualified': False, 'acceptanceCasesPromoted': [],\n    'acceptanceCriteria': ['US-056-AC7', 'US-056-AC10'],\n}\nif prior is not None:\n    h = sha(prior)\n    archive = OUT.with_name(OUT.stem + '-prior-' + h[:16] + '.json')\n    if archive.exists() and archive.read_bytes() != prior:\n        raise RuntimeError('Archive collision')\n    if not archive.exists(): archive.write_bytes(prior)\n    receipt['previousReceipt'] = {'path': str(archive), 'sha256': h, 'scope': 'Historical only.'}\nOUT.write_text(json.dumps(receipt, indent=2) + '\\n')\nprint(json.dumps({'status': receipt['status'], 'formulaCount': 24, 'unsat': 8, 'sat': 16,\n    'sourcePins': len(frozen), 'sourcesUnchanged': True, 'remainingFindings': [],\n    'parentRustTests': 128, 'independentRustExecution': False,\n    'output': str(OUT), 'sha256': sha(OUT.read_bytes())}))\n"
+  },
+  "formalReplay": {
+    "solverVersion": "4.15.4",
+    "formulaCount": 24,
+    "unsatCount": 8,
+    "satCount": 16,
+    "receipts": [
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/source-demands-formal.json",
+        "sha256": "6dea51806d28a6dae35b429f0b910ee444c3d845b6306e519bf4636ee33f0617",
+        "lawCount": 5,
+        "formulaCount": 15,
+        "sourceDigests": {
+          "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-source-demands.py": "538c86a50d47573913062f4ad956bab38c117690998b4ab15129f1bd23e20c30",
+          "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md": "e15678519812cf153e092efbe952d2061020e8b06f1b271cb660a987b10968a6",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "3130863e6c071bd3dd15100dc74e22d840decc0a1fc8e3fdcfc86eb1ce41788a",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "06f995cea6f98dfac0e19b1a0d876090fadadc9a7ee543bc1b6a2761748f63be"
+        },
+        "exactSourceInventoryMatched": true
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json",
+        "sha256": "4043a60e458243d17f7781622ce09ef4f44bdcaa529f6f426644f9409615dda5",
+        "lawCount": 3,
+        "formulaCount": 9,
+        "sourceDigests": {
+          "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "85a72af332ea09ae33b6daac9494ea6d499e82322c8cf5b4e4c9dc0478ba36b1",
+          "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "af2e12631098fac92160f5771d656a3551a20842bdb8c9d24469296dc772f6aa",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0"
+        },
+        "exactSourceInventoryMatched": true
+      }
+    ],
+    "observations": [
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/violation",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "2961fc23dea54e8f30f1f428527b9dccfd0df8943c9876e6e29a0483d4237281",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b878779c5b50dd997b182742bd9b51a01981a88e7fd1ea97e0e25493824304",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7b177d5febe03a98c1ece9699c1e594033fb9ef8c2068dc699ef5a8bb5d7ecc4",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/violation",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "a58a59ab4670575951632daba266617bb3b2cd21240a11e2158db41d77c592b9",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "62f7fcaf2e0e0372b66d93bf50bc034c76094d92104a5398b410d50689c41b79",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "1aa28f7e6fe12a15341ee55d38fc8872bd4333f83a0aef721895f86fc56625ab",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/violation",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "3922cf644c02c78800f0c878bc90f5d10d8b7840b6dc8ad2acaa238df74ff3cd",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9a954116b41c9e7b45a467c33358e2dd38e0a02b265f0f89562a2e1dcf833c1c",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "8f035f24a90f16b77c3ee1b3850a873ee0eb9a4560bfa436265e4ac70377d79f",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/violation",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "3f26174d4369d547dbc0a31336ae2512e50de4e8f5c6ac02dd632d61ca5ebb66",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "87018e958b3ad517cfc9471f9df372588ba2ca1f64eb91f8512eef59c1295bd8",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "311dcca6d60e293fdad3e8f55db73db92014ceee5ae9fee3bd03a5e0c702acc1",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/violation",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "dbae4e2c55c4b3bc744ac09f06b7626884d17a571e55661ee8310a16bb83033d",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f76cc611f41f020b72ad3c5dc299c896096968632e865a756aa0635e592d94d5",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "4efbfd48e063fb2404d40cdb05e12cb627a850440a3965a664df39b8794cc7ab",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "7ea5dbe40eb5b05b8f72e864b63125fb9ce625e3c895a63312699b077660dfd4",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "54a22745ac5647378f4026ecf6af9b7f5bc8c870fc126bb97b145046e3061ee4",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f3697c4d945d522b4f6c3d8024a2be362a4ab416c06683e8cb004cf4503f94ab",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "87ce3286da471de6d76e178bb7f1605cfa2ed436918f67a7406b49d61486402e",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "4e86c63363c85b24e41cba4a327cc37b32c0d395d6a0a1a857bdec4119a25a06",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9c3cfc373dcdcba97f4138a18099c22738cd75597dc569e84ea8e1e3ac863062",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "1c50b6be9d443f7e80deaba433fc24bad21f53659e67f385ca768d25ae0d2d14",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9ef619e57664475332dca938301f881134b7276d3624b98ce315f020f3263d5b",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "49aa8da3935e58b7847f1593a7e30832d9e4f0a5fa093a7d950ade178c43b9c2",
+        "freshContext": true
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "actual-immutable-owner-rule-custody",
+      "expected": true,
+      "observed": true,
+      "method": "Read-only source inspection: private rule_events stores borrowed actual Rule pointers with coverage/context lifetime; conditions, effects, actions, target and dispositions remain on original Rule without cloning. Model dependencies remain reachable through context."
+    },
+    {
+      "id": "independent-rule-retention-ledger",
+      "expected": {
+        "work": 6,
+        "bytes": 74
+      },
+      "observed": {
+        "work": 6,
+        "bytes": 74
+      },
+      "charges": [
+        {
+          "operation": "four token visits",
+          "work": 4,
+          "bytes": 16
+        },
+        {
+          "operation": "encoded ID",
+          "work": 1,
+          "bytes": 29
+        },
+        {
+          "operation": "retained rule-map ID",
+          "work": 1,
+          "bytes": 29
+        }
+      ],
+      "method": "Independent arithmetic for literal four-token ID; parent test has (6,74) pass, (5,74)/(6,73) refusals. No independent Rust execution."
+    },
+    {
+      "id": "same-pointer-repeat-and-separately-allocated-equal-rule-refusal",
+      "expected": true,
+      "observed": true,
+      "method": "Read-only review of direct retain_rule regression: equality and pointer-distinctness asserted before mutation; repeated original pointer accepted and equal clone refused at same ID. Only private intermediates mutate before Err."
+    },
+    {
+      "id": "two-scans-two-actions-two-rules-complete-occurrences",
+      "expected": [
+        "[\"rule\",\"s0\",\"query-original\",\"membership\"]",
+        "[\"rule\",\"s0\",\"query-original\",\"reader\"]",
+        "[\"rule\",\"s0\",\"read\",\"membership\"]",
+        "[\"rule\",\"s0\",\"read\",\"reader\"]",
+        "[\"rule\",\"s1\",\"query-original\",\"membership\"]",
+        "[\"rule\",\"s1\",\"query-original\",\"reader\"]",
+        "[\"rule\",\"s1\",\"read\",\"membership\"]",
+        "[\"rule\",\"s1\",\"read\",\"reader\"]"
+      ],
+      "observed": [
+        "[\"rule\",\"s0\",\"query-original\",\"membership\"]",
+        "[\"rule\",\"s0\",\"query-original\",\"reader\"]",
+        "[\"rule\",\"s0\",\"read\",\"membership\"]",
+        "[\"rule\",\"s0\",\"read\",\"reader\"]",
+        "[\"rule\",\"s1\",\"query-original\",\"membership\"]",
+        "[\"rule\",\"s1\",\"query-original\",\"reader\"]",
+        "[\"rule\",\"s1\",\"read\",\"membership\"]",
+        "[\"rule\",\"s1\",\"read\",\"reader\"]"
+      ],
+      "method": "Read-only review of actual registered-context fixture; independent eight-ID inventory compared to issued map; each entry matches original plan pointer and singleton exact scan/action scope. Parent pass line checked."
+    },
+    {
+      "id": "false-branch-custody-and-golden-rule-keys",
+      "expected": true,
+      "observed": true,
+      "method": "Actual fixture retains And(false, original populated condition) by exact plan pointer at both self-join occurrences. Single-scan golden independently names reader and membership IDs."
+    },
+    {
+      "id": "legacy-ledger-and-atomic-boundary",
+      "expected": true,
+      "observed": true,
+      "method": "Read-only source inspection: retain_rule immediately returns on assignments None; ID encoding and retention charged before insertion; 4096 map/source bounds. No public partial inventory is returned on error."
+    },
+    {
+      "id": "conditional-lineage-scope-only",
+      "expected": true,
+      "observed": true,
+      "method": "Borrowed rule payload is not complete semantic kind/occurrence enumeration, independent template issuance, authenticated qualification, Rust refinement or native enforcement."
+    }
+  ],
+  "parentRustExecution": {
+    "attribution": "Parent-produced log; inspected only, not independently executed by this review.",
+    "path": "/private/tmp/security-rule-event-core.log",
+    "sha256": "f5832654533bed9a3fab27395f3337fac5fd3ea43ee9360b1fc4f3bc3acb594d",
+    "log": "warning: unexpected `cfg` condition value: `128`\n   --> vendor/ahash/src/fallback_hash.rs:164:11\n    |\n164 |     #[cfg(target_pointer_width = \"128\")]\n    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |\n    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`\n    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n    = note: `#[warn(unexpected_cfgs)]` on by default\n\nwarning: unexpected `cfg` condition name: `fuzzing`\n  --> vendor/ahash/src/random_state.rs:48:58\n   |\n48 |     if #[cfg(all(feature = \"compile-time-rng\", any(test, fuzzing)))] {\n   |                                                          ^^^^^^^\n   |\n   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more\n   = help: consider using a Cargo feature instead\n   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:\n            [lints.rust]\n            unexpected_cfgs = { level = \"warn\", check-cfg = ['cfg(fuzzing)'] }\n   = help: or consider adding `println!(\"cargo::rustc-check-cfg=cfg(fuzzing)\");` to the top of the `build.rs`\n   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n\nwarning: unexpected `cfg` condition name: `fuzzing`\n  --> vendor/ahash/src/random_state.rs:68:54\n   |\n68 |     } else if #[cfg(all(feature = \"runtime-rng\", not(fuzzing)))] {\n   |                                                      ^^^^^^^\n   |\n   = help: consider using a Cargo feature instead\n   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:\n            [lints.rust]\n            unexpected_cfgs = { level = \"warn\", check-cfg = ['cfg(fuzzing)'] }\n   = help: or consider adding `println!(\"cargo::rustc-check-cfg=cfg(fuzzing)\");` to the top of the `build.rs`\n   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n\nwarning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used\n  --> vendor/ahash/src/convert.rs:69:8\n   |\n64 | pub(crate) trait ReadFromSlice {\n   |                  ------------- methods in this trait\n...\n69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);\n   |        ^^^^^^^^^^^\n70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);\n   |        ^^^^^^^^^^^\n71 |     fn read_last_u16(&self) -> u16;\n   |        ^^^^^^^^^^^^^\n...\n75 |     fn read_last_u128x2(&self) -> [u128; 2];\n   |        ^^^^^^^^^^^^^^^^\n76 |     fn read_last_u128x4(&self) -> [u128; 4];\n   |        ^^^^^^^^^^^^^^^^\n   |\n   = note: `#[warn(dead_code)]` on by default\n\nwarning: `ahash` (lib) generated 4 warnings\nwarning: `ahash` (lib) generated 4 warnings (4 duplicates)\n   Compiling weft-core v0.1.0 (/Users/erik/Projects/weft/crates/weft-core)\nwarning: method `finish` is never used\n   --> crates/weft-core/src/syntax.rs:243:19\n    |\n206 | impl Parser {\n    | ----------- method in this implementation\n...\n243 |     pub(crate) fn finish(&mut self) -> Result<()> {\n    |                   ^^^^^^\n    |\n    = note: `#[warn(dead_code)]` on by default\n\nwarning: `weft-core` (lib test) generated 1 warning\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.26s\n     Running unittests src/lib.rs (/private/tmp/umf-security-weft-bridge-target/debug/deps/weft_core-189cbadb0bdab47b)\n\nrunning 128 tests\ntest json::bounded_transport_tests::byte_limits_count_utf8_and_whitespace ... ok\ntest backend_emission::tests::numeric_results_require_exact_text_decoders ... ok\ntest security_association_ref::tests::reference_shapes_roundtrip_without_record_graph_namespace_erasure ... ok\ntest backend_emission::tests::scalar_carriers_preserve_family_nullability_and_facets ... ok\ntest security_association_ref::tests::malformed_or_ambiguous_selectors_refuse ... ok\ntest security_candidate_dependencies::tests::dependency_budgets_refuse_work_and_text_exhaustion ... ok\ntest backend::tests::obligations_are_retained_sorted_and_conflicts_refuse ... ok\ntest json::bounded_transport_tests::duplicate_members_and_malformed_json_refuse ... ok\ntest backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes ... ok\ntest backend_emission::tests::parameter_domain_guards_have_exact_diagnostics ... ok\ntest json::bounded_transport_tests::charged_reader_uses_the_callers_actual_remaining_work ... ok\ntest json::bounded_transport_tests::depth_counts_root_and_nodes_count_values_not_names ... ok\ntest json::bounded_transport_tests::ordinary_reserved_looking_objects_survive_every_reader ... ok\ntest security_association_ref::tests::all_qualified_components_and_unicode_spelling_remain_distinct ... ok\ntest security_candidate_dependencies::tests::graph_endpoint_charges_every_retained_identifier_copy_before_issuance ... ok\ntest backend_emission::tests::initial_plan_requires_projection_root_before_output_validation ... ok\ntest security_candidate_incidence::tests::empty_unused_populations_require_declared_supported_relationships ... ok\ntest security_candidate_incidence::tests::equal_numeric_carriers_retain_distinct_domains_and_catalog_custody ... ok\ntest security_candidate_incidence::tests::empty_graph_quantifier_cannot_hide_unsupported_nested_profiles ... ok\ntest security_candidate_incidence::tests::fact_budget_accumulates_across_coherent_fields_in_both_orders ... ok\ntest security_candidate_incidence::tests::aggregate_normalized_storage_is_bounded_before_retention ... ok\ntest backend_emission::tests::related_result_metadata_preserves_authored_key_and_bound ... ok\ntest backend_emission::tests::presence_and_native_null_require_qualified_descriptors ... ok\ntest security_candidate_incidence::tests::matching_first_bundle_cannot_hide_later_source_substitution ... ok\ntest security_composition::tests::complete_strong_kleene_tables_and_bounds ... ok\ntest security_candidate_incidence::tests::entity_identity_preserves_key_order_exact_numbers_and_domains ... ok\ntest security_composition::tests::portable_typescript_truth_corpus_correspondence ... ok\ntest security_candidate_incidence::tests::identity_payload_budgets_and_unused_binding_checks_are_isolated ... ok\ntest security_candidate_incidence::tests::graph_ir_budgets_are_charged_after_a_first_matching_witness ... ok\ntest security_evaluation::faithful_fact_tests::raw_literal_objects_cannot_masquerade_through_typed_fact_consumers ... ok\ntest resolve::tests::typed_ast_resolver_literal_boundary_and_empty_join_refusal ... ok\ntest security_candidate_incidence::tests::raw_composite_endpoint_retains_order_domain_and_source_custody ... ok\ntest security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict ... ok\ntest security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain ... ok\ntest security_evaluation::tests::record_fact_evaluator_refuses_graph_variants_instead_of_empty_relations ... ok\ntest security_ir::tests::existential_ir_preserves_record_and_relationship_reference_shapes ... ok\ntest security_candidate_incidence::tests::raw_witness_projects_endpoints_from_one_source_bound_record ... ok\ntest security_obligation_custody::faithful_parameter_tests::malformed_manifest_roots_refuse_without_panicking ... ok\ntest security_ir::tests::plan_reuse_refuses_mutated_prepared_definitions ... ok\ntest security_obligation_custody::faithful_parameter_tests::typed_status_and_owner_do_not_accept_object_enum_carriers ... ok\ntest security_candidate_incidence::tests::bundle_requires_complete_distinct_role_specific_endpoints ... ok\ntest security_obligation_custody::tests::closed_projection_preserves_complete_declared_inventory ... ok\ntest security_obligation_custody::tests::complete_inventory_and_repeated_provenance_are_retained ... ok\ntest security_obligation_custody::tests::exact_inventory_budget_and_parameter_depth_are_atomic ... ok\ntest security_obligation_custody::tests::diamond_dag_shared_dependencies_and_isolated_cycle_are_distinct ... ok\ntest security_obligation_custody::tests::exact_selection_retains_empty_capabilities_from_immutable_registration ... ok\ntest security_obligation_custody::tests::host_reconstruction_requires_exact_bytes_and_target ... ok\ntest security_obligation_custody::tests::original_bytes_and_opaque_parameters_survive_callback_drift ... ok\ntest security_obligation_custody::tests::incomplete_duplicate_inapplicable_and_status_selection_refuse ... ok\ntest security_obligation_custody::tests::prerequisites_resolve_only_in_complete_selected_capability_inventory ... ok\ntest security_candidate_incidence::tests::graph_rule_matches_subject_and_resource_exact_logical_identities ... ok\ntest security_obligation_custody::tests::prerequisite_closure_and_disconnected_cycles_refuse_atomically ... ok\ntest security_obligation_custody::tests::projection_work_and_utf8_limits_refuse_before_returning_inventory ... ok\ntest security_obligation_custody::tests::repeated_id_parameter_owner_and_failure_code_conflicts_refuse ... ok\ntest security_obligation_custody::tests::scoped_decoder_retains_paired_subjects_originals_and_all_origins ... ok\ntest security_obligation_custody::tests::shared_obligation_comparisons_have_independent_budget_cost ... ok\ntest security_obligation_custody::tests::scoped_decoder_refuses_ambiguous_subjects_and_legacy_parameters ... ok\ntest security_obligation_custody::tests::unknown_projection_meaning_owner_and_carriers_refuse ... ok\ntest security_obligation_sources::tests::rule_retention_requires_exact_owner_pointer_and_independent_copy_budget ... ok\ntest security_obligation_sources::tests::tuple_encoding_preserves_escaping_boundaries_and_exact_utf8_limits ... ok\ntest security_obligation_sources::tests::typed_events_reject_category_aliasing_and_charge_the_retained_copy ... ok\ntest security_candidate_incidence::tests::original_graph_ir_preserves_nested_outer_witness_correlation ... ok\ntest security_obligation_custody::faithful_parameter_tests::raw_manifest_reserved_looking_keys_are_ordinary_opaque_members ... ok\ntest security_evaluation::tests::nested_same_type_relation_and_bag_multiplicity_are_preserved ... ok\ntest security_evaluation::tests::unknown_cut_members_and_key_field_mismatch_refuse ... ok\ntest security_obligation_custody::tests::scoped_decoder_checks_disconnected_dag_and_repeated_origin_expansion_bound ... ok\ntest security_candidate_incidence::tests::raw_population_admission_budgets_identity_and_all_sources ... ok\ntest security_candidate_incidence::tests::existential_simulation_keeps_both_endpoints_on_the_same_bundle ... ok\ntest security_candidate_incidence::tests::authored_abac_graph_rule_uses_exact_resource_fields_and_subject_identity ... ok\ntest security_candidate_incidence::tests::stored_and_context_same_field_are_independent_channels ... ok\ntest security_query_uses::tests::extraction_covers_every_operator_and_both_join_occurrences ... ok\ntest security_candidate_incidence::tests::mixed_raw_ownership_and_graph_membership_keep_project_correlation ... ok\ntest security_query_profile::tests::actual_resolved_predicate_derives_profile_action_without_caller_annotation ... ok\ntest security_query_uses::tests::field_free_counts_preserve_scan_and_keyset_fields_are_predicate_uses ... ok\ntest security_query_uses::tests::ordered_alias_outputs_survive_dependency_deduplication_and_stale_models_refuse ... ok\ntest security_record_homes::tests::exact_integer_native_image_never_rounds_or_expands_unboundedly ... ok\ntest security_query_profile::tests::mapping_handoff_keeps_self_join_occurrences_and_field_free_count_authority ... ok\ntest security_query_profile::tests::bound_action_is_derived_and_unrelated_granted_action_cannot_substitute ... ok\ntest security_query_profile::tests::mapping_handoff_preserves_plan_identity_dependencies_and_source_refusal ... ok\ntest security_query_profile::tests::scan_obligations_preserve_correlated_keys_and_field_free_count_dependencies ... ok\ntest security_query_profile::tests::complete_qualified_bindings_unknown_meaning_and_exact_pins_are_required ... ok\ntest security_query_profile::tests::original_action_false_branches_and_context_are_retained_without_constant_fact_reads ... ok\ntest security_query_profile::tests::profile_reuse_is_exact_source_custody_not_a_native_mapping_claim ... ok\ntest security_composition::tests::all_permit_require_forbid_truths_and_rule_order ... ok\ntest security_requirements::tests::budget_refuses_before_allocation_or_underflow ... ok\ntest security_obligation_sources::tests::demand_retention_merges_edges_and_refuses_exact_bound_overrun ... ok\ntest security_scan_obligations::tests::inventory_work_and_identifier_text_limits_refuse_before_underflow ... ok\ntest security_scan_obligations::tests::record_inventory_collector_refuses_graph_namespaces_before_inventing_reads ... ok\ntest security_record_homes::tests::late_key_and_role_matches_consume_each_comparison ... ok\ntest security_requirements::derivation_tests::actual_admitted_count_cannot_issue_requirements_after_work_or_text_exhaustion ... ok\ntest security_result_check::tests::normalized_numeric_payload_is_charged_independently_of_short_tokens ... ok\ntest security_semantic_coverage::tests::allocation_relation_bounds_refuse_empty_duplicate_scope_and_overflow ... ok\ntest security_semantic_coverage::tests::closed_domain_grammar_refuses_unknown_positional_duplicate_and_numeric_meaning ... ok\ntest security_record_homes::tests::actual_context_dependencies_refuse_even_under_false_branches ... ok\ntest security_record_homes::tests::single_budget_refuses_before_partial_correspondence ... ok\ntest security_semantic_coverage::tests::actual_owner_coverage_keeps_whole_conditions_selection_and_output_positions ... ok\ntest security_semantic_coverage::tests::entire_component_budget_refuses_before_lookup_copy_or_matching_overrun ... ok\ntest security_semantic_coverage::tests::allocation_issuer_borrows_actual_registration_and_context_after_callback_drift ... ok\ntest security_semantic_coverage::tests::false_branch_retains_whole_correlated_condition_at_exact_declared_bounds ... ok\ntest security_record_homes::tests::same_domain_composite_endpoints_keep_position_and_own_association_key ... ok\ntest security_semantic_coverage::tests::issued_allocations_keep_all_complete_candidates_without_fragment_union ... ok\ntest security_semantic_coverage::tests::actual_context_and_original_authorized_modes_keep_source_channels ... ok\ntest security_semantic_coverage::tests::issued_allocations_keep_original_authorized_action_separate_from_read ... ok\ntest security_semantic_coverage::tests::composite_key_sources_retain_actual_same_domain_member_order ... ok\ntest security_record_homes::tests::actual_raw_typed_and_discriminated_homes_keep_natural_keys_and_scan_occurrences ... ok\ntest security_semantic_coverage::tests::issued_selfjoin_allocations_preserve_scopes_and_whole_application ... ok\ntest security_semantic_coverage::tests::issued_source_demands_accumulate_distinct_original_actions_on_one_field ... ok\ntest security_semantic_coverage::tests::field_free_count_and_selfjoin_keep_actual_plan_requirements ... ok\ntest security_semantic_coverage::tests::issued_source_demands_keep_output_selfjoin_and_false_branch_ownership ... ok\ntest security_semantic_coverage::tests::issued_source_demands_preserve_disjoint_candidates_and_zero_edge_selection ... ok\ntest security_record_homes::tests::known_literal_native_images_survive_false_branches_and_empty_results ... ok\ntest security_semantic_coverage::tests::issued_source_demands_match_independent_complete_fixture_map_and_exact_budgets ... ok\ntest security_semantic_coverage::tests::partial_capabilities_source_substitution_and_unknown_selected_targets_refuse ... ok\ntest security_record_homes::tests::exact_registration_pins_and_closed_transport_refuse ... ok\ntest security_semantic_coverage::tests::rule_event_custody_retains_both_scan_and_action_coordinates ... ok\ntest security_record_homes::tests::metadata_only_transforms_and_selected_unknown_meaning_are_checked ... ok\ntest security_semantic_coverage::tests::source_paths_preserve_selfjoin_occurrences_and_field_free_count ... ok\ntest security_semantic_coverage::tests::projected_sources_require_actual_complete_owner_inventory ... ok\ntest security_semantic_coverage::tests::scoped_matching_uses_actual_owner_demands_and_independent_required_contracts ... ok\ntest security_semantic_coverage::tests::scoped_matching_refuses_agreeing_fragments_and_foreign_subjects_but_allows_distinct_complete_scopes ... ok\ntest security_record_homes::tests::complete_actual_keys_endpoints_fields_and_revisions_cannot_be_substituted ... ok\ntest security_evaluation::faithful_fact_tests::actual_simulation_refuses_raw_value_wrapped_keys_fields_and_context ... ok\ntest security_record_homes::tests::source_reuse_partition_carrier_and_subject_correspondence_are_distinct ... ok\ntest security_candidate_incidence::tests::record_backed_graph_fields_stay_with_their_edge_endpoints ... ok\ntest security_semantic_coverage::tests::scoped_instance_matching_requires_all_kinds_at_one_origin ... ok\ntest security_evaluation::tests::repeated_large_identity_work_refuses_without_returning_an_admitted_prefix ... ok\ntest security_evaluation::tests::portable_project_membership_and_whole_collection_refusal_correspondence ... ok\ntest security_candidate_incidence::tests::existential_simulation_matches_independent_finite_edge_oracle ... ok\n\ntest result: ok. 128 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.20s\n\n",
+    "summary": {
+      "passed": 128,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    "requiredPassLines": [
+      "security_obligation_sources::tests::rule_retention_requires_exact_owner_pointer_and_independent_copy_budget",
+      "security_semantic_coverage::tests::rule_event_custody_retains_both_scan_and_action_coordinates",
+      "security_semantic_coverage::tests::issued_source_demands_keep_output_selfjoin_and_false_branch_ownership",
+      "security_semantic_coverage::tests::issued_source_demands_match_independent_complete_fixture_map_and_exact_budgets"
+    ],
+    "independentlyExecuted": false,
+    "parentReceiptPath": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/rule-event-custody.json",
+    "parentReceiptSha256": "44b4c5553bb9cf9ea224ed538b21a2fa4690efb6c59b65cfcbd813e8a7d51bf0",
+    "buildSourceCustodyQualifiedByThisReview": false
+  },
+  "historicalReviews": [
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-events-astra-review.json",
+      "sha256": "d4e05f98a3292a83393b9ebda1e9acfc3cd8cb18a0a05d553a7709dabd56b322",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-instance-astra-review.json",
+      "sha256": "e68c57a216809971131ddd05cfdfdf22562f4b90e87d1f9fa20754cb630696db",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-astra-review.json",
+      "sha256": "100cc34bfdaf81f9a289f4582de82b586d7b3fc2f92e30e29b34170e84420db6",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-astra-review.json",
+      "sha256": "6f1859bde2418c9c6bf53c7e81669287f48305445ff0ac4511476e874462fd9f",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    }
+  ],
+  "scope": "Read-only review of current private borrowed rule-event custody, source identity and scan/action coordinates, pointer-conflict refusal, phase-local budgets and new isolated controls. Independently replayed all15 source-demand and9 kind-completeness saved SMT formulas in separate fresh contexts, with exact closed law IDs, outcomes and current proof source path/digest inventories. These eight finite conditional Boolean laws do not prove rule extraction, arbitrary cardinalities, Rust refinement, independently complete typed kind/occurrence or case inventories, profile authentication or native enforcement. The 128-test Rust log and selected post-run parent pins are parent-attributed only, with no complete Rust build-custody claim. No Cargo, producer or native fixture was run. Review/runtime pins cover selected audited inputs, not a complete Rust build closure. Python executable and selected complete Z3 package files are pinned; platform/dynamic system libraries remain trusted. No complete semantic issuance, release authority or backend acceptance is established.",
+  "remainingFindings": [],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "acceptanceCriteria": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ]
+}

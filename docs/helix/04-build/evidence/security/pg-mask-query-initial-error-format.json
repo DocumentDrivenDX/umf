@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "sourceDigest": "2bbf37ddfc0d3b0cad6b738c3e75521ac26bcb73df2b24aa6be468b0e50f8732",
+  "assertion": "umf_sec_alice:unbound-filter",
+  "expected": true,
+  "observed": false,
+  "cause": "psql default diagnostics omit SQLSTATE; the runner required 42703 without selecting verbose diagnostics. No success receipt published; finally cleanup completed."
+}

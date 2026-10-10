@@ -1,0 +1,6850 @@
+{
+  "status": "passed",
+  "id": "pg-raw.B15",
+  "backend": "pg-raw",
+  "runId": "56d769c4-fcb4-44b6-849b-34dcce9d9a5f",
+  "command": [
+    "python3",
+    "tests/security/native/pg-raw-membership.py"
+  ],
+  "covers": [
+    "US-056-AC7"
+  ],
+  "versions": {
+    "postgresql": {
+      "serverVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "serverVersionNum": "170009",
+      "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    "python": "3.9.6"
+  },
+  "sourceDigests": {
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-authority-cut.py": "a61bfc549e56dcbfe1ddbf1ee78652d55c7b9adf6051adab6b95e6acd25d74f3",
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e"
+  },
+  "observations": [
+    {
+      "assertionId": "pg-raw.B15:facts:company",
+      "expected": [
+        [
+          "C"
+        ]
+      ],
+      "observed": [
+        [
+          "C"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:project",
+      "expected": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "D",
+          "C"
+        ]
+      ],
+      "observed": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "D",
+          "C"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:employee",
+      "expected": [
+        [
+          "Alice",
+          "umf_sec_alice"
+        ],
+        [
+          "Bob",
+          "umf_sec_bob"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "umf_sec_alice"
+        ],
+        [
+          "Bob",
+          "umf_sec_bob"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:resource",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ],
+        [
+          "RO",
+          "ownerless"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ],
+        [
+          "RO",
+          "ownerless"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:resource_private_carrier",
+      "expected": [
+        [
+          "RA",
+          {
+            "note": null,
+            "salary": 100
+          },
+          "7365637265742d41"
+        ],
+        [
+          "RAB",
+          {
+            "salary": 333
+          },
+          "7365637265742d4142"
+        ],
+        [
+          "RB",
+          {
+            "note": "hidden",
+            "salary": 200
+          },
+          "7365637265742d42"
+        ],
+        [
+          "RD",
+          {
+            "salary": 444
+          },
+          "7365637265742d44"
+        ],
+        [
+          "RO",
+          {
+            "salary": 555
+          },
+          "7365637265742d4f"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          {
+            "note": null,
+            "salary": 100
+          },
+          "7365637265742d41"
+        ],
+        [
+          "RAB",
+          {
+            "salary": 333
+          },
+          "7365637265742d4142"
+        ],
+        [
+          "RB",
+          {
+            "note": "hidden",
+            "salary": 200
+          },
+          "7365637265742d42"
+        ],
+        [
+          "RD",
+          {
+            "salary": 444
+          },
+          "7365637265742d44"
+        ],
+        [
+          "RO",
+          {
+            "salary": 555
+          },
+          "7365637265742d4f"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:facts:resource_child_carrier",
+      "expected": [
+        [
+          "RA",
+          "child-secret-A"
+        ],
+        [
+          "RAB",
+          "child-secret-AB"
+        ],
+        [
+          "RB",
+          "child-secret-B"
+        ],
+        [
+          "RD",
+          "child-secret-D"
+        ],
+        [
+          "RO",
+          "child-secret-O"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "child-secret-A"
+        ],
+        [
+          "RAB",
+          "child-secret-AB"
+        ],
+        [
+          "RB",
+          "child-secret-B"
+        ],
+        [
+          "RD",
+          "child-secret-D"
+        ],
+        [
+          "RO",
+          "child-secret-O"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:identity:umf_sec_alice",
+      "expected": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_alice",
+        "sessionUser": "umf_sec_alice",
+        "superuser": false
+      },
+      "observed": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_alice",
+        "sessionUser": "umf_sec_alice",
+        "superuser": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:ids:umf_sec_alice",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:rows:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_alice:employee",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_alice:m2m_employee_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_alice:m2m_resource_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:identity:umf_sec_bob",
+      "expected": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_bob",
+        "sessionUser": "umf_sec_bob",
+        "superuser": false
+      },
+      "observed": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_bob",
+        "sessionUser": "umf_sec_bob",
+        "superuser": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:ids:umf_sec_bob",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:rows:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_bob:employee",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_bob:m2m_employee_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_bob:m2m_resource_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:identity:umf_sec_outsider",
+      "expected": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_outsider",
+        "sessionUser": "umf_sec_outsider",
+        "superuser": false
+      },
+      "observed": {
+        "bypassRls": false,
+        "currentUser": "umf_sec_outsider",
+        "sessionUser": "umf_sec_outsider",
+        "superuser": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:ids:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:rows:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_outsider:employee",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_outsider:m2m_employee_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:private:umf_sec_outsider:m2m_resource_project",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:independent-source-cut",
+      "expected": {
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ]
+      },
+      "observed": {
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ]
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:baseline:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingActiveAssignment:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:missingActiveAssignment",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:missingActiveAssignment",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:missingActiveAssignment",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingActiveAssignment:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingInactiveAssignment:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:missingInactiveAssignment",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:missingInactiveAssignment",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:missingInactiveAssignment",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingInactiveAssignment:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingOwner:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:missingOwner",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:missingOwner",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:missingOwner",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingOwner:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:wrongSubjectBinding:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:wrongSubjectBinding",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:wrongSubjectBinding",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:wrongSubjectBinding",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-wrongSubjectBinding:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:sameCountWrongEndpoint:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:sameCountWrongEndpoint",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:sameCountWrongEndpoint",
+      "expected": [
+        "RD"
+      ],
+      "observed": [
+        "RD"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:sameCountWrongEndpoint",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-sameCountWrongEndpoint:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:nullRequiredAttribute:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:nullRequiredAttribute",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-partial-rows:nullRequiredAttribute",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:nullRequiredAttribute",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-nullRequiredAttribute:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:count",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:incomplete-refusal:missingRequiredSource:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "refused"
+      },
+      "observed": {
+        "rows": [],
+        "status": "refused"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:weakened-empty-success:missingRequiredSource",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B15:authority-corruption:missingRequiredSource",
+      "expected": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      },
+      "observed": {
+        "executedUnderCorruption": 0,
+        "restored": true
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:list",
+      "expected": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA",
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RAB",
+          "min": "RA",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:page",
+      "expected": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RA"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_alice:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:list",
+      "expected": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB",
+          "RB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:count",
+      "expected": {
+        "rows": 2,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 2,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:aggregate",
+      "expected": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 2,
+          "max": "RB",
+          "min": "RAB",
+          "valueLengthSum": 21
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:page",
+      "expected": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          "RAB"
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:traversal",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ]
+        ],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_bob:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:list",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:count",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:aggregate",
+      "expected": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": {
+          "count": 0,
+          "max": null,
+          "min": null,
+          "valueLengthSum": 0
+        },
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:page",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:traversal",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:emptyList",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:emptyCount",
+      "expected": {
+        "rows": 0,
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": 0,
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:complete-cut:restored-missingRequiredSource:umf_sec_outsider:emptyPage",
+      "expected": {
+        "rows": [],
+        "status": "admitted"
+      },
+      "observed": {
+        "rows": [],
+        "status": "admitted"
+      }
+    },
+    {
+      "assertionId": "pg-raw.B15:ordinary-memberships",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B15:forced-rls",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:restricted-definer",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:secured-publication-views",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:tcp-scram-only",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15:scram-secret-storage",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B15",
+      "expected": {
+        "missingActiveAssignment": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingInactiveAssignment": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingOwner": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingRequiredSource": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "nullRequiredAttribute": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "sameCountWrongEndpoint": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "wrongSubjectBinding": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        }
+      },
+      "observed": {
+        "missingActiveAssignment": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingInactiveAssignment": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingOwner": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "missingRequiredSource": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "nullRequiredAttribute": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "sameCountWrongEndpoint": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        },
+        "wrongSubjectBinding": {
+          "executedUnderCorruption": 0,
+          "restored": true
+        }
+      }
+    }
+  ],
+  "nativeInventory": {
+    "authentication": {
+      "ordinaryTransport": "tcp-scram-sha-256",
+      "excludedHostLocalAccess": true,
+      "rules": [
+        {
+          "line": 117,
+          "type": "local",
+          "databases": [
+            "all"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": null,
+          "method": "trust",
+          "error": null
+        },
+        {
+          "line": 119,
+          "type": "host",
+          "databases": [
+            "all"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": "127.0.0.1",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "line": 121,
+          "type": "host",
+          "databases": [
+            "all"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": "::1",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "line": 124,
+          "type": "local",
+          "databases": [
+            "replication"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": null,
+          "method": "trust",
+          "error": null
+        },
+        {
+          "line": 125,
+          "type": "host",
+          "databases": [
+            "replication"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": "127.0.0.1",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "line": 126,
+          "type": "host",
+          "databases": [
+            "replication"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": "::1",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "line": 128,
+          "type": "host",
+          "databases": [
+            "all"
+          ],
+          "users": [
+            "all"
+          ],
+          "address": "all",
+          "method": "scram-sha-256",
+          "error": null
+        }
+      ]
+    },
+    "views": [
+      {
+        "name": "resource_disclosure",
+        "definition": " SELECT r.id,\n    jsonb_build_array(jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'original', 'value', jsonb_build_object('string', r.id)), security_raw.note_cell(p.bag),\n        CASE\n            WHEN (r.id = 'RAB'::text) THEN jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'transformed', 'outputType', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'value', jsonb_build_object('string', 'restricted'))\n            ELSE jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'withheld')\n        END) AS cells\n   FROM (security_raw.resource r\n     LEFT JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));",
+        "settings": [
+          "security_barrier=true"
+        ]
+      },
+      {
+        "name": "resource_project",
+        "definition": " SELECT r.id AS resource_id,\n    o.project_id\n   FROM (((security_raw.resource r\n     JOIN security_raw.m2m_resource_project o ON ((o.resource_id = r.id)))\n     JOIN security_raw.m2m_employee_project a ON (((a.project_id = o.project_id) AND a.active)))\n     JOIN security_raw.employee e ON ((e.id = a.employee_id)))\n  WHERE (e.native_login = (SESSION_USER)::text);",
+        "settings": [
+          "security_barrier=true"
+        ]
+      }
+    ],
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545",
+    "namespace": {
+      "name": "security_raw",
+      "owner": "umf_sec_guardian",
+      "acl": "{umf_sec_guardian=UC/umf_sec_guardian,umf_sec_alice=U/umf_sec_guardian,umf_sec_bob=U/umf_sec_guardian,umf_sec_outsider=U/umf_sec_guardian}"
+    },
+    "columns": [
+      {
+        "table": "company",
+        "position": 1,
+        "name": "id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "employee",
+        "position": 1,
+        "name": "id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "employee",
+        "position": 2,
+        "name": "native_login",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "m2m_employee_project",
+        "position": 1,
+        "name": "employee_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "m2m_employee_project",
+        "position": 2,
+        "name": "project_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "m2m_employee_project",
+        "position": 3,
+        "name": "active",
+        "type": "boolean",
+        "notNull": true,
+        "collation": "0",
+        "acl": null
+      },
+      {
+        "table": "m2m_resource_project",
+        "position": 1,
+        "name": "resource_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "m2m_resource_project",
+        "position": 2,
+        "name": "project_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "project",
+        "position": 1,
+        "name": "id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "project",
+        "position": 2,
+        "name": "company_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource",
+        "position": 1,
+        "name": "id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource",
+        "position": 2,
+        "name": "value",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_child_carrier",
+        "position": 1,
+        "name": "resource_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_child_carrier",
+        "position": 2,
+        "name": "private_value",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_disclosure",
+        "position": 1,
+        "name": "id",
+        "type": "text",
+        "notNull": false,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_disclosure",
+        "position": 2,
+        "name": "cells",
+        "type": "jsonb",
+        "notNull": false,
+        "collation": "0",
+        "acl": null
+      },
+      {
+        "table": "resource_private_carrier",
+        "position": 1,
+        "name": "resource_id",
+        "type": "text",
+        "notNull": true,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_private_carrier",
+        "position": 2,
+        "name": "bag",
+        "type": "jsonb",
+        "notNull": true,
+        "collation": "0",
+        "acl": null
+      },
+      {
+        "table": "resource_private_carrier",
+        "position": 3,
+        "name": "retained",
+        "type": "bytea",
+        "notNull": true,
+        "collation": "0",
+        "acl": null
+      },
+      {
+        "table": "resource_project",
+        "position": 1,
+        "name": "resource_id",
+        "type": "text",
+        "notNull": false,
+        "collation": "100",
+        "acl": null
+      },
+      {
+        "table": "resource_project",
+        "position": 2,
+        "name": "project_id",
+        "type": "text",
+        "notNull": false,
+        "collation": "100",
+        "acl": null
+      }
+    ],
+    "constraints": [
+      {
+        "table": "company",
+        "name": "company_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "employee",
+        "name": "employee_native_login_key",
+        "kind": "u",
+        "definition": "UNIQUE (native_login)",
+        "validated": true
+      },
+      {
+        "table": "employee",
+        "name": "employee_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_employee_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (employee_id) REFERENCES security_raw.employee(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (employee_id, project_id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_project_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (resource_id, project_id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_project_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_resource_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      },
+      {
+        "table": "project",
+        "name": "project_company_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (company_id) REFERENCES security_raw.company(id)",
+        "validated": true
+      },
+      {
+        "table": "project",
+        "name": "project_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "resource",
+        "name": "resource_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "resource_child_carrier",
+        "name": "resource_child_carrier_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (resource_id)",
+        "validated": true
+      },
+      {
+        "table": "resource_child_carrier",
+        "name": "resource_child_carrier_resource_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      },
+      {
+        "table": "resource_private_carrier",
+        "name": "resource_private_carrier_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (resource_id)",
+        "validated": true
+      },
+      {
+        "table": "resource_private_carrier",
+        "name": "resource_private_carrier_resource_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      }
+    ],
+    "objects": [
+      {
+        "schema": "security_raw",
+        "name": "company",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "company_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee_native_login_key",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_employee_project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_employee_project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_resource_project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_resource_project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": true,
+        "forceRls": true,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_child_carrier",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_child_carrier_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_disclosure",
+        "kind": "v",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_private_carrier",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_private_carrier_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_project",
+        "kind": "v",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      }
+    ],
+    "policies": [
+      {
+        "table": "resource",
+        "name": "resource_owner_projection",
+        "roles": [
+          "umf_sec_guardian"
+        ],
+        "command": "SELECT",
+        "using": "security_raw.allowed(id)",
+        "check": null
+      },
+      {
+        "table": "resource",
+        "name": "resource_read",
+        "roles": [
+          "umf_sec_alice",
+          "umf_sec_bob",
+          "umf_sec_outsider"
+        ],
+        "command": "SELECT",
+        "using": "security_raw.allowed(id)",
+        "check": null
+      }
+    ],
+    "routines": [
+      {
+        "name": "allowed",
+        "identity": "resource_id text",
+        "owner": "umf_sec_guardian",
+        "definer": true,
+        "settings": [
+          "search_path=pg_catalog"
+        ],
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+        "definition": "CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\n SELECT EXISTS(SELECT 1 FROM security_raw.m2m_resource_project o\n JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id\n JOIN security_raw.employee e ON e.id=a.employee_id\n WHERE o.resource_id=$1 AND a.active AND e.native_login=session_user::text)\n$function$\n"
+      },
+      {
+        "name": "note_cell",
+        "identity": "bag jsonb",
+        "owner": "umf_sec_guardian",
+        "definer": false,
+        "settings": [
+          "search_path=pg_catalog"
+        ],
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+        "definition": "CREATE OR REPLACE FUNCTION security_raw.note_cell(bag jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE f jsonb := '{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"note\"}'::jsonb; note jsonb;\nBEGIN\n IF jsonb_typeof(bag) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001'; END IF;\n note := bag->'note';\n IF NOT (bag ? 'note') THEN RETURN jsonb_build_object('field',f,'disposition','absent'); END IF;\n IF jsonb_typeof(note)='null' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',NULL); END IF;\n IF jsonb_typeof(note)='string' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',jsonb_build_object('string',note #>> '{}')); END IF;\n RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001';\nEND $function$\n"
+      }
+    ],
+    "roles": [
+      {
+        "name": "umf_sec_alice",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false,
+        "createDb": false
+      },
+      {
+        "name": "umf_sec_bob",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false,
+        "createDb": false
+      },
+      {
+        "name": "umf_sec_guardian",
+        "login": false,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false,
+        "createDb": false
+      },
+      {
+        "name": "umf_sec_outsider",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false,
+        "createDb": false
+      }
+    ],
+    "memberships": [],
+    "ordinaryActor": [
+      {
+        "sessionUser": "umf_sec_alice",
+        "currentUser": "umf_sec_alice",
+        "superuser": false,
+        "bypassRls": false
+      },
+      {
+        "sessionUser": "umf_sec_bob",
+        "currentUser": "umf_sec_bob",
+        "superuser": false,
+        "bypassRls": false
+      },
+      {
+        "sessionUser": "umf_sec_outsider",
+        "currentUser": "umf_sec_outsider",
+        "superuser": false,
+        "bypassRls": false
+      }
+    ],
+    "excludedInstaller": "postgres",
+    "engine": {
+      "serverVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+      "serverVersionNum": "170009",
+      "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    "factSources": [
+      "company",
+      "project",
+      "employee",
+      "m2m_employee_project",
+      "resource",
+      "m2m_resource_project",
+      "resource_private_carrier",
+      "resource_child_carrier"
+    ],
+    "completeSourceCut": {
+      "employee": [
+        [
+          "Alice",
+          "umf_sec_alice"
+        ],
+        [
+          "Bob",
+          "umf_sec_bob"
+        ]
+      ],
+      "project": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "resource": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "assignment": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "ownership": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    "corruptedAuthorityCuts": {
+      "missingActiveAssignment": {
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "missingInactiveAssignment": {
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "missingOwner": {
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "wrongSubjectBinding": {
+        "employee": [
+          [
+            "Alice",
+            "unmapped"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "sameCountWrongEndpoint": {
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Alice",
+            "D",
+            true
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "nullRequiredAttribute": {
+        "employee": [
+          [
+            "Alice",
+            "umf_sec_alice"
+          ],
+          [
+            "Bob",
+            "umf_sec_bob"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "assignment": [
+          [
+            "Alice",
+            "A",
+            null
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "ownership": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      },
+      "missingRequiredSource": {
+        "providerUnavailable": true
+      }
+    },
+    "executedManagedSourceDigests": {
+      "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+      "tools/security/pg-authority-cut.py": "a61bfc549e56dcbfe1ddbf1ee78652d55c7b9adf6051adab6b95e6acd25d74f3"
+    },
+    "digest": "51cc2dc0a1f89b8e6adb49bc48a49a3d1e5e8dec37a9ede6edb51fd4b6388026"
+  },
+  "scope": "PostgreSQL 17.9 disposable raw-table read membership, selected collection operators private-storage, definer/name-resolution and administrator-exclusion controls at a stable cut only. Native source inventory retained; complete profile, concurrent authority, compiler lowering and all other B/L cases remain unqualified."
+}

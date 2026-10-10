@@ -59,6 +59,7 @@ async function indexFiles(paths: string[]) {
 export async function buildAcceptanceLedger() {
   const storyFiles = (await filesBelow(storiesRoot)).filter(path => path.endsWith('.md'));
   const criteria = new Map<string, string>();
+  const storyAcceptance = new Map<string,boolean>();
   for (const path of storyFiles) {
     const text = await Bun.file(path).text();
     for (const match of text.matchAll(criterionPattern)) {
@@ -66,12 +67,19 @@ export async function buildAcceptanceLedger() {
       const story = repositoryPath(path);
       if (criteria.has(id) && criteria.get(id) !== story) throw new Error(`Duplicate acceptance criterion ${id}`);
       criteria.set(id, story);
+      storyAcceptance.set(id,new RegExp(`^- \\[x\\] \\*\\*${id}\\*\\*`, 'm').test(text));
     }
   }
   const testFiles = (await filesBelow('tests')).filter(path => /\.(?:ts|py)$/.test(path));
   const scriptFiles = (await filesBelow('scripts')).filter(path => /\.(?:ts|py)$/.test(path));
   const tests = await indexFiles(testFiles);
   const scripts = await indexFiles(scriptFiles);
+  const securityPlan=await Bun.file('docs/helix/03-test/security/cases.json').json();
+  const securityCriteria=new Set<string>(securityPlan.cases.flatMap((c:{covers:string[]})=>c.covers));
+  // Citation presence is partial evidence. Security acceptance requires the separate
+  // reviewed, fresh execution gate and an authored acceptance decision.
+  const securityGatePath='docs/helix/04-build/evidence/security/acceptance.json';
+  const securityGate=await Bun.file(securityGatePath).exists()?await Bun.file(securityGatePath).json():null;
   const dangling = [...new Set([...tests.citations.keys(), ...scripts.citations.keys()])]
     .filter(id => !criteria.has(id)).sort();
   if (dangling.length) throw new Error(`Dangling @covers citations: ${dangling.join(', ')}`);
@@ -80,6 +88,11 @@ export async function buildAcceptanceLedger() {
     const testCitations = [...(tests.citations.get(id) ?? [])].sort();
     const scriptCitations = [...(scripts.citations.get(id) ?? [])].sort();
     const testMentions = [...(tests.mentions.get(id) ?? [])].filter(item => !testCitations.includes(item)).sort();
+    if(securityCriteria.has(id)){
+      const authored=storyAcceptance.get(id)??false;
+      if(!authored||securityGate?.status!=='passed')return {id,story,status:'UNTESTED' as const,
+        evidence:[...testCitations,...scriptCitations],rationale:'Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted.'};
+    }
     if (testCitations.length) return { id, story, status: 'SATISFIED' as const, evidence: testCitations, rationale: 'A live Bun test carries a canonical citation.' };
     if (scriptCitations.length) return { id, story, status: 'REVIEWED_EXCEPTION' as const, evidence: scriptCitations, rationale: 'A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test.' };
     if (testMentions.length) return { id, story, status: 'UNCITED_COVERAGE' as const, evidence: testMentions, rationale: 'A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form.' };

@@ -1,0 +1,90 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "85a72af332ea09ae33b6daac9494ea6d499e82322c8cf5b4e4c9dc0478ba36b1",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "5dea35ff4a7b63b32b3efe31c79a66b23c81e73b1f07ba2dd0749c1cdf05327c",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "same-source-kinds-cannot-fragment-across-origins",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(assert (and (= admitted (or (and codec_a privacy_a) (and codec_b privacy_b)))\n     codec_a\n     (not privacy_a)\n     (not codec_b)\n     privacy_b\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(assert (and (= admitted (or codec_a privacy_a codec_b privacy_b))\n     codec_a\n     (not privacy_a)\n     (not codec_b)\n     privacy_b\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n codec_a = True,\n privacy_a = False,\n codec_b = False,\n privacy_b = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(assert (and (= admitted (or (and codec_a privacy_a) (and codec_b privacy_b)))\n     codec_a\n     privacy_a\n     (not codec_b)\n     (not privacy_b)\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n codec_a = True,\n privacy_a = True,\n codec_b = False,\n privacy_b = False]"
+      }
+    },
+    {
+      "id": "different-scopes-may-use-different-instance-complete-origins",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun all_instances_scope1_b () Bool)\n(declare-fun all_instances_scope1_a () Bool)\n(declare-fun all_instances_scope0_b () Bool)\n(declare-fun all_instances_scope0_a () Bool)\n(assert (and (= admitted\n        (and (or all_instances_scope0_a all_instances_scope0_b)\n             (or all_instances_scope1_a all_instances_scope1_b)))\n     all_instances_scope0_a\n     (not all_instances_scope0_b)\n     (not all_instances_scope1_a)\n     all_instances_scope1_b\n     (not admitted)))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun all_instances_scope1_b () Bool)\n(declare-fun all_instances_scope1_a () Bool)\n(declare-fun all_instances_scope0_b () Bool)\n(declare-fun all_instances_scope0_a () Bool)\n(assert (and (= admitted\n        (or (and all_instances_scope0_a all_instances_scope1_a)\n            (and all_instances_scope0_b all_instances_scope1_b)))\n     all_instances_scope0_a\n     (not all_instances_scope0_b)\n     (not all_instances_scope1_a)\n     all_instances_scope1_b\n     (not admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[all_instances_scope0_a = True,\n admitted = False,\n all_instances_scope0_b = False,\n all_instances_scope1_b = True,\n all_instances_scope1_a = False]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun all_instances_scope1_b () Bool)\n(declare-fun all_instances_scope1_a () Bool)\n(declare-fun all_instances_scope0_b () Bool)\n(declare-fun all_instances_scope0_a () Bool)\n(assert (and (= admitted\n        (and (or all_instances_scope0_a all_instances_scope0_b)\n             (or all_instances_scope1_a all_instances_scope1_b)))\n     all_instances_scope0_a\n     (not all_instances_scope0_b)\n     (not all_instances_scope1_a)\n     all_instances_scope1_b\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[all_instances_scope0_a = True,\n admitted = True,\n all_instances_scope0_b = False,\n all_instances_scope1_b = True,\n all_instances_scope1_a = False]"
+      }
+    },
+    {
+      "id": "instance-completeness-cannot-discharge-native-evidence",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(assert (let ((a!1 (= admitted\n              (and (or (and codec_a privacy_a) (and codec_b privacy_b)) native))))\n  (and a!1 codec_a privacy_a (not native) admitted)))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(assert (and (= admitted (or (and codec_a privacy_a) (and codec_b privacy_b)))\n     codec_a\n     privacy_a\n     (not native)\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n codec_a = True,\n privacy_a = True,\n codec_b = True,\n native = False,\n privacy_b = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun privacy_a () Bool)\n(declare-fun codec_a () Bool)\n(declare-fun privacy_b () Bool)\n(declare-fun codec_b () Bool)\n(assert (let ((a!1 (= admitted\n              (and (or (and codec_a privacy_a) (and codec_b privacy_b)) native))))\n  (and a!1 codec_a privacy_a native admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n codec_a = True,\n privacy_a = True,\n native = True]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Three conditional finite kind-completeness design laws. The source-only negative control models a limitation of the unchanged source-level RequiredPremise0.1. New typed owner extraction, profile issuance, implementation correspondence, arbitrary cardinality, Rust refinement and native enforcement are not proved."
+}

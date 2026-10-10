@@ -1,0 +1,18 @@
+{
+  "status": "source-review-prerequisites-incomplete",
+  "scope": "Read-only native collector interface review; no installed authority or native population qualification",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "/Users/erik/Projects/truss/packages/postgresql/native/operation-generation-observer.sql": "ee808418b7e5d9f3f6943ce8c9873a92a20f4accd6116dc1d79e1a807b9fa37f",
+    "/Users/erik/Projects/truss/docs/helix/02-design/contracts/private-owner-states-observation-v0.1.proposal.sql": "aad6ba4e8d752906af3d27bd500c71f4505dd4a2812294f78755c15feaaa73b1",
+    "/Users/erik/Projects/truss/docs/helix/02-design/contracts/private-tree-full-observation-v0.1.proposal.sql": "db1ddad5f6ef8953a2e3dacf91b7c69fc8941c5df4e1ca2fc304d7e6a33df6a8"
+  },
+  "findings": [
+    "Candidate graph source explicitly delegates complete source/cut authority",
+    "Owner-state enumeration is per typed owner, not whole population",
+    "Canonical generation trigger excludes complete row-touch qualification",
+    "Complete population/cut/resource/custody collector remains required"
+  ],
+  "testPlan": "docs/helix/03-test/security/truss.md",
+  "acceptanceCasesUnchanged": 132
+}

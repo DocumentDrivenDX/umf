@@ -1,0 +1,744 @@
+{
+  "id": "kind-instance-astra-review",
+  "status": "qualified-conditional-formal-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T11:46:35.765144+00:00",
+  "sourceDigests": {
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "56ebf4e5028ed28adffd54a42c05ee6123db976838278ae92d9a3b5435cf9470",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md": "a5de8840a02bb0d919a4fd3cb0c11cfd569c3c1e6ecf278c2bba6b040f039ecf",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md": "e15678519812cf153e092efbe952d2061020e8b06f1b271cb660a987b10968a6",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json": "a7e3d174be33866b4f16506f2f29463a2c591297473b099026a94699aac2db08",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-formal.json": "d063094d6bc08d92d3581799b50768fdecaa0ed781b893b0bcef5b1ee37e9bfc",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/source-demands-formal.json": "4ce132d6b64cee60c61d49d3a9bc1ac664c409ea2bb57b6c57ee19faf6d64289",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "85a72af332ea09ae33b6daac9494ea6d499e82322c8cf5b4e4c9dc0478ba36b1",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-scoped-obligations.py": "8940268407468e225e2b8ac9a7c0b28b0ee1456af259a049d4ac58128bc1a4f2",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-source-demands.py": "538c86a50d47573913062f4ad956bab38c117690998b4ab15129f1bd23e20c30",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "571e3131fe5b67eb402ff4e5b87eda249d6867440eeb7fd0cf3ae419cd9a10bf",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "dab5dcd078f128790c73a053f98afcf5cce343d758a8840841022b2371f47f60",
+    "/private/tmp/kind-instance-astra-review.py": "ba0398145717e9fe6ed2103d58cb3e97ab6cbeaafaa6c83d152f7d927d6ffdc7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/kind-instance-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "ba0398145717e9fe6ed2103d58cb3e97ab6cbeaafaa6c83d152f7d927d6ffdc7",
+    "source": "\"\"\"Independent saved-SMT review; never executes a producer, Cargo or native code.\"\"\"\nimport hashlib, importlib.util, json, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nOWNER = Path('/Users/erik/Projects/weft')\nSELF = Path('/private/tmp/kind-instance-astra-review.py')\nif Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF or len(sys.argv) != 1:\n    raise RuntimeError('Unknown exact review invocation')\nBASE = ROOT / 'docs/helix/04-build/evidence/security'\nOUT = BASE / 'kind-instance-astra-review.json'\nsha = lambda b: hashlib.sha256(b).hexdigest()\ngroups = [\n    ('kind-completeness-formal', [\n        'same-source-kinds-cannot-fragment-across-origins',\n        'different-scopes-may-use-different-instance-complete-origins',\n        'instance-completeness-cannot-discharge-native-evidence',\n    ], [ROOT / 'tools/security/prove-kind-completeness.py',\n        ROOT / 'docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md',\n        OWNER / 'crates/weft-core/src/security_obligation_matching.rs']),\n    ('source-demands-formal', [\n        'whole-capability-before-source-quantifier',\n        'different-scopes-may-use-different-complete-capabilities',\n        'original-use-needs-primary-original-and-application',\n        'equal-marginals-cannot-substitute-scoped-edges',\n        'source-correspondence-cannot-discharge-native-execution',\n    ], [ROOT / 'tools/security/prove-source-demands.py',\n        ROOT / 'docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md',\n        OWNER / 'crates/weft-core/src/security_obligation_sources.rs',\n        OWNER / 'crates/weft-core/src/security_semantic_coverage.rs']),\n    ('scoped-obligations-formal', [\n        'paired-subjects-cannot-collapse-to-marginals',\n        'zero-edge-selection-keeps-independent-deployment-duty',\n        'unchosen-selected-origin-remains-mandatory',\n        'exact-atoms-do-not-substitute-full-contract',\n        'original-prerequisite-edges-cannot-be-removed',\n        'subject-variant-is-an-identity-coordinate',\n        'one-complete-capability-per-scope',\n        'correspondence-does-not-establish-release',\n        'zero-edge-profile-entry-is-independently-required',\n        'zero-edge-deployment-match-is-independently-required',\n        'unbounded-exact-relation-cannot-omit-required-atom',\n        'unbounded-exact-relation-cannot-add-surplus-atom',\n    ], [ROOT / 'tools/security/prove-scoped-obligations.py',\n        ROOT / 'docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md',\n        OWNER / 'crates/weft-core/src/security_obligation_custody.rs']),\n]\nspec = importlib.util.find_spec('z3')\nassert spec and spec.origin\nsolver_root = Path(spec.origin).resolve().parent\ndef solver_files():\n    return {p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'}\nruntime_paths = solver_files()\npaths = {SELF, Path(sys.executable).resolve(), *runtime_paths}\nfor name, laws, source_paths in groups:\n    paths.add(BASE / (name + '.json'))\n    paths.update(source_paths)\nfrozen = {str(p): p.read_bytes() for p in sorted(paths)}\nprior = OUT.read_bytes() if OUT.exists() else None\n# Existing individual reviews remain historical and are never rewritten here.\nhistorical_paths = [BASE / 'kind-completeness-astra-review.json', BASE / 'scoped-obligations-astra-review.json']\nhistorical = {str(p): p.read_bytes() for p in historical_paths if p.exists()}\nimport z3\nassert z3.get_version_string() == '4.15.4'\nobservations, receipt_audits = [], []\nfor name, laws, source_paths in groups:\n    path = BASE / (name + '.json')\n    raw = frozen[str(path)]\n    proof = json.loads(raw)\n    expected_pins = {str(p): sha(frozen[str(p)]) for p in source_paths}\n    assert proof['sourceDigests'] == expected_pins, name + ': source inventory/digest mismatch'\n    assert proof['status'] == 'conditional-proof-passed' and proof['sourcesUnchanged'] is True\n    assert proof['nativeImplementationQualified'] is False and proof['acceptanceCasesPromoted'] == []\n    assert proof['solverVersion'] == '4.15.4'\n    assert [c['id'] for c in proof['cases']] == laws\n    for case in proof['cases']:\n        assert case['covers'] == ['US-056-AC7', 'US-056-AC10']\n        for kind, expected in [('violation', 'unsat'), ('negativeControl', 'sat'), ('positivePopulation', 'sat')]:\n            query = case[kind]\n            assert query['result'] == expected and query['replayResult'] == expected\n            ctx = z3.Context()\n            solver = z3.Solver(ctx=ctx)\n            solver.set(timeout=30000)\n            solver.from_string(query['smt'])\n            observed = str(solver.check())\n            if observed != expected:\n                raise RuntimeError(name + '/' + case['id'] + '/' + kind + ': ' + observed)\n            observations.append({'id': name + '/' + case['id'] + '/' + kind,\n                'receipt': name, 'law': case['id'], 'queryKind': kind,\n                'expected': expected, 'observed': observed,\n                'smtSha256': sha(query['smt'].encode()), 'freshContext': True})\n            del solver, ctx\n    receipt_audits.append({'path': str(path), 'sha256': sha(raw),\n        'lawCount': len(laws), 'formulaCount': len(laws) * 3,\n        'sourcePinCount': len(source_paths), 'sourceDigests': expected_pins,\n        'exactSourceInventoryMatched': True, 'allFormulaOutcomesMatched': True})\nassert len(observations) == 60 and len({o['id'] for o in observations}) == 60\nassert solver_files() == runtime_paths\nif any(Path(p).read_bytes() != data for p, data in frozen.items()):\n    raise RuntimeError('Captured input/runtime changed')\nif any(Path(p).read_bytes() != data for p, data in historical.items()):\n    raise RuntimeError('Historical review changed')\nif (OUT.read_bytes() if OUT.exists() else None) != prior:\n    raise RuntimeError('Previous combined review changed')\nreceipt = {\n    'id': 'kind-instance-astra-review',\n    'status': 'qualified-conditional-formal-review-passed',\n    'reviewer': '/root/astra_security_review',\n    'generatedAt': datetime.now(timezone.utc).isoformat(),\n    'sourceDigests': {p: sha(data) for p, data in frozen.items()}, 'sourcesUnchanged': True,\n    'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n        'sourceSha256': sha(frozen[str(SELF)]), 'source': frozen[str(SELF)].decode()},\n    'formalReplay': {'solverVersion': z3.get_version_string(), 'formulaCount': 60,\n        'unsatCount': 20, 'satCount': 40, 'receipts': receipt_audits, 'observations': observations},\n    'remainingFindings': [],\n    'historicalReviews': [{'path': p, 'sha256': sha(data), 'preservedUnchanged': True,\n        'scope': 'Historical only; no pin refresh or freshness assertion.'} for p, data in historical.items()],\n    'scope': 'Independent replay of all60 retained formulas in fresh Z3 contexts:9 kind-completeness,15 source-demand and36 scoped-obligation formulas. Exact closed law identities, expected outcomes, source-path sets and current source bytes were checked for each proof receipt. Eighteen laws are finite conditional Boolean composition/guard models; two scoped laws state no-omission/no-addition under assumed pointwise extensional equality over an unbounded typed atom relation. Nonempty SAT witnesses and explicit weakened controls remain distinct from the UNSAT checks. The source-level and instance-level Rust modules are pinned lineage only; this does not prove typed owner extraction, independently complete kind/occurrence or case inventories, profile authentication, arbitrary-size capability assignment, Rust/parser/DAG refinement or native execution. No producer, Cargo or native fixture was executed. Python executable and selected complete Z3 package file inventory are pinned; dynamic system libraries/platform are trusted premises. No backend acceptance or release authority is established.',\n    'nativeImplementationQualified': False, 'acceptanceCasesPromoted': [],\n    'acceptanceCriteria': ['US-056-AC7', 'US-056-AC10'],\n}\nassert sum(o['observed'] == 'unsat' for o in observations) == 20\nassert sum(o['observed'] == 'sat' for o in observations) == 40\nif prior is not None:\n    h = sha(prior)\n    archive = OUT.with_name(OUT.stem + '-prior-' + h[:16] + '.json')\n    if archive.exists() and archive.read_bytes() != prior:\n        raise RuntimeError('Archive collision')\n    if not archive.exists():\n        archive.write_bytes(prior)\n    receipt['previousReceipt'] = {'path': str(archive), 'sha256': h, 'scope': 'Historical only.'}\nOUT.write_text(json.dumps(receipt, indent=2) + '\\n')\nprint(json.dumps({'status': receipt['status'], 'formulaCount': 60, 'unsat': 20, 'sat': 40,\n    'groups': [9, 15, 36], 'sourcePins': len(frozen), 'sourcesUnchanged': True,\n    'output': str(OUT), 'sha256': sha(OUT.read_bytes())}))\n"
+  },
+  "formalReplay": {
+    "solverVersion": "4.15.4",
+    "formulaCount": 60,
+    "unsatCount": 20,
+    "satCount": 40,
+    "receipts": [
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-formal.json",
+        "sha256": "a7e3d174be33866b4f16506f2f29463a2c591297473b099026a94699aac2db08",
+        "lawCount": 3,
+        "formulaCount": 9,
+        "sourcePinCount": 3,
+        "sourceDigests": {
+          "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-kind-completeness.py": "85a72af332ea09ae33b6daac9494ea6d499e82322c8cf5b4e4c9dc0478ba36b1",
+          "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "56ebf4e5028ed28adffd54a42c05ee6123db976838278ae92d9a3b5435cf9470",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0"
+        },
+        "exactSourceInventoryMatched": true,
+        "allFormulaOutcomesMatched": true
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/source-demands-formal.json",
+        "sha256": "4ce132d6b64cee60c61d49d3a9bc1ac664c409ea2bb57b6c57ee19faf6d64289",
+        "lawCount": 5,
+        "formulaCount": 15,
+        "sourcePinCount": 4,
+        "sourceDigests": {
+          "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-source-demands.py": "538c86a50d47573913062f4ad956bab38c117690998b4ab15129f1bd23e20c30",
+          "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md": "e15678519812cf153e092efbe952d2061020e8b06f1b271cb660a987b10968a6",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "571e3131fe5b67eb402ff4e5b87eda249d6867440eeb7fd0cf3ae419cd9a10bf",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "dab5dcd078f128790c73a053f98afcf5cce343d758a8840841022b2371f47f60"
+        },
+        "exactSourceInventoryMatched": true,
+        "allFormulaOutcomesMatched": true
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-formal.json",
+        "sha256": "d063094d6bc08d92d3581799b50768fdecaa0ed781b893b0bcef5b1ee37e9bfc",
+        "lawCount": 12,
+        "formulaCount": 36,
+        "sourcePinCount": 3,
+        "sourceDigests": {
+          "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-scoped-obligations.py": "8940268407468e225e2b8ac9a7c0b28b0ee1456af259a049d4ac58128bc1a4f2",
+          "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md": "a5de8840a02bb0d919a4fd3cb0c11cfd569c3c1e6ecf278c2bba6b040f039ecf",
+          "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b"
+        },
+        "exactSourceInventoryMatched": true,
+        "allFormulaOutcomesMatched": true
+      }
+    ],
+    "observations": [
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "7ea5dbe40eb5b05b8f72e864b63125fb9ce625e3c895a63312699b077660dfd4",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "54a22745ac5647378f4026ecf6af9b7f5bc8c870fc126bb97b145046e3061ee4",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/same-source-kinds-cannot-fragment-across-origins/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "same-source-kinds-cannot-fragment-across-origins",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f3697c4d945d522b4f6c3d8024a2be362a4ab416c06683e8cb004cf4503f94ab",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "87ce3286da471de6d76e178bb7f1605cfa2ed436918f67a7406b49d61486402e",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "4e86c63363c85b24e41cba4a327cc37b32c0d395d6a0a1a857bdec4119a25a06",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/different-scopes-may-use-different-instance-complete-origins/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "different-scopes-may-use-different-instance-complete-origins",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9c3cfc373dcdcba97f4138a18099c22738cd75597dc569e84ea8e1e3ac863062",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/violation",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "1c50b6be9d443f7e80deaba433fc24bad21f53659e67f385ca768d25ae0d2d14",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/negativeControl",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9ef619e57664475332dca938301f881134b7276d3624b98ce315f020f3263d5b",
+        "freshContext": true
+      },
+      {
+        "id": "kind-completeness-formal/instance-completeness-cannot-discharge-native-evidence/positivePopulation",
+        "receipt": "kind-completeness-formal",
+        "law": "instance-completeness-cannot-discharge-native-evidence",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "49aa8da3935e58b7847f1593a7e30832d9e4f0a5fa093a7d950ade178c43b9c2",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/violation",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "2961fc23dea54e8f30f1f428527b9dccfd0df8943c9876e6e29a0483d4237281",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b878779c5b50dd997b182742bd9b51a01981a88e7fd1ea97e0e25493824304",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/whole-capability-before-source-quantifier/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "whole-capability-before-source-quantifier",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7b177d5febe03a98c1ece9699c1e594033fb9ef8c2068dc699ef5a8bb5d7ecc4",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/violation",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "a58a59ab4670575951632daba266617bb3b2cd21240a11e2158db41d77c592b9",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "62f7fcaf2e0e0372b66d93bf50bc034c76094d92104a5398b410d50689c41b79",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/different-scopes-may-use-different-complete-capabilities/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "different-scopes-may-use-different-complete-capabilities",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "1aa28f7e6fe12a15341ee55d38fc8872bd4333f83a0aef721895f86fc56625ab",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/violation",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "3922cf644c02c78800f0c878bc90f5d10d8b7840b6dc8ad2acaa238df74ff3cd",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9a954116b41c9e7b45a467c33358e2dd38e0a02b265f0f89562a2e1dcf833c1c",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/original-use-needs-primary-original-and-application/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "original-use-needs-primary-original-and-application",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "8f035f24a90f16b77c3ee1b3850a873ee0eb9a4560bfa436265e4ac70377d79f",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/violation",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "3f26174d4369d547dbc0a31336ae2512e50de4e8f5c6ac02dd632d61ca5ebb66",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "87018e958b3ad517cfc9471f9df372588ba2ca1f64eb91f8512eef59c1295bd8",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/equal-marginals-cannot-substitute-scoped-edges/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "equal-marginals-cannot-substitute-scoped-edges",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "311dcca6d60e293fdad3e8f55db73db92014ceee5ae9fee3bd03a5e0c702acc1",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/violation",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "dbae4e2c55c4b3bc744ac09f06b7626884d17a571e55661ee8310a16bb83033d",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/negativeControl",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f76cc611f41f020b72ad3c5dc299c896096968632e865a756aa0635e592d94d5",
+        "freshContext": true
+      },
+      {
+        "id": "source-demands-formal/source-correspondence-cannot-discharge-native-execution/positivePopulation",
+        "receipt": "source-demands-formal",
+        "law": "source-correspondence-cannot-discharge-native-execution",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "4efbfd48e063fb2404d40cdb05e12cb627a850440a3965a664df39b8794cc7ab",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/paired-subjects-cannot-collapse-to-marginals/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "paired-subjects-cannot-collapse-to-marginals",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "416abba0def123e5907f53fb791695740fda5fc26c48befa0ae69a0196353c42",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/paired-subjects-cannot-collapse-to-marginals/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "paired-subjects-cannot-collapse-to-marginals",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "02a7d8fda2863f057926acdf93e0fc5cf11e061b53721bcea8812e6903186b30",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/paired-subjects-cannot-collapse-to-marginals/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "paired-subjects-cannot-collapse-to-marginals",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "e6a2fe2f555f2b9cd49ed2f9a3b1ac9814a5d48baa4cb4f853c30ce4e53cb1a4",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-selection-keeps-independent-deployment-duty/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-selection-keeps-independent-deployment-duty",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "283b8869bf24d35d994e69662c060e01b124ab45fa8d6f635508c8cf9475e5eb",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-selection-keeps-independent-deployment-duty/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-selection-keeps-independent-deployment-duty",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "c30d8b0fde9d0d1b48eb3499ac08e4546f805ae74634519ff92eefd001e70190",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-selection-keeps-independent-deployment-duty/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-selection-keeps-independent-deployment-duty",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "78e57b59e36527b6a4523a88c827e1e318b36f99daae75959ff60edfff1eb42d",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unchosen-selected-origin-remains-mandatory/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unchosen-selected-origin-remains-mandatory",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "82e267b50e53e7c265b161e0947fdb9e7936ab9f735dd055df74b696560c9d39",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unchosen-selected-origin-remains-mandatory/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "unchosen-selected-origin-remains-mandatory",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b722373429ffba3445d4a6c1ae4efb930028ac75f674e3dc874ae1448ca77d",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unchosen-selected-origin-remains-mandatory/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unchosen-selected-origin-remains-mandatory",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f4fc68ee831221153545dc717a6f3d70095ebc8a656e4b06b38ccf43803c4211",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/exact-atoms-do-not-substitute-full-contract/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "exact-atoms-do-not-substitute-full-contract",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "d5ddb00f01ba624156cef0feb6bd6976ec295c932398da79c8821f1c337432e1",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/exact-atoms-do-not-substitute-full-contract/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "exact-atoms-do-not-substitute-full-contract",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "13e10db37afb1bf7910ad3816d4dae76fbc66c97cc044cbfb798704e4622da9b",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/exact-atoms-do-not-substitute-full-contract/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "exact-atoms-do-not-substitute-full-contract",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7c444de36d09541bd58cb1ad43e34bc8cd9e5fe77cc6c4ffc7a21552e6258321",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/original-prerequisite-edges-cannot-be-removed/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "original-prerequisite-edges-cannot-be-removed",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "dd32fd6a481905d11134f6aba54c2183b96cbb5cd1d9d43f0df41b4140d3a9b6",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/original-prerequisite-edges-cannot-be-removed/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "original-prerequisite-edges-cannot-be-removed",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "6f7cb2ce82563724961f80da852d3e61db295e8ee557430c0159ff16b11220f6",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/original-prerequisite-edges-cannot-be-removed/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "original-prerequisite-edges-cannot-be-removed",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7c444de36d09541bd58cb1ad43e34bc8cd9e5fe77cc6c4ffc7a21552e6258321",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/subject-variant-is-an-identity-coordinate/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "subject-variant-is-an-identity-coordinate",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "274245579d0f68e8ce1ddcc79b356a4bdb984c89dd128797b9152253f5243b23",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/subject-variant-is-an-identity-coordinate/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "subject-variant-is-an-identity-coordinate",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7a129b6f89be82d157733a67a1ff281de7c8529ee700bc0d42b6c7a7ed0b6ca4",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/subject-variant-is-an-identity-coordinate/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "subject-variant-is-an-identity-coordinate",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "fd6b0dabe9f6ca7f791aed262fa0d564d5f4fcf624a74f7518172de64b23626a",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/one-complete-capability-per-scope/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "one-complete-capability-per-scope",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "2961fc23dea54e8f30f1f428527b9dccfd0df8943c9876e6e29a0483d4237281",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/one-complete-capability-per-scope/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "one-complete-capability-per-scope",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b878779c5b50dd997b182742bd9b51a01981a88e7fd1ea97e0e25493824304",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/one-complete-capability-per-scope/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "one-complete-capability-per-scope",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7b177d5febe03a98c1ece9699c1e594033fb9ef8c2068dc699ef5a8bb5d7ecc4",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/correspondence-does-not-establish-release/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "correspondence-does-not-establish-release",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "8bf66dd51188ab931afa15e8c192aea65df3729a875a9a0965efab070fa3b788",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/correspondence-does-not-establish-release/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "correspondence-does-not-establish-release",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "3eaab63729c6d64bb326b5ca23b093b91362b97d166f981f90fb0ed7eb887a18",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/correspondence-does-not-establish-release/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "correspondence-does-not-establish-release",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "a8a80dc84ea03ba73de88f99369d4da9ce8bed1b3b2c6c1c22cf4414fa22f2d8",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-profile-entry-is-independently-required/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-profile-entry-is-independently-required",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "bff388294afd4f607b3b0e84a06fc0a51c9feab71e38a204e5b13e3ea8e9a725",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-profile-entry-is-independently-required/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-profile-entry-is-independently-required",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "0dc79e384cdc63744856d74f615bbfdd3fd6318289bd9d5c4ea3b929768716fb",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-profile-entry-is-independently-required/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-profile-entry-is-independently-required",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "15bfc1068e04d0f039e7243e1a3ae5bf7fd760d7af6d29d62d9ebc571c756136",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-deployment-match-is-independently-required/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-deployment-match-is-independently-required",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "23e8f3cf4a6fc64808cc94ebacf7ac557fdde2895bc2e221414c9ffd0b9c8049",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-deployment-match-is-independently-required/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-deployment-match-is-independently-required",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "3eb8735d112792de18ac8394b8c4eb292a67174395064aa1726f820d818ed924",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/zero-edge-deployment-match-is-independently-required/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "zero-edge-deployment-match-is-independently-required",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "15bfc1068e04d0f039e7243e1a3ae5bf7fd760d7af6d29d62d9ebc571c756136",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-omit-required-atom/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-omit-required-atom",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "a957da0a12e27a5642af2499432c2c7803c6656ff77a060de75b03457e6cbeb3",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-omit-required-atom/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-omit-required-atom",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "ae04fd778c91d3bde711d3b5429329ac145e8c3856c053a188fe949c02fa583f",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-omit-required-atom/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-omit-required-atom",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "01f39abd071f20245ba9968c5c4470336d88ae248f54a6fae33b26f024eec6a3",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-add-surplus-atom/violation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-add-surplus-atom",
+        "queryKind": "violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "cfba9d3f04a7b18bd12d099dbe0976ac6912033dfefdea2917dc52a38bc47891",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-add-surplus-atom/negativeControl",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-add-surplus-atom",
+        "queryKind": "negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f0d4e506b9842bb23f69aa946cd8a2a39109593f1bfb9a01d1bc9b02035ff058",
+        "freshContext": true
+      },
+      {
+        "id": "scoped-obligations-formal/unbounded-exact-relation-cannot-add-surplus-atom/positivePopulation",
+        "receipt": "scoped-obligations-formal",
+        "law": "unbounded-exact-relation-cannot-add-surplus-atom",
+        "queryKind": "positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "01f39abd071f20245ba9968c5c4470336d88ae248f54a6fae33b26f024eec6a3",
+        "freshContext": true
+      }
+    ]
+  },
+  "remainingFindings": [],
+  "historicalReviews": [
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/kind-completeness-astra-review.json",
+      "sha256": "100cc34bfdaf81f9a289f4582de82b586d7b3fc2f92e30e29b34170e84420db6",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-astra-review.json",
+      "sha256": "6f1859bde2418c9c6bf53c7e81669287f48305445ff0ac4511476e874462fd9f",
+      "preservedUnchanged": true,
+      "scope": "Historical only; no pin refresh or freshness assertion."
+    }
+  ],
+  "scope": "Independent replay of all60 retained formulas in fresh Z3 contexts:9 kind-completeness,15 source-demand and36 scoped-obligation formulas. Exact closed law identities, expected outcomes, source-path sets and current source bytes were checked for each proof receipt. Eighteen laws are finite conditional Boolean composition/guard models; two scoped laws state no-omission/no-addition under assumed pointwise extensional equality over an unbounded typed atom relation. Nonempty SAT witnesses and explicit weakened controls remain distinct from the UNSAT checks. The source-level and instance-level Rust modules are pinned lineage only; this does not prove typed owner extraction, independently complete kind/occurrence or case inventories, profile authentication, arbitrary-size capability assignment, Rust/parser/DAG refinement or native execution. No producer, Cargo or native fixture was executed. Python executable and selected complete Z3 package file inventory are pinned; dynamic system libraries/platform are trusted premises. No backend acceptance or release authority is established.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "acceptanceCriteria": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ]
+}

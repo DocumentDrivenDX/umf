@@ -1,0 +1,55 @@
+{
+  "status": "source-correspondence-inspected",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-new-stage.ts": "ff3fc3a6066854d4ac74b6256a06d0bdf56350617f97af06c583c0a46b59f8dd",
+    "/Users/erik/Projects/truss/packages/postgresql/native/catalog-new-inventory.sql": "a1b3a2391176f48527d465d63f8022d54082856d28d5586cc396f49ed941e4c3",
+    "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-default-homes.ts": "4766c10e24e494388dfd61f53f3863be054677c232f382612bf3947c9353e663",
+    "/Users/erik/Projects/truss/docs/helix/02-design/contracts/CONTRACT-007-embedding-and-execution.md": "0e6cbf2f656eb97e2e40fa3f58b91e7133824e8b6632f27f398de28e023f3c0d",
+    "/Users/erik/Projects/truss/packages/postgresql/native/catalog-relationship-stage.sql": "b8e9cd8d576c753b7889696717e17d7174e21c811f5fc880833648dee02c237b"
+  },
+  "observations": [
+    {
+      "id": "catalog-stage-not-accepted-binding",
+      "observed": "Both staging paths remain provisional_new_catalog_staging_only. The new wrapper calls prepareCatalogSourceReport and requireClosedCatalogSourceReport before low-level staging; this five-file inspection establishes call ordering, not closure semantics of those callees. Low-level staging does not independently run that source preflight. Complete support, report, resource and finalizer admission remain required."
+    },
+    {
+      "id": "original-native-catalog-correspondence",
+      "observed": "Native new-catalog collector checks original Record and Field storage identities and creation revision against original declaration matcher."
+    },
+    {
+      "id": "explicit-property-home-dispatch",
+      "observed": "Absent original binding selects json property homes under ADR-002; explicit binding interpretation is required separately."
+    },
+    {
+      "id": "graph-binding-key-and-home-obligations",
+      "observed": "CONTRACT-007 distinguishes business keys from object IDs and requires original object/edge identity, property catalog allocation, JSON member and row-home joins."
+    },
+    {
+      "id": "original-association-property-owner-correspondence",
+      "observed": "Staging resolves archived associationRecord to its same-document/revision property-owner Record; the selected owner Key is checked only when associationRecord.key is explicit. Native inventory independently re-resolves the owner and checks assoc_type_id, including NULL for absent association ownership. This does not establish a native edge business Key or public admission."
+    }
+  ],
+  "nextImplementationRequirements": [
+    "Current original admitted catalog/layout custody distinct from provisional staging",
+    "Record versus relationship/association identity correspondence",
+    "Exact business-key component/property/namespace correspondence instead of object.id substitution",
+    "Original prop_def.home json-to-props translation and canonical allocated property member",
+    "Complete state/node/scalar join and absence/domain obligations for selected row homes",
+    "Typed root/carrier/query aliases and separate source/current-authority/final-publication custody"
+  ],
+  "scope": "Read-only current source/contracts inspection, not runtime execution, authenticated origin, complete catalog/native installation or backend acceptance. Does not infer an installed graph from review-only owner exports.",
+  "priorSourceDigests": {
+    "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-new-stage.ts": "9f40d1b03b4887e906847ab3597f92244791333ec57966f954096a5d8c6f185a",
+    "/Users/erik/Projects/truss/packages/postgresql/native/catalog-new-inventory.sql": "a1b3a2391176f48527d465d63f8022d54082856d28d5586cc396f49ed941e4c3",
+    "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-default-homes.ts": "4766c10e24e494388dfd61f53f3863be054677c232f382612bf3947c9353e663",
+    "/Users/erik/Projects/truss/docs/helix/02-design/contracts/CONTRACT-007-embedding-and-execution.md": "0e6cbf2f656eb97e2e40fa3f58b91e7133824e8b6632f27f398de28e023f3c0d",
+    "/Users/erik/Projects/truss/packages/postgresql/native/catalog-relationship-stage.sql": "b8e9cd8d576c753b7889696717e17d7174e21c811f5fc880833648dee02c237b"
+  },
+  "review": {
+    "reviewer": "Astra ultra",
+    "method": "Independent current-source read-only review of all five observations and exact source hashes",
+    "nativeRunsPerformed": false,
+    "changedSourceCount": 1,
+    "qualification": "Source correspondence only; wrapper callee closure dependencies are outside this five-file review"
+  }
+}

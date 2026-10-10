@@ -1,0 +1,542 @@
+{
+  "status": "passed",
+  "runId": "762f62ac-6ac9-4f67-aff6-5e5ff741aa7f",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-private-principal-probe.py": "fe7e2f153938ad6def05296dfbea1313ee5b747d4832e0adf9f4ad558ff68255",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tools/security/truss-private-principal-probe.ts": "a190f447982f05b97ddf4375810c1925d5e59f40b94852fe7e88bd5a1606a041",
+    "tools/security/truss-principal-typecheck.json": "9be1b3f8fcd2609e0d25754f872d0e505f6bf4ef4afed5b0b76183d04913d8be",
+    "tools/security/truss-private-principal.sql": "e05101ce9bb5bc0167da86d2b99d6fb05e87e2f8d63c6ce64c932d519496941f",
+    "/Users/erik/Projects/truss/tests/pg-principal-wire.test.ts": "1eb2f948ff70b2b7d4b6e9596e3e5b3b707775339ef2a2d4162acaece88456e5",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts": "3f9090957a5b94b677022f0682a919b94591fff8e3ba87fe7e5ae35c6e3f6d7d",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts": "a404706f40228a3c43514da2447db19c2b0dd5a37f491f7cfa63bcf15cac4b76",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts": "1a9cf79f5d1b700d7813ee24dabd6bcf3abc2f9a4eee134c7c223cd4dc5e0cd0",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts": "83acc32f461371df5108df7a1dd5177d7edea5a749ea4a1f07b71ed4073d3be3",
+    "/Users/erik/Projects/truss/packages/pg-runtime/package.json": "958e5c9e451ec2d9c523c5c3dcafad3b259d8a2b4204c9397d4fb8ea1ef7a562",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json": "f7b678a8055c234669e8dd272dd624771e29d9f0e3a3353f15c3005ab1a5fd29"
+  },
+  "versions": {
+    "postgresql": {
+      "number": "170009",
+      "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    "bun": "1.4.2",
+    "pg": "8.16.3",
+    "python": "3.9.6",
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545"
+  },
+  "observations": [
+    {
+      "id": "umf_sec_alice:authorized",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:same-native-pid",
+      "expected": "189",
+      "observed": "189"
+    },
+    {
+      "id": "umf_sec_alice:pooled-role-restored",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "umf_sec_alice:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "umf_sec_bob:authorized",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:same-native-pid",
+      "expected": "190",
+      "observed": "190"
+    },
+    {
+      "id": "umf_sec_bob:pooled-role-restored",
+      "expected": "umf_sec_bob",
+      "observed": "umf_sec_bob"
+    },
+    {
+      "id": "umf_sec_bob:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "umf_sec_outsider:authorized",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:same-native-pid",
+      "expected": "191",
+      "observed": "191"
+    },
+    {
+      "id": "umf_sec_outsider:pooled-role-restored",
+      "expected": "umf_sec_outsider",
+      "observed": "umf_sec_outsider"
+    },
+    {
+      "id": "umf_sec_outsider:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "combined:subject_text:admitted",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "combined:subject-text-data",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "combined:subject_name:admitted",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "combined:subject_name:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "combined:subject_missing:admitted",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "combined:subject_missing:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "combined:subject_ambiguous:admitted",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "combined:subject_ambiguous:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "direct-profile-incompatible:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "direct-profile-incompatible:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "direct-profile-incompatible:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "direct-profile-incompatible:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "missing:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "missing:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "bad_shape:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad_shape:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "bad_shape:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad_shape:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "bad_flags:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad_flags:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "bad_flags:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad_flags:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "no_rows:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "no_rows:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "no_rows:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "no_rows:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "multi_rows:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "multi_rows:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "multi_rows:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "multi_rows:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "wrong-pin:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-pin:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "wrong-pin:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-pin:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "excluded-superuser:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "excluded-superuser:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "excluded-superuser:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "excluded-superuser:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "observer-requires-pin",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-subject-carrier:\"\"",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-subject-carrier:null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-subject-carrier:false",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-subject-carrier:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-subject-carrier:\"varchar\"",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "LATIN1-release-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "LATIN1-quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "native-bypass:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-bypass:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "native-bypass:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-bypass:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "altered-helper:refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "altered-helper:quarantined",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "altered-helper:closed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "altered-helper:custody",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "independent-native-routine",
+      "expected": {
+        "owner": "umf_sec_principal_observer",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog"
+        ],
+        "publicExecute": false
+      },
+      "observed": {
+        "owner": "umf_sec_principal_observer",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog"
+        ],
+        "publicExecute": false
+      }
+    },
+    {
+      "id": "disk-journal-query-count",
+      "expected": 135,
+      "observed": 135
+    },
+    {
+      "id": "disk-original-request-frame-outcome-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "disk-custody-consecutive",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "disk-context-reports-present",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "disk-missing-outcome",
+      "expected": "incomplete",
+      "observed": "incomplete"
+    },
+    {
+      "id": "disk-missing-outcome-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "disk-malformed-status",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "id": "disk-malformed-status-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "disk-status-does-not-replace-command",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "id": "disk-omission-structural-only",
+      "expected": "complete",
+      "observed": "complete"
+    },
+    {
+      "id": "disk-omission-content-correspondence",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "native-parameter-status-retained",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "nativeParameterStatuses": [
+    {
+      "name": "application_name",
+      "value": "changed-for-component"
+    },
+    {
+      "name": "application_name",
+      "value": "truss-ordinary-component"
+    },
+    {
+      "name": "application_name",
+      "value": "changed-for-component"
+    },
+    {
+      "name": "application_name",
+      "value": "truss-ordinary-component"
+    },
+    {
+      "name": "application_name",
+      "value": "changed-for-component"
+    },
+    {
+      "name": "application_name",
+      "value": "truss-ordinary-component"
+    }
+  ],
+  "journalEvidence": {
+    "originalQueries": 135,
+    "leases": 10,
+    "privateDirectory": "/private/tmp/umf-truss-principal-journal-k1fq1uk4",
+    "structuralValidationNotAuthenticity": true
+  },
+  "scope": "Experimental private principal observation in actual Truss pg-runtime on owned PostgreSQL 17.9 SCRAM sessions and original journals; closed candidate known surfaces only, not complete diagnostic, installed graph, authenticated deployment or final-publication acceptance"
+}

@@ -1,0 +1,94 @@
+{
+  "status": "counterexample-observed",
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "archives": {
+    "original-publication-stale-retirement-vulnerable.ts.txt": "aee0521638f4655848e84cd5996a7e25808e8092b93c8cb90f613550ff8d867b",
+    "original-publication-stale-retirement-vulnerable.py.txt": "412e19686c9975a38331d1accea6225189fd1ea48703eeddd2fe7d4fa9565543",
+    "original-publication-stale-retirement-native.json": "b9f664b335537b3687ec92126cabe5285570d244dc0b0cd250718118096de206"
+  },
+  "observations": [
+    {
+      "id": "stale-retirement-registration-barrier",
+      "expected": "stale-registration-ready",
+      "observed": "stale-registration-ready"
+    },
+    {
+      "id": "stale-retirement-first-buffer",
+      "expected": [
+        [
+          "433"
+        ]
+      ],
+      "observed": [
+        [
+          "433"
+        ]
+      ]
+    },
+    {
+      "id": "stale-retirement-first-buffer-discarded",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "stale-retirement-current-state-terminal",
+      "expected": "released",
+      "observed": "released"
+    },
+    {
+      "id": "stale-retirement-unfenced-epoch",
+      "expected": "51",
+      "observed": "51"
+    },
+    {
+      "id": "stale-retirement-counterexample-second-buffer",
+      "expected": [
+        [
+          "433"
+        ]
+      ],
+      "observed": [
+        [
+          "433"
+        ]
+      ]
+    },
+    {
+      "id": "stale-retirement-counterexample-backend-terminated",
+      "expected": "t",
+      "observed": "t"
+    },
+    {
+      "id": "stale-retirement-counterexample-revocation-before-second-drain",
+      "expected": "f",
+      "observed": "f"
+    },
+    {
+      "id": "stale-retirement-counterexample-second-buffer-survives",
+      "expected": [
+        [
+          "433"
+        ]
+      ],
+      "observed": [
+        [
+          "433"
+        ]
+      ]
+    },
+    {
+      "id": "stale-retirement-counterexample-second-buffer-discarded",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "stale-retirement-counterexample-client-detects-loss",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "scope": "Actual ordinary PostgreSQL repeatable-read enrolled publisher reused terminal UUID through retained snapshot; after native backend termination revocation committed while second buffer remained held in the test host. Neither buffer was delivered to a consumer. This demonstrates a protocol defect, not acceptance."
+}

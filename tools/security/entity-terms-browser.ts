@@ -1,0 +1,37 @@
+/** Real Chromium check of intrinsic entity typing; no compiler/native admission. */
+import {chromium} from 'playwright';
+import {createHash} from 'node:crypto';
+import {securityFixture} from '../../tests/security/fixture';
+import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';
+import {migrateCandidateSecurityPolicy} from '../../src/extensions/security/policy-migration-candidate';
+const source='src/extensions/security/entity-terms-candidate.ts';
+const paths=[source,'tools/security/entity-terms-browser.ts','tools/security/entity-terms-browser-entry.ts','tests/security/fixture.ts','docs/helix/02-design/spikes/security/policy-v0.2.schema.json','docs/helix/02-design/spikes/security/ontology-v0.2.schema.json',...new Bun.Glob('src/**/*').scanSync({onlyFiles:true}),...new Bun.Glob('spec/**/*').scanSync({onlyFiles:true})];
+const hash=async(p:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex');
+const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,await hash(p)])));
+const f=securityFixture(),ontology:any=structuredClone(migrateCandidateSecurityOntology(f.resolution.ontology,'ontology-2').target);ontology.associations=[];ontology.context=[{documentId:'domain',moduleId:'m',elementId:'active'}];
+const policy:any=structuredClone(migrateCandidateSecurityPolicy(f.policy,{documentId:'domain',revision:'ontology-2'},'policy-2').target);policy.rules=policy.rules.slice(0,1);policy.rules[0].condition={op:'and',args:[{op:'eq',left:{kind:'resource',field:{documentId:'domain',moduleId:'m',elementId:'salary'}},right:{kind:'constant',field:{documentId:'domain',moduleId:'m',elementId:'salary'},value:{integerToken:'9007199254740993'}}},{op:'eq',left:{kind:'context',field:{documentId:'domain',moduleId:'m',elementId:'active'}},right:{kind:'constant',field:{documentId:'domain',moduleId:'m',elementId:'active'},value:{boolean:true}}}]};
+const build=await Bun.build({entrypoints:['tools/security/entity-terms-browser-entry.ts'],target:'browser',format:'esm'});if(!build.success)throw Error('Browser build failed');
+const js=await build.outputs[0]!.text(),server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/candidate.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html>')});let browser;
+try{
+ browser=await chromium.launch({headless:true,executablePath:Bun.env.UMF_CHROMIUM_PATH});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():(externalRequests++,r.abort()));await page.goto(`http://127.0.0.1:${server.port}`);
+ const browserPacket:any={ontology,documents:f.resolution.documents,policy};
+ const observations=await page.evaluate(async(p:any)=>{
+  const moduleUrl='/candidate.js',m=await import(moduleUrl),ref=(elementId:string)=>({documentId:'domain',moduleId:'m',elementId}),scope=m.createCandidateEntityTermScope(p.ontology,p.documents,ref('Resource'));
+  const rows:any[]=[],check=(id:string,expected:any,observed:any)=>rows.push({id,expected,observed}),resolve=(term:any)=>m.resolveCandidateEntityTerm(scope,term),refuses=(fn:()=>unknown)=>{try{fn();return false;}catch{return true;}};
+  const subject=resolve({kind:'subject',identity:true}),resource=resolve({kind:'resource',identity:true}),salary=resolve({kind:'resource',field:ref('salary')}),constant=resolve({kind:'constant',field:ref('salary'),value:{integerToken:'9007199254740993'}});
+  check('association-free',0,p.ontology.associations.length);check('subject-owner',ref('Staff'),subject.term.type);check('resource-owner',ref('Resource'),resource.term.type);check('nominal-identity',false,m.candidateEntityTermsCompatible(subject,resource));check('exact-integer',true,m.candidateEntityTermsCompatible(salary,constant));check('exact-carrier','9007199254740993',constant.term.value.integerToken);
+  const context=resolve({kind:'context',field:ref('active')}),flag=resolve({kind:'constant',field:ref('active'),value:{boolean:true}});check('context-domain',true,m.candidateEntityTermsCompatible(context,flag));check('scalar-domain',false,m.candidateEntityTermsCompatible(salary,flag));
+  const negatives=[{kind:'subject',field:ref('salary')},{kind:'resource',field:ref('staffId')},{kind:'context',field:ref('salary')},{kind:'constant',field:ref('salary'),value:{string:'9007199254740993'}},{kind:'constant',field:ref('salary'),value:{integerToken:'1.5'}},{kind:'resource',identity:false},{kind:'context',identity:true},{kind:'resource',identity:true,future:true}];
+  negatives.forEach((term,i)=>check('refusal-'+i,true,refuses(()=>resolve(term))));check('copied-scope',true,refuses(()=>m.resolveCandidateEntityTerm({...scope},{kind:'resource',identity:true})));check('copied-term',true,refuses(()=>m.candidateEntityTermsCompatible({...resource},resource)));
+  const other=m.createCandidateEntityTermScope(p.ontology,p.documents,ref('Resource'));check('cross-cut',true,refuses(()=>m.candidateEntityTermsCompatible(resource,m.resolveCandidateEntityTerm(other,{kind:'resource',identity:true}))));
+  let calls=0;check('accessor',true,refuses(()=>resolve({kind:'resource',get identity(){calls++;return true;}})));check('accessor-calls',0,calls);check('frozen',true,Object.isFrozen(resource.term.key));
+  const checked=m.resolveCandidateSecurityPolicy(p.policy,p.ontology,p.documents),wire=checked.conditions[0].transport,deps=m.candidateSecurityPolicyDependencies(checked);
+  check('intrinsic-policy-no-bindings',0,checked.residuals.length);check('transport-roundtrip',true,JSON.stringify(m.inspectCandidateAssociationExpressionTransport(JSON.parse(JSON.stringify(wire))))===JSON.stringify(wire));check('context-dependencies',{fields:[ref('salary')],context:[ref('active')],associations:[]},{fields:deps.fields,context:deps.contextFields,associations:deps.associations});
+  const changes=[(w:any)=>w.expression.args[0].left.domain='scalar:forged',(w:any)=>w.expression.args[0].left.term.field.elementId='staffId',(w:any)=>w.entities.target.elementId='Staff',(w:any)=>w.entities.ontology.context=[],(w:any)=>w.entities.future=true,(w:any)=>w.kind='candidate-association-expression-transport/0.1'];changes.forEach((mutate,i)=>{const changed=structuredClone(wire);mutate(changed);check('transport-refusal-'+i,true,refuses(()=>m.inspectCandidateAssociationExpressionTransport(changed)));});
+  return rows;
+ },browserPacket);
+ if(observations.some((r:any)=>JSON.stringify(r.expected)!==JSON.stringify(r.observed))||externalRequests)throw Error('Browser controls failed');
+ const sourcesUnchanged=(await Promise.all(Object.entries(sourceDigests).map(async([p,h])=>await hash(p)===h))).every(Boolean);if(!sourcesUnchanged)throw Error('Source changed during browser run');
+ const receipt={status:'candidate-entity-terms-browser-passed',browser:browser.version(),sourceDigests,sourcesUnchanged,externalRequests,observations,nativeImplementationQualified:false,scope:'Intrinsic source-derived entity/context/constant typing, whole-policy transport/receiver and live/context dependency closure without association declarations; no compiler refinement, authenticated subject/context facts or backend admission.'};
+ await Bun.write('docs/helix/04-build/evidence/security/entity-terms-browser.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify({status:receipt.status,checks:observations.length,browser:receipt.browser}));
+}finally{await browser?.close();server.stop(true);}

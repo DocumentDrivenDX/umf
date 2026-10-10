@@ -1,0 +1,9 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "stage": "first ordinary connection",
+    "reason": "psql defaulted to database umf_security_alice; fixture database is postgres",
+    "correction": "pin -d postgres; no policy test passed in this attempt"
+  }
+]

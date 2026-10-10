@@ -1,0 +1,3044 @@
+{
+  "status": "passed",
+  "id": "pg-raw.B16",
+  "backend": "pg-raw",
+  "runId": "ca233576-35f5-442a-b029-85332762aac7",
+  "command": [
+    "python3",
+    "tests/security/native/pg-raw-scale.py"
+  ],
+  "covers": [
+    "US-056-AC10"
+  ],
+  "versions": {
+    "postgresql": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "bun": "1.4.2",
+    "pg": "8.16.3",
+    "packages": {
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare": {
+        "name": "pg-cloudflare",
+        "version": "1.4.1"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string": {
+        "name": "pg-connection-string",
+        "version": "2.14.1"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8": {
+        "name": "pg-int8",
+        "version": "1.0.1"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool": {
+        "name": "pg-pool",
+        "version": "3.14.0"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol": {
+        "name": "pg-protocol",
+        "version": "1.16.1"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types": {
+        "name": "pg-types",
+        "version": "2.2.0"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg": {
+        "name": "pg",
+        "version": "8.16.3"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass": {
+        "name": "pgpass",
+        "version": "1.0.5"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array": {
+        "name": "postgres-array",
+        "version": "2.0.0"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea": {
+        "name": "postgres-bytea",
+        "version": "1.0.1"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date": {
+        "name": "postgres-date",
+        "version": "1.0.7"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval": {
+        "name": "postgres-interval",
+        "version": "1.2.0"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2": {
+        "name": "split2",
+        "version": "4.2.0"
+      },
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend": {
+        "name": "xtend",
+        "version": "4.0.2"
+      }
+    }
+  },
+  "sourceDigests": {
+    "tests/security/native/pg-raw-scale.py": "89e0a7bba91d0390d84c391808711cd14e50dcbf59143ccd15b8c55b2f3a0bcb",
+    "tests/security/native/pg-raw-scale-oracle.json": "f59a4dfff6482a0429c0a248f7db442f5273da728d5af325cda6610ad32e6261",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tools/security/pg-raw-B16-runtime.ts": "6068be223cee9287df6f4eaa05f372cf39567e1ba588b79b28eda2b1670f15a5",
+    "tests/security/native/pg-runtime-dependency-inventory.json": "de275394abba4b2f6f4158e6f4ac96880ad91598e1311ab8cb9c4dd535da1701",
+    "tools/security/pg-runtime-dependencies.py": "70ecbbc043014a0151b4e21c0e9d61c30d9985f09500a0d85f2a1e670c619aaa",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts": "3f9090957a5b94b677022f0682a919b94591fff8e3ba87fe7e5ae35c6e3f6d7d",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts": "a404706f40228a3c43514da2447db19c2b0dd5a37f491f7cfa63bcf15cac4b76",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts": "1a9cf79f5d1b700d7813ee24dabd6bcf3abc2f9a4eee134c7c223cd4dc5e0cd0",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts": "83acc32f461371df5108df7a1dd5177d7edea5a749ea4a1f07b71ed4073d3be3",
+    "/Users/erik/Projects/truss/packages/pg-runtime/package.json": "958e5c9e451ec2d9c523c5c3dcafad3b259d8a2b4204c9397d4fb8ea1ef7a562",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js": "3f83d105df21adbeeffb03450deb422644c30023ece93b2d6191fac3c620a316",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js": "fdd631639301f2a7478a4770415fafcde43209cdd54b6caa73154ca423137ebd",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs": "8a44ad34a1d541c0607579b46ab4eb3d60c614991429aa053763d7bca58cff7e",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json": "93b30ce3bed1ce3b836aa344c8afdaab74a42c03720e8d5baa801b6ae84ca3e7",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs": "e5af439889cb873c459670b82503c7b0480c7055843c6482242e50282f76b1ee",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js": "d8c0ca43dc70daf05a9ff5469c92fd0a3cbcd11cacf68156ebb19ee32d127cfd",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json": "53d453c5a426e69a11ff479e0d8a293505faa1833e6eb3ff7ceefdaac569e3ea",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js": "f991b0a41119bce0efbb471275dbd02de31a79fe6f87f8f5e5678e373a0f1627",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json": "147155887a41bb6f69ff98b3dde827b7e6a8214c3a71938da4babf8e12adff2e",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs": "521c8058172944cb9ceaee95073b49950a3906f91263303837e89f9ee346e81e",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js": "6f304776edaabde2954cbf8c4366fa6d9512bfba0e408e78cc56b3c46c69d058",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json": "0a9924def9e06f791b09a44eaefb227f323a39199887f6ce17b44cb5a9193134",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js": "a1024bdec7246a732be4713a3d3326258732971363ac234d4c1709fe54b48be1",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js": "fdae5fd80c1ad1015f91a92da667467752eabdf531f19558897e205559e6b714",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js": "78428fc0607cd87c28009159e87ca3704faf7bda000ea44d2ec46a97805cec9d",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js": "b7bcfce357865e993960da4e85d3095e35b8384d52cc3c17dd04dde7fea8e5ad",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js": "e7a99ac02633393d8c3ef16cd6385b8246100d28c838b02420844068429a46c9",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js": "dfd22ad639f3030b41617ff0ee201ece7cdbce4adb7e1aae7978541b1384cd31",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js": "2f698de794633941a67fc04506d48bc85bc74f0e9927dae08548688a91246112",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js": "6f841aabda7240df44e1b08bbe8e202502ead969576c1ecc17311af48f57f2ef",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js": "0c81a499cd210334e14bc65ee514b2ecf842588e27533f5e9a461f914d0b9623",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js": "0f6c279f5e18cbc73dd3eab808e6eaa9621ddd3511197da2e67106fdd0b2b3b2",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json": "a4a4e23027b26c72be7729d045d0100ad9329959db0449c535fa7b2ba2e717c6",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js": "ece6d549270ba55d08126b10c9997324d808ee828ef00dad236e84e54d9d556d",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js": "cad20b20e6312125b45f74480eba3ef46b456997da4f53bbec56356d66edd730",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js": "4b0105414068ea96450ef0d420db9449c00c565c5894683955af15bf94075fb9",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js": "09213197e4b44012e4c83669aa80884a189e90c777ddfef1f44c90c412167354",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js": "bd811a530000508b6b90c1db462078e122f0404769d73f57ad41fe90aca159bd",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json": "3ec0293cb38cc8d9475e3eb32ac5f19d195bf9fccc8b19a0714e6ecd6e7c2cf0",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js": "903e76e7cd794c5f7918b67847e3790f4c582948eaf75ab9fd43d62278b44bc3",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js": "b813a6ece808d40094bac1770d4d35cb0e17ae70a4236cc5c93846d72c08c159",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs": "5ef4d06556eeb775987759c2c09229dca2139421ee40e819b566612db2b4a8dc",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js": "7e6ba79fe6bc1db15ec66ce67cd0f96b6b27c300ccec45911dc15f5121f709f4",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js": "db77bac013bfb5faae661d3056f3fbc49f5bae60334f60b149de0c271a9d9725",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js": "2069c662af9de8a708105f304a0e674a9766478da8250b416f5f3ee9ae0f4d99",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js": "206ec95c51012b73fe15d549b24db2acab969271e971940a0b79cfdcf830755b",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js": "37206f4af85a0bf9973089c06ce54456938c3c74c9d4e65507053b8afd468889",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js": "f453cc172ad7e9dbb6e09b3cb48d267113e5128d834e6ae2519d7e2d9fde0fa6",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js": "a849cfe22d7590d79ddee76c8d7a058e2b67360a0d76683275d34133e5637117",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js": "a7d537da58f9ebc65dee84789ed5fa4175c6961c5be4a4dbb62b67d99c9c1213",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js": "8bb1781954cb7695e1e1bf7200aa29327ad0e135c877d1a82878858b123ced31",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js": "a012ecbe7fdefed8d2b36c3658e33dc4c291d0bb60df18d382300061211052b7",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js": "c900e47be3da1cb8b35a7e0cf1e51a7065f85cbbe505103c833d770cf574f5d5",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js": "99fb61cb78a6d78b7a5fc0b9ac264ad58272af48be4bc50bfdb948b1342e3292",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js": "e17221776993847901de73de28690aebc1e5ed1151b115bc8d84cc10cddf4ae4",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js": "dea8044d70531cd16e514ecddbe44cdd65b4315a02287958d5ecfd0ebcd70ded",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js": "2e9dfbbb89c84cfdb1977a1503f2ddd265ed2f943f8dc3957dc0db193ee81488",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js": "0bd4001775301604ddf7c94152e05f6f30a9354876717bdae2ab636d00eb12ba",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js": "47cb7f7bc6a6e1b1d4dc7c92bacacb436f12e99242b77da8391fd5b71991d2a5",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js": "a109ef3b3a7572e8523b937ae0c100be72d4f36d1d3d4c7032e1ef0abaf92e38",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json": "f7b678a8055c234669e8dd272dd624771e29d9f0e3a3353f15c3005ab1a5fd29",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js": "28d823dcde115f31848ba93d9cb55ba20089ac701b6a38b228d185d96df4f1b5",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js": "cc95b8ef6c32a9afdc48b85a5e7128d5e29567f8ded02d9bf7acd27c3d870c39",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json": "d75240eb4fe759c10db9f903838275348676a8bdc1f329e20a833713cd7c99bd",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js": "807ba580ed423e518672c27b4022a56acb693be04349733ffc1fe6f324fbcee2",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json": "dcd6a505fcbc032b409ee2838ab2c776dea3a9cfe02b736364b6cb82a946665f",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js": "c078b99e1009c4bcf6e3ab59d9fe808b12caee3461204ae599cdd9cccd990801",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json": "9125568c5fb51a65b8f11adb0080c2775b99ee82822d73bff8b56b2a9d47d7aa",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js": "9a09e3ec0775237576b1f6ff0fba0ed6171235aeded635a42c174b517e34cb1a",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json": "03f9edefa96697072075e02df045cc61ed4ca2f8dfffb1ff87f4070bc3404151",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js": "836fe0a39e52f051d62583d8375d3b270b4cb93dd026b125438a89e5a0258c41",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json": "cc3056db105e66c9128cb8a387cda782d5f1ae9281be90de0b8d26a90af89c57",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js": "de9eadc4133f88e9991f504899c47ef841ee923576dba2a8e50dc34a1d48692e",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js": "842471719e0e901e01ae1a1d3a6a4d1ff3e36747a7f50d5644f09d1d595c1857",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json": "87b734c3087c8d9ed5d76d1bff00db30f960831ba8705dd18d73b180d08d2140",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js": "de9619b9670887b6d1ed959287b96b46334cd9a6be21487c8a715afad90eade8",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js": "04986f168b8f16f4f25237d0608cdf57b6ca14f100fed62c0295bda2559ab24b",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js": "71a38649c77408217483f81f55daee1d6646d6c670e3d034a4482cb3453886e9",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json": "b02ffef8cda96c5c3ee00a00390e63f608362c2ddfb3ed754e181d013a45d48a",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js": "4a7a6d3aade85095607c4aa3bd99f74fa6adaa69058d156677ad7756955e80f6"
+  },
+  "observations": [
+    {
+      "assertionId": "pg-raw.B16:population:1000",
+      "expected": 1000,
+      "observed": 1000
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000:umf_sec_alice",
+      "expected": "499",
+      "observed": "499"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000:umf_sec_alice",
+      "expected": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-994",
+          "994"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-994",
+          "994"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000:umf_sec_bob",
+      "expected": "500",
+      "observed": "500"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000:umf_sec_bob",
+      "expected": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-995",
+          "995"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-995",
+          "995"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000:umf_sec_outsider",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B16:plans:1000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:-1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:60001",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:1.5",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:NaN",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:Infinity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:30000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:invalid-original-deadline:null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_alice:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_alice:unsupported-no-native-query",
+      "expected": 8,
+      "observed": 8
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_alice:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "499"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "499"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_alice:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_bob:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_bob:unsupported-no-native-query",
+      "expected": 26,
+      "observed": 26
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_bob:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "500"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "500"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_bob:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_outsider:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_outsider:unsupported-no-native-query",
+      "expected": 44,
+      "observed": 44
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_outsider:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:umf_sec_outsider:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-journal-query-count",
+      "expected": 54,
+      "observed": 54
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-original-request-frame-outcome-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-custody-consecutive",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-context-reports-present",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-missing-outcome",
+      "expected": "incomplete",
+      "observed": "incomplete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-missing-outcome-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-malformed-status",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-malformed-status-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-status-does-not-replace-command",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-omission-structural-only",
+      "expected": "complete",
+      "observed": "complete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000:disk-omission-content-correspondence",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "assertionId": "pg-raw.B16:population:100000",
+      "expected": 100000,
+      "observed": 100000
+    },
+    {
+      "assertionId": "pg-raw.B16:count:100000:umf_sec_alice",
+      "expected": "49999",
+      "observed": "49999"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:100000:umf_sec_alice",
+      "expected": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-99994",
+          "99994"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-99994",
+          "99994"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:100000:umf_sec_bob",
+      "expected": "50000",
+      "observed": "50000"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:100000:umf_sec_bob",
+      "expected": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-99995",
+          "99995"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-99995",
+          "99995"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:100000:umf_sec_outsider",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:100000:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B16:plans:100000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:-1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:60001",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:1.5",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:NaN",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:Infinity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:30000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:invalid-original-deadline:null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_alice:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_alice:unsupported-no-native-query",
+      "expected": 8,
+      "observed": 8
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_alice:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "49999"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "49999"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_alice:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_bob:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_bob:unsupported-no-native-query",
+      "expected": 26,
+      "observed": 26
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_bob:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "50000"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "50000"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_bob:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_outsider:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_outsider:unsupported-no-native-query",
+      "expected": 44,
+      "observed": 44
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_outsider:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:umf_sec_outsider:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-journal-query-count",
+      "expected": 54,
+      "observed": 54
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-original-request-frame-outcome-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-custody-consecutive",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-context-reports-present",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-missing-outcome",
+      "expected": "incomplete",
+      "observed": "incomplete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-missing-outcome-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-malformed-status",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-malformed-status-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-status-does-not-replace-command",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-omission-structural-only",
+      "expected": "complete",
+      "observed": "complete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:100000:disk-omission-content-correspondence",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "assertionId": "pg-raw.B16:population:1000000",
+      "expected": 1000000,
+      "observed": 1000000
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000000:umf_sec_alice",
+      "expected": "499999",
+      "observed": "499999"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000000:umf_sec_alice",
+      "expected": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-999994",
+          "999994"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-2",
+          "2"
+        ],
+        [
+          "perf-999994",
+          "999994"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000000:umf_sec_bob",
+      "expected": "500000",
+      "observed": "500000"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000000:umf_sec_bob",
+      "expected": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-999995",
+          "999995"
+        ]
+      ],
+      "observed": [
+        [
+          "perf-1",
+          "1"
+        ],
+        [
+          "perf-999995",
+          "999995"
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:count:1000000:umf_sec_outsider",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "assertionId": "pg-raw.B16:samples:1000000:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B16:plans:1000000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:-1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:60001",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:1.5",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:NaN",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:Infinity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:30000",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:invalid-original-deadline:null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_alice:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_alice:unsupported-no-native-query",
+      "expected": 8,
+      "observed": 8
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_alice:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "499999"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "499999"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_alice:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_bob:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_bob:unsupported-no-native-query",
+      "expected": 26,
+      "observed": 26
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_bob:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "500000"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "500000"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_bob:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_outsider:unsupported-cancellation",
+      "expected": "Unsupported transaction options",
+      "observed": "Unsupported transaction options"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_outsider:unsupported-no-native-query",
+      "expected": 44,
+      "observed": 44
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_outsider:exact-million-count",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "0"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:umf_sec_outsider:healthy",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:million-native-timeout",
+      "expected": "57014",
+      "observed": "57014"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-zero-original-data-rows",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-original-failed-ready",
+      "expected": [
+        "E"
+      ],
+      "observed": [
+        "E"
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-transaction-remains-failed",
+      "expected": "25P02",
+      "observed": "25P02"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-no-transport-ambiguity",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-explicit-rollback",
+      "expected": "rolled_back",
+      "observed": "rolled_back"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-same-original-session",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "356"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "356"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:timeout-recovery-authorized-boundaries",
+      "expected": [
+        [
+          {
+            "state": "text",
+            "text": "RA"
+          }
+        ],
+        [
+          {
+            "state": "text",
+            "text": "RAB"
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "state": "text",
+            "text": "RA"
+          }
+        ],
+        [
+          {
+            "state": "text",
+            "text": "RAB"
+          }
+        ]
+      ]
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-journal-query-count",
+      "expected": 76,
+      "observed": 76
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-original-request-frame-outcome-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-custody-consecutive",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-context-reports-present",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-missing-outcome",
+      "expected": "incomplete",
+      "observed": "incomplete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-missing-outcome-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-malformed-status",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-malformed-status-raw-retained",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-status-does-not-replace-command",
+      "expected": "invalid",
+      "observed": "invalid"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-omission-structural-only",
+      "expected": "complete",
+      "observed": "complete"
+    },
+    {
+      "assertionId": "pg-raw.B16:runtime:1000000:disk-omission-content-correspondence",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "assertionId": "pg-raw.B16:native-timeout",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:ordinary-identity:umf_sec_alice",
+      "expected": {
+        "sessionUser": "umf_sec_alice",
+        "currentUser": "umf_sec_alice",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "observed": {
+        "sessionUser": "umf_sec_alice",
+        "currentUser": "umf_sec_alice",
+        "superuser": false,
+        "bypassRls": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B16:ordinary-identity:umf_sec_bob",
+      "expected": {
+        "sessionUser": "umf_sec_bob",
+        "currentUser": "umf_sec_bob",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "observed": {
+        "sessionUser": "umf_sec_bob",
+        "currentUser": "umf_sec_bob",
+        "superuser": false,
+        "bypassRls": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B16:ordinary-identity:umf_sec_outsider",
+      "expected": {
+        "sessionUser": "umf_sec_outsider",
+        "currentUser": "umf_sec_outsider",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "observed": {
+        "sessionUser": "umf_sec_outsider",
+        "currentUser": "umf_sec_outsider",
+        "superuser": false,
+        "bypassRls": false
+      }
+    },
+    {
+      "assertionId": "pg-raw.B16:forced-root-rls",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16:ordinary-memberships",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "assertionId": "pg-raw.B16:ordinary-tcp-scram",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "assertionId": "pg-raw.B16",
+      "expected": {
+        "stages": [
+          1000,
+          100000,
+          1000000
+        ],
+        "nativeTimeout": true,
+        "runtimeVerified": true
+      },
+      "observed": {
+        "stages": [
+          1000,
+          100000,
+          1000000
+        ],
+        "nativeTimeout": true,
+        "runtimeVerified": true
+      }
+    }
+  ],
+  "nativeInventory": {
+    "engine": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "ordinaryActor": [
+      {
+        "sessionUser": "umf_sec_alice",
+        "currentUser": "umf_sec_alice",
+        "superuser": false,
+        "bypassRls": false
+      },
+      {
+        "sessionUser": "umf_sec_bob",
+        "currentUser": "umf_sec_bob",
+        "superuser": false,
+        "bypassRls": false
+      },
+      {
+        "sessionUser": "umf_sec_outsider",
+        "currentUser": "umf_sec_outsider",
+        "superuser": false,
+        "bypassRls": false
+      }
+    ],
+    "objects": [
+      {
+        "schema": "security_raw",
+        "name": "company",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "company_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee_native_login_key",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "employee_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_employee_project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_employee_project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_resource_project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "m2m_resource_project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "project",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "project_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": true,
+        "forceRls": true,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_child_carrier",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_child_carrier_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_disclosure",
+        "kind": "v",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_private_carrier",
+        "kind": "r",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}"
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_private_carrier_pkey",
+        "kind": "i",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": null
+      },
+      {
+        "schema": "security_raw",
+        "name": "resource_project",
+        "kind": "v",
+        "owner": "umf_sec_guardian",
+        "rls": false,
+        "forceRls": false,
+        "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}"
+      }
+    ],
+    "policies": [
+      {
+        "table": "resource",
+        "name": "resource_owner_projection",
+        "roles": [
+          "umf_sec_guardian"
+        ],
+        "command": "SELECT",
+        "using": "security_raw.allowed(id)",
+        "check": null
+      },
+      {
+        "table": "resource",
+        "name": "resource_read",
+        "roles": [
+          "umf_sec_alice",
+          "umf_sec_bob",
+          "umf_sec_outsider"
+        ],
+        "command": "SELECT",
+        "using": "security_raw.allowed(id)",
+        "check": null
+      }
+    ],
+    "routines": [
+      {
+        "name": "allowed",
+        "owner": "umf_sec_guardian",
+        "definer": true,
+        "settings": [
+          "search_path=pg_catalog"
+        ],
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+        "definition": "CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\n SELECT EXISTS(SELECT 1 FROM security_raw.m2m_resource_project o\n JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id\n JOIN security_raw.employee e ON e.id=a.employee_id\n WHERE o.resource_id=$1 AND a.active AND e.native_login=session_user::text)\n$function$\n"
+      },
+      {
+        "name": "note_cell",
+        "owner": "umf_sec_guardian",
+        "definer": false,
+        "settings": [
+          "search_path=pg_catalog"
+        ],
+        "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+        "definition": "CREATE OR REPLACE FUNCTION security_raw.note_cell(bag jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE f jsonb := '{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"note\"}'::jsonb; note jsonb;\nBEGIN\n IF jsonb_typeof(bag) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001'; END IF;\n note := bag->'note';\n IF NOT (bag ? 'note') THEN RETURN jsonb_build_object('field',f,'disposition','absent'); END IF;\n IF jsonb_typeof(note)='null' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',NULL); END IF;\n IF jsonb_typeof(note)='string' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',jsonb_build_object('string',note #>> '{}')); END IF;\n RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001';\nEND $function$\n"
+      }
+    ],
+    "roles": [
+      {
+        "name": "umf_sec_alice",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false
+      },
+      {
+        "name": "umf_sec_bob",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false
+      },
+      {
+        "name": "umf_sec_guardian",
+        "login": false,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false
+      },
+      {
+        "name": "umf_sec_outsider",
+        "login": true,
+        "superuser": false,
+        "bypassRls": false,
+        "createRole": false
+      }
+    ],
+    "memberships": [],
+    "indexes": [
+      {
+        "table": "company",
+        "name": "company_pkey",
+        "definition": "CREATE UNIQUE INDEX company_pkey ON security_raw.company USING btree (id)"
+      },
+      {
+        "table": "employee",
+        "name": "employee_native_login_key",
+        "definition": "CREATE UNIQUE INDEX employee_native_login_key ON security_raw.employee USING btree (native_login)"
+      },
+      {
+        "table": "employee",
+        "name": "employee_pkey",
+        "definition": "CREATE UNIQUE INDEX employee_pkey ON security_raw.employee USING btree (id)"
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_pkey",
+        "definition": "CREATE UNIQUE INDEX m2m_employee_project_pkey ON security_raw.m2m_employee_project USING btree (employee_id, project_id)"
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_pkey",
+        "definition": "CREATE UNIQUE INDEX m2m_resource_project_pkey ON security_raw.m2m_resource_project USING btree (resource_id, project_id)"
+      },
+      {
+        "table": "project",
+        "name": "project_pkey",
+        "definition": "CREATE UNIQUE INDEX project_pkey ON security_raw.project USING btree (id)"
+      },
+      {
+        "table": "resource_child_carrier",
+        "name": "resource_child_carrier_pkey",
+        "definition": "CREATE UNIQUE INDEX resource_child_carrier_pkey ON security_raw.resource_child_carrier USING btree (resource_id)"
+      },
+      {
+        "table": "resource",
+        "name": "resource_pkey",
+        "definition": "CREATE UNIQUE INDEX resource_pkey ON security_raw.resource USING btree (id)"
+      },
+      {
+        "table": "resource_private_carrier",
+        "name": "resource_private_carrier_pkey",
+        "definition": "CREATE UNIQUE INDEX resource_private_carrier_pkey ON security_raw.resource_private_carrier USING btree (resource_id)"
+      }
+    ],
+    "constraints": [
+      {
+        "table": "company",
+        "name": "company_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "employee",
+        "name": "employee_native_login_key",
+        "definition": "UNIQUE (native_login)",
+        "validated": true
+      },
+      {
+        "table": "employee",
+        "name": "employee_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_employee_id_fkey",
+        "definition": "FOREIGN KEY (employee_id) REFERENCES security_raw.employee(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_pkey",
+        "definition": "PRIMARY KEY (employee_id, project_id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_employee_project",
+        "name": "m2m_employee_project_project_id_fkey",
+        "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_pkey",
+        "definition": "PRIMARY KEY (resource_id, project_id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_project_id_fkey",
+        "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+        "validated": true
+      },
+      {
+        "table": "m2m_resource_project",
+        "name": "m2m_resource_project_resource_id_fkey",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      },
+      {
+        "table": "project",
+        "name": "project_company_id_fkey",
+        "definition": "FOREIGN KEY (company_id) REFERENCES security_raw.company(id)",
+        "validated": true
+      },
+      {
+        "table": "project",
+        "name": "project_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "resource_child_carrier",
+        "name": "resource_child_carrier_pkey",
+        "definition": "PRIMARY KEY (resource_id)",
+        "validated": true
+      },
+      {
+        "table": "resource_child_carrier",
+        "name": "resource_child_carrier_resource_id_fkey",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      },
+      {
+        "table": "resource",
+        "name": "resource_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "table": "resource_private_carrier",
+        "name": "resource_private_carrier_pkey",
+        "definition": "PRIMARY KEY (resource_id)",
+        "validated": true
+      },
+      {
+        "table": "resource_private_carrier",
+        "name": "resource_private_carrier_resource_id_fkey",
+        "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+        "validated": true
+      }
+    ],
+    "authentication": {
+      "rules": [
+        {
+          "type": "local",
+          "method": "trust",
+          "error": null
+        },
+        {
+          "type": "host",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "type": "host",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "type": "local",
+          "method": "trust",
+          "error": null
+        },
+        {
+          "type": "host",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "type": "host",
+          "method": "scram-sha-256",
+          "error": null
+        },
+        {
+          "type": "host",
+          "method": "scram-sha-256",
+          "error": null
+        }
+      ],
+      "ordinaryTransport": "tcp-scram-sha-256",
+      "excludedHostLocalAccess": true
+    },
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545",
+    "excludedInstaller": "postgres",
+    "factSources": [
+      "company",
+      "project",
+      "employee",
+      "m2m_employee_project",
+      "resource",
+      "m2m_resource_project",
+      "resource_private_carrier",
+      "resource_child_carrier"
+    ],
+    "modelSource": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "policyMappingSource": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "selectedBudgets": {
+      "originalResponseTimeoutMs": 30000,
+      "statementTimeoutMs": 1,
+      "runtimeProcessSeconds": 90
+    },
+    "stagePlans": [
+      {
+        "stage": "native-scale",
+        "additionalResources": 995,
+        "actualResources": 1000,
+        "actorCounts": [
+          {
+            "actor": "umf_sec_alice",
+            "expectedAuthorizedCount": "499",
+            "observedAuthorizedCount": "499",
+            "expectedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-994",
+                "994"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-994",
+                "994"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_bob",
+            "expectedAuthorizedCount": "500",
+            "observedAuthorizedCount": "500",
+            "expectedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-995",
+                "995"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-995",
+                "995"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_outsider",
+            "expectedAuthorizedCount": "0",
+            "observedAuthorizedCount": "0",
+            "expectedSamples": [],
+            "observedSamples": []
+          }
+        ],
+        "protectedPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 266.83,
+              "Total Cost": 266.84,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "resource",
+                  "Alias": "resource",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 266.0,
+                  "Plan Rows": 333,
+                  "Plan Width": 0,
+                  "Actual Rows": 499,
+                  "Actual Loops": 1,
+                  "Filter": "security_raw.allowed(id)",
+                  "Rows Removed by Filter": 501
+                }
+              ]
+            },
+            "Planning Time": 0.194,
+            "Triggers": [],
+            "Execution Time": 7.137
+          }
+        ],
+        "excludedAssessorPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 18.5,
+              "Total Cost": 18.51,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "resource",
+                  "Alias": "resource",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 16.0,
+                  "Plan Rows": 1000,
+                  "Plan Width": 0,
+                  "Actual Rows": 1000,
+                  "Actual Loops": 1
+                }
+              ]
+            },
+            "Planning Time": 0.098,
+            "Triggers": [],
+            "Execution Time": 0.055
+          }
+        ]
+      },
+      {
+        "stage": "native-scale",
+        "additionalResources": 99995,
+        "actualResources": 100000,
+        "actorCounts": [
+          {
+            "actor": "umf_sec_alice",
+            "expectedAuthorizedCount": "49999",
+            "observedAuthorizedCount": "49999",
+            "expectedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-99994",
+                "99994"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-99994",
+                "99994"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_bob",
+            "expectedAuthorizedCount": "50000",
+            "observedAuthorizedCount": "50000",
+            "expectedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-99995",
+                "99995"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-99995",
+                "99995"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_outsider",
+            "expectedAuthorizedCount": "0",
+            "observedAuthorizedCount": "0",
+            "expectedSamples": [],
+            "observedSamples": []
+          }
+        ],
+        "protectedPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 26711.33,
+              "Total Cost": 26711.34,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "resource",
+                  "Alias": "resource",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 26628.0,
+                  "Plan Rows": 33333,
+                  "Plan Width": 0,
+                  "Actual Rows": 49999,
+                  "Actual Loops": 1,
+                  "Filter": "security_raw.allowed(id)",
+                  "Rows Removed by Filter": 50001
+                }
+              ]
+            },
+            "Planning Time": 0.142,
+            "Triggers": [],
+            "Execution Time": 857.728
+          }
+        ],
+        "excludedAssessorPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 1878.0,
+              "Total Cost": 1878.01,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "resource",
+                  "Alias": "resource",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 1628.0,
+                  "Plan Rows": 100000,
+                  "Plan Width": 0,
+                  "Actual Rows": 100000,
+                  "Actual Loops": 1
+                }
+              ]
+            },
+            "Planning Time": 0.099,
+            "Triggers": [],
+            "Execution Time": 5.418
+          }
+        ]
+      },
+      {
+        "stage": "native-scale",
+        "additionalResources": 999995,
+        "actualResources": 1000000,
+        "actorCounts": [
+          {
+            "actor": "umf_sec_alice",
+            "expectedAuthorizedCount": "499999",
+            "observedAuthorizedCount": "499999",
+            "expectedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-999994",
+                "999994"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-2",
+                "2"
+              ],
+              [
+                "perf-999994",
+                "999994"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_bob",
+            "expectedAuthorizedCount": "500000",
+            "observedAuthorizedCount": "500000",
+            "expectedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-999995",
+                "999995"
+              ]
+            ],
+            "observedSamples": [
+              [
+                "perf-1",
+                "1"
+              ],
+              [
+                "perf-999995",
+                "999995"
+              ]
+            ]
+          },
+          {
+            "actor": "umf_sec_outsider",
+            "expectedAuthorizedCount": "0",
+            "observedAuthorizedCount": "0",
+            "expectedSamples": [],
+            "observedSamples": []
+          }
+        ],
+        "protectedPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Simple",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 267193.33,
+              "Total Cost": 267193.34,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "resource",
+                  "Alias": "resource",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 266360.0,
+                  "Plan Rows": 333333,
+                  "Plan Width": 0,
+                  "Actual Rows": 499999,
+                  "Actual Loops": 1,
+                  "Filter": "security_raw.allowed(id)",
+                  "Rows Removed by Filter": 500001
+                }
+              ]
+            },
+            "Planning Time": 0.11,
+            "Triggers": [],
+            "JIT": {
+              "Functions": 4,
+              "Options": {
+                "Inlining": false,
+                "Optimization": false,
+                "Expressions": true,
+                "Deforming": true
+              }
+            },
+            "Execution Time": 7505.648
+          }
+        ],
+        "excludedAssessorPlan": [
+          {
+            "Plan": {
+              "Node Type": "Aggregate",
+              "Strategy": "Plain",
+              "Partial Mode": "Finalize",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 12568.55,
+              "Total Cost": 12568.56,
+              "Plan Rows": 1,
+              "Plan Width": 8,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Plans": [
+                {
+                  "Node Type": "Gather",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 12568.33,
+                  "Total Cost": 12568.54,
+                  "Plan Rows": 2,
+                  "Plan Width": 8,
+                  "Actual Rows": 3,
+                  "Actual Loops": 1,
+                  "Workers Planned": 2,
+                  "Workers Launched": 2,
+                  "Single Copy": false,
+                  "Plans": [
+                    {
+                      "Node Type": "Aggregate",
+                      "Strategy": "Plain",
+                      "Partial Mode": "Partial",
+                      "Parent Relationship": "Outer",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Startup Cost": 11568.33,
+                      "Total Cost": 11568.34,
+                      "Plan Rows": 1,
+                      "Plan Width": 8,
+                      "Actual Rows": 1,
+                      "Actual Loops": 3,
+                      "Workers": [],
+                      "Plans": [
+                        {
+                          "Node Type": "Seq Scan",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": true,
+                          "Async Capable": false,
+                          "Relation Name": "resource",
+                          "Alias": "resource",
+                          "Startup Cost": 0.0,
+                          "Total Cost": 10526.67,
+                          "Plan Rows": 416667,
+                          "Plan Width": 0,
+                          "Actual Rows": 333333,
+                          "Actual Loops": 3,
+                          "Workers": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "Planning Time": 0.192,
+            "Triggers": [],
+            "Execution Time": 16.151
+          }
+        ]
+      }
+    ],
+    "runtimeArtifacts": [
+      {
+        "totalResources": 1000,
+        "driverEntry": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "observedDriverEntries": {
+          "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+          "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
+        },
+        "status": "passed",
+        "observations": [
+          {
+            "id": "invalid-original-deadline:0",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:-1",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:60001",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:1.5",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:NaN",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:Infinity",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:30000",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:null",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "umf_sec_alice:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_alice:unsupported-no-native-query",
+            "expected": 8,
+            "observed": 8
+          },
+          {
+            "id": "umf_sec_alice:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "499"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "499"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_alice:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_bob:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_bob:unsupported-no-native-query",
+            "expected": 26,
+            "observed": 26
+          },
+          {
+            "id": "umf_sec_bob:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "500"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "500"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_bob:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-no-native-query",
+            "expected": 44,
+            "observed": 44
+          },
+          {
+            "id": "umf_sec_outsider:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_outsider:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "disk-journal-query-count",
+            "expected": 54,
+            "observed": 54
+          },
+          {
+            "id": "disk-original-request-frame-outcome-correspondence",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-custody-consecutive",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-context-reports-present",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-missing-outcome",
+            "expected": "incomplete",
+            "observed": "incomplete"
+          },
+          {
+            "id": "disk-missing-outcome-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-malformed-status",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-malformed-status-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-status-does-not-replace-command",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-omission-structural-only",
+            "expected": "complete",
+            "observed": "complete"
+          },
+          {
+            "id": "disk-omission-content-correspondence",
+            "expected": false,
+            "observed": false
+          }
+        ],
+        "parameterStatuses": [
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          }
+        ],
+        "journalEvidence": {
+          "originalQueries": 54,
+          "leases": 3,
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-lumuvjsa",
+          "structuralValidationNotAuthenticity": true
+        },
+        "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
+      },
+      {
+        "totalResources": 100000,
+        "driverEntry": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "observedDriverEntries": {
+          "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+          "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
+        },
+        "status": "passed",
+        "observations": [
+          {
+            "id": "invalid-original-deadline:0",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:-1",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:60001",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:1.5",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:NaN",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:Infinity",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:30000",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:null",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "umf_sec_alice:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_alice:unsupported-no-native-query",
+            "expected": 8,
+            "observed": 8
+          },
+          {
+            "id": "umf_sec_alice:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "49999"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "49999"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_alice:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_bob:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_bob:unsupported-no-native-query",
+            "expected": 26,
+            "observed": 26
+          },
+          {
+            "id": "umf_sec_bob:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "50000"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "50000"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_bob:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-no-native-query",
+            "expected": 44,
+            "observed": 44
+          },
+          {
+            "id": "umf_sec_outsider:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_outsider:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "disk-journal-query-count",
+            "expected": 54,
+            "observed": 54
+          },
+          {
+            "id": "disk-original-request-frame-outcome-correspondence",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-custody-consecutive",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-context-reports-present",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-missing-outcome",
+            "expected": "incomplete",
+            "observed": "incomplete"
+          },
+          {
+            "id": "disk-missing-outcome-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-malformed-status",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-malformed-status-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-status-does-not-replace-command",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-omission-structural-only",
+            "expected": "complete",
+            "observed": "complete"
+          },
+          {
+            "id": "disk-omission-content-correspondence",
+            "expected": false,
+            "observed": false
+          }
+        ],
+        "parameterStatuses": [
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          }
+        ],
+        "journalEvidence": {
+          "originalQueries": 54,
+          "leases": 3,
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-q4uh711d",
+          "structuralValidationNotAuthenticity": true
+        },
+        "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
+      },
+      {
+        "totalResources": 1000000,
+        "driverEntry": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "observedDriverEntries": {
+          "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+          "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
+        },
+        "status": "passed",
+        "observations": [
+          {
+            "id": "invalid-original-deadline:0",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:-1",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:60001",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:1.5",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:NaN",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:Infinity",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:30000",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "invalid-original-deadline:null",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "umf_sec_alice:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_alice:unsupported-no-native-query",
+            "expected": 8,
+            "observed": 8
+          },
+          {
+            "id": "umf_sec_alice:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "499999"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "499999"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_alice:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_bob:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_bob:unsupported-no-native-query",
+            "expected": 26,
+            "observed": 26
+          },
+          {
+            "id": "umf_sec_bob:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "500000"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "500000"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_bob:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-cancellation",
+            "expected": "Unsupported transaction options",
+            "observed": "Unsupported transaction options"
+          },
+          {
+            "id": "umf_sec_outsider:unsupported-no-native-query",
+            "expected": 44,
+            "observed": 44
+          },
+          {
+            "id": "umf_sec_outsider:exact-million-count",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "0"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "umf_sec_outsider:healthy",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "million-native-timeout",
+            "expected": "57014",
+            "observed": "57014"
+          },
+          {
+            "id": "timeout-zero-original-data-rows",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "timeout-original-failed-ready",
+            "expected": [
+              "E"
+            ],
+            "observed": [
+              "E"
+            ]
+          },
+          {
+            "id": "timeout-transaction-remains-failed",
+            "expected": "25P02",
+            "observed": "25P02"
+          },
+          {
+            "id": "timeout-no-transport-ambiguity",
+            "expected": 0,
+            "observed": 0
+          },
+          {
+            "id": "timeout-explicit-rollback",
+            "expected": "rolled_back",
+            "observed": "rolled_back"
+          },
+          {
+            "id": "timeout-same-original-session",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "356"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "356"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "timeout-recovery-authorized-boundaries",
+            "expected": [
+              [
+                {
+                  "state": "text",
+                  "text": "RA"
+                }
+              ],
+              [
+                {
+                  "state": "text",
+                  "text": "RAB"
+                }
+              ]
+            ],
+            "observed": [
+              [
+                {
+                  "state": "text",
+                  "text": "RA"
+                }
+              ],
+              [
+                {
+                  "state": "text",
+                  "text": "RAB"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "disk-journal-query-count",
+            "expected": 76,
+            "observed": 76
+          },
+          {
+            "id": "disk-original-request-frame-outcome-correspondence",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-custody-consecutive",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-context-reports-present",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-missing-outcome",
+            "expected": "incomplete",
+            "observed": "incomplete"
+          },
+          {
+            "id": "disk-missing-outcome-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-malformed-status",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-malformed-status-raw-retained",
+            "expected": true,
+            "observed": true
+          },
+          {
+            "id": "disk-status-does-not-replace-command",
+            "expected": "invalid",
+            "observed": "invalid"
+          },
+          {
+            "id": "disk-omission-structural-only",
+            "expected": "complete",
+            "observed": "complete"
+          },
+          {
+            "id": "disk-omission-content-correspondence",
+            "expected": false,
+            "observed": false
+          }
+        ],
+        "parameterStatuses": [
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          },
+          {
+            "name": "application_name",
+            "value": "changed-for-component"
+          },
+          {
+            "name": "application_name",
+            "value": "truss-ordinary-component"
+          }
+        ],
+        "journalEvidence": {
+          "originalQueries": 76,
+          "leases": 4,
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-ux70rzrx",
+          "structuralValidationNotAuthenticity": true
+        },
+        "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
+      }
+    ],
+    "managedDependencyInventory": {
+      "packages": {
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare": {
+          "name": "pg-cloudflare",
+          "version": "1.4.1"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string": {
+          "name": "pg-connection-string",
+          "version": "2.14.1"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8": {
+          "name": "pg-int8",
+          "version": "1.0.1"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool": {
+          "name": "pg-pool",
+          "version": "3.14.0"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol": {
+          "name": "pg-protocol",
+          "version": "1.16.1"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types": {
+          "name": "pg-types",
+          "version": "2.2.0"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg": {
+          "name": "pg",
+          "version": "8.16.3"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass": {
+          "name": "pgpass",
+          "version": "1.0.5"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array": {
+          "name": "postgres-array",
+          "version": "2.0.0"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea": {
+          "name": "postgres-bytea",
+          "version": "1.0.1"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date": {
+          "name": "postgres-date",
+          "version": "1.0.7"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval": {
+          "name": "postgres-interval",
+          "version": "1.2.0"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2": {
+          "name": "split2",
+          "version": "4.2.0"
+        },
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend": {
+          "name": "xtend",
+          "version": "4.0.2"
+        }
+      },
+      "files": [
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js"
+      ],
+      "entry": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
+    },
+    "executedManagedSourceDigests": {
+      "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+      "tools/security/pg-runtime-dependencies.py": "70ecbbc043014a0151b4e21c0e9d61c30d9985f09500a0d85f2a1e670c619aaa"
+    },
+    "digest": "d74b142ab527e3f0923896554232215634656fb4cfc2b1b8813abb54efe3b41f"
+  },
+  "scope": "Authored PostgreSQL17.9 forced-RLS raw profile at stable cut, exact total populations 1k/100k/1M, independent counts/samples, paired native plans and actual-driver text aggregate/native timeout/no partial output/failed transaction/explicit same-session recovery. No arbitrary workload SLA, streaming/final-publication, full diagnostic closure, graph or Delta qualification."
+}

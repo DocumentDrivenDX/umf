@@ -1,0 +1,376 @@
+{
+  "status": "passed",
+  "runId": "2844323b-88a6-4d4b-8535-ee0378928d16",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-key-transport-probe.py": "bc1e9b2357770e82dd0083ae39268396a4e56721c9908704172c462cfa424828",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-compiler-keys.py": "b2e294ca2696c5c8810f6131d04c3bf4779565d0cf76e7510849076e8a34283e",
+    "tools/security/truss-key-transport.ts": "aa10dd0b44fe020af29ce8f4bbeb3dd11ca524287c1b01f1c12db6b1e2cf23d6",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-transport.ts": "720d4d471ca37e38da3c1949243f64e5ac7af787da9b38f7fea477400b54abce",
+    "/Users/erik/Projects/truss/packages/umf-bun/src/index.ts": "10472e4276c3f1d00a6e6860215a712ba45c74a4dbd45d6eddb90213b66e8342",
+    "/Users/erik/Projects/truss/tests/umf-fixtures/value-key.json": "f7696dcb6e46e158b82e238eb04de3e37609dcf02ed122fc6435b66c6189bafa",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql": "cc725df53f0d74e13bb51fda29603f8cafe8c0cee237667778566f81b33f5011",
+    "/Users/erik/Projects/truss/packages/postgresql/native/canonical-string-bytes.sql": "fe943bfd4397325ed3dff16cec7436070653f6ad6c19fbe67e853348c508dbc1",
+    "/Users/erik/Projects/truss/packages/postgresql/native/canonical-tree-bytes.sql": "c35cbe7cced69fc660142d62e4bd04d7b08d9c844738289cbd4d6aab01389429",
+    "/private/tmp/truss-umf-runtime-bG1IMG/producer.js": "0a5c81094f4cb153d8d847701e9f73dc96ddd3d03eeb6488251fc696a95ad775",
+    "/private/tmp/truss-umf-runtime-bG1IMG/producer-manifest.json": "86e71b2452501e84b147b44190d7d772ca0685edc6f10894778263cae5783875",
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b"
+  },
+  "versions": {
+    "postgresql": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545"
+  },
+  "observations": [
+    {
+      "id": "original",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "namespaceIsolation",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "changedPayload",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "prefixOnly",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "reorderedValues",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "selectionCopied",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "actual-native-bucket-full-payload-roundtrip",
+      "expected": {
+        "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d",
+        "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+      },
+      "observed": {
+        "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d",
+        "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+      }
+    },
+    {
+      "id": "same-payload-different-namespace",
+      "expected": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333",
+      "observed": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+    },
+    {
+      "id": "different-full-namespace",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "equal-key-digest-cannot-select-namespace",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "two-native-memberships",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "umf_sec_alice:private-original-schema",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_alice:private-original-bucket-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:private-original-schema",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_bob:private-original-bucket-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:private-original-schema",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_outsider:private-original-bucket-refuses",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "transportReport": {
+    "checks": {
+      "original": true,
+      "namespaceIsolation": true,
+      "changedPayload": true,
+      "prefixOnly": true,
+      "reorderedValues": true,
+      "selectionCopied": true
+    },
+    "expected": {
+      "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d",
+      "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+    },
+    "receipt": {
+      "operation": "encode-core-key-tuple",
+      "version": "3.0.0",
+      "profile": "umf-key-tuple-v1",
+      "source": {
+        "umf": "0.8.0",
+        "id": "truss-value-owner",
+        "vocabularies": {},
+        "extensions": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "code",
+                "name": "code",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "name": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "facets": {
+                  "precision": 21,
+                  "scale": 3
+                }
+              },
+              {
+                "id": "count",
+                "name": "count",
+                "kind": "field",
+                "scalarType": "integer",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": false
+                  }
+                }
+              },
+              {
+                "id": "Invoice",
+                "name": "Invoice",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "code"
+                  },
+                  {
+                    "module": "m",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "m",
+                    "element": "count"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "identity",
+                    "name": "identity",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "amount"
+                      },
+                      {
+                        "module": "m",
+                        "element": "code"
+                      },
+                      {
+                        "module": "m",
+                        "element": "count"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "Invoice",
+        "key": "identity"
+      },
+      "values": [
+        {
+          "decimalToken": "12.340"
+        },
+        {
+          "string": "\u96ea\ud83d\ude42"
+        },
+        {
+          "integerToken": "9007199254740993"
+        }
+      ],
+      "keyPath": "/modules/0/elements/3/keys/0",
+      "bytesHex": "554d464b310303060331323334300407e99baaf09f9982021039303037313939323534373430393933"
+    },
+    "values": [
+      {
+        "decimalToken": "12.340"
+      },
+      {
+        "string": "\u96ea\ud83d\ude42"
+      },
+      {
+        "integerToken": "9007199254740993"
+      }
+    ],
+    "model": {
+      "umf": "0.8.0",
+      "id": "truss-value-owner",
+      "vocabularies": {},
+      "extensions": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "m",
+          "elements": [
+            {
+              "id": "code",
+              "name": "code",
+              "kind": "field",
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "extensions": {}
+            },
+            {
+              "id": "amount",
+              "name": "amount",
+              "kind": "field",
+              "scalarType": "decimal",
+              "nullability": "required",
+              "cardinality": "one",
+              "extensions": {},
+              "facets": {
+                "precision": 21,
+                "scale": 3
+              }
+            },
+            {
+              "id": "count",
+              "name": "count",
+              "kind": "field",
+              "scalarType": "integer",
+              "nullability": "required",
+              "cardinality": "one",
+              "extensions": {},
+              "facets": {
+                "integerWidth": {
+                  "bits": 64,
+                  "signed": false
+                }
+              }
+            },
+            {
+              "id": "Invoice",
+              "name": "Invoice",
+              "kind": "record",
+              "members": [
+                {
+                  "module": "m",
+                  "element": "code"
+                },
+                {
+                  "module": "m",
+                  "element": "amount"
+                },
+                {
+                  "module": "m",
+                  "element": "count"
+                }
+              ],
+              "keys": [
+                {
+                  "id": "identity",
+                  "name": "identity",
+                  "fields": [
+                    {
+                      "module": "m",
+                      "element": "amount"
+                    },
+                    {
+                      "module": "m",
+                      "element": "code"
+                    },
+                    {
+                      "module": "m",
+                      "element": "count"
+                    }
+                  ],
+                  "primary": true
+                }
+              ],
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "Invoice",
+      "key": "identity"
+    },
+    "producer": {
+      "directory": "/private/tmp/truss-umf-runtime-bG1IMG",
+      "sourceRevision": "9e4bed3efe922c11e4b5a888ba6854de14f1b29f",
+      "bundleSha256": "0a5c81094f4cb153d8d847701e9f73dc96ddd3d03eeb6488251fc696a95ad775"
+    },
+    "scope": "Actual registered UMF current-core owner tuple and Truss exact transport comparison. Namespace selection is an opaque independently admitted host premise, not native issuer/catalog authentication or graph profile qualification."
+  },
+  "nativeStored": [
+    {
+      "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d",
+      "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+    },
+    {
+      "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d00",
+      "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+    }
+  ],
+  "scope": "Actual pinned UMF v3 tuple producer and portable Truss exact namespace/transport comparison, with original 0.15 owner-export native key bucket payload roundtrip on PostgreSQL 17.9. Installer-only incomplete graph/source fixture and second deliberately unadmitted namespace diagnose byte custody; no protected catalog/key writer, namespace authority, complete graph facts, role closure, current authority or graph profile qualification."
+}

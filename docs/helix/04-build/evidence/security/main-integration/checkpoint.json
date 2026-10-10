@@ -1,0 +1,76 @@
+{
+  "profile": "umf-security-main-integration-checkpoint/0.1",
+  "recordedAt": "2026-10-10T20:16:40.375439+00:00",
+  "baseMain": "d2ef29e267eafcb6bae28efd3c7974754c1d0b23",
+  "branch": "codex/security-main-integration",
+  "status": "draft-integration-merge-gate-open",
+  "scope": "Integrated source against current main. Focused191core+113security/traceability tests, typecheck/build,376schemas and real Chromium security/Delta checks passed. Broader core-ideals binding/conformance regression has failures; original132 backend gate remains open. No backend production qualification or fresh26-case replay claimed.",
+  "identityMigration": "docs/helix/04-build/evidence/security/main-integration/identity-migration.json",
+  "checks": [
+    {
+      "name": "typecheck",
+      "log": "docs/helix/04-build/evidence/security/main-integration/typecheck.log",
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+      "outcome": "passed"
+    },
+    {
+      "name": "build",
+      "log": "docs/helix/04-build/evidence/security/main-integration/build.log",
+      "sha256": "8a6767c953a974b5683d78301aaadefa45fa189ed7657edf758e031cb843bace",
+      "outcome": "passed"
+    },
+    {
+      "name": "security-and-ledger",
+      "log": "docs/helix/04-build/evidence/security/main-integration/security-and-ledger.log",
+      "sha256": "8b1eea36a691fc4718604293e2cf873e509a1d2aee882b4dd57864660c3ac6ea",
+      "outcome": "passed"
+    },
+    {
+      "name": "core-modules",
+      "log": "docs/helix/04-build/evidence/security/main-integration/core-modules.log",
+      "sha256": "d5369e65b70175e323554766dff3b27ea8f9d0c65810b32a73c01c3205e662b6",
+      "outcome": "passed"
+    },
+    {
+      "name": "schemas",
+      "log": "docs/helix/04-build/evidence/security/main-integration/schemas.log",
+      "sha256": "53635bde856dfcae17802d83bd638073e9ee30f1626db866ec1b5794e8859647",
+      "outcome": "passed"
+    },
+    {
+      "name": "chromium-security",
+      "log": "docs/helix/04-build/evidence/security/main-integration/chromium-security.log",
+      "sha256": "9caa3c98b81c3389b42813254a304ff5290bd81967ab1a0ac6d25e06411a9305",
+      "outcome": "passed"
+    },
+    {
+      "name": "chromium-delta",
+      "log": "docs/helix/04-build/evidence/security/main-integration/chromium-delta.log",
+      "sha256": "79d494111bd1504f20c6f2b09c2e06e8c7d6fece006710bbd3c7dfad3ec6b9a1",
+      "outcome": "passed"
+    },
+    {
+      "name": "ashlar-broad-attempt",
+      "log": "docs/helix/04-build/evidence/security/main-integration/ashlar-broad-attempt.log",
+      "sha256": "4128d8cdc2d1673458c13399aae67c2125027dacc9ca94851163996cd9d1e973",
+      "outcome": "failed:4failures22errors57skips1118tests"
+    }
+  ],
+  "broaderUmfAttempt": {
+    "status": "running-with-observed-failures",
+    "log": "/private/tmp/umf-main-security-tests.log",
+    "qualification": "Source changed in comments/document identity migration during this broad attempt; never qualifies final source. Retain terminal output as a failed/incomplete attempt, then rerun stable integrated source after fixes."
+  },
+  "ashlarMain": {
+    "commit": "28b35f1bc57bac87a5ace124e57a46c2a5bf4037",
+    "url": "https://github.com/DocumentDrivenDX/ashlar/commit/28b35f1bc57bac87a5ace124e57a46c2a5bf4037",
+    "review": "Independent Astra ultra14focusedtests; narrow6-fileauthorityhardening. Broadsuitefailed; failures include missingDuckDB/jsonschema/tool imports, externalUMFcheckoutmissingAjv and unavailable diagnostic runtime admission; noauthoritytestfailureobserved."
+  },
+  "openMergeGates": [
+    "Resolve broader UMF binding/conformance failures and rerun stable final source.",
+    "Independent final integrated-tree review.",
+    "Reconcile Weft dirty draft/main compile contract and module ownership; qualify final workspace/hosts.",
+    "Integrate remaining Truss security changes against current main.",
+    "Fresh source-pinned backend case replay; retain original132 required cases."
+  ]
+}

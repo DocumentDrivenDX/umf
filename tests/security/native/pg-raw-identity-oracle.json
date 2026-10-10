@@ -1,0 +1,154 @@
+{
+  "pairs": [
+    {
+      "id": "quoted-case",
+      "left": "CaseKey",
+      "right": "casekey"
+    },
+    {
+      "id": "unicode-normalization",
+      "left": "é",
+      "right": "é"
+    },
+    {
+      "id": "supplementary",
+      "left": "雪🙂",
+      "right": "雪🙃"
+    },
+    {
+      "id": "delimiter-text",
+      "left": "a|b",
+      "right": "a/b"
+    }
+  ],
+  "normalizationControls": [
+    {
+      "id": "lossy-case-equality",
+      "expression": "pg_catalog.lower(id)='casekey'",
+      "expected": [
+        "CaseKey",
+        "casekey"
+      ]
+    }
+  ],
+  "tupleControls": [
+    {
+      "id": "delimiter-tuple-distinct",
+      "sql": "ARRAY['a|b','c']::text[] OPERATOR(pg_catalog.=) ARRAY['a','b|c']::text[]",
+      "expected": false
+    },
+    {
+      "id": "empty-null-distinct",
+      "sql": "ARRAY['','x']::text[] OPERATOR(pg_catalog.=) ARRAY[NULL,'x']::text[]",
+      "expected": false
+    },
+    {
+      "id": "framing-not-element-only",
+      "sql": "ARRAY['a','b']::text[] OPERATOR(pg_catalog.=) '[0:1]={a,b}'::text[]",
+      "expected": false
+    }
+  ],
+  "compositePairs": [
+    {
+      "id": "composite-delimiter",
+      "left": [
+        "a|b",
+        "c"
+      ],
+      "right": [
+        "a",
+        "b|c"
+      ]
+    },
+    {
+      "id": "composite-empty",
+      "left": [
+        "",
+        "x"
+      ],
+      "right": [
+        "x",
+        ""
+      ]
+    },
+    {
+      "id": "composite-qualified-label",
+      "left": [
+        "tenant-A",
+        "shared"
+      ],
+      "right": [
+        "tenant-B",
+        "shared"
+      ]
+    },
+    {
+      "id": "composite-unicode",
+      "left": [
+        "é",
+        "shared"
+      ],
+      "right": [
+        "é",
+        "shared"
+      ]
+    }
+  ],
+  "compositeSubjects": [
+    {
+      "key": [
+        "tenant-A",
+        "Staff"
+      ],
+      "actor": "umf_sec_alice",
+      "project": "A"
+    },
+    {
+      "key": [
+        "tenant-B",
+        "Staff"
+      ],
+      "actor": "umf_sec_bob",
+      "project": "B"
+    }
+  ],
+  "hashCollision": {
+    "left": "hash-key-13383",
+    "right": "hash-key-42423",
+    "hashText": "-1315717682",
+    "engine": "170009",
+    "algorithm": "pg_catalog.hashtext"
+  },
+  "quotedResourcePairId": "composite-qualified-label",
+  "allowedReadHomes": [
+    "QuotedResource",
+    "composite_resource",
+    "hash_resource",
+    "quotedresource",
+    "resource",
+    "resource_disclosure",
+    "resource_project"
+  ],
+  "allowedRoutines": [
+    {
+      "name": "allowed",
+      "identity": "resource_id text",
+      "execute": true
+    },
+    {
+      "name": "composite_allowed",
+      "identity": "text, text",
+      "execute": true
+    },
+    {
+      "name": "hash_allowed",
+      "identity": "text",
+      "execute": true
+    },
+    {
+      "name": "note_cell",
+      "identity": "bag jsonb",
+      "execute": true
+    }
+  ]
+}

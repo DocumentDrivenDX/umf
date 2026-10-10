@@ -1,0 +1,482 @@
+{
+  "status": "component-passed-counterexample-reproduced",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-mask-query.py": "7e6ffc3b97b5bf9055725bc99191c17dd6a46507d73c1abaedb514ccd1007610",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee"
+  },
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "runId": "c826b180-d675-48f8-a05f-2498b7e4da22",
+  "observations": [
+    {
+      "id": "umf_sec_alice:native-identity",
+      "expected": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice",
+        "superuser": false,
+        "bypass": false
+      },
+      "observed": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice",
+        "superuser": false,
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_alice:published",
+      "expected": [
+        [
+          "RA",
+          "restricted"
+        ],
+        [
+          "RAB",
+          "restricted"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "restricted"
+        ],
+        [
+          "RAB",
+          "restricted"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:unbound-filter",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:unbound-sort",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:unbound-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:unbound-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:unbound-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:native-identity",
+      "expected": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob",
+        "superuser": false,
+        "bypass": false
+      },
+      "observed": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob",
+        "superuser": false,
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_bob:published",
+      "expected": [
+        [
+          "RAB",
+          "restricted"
+        ],
+        [
+          "RB",
+          "restricted"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "restricted"
+        ],
+        [
+          "RB",
+          "restricted"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:unbound-filter",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:unbound-sort",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:unbound-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:unbound-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:unbound-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:separate-use-denied",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:native-identity",
+      "expected": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider",
+        "superuser": false,
+        "bypass": false
+      },
+      "observed": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider",
+        "superuser": false,
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_outsider:published",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:unbound-filter",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:unbound-sort",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:unbound-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:unbound-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:unbound-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:separate-use-denied",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:separate-use-filter",
+      "expected": [
+        "RAB"
+      ],
+      "observed": [
+        "RAB"
+      ]
+    },
+    {
+      "id": "Alice:separate-use-sort",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "Alice:separate-use-group",
+      "expected": [
+        [
+          100,
+          1
+        ],
+        [
+          333,
+          1
+        ]
+      ],
+      "observed": [
+        [
+          100,
+          1
+        ],
+        [
+          333,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "Alice:separate-use-join",
+      "expected": [
+        "RAB"
+      ],
+      "observed": [
+        "RAB"
+      ]
+    },
+    {
+      "id": "Alice:separate-use-aggregate",
+      "expected": 433,
+      "observed": 433
+    },
+    {
+      "id": "umf_sec_bob:empty-ungranted-predicate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:empty-ungranted-order",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:empty-ungranted-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:empty-ungranted-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob:empty-ungranted-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:empty-ungranted-predicate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:empty-ungranted-order",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:empty-ungranted-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:empty-ungranted-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:empty-ungranted-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:empty-permitted-count",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "Alice:empty-permitted-collection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "Alice:revoked-empty-predicate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:revoked-empty-order",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:revoked-empty-group",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:revoked-empty-join",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:revoked-empty-aggregate",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:revoked-public-still-permitted",
+      "expected": [
+        [
+          "RA",
+          "restricted"
+        ],
+        [
+          "RAB",
+          "restricted"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "restricted"
+        ],
+        [
+          "RAB",
+          "restricted"
+        ]
+      ]
+    },
+    {
+      "id": "Alice:restored-use-grant",
+      "expected": 433,
+      "observed": 433
+    },
+    {
+      "id": "Alice:prepared-initial-errors",
+      "expected": "",
+      "observed": ""
+    },
+    {
+      "id": "Alice:prepared-initial",
+      "expected": 433,
+      "observed": 433
+    },
+    {
+      "id": "Alice:prepared-revocation-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "Alice:prepared-restored-errors",
+      "expected": "",
+      "observed": ""
+    },
+    {
+      "id": "Alice:prepared-same-native-session",
+      "expected": "461",
+      "observed": "461"
+    },
+    {
+      "id": "Alice:prepared-restored-original-plan",
+      "expected": 433,
+      "observed": 433
+    },
+    {
+      "id": "ungranted-Bob:weak-before",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "ungranted-Bob:weak-hidden-value-inference",
+      "expected": [
+        "RAB"
+      ],
+      "observed": [
+        "RAB"
+      ]
+    },
+    {
+      "id": "ungranted-Bob:public-stays-identical",
+      "expected": [
+        [
+          "RAB",
+          "restricted"
+        ],
+        [
+          "RB",
+          "restricted"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "restricted"
+        ],
+        [
+          "RB",
+          "restricted"
+        ]
+      ]
+    },
+    {
+      "id": "ungranted-Bob:restored-hidden-value-control",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    }
+  ],
+  "nativeViews": [
+    {
+      "name": "salary_public",
+      "owner": "umf_sec_guardian",
+      "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+      "options": [
+        "security_barrier=true"
+      ],
+      "definition": " SELECT id,\n    'restricted'::text AS salary_display\n   FROM security_raw.resource r;"
+    },
+    {
+      "name": "salary_query",
+      "owner": "umf_sec_guardian",
+      "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian}",
+      "options": [
+        "security_barrier=true"
+      ],
+      "definition": " SELECT r.id,\n    ((p.bag ->> 'salary'::text))::numeric AS salary\n   FROM (security_raw.resource r\n     JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));"
+    },
+    {
+      "name": "salary_weak",
+      "owner": "umf_sec_guardian",
+      "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+      "options": [
+        "security_barrier=true"
+      ],
+      "definition": " SELECT r.id,\n    'restricted'::text AS salary_display\n   FROM (security_raw.resource r\n     JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)))\n  WHERE (((p.bag ->> 'salary'::text))::numeric >= (200)::numeric);"
+    }
+  ],
+  "scope": "PostgreSQL 17.9 fixed raw-table stable-cut fixture. Output-only masking with a pre-mask predicate leaks hidden-value selection. A public surface without the protected column refuses original-field query operations, while a separate Alice-only native privilege surface supports filter/order/group/join/aggregate with authored vectors. This is not a compiler binding, complete query lineage, protected-field transformation algebra, source authority or production backend B08 qualification."
+}

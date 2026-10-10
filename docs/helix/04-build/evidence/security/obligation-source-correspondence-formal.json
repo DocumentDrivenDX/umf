@@ -1,0 +1,145 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-obligation-source-correspondence.py": "303f44a64d3dc93e4cd690c8fa40956de09709b9c41df114753fced29d5f89db",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/obligation-source-correspondence-v0.1.md": "fb674e46aefabec3c45cad8f5bebab4beb3e61c359010f8cedef5fdf800f3dbd",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "38106f38ed585201bcf7f47d017e887212e870efe48141b3bff7cd96f94a9d6f",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "bcacdc84de19ba38e32abd86413bbc067f98e017bde9baf054839c8794ddb4f2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "571e3131fe5b67eb402ff4e5b87eda249d6867440eeb7fd0cf3ae419cd9a10bf",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "881ee322e3ba861c08ab2f96268f486fbb265c57872c02a5fdff6b9da13c8c12",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "ff8a8472cc97a731a4dcb5cba0ccab1d44d4d0e6c2f334a2339bc550ff8bee72"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "exact-union-cannot-omit-required-source",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun projected_declares (String) Bool)\n(declare-fun required_source () String)\n(declare-fun owner_requires (String) Bool)\n(assert (and (forall ((required_source String))\n       (= (owner_requires required_source) (projected_declares required_source)))\n     (owner_requires required_source)\n     (not (projected_declares required_source))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun projected_declares (String) Bool)\n(declare-fun required_source () String)\n(declare-fun owner_requires (String) Bool)\n(assert (and (owner_requires required_source)\n     (not (projected_declares required_source))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[required_source = \"!0!\",\n owner_requires = [else -> True],\n projected_declares = [else -> False]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun projected_declares (String) Bool)\n(declare-fun required_source () String)\n(declare-fun owner_requires (String) Bool)\n(assert (and (forall ((required_source String))\n       (= (owner_requires required_source) (projected_declares required_source)))\n     (owner_requires required_source)\n     (projected_declares required_source)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[required_source = \"!0!\",\n owner_requires = [\"!0!\" -> True,\n                   else -> projected_declares(Var(0))],\n projected_declares = [else -> True]]"
+      }
+    },
+    {
+      "id": "scoped-field-identities-retain-scan-occurrence",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct scan0 scan1)\n     (= (field scan0 action target member) (field scan1 action target member))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct scan0 scan1)\n     (= member member)\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct scan0 scan1)\n     (distinct (field scan0 action target member)\n               (field scan1 action target member))\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      }
+    },
+    {
+      "id": "key-component-position-is-not-a-set-of-fields",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun member () String)\n(declare-fun position_j () Int)\n(declare-fun key () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan0 () String)\n(declare-fun position_i () Int)\n(assert (and (distinct position_i position_j)\n     (= (key_component scan0 action target key position_i member)\n        (key_component scan0 action target key position_j member))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct position_i position_j)\n     (= member member)\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct position_i position_j)\n     (distinct (key_component scan0 action target key position_i member)\n               (key_component scan0 action target key position_j member))\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      }
+    },
+    {
+      "id": "stored-and-context-identities-have-distinct-channels",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun member () String)\n(declare-fun action () String)\n(declare-fun scan0 () String)\n(declare-fun target () String)\n(assert (= (field scan0 action target member) (context scan0 action member)))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (= member member)\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((ScopedSource 0)) (((field (field_scan String) (field_action String) (field_target String) (field_member String)) (context (context_scan String) (context_action String) (context_member String)) (key_component (key_scan String) (key_action String) (key_owner String) (key_id String) (key_position Int) (key_member String)))))\n(declare-fun position_j () Int)\n(declare-fun position_i () Int)\n(declare-fun key () String)\n(declare-fun member () String)\n(declare-fun target () String)\n(declare-fun action () String)\n(declare-fun scan1 () String)\n(declare-fun scan0 () String)\n(assert (and (distinct (field scan0 action target member) (context scan0 action member))\n     (= scan0 \"s0\")\n     (= scan1 \"s1\")\n     (= action \"read\")\n     (= target \"Resource\")\n     (= member \"salary\")\n     (= key \"pk\")\n     (= position_i 1)\n     (= position_j 2)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1 = \"s1\",\n target = \"Resource\",\n position_j = 2,\n position_i = 1,\n key = \"pk\",\n member = \"salary\",\n action = \"read\",\n scan0 = \"s0\"]"
+      }
+    },
+    {
+      "id": "source-correspondence-cannot-discharge-native-evidence",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun independently_required_cases_covered () Bool)\n(declare-fun source_corresponds () Bool)\n(assert (and (= admitted\n        (and source_corresponds\n             native_verified\n             independently_required_cases_covered))\n     source_corresponds\n     independently_required_cases_covered\n     (not native_verified)\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun independently_required_cases_covered () Bool)\n(declare-fun source_corresponds () Bool)\n(assert (and source_corresponds\n     independently_required_cases_covered\n     (not native_verified)\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n native_verified = False,\n source_corresponds = True,\n independently_required_cases_covered = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun independently_required_cases_covered () Bool)\n(declare-fun source_corresponds () Bool)\n(assert (and (= admitted\n        (and source_corresponds\n             native_verified\n             independently_required_cases_covered))\n     source_corresponds\n     independently_required_cases_covered\n     (not native_verified)\n     (not admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = False,\n native_verified = False,\n source_corresponds = True,\n independently_required_cases_covered = True]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Five conditional laws over exact unbounded owner-issued/projected source relations and an injective algebraic tuple vocabulary. Scoped/channel/key-position controls intentionally collapse the distinguishing component; they are abstract identity controls, not a proof or mutation of JSON serialization/Rust. Native admission is a modeled conjunction with independently required native-case coverage held true. Does not establish actual source-inventory completeness, case interpretation/coverage, per-capability site assignment, aggregate resource bounds, encoder/compiler refinement or native authorization/enforcement."
+}

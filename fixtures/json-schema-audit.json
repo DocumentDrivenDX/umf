@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 367,
-  "passed": 367,
+  "schemas": 376,
+  "passed": 376,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -90,6 +90,13 @@
     {
       "path": "spec/core/cardinality-operation-v4.schema.json",
       "id": "urn:umf:core:cardinality-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-operation-v5.schema.json",
+      "id": "urn:umf:core:cardinality-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -209,6 +216,13 @@
     {
       "path": "spec/core/facet-operation-v3.schema.json",
       "id": "urn:umf:core:facet-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-operation-v4.schema.json",
+      "id": "urn:umf:core:facet-operation:4.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -361,6 +375,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/key-operation-v3.schema.json",
+      "id": "urn:umf:core:key-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/key-operation.schema.json",
       "id": "urn:umf:core:key-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -466,6 +487,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/kind-operation-v7.schema.json",
+      "id": "urn:umf:core:kind-operation:7.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/kind-operation.schema.json",
       "id": "urn:umf:core:kind-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -517,6 +545,13 @@
     {
       "path": "spec/core/nullability-operation-v5.schema.json",
       "id": "urn:umf:core:nullability-operation:5.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation-v6.schema.json",
+      "id": "urn:umf:core:nullability-operation:6.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -811,6 +846,13 @@
     {
       "path": "spec/core/relationship-metadata-selection.schema.json",
       "id": "urn:umf:core:relationship-metadata-selection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/relationship-operation-v2.schema.json",
+      "id": "urn:umf:core:relationship-operation:2.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -1301,6 +1343,13 @@
     {
       "path": "spec/extensions/ddd/schema.json",
       "id": "urn:umf:ddd:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-definition/schema.json",
+      "id": "urn:umf:delta-definition:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -2127,6 +2176,20 @@
     {
       "path": "spec/extensions/rdf/schema.json",
       "id": "urn:umf:rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/security/ontology.schema.json",
+      "id": "urn:umf:security:ontology:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/security/schema.json",
+      "id": "urn:umf:security:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

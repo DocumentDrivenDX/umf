@@ -6,6 +6,15 @@ import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';
 const identity={module:'m',element:'e'};
 const doc=(umf:Document['umf'],extra:Record<string,unknown>={}):Document=>({umf,id:'kinds',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'sales',elements:[{id:'e',extensions:{future:{native:['retained',null]}},...extra}]},{id:'other',namespace:'support',elements:[{id:'e',extensions:{}}]}]});
+test('original0.8 kind inspection use the exact7.0 result contract',()=>{
+ for(const kind of ['field','record','group','future',undefined] as const){
+  const source=doc('0.8.0',kind===undefined?{}:{kind}),result=inspectCoreElementKind(source,identity);
+  expect(result.version).toBe('7.0.0');expect(result.source).toEqual(source);
+  expect(result.meaning).toEqual(kind===undefined?{state:'unspecified'}:kind==='future'?{state:'unknown',value:kind}:{state:'known',kind});
+ }
+ expect(()=>declareCoreElementKind(doc('0.8.0'),identity,'field')).toThrow('Explicit envelope migration');
+ expect(inspectCoreElementKind(doc('0.7.0',{kind:'field'}),identity).version).toBe('6.0.0');
+});
 test('kind lookup separates legacy, unknown, missing and defined roles without inventing provenance',()=>{
  for(const umf of ['0.1.0','0.2.0'] as const)for(const kind of ['field','record','group','future',undefined] as const){
   const source=doc(umf,kind===undefined?{scalarType:'string'}:{kind});const result=inspectCoreElementKind(source,identity);

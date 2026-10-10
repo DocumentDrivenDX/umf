@@ -1,3 +1,6 @@
+import properties from '../../spec/core/schema-properties-document.schema.json';
+import schemaV6 from '../../spec/core/nullability-operation-v6.schema.json';
+export {default as coreNullabilityOperationV6Schema} from '../../spec/core/nullability-operation-v6.schema.json';
 import relationships from '../../spec/core/relationship-document.schema.json';
 import schemaV5 from '../../spec/core/nullability-operation-v5.schema.json';
 export {default as coreNullabilityOperationV5Schema} from '../../spec/core/nullability-operation-v5.schema.json';
@@ -21,10 +24,10 @@ export {default as coreNullabilityOperationV2Schema} from '../../spec/core/nulla
 export {default as coreNullabilityOperationSchema} from '../../spec/core/nullability-operation.schema.json';
 export interface CoreNullabilityIdentity {module:string;element:string}
 export type CoreNullabilityMeaning={state:'known';nullability:Nullability}|{state:'missing'}|{state:'inapplicable'}|{state:'legacy';value:Json}|{state:'unknown';value:string};
-export interface CoreNullabilityInspection {operation:'inspect-core-nullability';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0';source:Document;identity:CoreNullabilityIdentity;path:string;meaning:CoreNullabilityMeaning;provenance:'unverified'}
+export interface CoreNullabilityInspection {operation:'inspect-core-nullability';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0'|'6.0.0';source:Document;identity:CoreNullabilityIdentity;path:string;meaning:CoreNullabilityMeaning;provenance:'unverified'}
 export interface CoreNullabilityDeclaration {operation:'declare-core-nullability';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0';source:Document;target:Document;identity:CoreNullabilityIdentity;provenance:{origin:'authored';idealPath:string;nullability:Nullability;binding:{id:'umf.core.nullability.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0'};basis:'explicit-author-declaration';nativePath:null}}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);validator.addSchema(keys);validator.addSchema(relationships);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),checkV4=validator.compile(schemaV4),checkV5=validator.compile(schemaV5);
-const checker=(version:unknown)=>version==='5.0.0'?checkV5:version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);validator.addSchema(keys);validator.addSchema(relationships);validator.addSchema(properties);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),checkV4=validator.compile(schemaV4),checkV5=validator.compile(schemaV5),checkV6=validator.compile(schemaV6);
+const checker=(version:unknown)=>version==='6.0.0'?checkV6:version==='5.0.0'?checkV5:version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
 function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_NULLABILITY_RESULT',JSON.stringify(check.errors));return result as T;}
 function locate(input:Document,identityInput:CoreNullabilityIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreNullabilityIdentity;
@@ -39,11 +42,11 @@ export function inspectCoreNullability(input:Document,identity:CoreNullabilityId
  const located=locate(input,identity);const {source,element,path}=located;
  let meaning:CoreNullabilityMeaning={state:'missing'};
  if(Object.hasOwn(element,'nullability')){
-  if(source.umf!=='0.3.0'&&source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0')meaning={state:'legacy',value:copyJson(element.nullability)};
+  if(source.umf!=='0.3.0'&&source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0'&&source.umf!=='0.8.0')meaning={state:'legacy',value:copyJson(element.nullability)};
   else if((NULLABILITIES as readonly unknown[]).includes(element.nullability))meaning={state:'known',nullability:element.nullability as Nullability};
   else meaning={state:'unknown',value:element.nullability as string};
- }else if((source.umf==='0.3.0'||source.umf==='0.4.0'||(source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0')))&&element.kind!=='field')meaning={state:'inapplicable'};
- return finish({operation:'inspect-core-nullability',version:source.umf==='0.7.0'?'5.0.0':source.umf==='0.6.0'?'4.0.0':source.umf==='0.5.0'?'3.0.0':source.umf==='0.4.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
+ }else if((source.umf==='0.3.0'||source.umf==='0.4.0'||(source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0'||source.umf==='0.8.0')))&&element.kind!=='field')meaning={state:'inapplicable'};
+ return finish({operation:'inspect-core-nullability',version:source.umf==='0.8.0'?'6.0.0':source.umf==='0.7.0'?'5.0.0':source.umf==='0.6.0'?'4.0.0':source.umf==='0.5.0'?'3.0.0':source.umf==='0.4.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
 }
 /** Explicit author action; archives previous meaning and makes no native classification claim. */
 export function declareCoreNullability(input:Document,identity:CoreNullabilityIdentity,nullability:Nullability):CoreNullabilityDeclaration {

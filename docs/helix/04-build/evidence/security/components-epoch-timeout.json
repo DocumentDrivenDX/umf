@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "generatedAt": "2026-10-08T17:16:24.665915+00:00",
+  "command": [
+    "bun",
+    "test",
+    "--timeout",
+    "15000",
+    "./tests/security",
+    "./tests/traceability/acceptance-ledger.test.ts",
+    "./tests/core/key-tuple.test.ts"
+  ],
+  "deadlineSeconds": 60,
+  "observed": "subprocess.TimeoutExpired; component wrapper terminated without writing a fresh component receipt",
+  "scope": "Historical failed replay, not component qualification"
+}

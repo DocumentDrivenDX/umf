@@ -1,0 +1,55 @@
+{
+  "status": "conditional-proof-passed",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-hash-key.py": "b84f07d257163b3e1d6fcd93bfa70663f59e8edb39c724282de5456bdebd6e3f",
+    "tests/security/native/pg-raw-hash-identity.sql": "b61824e47b74320217b760926e30bab8e5d9109a8cf53efb0cf4d4fc2c3d5274",
+    "tests/security/native/pg-raw-identity-oracle.json": "f7e9165ca244708ee7a6ee8144015294d7ce135d19055a69539a714e35e4e6d5"
+  },
+  "solverVersion": "4.15.4",
+  "cases": [
+    {
+      "id": "hash-prefilter-exact-key-refinement",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun resource () CompleteIdentity)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(assert (let ((a!1 (exists ((candidate CompleteIdentity))\n             (and (complete_current_authorization candidate)\n                  (= (deterministic_native_hash candidate)\n                     (deterministic_native_hash resource))\n                  (= candidate resource)))))\n  (distinct a!1 (complete_current_authorization resource))))\n",
+        "replayResult": "unsat",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun resource () CompleteIdentity)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(declare-fun other () CompleteIdentity)\n(assert (and (distinct other resource)\n     (= (deterministic_native_hash other) (deterministic_native_hash resource))\n     (complete_current_authorization resource)))\n",
+        "replayResult": "sat",
+        "model": "[other = CompleteIdentity!val!0,\n resource = CompleteIdentity!val!1,\n deterministic_native_hash = [else -> 2],\n complete_current_authorization = [else -> True]]"
+      },
+      "hashOnlyControl": {
+        "result": "sat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun resource () CompleteIdentity)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(declare-fun other () CompleteIdentity)\n(assert (let ((a!1 (exists ((candidate CompleteIdentity))\n             (and (complete_current_authorization candidate)\n                  (= (deterministic_native_hash candidate)\n                     (deterministic_native_hash resource))))))\n  (and (distinct other resource)\n       (= (deterministic_native_hash other)\n          (deterministic_native_hash resource))\n       (complete_current_authorization other)\n       (not (complete_current_authorization resource))\n       (distinct a!1 (complete_current_authorization resource)))))\n",
+        "replayResult": "sat",
+        "model": "[other = CompleteIdentity!val!0,\n resource = CompleteIdentity!val!1,\n deterministic_native_hash = [else -> 0],\n complete_current_authorization = [CompleteIdentity!val!1 ->\n                                   False,\n                                   else -> True]]"
+      }
+    },
+    {
+      "id": "hash-collision-no-authorization-alias",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun resource () CompleteIdentity)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(assert (let ((a!1 (exists ((candidate CompleteIdentity))\n             (and (complete_current_authorization candidate)\n                  (= (deterministic_native_hash candidate)\n                     (deterministic_native_hash resource))\n                  (= candidate resource)))))\n  (and a!1 (not (complete_current_authorization resource)))))\n",
+        "replayResult": "unsat",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun resource () CompleteIdentity)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(declare-fun other () CompleteIdentity)\n(assert (and (distinct other resource)\n     (= (deterministic_native_hash other) (deterministic_native_hash resource))\n     (complete_current_authorization resource)))\n",
+        "replayResult": "sat",
+        "model": "[other = CompleteIdentity!val!0,\n resource = CompleteIdentity!val!1,\n deterministic_native_hash = [else -> 2],\n complete_current_authorization = [else -> True]]"
+      },
+      "hashOnlyControl": {
+        "result": "sat",
+        "smt": "(declare-sort CompleteIdentity 0)\n(declare-fun deterministic_native_hash (CompleteIdentity) Int)\n(declare-fun resource () CompleteIdentity)\n(declare-fun complete_current_authorization (CompleteIdentity) Bool)\n(declare-fun other () CompleteIdentity)\n(assert (let ((a!1 (exists ((candidate CompleteIdentity))\n             (and (complete_current_authorization candidate)\n                  (= (deterministic_native_hash candidate)\n                     (deterministic_native_hash resource))))))\n  (and (distinct other resource)\n       (= (deterministic_native_hash other)\n          (deterministic_native_hash resource))\n       (complete_current_authorization other)\n       (not (complete_current_authorization resource))\n       a!1)))\n",
+        "replayResult": "sat",
+        "model": "[other = CompleteIdentity!val!0,\n resource = CompleteIdentity!val!1,\n deterministic_native_hash = [else -> 0],\n complete_current_authorization = [CompleteIdentity!val!1 ->\n                                   False,\n                                   else -> True]]"
+      }
+    }
+  ],
+  "nativeInstallationProven": false,
+  "scope": "Unbounded uninterpreted complete key identities, arbitrary authorization predicate and deterministic hash function with collisions explicitly admitted. Hash-prefilter plus exact complete identity existential lookup equals the independent direct authorization predicate. Hash-only authorization has a SAT false-positive control. Complete/truthful identity equality, identical deterministic hash semantics on both sides, complete current facts and eligible-only native evaluation are premises. Native SQL/compiler execution, collation, issuer/source admission, concurrency, timing and other hash algorithms are not proven."
+}

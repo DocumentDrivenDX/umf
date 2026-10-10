@@ -3223,3 +3223,6 @@ bytes and FK closure; actual Chromium exercises projections, pack/table/ontology
 navigation and manifest download. Fixed observed inputs are not replayed.
 Full EDGAR coverage, narrative extraction, native graph and live Databricks/model/
 email qualification remain separate gates.
+## Shared security acceptance allocation
+
+FEAT-008 and US-079, US-056 and US-057 define the owner-requested security slice. STP-079 allocates authoring/typing/composition/disclosure/portable evaluation to contract and browser integration tests. STP-056 allocates backend mappings, bypass, privacy and drift to native integration. STP-057 allocates writes/history/revocation/propagation to native concurrent integration. All P0 criteria require 100% exercising coverage with canonical citations; missing native runs block qualification. The per-AC matrices live in the story plans. Backend procedures SEC-PG-RAW, SEC-TRUSS, SEC-DELTA-RAW and SEC-ASHLAR supplement this strategy; SQL Server is a future admission witness, not an initial release backend.

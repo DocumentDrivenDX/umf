@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {copyJson} from '../../src/model/json';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import * as u from '../../src';
 import {relationshipExtraCases} from './relationship-extras-cases';
@@ -19,7 +20,7 @@ export function verifyRelationshipAuthoredCorpus(){
   let recoveries=0,refusals=0;
   for(const format of ['json','yaml'] as const){
    const saved=u.readJsonValue(u.writeJsonValue(upgrade as any,format),format) as unknown as typeof upgrade;
-   const rolled=u.rollbackRelationshipEnvelope(saved,source);assert.deepEqual(rolled.target,legacy);assert.deepEqual(rolled.source,source);u.verifyRelationshipTransition(rolled);recoveries++;
+   const rolled=u.rollbackRelationshipEnvelope(saved,source);assert.deepEqual(copyJson(rolled.target),copyJson(legacy));assert.deepEqual(copyJson(rolled.source),copyJson(source));u.verifyRelationshipTransition(rolled);recoveries++;
    const forged=structuredClone(saved);forged.target.id='forged';assert.throws(()=>u.rollbackRelationshipEnvelope(forged,source));refusals++;
   }
   const extras=[];
@@ -29,11 +30,11 @@ export function verifyRelationshipAuthoredCorpus(){
    assert.equal(r.status,'projected');const current=u.importRelationshipExtraArchive(r.nativeArchive!,'fresh-gate');
    for(const format of ['json','yaml'] as const){
     const saved=u.readJsonValue(u.writeJsonValue(r as any,format),format) as unknown as typeof r;
-    assert.deepEqual(u.recoverRelationshipExtraIdeal(saved,current),source);
-    assert.deepEqual(u.recoverRelationshipExtraNative(saved,current).archive,r.nativeArchive);
+    assert.deepEqual(copyJson(u.recoverRelationshipExtraIdeal(saved,current)),copyJson(source));
+    assert.deepEqual(copyJson(u.recoverRelationshipExtraNative(saved,current).archive),copyJson(r.nativeArchive));
     const classified=u.classifyRelationshipExtra(current,{system:template.request.system,mode:'report',archive:r.nativeArchive!});
     assert(!classified.target!.modules.some(m=>Object.hasOwn(m,'relationships')),'Native classification invented intent');
-    assert.deepEqual(u.recoverRelationshipExtraNative(classified,classified.target!).archive,r.nativeArchive);recoveries+=3;
+    assert.deepEqual(copyJson(u.recoverRelationshipExtraNative(classified,classified.target!).archive),copyJson(r.nativeArchive));recoveries+=3;
    }
    const forged=structuredClone(r);forged.residuals.pop();assert.throws(()=>u.verifyRelationshipExtra(forged,current));refusals++;
    extras.push({system:template.request.system,mode:'report',status:r.status,residuals:r.residuals.length});

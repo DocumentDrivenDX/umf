@@ -1,0 +1,193 @@
+// @covers US-079-AC1
+// @covers US-079-AC4
+// @covers US-079-AC6
+// @covers US-079-AC3
+// @covers US-079-AC9
+// @covers US-079-AC7
+// @covers US-079-AC8
+// @covers US-079-AC5
+// @covers US-079-AC2
+import {createHash} from 'node:crypto';
+import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource} from '../../src/extensions/security/policy';
+import {canonicalSchemaJson} from '../../src/model/schema-literals';
+import {securityFixture,ref} from './fixture';
+import {SecurityReadRegistration} from '../../src/extensions/security/registration';
+import {evaluationFixture} from './evaluation-fixture';
+import {evaluateSecurityAccess,evaluateSecurityCollection,type SecurityEvaluationRequest} from '../../src/extensions/security/evaluate';
+import {invalidPolicyCases,refusalExpectation,nativeArchive,accessExpectations,disclosureExpectations,queryOperators,ownershipExpectations,identityExpectations,generatedPolicyCases,registrationExpectations} from './acceptance-oracle';
+
+const id=Bun.argv[2],runId=Bun.env.UMF_SECURITY_RUN_ID;
+if(!id||id!==Bun.env.UMF_SECURITY_CASE_ID||!runId)throw new Error('Fresh security case/run binding required');
+const plan=await Bun.file('docs/helix/03-test/security/cases.json').json();
+const c=plan.cases.find((row:any)=>row.id===id);
+if(!c||c.backend!=='semantic')throw new Error('Unknown semantic case');
+const observations:{assertionId:string;expected:unknown;observed:unknown}[]=[];
+const check=(suffix:string,expected:unknown,observed:unknown)=>{
+  observations.push({assertionId:id+':'+suffix,expected,observed});
+};
+if(id==='S01'||id==='S04'||id==='S06'){
+  const vectors=id==='S01'?['assigned','inactive','missing','sibling','otherStaff','ownerless']:
+    id==='S04'?['assigned','inactive','forbidden']:
+    ['untrusted','stale','policy','subject','ambiguous','coverage','attribute','duplicate','budget'];
+  for(const vector of vectors){
+    const f=evaluationFixture();
+    if(vector==='inactive')f.assignment.fields.find(x=>x.field.elementId==='active')!.value={boolean:false};
+    if(vector==='missing')f.cut.facts=[f.owner];
+    if(vector==='ownerless')f.cut.facts=[f.assignment];
+    if(vector==='sibling')f.assignment.fields.find(x=>x.field.elementId==='assignmentProject')!.value={string:'p2'};
+    if(vector==='otherStaff')f.assignment.fields.find(x=>x.field.elementId==='assignmentStaff')!.value={string:'bob'};
+    if(vector==='forbidden')f.policy.rules.push({id:'forbid',effect:'forbid',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:true}});
+    if(vector==='untrusted')f.cut.trusted=false;
+    if(vector==='stale')f.cut.generation='old';
+    if(vector==='policy')f.cut.policyRevision='old';
+    if(vector==='subject')f.cut.subjects=[];
+    if(vector==='ambiguous')f.cut.subjects.push(f.cut.subjects[0]!);
+    if(vector==='coverage')f.cut.coverage.find(c=>c.type.elementId==='Assignment')!.complete=false;
+    if(vector==='attribute')f.assignment.fields=f.assignment.fields.filter(x=>x.field.elementId!=='active');
+    if(vector==='duplicate')f.cut.facts.push(f.assignment);
+    if(vector==='budget')f.cut.maxSteps=1;
+    const expected=accessExpectations[vector as keyof typeof accessExpectations];
+    const request={action:'read',output:[ref('salary')]};
+    check(vector,expected,evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+    if(id==='S04'){
+      f.policy.rules.reverse();check(vector+':permutation',expected,evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+    }
+    if(id==='S06')check(vector+':collection',{status:'refused',rows:[]},evaluateSecurityCollection(f.policy,f.resolution,f.cut,{...request,resources:[f.resource]}));
+  }
+  if(id==='S06'){
+    const f=evaluationFixture();f.cut.coverage=f.cut.coverage.filter(c=>c.type.elementId!=='Assignment');
+    check('empty-incomplete',{status:'refused',rows:[]},evaluateSecurityCollection(f.policy,f.resolution,f.cut,{action:'read',targets:[ref('Resource')],output:[],resources:[]}));
+  }
+}else if(id==='S11'){
+  for(const example of generatedPolicyCases){
+    const f=securityFixture();example.change(f);const original=canonicalSchemaJson(f.policy);
+    const inspected=inspectSecurityPolicy(f.policy,f.resolution);
+    check(example.id+':incomplete',false,inspected.complete);
+    check(example.id+':source-retained',original,canonicalSchemaJson(inspected.source));
+    let refused=false;try{new SecurityReadRegistration().register(f.policy,f.resolution);}catch{refused=true;}
+    check(example.id+':registration',registrationExpectations.refused,refused);
+  }
+  const f=evaluationFixture(),registration=new SecurityReadRegistration(),handle=registration.register(f.policy,f.resolution);
+  const salary=f.resolution.ontology.entities[2]!.fields.find(x=>x.ref.elementId==='salary')!;salary.protection='unprotected';
+  let refused=false;try{registration.register(f.policy,f.resolution);}catch{refused=true;}
+  check('stale-classification',registrationExpectations.refused,refused);
+  check('stale-query-use',registrationExpectations.untrusted,registration.evaluate(handle,f.cut,{action:'read',output:[],resources:[f.resource],queryUses:[{field:ref('salary'),operator:'predicate'}]}).status);
+  check('prior-definition',registrationExpectations.unchanged,registration.evaluate(handle,f.cut,{action:'read',output:[ref('salary')],resources:[f.resource]}).rows[0]![0]!.disposition);
+  check('fabricated-handle',registrationExpectations.untrusted,registration.evaluate({kind:'registered-security-read'},f.cut,{action:'read',output:[],resources:[f.resource]}).status);
+  const native=evaluationFixture();native.policy.native={issuer:{trusted:true,nativeRole:'owner'}};native.cut.trusted=false;
+  const nativeRegistration=new SecurityReadRegistration(),nativeHandle=nativeRegistration.register(native.policy,native.resolution);
+  check('native-archive-is-not-issuer',registrationExpectations.untrusted,nativeRegistration.evaluate(nativeHandle,native.cut,{action:'read',output:[],resources:[native.resource]}).status);
+}else if(id==='S02'){
+  const f=evaluationFixture(),request={action:'read',output:[]};
+  const doc=JSON.parse(JSON.stringify(f.resolution.documents[0]!.document));doc.id='shadow';
+  f.resolution.documents.push({revision:'schema-1',document:doc});f.resolution.ontology.documents.push({documentId:'shadow',revision:'schema-1'});
+  const source=f.resolution.ontology.entities.find(e=>e.type.elementId==='Resource')!;
+  const shadow={...source,type:{...source.type,documentId:'shadow'},fields:source.fields.map(x=>({...x,ref:{...x.ref,documentId:'shadow'}}))};
+  f.resolution.ontology.entities.push(shadow);f.cut.coverage.push({type:shadow.type,complete:true,fields:shadow.fields.map(x=>x.ref)});
+  const alias={...f.resource,type:shadow.type,fields:f.resource.fields.map(x=>({...x,field:{...x.field,documentId:'shadow'}}))};
+  check('otherDocument',identityExpectations.otherDocument,evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,alias).decision);
+  f.cut.subjects[0]!.key=[{string:'é'}];f.cut.subjects[0]!.fields[0]!.value={string:'é'};
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentStaff')!.value={string:'é'};
+  const run=(name:keyof typeof identityExpectations)=>check(name,identityExpectations[name],evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+  run('unicodeDistinct');
+  for(const name of ['staffId','assignmentStaff'])f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id===name)!.scalarType='integer';
+  f.cut.subjects[0]!.key=[{integerToken:'9007199254740993'}];f.cut.subjects[0]!.fields[0]!.value={integerToken:'9007199254740993'};
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentStaff')!.value={integerToken:'9007199254740992'};run('largeIntegerDistinct');
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentStaff')!.value={integerToken:'9007199254740993'};run('largeIntegerExact');
+}else if(id==='S05'){
+  const f=evaluationFixture(),request={action:'read',output:[]};
+  // Client facts are present, but membership remains correlated to the exact owning Project.
+  const elements=f.resolution.documents[0]!.document.modules[0]!.elements;
+  elements.push({id:'Client',kind:'record',members:[{module:'m',element:'clientId'}],keys:[{id:'pk',name:'Key',fields:[{module:'m',element:'clientId'}]}],extensions:{}},
+    {id:'clientId',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}},
+    {id:'projectClient',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}});
+  const members=elements.find(e=>e.id==='Project')!.members;if(!Array.isArray(members))throw new Error('Authored Project members required');members.push({module:'m',element:'projectClient'});
+  f.resolution.ontology.entities.push({type:ref('Client'),keyId:'pk',fields:[{ref:ref('clientId'),protection:'unprotected'}]});
+  f.resolution.ontology.entities.find(e=>e.type.elementId==='Project')!.fields.push({ref:ref('projectClient'),protection:'unprotected'});
+  f.cut.coverage=[...f.resolution.ontology.entities,...f.resolution.ontology.associations].map(t=>({type:t.type,complete:true,fields:t.fields.map(x=>x.ref)}));
+  for(const [project,client] of [['p1','c1'],['p2','c1'],['p3','c2']])f.cut.facts.push({type:ref('Project'),key:[{string:project!}],fields:[{field:ref('projectId'),value:{string:project!}},{field:ref('projectClient'),value:{string:client!}}],absent:[]});
+  for(const client of ['c1','c2'])f.cut.facts.push({type:ref('Client'),key:[{string:client}],fields:[{field:ref('clientId'),value:{string:client}}],absent:[]});
+  const run=(name:keyof typeof ownershipExpectations)=>check(name,ownershipExpectations[name],evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+  run('sameProject');f.assignment.fields.find(x=>x.field.elementId==='active')!.value={boolean:false};run('inactive');
+  f.assignment.fields.find(x=>x.field.elementId==='active')!.value={boolean:true};
+  const original=f.cut.facts;f.cut.facts=original.filter(x=>x!==f.assignment);run('missing');f.cut.facts=original;
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentProject')!.value={string:'p2'};run('sameClientSiblingProject');
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentProject')!.value={string:'p3'};run('otherClientProject');
+  f.assignment.fields.find(x=>x.field.elementId==='assignmentProject')!.value={string:'p1'};
+  f.cut.facts=original.filter(x=>x!==f.owner);run('ownerlessAny');f.cut.facts=original;
+  const own=f.policy.rules[1]!.condition;if(own.op!=='exists'||own.where.op!=='and')throw new Error('Authored ownership shape required');
+  const matchResource=own.where.args[0]!,assignment=own.where.args[1]!;
+  f.cut.facts.push({...f.owner,key:[{string:'o2'}],fields:f.owner.fields.map(x=>({...x,value:x.field.elementId==='ownerId'?{string:'o2'}:x.field.elementId==='ownerProject'?{string:'p2'}:x.value}))});run('multipleAny');
+  f.policy.rules[1]!.condition={op:'not',arg:{op:'exists',association:ref('Ownership'),as:'o',where:{op:'and',args:[matchResource,{op:'not',arg:assignment}]}}};run('multipleAll');
+  f.cut.facts=f.cut.facts.filter(x=>x.type.elementId!=='Ownership');run('ownerlessAll');
+  f.policy.rules[1]!.condition={op:'and',args:[{op:'exists',association:ref('Ownership'),as:'o',where:matchResource},f.policy.rules[1]!.condition]};run('ownerlessNonemptyAll');
+}else if(id==='S07'){
+  const f=evaluationFixture(),request={action:'read',output:[ref('salary')]};
+  const observed=()=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource);
+  const output=(name:keyof typeof disclosureExpectations)=>{
+    const result=observed();check(name+':decision','permit',result.decision);check(name,disclosureExpectations[name],result.output);
+    for(const format of ['json','yaml'] as const)check(name+':'+format,disclosureExpectations[name],readSecuritySource(writeSecuritySource(result.output,format),format));
+  };
+  output('withheld');
+  f.policy.rules.push({id:'false',effect:'permit',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:false},disclosure:[{field:ref('salary'),disposition:{kind:'original'}}]});
+  check('false-permit',disclosureExpectations.withheld,observed().output);
+  f.policy.rules[0]!.disclosure=[];check('protected-omission','indeterminate',observed().decision);
+  f.policy.rules[0]!.disclosure=[{field:ref('salary'),disposition:{kind:'original'}}];
+  f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.nullability='absent-allowed';
+  f.resource.fields.find(x=>x.field.elementId==='salary')!.value=null;output('null');
+  f.resource.fields=f.resource.fields.filter(x=>x.field.elementId!=='salary');f.resource.absent=[ref('salary')];output('absent');
+  f.policy.rules[0]!.disclosure![0]!.disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'redacted'}};output('transformed');
+  f.policy.rules.push({...f.policy.rules[0]!,id:'conflicting',disclosure:[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'other'}}}]});
+  check('conflict',{decision:'conflict',output:[]},observed());
+  f.policy.rules.push({...f.policy.rules[0]!,id:'withheld',disclosure:[{field:ref('salary'),disposition:{kind:'withheld'}}]});
+  output('withheld');f.policy.rules.reverse();check('permutation',disclosureExpectations.withheld,observed().output);
+}else if(id==='S08'){
+  for(const operator of queryOperators){
+    const f=evaluationFixture(),salary=f.resolution.ontology.entities[2]!.fields.find(x=>x.ref.elementId==='salary')!;
+    const request={action:'read',output:[],queryUses:[{field:ref('salary'),operator}]};
+    const run=(q:Omit<SecurityEvaluationRequest,'resources'>=request)=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,q,f.resource).decision;
+    check(operator+':prohibited','indeterminate',run());
+    salary.queryUse={[operator]:'disclosed'};check(operator+':withheld','indeterminate',run());
+    f.policy.rules[0]!.disclosure![0]!.disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'redacted'}};
+    check(operator+':disclosed-transform','permit',run());
+    salary.queryUse={[operator]:'original-authorized'};f.resolution.ontology.actions.push('query-original');
+    const original={...request,queryUses:[{field:ref('salary'),operator,originalAction:'query-original'}]};
+    check(operator+':original-missing','indeterminate',run(original));
+    f.policy.rules.push({id:'original',effect:'permit',actions:['query-original'],target:[ref('Resource')],condition:{op:'literal',value:true}});
+    check(operator+':original-authorized','permit',run(original));
+    check(operator+':same-action','indeterminate',run({...request,queryUses:[{field:ref('salary'),operator,originalAction:'read'}]}));
+    f.policy.rules.pop();check(operator+':original-revoked','indeterminate',run(original));
+  }
+}else if(id==='S03'){
+  for(const example of invalidPolicyCases){
+    const fixture=securityFixture();example.change(fixture);const original=canonicalSchemaJson(fixture.policy);
+    const actual=inspectSecurityPolicy(fixture.policy,fixture.resolution);
+    check(example.id,refusalExpectation,{valid:actual.valid,complete:actual.complete});
+    let refused=false;try{requireSecurityInterpretation(fixture.policy,fixture.resolution);}catch{refused=true;}
+    check(example.id+':refused',true,refused);check(example.id+':source-retained',original,canonicalSchemaJson(actual.source));
+  }
+}else if(id==='S09'){
+  for(const unknownKind of ['member','operator']){
+    const {policy,resolution}=securityFixture();
+    const source:any={...policy,native:nativeArchive};
+    if(unknownKind==='member')source.rules[0].future={semantics:'uninterpreted'};
+    else source.rules[0].condition={op:'future',native:{content:'retained'}};
+    const expected=canonicalSchemaJson(source);
+    for(const format of ['json','yaml'] as const){
+      const recovered=readSecuritySource(writeSecuritySource(source,format),format);
+      check(unknownKind+':'+format+':retained',expected,canonicalSchemaJson(recovered));
+      check(unknownKind+':'+format+':incomplete',false,inspectSecurityPolicy(recovered,resolution).complete);
+      let refused=false;try{requireSecurityInterpretation(recovered,resolution);}catch{refused=true;}
+      check(unknownKind+':'+format+':refused',true,refused);
+    }
+  }
+}else throw new Error('Semantic case not implemented');
+const passing=observations.length>0&&observations.every(x=>canonicalSchemaJson(x.expected)===canonicalSchemaJson(x.observed));
+observations.push({assertionId:id,expected:true,observed:passing});
+const sourceDigests:Record<string,string>={};
+for(const file of [c.testSource,c.oracleSource,...c.implementationSources])sourceDigests[file]=createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex');
+const ajv=await Bun.file('node_modules/ajv/package.json').json();
+const receipt={id,runId,command:c.command,backend:'semantic',covers:c.covers,status:passing?'passed':'failed',
+  versions:{bun:Bun.version,ajv:ajv.version,security:'0.1.0',core:'0.8.0'},sourceDigests,observations,
+  scope:id==='S03'?'Typed expression refusal vectors only':id==='S09'?'Opaque native/unknown policy preservation and interpretation refusal only':'Bounded read semantics over host-attested facts; no native authentication or enforcement'};
+console.log(JSON.stringify(receipt));process.exitCode=passing?0:1;

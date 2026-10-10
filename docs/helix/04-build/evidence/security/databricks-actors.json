@@ -1,0 +1,42 @@
+{
+  "status": "not-qualified",
+  "versions": {
+    "databricksCli": "Databricks CLI v1.19.0"
+  },
+  "command": [
+    "python3",
+    "tools/security/databricks-actors.py",
+    "aidev-cus",
+    "scope-test"
+  ],
+  "sourceDigests": {
+    "tools/security/databricks-actors.py": "5e2d7088e9fddceaf2a40dc630913f5cb66df8732f021976a4aec1a3208ce030"
+  },
+  "observations": [
+    {
+      "profile": "aidev-cus",
+      "qualifiedActor": {
+        "host": "https://adb-7405607548213398.18.azuredatabricks.net",
+        "accountId": "996cf4c3-9831-4561-964c-08141715653e",
+        "workspaceId": "7405607548213398",
+        "actorId": "3755468182769617"
+      },
+      "active": true
+    },
+    {
+      "profile": "scope-test",
+      "qualifiedActor": {
+        "host": "https://adb-7405607548213398.18.azuredatabricks.net",
+        "accountId": "996cf4c3-9831-4561-964c-08141715653e",
+        "workspaceId": "7405607548213398",
+        "actorId": "3755468182769617"
+      },
+      "active": true
+    }
+  ],
+  "distinctNonInstallerActors": 0,
+  "requiredDistinctNonInstallerActors": 2,
+  "matchingConfiguredContext": true,
+  "contextQualification": "Host/account/workspace context comes from CLI configuration; independent server/SQL context verification is still required",
+  "scope": "Original native authentication observations only; SQL grants, ordinary-role eligibility, target namespace and backend security are not qualified"
+}

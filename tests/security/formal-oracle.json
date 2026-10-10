@@ -1,0 +1,28 @@
+{
+  "caseIds": [
+    "composition-safety",
+    "incomplete-refusal",
+    "write-both-states",
+    "epoch-stale-snapshot-refusal",
+    "epoch-rollback-gap-refusal",
+    "logical-flat-graph-correspondence",
+    "assignment-removal",
+    "revocation-drain-order",
+    "protected-disposition-required",
+    "qualified-identity-separation",
+    "tri-state-scoped-unknown-refusal",
+    "mask-order-invariance",
+    "withholding-dominates",
+    "false-permit-no-obligation",
+    "mask-associativity",
+    "query-profile-exact-original-action",
+    "query-profile-qualified-use-tuple",
+    "query-profile-exact-source-reuse",
+    "collection-aggregate-hidden-noninterference",
+    "collection-page-hidden-noninterference"
+  ],
+  "safety": "unsat",
+  "population": "sat",
+  "weakened": "sat",
+  "nativeInstallationProven": false
+}

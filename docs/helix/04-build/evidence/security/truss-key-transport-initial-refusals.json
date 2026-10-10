@@ -1,0 +1,15 @@
+{
+  "status": "retained-diagnostic-refusals",
+  "observed": [
+    "type_def_definition_source_complete constraint refused omitted original definition source",
+    "key_def_definition_source_complete constraint refused omitted original definition source",
+    "ordinary metadata lookup refused with permission denied for schema truss"
+  ],
+  "corrections": [
+    "retained document source references populated",
+    "retained key document source references populated",
+    "ordinary denial asserted at schema boundary and direct native query SQLSTATE 42501"
+  ],
+  "originalFailedSourceSnapshots": "not retained; these diagnostics do not establish source-qualified failed-case receipts",
+  "fullBackendAcceptance": false
+}

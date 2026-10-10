@@ -1,0 +1,39 @@
+{"case":0}
+{"case":40}
+{"case":80}
+{"case":120}
+{"case":160}
+{"case":200}
+34 | full=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(full).target).target).target).target;
+35 | const fullRow=facetsSqlServerProjectionCases().find(r=>r.name==='smallint-8-true'&&r.request.mode==='report'&&r.request.encoding==='checked')!;
+36 | const fullColumn=u.getSqlServerColumnMetadata(full).find(c=>c.table.name===fullRow.request.tableName)!;
+37 | full.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:'value',cardinality:'one',scalarType:'integer',extensions:{}}]});
+38 | const fullResult=u.classifySqlServerFacets(full,{column:fullColumn.path,nativeSource:proof.sourceText,identity:{module:'logical',element:'value'},mode:'strict',profile:'stored-value',obligation:'value-domain'});
+39 | assert.equal(fullResult.status,'classified');assert.deepEqual(fullResult.mapping.facets,{integerWidth:{bits:8,signed:true}});
+                                                         ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [Object: null prototype] {
++   integerWidth: [Object: null prototype] {
+- {
+-   integerWidth: {
+      bits: 8,
+      signed: true
+    }
+  }
+
+ generatedMessage: true,
+     actual: [Object: null prototype] {
+  integerWidth: [Object ...],
+},
+   expected: {
+  integerWidth: [Object ...],
+},
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /Users/erik/.codex/worktrees/security-main-integration/umf/scripts/core-ideals/facets-sqlserver-composition.ts:39:53
+
+Bun v1.4.2 (macOS arm64)

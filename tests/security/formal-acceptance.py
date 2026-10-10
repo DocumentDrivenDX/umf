@@ -1,0 +1,44 @@
+"""Fresh conditional proof replay; never infers installed backend correctness."""
+# @covers US-079-AC4
+# @covers US-079-AC2
+# @covers US-079-AC8
+# @covers US-056-AC10
+# @covers US-056-AC1
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+case_id=os.environ.get('UMF_SECURITY_CASE_ID');run_id=os.environ.get('UMF_SECURITY_RUN_ID')
+if case_id!='S12' or not run_id:raise ValueError('Fresh formal case binding required')
+plan=json.loads(Path('docs/helix/03-test/security/cases.json').read_text())
+case=next(row for row in plan['cases'] if row['id']==case_id)
+paths=[case['testSource'],case['oracleSource'],*case['implementationSources']]
+def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+before={path:digest(path) for path in paths}
+proof_path=Path('docs/helix/04-build/evidence/security/formal.json')
+# Remove a retained result so only this completed solver invocation can supply it.
+proof_path.unlink(missing_ok=True)
+python=os.environ.get('UMF_Z3_PYTHON','/private/tmp/umf-security-proof-venv/bin/python3')
+result=subprocess.run([python,'docs/helix/02-design/spikes/security/prove.py'],capture_output=True,text=True,timeout=20)
+if result.returncode or not proof_path.exists():raise RuntimeError('Fresh solver replay failed')
+proof=json.loads(proof_path.read_text());oracle=json.loads(Path(case['oracleSource']).read_text())
+observations=[]
+def check(suffix,expected,observed):observations.append({'assertionId':case_id+':'+suffix,'expected':expected,'observed':observed})
+check('case-ids',oracle['caseIds'],[r['id'] for r in proof['cases']])
+for row in proof['cases']:
+ check(row['id']+':safety',oracle['safety'],row['result'])
+ check(row['id']+':population',oracle['population'],row['populationResult'])
+ check(row['id']+':weakened',oracle['weakened'],row['weakenedControlResult'])
+ check(row['id']+':scope',True,bool(row['scope']))
+check('native-scope',oracle['nativeInstallationProven'],proof['nativeInstallationProven'])
+check('unchanged-sources',before,{path:digest(path) for path in paths})
+passing=all(row['expected']==row['observed'] for row in observations)
+observations.append({'assertionId':case_id,'expected':True,'observed':passing})
+receipt={'id':case_id,'runId':run_id,'command':case['command'],'backend':'semantic','covers':case['covers'],
+ 'status':'passed' if passing else 'failed','versions':{'python':sys.version.split()[0],'z3':proof['solverVersion']},
+ 'sourceDigests':before,'observations':observations,'scope':proof['scope']}
+print(json.dumps(receipt))
+raise SystemExit(0 if passing else 1)

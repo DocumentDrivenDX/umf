@@ -1,0 +1,141 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-source-demands.py": "538c86a50d47573913062f4ad956bab38c117690998b4ab15129f1bd23e20c30",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/source-demand-binding-v0.1.md": "e15678519812cf153e092efbe952d2061020e8b06f1b271cb660a987b10968a6",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "a9a7cc395f40c631055ec79701da4a4baaabf9d3f5fae8cfe024de49e6ebc74f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "f076f57d44a9ee2f69c77a54324c3874a6e39dc92f11c1423ecf34f028cd2e15"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "whole-capability-before-source-quantifier",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun source1_capB () Bool)\n(declare-fun source1_capA () Bool)\n(declare-fun source0_capB () Bool)\n(declare-fun source0_capA () Bool)\n(assert (and (= admitted\n        (or (and source0_capA source1_capA) (and source0_capB source1_capB)))\n     source0_capA\n     (not source0_capB)\n     (not source1_capA)\n     source1_capB\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun source1_capB () Bool)\n(declare-fun source1_capA () Bool)\n(declare-fun source0_capB () Bool)\n(declare-fun source0_capA () Bool)\n(assert (and (= admitted\n        (and (or source0_capA source0_capB) (or source1_capA source1_capB)))\n     source0_capA\n     (not source0_capB)\n     (not source1_capA)\n     source1_capB\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n source0_capA = True,\n source0_capB = False,\n source1_capA = False,\n source1_capB = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun source1_capA () Bool)\n(declare-fun source0_capA () Bool)\n(declare-fun source1_capB () Bool)\n(declare-fun source0_capB () Bool)\n(assert (and (= admitted\n        (or (and source0_capA source1_capA) (and source0_capB source1_capB)))\n     source0_capA\n     source1_capA\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n source0_capA = True,\n source1_capA = True,\n source0_capB = False,\n source1_capB = False]"
+      }
+    },
+    {
+      "id": "different-scopes-may-use-different-complete-capabilities",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun scope1_capB () Bool)\n(declare-fun scope1_capA () Bool)\n(declare-fun scope0_capB () Bool)\n(declare-fun scope0_capA () Bool)\n(assert (and (= admitted\n        (and (or scope0_capA scope0_capB) (or scope1_capA scope1_capB)))\n     scope0_capA\n     (not scope0_capB)\n     (not scope1_capA)\n     scope1_capB\n     (not admitted)))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun scope1_capB () Bool)\n(declare-fun scope1_capA () Bool)\n(declare-fun scope0_capB () Bool)\n(declare-fun scope0_capA () Bool)\n(assert (and (= admitted\n        (or (and scope0_capA scope1_capA) (and scope0_capB scope1_capB)))\n     scope0_capA\n     (not scope0_capB)\n     (not scope1_capA)\n     scope1_capB\n     (not admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scope1_capB = True,\n admitted = False,\n scope0_capA = True,\n scope0_capB = False,\n scope1_capA = False]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun scope1_capB () Bool)\n(declare-fun scope1_capA () Bool)\n(declare-fun scope0_capB () Bool)\n(declare-fun scope0_capA () Bool)\n(assert (and (= admitted\n        (and (or scope0_capA scope0_capB) (or scope1_capA scope1_capB)))\n     scope0_capA\n     (not scope0_capB)\n     (not scope1_capA)\n     scope1_capB\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scope1_capB = True,\n admitted = True,\n scope0_capA = True,\n scope0_capB = False,\n scope1_capA = False]"
+      }
+    },
+    {
+      "id": "original-use-needs-primary-original-and-application",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun original () Bool)\n(declare-fun application () Bool)\n(declare-fun primary () Bool)\n(assert (and (= admitted (and primary original application))\n     primary\n     application\n     (not original)\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun original () Bool)\n(declare-fun application () Bool)\n(declare-fun primary () Bool)\n(assert (and (= admitted (and primary application))\n     primary\n     application\n     (not original)\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n primary = True,\n application = True,\n original = False]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun application () Bool)\n(declare-fun original () Bool)\n(declare-fun primary () Bool)\n(assert (and (= admitted (and primary original application))\n     primary\n     original\n     application\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n primary = True,\n application = True,\n original = True]"
+      }
+    },
+    {
+      "id": "equal-marginals-cannot-substitute-scoped-edges",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun declared11 () Bool)\n(declare-fun declared10 () Bool)\n(declare-fun declared01 () Bool)\n(declare-fun declared00 () Bool)\n(declare-fun required11 () Bool)\n(declare-fun required10 () Bool)\n(declare-fun required01 () Bool)\n(declare-fun required00 () Bool)\n(assert (and (= admitted\n        (and (= required00 declared00)\n             (= required01 declared01)\n             (= required10 declared10)\n             (= required11 declared11)))\n     required00\n     (not required01)\n     (not required10)\n     required11\n     (not declared00)\n     declared01\n     declared10\n     (not declared11)\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun declared11 () Bool)\n(declare-fun declared10 () Bool)\n(declare-fun declared01 () Bool)\n(declare-fun declared00 () Bool)\n(declare-fun required11 () Bool)\n(declare-fun required10 () Bool)\n(declare-fun required01 () Bool)\n(declare-fun required00 () Bool)\n(assert (let ((a!1 (= admitted\n              (and (= (or required00 required01) (or declared00 declared01))\n                   (= (or required10 required11) (or declared10 declared11))\n                   (= (or required00 required10) (or declared00 declared10))\n                   (= (or required01 required11) (or declared01 declared11))))))\n  (and a!1\n       required00\n       (not required01)\n       (not required10)\n       required11\n       (not declared00)\n       declared01\n       declared10\n       (not declared11)\n       admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n declared00 = False,\n declared10 = True,\n required11 = True,\n declared11 = False,\n required00 = True,\n required01 = False,\n declared01 = True,\n required10 = False]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun declared11 () Bool)\n(declare-fun declared10 () Bool)\n(declare-fun declared01 () Bool)\n(declare-fun declared00 () Bool)\n(declare-fun required11 () Bool)\n(declare-fun required10 () Bool)\n(declare-fun required01 () Bool)\n(declare-fun required00 () Bool)\n(assert (and (= admitted\n        (and (= required00 declared00)\n             (= required01 declared01)\n             (= required10 declared10)\n             (= required11 declared11)))\n     required00\n     (not required01)\n     (not required10)\n     required11\n     declared00\n     (not declared01)\n     (not declared10)\n     declared11\n     admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n declared00 = True,\n declared10 = False,\n required11 = True,\n declared11 = True,\n required00 = True,\n required01 = False,\n declared01 = False,\n required10 = False]"
+      }
+    },
+    {
+      "id": "source-correspondence-cannot-discharge-native-execution",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun correspondence () Bool)\n(assert (and (= admitted (and correspondence native))\n     correspondence\n     (not native)\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun correspondence () Bool)\n(assert (and (= admitted correspondence) correspondence (not native) admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True, correspondence = True, native = False]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun native () Bool)\n(declare-fun correspondence () Bool)\n(assert (and (= admitted (and correspondence native)) correspondence native admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True, correspondence = True, native = True]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Five conditional finite Boolean laws: two sources/two capabilities within one scope, two scopes with disjoint complete alternatives, three original-use conjuncts, exact two-by-two scoped edges versus their marginals, and independent native execution. Exact owner extraction, arbitrary cardinality/quantifiers, profile authentication, native case sufficiency and enforcement are not proved."
+}

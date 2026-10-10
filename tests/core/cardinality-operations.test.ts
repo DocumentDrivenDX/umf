@@ -5,6 +5,20 @@ import {copyJson} from '../../src/model/json';
 import {CARDINALITIES,type Document} from '../../src/model/types';
 const identity={module:'m',element:'e'};
 function model(umf:Document['umf']='0.4.0'):Document{return {umf,id:'author',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'',elements:[{id:'e',kind:'field',nullability:'required',extensions:{future:{unknown:'9007199254740993'}}},{id:'value',kind:'field',scalarType:'integer',extensions:{}}]}]};}
+test('original0.8 cardinality inspection retains shape and item references without authoring admission',()=>{
+ for(const label of [...CARDINALITIES,'future-container'] as const){
+  const source=model('0.8.0');source.modules[0]!.elements[0]!.cardinality=label;
+  if(label==='array'||label==='map')source.modules[0]!.elements[0]!.itemType={module:'m',element:'value',future:{opaque:true}};
+  const result=inspectCoreCardinality(source,identity);
+  expect(result.version).toBe('5.0.0');expect(result.source).toEqual(source);
+  expect<unknown>(result.meaning).toEqual(label==='future-container'?{state:'unknown',value:label}:{state:'known',cardinality:label,...(['array','map'].includes(label)?{itemType:source.modules[0]!.elements[0]!.itemType}:{})});
+ }
+ expect(inspectCoreCardinality(model('0.8.0'),identity).meaning).toEqual({state:'missing'});
+ const record=model('0.8.0');record.modules[0]!.elements[0]!.kind='record';delete record.modules[0]!.elements[0]!.nullability;
+ expect(inspectCoreCardinality(record,identity).meaning).toEqual({state:'inapplicable'});
+ expect(()=>declareCoreCardinality(model('0.8.0'),identity,{cardinality:'one'})).toThrow('Explicit envelope migration');
+ expect(inspectCoreCardinality(model('0.7.0'),identity).version).toBe('4.0.0');
+});
 test('authored Cardinality and item meaning survive serialized verified receipts without source mutation',()=>{
  for(const cardinality of CARDINALITIES)for(const withItem of [false,true]){
   if(withItem&&!['array','map'].includes(cardinality))continue;

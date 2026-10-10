@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:cardinality-operation:5.0.0",
+  "title": "Read-only core0.8 cardinality inspection",
+  "$defs": {
+    "cardinality": {
+      "enum": [
+        "one",
+        "array",
+        "map",
+        "unspecified"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "lookup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "inspect-core-cardinality"
+        },
+        "version": {
+          "const": "5.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "path": {
+          "type": "string"
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "cardinality"
+              ],
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "cardinality": {
+                  "$ref": "#/$defs/cardinality"
+                },
+                "itemType": {
+                  "$ref": "#/$defs/itemType"
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "required": [
+                      "itemType"
+                    ],
+                    "properties": {
+                      "itemType": {}
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "cardinality": {
+                        "enum": [
+                          "array",
+                          "map"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "missing"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "value"
+              ],
+              "properties": {
+                "state": {
+                  "const": "unknown"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "not": {
+                    "$ref": "#/$defs/cardinality"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "inapplicable"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "itemType": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cardinality"
+      ],
+      "properties": {
+        "cardinality": {
+          "$ref": "#/$defs/cardinality"
+        },
+        "itemType": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/itemType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "itemType"
+            ],
+            "properties": {
+              "itemType": {
+                "type": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cardinality": {
+                "enum": [
+                  "array",
+                  "map"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/lookup"
+}

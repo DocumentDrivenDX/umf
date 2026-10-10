@@ -1,0 +1,74 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "tools/security/prove-visible-owner-inventory-bound.py": "78a883401b28ee27fd5f097a8edae8a8d509a22d82a4c88776d782a2d18c1f3c",
+    "/Users/erik/Projects/truss/packages/postgresql/native/dataset-visible-owner-inventory.sql": "3a5258fe88887ee94361bb481208357ceede56fd8bb90511955b0f5335ad86b3"
+  },
+  "sourcesUnchanged": true,
+  "selectedImplementationFragments": [
+    "FROM truss.object x LIMIT 1001",
+    "FROM truss.edge x LIMIT 10001",
+    "jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000",
+    "FROM jsonb_array_elements(objects) v",
+    "FROM jsonb_array_elements(edges) v"
+  ],
+  "queries": [
+    {
+      "id": "admitted_object_bound",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 (<= captured_edges 10000))))\n(and $x19 (> captured_objects 1000)))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "admitted_edge_bound",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(and $x19 (> captured_edges 10000))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "admitted_combined_bound",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(and $x19 (> (+ captured_objects captured_edges) 11000))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "overflow_refuses",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(let (($x30 (or (= captured_objects 1001) (= captured_edges 10001))))\n(and $x30 $x19))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "exact_combined_boundary",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let ((?x20 (+ captured_objects captured_edges)))\n(let (($x34 (= ?x20 11000)))\n(let (($x33 (= captured_edges 10000)))\n(let (($x32 (= captured_objects 1000)))\n(let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(and $x19 $x32 $x33 $x34)))))))))\n(check-sat)\n",
+      "model": "[captured_objects = 1000, captured_edges = 10000]"
+    },
+    {
+      "id": "empty_population_nonvacuity",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let ((?x20 (+ captured_objects captured_edges)))\n(let (($x36 (= ?x20 0)))\n(let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(and $x19 $x36)))))))\n(check-sat)\n",
+      "model": "[captured_edges = 0, captured_objects = 0]"
+    },
+    {
+      "id": "double_scan_mutant",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_objects () Int)\n(declare-fun captured_edges () Int)\n(declare-fun later_visible_objects () Int)\n(assert\n (>= captured_objects 0))\n(assert\n (<= captured_objects 1001))\n(assert\n (>= captured_edges 0))\n(assert\n (<= captured_edges 10001))\n(assert\n (let (($x39 (= later_visible_objects 1001)))\n(let (($x38 (= captured_objects 0)))\n(let (($x18 (<= captured_edges 10000)))\n(let (($x16 (<= captured_objects 1000)))\n(let (($x19 (and $x16 $x18)))\n(and $x19 $x38 $x39 (> later_visible_objects 1000))))))))\n(check-sat)\n",
+      "model": "[captured_edges = 7279,\n captured_objects = 0,\n later_visible_objects = 1001]"
+    }
+  ],
+  "premises": [
+    "PostgreSQL LIMIT bounds each captured projection and JSONB aggregation preserves each projected row exactly once",
+    "Array length measures captured rows and jsonb_array_elements emits those same captured rows exactly once",
+    "Only one captured object and edge buffer are emitted; caller visibility is not authenticated by this theorem"
+  ],
+  "scope": "Conditional row-count admission arithmetic, not proof of SQL implementation, stable visibility, bounded RLS evaluation cost, bytes/work, typed source correspondence, native population completeness or authorization",
+  "nativeImplementationQualified": false
+}

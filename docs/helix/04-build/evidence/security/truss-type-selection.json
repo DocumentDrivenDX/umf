@@ -1,0 +1,1038 @@
+{
+  "status": "passed",
+  "runId": "4756252b-6328-4ec1-98eb-9434fbae8d0e",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-type-selection-probe.py": "3bc17238e97887f2b9693999499197f1ff709dc04065872e0f106032816919ae",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-compiler-keys.py": "b2e294ca2696c5c8810f6131d04c3bf4779565d0cf76e7510849076e8a34283e",
+    "tools/security/truss-type-selection.ts": "85f65f2c64e297c71b476150fb5f668d7b2deb21a8aa8ae6c86239660bf584b9",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff": "10ed6eeaf06b2f687cf2716a14d2792badd39109d4dfeed762c43e88f09a2ca6"
+  },
+  "versions": {
+    "postgresql": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545"
+  },
+  "observations": [
+    {
+      "id": "umf_sec_alice:shared-home-exact-eligibility",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:wrong-root-type-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:original-identity",
+      "expected": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice"
+      },
+      "observed": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice"
+      }
+    },
+    {
+      "id": "umf_sec_alice:private-entity",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_alice:private-association",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_bob:shared-home-exact-eligibility",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:wrong-root-type-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:original-identity",
+      "expected": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob"
+      },
+      "observed": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob"
+      }
+    },
+    {
+      "id": "umf_sec_bob:private-entity",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_bob:private-association",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_outsider:shared-home-exact-eligibility",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:wrong-root-type-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:original-identity",
+      "expected": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider"
+      },
+      "observed": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider"
+      }
+    },
+    {
+      "id": "umf_sec_outsider:private-entity",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_outsider:private-association",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "mapping-refusal:missing-root",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:overlap",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:missing-selection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:wrong-column",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:wrong-carrier",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:noncanonical",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mapping-refusal:overflow",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "negative-control-changes-original-sql",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "untyped-association-witness-leak",
+      "expected": [
+        "RA",
+        "RB"
+      ],
+      "observed": [
+        "RA",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:restored-exact-typed-predicate",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:restored-exact-typed-predicate",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:restored-exact-typed-predicate",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "null-root-discriminator-denies",
+      "expected": {
+        "truth": false
+      },
+      "observed": {
+        "truth": false
+      }
+    }
+  ],
+  "predicate": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+  "associationTypeErasedNegativeControl": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+  "compilerHandoff": {
+    "applicationPlan": {
+      "aggregate": true,
+      "filters": [],
+      "groups": [],
+      "irVersion": "weft-ir/0.2.0",
+      "joins": [
+        {
+          "on": [
+            {
+              "left": {
+                "identity": {
+                  "documentId": "domain",
+                  "element": "resourceId",
+                  "module": "m",
+                  "revision": "schema-natural-1"
+                },
+                "scan": "s0",
+                "span": {
+                  "end": 63,
+                  "start": 51
+                },
+                "type": {
+                  "facets": {},
+                  "family": "string",
+                  "nullable": false
+                }
+              },
+              "op": "equal",
+              "right": {
+                "field": {
+                  "identity": {
+                    "documentId": "domain",
+                    "element": "resourceId",
+                    "module": "m",
+                    "revision": "schema-natural-1"
+                  },
+                  "scan": "s1",
+                  "span": {
+                    "end": 76,
+                    "start": 64
+                  },
+                  "type": {
+                    "facets": {},
+                    "family": "string",
+                    "nullable": false
+                  }
+                },
+                "kind": "field"
+              }
+            }
+          ],
+          "right": {
+            "occurrence": "s1",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+              "umfVersion": "0.8.0"
+            },
+            "record": {
+              "documentId": "domain",
+              "element": "Resource",
+              "module": "m",
+              "revision": "schema-natural-1"
+            }
+          }
+        }
+      ],
+      "limit": null,
+      "modulePins": [
+        {
+          "documentId": "domain",
+          "revision": "schema-natural-1",
+          "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "order": [],
+      "outputs": [
+        {
+          "expression": {
+            "op": "count",
+            "type": {
+              "facets": {},
+              "family": "integer",
+              "nullable": false
+            }
+          },
+          "name": "count"
+        }
+      ],
+      "pageKey": null,
+      "readProfile": null,
+      "requiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "equal",
+        "innerJoin",
+        "project",
+        "scan",
+        "type.string"
+      ],
+      "source": {
+        "occurrence": "s0",
+        "pin": {
+          "documentId": "domain",
+          "revision": "schema-natural-1",
+          "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+          "umfVersion": "0.8.0"
+        },
+        "record": {
+          "documentId": "domain",
+          "element": "Resource",
+          "module": "m",
+          "revision": "schema-natural-1"
+        }
+      },
+      "typeGraph": []
+    },
+    "binding": {
+      "backendId": "fixture",
+      "backendVersion": "unqualified",
+      "sha256": "fec33cb671c2ec0e5dece7a7ca35fe7216115a0ac9317684bb320ed31272d63d",
+      "targetProfile": "inspection-only"
+    },
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "schema-natural-1",
+        "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "ontologySha256": "0bb78119241c490c7a588805306536632f353ed6fead463564992fa67fc6a120",
+    "policySha256": "4c1dc6cdfff13dade077fb718d2f40ec96e764dd1154f46652d9f5246d495493",
+    "profile": {
+      "id": "natural-key-inspection-profile",
+      "revision": "1",
+      "sha256": "bd4bd7d76233208a1db6e3cf3874c5c4d4860b481accfd0d7da55d691ad96a17"
+    },
+    "scans": [
+      {
+        "actions": [
+          {
+            "action": "read",
+            "associations": [
+              {
+                "documentId": "domain",
+                "elementId": "Assignment",
+                "moduleId": "m"
+              },
+              {
+                "documentId": "domain",
+                "elementId": "Ownership",
+                "moduleId": "m"
+              }
+            ],
+            "context": [],
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "active",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentProject",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentStaff",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerProject",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerResource",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "projectId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Project",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "resourceId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Resource",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "staffId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Staff",
+                  "moduleId": "m"
+                }
+              }
+            ],
+            "keys": [
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentStaff",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentProject",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerResource",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerProject",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "projectId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Project",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "resourceId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Resource",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "staffId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Staff",
+                  "moduleId": "m"
+                }
+              }
+            ],
+            "ruleIds": [
+              "membership",
+              "reader"
+            ]
+          }
+        ],
+        "projectionFields": [],
+        "queryFields": [
+          {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          }
+        ],
+        "scan": "s0",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "read",
+            "associations": [
+              {
+                "documentId": "domain",
+                "elementId": "Assignment",
+                "moduleId": "m"
+              },
+              {
+                "documentId": "domain",
+                "elementId": "Ownership",
+                "moduleId": "m"
+              }
+            ],
+            "context": [],
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "active",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentProject",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentStaff",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerProject",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerResource",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "projectId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Project",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "resourceId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Resource",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "staffId",
+                    "moduleId": "m"
+                  }
+                ],
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Staff",
+                  "moduleId": "m"
+                }
+              }
+            ],
+            "keys": [
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentStaff",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "assignmentProject",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerResource",
+                    "moduleId": "m"
+                  },
+                  {
+                    "documentId": "domain",
+                    "elementId": "ownerProject",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "projectId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Project",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "resourceId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Resource",
+                  "moduleId": "m"
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "documentId": "domain",
+                    "elementId": "staffId",
+                    "moduleId": "m"
+                  }
+                ],
+                "keyId": "pk",
+                "target": {
+                  "documentId": "domain",
+                  "elementId": "Staff",
+                  "moduleId": "m"
+                }
+              }
+            ],
+            "ruleIds": [
+              "membership",
+              "reader"
+            ]
+          }
+        ],
+        "projectionFields": [],
+        "queryFields": [
+          {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          }
+        ],
+        "scan": "s1",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "securityLogicalPlan": {
+      "rules": [
+        {
+          "actions": [
+            "read"
+          ],
+          "condition": {
+            "literal": true
+          },
+          "disclosure": [
+            [
+              {
+                "documentId": "domain",
+                "elementId": "salary",
+                "moduleId": "m"
+              },
+              "withheld"
+            ]
+          ],
+          "effect": "permit",
+          "id": "reader",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        },
+        {
+          "actions": [
+            "read"
+          ],
+          "condition": {
+            "exists": {
+              "association": {
+                "documentId": "domain",
+                "elementId": "Ownership",
+                "moduleId": "m"
+              },
+              "condition": {
+                "and": [
+                  {
+                    "equal": [
+                      {
+                        "endpoint": {
+                          "association": {
+                            "documentId": "domain",
+                            "elementId": "Ownership",
+                            "moduleId": "m"
+                          },
+                          "binding": {
+                            "variable": 0
+                          },
+                          "keyId": "pk",
+                          "role": "resource",
+                          "target": {
+                            "documentId": "domain",
+                            "elementId": "Resource",
+                            "moduleId": "m"
+                          }
+                        }
+                      },
+                      {
+                        "identity": {
+                          "binding": "resource",
+                          "keyId": "pk",
+                          "target": {
+                            "documentId": "domain",
+                            "elementId": "Resource",
+                            "moduleId": "m"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "exists": {
+                      "association": {
+                        "documentId": "domain",
+                        "elementId": "Assignment",
+                        "moduleId": "m"
+                      },
+                      "condition": {
+                        "and": [
+                          {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "association": {
+                                    "documentId": "domain",
+                                    "elementId": "Assignment",
+                                    "moduleId": "m"
+                                  },
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "keyId": "pk",
+                                  "role": "staff",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "elementId": "Staff",
+                                    "moduleId": "m"
+                                  }
+                                }
+                              },
+                              {
+                                "identity": {
+                                  "binding": "subject",
+                                  "keyId": "pk",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "elementId": "Staff",
+                                    "moduleId": "m"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "association": {
+                                    "documentId": "domain",
+                                    "elementId": "Assignment",
+                                    "moduleId": "m"
+                                  },
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "keyId": "pk",
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "elementId": "Project",
+                                    "moduleId": "m"
+                                  }
+                                }
+                              },
+                              {
+                                "endpoint": {
+                                  "association": {
+                                    "documentId": "domain",
+                                    "elementId": "Ownership",
+                                    "moduleId": "m"
+                                  },
+                                  "binding": {
+                                    "variable": 0
+                                  },
+                                  "keyId": "pk",
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "elementId": "Project",
+                                    "moduleId": "m"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "equal": [
+                              {
+                                "field": {
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "domain": {
+                                    "allowedValues": null,
+                                    "cardinality": "one",
+                                    "facets": {},
+                                    "nullability": "required",
+                                    "scalarType": "boolean"
+                                  },
+                                  "field": {
+                                    "documentId": "domain",
+                                    "elementId": "active",
+                                    "moduleId": "m"
+                                  }
+                                }
+                              },
+                              {
+                                "constant": {
+                                  "domain": {
+                                    "allowedValues": null,
+                                    "cardinality": "one",
+                                    "facets": {},
+                                    "nullability": "required",
+                                    "scalarType": "boolean"
+                                  },
+                                  "field": {
+                                    "documentId": "domain",
+                                    "elementId": "active",
+                                    "moduleId": "m"
+                                  },
+                                  "literal": {
+                                    "boolean": true
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "slot": 1
+                    }
+                  }
+                ]
+              },
+              "slot": 0
+            }
+          },
+          "disclosure": [],
+          "effect": "require",
+          "id": "membership",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        }
+      ],
+      "version": "weft.security.logical-ir/0.1.0"
+    },
+    "sqlSha256": "0dbb841bdede841d4cc7fa6cb15b57e264e23213c262e90716931938adfacc01",
+    "uses": [
+      {
+        "field": {
+          "documentId": "domain",
+          "elementId": "resourceId",
+          "moduleId": "m"
+        },
+        "operator": "join",
+        "originalAction": null,
+        "scan": "s0",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      },
+      {
+        "field": {
+          "documentId": "domain",
+          "elementId": "resourceId",
+          "moduleId": "m"
+        },
+        "operator": "join",
+        "originalAction": null,
+        "scan": "s1",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "version": "weft.security.mapping-handoff/0.2.0"
+  },
+  "scope": "Actual portable Truss emitter and original Rust logical handoff on explicit shared-home native TEXT fact projections with int4 row type filters. Synthetic fact projection is not actual installed Truss graph/current-state/key/property storage. Model-to-native correspondence, root dispatch, source/issuer/fact/current-authority/guard/privacy/lifecycle qualification remain unqualified; no required Truss graph case or acceptance criterion."
+}

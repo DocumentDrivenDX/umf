@@ -1,0 +1,209 @@
+{
+  "status": "failed-attempt-retained",
+  "sources": {
+    "tools/security/pg-raw-scale.py": {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-pg-raw-scale.py.txt",
+      "sha256": "b2ce1c08a6e1ebbd25b1c79f62b0124d86ae19e3b78666addaec47be8edca179"
+    },
+    "tools/security/pg-raw-scale-runtime.ts": {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-pg-raw-scale-runtime.ts.txt",
+      "sha256": "fcf665d38d3065faf1a73286974d88ed63dea404ea882658ee104cd53e526da7"
+    },
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts": {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-native-query.ts.txt",
+      "sha256": "3ca0045cfc73b76577e5bb9b6d8811c97266335c203d203596d3ea88a49acc3b"
+    }
+  },
+  "originalJournalFiles": [
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-0cde89e7-e9e3-4827-8876-dc68f0be4390.jsonl",
+      "sha256": "e6fc73a38ddd432aa986b097cf14bc50a33bc980c4b22e76a276bd362a0e7eb0",
+      "request": {
+        "kind": "request",
+        "text": "ROLLBACK",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "7"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-0fa7dfea-00e1-4569-99bb-602dc009817f.jsonl",
+      "sha256": "a1acbee8e59fbbc6c46c7cbbd6133ceab8b3d9186d2cdd840c2340ded72a24c5",
+      "request": {
+        "kind": "request",
+        "text": "RESET SESSION AUTHORIZATION",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "2"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-22cbd32f-3250-402f-8343-87816f57e48e.jsonl",
+      "sha256": "633a02d3da34a850ec73a80db1ddcb4df81799b3f39f13af586d93055c03f77b",
+      "request": {
+        "kind": "request",
+        "text": "RESET ROLE",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "1"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-54e98f60-136e-486d-bf43-d754dcfc40d4.jsonl",
+      "sha256": "6a95b32a5c5f5b906fc05bd24c4605da2d188730c65ea5d8f75cafe34a664a61",
+      "request": {
+        "kind": "request",
+        "text": "SELECT count(*) FROM security_raw.resource",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "10"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "uncertain"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-954aac6b-5143-42d0-8ad4-38d7fc8ec5a3.jsonl",
+      "sha256": "00b3a4b7f7b53fa7ca1ec542f098dc181cbb40c204ddeb8b5ca34c19c1edb3ae",
+      "request": {
+        "kind": "request",
+        "text": "BEGIN ISOLATION LEVEL READ COMMITTED READ WRITE",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "5"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-97d0fc72-3225-4aa7-9eb6-c58acf91321f.jsonl",
+      "sha256": "0534c77d28a91cd0f2356399343d024ba45efe5b6349c1706d3029077203daa6",
+      "request": {
+        "kind": "request",
+        "text": "SELECT session_user::pg_catalog.text AS original_actor,current_user::pg_catalog.text AS effective_actor,(SELECT rolsuper::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_superuser,(SELECT rolbypassrls::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_bypass,pg_catalog.current_setting('client_encoding')::pg_catalog.text AS native_encoding",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "9"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-9c0c6518-d9dd-4114-b9a9-3269730a904e.jsonl",
+      "sha256": "0d6cc36fb4a167b86f82d4b9dae5d6852b35557d97eab9d5d6615176c973b915",
+      "request": {
+        "kind": "request",
+        "text": "SELECT session_user::pg_catalog.text AS original_actor,current_user::pg_catalog.text AS effective_actor,(SELECT rolsuper::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_superuser,(SELECT rolbypassrls::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_bypass,pg_catalog.current_setting('client_encoding')::pg_catalog.text AS native_encoding",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "4"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-9daee0d7-d66c-405a-8706-cf89657dcbcf.jsonl",
+      "sha256": "ef2302535fcb2a39213b63c090b990607acd6219f794a82ee85063f846421ae8",
+      "request": {
+        "kind": "request",
+        "text": "SELECT session_user::pg_catalog.text AS original_actor,current_user::pg_catalog.text AS effective_actor,(SELECT rolsuper::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_superuser,(SELECT rolbypassrls::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_bypass,pg_catalog.current_setting('client_encoding')::pg_catalog.text AS native_encoding",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "0"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-a901d6b7-edcf-405d-87f4-a52db8761cfc.jsonl",
+      "sha256": "39381cb55fc5e9969f32c4c094ccaf5df2e79b988c068f0433bd3d4d62962434",
+      "request": {
+        "kind": "request",
+        "text": "RESET ALL",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "3"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-ea821591-f5e5-4f89-af78-917fa5edeb17.jsonl",
+      "sha256": "53e5d5ac90227d38748a8fcfe2d03ef273b30d0a7de207115a4d8a25dc23b3ef",
+      "request": {
+        "kind": "request",
+        "text": "BEGIN ISOLATION LEVEL READ COMMITTED READ WRITE",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "8"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    },
+    {
+      "archive": "docs/helix/04-build/evidence/security/scale-fixed-deadline-fa4c345f-df61-4060-8a14-5701825ce2b0.jsonl",
+      "sha256": "5f3dffe8d774413146799d620506af3ded1a3b5854e9e7ec89a53107bbb6753e",
+      "request": {
+        "kind": "request",
+        "text": "SELECT session_user::pg_catalog.text AS original_actor,current_user::pg_catalog.text AS effective_actor,(SELECT rolsuper::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_superuser,(SELECT rolbypassrls::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname OPERATOR(pg_catalog.=) session_user) AS native_bypass,pg_catalog.current_setting('client_encoding')::pg_catalog.text AS native_encoding",
+        "values": [],
+        "custody": {
+          "lease": "52820fc7-6f46-4fb3-ad27-aecfd5cc5842",
+          "ordinal": "6"
+        }
+      },
+      "terminal": {
+        "kind": "outcome",
+        "outcome": "response_complete"
+      }
+    }
+  ],
+  "nativeMillionProtectedPlanMs": 6201.223,
+  "observedTopLevelFailure": "Original quarantined custody needs explicit settlement",
+  "scope": "Original native runtime first million-row positive did not complete, and final close masked the earlier error with quarantine custody refusal. Original journal records retain uncertain outcome. The fixed 5000ms response deadline is a source-derived likely cause; the original inner exception was not separately retained, so no exact expiry event or SQL57014 result is asserted. Not a passing B16 or failed-statement recovery proof."
+}
