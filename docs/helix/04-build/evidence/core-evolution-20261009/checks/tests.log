@@ -1,0 +1,24 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core-evolution.test.ts:
+(pass) exact source and absent addition preserve; original partial Record semantics retained [155.06ms]
+(pass) known type change breaks; unknown unchanged meaning stays unsupported [98.91ms]
+(pass) forged original expectations, policy and result refuse [139.26ms]
+(pass) required addition, reordered members and changed facet do not preserve [158.44ms]
+(pass) resource and accessor refusal precede any accepted receipt [11.17ms]
+(pass) known breaking changes retain unknown residuals; wrong versions and identity refuse preservation [89.17ms]
+(pass) schema exports are snapshots and original inputs/results are independent copies [92.34ms]
+(pass) exported schema mutation does not loosen private admission [0.33ms]
+(pass) duplicate additions, changed Keys/defaults, and present-null are not absent preservation [118.54ms]
+(pass) oversized forged receipt refuses streaming before whole serialization [94.77ms]
+(pass) aggregate sources are byte bounded before semantic validation [9.87ms]
+(pass) oversized policy text refuses before const canonicalization [11.38ms]
+(pass) valid cross-module additions are explicitly unsupported and wholly retained [90.83ms]
+(pass) duplicate presentation names retain distinct qualified admitted identities [84.14ms]
+(pass) new known annotations outside the closed profile remain retained unsupported [37.47ms]
+(pass) semantic work exhaustion refuses without raising value or byte limits [86.93ms]
+
+ 16 pass
+ 0 fail
+ 49 expect() calls
+Ran 16 tests across 1 file. [1.70s]

@@ -1,0 +1,46 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core-evolution.test.ts:
+(pass) exact source and absent addition preserve; original partial Record semantics retained [128.99ms]
+(pass) known type change breaks; unknown unchanged meaning stays unsupported [68.65ms]
+(pass) forged original expectations, policy and result refuse [97.95ms]
+(pass) required addition, reordered members and changed facet do not preserve [118.37ms]
+(pass) resource and accessor refusal precede any accepted receipt [6.47ms]
+(pass) known breaking changes retain unknown residuals; wrong versions and identity refuse preservation [71.81ms]
+(pass) schema exports are snapshots and original inputs/results are independent copies [66.76ms]
+(pass) exported schema mutation does not loosen private admission [0.25ms]
+(pass) duplicate additions, changed Keys/defaults, and present-null are not absent preservation [69.34ms]
+(pass) oversized forged receipt refuses streaming before whole serialization [39.01ms]
+(pass) aggregate sources are byte bounded before semantic validation [6.89ms]
+(pass) oversized policy text refuses before const canonicalization [4.96ms]
+(pass) valid cross-module additions are explicitly unsupported and wholly retained [30.63ms]
+(pass) duplicate presentation names retain distinct qualified admitted identities [27.37ms]
+(pass) new known annotations outside the closed profile remain retained unsupported [20.84ms]
+(pass) semantic work exhaustion refuses without raising value or byte limits [52.51ms]
+
+tests/core-dataset-compact.test.ts:
+(pass) original commerce dataset admits under unchanged limits and expands to original public results [321.40ms]
+(pass) original supply-chain dataset admits under unchanged limits and expands to original public results [488.45ms]
+(pass) original archaeology dataset admits under unchanged limits and expands to original public results [2406.53ms]
+(pass) original ecology dataset admits under unchanged limits and expands to original public results [1869.45ms]
+(pass) full operation remains unchanged and compact context discharge/diagnostics match original full receipts [732.29ms]
+(pass) present null and original decimal exponent tokens survive while absent and required-null stay different [192.55ms]
+(pass) duplicate keys, unresolved endpoints and parallel identity/multiplicity retain exact original diagnostics [843.16ms]
+(pass) unknown source meaning/context remains complete in retained bytes and prevents invented completeness [229.93ms]
+(pass) forged compact references, original inputs/source and any changed result are refused by complete recomputation [128.49ms]
+(pass) copy/accessor/version and structural/byte/semantic work limits refuse without partial receipts or raised full guards [180.75ms]
+(pass) work admission counts endpoint occurrences inside a single declaration before quadratic presentation scans [24.93ms]
+(pass) malformed copied source shapes refuse through governed source validation rather than TypeError [21.82ms]
+(pass) custom uniqueItems retains governed invalid-source refusal for repeated object references [18.41ms]
+(pass) source declaration byte preflight runs before any expensive literal validation and opaque Unicode stays exact [65.55ms]
+(pass) unknown length units retain original diagnostics with growing unrelated unknown qualifiers [413.35ms]
+(pass) source key component/reference scan product is reserved before original semantic checking [76.49ms]
+(pass) public schema mutation cannot alter private resource reservations [57.55ms]
+(pass) compact first-occurrence field index preserves duplicate supplied-value behavior exactly [251.80ms]
+(pass) resource-only meter reserves propertyNames and both const/enum sides independently [0.10ms]
+(pass) indexed key selection preserves unknown key/field qualifiers and missing identity refusals [687.19ms]
+
+ 36 pass
+ 0 fail
+ 653 expect() calls
+Ran 36 tests across 2 files. [20.19s]
