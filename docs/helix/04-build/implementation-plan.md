@@ -9765,3 +9765,37 @@ mappings with authenticated exact profiles. Complete issuance, B10/admission-dri
 closure, physical lowering and integrated native qualification remain unfinished.
 All132 original cases remain binding; no acceptance case is promoted by this
 Key-custody checkpoint. The goal remains active.
+
+### Query payload custody merged directly to main — 2026-10-10
+
+Weft main45910686acb1c607bcd9769e163f8189a0afc595 contains reviewed private
+Projection/QueryField/Operator/Output payload custody under CONTRACT-006 and the
+shared independent requirement issuer design. Actual scan inventories, qualified
+field references, native catalog carriers, ontology classifications, admitted
+requirements and original resolved application Plan remain borrowed. Projection
+objects retain exact identity; operators preserve the profile-owned admitted use
+and OriginalAuthorized action; outputs preserve original ordered positions, aliases
+and expressions, including repeated fields. Resolved uses/projections are families,
+not all SQL AST occurrences. Identity conflicts refuse, work/text is charged and
+population is bounded at4096. Complete query payload keys equal their source-event
+projection while legacy source-only traversal retains its ledger.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/45910686acb1c607bcd9769e163f8189a0afc595/docs/helix/04-build/evidence/security-query-events/checkpoint.json)
+records559 Rust workspace tests passing across44groups with zero failed, ignored or
+filtered, plus successful documentation/schema/corpus checks. Its824 declared test
+inputs were captured during execution and checked unchanged at terminal and after
+concurrent main integration; this is explicitly not a pre-execution freeze and
+excludes external registry/runtime dependencies. Initial strengthened-test failure
+(profile-owned use versus raw-query pointer expectation) and premature documentation
+check failure are preserved alongside corrected runs. Astra ultra's final read-only
+implementation review has no remaining findings after pointer expectation correction
+and isolated scan/operator carrier/classification substitution controls.
+
+Direct main push succeeded with concurrent main updates preserved, without a PR or
+force push. This checkpoint adds tested private semantic custody, no new formal Rust
+refinement proof or native enforcement claim; older source-specific formal receipts
+remain unchanged. All132 original backend cases remain binding and none is promoted.
+Next complete remaining association custody and independent backend applicability,
+templates, sites, failures, prerequisites and original assertion mappings, then
+authenticated issuance, physical lowering and B10/admission-drift closure. The
+implementation goal remains active.
