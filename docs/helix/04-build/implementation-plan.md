@@ -9955,3 +9955,35 @@ The native run passed 58 observations with six captured source pins and 48 reque
 This qualifies the fixed isolation-admission refusal/restart behavior only. Enrollment commits after the old snapshot, so the schedule does not establish isolation-check-erasure necessity or stale-row disclosure through that entry. Native table/routine/dependency closure, authenticated production broker, generalized compiled queries, disclosure diagnostics, all authority mutations and final-publication boundaries remain required. Original pg-raw.L06 remains pending, historical required acceptance stays 26/132, and the full goal remains active.
 
 Astra ultra independently reconstructed the 58 observations against the authored oracle and 48 transcript schedule, checked all six current source pins and both diagnostic boundaries, and found no remaining landing blocker in this stated scope. [Retained checkpoint](evidence/security/pg-old-snapshot-admission/checkpoint.json) and [review](evidence/security/pg-old-snapshot-admission/astra-review.json) preserve the acceptance qualification.
+
+### Authored deployment qualification duty checkpoint
+
+Weft main `60e82559941ff124fa38e248adb49af4f0a77a18` contains the separate candidate
+`weft.security.deployment-duty-catalog/0.1.0`:42 distinct original qualification
+duties for each backend home, with exact owners/sites/failures/case assignments and
+81 explicit same-capability prerequisite edges. The strict bounded gate refuses
+all duty/assignment omissions and contract substitutions, including unchosen and
+zero-edge capabilities. A coherent original manifest/profile catch-all passes
+weaker instance matching but still refuses this independent gate. Its distinct
+private DeploymentIssued type retains strict-gate provenance; no public lowering
+or native execution is enabled.
+
+The [retained checkpoint](evidence/security/weft-deployment-catalog/checkpoint.json)
+and [integration receipt](evidence/security/weft-deployment-catalog/integration.json)
+link candidate correspondence to US-056-AC7/AC10:578 passing release workspace
+tests in44 groups (235 core), five new controls, all837 prefrozen source pins
+unchanged, zero failed/ignored/measured/filtered, and independent Astra ultra
+source/receipt audit with no blockers. Specification checks passed51 artifacts,
+31 schemas,30 criteria and636 fixture scenarios. Earlier development logs are
+retained as diagnostics without exact attempted-source snapshots; the final run
+has fresh captured pins. The manual42-row golden table is separate from the Rust
+implementation. Shared charged profile preflight and visit/text reservation fixes
+were applied before the frozen run.
+
+This implements deployment qualification mapping only. Complete semantic payload
+applicability, authenticated profile/case/procedure selection, native assertion
+adequacy and backend enforcement/current-cut evidence remain necessary. Proposed
+prerequisites do not prove test sufficiency or Rust/native refinement. All42 cases
+remain pending at the issuer, historical required acceptance stays26/132, and all132
+original acceptance obligations remain intact. Continue toward admitted profiles
+and complete backend qualification; component correspondence cannot finish the goal.

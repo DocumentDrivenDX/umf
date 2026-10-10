@@ -283,3 +283,44 @@ authentication mechanism. Test template-to-case mappings are synthetic. Full132
 acceptance and historical26/132 remain unchanged.
 
 The catalog binding checkpoint is merged directly into Weft main at `f7a682e27db5d3530678bea3312a5ea2211d4f28`: 573 workspace tests /44 groups, 230 core, 833 unchanged declared inputs, and an independent Astra ultra receipt audit. Retained evidence: [checkpoint](../../../04-build/evidence/security/weft-case-catalog/checkpoint.json). This component result does not promote any original native acceptance case.
+
+### Explicit deployment duty catalog candidate
+
+The next private compiler boundary introduces `weft.security.deployment-duty-catalog/0.1.0`
+as an explicitly authored qualification interface, replacing the prior fixture's
+single Selected42-case catch-all with42 original duties. Each retains its own kind,
+Host/host or Backend/native owner/site, common qualification-required refusal,
+single full original case record and exact prerequisite templates. Twelve semantic
+verifiers and B12 receipt custody are Host/host; the other29 are Backend/native.
+All four backend homes retain separate template IDs and case/procedure evidence.
+Identical original suffix assertion text justifies shared interfaces, not shared
+physical enforcement. The manual42-row golden mapping is independently checked
+against the code. The candidate has81 same-Selected-occurrence dependency edges,
+no cycles/missing nodes, and maximum dependency depth9.
+
+A stricter private factory first verifies bounded original registration/case
+correspondence, then applies existing charged profile preflight before checking
+all42 exact duty tuples and assignments through the same issuer ledger. Every
+authored capability retains all42, including unchosen and zero-edge capabilities.
+Contract substitution and catch-all weakening refuse even where manifest and
+profile agree and weaker original instance matching succeeds. Strict factory
+provenance survives in the distinct private DeploymentIssued type and candidate
+version; a weaker CatalogIssued cannot stand in for it.
+
+The42 fixed record copies reserve512 text bytes each before construction; actual
+maximum retained authored text is264 bytes for delta-raw.B01. Template counting,
+comparisons and per-capability membership lookups consume visits. A one-capability
+42-template catalog has independently counted169 visits/21504 reserved text;
+exact/minus-one tests isolate that phase. These are copied-text/visit bounds,
+not allocator or aggregate process guarantees. No incoming Selected-ID comparison
+map is allocated before charged validation.
+
+This authors deployment qualification mappings only. Typed field/domain/transform/
+operator/backend semantic applicability, authenticated registry selection,
+procedure assertion adequacy, native implementations and current enforcement
+still remain required. Proposed dependency edges constrain composition and do not
+prove any test sufficient. Original assertions, including S10:disclosure, remain
+unaltered and pending. The strict result does not emit SQL, activate a public
+transport or promote any of132 acceptance cases. The full goal remains active.
+
+The candidate-duty checkpoint is merged directly into Weft main at `60e82559941ff124fa38e248adb49af4f0a77a18`. [Retained evidence](../../../04-build/evidence/security/weft-deployment-catalog/checkpoint.json) records578 workspace tests/44 groups,235 core,837 unchanged declared inputs and an independent Astra ultra source/receipt audit. This does not promote any original acceptance case.
