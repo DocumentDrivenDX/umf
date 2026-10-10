@@ -9799,3 +9799,42 @@ Next complete remaining association custody and independent backend applicabilit
 templates, sites, failures, prerequisites and original assertion mappings, then
 authenticated issuance, physical lowering and B10/admission-drift closure. The
 implementation goal remains active.
+
+### Original association semantics on main — 2026-10-10
+
+Weft main2650937c1cc1827689d903d7d97b3dbc08c6c637 retains original association
+semantics under CONTRACT-006 and the shared independent requirement issuer design.
+Each private record-association dependency carries exact original scan/action
+inventories, qualified association reference, native catalog record and complete
+ontology declaration. Endpoint roles, qualified targets, selected keys, ordered
+component fields and classification metadata remain borrowed rather than decoded
+from source IDs. This is per-scan/action dependency custody; Rule occurrence
+inventories separately retain each Exists expression. Graph association activation
+remains unfinished. Charged full-qualified declaration lookup refuses absent or
+duplicate matches; bounded identity retention refuses foreign equal objects, and
+Association source-key projection equals the complete payload map. The legacy
+source-only traversal ledger remains unchanged.
+
+The [execution checkpoint](https://github.com/DocumentDrivenDX/weft/blob/2650937c1cc1827689d903d7d97b3dbc08c6c637/docs/helix/04-build/evidence/security-association-events/checkpoint.json)
+records560 Rust workspace tests passing across44groups, zero failed/ignored/filtered,
+with all825 declared repository inputs frozen before execution and checked
+unchanged at terminal. External Cargo registry/runtime dependencies are excluded.
+Documentation/schema/corpus checks also pass51 artifacts/31schemas/30planned
+compiler criteria/636fixtures. Actual controls cover independently authored
+source-to-qualified-reference expectations, all five pointer substitutions,
+self-join ownership, forward/reverse compound endpoints, an actual empty inventory
+retaining its action duty, exact/minus-one budgets and populated4096/4097 boundaries.
+Astra ultra caught a test-oracle gap accepting swapped complete payloads; the
+independent golden map closes it and final read-only review has no findings.
+
+The requirement trace links identity/order controls to original S01/S02/S05 and
+B02/B13 assertions without claiming those native cases passed. No original132
+backend case is promoted, and historical26/132 acceptance remains unchanged.
+This checkpoint adds no formal Rust refinement proof, complete independent issuer,
+authenticated profile, public security lowering or native population completeness.
+Direct main push succeeded without a PR. Next connect retained semantic inputs
+to explicitly authored backend applicability/templates/sites/failures/prerequisites
+and original assertion mappings, implement authenticated issuance and physical
+bodies, and close B10/admission drift with integrated native evidence. The current
+Truss handoff still explicitly lacks seven native semantic protected bodies; its
+other checkpoint progress is not full backend qualification. The goal remains active.
