@@ -9907,3 +9907,37 @@ Astra ultra independently verifies all 61 observations, six traces, six native
 and eight formal source pins, the executed helper prefix and all eight fresh Z3
 replays. No findings remain within the qualified scope. Four custody unit tests
 also pass. Review and execution receipt hashes are retained in the checkpoint.
+
+
+### Independent typed template expansion integration — 2026-10-10
+
+Weft main now contains [ae13dbb](https://github.com/DocumentDrivenDX/weft/commit/ae13dbb251cf0878e511f133290cc4978649e99d):
+a private issuer expands independently authored typed templates into original
+contracts, explicit kinds/case atoms and prerequisite instances. It consumes actual
+owner events and structural Rule payloads, preserving source/scope/address and all
+shared original origins. Mandatory semantic templates cannot disappear because
+another kind is present. Per-capability deployment catalogs remain unconditional,
+including selected zero-edge declarations. The existing instance matcher rejects
+codec/privacy fragments even when source-level correspondence passes.
+
+The [integration receipt](evidence/security/weft-requirement-templates/integration.json)
+retains unchanged Weft-namespace execution/review evidence:569 passing release
+workspace tests in44 groups (core226), all nine new controls passing, all828
+prefrozen declared input hashes unchanged, and independent Astra ultra verification.
+The full workspace log, corrected development failures and specification checks
+are retained. Exact failed-attempt source snapshots were not captured; those logs
+are development diagnostics only. Review fixes address transitive missing dependency
+panic, per-capability selected template instantiation and charge-before-copy/visit
+accounting. Independent tiny ledgers, complete shared origin omission controls and
+4096/4097 aggregate links isolate the intended checks.
+
+This expands requirements conditionally from an independently authored trusted
+fixture profile. Payload-specific domain/transform/operator/backend applicability,
+exact original backend case/assertion mappings, authenticated registry selection,
+cross-target prerequisites, native physical bodies and public lowering remain open.
+Rule enumeration and template expansion have separate phase-local budgets, not an
+aggregate CPU/allocator bound. No new formal Rust refinement or native acceptance
+is claimed. Historical26/132 and all132 required cases remain unchanged; the goal
+remains active. Next author and validate the exact backend template/case catalogs
+and profile authentication before permitting native physical dispatch. Direct main
+integration continues without new PRs.

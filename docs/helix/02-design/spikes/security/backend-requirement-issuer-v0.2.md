@@ -229,3 +229,35 @@ An independent Not(Equal(distinct operands)) ledger passes10visits and
 condition-child and disclosure positions are zero-based. The previous130 receipt
 is archived. Formal negative controls explicitly erase index, namespace or source
 coordinates; they do not claim Rust refinement or structural completeness.
+
+
+### Conditional typed template expansion checkpoint
+
+Weft's private requirement-templates0.1 issuer now expands explicit independently
+authored template contracts into required-instances0.2 from all18 owner event
+categories and exact structural Rule effect/condition/operand/disposition variants.
+It retains source/scope/address identities, full case atoms and shared origins;
+semantic same-selector templates remain globally mandatory. Selected deployment
+templates are assigned per capability, including zero-edge selections, and must
+cover the complete declared profile case inventory for every authored capability.
+Prerequisites are explicit bounded same-selector/same-occurrence DAGs. No expected
+contract is authored from the manifest obligations being checked.
+
+This is a conditional template expansion implementation. Complete original backend
+case sets and all payload-specific domain/operator/transform/backend applicability
+are not established by the supplied fixture catalog. Authentication, exact native
+qualification and public physical admission remain open. Cross-target prerequisite
+instantiation is unsupported. Template expansion and rule enumeration have separate
+phase-local bounds; no aggregate CPU/allocator guarantee follows. The full132-case
+acceptance plan and historical26/132 remain unchanged.
+
+
+Fresh release workspace evidence passes569 tests in44 groups (core226), including
+nine issuer controls. Independently authored fixture originals and full source
+keys verify false-rule/withheld expansion, shared contracts/all origins, zero-edge
+deployment duties, codec/privacy fragment refusal, exact registration/site/failure/
+prerequisite comparison and isolated aggregate4096/4097 links. Independent small
+retention ledgers and their minus-one refusals pass. Astra independently audits
+all828 prefrozen repository inputs, terminal counts and full retained log hash;
+no remaining findings within the qualified subset. These are compiler component
+controls, not execution of the original132 backend cases or formal Rust refinement.
