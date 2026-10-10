@@ -1,0 +1,12 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [237.72ms]
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [86.28ms]
+
+ 2 pass
+ 0 fail
+ 653 expect() calls
+Ran 2 tests across 2 files. [8.52s]

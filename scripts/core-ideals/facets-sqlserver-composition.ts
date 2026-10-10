@@ -36,7 +36,7 @@ const fullRow=facetsSqlServerProjectionCases().find(r=>r.name==='smallint-8-true
 const fullColumn=u.getSqlServerColumnMetadata(full).find(c=>c.table.name===fullRow.request.tableName)!;
 full.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:'value',cardinality:'one',scalarType:'integer',extensions:{}}]});
 const fullResult=u.classifySqlServerFacets(full,{column:fullColumn.path,nativeSource:proof.sourceText,identity:{module:'logical',element:'value'},mode:'strict',profile:'stored-value',obligation:'value-domain'});
-assert.equal(fullResult.status,'classified');assert.deepEqual(fullResult.mapping.facets,{integerWidth:{bits:8,signed:true}});
+assert.equal(fullResult.status,'classified');assert.deepEqual(u.copyJson(fullResult.mapping.facets),u.copyJson({integerWidth:{bits:8,signed:true}}));
 let fullCatalogNativeRecoveries=0;
 for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(fullResult),format),format) as unknown as typeof fullResult;assert.equal(u.recoverSqlServerFacetSource(receipt,receipt.target!),proof.sourceText);fullCatalogNativeRecoveries++;}
 const paths=['scripts/core-ideals/facets-sqlserver-composition.ts','scripts/core-ideals/facets-sqlserver-projection-cases.ts','src/core-ideals/facets-sqlserver.ts','src/core-ideals/facets-sqlserver-projection.ts','src/adapters/sqlserver/facet-constraints.ts','src/adapters/sqlserver/facet-predicate.ts','src/adapters/sqlserver/facet-type.ts','fixtures/validation/facets-sqlserver-projection-native.json'];
