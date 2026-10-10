@@ -1,3 +1,6 @@
+import properties from '../../spec/core/schema-properties-document.schema.json';
+import schemaV3 from '../../spec/core/key-operation-v3.schema.json';
+export {default as coreKeyOperationV3Schema} from '../../spec/core/key-operation-v3.schema.json';
 import relationships from '../../spec/core/relationship-document.schema.json';
 import schemaV2 from '../../spec/core/key-operation-v2.schema.json';
 import {copyJson} from './json';
@@ -13,12 +16,12 @@ interface Declaration {version:'1.0.0'|'2.0.0';source:Document;target:Document;i
 export interface CoreKeyDeclaration extends Declaration {operation:'declare-core-key';request:CoreKeyRequest}
 export interface CoreRecordMembersDeclaration extends Declaration {operation:'declare-core-record-members';request:CoreRecordIdentity[]}
 export type CoreKeyMeaning={state:'missing'|'inapplicable'}|{state:'legacy';value:Json}|{state:'known'|'partial';keys:CoreKeyDefinition[];uninterpretedPaths:string[]};
-export interface CoreKeyInspection {operation:'inspect-core-keys';version:'1.0.0'|'2.0.0';source:Document;identity:CoreRecordIdentity;path:string;meaning:CoreKeyMeaning;provenance:'unverified'}
-export interface CoreKeyLookup {operation:'lookup-core-key';version:'1.0.0'|'2.0.0';source:Document;identity:CoreKeyIdentity;path:string;key:CoreKeyDefinition;uninterpretedPaths:string[];provenance:'unverified'}
+export interface CoreKeyInspection {operation:'inspect-core-keys';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;identity:CoreRecordIdentity;path:string;meaning:CoreKeyMeaning;provenance:'unverified'}
+export interface CoreKeyLookup {operation:'lookup-core-key';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;identity:CoreKeyIdentity;path:string;key:CoreKeyDefinition;uninterpretedPaths:string[];provenance:'unverified'}
 export type CoreKeyOperation=CoreKeyDeclaration|CoreRecordMembersDeclaration|CoreKeyInspection|CoreKeyLookup;
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships])validator.addSchema(s);
-const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),identityCheck=validator.compile(schema.$defs.identity),keyIdentityCheck=validator.compile(schema.$defs.keyIdentity),requestCheck=validator.compile(schema.$defs.keyRequest),membersCheck=validator.compile(schema.$defs.memberRequest);
-const checker=(version:unknown)=>version==='2.0.0'?checkV2:checkV1;
+const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,keys,relationships,properties])validator.addSchema(s);
+const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),identityCheck=validator.compile(schema.$defs.identity),keyIdentityCheck=validator.compile(schema.$defs.keyIdentity),requestCheck=validator.compile(schema.$defs.keyRequest),membersCheck=validator.compile(schema.$defs.memberRequest);
+const checker=(version:unknown)=>version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
 const id=(r:CoreRecordIdentity)=>JSON.stringify([r.module,r.element]);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 function finish<T extends CoreKeyOperation>(result:T):T{const copied=copyJson(result),check=checker(result.version);if(!check(copied))throw new UmfError('CORE_KEY_RESULT',JSON.stringify(check.errors));return copied as unknown as T;}
@@ -31,24 +34,24 @@ function locate(input:Document,identityInput:CoreRecordIdentity){
  return {source,identity,mi,ei,element:source.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}`,validation};
 }
 const unknown=(diagnostics:ReturnType<typeof validateDocument>['diagnostics'],path:string)=>diagnostics.filter(d=>d.code==='UNKNOWN_KEY_QUALIFIER'&&(d.path===path||d.path.startsWith(path+'/'))).map(d=>d.path);
-function record(located:ReturnType<typeof locate>){
- if(located.source.umf!=='0.6.0'&&located.source.umf!=='0.7.0')throw new UmfError('CORE_KEY_VERSION','Explicit Key envelope migration is required');
+function record(located:ReturnType<typeof locate>,readOnly=false){
+ if(located.source.umf!=='0.6.0'&&located.source.umf!=='0.7.0'&&!(readOnly&&located.source.umf==='0.8.0'))throw new UmfError('CORE_KEY_VERSION','Explicit Key envelope migration is required');
  if(located.element.kind!=='record')throw new UmfError('CORE_KEY_ROLE','Keys and membership apply only to explicit Records',located.path);
 }
 export function inspectCoreKeys(input:Document,identity:CoreRecordIdentity):CoreKeyInspection{
  const l=locate(input,identity),path=l.path+'/keys';let meaning:CoreKeyMeaning={state:'missing'};
  if(Object.hasOwn(l.element,'keys')){
-  if(l.source.umf!=='0.6.0'&&l.source.umf!=='0.7.0')meaning={state:'legacy',value:copyJson(l.element.keys)};
+  if(l.source.umf!=='0.6.0'&&l.source.umf!=='0.7.0'&&l.source.umf!=='0.8.0')meaning={state:'legacy',value:copyJson(l.element.keys)};
   else{const uninterpretedPaths=unknown(l.validation.diagnostics,path);meaning={state:uninterpretedPaths.length?'partial':'known',keys:copyJson(l.element.keys) as unknown as CoreKeyDefinition[],uninterpretedPaths};}
- }else if((l.source.umf==='0.6.0'||l.source.umf==='0.7.0')&&l.element.kind!=='record')meaning={state:'inapplicable'};
- return finish({operation:'inspect-core-keys',version:l.source.umf==='0.7.0'?'2.0.0':'1.0.0',source:l.source,identity:l.identity,path,meaning,provenance:'unverified'});
+ }else if((l.source.umf==='0.6.0'||l.source.umf==='0.7.0'||l.source.umf==='0.8.0')&&l.element.kind!=='record')meaning={state:'inapplicable'};
+ return finish({operation:'inspect-core-keys',version:l.source.umf==='0.8.0'?'3.0.0':l.source.umf==='0.7.0'?'2.0.0':'1.0.0',source:l.source,identity:l.identity,path,meaning,provenance:'unverified'});
 }
 export function lookupCoreKey(input:Document,identityInput:CoreKeyIdentity):CoreKeyLookup{
  const identity=copyJson(identityInput) as unknown as CoreKeyIdentity;if(!keyIdentityCheck(identity))throw new UmfError('CORE_KEY_IDENTITY','Explicit stable key identity is required');
- const l=locate(input,{module:identity.module,element:identity.element});record(l);
+ const l=locate(input,{module:identity.module,element:identity.element});record(l,true);
  const values=l.element.keys as CoreKeyDefinition[]|undefined,index=values?.findIndex(k=>k.id===identity.key)??-1;
  if(index<0)throw new UmfError('CORE_KEY_MISSING','Stable key ID does not resolve');const path=l.path+`/keys/${index}`;
- return finish({operation:'lookup-core-key',version:l.source.umf==='0.7.0'?'2.0.0':'1.0.0',source:l.source,identity,path,key:values![index]!,uninterpretedPaths:unknown(l.validation.diagnostics,path),provenance:'unverified'});
+ return finish({operation:'lookup-core-key',version:l.source.umf==='0.8.0'?'3.0.0':l.source.umf==='0.7.0'?'2.0.0':'1.0.0',source:l.source,identity,path,key:values![index]!,uninterpretedPaths:unknown(l.validation.diagnostics,path),provenance:'unverified'});
 }
 export function declareCoreRecordMembers(input:Document,identity:CoreRecordIdentity,requestInput:CoreRecordIdentity[]):CoreRecordMembersDeclaration{
  const request=copyJson(requestInput) as unknown as CoreRecordIdentity[];if(!membersCheck(request))throw new UmfError('CORE_MEMBERS_REQUEST','Expected exact ordered Field references');

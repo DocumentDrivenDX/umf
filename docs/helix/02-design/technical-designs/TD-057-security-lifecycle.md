@@ -1,0 +1,468 @@
+---
+ddx:
+  id: TD-057
+  type: technical-design
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: US-057
+      kind: informed_by
+    - id: SD-008
+      kind: informed_by
+---
+
+# TD-057: Guarded current authority and retained-context admission
+
+**User Story:** [[US-057]] | **Feature:** FEAT-008 | **Solution Design:** [[SD-008]]
+
+## Scope
+
+Story-level realization of US-057-AC1–8; CONTRACT-062/063 govern exact surfaces.
+
+## Technical Approach
+
+Guarded current authority and retained-context admission. Inherit complete-fact admission, mandatory restrictions and native
+refusal from SD-008. No source policy can choose a trusted issuer or native role.
+
+## Component Changes
+
+Spike files under `02-design/spikes/security/` establish bounded feasibility.
+Production components follow the existing portable-library/runtime separation;
+new package/schema/API details must conform to CONTRACT-001 and CONTRACT-062.
+Backend-specific source and receipt adoption are consumer-owned.
+
+Input: Current policy/facts and selected original/proposed/history state. Output: authorized effects or refusal with retained custody.
+Authoring retains unknown source; activation requires understood meaning.
+
+## API/Interface Design
+
+Use CONTRACT-062 policy meaning and CONTRACT-063 receipt admission. Weft-owned
+lowering interfaces require pinned owner agreement before production integration;
+no invented local compiler API is silently adopted.
+
+## Security
+
+Original caller and trusted attributes are host inputs with independently
+qualified provenance. Invalid/incomplete context refuses before effects. Native
+owners, BYPASSRLS and definer dependencies are explicitly inventoried/excluded.
+Private observations cannot escape through read, error or progress surfaces.
+
+## Testing
+
+Two-session barrier schedules, historical owner and derived-copy controls. Every exercising test cites `@covers US-057-AC` with its full numeric
+criterion ID. STP-057 owns per-criterion cases; declaration-only checks do not
+qualify execution. Qualification requires zero skipped required cases.
+
+## Performance
+
+Bound semantic expressions under CONTRACT-062. Measure native policy overhead,
+plans and drain at 1k/100k/1M records; resource timeout is an explicit refusal.
+
+## Migration & Rollback
+
+Version source and bindings separately. Preserve native/unknown source and prior
+admitted installation. Failed activation closes admission or retains the prior
+profile; never remove protection while broad ordinary grants remain.
+
+## Implementation Sequence
+
+1. Create exercising contract/native fixtures and record red or not-run states.
+2. Implement the scoped component and independent expected-result comparison.
+3. Reproduce formal/native/browser checks at matching source fingerprints.
+4. Admit only the exact completed subset and publish criterion receipts.
+
+## Risks
+
+Missing native capability, incomplete authority participation or unreviewed
+compiler interface blocks that profile. Continue independent semantic validation;
+never substitute synthetic fixtures for actual consumer adoption.
+
+## Implemented shared authority coordination
+
+`src/extensions/security/authority-guard.ts` now implements the CONTRACT-063
+single-realm read/change guard. FIFO shared operations hold through callback
+settlement; exclusive authority changes wait for drain and advance to a unique
+generation only after their producer resolves. Unknown transition outcomes close
+admission rather than acknowledge possibly stale authority. Cancellation removes
+queued work and never forcibly releases an active callback. Native outcome
+reconciliation/fencing is required before recovery creates a fresh guard.
+
+Seven explicit-barrier tests cover drain, fresh generation, active-buffer
+cancellation, queued cancellation, uncertain change outcome, generation reuse,
+close-before-producer and finite resource admission (the drain schedule contains
+multiple assertions). Seven guard observations also match Bun and Chromium.
+These tests qualify portable host coordination only. Native writer inventories,
+database locks, old snapshots, cross-process callbacks and backend crash/rollback/
+stream schedules remain separately required in STP-057 and each backend matrix.
+
+## Implemented semantic write admission
+
+`src/extensions/security/write.ts` checks create/proposed, delete/original and
+update/both complete states. It requires complete exact field-action bindings,
+separate ownership/policy mutation actions and current coherent authority cuts.
+Null and absence differ in change detection. Changed non-ownership authorization
+facts and mixed generations refuse. Declared ownership inventory changes require
+separate permission on both states. Per-state budgets are divided across checks.
+
+Five tests and five Chromium/Bun vectors cover field restrictions, proposed-state
+membership, ownership/policy actions, mixed/partial states and null/absence.
+No effects are executed; actual native mutation custody, atomic commit and
+complete attribute classification still require backend qualification. This
+component does not close any native L01/L02 case.
+
+Write-profile completeness now checks the derived policy dependency closure.
+A host cannot omit a policy-read target field to bypass the separate policy-change
+action. Association create/delete with a policy inventory dependency also checks
+that action. Native/external attributes, roles and clocks still need complete
+backend writer inventories and generation-transition qualification.
+
+## Native epoch candidate
+
+The PostgreSQL `epoch.sql`/`epoch.py` spike compares an MVCC epoch row with a
+private non-MVCC sequence under a participating advisory guard. Actual ordinary
+RR first-read, rollback-gap and missing-retained-state controls refuse; fresh
+current authority observes revoked access. A protected gateway must run explicit
+admission before rows/counts, including empty results; an RLS-only guard expression
+can be skipped where no row is evaluated. Full writer participation, native
+clock reset/rollover exclusion, uncertain-commit recovery and final application
+release remain implementation/qualification gates. No production/native store
+profile is admitted solely from this candidate or its conditional algebra.
+
+## Native connection lifetime and application buffers
+
+The participating PostgreSQL host-buffer candidate uses a session advisory shared
+lock through the application final-release boundary, including after the read
+transaction commits. The independent revoker waits behind that session lock.
+Successful release and cancellation invalidate the host buffer before unlock.
+An actual native early-close counterexample proves that connection closure alone
+is insufficient: native lock release can permit acknowledgment while application
+rows remain releasable. A production adapter must make connection-loss handling
+and every buffer/cursor release path participate in the same drain boundary,
+or refuse operations whose lifetime cannot be guaranteed. Process/transport
+failures need independent qualification. The Python/psql witness establishes
+feasibility and this failure mode, not a Truss/Delta/Ashlar/public-driver profile.
+
+## Independent coordinator and data-connection loss
+
+The public Bun SQL driver witness now holds a shared transaction advisory guard
+on a separate ordinary Alice coordinator connection. Its data connection reads
+RA into a host buffer, then the excluded assessor terminates that exact native
+backend PID. A query on the same reserved data connection fails. Independent
+`pg_locks` observation still shows the revoker waiting behind the coordinator;
+no acknowledgment occurs while the host buffer is live. Discarding that buffer
+precedes coordinator drain and revocation acknowledgment; a new ordinary connection
+sees zero resources. The witness publishes evidence only after exact native
+container teardown succeeds, including when SQL pool close fails.
+
+This candidate demonstrates how data-connection lifetime can be separated from
+final-release lifetime. It does not qualify loss of the coordinator itself,
+independent/nonparticipating native writers, distributed durable buffers, HTTP
+streaming or production host admission. Those failure paths remain mandatory
+backend qualification gates; a separate connection alone is not a credential or
+proof that every release path participates.
+
+## Coordinator-loss controls
+
+The public driver witness now terminates the exact ordinary coordinator backend
+while its host buffer remains live. In the weakened native-only design, a revoker
+previously observed waiting in `pg_locks` acknowledges after coordinator death
+while RA remains buffered. In the participating design, `SecurityAuthorityGuard`
+holds the host read callback alive; its queued exclusive transition has not invoked
+the native mutation producer after native coordinator loss. The host discards its
+buffer before callback settlement; only then does the transition commit and
+acknowledge. Both schedules finish with a fresh ordinary zero-row read.
+
+This provides actual native-failure evidence for the already specified single-realm
+host guard. It qualifies neither independent native writers nor multiple host
+realms. A production profile must enforce that all native authority mutation,
+clock and DDL paths enter the same drain protocol, or provide a qualified
+cross-process coordinator. The native-only weakened path must refuse activation;
+an additional host guard cannot compensate for an uncoordinated authority writer.
+An empty/failed buffer must settle only after all deferred release handles are
+invalidated. The witness owns a single in-memory buffer and no durable/HTTP stream.
+
+### Astra ultra review: original connection operation exclusion
+
+The actual Truss native runtime allowed overlapping application queries, causing multiple operations to wrap the same socket parser and risk response/journal cross-attribution. All public asynchronous lease operations now share a locally captured busy admission boundary through settlement: begin, execute, control, commit, rollback and release/reset. Quarantine remains available for uncertain custody. Competing operations refuse before native query submission; they are not queued behind a response they do not own.
+
+An independently observed native advisory-lock wait exercises both unconfigured and ordinary-principal-only leases. Concurrent operations all refuse without new original journal files; original response, subsequent query, subsequent checkout and zero healthy quarantine are then verified. The expanded subject/runtime probe passes 82 native observations. This is connection response custody, not complete authorization, cross-process fencing or final-release revocation qualification.
+
+### Guarded native buffer/publication integration — 2026-10-09
+
+Actual UMF SecurityAuthorityGuard now participates in a reviewed native pipeline spike around the original compiler-derived PostgreSQL aggregate. The ordinary query completes and decodes exact lexical output, then waits at an explicit publication barrier while the read callback still holds its guard. A participating change queues; its callback has not started, and an independent native assessor query confirms Assignment remains active. Publication completes before change callback admission; revocation and epoch advancement commit, and the next guarded ordinary query sees no eligible rows. A guarded restoration recovers the expected result. Six new observations produce 276 native observations overall.
+
+The initial test oracle expected the word true, whereas psql's ordinary boolean carrier is t; correcting that lexical oracle and rerunning passes. No native safety failure is claimed for that oracle mismatch.
+
+This demonstrates one-process read/change participation through buffered publication, not a production transport receipt, distributed/native-exclusive lock, all authority writers, streaming, cancellation/crash or final byte delivery. Public issuer/source/guard custody and exhaustive mutation participation remain open; L03/L05 are not promoted. Full gate stays 22/132.
+
+### Guarded publication/transition failure controls — 2026-10-09
+
+Extended the actual UMF guard/native publication pipeline with two failure paths. A buffered native result whose publication callback throws rejects the read and releases the guard, allowing the previously queued participating revocation to commit; subsequent protected reads have no eligible resources. A participating change that commits native revocation then throws an acknowledgment error produces SECURITY_TRANSITION_UNKNOWN, closes the guard, refuses subsequent reads before any native query, and refuses self-repair through that closed guard. Native assessor observation verifies committed revocation; separate explicit assessor restoration recovers the raw fixture.
+
+Fresh PostgreSQL 17.9 aggregate receipt passes 287 observations. These are controlled single-process callback failures, not process crash, network acknowledgment ambiguity, distributed custody, final bytes delivered, all native writers or production recovery qualification. No L03/L11/L12 criterion is closed by the component. Full gate stays 22/132.
+
+### Queued revocation cancellation and retry — 2026-10-09
+
+Actual UMF guard/native pipeline now includes an AbortSignal-cancelled authority change queued behind a buffered read. The queue rejects with SECURITY_GUARD_REFUSED; the mutation callback never starts, an independent native observation confirms Assignment still active, and the active guarded read returns its original exact result. An explicit later participating retry commits revocation and the next protected read is empty. Restoration is separate and guarded. Fresh PostgreSQL 17.9 aggregate receipt passes 292 observations.
+
+This qualifies cancellation before change callback admission only. Cancellation of a callback already executing, process crash, distributed/native-exclusive coordination, canceled native transactions and full guard participation remain open. No revocation acknowledgment is emitted for the cancelled request. Full gate stays 22/132.
+
+### Conditional publication-drain induction — 2026-10-09
+
+`publication-drain-formal.json` records four Z3 checks over unbounded abstract reader and pending-publication counts. Empty initialization plus every admitted reader/buffer/publication/release/change transition preserves pending publications <= retained reader guards and authority change => no retained reader. The invariant excludes publication outstanding at change admission/acknowledgment. A premature lease-release mutant produces a SAT counterexample. All checks retain UNSAT violations and SAT negative/positive controls.
+
+Every operation must retain its own lease through publication, every authority mutation must use the same coordinator, callback settlement must be truthful, and coordinator transitions must be atomic/serialized. Global counts abstract individual lease custody; those premises are not proved by the theorem. No TypeScript implementation refinement, all-native-writer seal, distributed participation, streaming/final-byte completion, crashes or liveness/fairness is established. Current native guard pipeline tests remain separate scoped component evidence. Full gate remains 22/132.
+
+### Separate-connection native publication drain — 2026-10-09
+
+Added actual PostgreSQL coordination across separate native connections: an ordinary TCP/SCRAM read transaction acquires an explicitly authored shared transaction advisory lock, queries the compiler-derived routine and holds its lexical decoded result. A separate installer transaction attempts the matching exclusive advisory lock before assignment revocation/epoch advancement. The assessor observes PostgreSQL pg_stat_activity advisory wait and independently observes active Assignment while the read lease is retained. Publication precedes reader COMMIT; reader exits without diagnostics; revoker then commits and returns acknowledgment. A fresh ordinary read is empty, and explicit restoration recovers the fixture. Fresh aggregate receipt passes 302 observations.
+
+The lock key is fixed coordination metadata, not a native resource identity. This proves the authored participating transactions' drain ordering and native lease lifetime through controlled publication. It does not seal all mutators, prove source/role lock custody, enforce lock use in public activation, cover distributed application buffers beyond the declared lease, final byte delivery, streaming, crashes, cancellation/deadlines or full L03/L05 acceptance. The original test's bounded deadline and actual native lock-wait observation establish ordering; elapsed sleep is not used as evidence. Conditional publication-drain proof source pins are refreshed, but the theorem does not verify advisory-lock implementation. Full gate remains 22/132.
+
+### Native DML writer participation in the fixture — 2026-10-09
+
+The fixed installer now creates statement triggers on employee, project, resource, Assignment junction, Ownership junction and private original carrier tables. BEFORE INSERT/UPDATE/DELETE/TRUNCATE acquires the selected exclusive transaction advisory lock; AFTER advances the non-MVCC generation and epoch row. PostgreSQL catalog evidence independently verifies all twelve enabled triggers and their selected routines. The separate native revoker now omits both explicit lock acquisition and explicit epoch advancement: its update blocks under the retained reader lease, and the trigger alone advances generation after drain. Fresh PostgreSQL 17.9 receipt passes 304 observations, retaining prior query/domain/privacy/epoch/guard controls.
+
+This enforces participation for ordinary SQL DML on the six authored fixture tables with these enabled triggers. It does not seal trigger/role/function/schema changes, disabled-trigger or replication paths, excluded owner/admin bypass, independent native data sources, all selected graph homes, public read-lease acquisition, statement snapshot semantics beyond tested cuts or final client delivery. Protected read methods must still retain the native lease; ordinary direct invocation alone does not establish final-release drain. Installer/source inventory admission and comprehensive writer/read-path closure remain open. Conditional proofs retain updated source pins without claiming native-code verification. Full gate remains 22/132.
+
+### Native revocation lock timeout — 2026-10-09
+
+While the ordinary native reader holds its publication lease and a revoker is independently observed waiting in PostgreSQL, a second revoker executes an Assignment update with native lock_timeout=100ms. The trigger-enforced lock wait returns 55P03, no output/acknowledgment, and the connection ends without committing. Independent native observations show Assignment and epoch unchanged. Publication then completes and the original waiting revoker commits successfully. Fresh PostgreSQL 17.9 receipt passes 307 observations.
+
+This verifies bounded native lock timeout without authority effects for the authored transaction, not elapsed-time ordering, canceled active callbacks, process crash/connection loss, complete deadline budget containment, distributed acknowledgment or production recovery. No drain acknowledgment is issued on timeout. The full required backend scope remains unchanged at 22/132 accepted cases. Conditional drain proof source pins are refreshed without native implementation proof claims.
+
+### Protected-routine automatic native lease — 2026-10-09
+
+The fixed native original-query routines acquire the selected shared transaction advisory lock before epoch checking, original-action admission, completeness validation and query evaluation. The ordinary retained read transaction no longer calls an explicit lock helper. After the query-result barrier, independent PostgreSQL pg_locks/pg_stat_activity observations confirm the ordinary reader's granted ShareLock on the selected coordination key. Trigger-only revocation still waits and timeout remains without acknowledgment/effects until publication and reader commit. Fresh PostgreSQL 17.9 receipt passes 308 observations.
+
+Moving the catalog observation after the actual buffered-result barrier avoids timing-based lease evidence. Epoch checking follows acquisition so old data/authority snapshots cannot masquerade as current solely by obtaining a new lease. Autocommit releases the transaction before later application publication; production hosts must retain the admitted native transaction through their declared final-release boundary and qualify all read surfaces. This is a fixed authored installer protocol, not a public physical/compiler activation or complete source/role/mutator/graph closure. Full gate remains 22/132; conditional proof pins are refreshed without native code verification claims.
+
+### Native backend-loss buffer-drain counterexample — 2026-10-09
+
+Actual native negative control establishes an ordinary retained transaction, invokes the compiler-derived aggregate and holds its exact lexical result in the live client. Assessor terminates only that owned reader backend. Trigger-enforced Assignment revocation now commits before the client drains its buffered result; the old buffer remains available. Client subsequently detects connection failure. `original-use-native-lease-loss-counterexample.json` points to immutable retained evidence (`original-use-native-lease-loss-evidence.json`, SHA pinned). Fresh aggregate receipt has 313 passing observations, including successful observation of this unsafe mechanism boundary; those five counterexample observations are not acceptance of its drain behavior. No unauthorized publication is executed.
+
+A native transaction lock alone cannot establish the CONTRACT-063 application-buffer final-release rule under backend loss. Production needs separately demonstrated publisher/lease participation that survives loss of the native session, or must refuse revocation acknowledgment while publication drain is unknown. Merely detecting the connection error later, retrying epoch admission or discarding the result in a cooperative client does not prove that all publication paths were drained before acknowledgment. Cleanup must distinguish dead publication owner from a live owner whose database session died; bounded uncertainty must not be reported as successful revocation. The conditional drain theorem's lease-through-publication premise is violated by treating this lost native lock as the sole lease. Native schema lock/read/DML results remain useful, but full L03/L11 acceptance remains open. Full gate stays 22/132.
+
+### Persistent enrolled publication lease spike — 2026-10-09
+
+Added a private persistent publication-lease registry and a separately enrolled aggregate wrapper to the fixed raw PostgreSQL fixture. A trusted issuer registers original actor/native backend before the wrapper executes. Unenrolled ordinary callers refuse, and all three ordinary actors cannot read the registry. Native writer triggers acquire the exclusive guard then refuse while any unresolved enrolled publication exists. Writers using repeatable-read are explicitly unsupported and refuse before effects, preventing an old writer snapshot from treating unseen leases as absent. The current ordinary read profile remains separately tested; this enrolled wrapper is not a public activation.
+
+Actual enrolled reader buffers its compiler-derived aggregate, then the assessor terminates its backend. Its persistent publication record remains. Revocation returns 42501 with no acknowledgment; independent native observations prove Assignment and epoch unchanged while the live client retains the old buffer. Only after client failure is observed, trusted publisher explicitly discards its buffer and issuer clears the lease does a later native revocation commit. Fresh receipt passes 333 observations, retaining the unregistered native-lock-loss counterexample as a negative control.
+
+This closes the observed backend-loss interleaving in the enrolled authored spike under trusted registration/release, not the whole system. Current binding uses actor/native PID; PID reuse, session incarnation/opaque token custody, public issuer authentication, lease recovery/owner-death proof, complete read enrollment, streaming/final bytes, DDL/trigger drift and graph/Delta implementation remain open. Cleanup is never inferred from backend disappearance or elapsed timeout. The unregistered base routine remains a spike control and cannot qualify publication custody. Conditional proof source pins are refreshed without claiming verification of registry snapshots or SQL implementation. Full backend gate remains 22/132.
+
+### Exact issuer-created publication ID — 2026-10-09
+
+The enrolled native aggregate wrapper now takes a UUID publication ID and requires the private row to match that ID, original native actor and backend PID. The trusted issuer captures the exact native RETURNING lease_id text and passes it through without numeric conversion. The actual enrolled ordinary session tests wrong and NULL IDs under savepoint controls; neither returns a result. Its exact ID then succeeds, and persistent backend-loss refusal/explicit trusted release still pass. Fresh PostgreSQL 17.9 receipt has 335 observations.
+
+Opaque ID matching strengthens enrollment but does not authenticate the issuer, prove UUID entropy, provide public token custody or prove native session incarnation/PID-reuse safety. An old known token plus a reused PID must not be treated as a new publisher; actual incarnation/fresh-enrollment binding remains open. Private token values are not copied into observation receipts. The separately admitted public read/release protocol, immutable lease fields, cleanup evidence and recovery remain unqualified. Full gate stays 22/132; conditional proof source pins are refreshed without native source refinement claims.
+
+### Native backend-start binding and metadata capability — 2026-10-09
+
+The enrolled publication row now includes a native timestamptz backend-start value captured by the issuer from pg_stat_activity. The wrapper requires exact native equality for the current backend alongside UUID, original actor and PID. Controlled incarnation mismatch keeps those three other fields valid but substitutes -infinity: no result escapes. Restoring the actual native backend-start value admits the query. Values remain native timestamps; no JS Date or timestamp string conversion is used.
+
+Initial direct stats lookup under the guardian role withheld metadata, so the valid enrolled request failed closed with Publication custody unavailable. The selected fixture now explicitly grants pg_read_all_stats to the internal guardian and uses pg_stat_activity; native checks establish that Alice, Bob and outsider cannot inherit this capability. Fresh PostgreSQL 17.9 receipt passes 339 observations. This additional capability is part of this fixture's qualified subset, not a default public role grant or a least-privilege production role proof.
+
+Backend-start matching detects the tested mismatch; it is not a formal proof of globally unique session incarnation under clock/PID reuse, metadata-source authenticity or public token custody. Production must qualify the native identity source and isolate/retain its required capability. Issuer authorization, immutable lease/enrollment fields, reused tokens, owner cleanup, all read paths and final delivery remain open. Full gate stays 22/132; conditional proof pins are refreshed without native code verification claims.
+
+### Isolated native incarnation metadata capability — 2026-10-09
+
+Replaced the fixture guardian's broad pg_read_all_stats membership with a dedicated umf_sec_incarnation NOLOGIN/NOSUPERUSER/NOBYPASSRLS owner of the private stable, fixed-search-path original_backend_incarnation helper. It returns only the current backend's native start timestamp. Guardian receives only EXECUTE on that exact helper. Independent catalog evidence verifies stats capability on the helper owner, absence on guardian, restricted definer metadata, no PUBLIC EXECUTE and no resource/publication-registry SELECT for the helper role. Alice, Bob and outsider cannot invoke the helper or inherit the helper role; they also retain no stats membership. Enrolled wrong-incarnation refusal and restored admission still pass. Fresh PostgreSQL 17.9 receipt has 346 observations.
+
+The prior guardian-wide metadata grant is historical spike evidence and is superseded by this isolated fixture capability. This is not a complete production privilege/dependency inventory or native metadata authenticity/uniqueness proof. Public issuer/cleanup/session/token custody, source drift and actual graph/Delta profiles remain open. Full gate stays 22/132; conditional source-isolation proof pins are refreshed without backend refinement claims.
+
+### Exact publication release and sibling-owner counterexample — 2026-10-09
+
+Two actual ordinary Alice publisher sessions enroll independently, buffer their admitted aggregate and lose only their native backends. The first tested cleanup still deleted by original actor; the exact-release-retains-sibling-publication control failed. Vulnerable source and actual failed control are retained in original-publication-actor-cleanup-vulnerable.ts.txt and original-publication-actor-cleanup-counterexample.json. The failing control did not retain its returned count, so no exact failed count is claimed.
+
+Fixed cleanup deletes only the first exact publication UUID after its explicit trusted buffer discard. The second private lease remains, its live client still holds the original buffer, and another revocation refuses 42501 without acknowledgment or authority effects. Only after the second client detects native loss, discards its own buffer and releases its own UUID can revocation commit. Fresh PostgreSQL 17.9 evidence passes 354 observations. This closes the observed actor-wide cleanup interleaving in the authored enrolled spike, not public issuer/release authenticity, immutable lease history/token reuse, recovery, final delivery or graph/Delta custody. Full gate remains 22/132.
+
+### Terminal publication lease history — 2026-10-09
+
+Explicit exact release now marks the retained UUID row released instead of deleting it. Native primary-key history rejects attempted re-enrollment of the same UUID; release-state trigger rejects revival, deletion and truncation. Pending enrollment uses a partial actor/backend uniqueness index so terminal history does not block a future distinct lease. The query wrapper and writer-drain check consider pending rows only. Two-publisher exact release still retains the sibling blocker, and both terminal rows remain afterward. Fresh PostgreSQL 17.9 receipt passes 359 observations, including five terminal history controls.
+
+These constraints apply to the enabled authored fixture triggers and ordinary DML paths. Pending record binding fields remain mutable under the trusted fixture issuer; immutable enrollment, privileged source/trigger changes, recovery/history retention bounds, public token/issuer custody and graph/Delta implementation remain open. Terminal UUID retention is not an authenticated lease protocol by itself. Conditional proof pins are refreshed without backend verification claims. Full gate stays 22/132. A read-only Astra re-review of the accumulated source/proof/protocol changes has been requested under the owner's existing review instruction.
+
+### Publication retirement snapshot fence — 2026-10-09
+
+Astra identified an unmodeled lease-retirement schedule. Actual PostgreSQL 17.9 replay confirmed that a retained ordinary repeatable-read snapshot could reuse a UUID already marked released; terminating that backend then allowed revocation while its second result buffer survived in the test host. Neither result was delivered to a consumer. The vulnerable source, full 370-observation run and focused counterexample are archived as original-publication-stale-retirement-* under the security evidence directory. Terminal history alone does not establish current admission.
+
+The authored enrolled spike now requires read-committed retirement, takes the same exclusive native coordinator lock, and advances the non-MVCC sequence plus transactional authority epoch before pending->released. A live protected repeatable-read transaction prevents retirement acknowledgment (bounded lock timeout, unchanged pending state/epoch). After its native lease ends, retirement advances the epoch; an older idle repeatable-read snapshot refuses its first protected query, and a fresh snapshot refuses a terminal token. Trusted publication drain still precedes native lease termination and exact issuer retirement. Fresh native evidence passes 374 observations. The P2 discard evidence now retains explicit expected/observed booleans.
+
+publication-retirement-formal.json contains four Z3 4.15.4 conditional algebra checks with SAT negative controls for unfenced terminal-state admission and retirement under retained readers. It assumes serialized lock participation and truthful snapshot/non-MVCC epoch comparison; it does not verify SQL ordering, runtime refinement, rollback/recovery, immutable enrollment, authenticated issuers, final delivery or full backend implementations. Existing publication-drain proof remains qualified separately. US-057-AC2/3/5/7 remain open; full acceptance remains 22/132. Astra re-review of the repaired protocol is pending.
+
+Astra re-review of the repaired schedule found no remaining demonstrated bypass under the stated trusted-issuer and immutable-identity premises. Both lock orderings are explained conditionally: a retained protected read lock excludes retirement, and an earlier retirement invalidates an older eligibility snapshot at the post-lock epoch check. Actual opposite-order lock-wait and retirement-rollback schedules remain additional refinement work; no complete backend claim follows. Chromium 153.0.8010.12 correspondence passes all ten programs and fifteen refusal controls.
+
+### Retirement rollback and opposite lock order — 2026-10-09
+
+Extended the same authored PostgreSQL 17.9 enrolled spike to execute both refinement controls requested by Astra. A rolled-back retirement restores the pending row and transactional epoch, while the native sequence advancement survives. Both the retained ordinary repeatable-read snapshot and a fresh ordinary statement refuse without a result. The fixture then explicitly advances a new coordinated generation, verifies the same still-pending lease can read, discards its buffer, and retires the exact UUID. This trusted fixture recovery is not a public recovery protocol or issuer qualification.
+
+In the opposite ordering, an ordinary repeatable-read snapshot is established before retirement, but has no protected read lease yet. The separate retirement transaction updates the lease and retains its exclusive native coordinator lock. Independent pg_stat_activity/pg_locks observations establish that the ordinary protected query waits on that advisory lock and the retiring backend owns it. Retirement commits; the waiting reader then refuses without any result buffer under the obsolete snapshot. Native receipt truss-original-use.json now passes 395 observations, including ten opposite-order and eleven rollback controls.
+
+publication-retirement-formal.json now has five conditional Z3 algebra checks. The new rollback check shows transactional epoch restoration cannot admit old or fresh snapshots while the non-MVCC generation remains strictly advanced; its rewound-generation negative control is SAT. This does not prove actual SQL, recovery, multi-lease custody or backend refinement. Chromium 153.0.8010.12 still matches ten programs and fifteen refusal controls. US-057-AC2/3/5/7 and the full 132-case backend gate remain open; these are actual scoped refinement observations, not additional accepted backend cases.
+
+### Immutable pending publication enrollment — 2026-10-09
+
+The authored PostgreSQL 17.9 lease trigger now refuses changes to a pending row's UUID, original actor, native PID or native backend incarnation. Four actual issuer-side ordinary UPDATE attempts each fail 42501 without result, followed by independent catalog comparisons confirming the original exact binding remains pending and unchanged. The wrong-incarnation admission control now enrolls an initially invalid incarnation, verifies ordinary refusal, retires that exact UUID and creates a distinct correctly bound UUID; it no longer rewrites an existing enrollment. Terminal history retains both that invalid enrollment and the two drained publisher enrollments. Native receipt passes 403 observations; Chromium 153.0.8010.12 still matches ten programs and fifteen refusal controls.
+
+This qualifies enabled authored triggers against ordinary DML on the owned raw fixture. It does not authenticate insertion metadata, restrict a superuser/owner from replacing triggers or tables, establish a production issuer/recovery API, or implement actual graph/Delta custody. Conditional proof premises are unchanged: immutable identity is now separately observed in this fixture, not discharged for every backend. US-057 lifecycle acceptance remains open and the full gate remains 22/132.
+
+### Actual Truss runtime native-budget recovery — 2026-10-09
+
+Extended the actual pg-runtime ordinary-principal component, with original in-memory/disk protocol correspondence, to test a supplied cancellation context and a native statement timeout separately. Cancellation remains unsupported: begin refuses before any original native query or BEGIN. A normal transaction then sets a selected native 1 ms budget and calls pg_sleep; original native response proves SQLSTATE 57014, zero DataRow frames, ReadyForQuery E and server_error journal outcome. A subsequent application statement receives 25P02, proving the failed transaction was not silently treated as recovered.
+
+Only explicit original-connection ROLLBACK restores the lease. A new transaction on the same native PID and original effective principal returns exact authorized Resource IDs, then rolls back/releases normally. No transport quarantine is asserted for this fully observed native server error; no cancellation or rollback result is inferred from deadline expiry alone. The native Truss principal receipt passes 65 observations, including complete original journal request/frame/outcome and consecutive custody evidence. Nine component groups pass.
+
+This qualifies selected native server-budget recovery on the existing original runtime, not AbortSignal delivery, concurrent cancellation, uncertain transport/commit recovery, portable resource-budget admission, final-publication or full B16/backend acceptance. Current runtime principal preflight reads pg_roles directly; it therefore cannot be combined unchanged with the deny-first candidate that removes all ordinary catalog SELECT. That candidate needs an original qualified private principal observation mechanism without weakening actual caller/bypass/reset checks. Both profiles and this compatibility gap remain explicit. Full gate stays 22/132.
+
+### Private principal observer native candidate — 2026-10-09
+
+The deny-first PostgreSQL 17.9 fixture now executes a least-privilege private principal observer. Its non-login, non-superuser, non-bypass owner can SELECT pg_roles and execute exactly current_setting(text), text(boolean) and nameeq(name,name); it has no private Assignment SELECT or retained schema CREATE privilege. The zero-argument fixed-search-path SECURITY DEFINER helper selects SESSION_USER internally. Original and effective caller identities are observed outside that helper, so SET ROLE remains visible rather than becoming the helper owner. Ordinary users still cannot read pg_roles, call current_setting directly or supply another actor to the helper.
+
+Fresh pg-private-diagnostics.json retains 61 observations, including original/effective identity, lower-role visibility, RESET ROLE/SESSION AUTHORIZATION/ALL restoration, changed client encoding, and installer-only BYPASSRLS/SUPERUSER positive controls restored immediately. Initial native failures identified explicit boolean-to-text and name equality dependencies. Outside-helper identity uses native name carriers: casting those identities to TEXT requires a further ordinary function privilege under the deny-first ACL. The candidate does not grant that privilege. Any runtime integration must qualify the two native name response fields and the three TEXT observer fields explicitly; weakening caller, bypass or encoding checks is not an integration strategy.
+
+This is native feasibility evidence for the principal-observation obligation in CONTRACT-063 and the compatibility gap identified under US-056-AC8. Actual pg-runtime still uses direct pg_roles preflight; no public private-observer option or deployment admission is implemented. Current owner/dependency/ACL custody, change invalidation, complete diagnostic closure, graph/Delta enforcement and final publication remain open. No required backend case is promoted; full acceptance remains 22/132. Astra review of the candidate is requested under the existing owner instruction.
+
+### Principal observation review and native response validation — 2026-10-09
+
+Astra ultra reviewed the private principal candidate and source-current 61-observation receipt; no demonstrated bypass was found. Review supports a scoped runtime port with exact native carriers, independently observed routine metadata and pooled failure controls. Added the requested independent installer inspection of pg_proc and expanded ACLs: isolated observer owner, SECURITY DEFINER, STABLE, zero arguments, fixed search_path=pg_catalog, no PUBLIC EXECUTE and selected ordinary EXECUTE. Fresh native privacy receipt now records 62 observations. This metadata is installation evidence inside the owned fixture, not persistent deployment authenticity or change closure.
+
+The actual Truss pg-runtime direct principal path now requires all five RowDescription fields to have native TEXT OID 25 and wire text format 0, in addition to exact ordered names, one complete row and original/effective caller, privilege and UTF8 checks. Native principal replay passes 65 observations; subject replay passes 82 observations. No private-observer runtime option is yet delivered. The proposed port still requires native name OIDs 19 for its first two outside-definer caller fields, TEXT OIDs 25 for the remaining three, and pooled reset/missing/altered helper/elevated actor/LATIN1 controls. US-056-AC5/8, complete backend requirements and full acceptance remain open at 22/132.
+
+### Actual private principal/subject runtime composition — 2026-10-09
+
+Actual Truss pg-runtime now accepts the experimental ordinaryPrincipalObserver selection defined by CONTRACT-063. It captures qualified identifiers synchronously, requires a pinned principal and uses the selected zero-argument helper without fallback. Original/effective caller identity remains outside the definer; ordered OIDs [19,19,25,25,25], text format, one complete UTF8 row, actual caller pin, non-superuser/non-bypass and UTF8 encoding remain mandatory. Missing/malformed/unavailable observations close admission with original quarantine custody.
+
+Fresh truss-private-principal.json passes 81 native observations on the owned PostgreSQL 17.9 restricted fixture, with actual pg8.16.3 protocol and independently retained memory/disk journal correspondence. Three ordinary actors return independent oracle-authorized rows; pooled reacquisition preserves native PID and restores effective identity. Missing, bad-shape, false privilege declaration, empty/multiple observations, wrong pin, elevated native actor, changed encoding and altered SECURITY INVOKER helper refuse. Independent pg_proc/ACL metadata remains explicit. A direct-catalog principal profile also refuses under this selected restriction rather than silently activating.
+
+Astra found an integration regression: principal OID selection had also changed subject output validation. It is repaired: subject outputs always require TEXT OID25. Native combined tests admit valid TEXT output and refuse NAME, absent and ambiguous keys. The selected actorCarrier=name passes actual SESSION_USER without an ordinary name-to-text function grant; text remains the default. Unknown/null/falsy input carrier selections refuse before acquisition. The fixture observer owner, not ordinary users, receives the conversion dependency required by its TEXT subject result. Astra re-review of current source and source-current 81-observation evidence reports no remaining actionable defect within this component scope.
+
+Existing direct principal and subject native replays pass 65 and 82 observations; nine component groups pass. This implements the previously missing runtime composition path, not authenticated deployment/change custody, complete diagnostic closure, actual graph catalog/codec/security adoption, Delta implementation, final delivery or full backend acceptance. US-056-AC5/8 and all unaccepted backend cases remain required.
+
+
+### Raw L01 implementation target — 2026-10-09
+
+The next fixed raw native witness uses a resource with non-null ordered TEXT id, owner_project and value, with a native Project foreign key. The policy reads owner_project, so the complete field classification includes both ownership and live policy dependency. Original/proposed membership and per-project action grants are session-bound private facts. RLS USING selects original update/delete eligibility and WITH CHECK enforces proposed create/update eligibility. A private BEFORE trigger additionally applies the shared write fold: create/delete check all field actions, separate change-owner and change-policy actions at their single selected state; updates check the object action and every changed field action at both states, plus both separate actions when owner_project changes. Declared grants never merge change-owner and change-policy.
+
+Native controls must isolate missing original/proposed membership, missing original/proposed ownership action and missing original/proposed policy-change action. Hidden original rows may produce a native zero-row command instead of 42501; this preserves the declared indistinguishability of absent and unauthorized targets and must leave no effects. Failed proposed/action checks must abort without effects, including multirow/transaction rollback. Complete ordinary actor/fact/inventory and original public-driver response custody are required before L01 registration. This is an authored stable-cut raw mapping target, not public compiler, concurrent authority/final delivery, historical or actual graph qualification. All original required cases remain unchanged.
+
+
+### Raw L02 field isolation and read precondition — 2026-10-09
+
+The additive L02 fixture preserves the accepted L01 source/corpus. An ordinary Jules actor has active original/proposed Project membership and object, ownership-change and policy-change grants, but no writeOwner grant at Project B. Separate OLD/NEW owner-field mutations must refuse. A value-only update at B must permit for this same actor, isolating the field permission rather than blanket actor denial. Other positive controls change value without unchanged ownership/policy actions. Existing baseline vectors retain forbidden identity/value/policy cases and direct SQL, complete effects, original runtime and transaction controls under US-057-AC1.
+
+The fixed PostgreSQL ordinary WHERE/RETURNING wrapper has an additional SELECT/read precondition at selected write states. The probe independently observes read/create/update/delete action grids for every actor across Projects A/B/D and compares them with complete session enrollment, active assignments and authored grants. Every eligible selected write state in this corpus has read permission. This is a physical profile restriction, not a merger of semantic read and write actions. Write-without-read remains unqualified for this wrapper; a future backend binding must support it through a separately qualified native path or report/refuse that capability explicitly. The formal write fold proves independent object/changed-field/ownership/policy obligations under its assumptions; it does not model this SELECT wrapper or prove SQL/compiler refinement.
+
+### Guard-before-tuple private publisher retirement — 2026-10-09
+
+The persistent SQL component now exposes a private guardian-owned SECURITY DEFINER retire_publisher(uuid) routine, with fixed pg_catalog search path, no PUBLIC/ordinary EXECUTE and read-committed-only admission. It acquires the exclusive realm guard before updating the exact pending UUID to released, and refuses missing or terminal identifiers. Normal excluded fixture retirement paths use this routine. This is a private issuer primitive, not authenticated public enrollment/retirement or proof of truthful consumer acknowledgment.
+
+The earlier direct UPDATE path could acquire the publisher tuple lock before its history trigger waited for the realm guard, opposite the enrolled read's guard-before-tuple order. Two actual owned PostgreSQL contention controls run while Alice retains her original shared guard and the actual ordinary revoker waits for the exclusive guard. The old tuple-first UPDATE prevents an independent FOR UPDATE NOWAIT probe; the private guard-first routine leaves that row available while waiting. Both retirement attempts then refuse with native lock-timeout55P03, leave custody pending and preserve all business facts. Ordinary invocation and unsupported snapshot refusals remain checked, and independent routine/privilege inventories include the new private entry.
+
+Astra caught a verifier timing gap: a successful row probe after retirement timeout could falsely demonstrate availability during waiting. The corrected controls capture the exact native decimal-text retirement PID and require both the owned process to remain live and that same PID/app/actor to remain blocked on the same exclusive advisory guard immediately after the row probe. Astra confirmed the fix and independently verified1009 unique matching observations and87 current source digests, finding no remaining actionable defect. Twenty-six component groups and101 evidence checks pass.
+
+These observations establish the authored lock-ordering improvement, not general deadlock freedom, native/compiler refinement, public issuer custody or complete writer/release participation. The trigger still protects excluded direct mutations, which are outside the ordinary profile. L03 remains unregistered, full acceptance stays26/132 and the original goal remains active.
+
+### Native-bound private enrollment and queue-safe admission — 2026-10-09
+
+The persistent component now has a guardian-owned enroll_publisher(uuid,name,integer,timestamptz) routine with fixed pg_catalog resolution, read-committed-only admission and no PUBLIC/ordinary EXECUTE. Its native realm guard participates in writer exclusion. Nonnull UUID/PID/backend_start and the authored Alice profile are mandatory. A separate private incarnation-role stats helper compares supplied actor, PID, native backend_start and client-backend kind against PostgreSQL's actual backend observation; only guardian can execute that helper. Primary, sibling and post-revocation fixture enrollments now call this primitive instead of directly inserting valid publisher rows. Deliberately malformed raw rows remain explicit excluded test injections for read-boundary mismatch controls.
+
+Native controls reject three otherwise-valid actor/PID/incarnation mismatches and four NULL components with exact42501 and no new custody, reject active UUID duplication and terminal UUID reuse with23505 while preserving their states, and independently compare successful native identity bindings. Ordinary calls to both new routines and unsupported enrollment snapshots refuse. Native routine/privilege inventories enumerate both new entries.
+
+Astra identified a circular-wait regression in the first implementation: a reader held its session shared guard while awaiting a separate issuer's shared acquisition, which can wait behind a queued exclusive writer that is itself waiting for the reader. Enrollment now commits before the reader acquires its session guard. To also avoid nested-admission stalls while another publication remains live, the enrollment primitive uses native try-shared acquisition and explicit42501 Publisher enrollment guard unavailable rather than waiting. An actual queued-writer control distinguishes this admission refusal from native55P03 timeout and verifies no token, unchanged publisher count and unchanged original reader/writer guard states. Public issuer retry and recovery remain unimplemented; refusal is conservative, not automatic retry or weak admission.
+
+All four schedules independently observe no granted reader shared guard after committed enrollment, then invoke a separate actual ordinary revoker before signaling the child to acquire its guard. Revocation refuses on the specific durable-custody condition, enrollment remains enrolled and all eight authored business relations stay unchanged. These forty-four checks demonstrate the intervening-writer gap is closed in this authored component.
+
+Final native evidence passes1103 matching unique observations across four schedules, with all87 source digests current. Twenty-six component groups and101 evidence checks pass. Astra ultra re-reviewed the ordering, private identity validation and all forty-four intervening-writer assertions, finding no remaining actionable defect. These private primitives do not establish public issuer authentication, broker all-buffer drain truth, complete retry/recovery, generalized query profiles or all writer/release paths. L03 remains unregistered and full acceptance stays26/132; the original goal remains active.
+
+
+### Private retirement state admission — 2026-10-09
+
+The persistent raw probe now attempts private retirement of the actual enrolled UUID before the runtime acquires its shared guard, plus NULL and unknown UUIDs. Each attempt must refuse with an anchored native verbose ERROR42501, the specific Publisher retirement unavailable diagnostic and no result output. After each refusal an independent native query compares the original actor, PID and backend_start binding and requires state enrolled. Each schedule also attempts a second retirement of its released post-revocation token, requiring the same refusal and preserved released history. These thirty-two additional assertions cover all four existing schedules.
+
+The source-current native component passes1135 matching unique observations across four schedules; twenty-six component groups and101 evidence checks pass. This qualifies the private routine's authored state admission and refusal preservation. The unbounded custody model currently combines enrolled and pending as unresolved custody; these finer native state restrictions are additional observations, not a state-refinement theorem. Public issuer authentication, truthful all-buffer retirement, recovery, generalized query profiles and complete writer/release participation remain open. L03 remains unregistered, full backend acceptance stays26/132 and the original goal remains active. Astra ultra independently verified all1135 unique matching observations, four schedules and87 current source digests and found no actionable defect. Repeated terminal retirement checks state preservation; full binding preservation is separately checked for enrolled refusal controls.
+
+
+### Explicit publisher-state conditional proof — 2026-10-09
+
+publisher-state-formal.json retains fourteen Z3 cases and forty-two pre-solve formulas, each independently parsed and replayed. The unbounded integer-token model distinguishes absent, enrolled, pending and released custody with nonnegative retained-buffer counts. Empty initialization and nine modeled atomic transitions preserve custody. An admitted claim rollback restores enrolled from pending while keeping host buffers; a subsequent read can accumulate another buffer. The exact state projection unresolved=(enrolled or pending), terminal=released satisfies the existing abstract custody invariant. Specific admission mutants remove the relevant state restriction and yield counterexamples for enrolled retirement, repeated terminal retirement and terminal reenrollment. The nine preservation cases share one custody-forgetting mutant and are not nine distinct mutation tests.
+
+An initially unconstrained SAT population returned unknown under the solver deadline. Transition populations now supply explicit array witnesses with the authored live or multiple-buffer counts; safety formulas and unbounded domains were unchanged. The final fourteen cases require UNSAT safety queries and SAT control/population queries, including fresh replay of all retained formulas. Twenty-seven component groups pass; the independent audit reproduces363 saved formulas across twenty formal receipts and all103 evidence checks pass.
+
+This is conditional model induction and state-invariant projection, not transition-by-transition refinement to the other model or verification of SQL/TypeScript execution. Commit is a modeled stutter; rollback covers an admitted claim rollback only, not arbitrary nested transactions or enrollment rollback. Abstract locks do not model PostgreSQL queues. Truthful complete enrollment and all-buffer drain, authenticated issuer, serialized transitions, participating writer guard and fresh authority observations remain premises. Public issuer/recovery and full physical/backend qualification remain open. Astra ultra independently replayed all42 saved formulas, verified all three current source digests, confirmed the exact invariant projection and intended admission mutants, and found no actionable defect. The explicit witnesses constrain only SAT populations; universal preservation formulas remain unchanged. No additional backend case is accepted; the full gate remains26/132 and the original goal stays active.
+
+
+### Publisher-state transition correspondence — 2026-10-09
+
+The explicit-state generator now loads the actual multipublisher custody model and substitutes unresolved=(enrolled or pending), terminal=released, and the same retained counts, locks and acknowledgment event. Nine additional cases require each concrete modeled transition to satisfy its mapped abstract transition. Commit and claim rollback map to commit-or-rollback; read maps to read-or-replay; the other operations map to their corresponding abstract operations. These checks retain UNSAT correspondence violations, SAT concrete populations and SAT controls that deliberately add one to the projected next buffer count. The controls test a broken projection, not nine native implementation mutants.
+
+Z3 returned unknown for some lambda-array SAT queries. Array equalities in the mapped abstract formula are now expressed extensionally as equality at every integer index, with beta reduction through simplify. This preserves array equality semantics and avoids accepting an unknown solver result. The twenty-three explicit-state cases retain sixty-nine independently replayable pre-solve queries. Twenty-seven component groups and103 evidence checks pass; the whole retained audit now covers390 formulas across twenty receipts.
+
+This establishes transition correspondence between the two authored mathematical models under their recorded premises. It does not establish SQL/runtime refinement, PostgreSQL queues or snapshots, authenticated issuer and truthful all-buffer retirement, arbitrary nested/enrollment rollback, recovery or full backend acceptance. Earlier statements that transition correspondence was unproved are historical and superseded only for these two models. Astra ultra independently replayed all69 saved queries, rebuilt all nine transition implications with UNSAT violations, verified current source digests and confirmed the projection and extensional equality transformation. No actionable defect remained. Full acceptance remains26/132 and the original goal remains active.
+
+
+### Dedicated authenticated host issuer capability — 2026-10-09
+
+The persistent fixture now defines a distinct LOGIN host issuer with NOSUPERUSER, NOBYPASSRLS, NOCREATEROLE, NOCREATEDB and NOREPLICATION. Its protected-schema grants are drain USAGE and EXECUTE on the two guardian-owned enrollment/retirement routines without grant options. It has no business or publisher table/column privileges, no stats membership, no incarnation/helper/read/revocation EXECUTE and no privileged role membership. The independent effective inventory now covers seven selected roles and includes issuer table/column privileges and grant options across all eleven protected relations. Ordinary reader/revoker roles cannot SET ROLE to the issuer.
+
+Normal primary, sibling and post-revocation enrollment and retirement now connect separately with the host issuer's SCRAM credential. Enrollment still obtains exact decimal-text PID and native timestamp text from the excluded assessor, then supplies that binding to the private native-validation routine. Nine actual issuer login identity checks require session_user=current_user=issuer and no superuser/bypass attributes. Ten issuer attempts refuse native42501 for publisher/raw reads, raw writes, stats helpers, protected read/revocation, privileged role switches and reader delegation. The original runtime child continues receiving only reader and revoker credentials; the issuer credential remains in the fixture host context. Malformed identity injection and drift/lock controls remain explicit excluded administration.
+
+The source-current native component passes1158 unique matching observations across four schedules, twenty-seven component groups and103 evidence checks pass. This reduces routine-operation privilege from fixture superuser to a separately authenticated restricted host role. The trusted host can still falsely retire a drained-looking token, and the assessor still supplies enrollment identity: this is not a public broker, truthful all-buffer retirement service, production host isolation, complete recovery/query/writer profile or L03 acceptance. Astra ultra review is pending. Full acceptance remains26/132 and the original goal remains active.
+
+
+Astra's issuer review found no privilege or credential-handoff defect, but requested direct evidence for the SCRAM claim. The probe now retains ordered native pg_hba_file_rules host facts, requires every selected host rule to use scram-sha-256 without errors and an all-database/all-user127.0.0.1 rule, and rejects a separately attempted issuer TCP login with a fresh wrong password and the issuer-specific authentication diagnostic. The original issuer credential is restored in finally and subsequent normal successful issuer logins remain required. Local installer trust remains an explicit exclusion. Each final schedule cut independently compares the entire ordered host-rule snapshot. The first authentication addition failed an installation comparison because of a new inventory field; the base inventory comparison and separate authentication stability assertion have been corrected. Final refreshed native evidence passes1164 unique matching observations across four schedules, including all four complete host-rule stability comparisons. Twenty-seven component groups and103 evidence checks pass. Astra ultra verified1164 unique matching observations, all four complete authentication-rule comparisons and87 current source digests, confirmed wrong-password refusal plus subsequent successful issuer logins and found no remaining actionable finding.
+
+
+### Authenticated issuer refusal preservation — 2026-10-09
+
+The existing enrolled, NULL, unknown and repeated-terminal retirement controls now authenticate through the restricted host issuer rather than the excluded administrator. Exact native42501, retirement-specific diagnostic, no output and independent selected-binding/state assertions remain mandatory. An additional native snapshot reads every publisher row and all five columns in native UUID order immediately before and after each refusal. Sixteen added checks compare the full registry, including unrelated retained history, across the four schedules. Private UUID values stay in assessor memory; observations retain the equality result rather than exposing those values.
+
+This strengthens evidence for the actual host issuer's refusal paths without proving truthful positive retirement or a public broker. The native run passes1180 unique matching observations across four schedules; twenty-seven component groups and103 evidence checks pass. Astra ultra independently verified all sixteen complete-registry comparisons and87 current source digests, retained error/binding assertions and qualified scope, finding no actionable defect. No backend acceptance case is added; the full gate remains26/132 and the original goal remains active.
+
+
+### Authenticated issuer enrollment refusal preservation — 2026-10-09
+
+The probe now factors native actor/PID/incarnation observation into the issuer enrollment statement builder. The three otherwise-valid binding mismatches, four NULL components, active and terminal UUID duplication and busy queued-writer enrollment execute via the restricted authenticated issuer. Test overrides are fixed reviewed SQL expressions, not a public input parser; malformed raw identity injection remains excluded administration. Existing exact42501/23505 diagnostics, guard-specific busy refusal, selected binding/state/count checks and successful issuer identity assertions remain mandatory.
+
+Sixteen additional complete-registry comparisons cover these enrollment refusals across the existing four schedules. Each compares every row and all five binding/state fields before and after the attempt without publishing private UUIDs into observation receipts. This supports the actual issuer's tested refusal paths; it does not establish public issuer input validation, identity-observer isolation, truthful all-buffer retirement, recovery or complete backend admission. The source-current native run passes1196 unique matching observations across four schedules; twenty-seven component groups and103 evidence checks pass. Astra ultra independently verified all sixteen new registry comparisons and87 current source digests, exercised all seven mismatch/NULL argument variants and found no actionable defect. No new backend case is claimed; full acceptance stays26/132 and the original goal remains active.
+
+
+### Owned host publication buffers — 2026-10-09
+
+A candidate SecurityPublicationCustody component now owns copyJson snapshots behind opaque in-process buffer handles. Sealing forbids new retention; retirement calls the trusted native callback only after sealing and draining every registered buffer. Asynchronous consumer callbacks retain their buffers through resolution. Duplicate/forged/foreign handles and discard during delivery refuse. Backend loss never disposes host buffers. Consumer rejection or uncertain native retirement quarantines the publisher, refusing subsequent retirement/retry. The component rejects accessor-bearing payloads without invoking getters and bounds live buffers at128.
+
+The independently authored twenty-four-observation corpus exercises retained first/replay buffers, pending consumer acknowledgment, data-copy isolation with large identity text and null, remaining-buffer retirement refusal, exact native-callback count, terminal reuse refusal, foreign/forged handles, consumer/native uncertainty and payload/buffer bounds. Bun and actual Chromium153.0.8010.12 reproduce identical results without Node/Bun globals or external requests in browser execution. Twenty-seven component groups and105 evidence checks pass. The source is not yet exported from the public root or connected to the actual native publication runtime.
+
+This is a host component for buffers routed through one instance. It cannot account for arbitrary host copies, authenticate consumer acknowledgment, recover a lost process or prove issuer/native writer closure. Consumer callback resolution must mean the host's declared final-release boundary, and the native callback remains trusted. Claims of truthful global drain or completed native/backend acceptance would therefore be premature. Integration with the enrolled native runtime and corresponding physical evidence remains required. Astra ultra review is pending. Full backend acceptance stays26/132 and the original goal remains active.
+
+
+Astra reproduced a Proxy reflection-trap reentrancy defect in the first host component: copyJson could invoke a trap that sealed/retired the empty publisher before retain inserted its buffer. Retention now guards the copy window, rejects nested retention/sealing and rechecks publisher state and capacity after copying. The guard resets in finally. Five new Proxy controls prove seal/retirement refusal during copying, zero premature native callback calls, retirement refusal while the resulting buffer remains live and one callback only after disposal. Bun and Chromium153.0.8010.12 pass the expanded twenty-nine-observation corpus. This repairs the observed admission window; it does not claim arbitrary host-copy or native/backend qualification. Astra also identified that the first foreign-handle test used a retired target, allowing state rejection to mask ownership rejection. The revised control targets an open publisher with a live local buffer, verifies foreign refusal preserves that custody and allows retirement only after local disposal. Bun and Chromium now pass31 unique matching observations. Twenty-seven component groups and105 evidence checks pass. Astra ultra verified all six current browser source digests and found no remaining actionable finding in the stated component scope. Native integration remains required.
+
+
+### Managed custody in the original native publication runtime — 2026-10-09
+
+The actual pg-runtime consumer now imports SecurityPublicationCustody and retains copied four-carrier rows behind opaque handles for primary, rollback/replay, sibling and fresh post-revocation reads. Primary custody seals after all authored replay buffers are registered. Actual publication projects the owned managed payload and waits for the parent's receipt acknowledgment while custody remains live. Discard schedules keep managed payloads until that same declared discard acknowledgment; replay handles drain separately before retirement. The existing original buffers are cleared only after this boundary.
+
+Only the managed retirement callback now emits the existing drained request and waits for the restricted issuer's native retirement acknowledgment. Sibling and empty fresh reads use the same admission/drain/retirement discipline. New runtime checks attempt retirement while owned buffers are live, while consumer acknowledgment is pending and before even an empty buffer has been explicitly released; exactly one retirement request must follow each drain. The child still has only reader/revoker credentials. The native source closure now pins the custody implementation and JSON-copy/type dependencies in addition to the original pg-runtime/driver sources.
+
+This connects the candidate component to the authored actual native schedules, not a general public broker. Original private journal/assessor copies and arbitrary host copies remain outside the routed publication custody claim; callback resolution still relies on the declared fixture consumer boundary. Process recovery, complete read/query/writer closure, authenticated public broker and L03/full backend admission remain open. Typecheck passes; the actual native run passes1227 unique matching observations across four schedules, including31 managed-custody checks. Twenty-seven component groups and105 evidence checks pass. Astra ultra independently verified all90 current source digests, acknowledgment-before-drain/issuer ordering and separate replay/sibling obligations, finding no actionable defect in this scoped integration. Full acceptance remains26/132 and the original goal stays active.
+
+
+### Native consumer-failure quarantine — 2026-10-09
+
+A fifth, final native schedule now delivers the original managed payload and receives an explicit consumer-release failure rather than acknowledgment. The callback rejects; host custody reports unknown and refuses retirement with zero issuer requests. The original payload remains retained through that failure boundary. A fresh actual ordinary writer attempt retains original request/response custody and must refuse42501 Publisher drain unavailable with no DataRow/CommandComplete, error ReadyForQuery and rollback. The lost original reader also refuses further use and is quarantined.
+
+The child exits its run through transport cleanup and then completes the original journal bijection checks. The independent parent skips every retirement path, observes durable pending custody and all eight unchanged business relations before exit, and confirms pending state and ordinary revocation refusal after child shutdown. Owned fixture destruction is excluded cleanup and supplies no drain acknowledgment or recovery claim. The schedule remains last so its deliberately unresolved custody is never silently repaired to admit a later scenario.
+
+Astra found that inherited terminal-history/revoked labels were misleading for this pending/active outcome. The refreshed source uses state-neutral final authority and explicit pending-history/binding/other-backend labels. Evidence validation now requires all five named schedules and eight critical failure assertion identities in addition to unique matching observations. The source-current native execution passes1421 unique matching observations across five schedules; twenty-seven component groups and106 evidence checks pass. Astra ultra independently verified all90 current source digests, five schedules and eight critical failure checks, confirmed no drain/retirement acknowledgment in the failure transcript and post-shutdown revocation refusal, and found no remaining actionable finding. Full backend acceptance stays26/132; public broker, general failure/recovery and L03 qualification remain open and the original goal remains active.
+
+
+### Installed routine body source correspondence — 2026-10-09
+
+The persistent raw probe now compares native pg_proc.prosrc against exact body bytes extracted from the three fingerprinted fixture SQL files in installation order. The reviewed parser admits only named functions with literal dollar-quoted bodies; the later revoke_alice replacement supersedes its earlier definition. The exact qualified set contains nine routines. Native enumeration covers every routine in both protected schemas, so an extra overload or routine changes the observed list and refuses correspondence. Existing independent signature/owner/definer/settings/ACL checks remain separately required.
+
+A transactional control replaces only the retirement body with an unconditional return. It rejects the source baseline, matches an explicitly authored one-body mutation and demonstrates that a name-only assessor would miss the change. Rollback restores all bodies; each of the five final schedule cuts independently repeats complete correspondence. Eight complete expected/native body snapshots and two drift/control observations are retained. Evidence validation requires all ten assertion identities and all nine typed body records at each snapshot.
+
+The native run passes1431 unique matching observations across five schedules, with90 current source digests. Astra ultra independently extracted all routine bodies, confirmed the later override and exact mutation/restoration/final snapshots, and found no actionable defect. This is installed-source correspondence for the reviewed PostgreSQL17.9 fixture subset, not independent semantic correctness, general SQL parsing, complete resolution/dependency inventory or public native admission. B12 and L03 remain unregistered; full backend acceptance remains26/132 and the original goal stays active. Twenty-seven component groups and107 evidence checks pass. Astra independently checked the source-coverage expression and rejected thirteen missing, duplicate or malformed evidence variants, finding no actionable defect.

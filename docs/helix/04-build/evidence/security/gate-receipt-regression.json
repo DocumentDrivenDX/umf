@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/gate-receipt-regression.py": "7feceb22adaf16e136d509fe7c9ceb224a970ab3d1a2f997e1016190e0fc7c5a",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/acceptance.ts": "f66321aeecfb94390049ed40fc04dd7dc9f440840eb6dc8388f32ab40b5aa70f",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+  },
+  "observations": [
+    {
+      "id": "valid",
+      "runnerExitCode": 0,
+      "accepted": true,
+      "expectedAccepted": true,
+      "gateStatus": "failed"
+    },
+    {
+      "id": "malformed",
+      "runnerExitCode": 0,
+      "accepted": false,
+      "expectedAccepted": false,
+      "gateStatus": "failed"
+    },
+    {
+      "id": "missing-assertion",
+      "runnerExitCode": 0,
+      "accepted": false,
+      "expectedAccepted": false,
+      "gateStatus": "failed"
+    },
+    {
+      "id": "stale-source",
+      "runnerExitCode": 0,
+      "accepted": false,
+      "expectedAccepted": false,
+      "gateStatus": "failed"
+    }
+  ],
+  "scope": "Actual current gate executed from original source with isolated one-case plans and reviewed zero-exit runners. Valid receipt is accepted; malformed, omitted assertion and changed source are rejected. All fixture full gates intentionally remain failed because remaining criteria are unallocated. No native backend admission or runner authenticity claim."
+}

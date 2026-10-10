@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "c39bdcd1175cba07b000a370e395c0bb295ceb9effcd308ff5ab8dae4caed051",
+    "tools/security/truss-policy-lowering-probe.py": "4de1db4d4f5566e4a2b4955c7c3c170821047e05f75b78d9fce63d379cf50d2c"
+  },
+  "cause": "The backend expected a raw core kind member; actual normalized Rust domains contain scalarType/nullability/cardinality/facets/allowedValues. It refused before generated predicate installation. Owned-container finally cleanup completed."
+}

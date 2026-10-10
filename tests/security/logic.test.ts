@@ -1,0 +1,66 @@
+import {expect,test} from 'bun:test';
+import {composeSecurityRules,securityAnd,securityOr,securityNot,type SecurityTruth,type EvaluatedSecurityRule,type SecurityDisposition} from '../../src/extensions/security/logic';
+
+test('strong Kleene tables agree with an independently enumerated oracle', () => {
+  // @covers US-079-AC4
+  const states:SecurityTruth[] = ['T','F','U'];
+  const and = [['T','F','U'],['F','F','F'],['U','F','U']];
+  const or = [['T','T','T'],['T','F','U'],['T','U','U']];
+  for (const [i,a] of states.entries()) for (const [j,b] of states.entries()) {
+    expect(securityAnd([a,b])).toBe(and[i]![j]! as SecurityTruth);
+    expect(securityOr([a,b])).toBe(or[i]![j]! as SecurityTruth);
+  }
+  expect(states.map(securityNot)).toEqual(['F','T','U']);
+});
+
+test('all 27 grant/require/forbid combinations agree with composition oracle', () => {
+  // @covers US-079-AC4
+  for (const grant of ['T','F','U'] as const) for (const require of ['T','F','U'] as const) for (const forbid of ['T','F','U'] as const) {
+    const expected = [grant,require,forbid].includes('U') ? 'indeterminate' :
+      grant === 'T' && require === 'T' && forbid === 'F' ? 'permit' : 'deny';
+    const rules:EvaluatedSecurityRule[] = [{effect:'permit',truth:grant},{effect:'require',truth:require},{effect:'forbid',truth:forbid}];
+    expect(composeSecurityRules(rules).decision).toBe(expected);
+    expect(composeSecurityRules([...rules].reverse()).decision).toBe(expected);
+  }
+  expect(composeSecurityRules([]).decision).toBe('deny');
+});
+
+test('all disposition triples and permutations preserve dominance and conflicts', () => {
+  // @covers US-079-AC7
+  const ds:SecurityDisposition[] = [{kind:'original'},{kind:'withheld'},
+    {kind:'transformed',type:'string',value:'x'},{kind:'transformed',type:'string',value:'y'}];
+  for (const a of ds) for (const b of ds) for (const c of ds) {
+    const values = [a,b,c];
+    const expected:SecurityDisposition|null = values.some(d => d.kind === 'withheld') ? {kind:'withheld'} :
+      values.some(d => d.kind === 'transformed' && d.value === 'x') && values.some(d => d.kind === 'transformed' && d.value === 'y') ? null :
+      values.find(d => d.kind === 'transformed') ?? {kind:'original'};
+    for (const order of [[a,b,c],[a,c,b],[b,a,c],[b,c,a],[c,a,b],[c,b,a]]) {
+      const result = composeSecurityRules(order.map(d => ({effect:'permit',truth:'T',disclosure:{salary:d}})),['salary']);
+      expect(result.decision).toBe(expected === null ? 'conflict' : 'permit');
+      expect(result.disclosure).toEqual(expected === null ? {} : {salary:expected});
+    }
+  }
+});
+
+test('false permits never contribute obligations and protected omission refuses', () => {
+  // @covers US-079-AC7
+  expect(composeSecurityRules([{effect:'permit',truth:'T'},{effect:'permit',truth:'F',disclosure:{salary:{kind:'original'}}}],['salary']).decision).toBe('indeterminate');
+  expect(composeSecurityRules([{effect:'permit',truth:'T',disclosure:{salary:{kind:'withheld'}}},
+    {effect:'permit',truth:'F',disclosure:{salary:{kind:'original'}}}],['salary']).disclosure).toEqual({salary:{kind:'withheld'}});
+});
+
+test('runtime boundary rejects malformed/unknown meaning without invoking accessors', () => {
+  // @covers US-079-AC10
+  let called = false;
+  const accessor = {effect:'permit',get truth() {called=true;return 'T';}};
+  expect(() => composeSecurityRules([accessor] as any)).toThrow();
+  expect(called).toBe(false);
+  for (const input of [[{effect:'permit',truth:'T',future:true}], [{effect:'permit',truth:true}],
+    [{effect:'require',truth:'T',disclosure:{x:{kind:'original'}}}],
+    [{effect:'permit',truth:'T',disclosure:{x:{kind:'transformed',type:'boolean',value:'false'}}}]]) {
+    expect(() => composeSecurityRules(input as any)).toThrow();
+  }
+  expect(() => securityAnd([])).toThrow();
+  expect(() => securityOr(Array(65).fill('T'))).toThrow();
+  expect(() => composeSecurityRules(Array(257).fill({effect:'permit',truth:'T'}))).toThrow();
+});

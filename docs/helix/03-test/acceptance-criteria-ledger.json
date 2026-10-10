@@ -5,10 +5,10 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 631,
+  "total": 659,
   "counts": {
     "SATISFIED": 117,
-    "UNTESTED": 288,
+    "UNTESTED": 316,
     "UNCITED_COVERAGE": 221,
     "ASSERTED_UNBACKED": 0,
     "REVIEWED_EXCEPTION": 5
@@ -3070,7 +3070,7 @@
       "evidence": [
         "tests/core-ideals/relationship-conformance.test.ts:5",
         "tests/core/relationship-ideal.test.ts:7",
-        "tests/core/relationship-operations.test.ts:7",
+        "tests/core/relationship-operations.test.ts:19",
         "tests/core/relationship-public.test.ts:11",
         "tests/core/relationship-public.test.ts:25",
         "tests/core/relationship-public.test.ts:5",
@@ -3087,7 +3087,7 @@
       "evidence": [
         "tests/core-ideals/relationship-conformance.test.ts:5",
         "tests/core/relationship-ideal.test.ts:7",
-        "tests/core/relationship-operations.test.ts:25",
+        "tests/core/relationship-operations.test.ts:37",
         "tests/core/relationship-public.test.ts:11",
         "tests/core/relationship-public.test.ts:5",
         "tests/relationship/authored-corpus.test.ts:5",
@@ -3112,7 +3112,7 @@
         "tests/core-ideals/relationship-tablespec-discovery.test.ts:8",
         "tests/core-ideals/relationship-tablespec.test.ts:13",
         "tests/core/relationship-ideal.test.ts:17",
-        "tests/core/relationship-operations.test.ts:32"
+        "tests/core/relationship-operations.test.ts:44"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -4151,194 +4151,172 @@
     },
     {
       "id": "US-056-AC1",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/composite-key.test.ts:81",
-        "tests/actions-reference/preview.test.ts:10",
-        "tests/actions-reference/receipts.test.ts:13"
+        "tests/security/formal-acceptance.py:6",
+        "tests/security/native/pg-raw-membership.py:2"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC2",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/actions-reference/composite-key.test.ts:21",
-        "tests/actions-reference/composite-key.test.ts:81",
-        "tests/actions-reference/executor.test.ts:11",
-        "tests/actions-reference/fresh-admission.test.ts:8",
-        "tests/actions-reference/native-refinement.test.ts:44"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC3",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/actions-reference/composite-key.test.ts:21",
-        "tests/actions-reference/executor.test.ts:33",
-        "tests/actions-reference/lookup-horizon.test.ts:11"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC4",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/actions-reference/attempts.test.ts:91",
-        "tests/actions-reference/composite-key.test.ts:21",
-        "tests/actions-reference/executor.test.ts:11",
-        "tests/actions-reference/executor.test.ts:33",
-        "tests/actions-reference/executor.test.ts:47",
-        "tests/actions-reference/lookup-horizon.test.ts:11",
-        "tests/actions-reference/lookup-horizon.test.ts:13",
-        "tests/actions-reference/native-refinement.test.ts:44",
-        "tests/actions-reference/outcomes.test.ts:9"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC5",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/native-refinement.test.ts:44",
-        "tests/actions-reference/reader-revocation.test.ts:12",
-        "tests/actions-reference/recovery.test.ts:46"
+        "tests/security/native/pg-raw-membership.py:3",
+        "tests/security/native/pg-raw-pool.ts:1"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC6",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/evolution.test.ts:34",
-        "tests/actions-reference/handler-executor.test.ts:85",
-        "tests/actions-reference/handler-executor.test.ts:97",
-        "tests/actions-reference/native-refinement.test.ts:44"
+        "tests/security/native/pg-raw-membership.py:4"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC7",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/handler-executor.test.ts:85",
-        "tests/actions-reference/handler-executor.test.ts:97",
-        "tests/actions-reference/launch-owner.test.ts:23",
-        "tests/actions-reference/launch-owner.test.ts:30",
-        "tests/actions-reference/launch-owner.test.ts:34",
-        "tests/actions-reference/launch-owner.test.ts:9"
+        "tests/security/native/pg-raw-membership.py:6"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC8",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/actions-reference/composite-key.test.ts:21",
-        "tests/actions-reference/composite-key.test.ts:81",
-        "tests/actions-reference/executor.test.ts:47",
-        "tests/actions-reference/invariant-mutants.test.ts:114",
-        "tests/actions-reference/restore.test.ts:54",
-        "tests/actions-reference/state.test.ts:10"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC9",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/attempts.test.ts:28",
-        "tests/actions-reference/attempts.test.ts:42",
-        "tests/actions-reference/attempts.test.ts:63",
-        "tests/actions-reference/launch-owner.test.ts:23",
-        "tests/actions-reference/launch-owner.test.ts:9",
-        "tests/actions-reference/process-recovery.test.ts:10",
-        "tests/actions-reference/receipts.test.ts:24",
-        "tests/actions-reference/recovery.test.ts:18",
-        "tests/actions-reference/recovery.test.ts:46"
+        "tests/security/native/pg-raw-membership.py:5"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-056-AC10",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "story": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/attempts.test.ts:36",
-        "tests/actions-reference/composite-key.test.ts:21",
-        "tests/actions-reference/lookup-horizon.test.ts:13",
-        "tests/actions-reference/process-recovery.test.ts:10",
-        "tests/actions-reference/recovery.test.ts:29",
-        "tests/actions-reference/recovery.test.ts:38",
-        "tests/actions-reference/recovery.test.ts:55",
-        "tests/actions-reference/restore.test.ts:16"
+        "tests/security/formal-acceptance.py:5",
+        "tests/security/native/pg-raw-scale.py:2",
+        "tests/security/native/reviewed-python.test.py:2"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
-      "id": "US-056-AC11",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "id": "US-057-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/attempts.test.ts:107",
-        "tests/actions-reference/attempts.test.ts:114",
-        "tests/actions-reference/attempts.test.ts:121",
-        "tests/actions-reference/attempts.test.ts:17",
-        "tests/actions-reference/attempts.test.ts:28",
-        "tests/actions-reference/attempts.test.ts:36",
-        "tests/actions-reference/attempts.test.ts:42",
-        "tests/actions-reference/attempts.test.ts:48",
-        "tests/actions-reference/attempts.test.ts:57",
-        "tests/actions-reference/attempts.test.ts:63",
-        "tests/actions-reference/attempts.test.ts:69",
-        "tests/actions-reference/attempts.test.ts:76",
-        "tests/actions-reference/attempts.test.ts:85",
-        "tests/actions-reference/attempts.test.ts:91",
-        "tests/actions-reference/attempts.test.ts:97",
-        "tests/actions-reference/audit.test.ts:10",
-        "tests/actions-reference/audit.test.ts:22",
-        "tests/actions-reference/audit.test.ts:44",
-        "tests/actions-reference/executor.test.ts:11",
-        "tests/actions-reference/native-refinement.test.ts:44",
-        "tests/actions-reference/process-recovery.test.ts:10",
-        "tests/actions-reference/reader-revocation.test.ts:12",
-        "tests/actions-reference/restore.test.ts:47"
+        "tests/security/dependencies.test.ts:14",
+        "tests/security/dependencies.test.ts:7",
+        "tests/security/write.test.ts:13",
+        "tests/security/write.test.ts:20",
+        "tests/security/write.test.ts:32",
+        "tests/security/write.test.ts:40",
+        "tests/security/write.test.ts:5"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
-      "id": "US-056-AC12",
-      "story": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
-      "status": "SATISFIED",
+      "id": "US-057-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/actions-reference/evolution.test.ts:13",
-        "tests/actions-reference/evolution.test.ts:34",
-        "tests/actions-reference/invariant-mutants.test.ts:114",
-        "tests/actions-reference/projection.test.ts:17",
-        "tests/actions-reference/projection.test.ts:36",
-        "tests/actions-reference/projection.test.ts:48",
-        "tests/actions-reference/reader-revocation.test.ts:12",
-        "tests/actions-reference/receipts.test.ts:13",
-        "tests/actions-reference/receipts.test.ts:20",
-        "tests/actions-reference/receipts.test.ts:24",
-        "tests/actions-reference/receipts.test.ts:28",
-        "tests/actions-reference/restore.test.ts:16",
-        "tests/actions-reference/restore.test.ts:31",
-        "tests/actions-reference/restore.test.ts:39",
-        "tests/actions-reference/restore.test.ts:47",
-        "tests/actions-reference/restore.test.ts:54"
+        "tests/security/authority-guard.test.ts:21",
+        "tests/security/authority-guard.test.ts:5",
+        "tests/security/publication-custody-corpus.ts:2",
+        "tests/security/publication-custody.test.ts:3"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:50",
+        "tests/security/authority-guard.test.ts:6"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:22",
+        "tests/security/authority-guard.test.ts:31",
+        "tests/security/authority-guard.test.ts:40",
+        "tests/security/authority-guard.test.ts:58",
+        "tests/security/authority-guard.test.ts:65",
+        "tests/security/publication-custody-corpus.ts:3",
+        "tests/security/publication-custody.test.ts:4",
+        "tests/security/write.test.ts:21"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-057-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/authority-guard.test.ts:41"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
     },
     {
       "id": "US-060-AC1",
@@ -5557,6 +5535,131 @@
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
     {
+      "id": "US-079-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:1",
+        "tests/security/evaluate.test.ts:10",
+        "tests/security/policy.test.ts:10"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:9",
+        "tests/security/evaluate.test.ts:121",
+        "tests/security/formal-acceptance.py:3",
+        "tests/security/policy.test.ts:19"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:4",
+        "tests/security/dependencies.test.ts:22",
+        "tests/security/dependencies.test.ts:6",
+        "tests/security/evaluate.test.ts:80",
+        "tests/security/policy.test.ts:102",
+        "tests/security/policy.test.ts:48",
+        "tests/security/policy.test.ts:69",
+        "tests/security/policy.test.ts:91",
+        "tests/security/registration.test.ts:6"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:2",
+        "tests/security/evaluate.test.ts:11",
+        "tests/security/evaluate.test.ts:44",
+        "tests/security/formal-acceptance.py:2",
+        "tests/security/logic.test.ts:17",
+        "tests/security/logic.test.ts:5"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:8",
+        "tests/security/evaluate.test.ts:106",
+        "tests/security/evaluate.test.ts:12"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:3",
+        "tests/security/evaluate.test.ts:134",
+        "tests/security/evaluate.test.ts:26",
+        "tests/security/evaluate.test.ts:87",
+        "tests/security/registration.test.ts:7"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:6",
+        "tests/security/evaluate.test.ts:45",
+        "tests/security/evaluate.test.ts:69",
+        "tests/security/evaluate.test.ts:95",
+        "tests/security/logic.test.ts:29",
+        "tests/security/logic.test.ts:46"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:7",
+        "tests/security/evaluate.test.ts:135",
+        "tests/security/evaluate.test.ts:53",
+        "tests/security/formal-acceptance.py:4"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/acceptance-case.ts:5",
+        "tests/security/policy.test.ts:32",
+        "tests/security/policy.test.ts:82"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
+      "id": "US-079-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "status": "UNTESTED",
+      "evidence": [
+        "tests/security/logic.test.ts:53",
+        "tests/security/policy.test.ts:97"
+      ],
+      "rationale": "Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted."
+    },
+    {
       "id": "US-900-AC1",
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
@@ -5650,6 +5753,197 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/actions/corpus.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/composite-key.test.ts:81",
+        "tests/actions-reference/preview.test.ts:10",
+        "tests/actions-reference/receipts.test.ts:13"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/composite-key.test.ts:21",
+        "tests/actions-reference/composite-key.test.ts:81",
+        "tests/actions-reference/executor.test.ts:11",
+        "tests/actions-reference/fresh-admission.test.ts:8",
+        "tests/actions-reference/native-refinement.test.ts:44"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/composite-key.test.ts:21",
+        "tests/actions-reference/executor.test.ts:33",
+        "tests/actions-reference/lookup-horizon.test.ts:11"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/attempts.test.ts:91",
+        "tests/actions-reference/composite-key.test.ts:21",
+        "tests/actions-reference/executor.test.ts:11",
+        "tests/actions-reference/executor.test.ts:33",
+        "tests/actions-reference/executor.test.ts:47",
+        "tests/actions-reference/lookup-horizon.test.ts:11",
+        "tests/actions-reference/lookup-horizon.test.ts:13",
+        "tests/actions-reference/native-refinement.test.ts:44",
+        "tests/actions-reference/outcomes.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/native-refinement.test.ts:44",
+        "tests/actions-reference/reader-revocation.test.ts:12",
+        "tests/actions-reference/recovery.test.ts:46"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/evolution.test.ts:34",
+        "tests/actions-reference/handler-executor.test.ts:85",
+        "tests/actions-reference/handler-executor.test.ts:97",
+        "tests/actions-reference/native-refinement.test.ts:44"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/handler-executor.test.ts:85",
+        "tests/actions-reference/handler-executor.test.ts:97",
+        "tests/actions-reference/launch-owner.test.ts:23",
+        "tests/actions-reference/launch-owner.test.ts:30",
+        "tests/actions-reference/launch-owner.test.ts:34",
+        "tests/actions-reference/launch-owner.test.ts:9"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/composite-key.test.ts:21",
+        "tests/actions-reference/composite-key.test.ts:81",
+        "tests/actions-reference/executor.test.ts:47",
+        "tests/actions-reference/invariant-mutants.test.ts:114",
+        "tests/actions-reference/restore.test.ts:54",
+        "tests/actions-reference/state.test.ts:10"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/attempts.test.ts:28",
+        "tests/actions-reference/attempts.test.ts:42",
+        "tests/actions-reference/attempts.test.ts:63",
+        "tests/actions-reference/launch-owner.test.ts:23",
+        "tests/actions-reference/launch-owner.test.ts:9",
+        "tests/actions-reference/process-recovery.test.ts:10",
+        "tests/actions-reference/receipts.test.ts:24",
+        "tests/actions-reference/recovery.test.ts:18",
+        "tests/actions-reference/recovery.test.ts:46"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/attempts.test.ts:36",
+        "tests/actions-reference/composite-key.test.ts:21",
+        "tests/actions-reference/lookup-horizon.test.ts:13",
+        "tests/actions-reference/process-recovery.test.ts:10",
+        "tests/actions-reference/recovery.test.ts:29",
+        "tests/actions-reference/recovery.test.ts:38",
+        "tests/actions-reference/recovery.test.ts:55",
+        "tests/actions-reference/restore.test.ts:16"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/attempts.test.ts:107",
+        "tests/actions-reference/attempts.test.ts:114",
+        "tests/actions-reference/attempts.test.ts:121",
+        "tests/actions-reference/attempts.test.ts:17",
+        "tests/actions-reference/attempts.test.ts:28",
+        "tests/actions-reference/attempts.test.ts:36",
+        "tests/actions-reference/attempts.test.ts:42",
+        "tests/actions-reference/attempts.test.ts:48",
+        "tests/actions-reference/attempts.test.ts:57",
+        "tests/actions-reference/attempts.test.ts:63",
+        "tests/actions-reference/attempts.test.ts:69",
+        "tests/actions-reference/attempts.test.ts:76",
+        "tests/actions-reference/attempts.test.ts:85",
+        "tests/actions-reference/attempts.test.ts:91",
+        "tests/actions-reference/attempts.test.ts:97",
+        "tests/actions-reference/audit.test.ts:10",
+        "tests/actions-reference/audit.test.ts:22",
+        "tests/actions-reference/audit.test.ts:44",
+        "tests/actions-reference/executor.test.ts:11",
+        "tests/actions-reference/native-refinement.test.ts:44",
+        "tests/actions-reference/process-recovery.test.ts:10",
+        "tests/actions-reference/reader-revocation.test.ts:12",
+        "tests/actions-reference/restore.test.ts:47"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-901-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-reference/evolution.test.ts:13",
+        "tests/actions-reference/evolution.test.ts:34",
+        "tests/actions-reference/invariant-mutants.test.ts:114",
+        "tests/actions-reference/projection.test.ts:17",
+        "tests/actions-reference/projection.test.ts:36",
+        "tests/actions-reference/projection.test.ts:48",
+        "tests/actions-reference/reader-revocation.test.ts:12",
+        "tests/actions-reference/receipts.test.ts:13",
+        "tests/actions-reference/receipts.test.ts:20",
+        "tests/actions-reference/receipts.test.ts:24",
+        "tests/actions-reference/receipts.test.ts:28",
+        "tests/actions-reference/restore.test.ts:16",
+        "tests/actions-reference/restore.test.ts:31",
+        "tests/actions-reference/restore.test.ts:39",
+        "tests/actions-reference/restore.test.ts:47",
+        "tests/actions-reference/restore.test.ts:54"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     }

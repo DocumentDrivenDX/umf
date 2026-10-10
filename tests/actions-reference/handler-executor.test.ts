@@ -82,7 +82,7 @@ test('retirement during an admitted native handler pins its accepted build and f
  });
 },60000);
 
-/** @covers US-056-AC6 @covers US-056-AC7 */
+/** @covers US-901-AC6 @covers US-901-AC7 */
 test('durable operator catalog survives new consumers, scopes stores and permanently retains retirement',async()=>{
  await withReferenceStore(async store=>{
   const issuer=new ReferenceActionIssuer(),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'}),{document}=source(),body=write+outputs,program={id:'approve-handler',version:'1',source:body,build:referenceHandlerBuild(body)},catalog=new ReferenceHandlerCatalog(store),target={module:'sales',action:'approve',revision:'durable'},request={protocol:'umf.actions.tx/1',target,key:'first',inputs:{order:input}};
@@ -94,7 +94,7 @@ test('durable operator catalog survives new consumers, scopes stores and permane
   }finally{await restarted.close();}
  });
 },60000);
-/** @covers US-056-AC6 @covers US-056-AC7 */
+/** @covers US-901-AC6 @covers US-901-AC7 */
 test('native catalog retirement waits for admitted handler commit then refuses fresh work',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),catalog=new ReferenceHandlerCatalog(store),executor=new ReferenceActionExecutor(policy,catalog),{document}=source(),body=`await gateway.read('order-read',{module:'sales',element:'status'});await new Promise(resolve=>setTimeout(resolve,1200));${write}${outputs}`,deployment=await catalog.publish('s',{id:'approve-handler',version:'1',build:referenceHandlerBuild(body),source:body}),target={module:'sales',action:'approve',revision:'catalog-race'},request={protocol:'umf.actions.tx/1',target,key:'admitted',inputs:{order:input}},credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'});

@@ -1,0 +1,808 @@
+{
+  "status": "component-passed",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-raw-scale.py": "b2ce1c08a6e1ebbd25b1c79f62b0124d86ae19e3b78666addaec47be8edca179",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tools/security/pg-raw-scale-runtime.ts": "536553bf6dc7fa85536b4c09368cb202e4617bd0be03e4c69a8a246b8fa46bdf",
+    "tools/security/truss-principal-typecheck.json": "9be1b3f8fcd2609e0d25754f872d0e505f6bf4ef4afed5b0b76183d04913d8be",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts": "3f9090957a5b94b677022f0682a919b94591fff8e3ba87fe7e5ae35c6e3f6d7d",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts": "a404706f40228a3c43514da2447db19c2b0dd5a37f491f7cfa63bcf15cac4b76",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts": "1a9cf79f5d1b700d7813ee24dabd6bcf3abc2f9a4eee134c7c223cd4dc5e0cd0",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts": "83acc32f461371df5108df7a1dd5177d7edea5a749ea4a1f07b71ed4073d3be3",
+    "/Users/erik/Projects/truss/packages/pg-runtime/package.json": "958e5c9e451ec2d9c523c5c3dcafad3b259d8a2b4204c9397d4fb8ea1ef7a562",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json": "f7b678a8055c234669e8dd272dd624771e29d9f0e3a3353f15c3005ab1a5fd29"
+  },
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "runId": "e5f81b53-fad3-45af-9dca-eafb83c0d56c",
+  "observations": [
+    {
+      "stage": "native-scale",
+      "additionalResources": 1000,
+      "actualResources": 1005,
+      "actorCounts": [
+        {
+          "actor": "umf_sec_alice",
+          "expectedAuthorizedCount": 502,
+          "observedAuthorizedCount": 502,
+          "expectedSamples": [
+            [
+              "perf-1000",
+              "1000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-1000",
+              "1000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_bob",
+          "expectedAuthorizedCount": 502,
+          "observedAuthorizedCount": 502,
+          "expectedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-999",
+              "999"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-999",
+              "999"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_outsider",
+          "expectedAuthorizedCount": 0,
+          "observedAuthorizedCount": 0,
+          "expectedSamples": [],
+          "observedSamples": []
+        }
+      ],
+      "protectedPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 268.14,
+            "Total Cost": 268.15,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "resource",
+                "Alias": "resource",
+                "Startup Cost": 0.0,
+                "Total Cost": 267.3,
+                "Plan Rows": 335,
+                "Plan Width": 0,
+                "Actual Rows": 502,
+                "Actual Loops": 1,
+                "Filter": "security_raw.allowed(id)",
+                "Rows Removed by Filter": 503
+              }
+            ]
+          },
+          "Planning Time": 0.081,
+          "Triggers": [],
+          "Execution Time": 5.677
+        }
+      ],
+      "excludedAssessorPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 18.56,
+            "Total Cost": 18.57,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "resource",
+                "Alias": "resource",
+                "Startup Cost": 0.0,
+                "Total Cost": 16.05,
+                "Plan Rows": 1005,
+                "Plan Width": 0,
+                "Actual Rows": 1005,
+                "Actual Loops": 1
+              }
+            ]
+          },
+          "Planning Time": 0.079,
+          "Triggers": [],
+          "Execution Time": 0.052
+        }
+      ]
+    },
+    {
+      "stage": "native-scale",
+      "additionalResources": 100000,
+      "actualResources": 100005,
+      "actorCounts": [
+        {
+          "actor": "umf_sec_alice",
+          "expectedAuthorizedCount": 50002,
+          "observedAuthorizedCount": 50002,
+          "expectedSamples": [
+            [
+              "perf-100000",
+              "100000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-100000",
+              "100000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_bob",
+          "expectedAuthorizedCount": 50002,
+          "observedAuthorizedCount": 50002,
+          "expectedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-99999",
+              "99999"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-99999",
+              "99999"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_outsider",
+          "expectedAuthorizedCount": 0,
+          "observedAuthorizedCount": 0,
+          "expectedSamples": [],
+          "observedSamples": []
+        }
+      ],
+      "protectedPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 26712.64,
+            "Total Cost": 26712.65,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "resource",
+                "Alias": "resource",
+                "Startup Cost": 0.0,
+                "Total Cost": 26629.3,
+                "Plan Rows": 33335,
+                "Plan Width": 0,
+                "Actual Rows": 50002,
+                "Actual Loops": 1,
+                "Filter": "security_raw.allowed(id)",
+                "Rows Removed by Filter": 50003
+              }
+            ]
+          },
+          "Planning Time": 0.105,
+          "Triggers": [],
+          "Execution Time": 591.532
+        }
+      ],
+      "excludedAssessorPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 1878.06,
+            "Total Cost": 1878.07,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "resource",
+                "Alias": "resource",
+                "Startup Cost": 0.0,
+                "Total Cost": 1628.05,
+                "Plan Rows": 100005,
+                "Plan Width": 0,
+                "Actual Rows": 100005,
+                "Actual Loops": 1
+              }
+            ]
+          },
+          "Planning Time": 0.089,
+          "Triggers": [],
+          "Execution Time": 2.367
+        }
+      ]
+    },
+    {
+      "stage": "native-scale",
+      "additionalResources": 1000000,
+      "actualResources": 1000005,
+      "actorCounts": [
+        {
+          "actor": "umf_sec_alice",
+          "expectedAuthorizedCount": 500002,
+          "observedAuthorizedCount": 500002,
+          "expectedSamples": [
+            [
+              "perf-1000000",
+              "1000000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-1000000",
+              "1000000"
+            ],
+            [
+              "perf-2",
+              "2"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_bob",
+          "expectedAuthorizedCount": 500002,
+          "observedAuthorizedCount": 500002,
+          "expectedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-999999",
+              "999999"
+            ]
+          ],
+          "observedSamples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-999999",
+              "999999"
+            ]
+          ]
+        },
+        {
+          "actor": "umf_sec_outsider",
+          "expectedAuthorizedCount": 0,
+          "observedAuthorizedCount": 0,
+          "expectedSamples": [],
+          "observedSamples": []
+        }
+      ],
+      "protectedPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 267194.64,
+            "Total Cost": 267194.65,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "resource",
+                "Alias": "resource",
+                "Startup Cost": 0.0,
+                "Total Cost": 266361.3,
+                "Plan Rows": 333335,
+                "Plan Width": 0,
+                "Actual Rows": 500002,
+                "Actual Loops": 1,
+                "Filter": "security_raw.allowed(id)",
+                "Rows Removed by Filter": 500003
+              }
+            ]
+          },
+          "Planning Time": 0.089,
+          "Triggers": [],
+          "JIT": {
+            "Functions": 4,
+            "Options": {
+              "Inlining": false,
+              "Optimization": false,
+              "Expressions": true,
+              "Deforming": true
+            }
+          },
+          "Execution Time": 6242.145
+        }
+      ],
+      "excludedAssessorPlan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Finalize",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 12568.58,
+            "Total Cost": 12568.59,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Actual Rows": 1,
+            "Actual Loops": 1,
+            "Plans": [
+              {
+                "Node Type": "Gather",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 12568.36,
+                "Total Cost": 12568.57,
+                "Plan Rows": 2,
+                "Plan Width": 8,
+                "Actual Rows": 3,
+                "Actual Loops": 1,
+                "Workers Planned": 2,
+                "Workers Launched": 2,
+                "Single Copy": false,
+                "Plans": [
+                  {
+                    "Node Type": "Aggregate",
+                    "Strategy": "Plain",
+                    "Partial Mode": "Partial",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 11568.36,
+                    "Total Cost": 11568.37,
+                    "Plan Rows": 1,
+                    "Plan Width": 8,
+                    "Actual Rows": 1,
+                    "Actual Loops": 3,
+                    "Workers": [],
+                    "Plans": [
+                      {
+                        "Node Type": "Seq Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": true,
+                        "Async Capable": false,
+                        "Relation Name": "resource",
+                        "Alias": "resource",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 10526.69,
+                        "Plan Rows": 416669,
+                        "Plan Width": 0,
+                        "Actual Rows": 333335,
+                        "Actual Loops": 3,
+                        "Workers": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning Time": 0.145,
+          "Triggers": [],
+          "Execution Time": 10.021
+        }
+      ]
+    },
+    {
+      "stage": "native-timeout",
+      "statementBudgetMs": 1,
+      "refusedWithoutOutput": true,
+      "sqlState": "57014"
+    },
+    {
+      "stage": "actual-scale-runtime",
+      "observations": [
+        {
+          "id": "invalid-original-deadline:0",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:-1",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:60001",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:1.5",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:NaN",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:Infinity",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:30000",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "invalid-original-deadline:null",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "umf_sec_alice:unsupported-cancellation",
+          "expected": "Unsupported transaction options",
+          "observed": "Unsupported transaction options"
+        },
+        {
+          "id": "umf_sec_alice:unsupported-no-native-query",
+          "expected": 8,
+          "observed": 8
+        },
+        {
+          "id": "umf_sec_alice:exact-million-count",
+          "expected": [
+            [
+              {
+                "state": "text",
+                "text": "500002"
+              }
+            ]
+          ],
+          "observed": [
+            [
+              {
+                "state": "text",
+                "text": "500002"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "umf_sec_alice:healthy",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "id": "umf_sec_bob:unsupported-cancellation",
+          "expected": "Unsupported transaction options",
+          "observed": "Unsupported transaction options"
+        },
+        {
+          "id": "umf_sec_bob:unsupported-no-native-query",
+          "expected": 26,
+          "observed": 26
+        },
+        {
+          "id": "umf_sec_bob:exact-million-count",
+          "expected": [
+            [
+              {
+                "state": "text",
+                "text": "500002"
+              }
+            ]
+          ],
+          "observed": [
+            [
+              {
+                "state": "text",
+                "text": "500002"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "umf_sec_bob:healthy",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "id": "umf_sec_outsider:unsupported-cancellation",
+          "expected": "Unsupported transaction options",
+          "observed": "Unsupported transaction options"
+        },
+        {
+          "id": "umf_sec_outsider:unsupported-no-native-query",
+          "expected": 44,
+          "observed": 44
+        },
+        {
+          "id": "umf_sec_outsider:exact-million-count",
+          "expected": [
+            [
+              {
+                "state": "text",
+                "text": "0"
+              }
+            ]
+          ],
+          "observed": [
+            [
+              {
+                "state": "text",
+                "text": "0"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "umf_sec_outsider:healthy",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "id": "million-native-timeout",
+          "expected": "57014",
+          "observed": "57014"
+        },
+        {
+          "id": "timeout-zero-original-data-rows",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "id": "timeout-original-failed-ready",
+          "expected": [
+            "E"
+          ],
+          "observed": [
+            "E"
+          ]
+        },
+        {
+          "id": "timeout-transaction-remains-failed",
+          "expected": "25P02",
+          "observed": "25P02"
+        },
+        {
+          "id": "timeout-no-transport-ambiguity",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "id": "timeout-explicit-rollback",
+          "expected": "rolled_back",
+          "observed": "rolled_back"
+        },
+        {
+          "id": "timeout-same-original-session",
+          "expected": [
+            [
+              {
+                "state": "text",
+                "text": "345"
+              }
+            ]
+          ],
+          "observed": [
+            [
+              {
+                "state": "text",
+                "text": "345"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "timeout-recovery-authorized-boundaries",
+          "expected": [
+            [
+              {
+                "state": "text",
+                "text": "RA"
+              }
+            ],
+            [
+              {
+                "state": "text",
+                "text": "RAB"
+              }
+            ]
+          ],
+          "observed": [
+            [
+              {
+                "state": "text",
+                "text": "RA"
+              }
+            ],
+            [
+              {
+                "state": "text",
+                "text": "RAB"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "disk-journal-query-count",
+          "expected": 76,
+          "observed": 76
+        },
+        {
+          "id": "disk-original-request-frame-outcome-correspondence",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "disk-custody-consecutive",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "disk-context-reports-present",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "disk-missing-outcome",
+          "expected": "incomplete",
+          "observed": "incomplete"
+        },
+        {
+          "id": "disk-missing-outcome-raw-retained",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "disk-malformed-status",
+          "expected": "invalid",
+          "observed": "invalid"
+        },
+        {
+          "id": "disk-malformed-status-raw-retained",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "id": "disk-status-does-not-replace-command",
+          "expected": "invalid",
+          "observed": "invalid"
+        },
+        {
+          "id": "disk-omission-structural-only",
+          "expected": "complete",
+          "observed": "complete"
+        },
+        {
+          "id": "disk-omission-content-correspondence",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "journalEvidence": {
+        "originalQueries": 76,
+        "leases": 4,
+        "privateDirectory": "/private/tmp/umf-pgraw-scale-journal-p6otb35l",
+        "structuralValidationNotAuthenticity": true
+      },
+      "nativeParameterStatuses": [
+        {
+          "name": "application_name",
+          "value": "changed-for-component"
+        },
+        {
+          "name": "application_name",
+          "value": "truss-ordinary-component"
+        },
+        {
+          "name": "application_name",
+          "value": "changed-for-component"
+        },
+        {
+          "name": "application_name",
+          "value": "truss-ordinary-component"
+        },
+        {
+          "name": "application_name",
+          "value": "changed-for-component"
+        },
+        {
+          "name": "application_name",
+          "value": "truss-ordinary-component"
+        }
+      ],
+      "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
+    }
+  ],
+  "scope": "Actual PostgreSQL17.9 raw forced-RLS fixture at 1k/100k/1M additional resources with complete authored A/B ownership, exact ordinary counts, retained native protected versus excluded-assessor plans and selected native 1ms statement timeout refusal without output. Performance metadata is coordination data, not stored-value transport. Actual selected million-row aggregate runs through pg8.16.3 and Truss original protocol runtime; native timeout has zero original DataRows, failed transaction refuses further use, and explicit rollback restores the same session. Cancellation context refuses before native BEGIN. No streaming/final-publication custody, full diagnostic closure, arbitrary workload, actual graph/Delta profile or complete B16 acceptance."
+}

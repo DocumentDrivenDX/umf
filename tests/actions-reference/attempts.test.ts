@@ -14,7 +14,7 @@ import {withReferenceStore} from './native-harness';
 async function setup(store:Parameters<Parameters<typeof withReferenceStore>[0]>[0]){
  await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document;(source.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile={id:'umf.actions.roles',version:'1'};const target={module:'sales',action:'approve',revision:'attempts'},request={protocol:'umf.actions.tx/1',target,key:'private-token-not-for-logs',correlation:'correlation',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'private-o1-not-for-logs'}]}}},credential=issuer.issue({tenant:'tenant',principal:'human',service:'service'});await executor.admission.revisions.retain('s',target,source);await policy.membership('s','human','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,source,{module:'sales',element:'order'},{'["sales","id"]':{string:'private-o1-not-for-logs'},'["sales","status"]':{string:'pending'}},'v0'));return {issuer,policy,executor,request,credential};
 }
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('native early-denial journal requires no business SELECT and never records untrusted actor or secrets',async()=>{
  await withReferenceStore(async store=>{
   const {policy,request,credential}=await setup(store);await store.sql.unsafe("create role journal_boundary login password 'qualification-only'; grant insert on action_attempt to journal_boundary; grant select on action_attempt_retention to journal_boundary; grant usage on sequence action_attempt_id_seq to journal_boundary").simple();const url=new URL(store.url);url.username='journal_boundary';const limited=new SQL(url.href);try{await expect((async()=>{await limited`select * from action_store`;})()).rejects.toThrow('permission denied');}finally{await limited.close();}
@@ -25,7 +25,7 @@ test('native early-denial journal requires no business SELECT and never records 
   const text=JSON.stringify(rows);for(const secret of ['invalid-credential',credential,request.key,'private-o1-not-for-logs','spoof'])expect(text).not.toContain(secret);expect(await store.sql`select * from action_audit`).toHaveLength(0);
  });
 },30000);
-/** @covers US-056-AC9 @covers US-056-AC11 */
+/** @covers US-901-AC9 @covers US-901-AC11 */
 test('native abort observations survive rollback with distinct retry IDs and one terminal atomic ID',async()=>{
  await withReferenceStore(async store=>{
   const {executor,request,credential}=await setup(store),transaction=store.transaction.bind(store);let attempts=0;store.transaction=((name,operation)=>transaction(name,async(tx,control)=>{attempts++;const result=await operation(tx,control);expect(await tx`select * from action_outbox`).toHaveLength(1);if(attempts<3)await tx.unsafe("DO $$ BEGIN RAISE EXCEPTION 'abort' USING ERRCODE='40001'; END $$");return result;})) as typeof transaction;
@@ -33,19 +33,19 @@ test('native abort observations survive rollback with distinct retry IDs and one
   const {correlation,...lookup}=request;expect(await executor.invoke('s',credential,request)).toEqual(await executor.outcomes.lookup('s',credential,lookup));expect(await store.sql`select * from action_attempt`).toHaveLength(8);expect(await store.sql`select * from action_audit`).toHaveLength(1);const replay=decodeReferenceJson((await store.sql`select details from action_attempt where phase='observed' order by id desc limit 1`)[0]!.details) as any;expect(replay.route).toBe('retained-lookup');expect(replay.revision).toEqual(request.target);
  });
 },30000);
-/** @covers US-056-AC10 @covers US-056-AC11 */
+/** @covers US-901-AC10 @covers US-901-AC11 */
 test('uncertain acknowledgement shares the terminal ID without inventing rollback or retry',async()=>{
  await withReferenceStore(async store=>{
   const {executor,request,credential}=await setup(store),transaction=store.transaction.bind(store);let runs=0;store.transaction=(async(name,operation)=>{runs++;await transaction(name,operation);throw new ReferenceCommitUncertain();}) as typeof transaction;expect(await executor.invoke('s',credential,request)).toEqual({status:'indeterminate'});expect(runs).toBe(1);store.transaction=transaction;const rows=await store.sql`select * from action_attempt order by id`;expect(rows).toHaveLength(2);expect((decodeReferenceJson(rows[1]!.header) as any).decision).toBe('indeterminate');expect(decodeReferenceJson((await store.sql`select identity from action_audit`)[0]!.identity)).toBe(rows[1]!.attempt);expect(await store.sql`select * from action_outcome`).toHaveLength(1);
  });
 },30000);
-/** @covers US-056-AC9 @covers US-056-AC11 */
+/** @covers US-901-AC9 @covers US-901-AC11 */
 test('actual journal SQL failures and throwing diagnostics cannot replace commit or trigger business retry',async()=>{
  await withReferenceStore(async store=>{
   const {policy,request,credential}=await setup(store);await store.sql.unsafe("create function refuse_observation() returns trigger language plpgsql as $$ begin raise exception 'journal abort' using errcode='40001'; end $$; create trigger refuse_observation before insert on action_attempt for each row execute function refuse_observation()").simple();let diagnostics=0;const journal=new ReferenceAttemptJournal(store.url,()=>{diagnostics++;throw Error('diagnostics failure');}),executor=new ReferenceActionExecutor(policy,undefined,journal),transaction=store.transaction.bind(store);let runs=0;store.transaction=(async(...args:any[])=>{runs++;return (transaction as any)(...args);}) as typeof transaction;expect((await executor.invoke('s',credential,request)).status).toBe('committed');expect(runs).toBe(1);expect(diagnostics).toBe(2);expect(journal.unacknowledgedAppends).toBe(2);store.transaction=transaction;expect(await store.sql`select * from action_attempt`).toHaveLength(0);expect(await store.sql`select * from action_audit`).toHaveLength(1);expect((await store.sql`select business_sequence::text from action_store`)[0]!.business_sequence).toBe('1');
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('operational journal reader has independent header/detail grants and irreversible visibility retention',async()=>{
  await withReferenceStore(async store=>{
   const {issuer,policy,executor,request,credential}=await setup(store);await store.create('admin','operations','ops-epoch');const reader=new ReferenceAttemptReader(policy,'admin'),operator=issuer.issue({tenant:'operations',principal:'operator',service:'audit-service'});await reader.retention(1);expect((await executor.invoke('s',credential,request)).status).toBe('committed');const [row]=await store.sql`select *,expires_at::text as deadline from action_attempt where phase='observed'`,query={attemptId:row!.attempt,phase:'observed'};expect(await reader.read(credential,query)).toEqual({status:'denied',code:'AUTHORIZATION'});expect(await reader.read(operator,query)).toEqual({status:'denied',code:'AUTHORIZATION'});await reader.configure(['operational-audit'],['failure-detail']);await policy.membership('admin','operator','operational-audit',true);const header=await reader.read(operator,query);expect(header.status).toBe('observation');expect(header).not.toHaveProperty('details');expect(await reader.read(operator,{...query,details:true})).toEqual({status:'denied',code:'AUTHORIZATION'});await policy.membership('admin','operator','failure-detail',true);expect((await reader.read(operator,{...query,details:true})).details).toHaveProperty('actor');
@@ -54,26 +54,26 @@ test('operational journal reader has independent header/detail grants and irreve
   for(const column of ['header','details','attempt','phase','created_at','expires_at'])await expect(store.sql.begin(async tx=>{await tx.unsafe(`update action_attempt set ${column}=${column} where id=${row!.id}`);})).rejects.toThrow('immutable attempt observation');await expect(store.sql.begin(async tx=>{await tx`delete from action_attempt where id=${row!.id}`;})).rejects.toThrow('immutable attempt observation');
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('caller mutation during journal latency cannot change the admitted invocation',async()=>{
  await withReferenceStore(async store=>{
   const {policy,request,credential}=await setup(store);let release!:()=>void,started!:()=>void;const signal=new Promise<void>(resolve=>{started=resolve;}),gate=new Promise<void>(resolve=>{release=resolve;}),journal=new ReferenceAttemptJournal(store.url),executor=new ReferenceActionExecutor(policy,undefined,{append:async event=>{if(event.phase==='started'){started();await gate;}await journal.append(event);}}),pending=executor.invoke('s',credential,request);await signal;request.target.revision='mutated-after-call';request.inputs.order.components[0]={string:'mutated-after-call'};release();const result=await pending;expect(result.status).toBe('committed');if(result.status==='committed')expect(result.revision.revision).toBe('attempts');const metadata=decodeReferenceJson((await store.sql`select details from action_attempt where phase='observed'`)[0]!.details) as any;expect(metadata.requestedTarget.revision).toBe('attempts');expect(await store.sql`select * from action_outcome`).toHaveLength(1);
  });
 },30000);
-/** @covers US-056-AC9 @covers US-056-AC11 */
+/** @covers US-901-AC9 @covers US-901-AC11 */
 test('late native rollback preserves attempt observations and no terminal or business write',async()=>{
  await withReferenceStore(async store=>{
   const {executor,request,credential}=await setup(store);await store.sql.unsafe("alter table action_audit add constraint refuse_terminal check(false)");await expect(executor.invoke('s',credential,request)).rejects.toThrow('refuse_terminal');const observations=await store.sql`select * from action_attempt order by id`;expect(observations).toHaveLength(2);expect((decodeReferenceJson(observations[1]!.header) as any).decision).toBe('host-error');expect((decodeReferenceJson((await store.sql`select fields from action_entity`)[0]!.fields) as any)['["sales","status"]']).toEqual({string:'pending'});expect((await store.sql`select business_sequence::text from action_store`)[0]!.business_sequence).toBe('0');for(const table of ['action_audit','action_outbox','action_outcome'])expect(await store.sql.unsafe('select * from '+table)).toHaveLength(0);
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('unknown or inconsistent operational headers refuse without changing retained source',async()=>{
  await withReferenceStore(async store=>{
   const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer);await store.create('admin','operations','epoch');const reader=new ReferenceAttemptReader(policy,'admin'),credential=issuer.issue({tenant:'operations',principal:'operator',service:'audit'});await reader.configure(['read'],[]);await policy.membership('admin','operator','read',true);
   for(const variant of ['profile','extension','identity','phase','null','malformed']){const attemptId=crypto.randomUUID(),header:any={profile:{id:'umf.actions.attempt-observation',version:'1'},attemptId,phase:'observed',decision:'denied'};if(variant==='profile')header.profile.version='2';if(variant==='extension')header.futureMeaning=true;if(variant==='identity')header.attemptId=crypto.randomUUID();if(variant==='phase')header.phase='started';const text=variant==='malformed'?'not JSON':JSON.stringify(variant==='null'?null:header);await store.sql`insert into action_attempt(attempt,phase,header,details,expires_at) values (${attemptId},'observed',${text},'{}',clock_timestamp()+interval '30 days')`;expect(await reader.read(credential,{attemptId,phase:'observed'})).toEqual({status:'unsupported',code:'ATTEMPT_PROFILE'});expect((await store.sql`select header from action_attempt where attempt=${attemptId}`)[0]!.header).toBe(text);}
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('a row committed after the journal existence boundary cannot bypass native expiry',async()=>{
  await withReferenceStore(async store=>{
   const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer);await store.create('admin','operations','epoch');const reader=new ReferenceAttemptReader(policy,'admin'),credential=issuer.issue({tenant:'operations',principal:'operator',service:'audit'});await reader.configure(['read'],[]);await policy.membership('admin','operator','read',true);const attemptId=crypto.randomUUID(),transaction=store.transaction.bind(store);let releaseInsert!:()=>void,inserted!:()=>void,hold=new Promise<void>(resolve=>{releaseInsert=resolve;}),ready=new Promise<void>(resolve=>{inserted=resolve;});
@@ -82,19 +82,19 @@ test('a row committed after the journal existence boundary cannot bypass native 
   try{expect(await reader.read(credential,{attemptId,phase:'observed'})).toEqual({status:'not-found'});expect(boundary).toBe(1);expect(payloads).toBe(0);}finally{releaseInsert();await pending;store.transaction=transaction;}expect(await reader.read(credential,{attemptId,phase:'observed'})).toEqual({status:'expired',code:'ATTEMPT_EXPIRED'});expect((await store.sql`select expired from action_attempt where attempt=${attemptId}`)[0]!.expired).toBe(true);
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('native journal lock timeout and async failing diagnostics stay outside business classification',async()=>{
  await withReferenceStore(async store=>{
   const {policy,request,credential}=await setup(store);let release!:()=>void,locked!:()=>void;const held=new Promise<void>(resolve=>{release=resolve;}),ready=new Promise<void>(resolve=>{locked=resolve;}),locking=store.sql.begin(async tx=>{await tx`lock table action_attempt in access exclusive mode`;locked();await held;});await ready;let failed=0;const journal=new ReferenceAttemptJournal(store.url,async()=>{failed++;throw Error('async diagnostics failure');}),executor=new ReferenceActionExecutor(policy,undefined,journal);const began=Date.now();try{expect((await executor.invoke('s',credential,request)).status).toBe('committed');expect(Date.now()-began).toBeLessThan(4500);expect(journal.unacknowledgedAppends).toBe(2);expect(failed).toBe(2);}finally{release();await locking;}expect(await store.sql`select * from action_attempt`).toHaveLength(0);expect(await store.sql`select * from action_audit`).toHaveLength(1);
  });
 },30000);
-/** @covers US-056-AC4 @covers US-056-AC11 */
+/** @covers US-901-AC4 @covers US-901-AC11 */
 test('rejected replay and token reuse attribute the original authorized revision, never the requested substitute',async()=>{
  await withReferenceStore(async store=>{
   const {policy,executor,request,credential}=await setup(store),rejected=structuredClone(request);rejected.key='rejected-token';rejected.inputs.order.components=[{string:'absent'}];expect(await executor.invoke('s',credential,rejected)).toEqual({status:'rejected',code:'ENTITY_MISSING'});expect(await executor.invoke('s',credential,rejected)).toEqual({status:'rejected',code:'ENTITY_MISSING'});expect(await executor.invoke('s',credential,{...rejected,target:{...rejected.target,revision:'requested-substitute'}})).toEqual({status:'conflict',code:'TOKEN_REUSE'});const observations=await store.sql`select details from action_attempt where phase='observed' order by id`;expect(observations).toHaveLength(3);for(const row of observations)expect((decodeReferenceJson(row.details) as any).revision).toEqual(request.target);expect((decodeReferenceJson(observations[2]!.details) as any).requestedTarget.revision).toBe('requested-substitute');expect(await store.sql`select * from action_audit`).toHaveLength(1);expect(await store.sql`select * from action_outcome`).toHaveLength(1);expect(await store.sql`select * from action_outbox`).toHaveLength(0);await policy.membership('s','human','approver',false);expect(await executor.invoke('s',credential,rejected)).toEqual({status:'denied',code:'AUTHORIZATION'});expect((decodeReferenceJson((await store.sql`select details from action_attempt where phase='observed' order by id desc limit 1`)[0]!.details) as any).revision).toBeNull();
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('supervisor death after acknowledged start leaves unresolved observation and no invented business result',async()=>{
  await withReferenceStore(async store=>{
   const {request}=await setup(store),prefix=new URL('../../scripts/actions-reference/',import.meta.url).pathname,path='/tmp/umf-attempt-supervisor-'+crypto.randomUUID()+'.ts';
@@ -104,21 +104,21 @@ test('supervisor death after acknowledged start leaves unresolved observation an
   finally{if(timer)clearTimeout(timer);if(child.exitCode===null){child.kill('SIGKILL');await child.exited;}await Bun.file(path).delete();}
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('unqualified retained deployment meaning stays intact but never enters attempt telemetry',async()=>{
  await withReferenceStore(async store=>{
   const {executor,request,credential}=await setup(store),deployment={id:'handler',version:'1',build:'build',privatePolicy:{secret:'private-policy-not-for-logs'}};
   for(const kind of ['recipe','handler']){const source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};if(kind==='handler')action.binding={kind:'handler',profile:{id:'umf.actions.container',version:'1'},handler:{id:'handler',version:'1'}};const target={...request.target,revision:'unknown-'+kind};await executor.admission.revisions.retain('s',target,source,deployment);const invalid={...request,target,key:kind,inputs:{order:{...request.inputs.order,components:[{int:1}]}}};expect((await executor.invoke('s',credential,invalid)).status).toBe('unsupported');const observed=decodeReferenceJson((await store.sql`select details from action_attempt where phase='observed' order by id desc limit 1`)[0]!.details) as any;expect(observed.revision).toEqual(target);expect(observed.deployment).toBeNull();expect(JSON.stringify(await store.sql`select header,details from action_attempt`)).not.toContain('private-policy-not-for-logs');expect(decodeReferenceJson((await store.sql`select deployment from action_revision where identity=${encodeReferenceIdentity(target)}`)[0]!.deployment)).toEqual(deployment);}
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('malformed retained details refuse only authorized detail reads while exact bytes stay intact',async()=>{
  await withReferenceStore(async store=>{
   const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer);await store.create('admin','operations','epoch');const reader=new ReferenceAttemptReader(policy,'admin'),credential=issuer.issue({tenant:'operations',principal:'operator',service:'audit'}),attemptId=crypto.randomUUID();await reader.configure(['read'],['detail']);await policy.membership('admin','operator','read',true);await policy.membership('admin','operator','detail',true);await store.sql`insert into action_attempt(attempt,phase,header,details,expires_at) values (${attemptId},'observed',${JSON.stringify({profile:{id:'umf.actions.attempt-observation',version:'1'},attemptId,phase:'observed',decision:'failed',code:'LIMIT'})},'malformed details',clock_timestamp()+interval '30 days')`;expect((await reader.read(credential,{attemptId,phase:'observed'})).status).toBe('observation');expect(await reader.read(credential,{attemptId,phase:'observed',details:true})).toEqual({status:'unsupported',code:'ATTEMPT_PROFILE'});expect((await store.sql`select details from action_attempt where attempt=${attemptId}`)[0]!.details).toBe('malformed details');
  });
 },30000);
 
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('business audit grants cannot authorize operational attempt observations',async()=>{
  await withReferenceStore(async store=>{
  const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer);await store.create('admin','operations','epoch');const reader=new ReferenceAttemptReader(policy,'admin'),credential=issuer.issue({tenant:'operations',principal:'operator',service:'audit'}),attemptId=crypto.randomUUID();await reader.configure(['ops-reader'],[]);await policy.membership('admin','operator','audit-reader',true);await new ReferenceActionAudit(policy).configure('admin','umf.actions.attempts','observation',['audit-reader'],[]);await new ReferenceAttemptJournal(store.url).append({attemptId,phase:'started',decision:'pending',metadata:{secret:'operational-only'}});expect(await reader.read(credential,{attemptId,phase:'started'})).toEqual({status:'denied',code:'AUTHORIZATION'});await policy.membership('admin','operator','ops-reader',true);expect((await reader.read(credential,{attemptId,phase:'started'})).status).toBe('observation');

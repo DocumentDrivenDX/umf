@@ -1,0 +1,18 @@
+{
+  "status": "native-counterexample-found",
+  "exitCode": 1,
+  "observation": {
+    "id": "RA:unknown-permit-with-true-permit-does-not-grant",
+    "expected": {
+      "truth": false
+    },
+    "observed": {
+      "truth": true
+    }
+  },
+  "sourceDigests": {
+    "docs/helix/04-build/evidence/security/predicate-scoped-unknown-vulnerable.ts.txt": "3979745e141513371945f0297c49de51aaf66efb2ca3f983b20bde0c1553b011",
+    "docs/helix/04-build/evidence/security/predicate-scoped-unknown-probe.py.txt": "a0b9594ebe72d43a6969d2e252abf98155886b4bca2c3ca20c5c17d1435b4061"
+  },
+  "scope": "Actual source-owner two-permit primitive native truth diagnostic after deliberately removing subject. Not a valid complete-subject admitted collection."
+}

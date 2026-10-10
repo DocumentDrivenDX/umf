@@ -4,7 +4,7 @@ import composite from '../../fixtures/actions/composite-key.json';
 import {ReferenceActionStore} from '../../scripts/actions-reference/store';
 import {withReferenceStore} from './native-harness';
 import {encodeReferenceIdentity as identity,encodeReferenceJson as json,decodeReferenceJson as decode} from '../../scripts/actions-reference/codec';
-// Partial native foundation evidence only; complete US-056 criteria remain open.
+// Partial native foundation evidence only; complete US-901 criteria remain open.
 test('native store foundation enforces exact aliases, FKs, control serialization and atomic rollback',async()=>{
  await withReferenceStore(async(store,version)=>{
   expect(version).toBe('17.9 (Debian 17.9-1.pgdg13+1)');console.log(JSON.stringify({nativeVersion:version,nativeVersionNumber:'170009'}));const sid=await store.create('s','tenant','epoch-1'),record=identity({module:'sales',element:'order'});

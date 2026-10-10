@@ -4,6 +4,16 @@ import {keyTransitionSource} from '../../scripts/core-key-transition-cases';
 const record={module:'m',element:'record'},field={module:'m',element:'id'};
 const source=()=>u.upgradeKeyEnvelope(keyTransitionSource(null)).target;
 const authored=()=>u.declareCoreKey(u.declareCoreRecordMembers(source(),record,[field]).target,record,{id:'pk',name:'ID',fields:[field],primary:true});
+test('original0.8 Key inspection and lookup retain unknown qualifiers and scoped authoring',()=>{
+ const document={...authored().target,umf:'0.8.0' as const},node=document.modules[0]!.elements.find(element=>element.id==='record')!;
+ (node.keys as any[])[0].future={opaque:true};
+ const inspection=u.inspectCoreKeys(document,record),lookup=u.lookupCoreKey(document,{...record,key:'pk'});
+ expect(inspection.version).toBe('3.0.0');expect(lookup.version).toBe('3.0.0');
+ expect(inspection.source).toEqual(document);expect(inspection.meaning.state).toBe('partial');
+ expect(lookup.key).toEqual((node.keys as any[])[0]);expect(lookup.uninterpretedPaths).toEqual([inspection.path+'/0/future']);
+ expect(()=>u.declareCoreKey(document,record,{id:'other',name:'Other',fields:[field]})).toThrow('Explicit Key envelope migration');
+ expect(()=>u.declareCoreRecordMembers(document,record,[field])).toThrow('Explicit Key envelope migration');
+});
 
 test('public Key authoring, inspection and stable lookup preserve copied source and both serializations',()=>{
  const membership=u.declareCoreRecordMembers(source(),record,[field]),key=u.declareCoreKey(membership.target,record,{id:'pk',name:'ID',fields:[field],primary:true});

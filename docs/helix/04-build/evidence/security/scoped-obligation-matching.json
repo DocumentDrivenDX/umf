@@ -1,0 +1,58 @@
+{
+  "status": "conditional-private-scoped-obligation-matching-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 124,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0
+  },
+  "rawOutputSha256": "6c69200d62d0502e42872f968decd8b4ec2b080204d5feeaa85854abc781b989",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_matching.rs": "21cd5b26a3c838e2580301e0b6ce850d26afca587c9e3f6f28b34083983efcb1",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "743f5941174d663e9d4a97fd31be37763b8b1d295ed7e5a15ae32cbaf378976a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "630ed24f24a6481fc5c5a1cb92cb1fc5abf3b76ed4781e935808d10bef26a254",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "3ed526debe72fd8c086070ad07ba22615dee34d8c7c22a1f5c2a60e51c83e0f5"
+  },
+  "controls": [
+    "Actual owner demand/immutable registry correspondence",
+    "Exact independent fixture contracts and atom relation",
+    "Every-atom omission/extra atom/failure/prerequisite changes",
+    "Complete selected custody and zero-edge requirement refusal",
+    "Exact/minus-one matcher work/text budgets",
+    "Typed subject swap with same marginal population",
+    "Agreeing fragment declarations/requirements refuse",
+    "Distinct complete capability per scope passes",
+    "Agreeing foreign source/scope refuse"
+  ],
+  "scope": "Private conditional matcher under independently authored trusted fixture requirements, not an authenticated profile issuer. Selected pins are not complete build-custody inventory. Formal predicates do not prove Rust/native refinement. Integrated refresh and production backend qualification remain open.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": [],
+  "review": {
+    "reviewer": "Astra ultra",
+    "mode": "read-only actual-owner matcher audit",
+    "result": "No remaining actionable findings within explicit trusted-premise scope",
+    "independentRustRun": false,
+    "formalReceiptReplay": {
+      "formulas": 36,
+      "unsat": 12,
+      "sat": 24,
+      "selectedPins": 42,
+      "reviewSha256": "91d9cae60be71ac9a1751c6fdd9d91f8b2a5d4bba9b5d3fe74771d0cbcc1ff1f"
+    }
+  }
+}

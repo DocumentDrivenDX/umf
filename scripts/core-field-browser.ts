@@ -1,7 +1,7 @@
 import {chromium} from 'playwright';
 import {validateDocument} from '../src/validation/document';
 const cases:unknown[]=[];
-for(const umf of ['0.1.0','0.2.0'])for(const kind of ['field','record','group','future-kind',null,42,{},[],undefined,''])for(const scalar of [false,true]){
+for(const umf of ['0.1.0','0.2.0','0.8.0'])for(const kind of ['field','record','group','future-kind',null,42,{},[],undefined,''])for(const scalar of [false,true]){
  cases.push({umf,id:'case-'+cases.length,vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'sales',elements:[{id:'e',extensions:{future:{opaque:[null,'雪',42]}},...(kind===undefined?{}:{kind}),...(scalar?{scalarType:'string'}:{})}]}]});
 }
 const expected=cases.map(validate=>validateDocument(validate));
@@ -21,7 +21,9 @@ try{
     const element=cases[i].modules[0].elements[0];
     const expectedState=!Object.hasOwn(element,'kind')?'unspecified':cases[i].umf==='0.1.0'?'legacy':['field','record','group'].includes(element.kind)?'known':'unknown';
     if(lookup.meaning.state!==expectedState||lookup.provenance!=='unverified')throw Error('Kind interpretation '+i);
+    if(cases[i].umf==='0.8.0'&&lookup.version!=='7.0.0')throw Error('Original0.8 result contract');
     kindLookups++;
+
    }
    if(result.valid&&cases[i].umf==='0.1.0')for(const format of ['json','yaml']){
     const receipt=umf.upgradeFieldEnvelope(cases[i]);

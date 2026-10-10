@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "attempts": 2,
+  "failure": "Unix-socket readiness observed temporary initialization server; it exited before fixture setup",
+  "correction": "Check native TCP readiness; temporary initialization server has no TCP listener",
+  "processes": "Both original command sessions terminal exit1; exact containers absent after finally cleanup",
+  "acceptanceClaim": false
+}

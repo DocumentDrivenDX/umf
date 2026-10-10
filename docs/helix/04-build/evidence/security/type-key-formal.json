@@ -1,0 +1,66 @@
+{
+  "status": "conditional-proof-passed",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-type-key.py": "049c00ce5b3226b54e44f8ec3220d6a55c760150bf686e35c733a2ee7a9821aa",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-native-key.ts": "0190bf385159decd0e5e89340936a2e324bff9a5f6291791a492caa6226c1d51"
+  },
+  "solverVersion": "4.15.4",
+  "cases": [
+    {
+      "id": "typed-native-key-correspondence",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun k!0 () Bool)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun k!1 () Bool)\n(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_0 () String)\n(declare-fun key_a_0 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (distinct (and (= logical_type_a logical_type_b)\n               (= key_a_0 key_b_0)\n               (= key_a_1 key_b_1))\n          (and (= native_tag_a native_tag_b)\n               (= key_a_0 key_b_0)\n               (= key_a_1 key_b_1))))\n(model-del k!0)\n(model-add logical_type_a () Int (ite k!0 logical_type_b (+ logical_type_b 1)))\n(model-del k!1)\n(model-add native_tag_a () Int (ite k!1 native_tag_b (+ native_tag_b 1)))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (= logical_type_a logical_type_b) (= key_a_0 key_b_0) (= key_a_1 key_b_1)))\n(model-add native_tag_a () Int native_tag_b)\n(model-add logical_type_a () Int logical_type_b)\n(model-add key_a_1 () String key_b_1)\n(model-add key_a_0 () String key_b_0)\n",
+        "model": "[key_b_0 = \"\",\n key_a_0 = \"\",\n key_b_1 = \"\",\n key_a_1 = \"\",\n logical_type_b = 0,\n logical_type_a = 0,\n native_tag_b = 0,\n native_tag_a = 0]"
+      },
+      "erasedOrReversedControl": {
+        "result": "sat",
+        "smt": "(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(declare-fun k!2 () Bool)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun k!3 () Bool)\n(assert (and (distinct logical_type_a logical_type_b)\n     (= native_tag_a native_tag_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)\n     (distinct (and (= logical_type_a logical_type_b)\n                    (= key_a_0 key_b_0)\n                    (= key_a_1 key_b_1))\n               (and (= native_tag_a native_tag_b)\n                    (= key_a_0 key_b_0)\n                    (= key_a_1 key_b_1)))))\n(model-add native_tag_a () Int native_tag_b)\n(model-add key_a_1 () String key_b_1)\n(model-add key_a_0 () String key_b_0)\n(model-del k!2)\n(model-add logical_type_a () Int (ite k!2 logical_type_b (+ logical_type_b 1)))\n(model-del k!3)\n(model-add k!2 () Bool (not k!3))\n(model-add k!3 () Bool true)\n",
+        "model": "[logical_type_a = 1,\n logical_type_b = 0,\n key_b_0 = \"\",\n key_a_0 = \"\",\n key_b_1 = \"\",\n key_a_1 = \"\",\n native_tag_b = 0,\n native_tag_a = 0]"
+      }
+    },
+    {
+      "id": "different-type-key-namespace",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun native_tag_b () Int)\n(declare-fun native_tag_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun logical_type_a () Int)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_0 () String)\n(declare-fun key_a_0 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (distinct logical_type_a logical_type_b)\n     (= native_tag_a native_tag_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun key_a_1 () String)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(declare-fun k!4 () Bool)\n(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun k!5 () Bool)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun k!6 () Bool)\n(declare-fun k!7 () Bool)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (distinct logical_type_a logical_type_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)))\n(model-add key_a_1 () String key_b_1)\n(model-add key_a_0 () String key_b_0)\n(model-del k!4)\n(model-add native_tag_a () Int (ite k!4 native_tag_b (+ native_tag_b 1)))\n(model-del k!5)\n(model-add logical_type_a () Int (ite k!5 logical_type_b (+ logical_type_b 1)))\n(model-del k!6)\n(model-add k!4 () Bool (not k!6))\n(model-del k!7)\n(model-add k!5 () Bool (not k!7))\n(model-add k!6 () Bool true)\n(model-add k!7 () Bool true)\n",
+        "model": "[native_tag_a = 1,\n logical_type_a = 1,\n logical_type_b = 0,\n native_tag_b = 0,\n key_b_0 = \"\",\n key_a_0 = \"\",\n key_b_1 = \"\",\n key_a_1 = \"\"]"
+      },
+      "erasedOrReversedControl": {
+        "result": "sat",
+        "smt": "(declare-fun key_a_1 () String)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(declare-fun k!8 () Bool)\n(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun k!9 () Bool)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun k!10 () Bool)\n(declare-fun k!11 () Bool)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (distinct logical_type_a logical_type_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)))\n(model-add key_a_1 () String key_b_1)\n(model-add key_a_0 () String key_b_0)\n(model-del k!8)\n(model-add native_tag_a () Int (ite k!8 native_tag_b (+ native_tag_b 1)))\n(model-del k!9)\n(model-add logical_type_a () Int (ite k!9 logical_type_b (+ logical_type_b 1)))\n(model-del k!10)\n(model-add k!8 () Bool (not k!10))\n(model-del k!11)\n(model-add k!9 () Bool (not k!11))\n(model-add k!10 () Bool true)\n(model-add k!11 () Bool true)\n",
+        "model": "[native_tag_a = 1,\n logical_type_a = 1,\n logical_type_b = 0,\n native_tag_b = 0,\n key_b_0 = \"\",\n key_a_0 = \"\",\n key_b_1 = \"\",\n key_a_1 = \"\"]"
+      }
+    },
+    {
+      "id": "declared-component-order",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun native_tag_b () Int)\n(declare-fun native_tag_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun logical_type_a () Int)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_0 () String)\n(declare-fun key_a_0 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (= logical_type_a logical_type_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)\n     (not (and (= native_tag_a native_tag_b)\n               (= key_a_0 key_b_0)\n               (= key_a_1 key_b_1)))))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun key_a_1 () String)\n(declare-fun key_b_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (= logical_type_a logical_type_b)\n     (= key_a_0 key_b_0)\n     (= key_a_1 key_b_1)\n     (distinct key_a_0 key_a_1)))\n(model-add native_tag_a () Int native_tag_b)\n(model-add logical_type_a () Int logical_type_b)\n(model-add key_a_1 () String key_b_1)\n(model-add key_a_0 () String key_b_0)\n(model-add key_b_0 () String \"A\")\n(model-add key_b_1 () String \"\")\n",
+        "model": "[key_b_0 = \"A\",\n key_b_1 = \"\",\n key_a_0 = \"A\",\n key_a_1 = \"\",\n logical_type_b = 0,\n logical_type_a = 0,\n native_tag_b = 0,\n native_tag_a = 0]"
+      },
+      "erasedOrReversedControl": {
+        "result": "sat",
+        "smt": "(declare-fun native_tag_a () Int)\n(declare-fun native_tag_b () Int)\n(declare-fun logical_type_a () Int)\n(declare-fun logical_type_b () Int)\n(declare-fun key_a_1 () String)\n(declare-fun key_a_0 () String)\n(declare-fun key_b_0 () String)\n(declare-fun key_b_1 () String)\n(assert (= (= logical_type_a logical_type_b) (= native_tag_a native_tag_b)))\n(assert (and (distinct (and (= logical_type_a logical_type_b)\n                    (= key_a_0 key_b_0)\n                    (= key_a_1 key_b_1))\n               (and (= native_tag_a native_tag_b)\n                    (= key_a_0 key_b_1)\n                    (= key_a_1 key_b_0)))\n     (= logical_type_a logical_type_b)\n     (distinct key_a_0 key_a_1)))\n(model-add native_tag_a () Int native_tag_b)\n(model-add logical_type_a () Int logical_type_b)\n(model-add key_b_0 () String \"\")\n(model-add key_b_1 () String \"A\")\n(model-add key_a_1 () String \"\")\n(model-add key_a_0 () String \"A\")\n",
+        "model": "[key_b_0 = \"\",\n key_b_1 = \"A\",\n key_a_1 = \"\",\n key_a_0 = \"A\",\n logical_type_b = 0,\n logical_type_a = 0,\n native_tag_b = 0,\n native_tag_a = 0]"
+      }
+    }
+  ],
+  "nativeInstallationProven": false,
+  "scope": "Two ordered unbounded string key components and unbounded logical/native type tags. Truthful injective native/logical type correspondence and exact scalar text equality are premises. Logical typed tuple equality matches native tag-prefixed tuple equality; equal key components in different types remain distinct; dropping type or reversing components has SAT counterexamples. Does not prove original catalog source authenticity, native key constraints/installation, compiler implementation, graph business-key codec, property/endpoint facts, admission/authority/guard or database text collation."
+}

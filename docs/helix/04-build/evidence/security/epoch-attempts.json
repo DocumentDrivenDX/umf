@@ -1,0 +1,15 @@
+{
+  "attempts": [
+    {
+      "stage": "baseline fixture initialization",
+      "status": "failed-before-setup",
+      "observed": "PostgreSQL local socket was not ready; initial native.py process exited with status 1"
+    },
+    {
+      "stage": "readiness recheck",
+      "status": "passed",
+      "observed": "pg_isready accepting connections; replay occurred only after terminal failed process and confirmed readiness"
+    }
+  ],
+  "scope": "Disposable startup attempts; no native acceptance inferred"
+}

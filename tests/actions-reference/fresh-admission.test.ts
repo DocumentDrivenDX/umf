@@ -5,7 +5,7 @@ import {ReferenceActionIssuer} from '../../scripts/actions-reference/authenticat
 import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {ReferenceActionAdmission} from '../../scripts/actions-reference/admission';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC2 */
+/** @covers US-901-AC2 */
 test('native fresh admission refuses full-declaration unknowns and fences without business or terminal writes',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),admission=new ReferenceActionAdmission(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};

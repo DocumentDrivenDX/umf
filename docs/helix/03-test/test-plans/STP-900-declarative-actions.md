@@ -11,7 +11,7 @@ ddx:
       kind: informed_by
     - id: TD-900
       kind: informed_by
-    - id: SD-008
+    - id: SD-900
       kind: informed_by
     - id: CONTRACT-900
       kind: references
@@ -25,7 +25,7 @@ ddx:
 
 **User Story:** [[US-900-declarative-actions]].
 **Technical Design:** [[TD-900-declarative-actions]].
-**Solution Design:** [[SD-008-declarative-actions]].
+**Solution Design:** [[SD-900-declarative-actions]].
 **Project Test Plan:** [TP-001](../test-plan.md).
 
 ## Scope and Objective
@@ -132,8 +132,8 @@ fresh-key no-op versus replay and contiguous projection visibility.
 ## Iteration 2 profile qualification allocation
 
 CONTRACT-901 adds consumer-owned requirements; the earlier 21-history SQL
-harness, sentinel check and browser representation do not satisfy them. US-056,
-TD-056 and STP-056 allocate the later bounded consumer implementation and
+harness, sentinel check and browser representation do not satisfy them. US-901,
+TD-901 and STP-901 allocate the later bounded consumer implementation and
 EX-01–EX-05 native witnesses. Their completed source-bound evidence is recorded
 in the historical certificate; fresh integrated qualification remains independent.
 
@@ -150,7 +150,7 @@ versions, rule/selector phase/type/dependency metadata and unknown-profile refus
 Static checker execution needs separate interpreter-version proof; public base
 inspection still evaluates no runtime state and invokes no policy/handler.
 
-The bounded consumer has its own US-056 story, TD-056 design, STP-056 test
+The bounded consumer has its own US-901 story, TD-901 design, STP-901 test
 allocation, handler isolation and native-store adapter. These witness IDs describe
 requirements allocation; only separately recorded exercising witnesses establish
 executed acceptance coverage for a specified source and profile.
@@ -187,7 +187,7 @@ attempted outside-frame reads and writes even when final state is restored.
 The new semantics are design corrections; earlier native/evaluator evidence does
 not qualify their implementation.
 
-US-056 / TD-056 / STP-056 now own the full native runtime journey and EX-01–05
+US-901 / TD-901 / STP-901 now own the full native runtime journey and EX-01–05
 transactional witnesses. Shared portable case decisions execute in Bun and Chromium
 through `tests/actions/case-corpus.ts`; report schemas have actual-output and negative
 validation tests in `tests/actions/reports.test.ts`.

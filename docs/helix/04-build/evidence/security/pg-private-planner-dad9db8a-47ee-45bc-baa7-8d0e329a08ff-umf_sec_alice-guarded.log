@@ -1,0 +1,285 @@
+LOG:  parse tree:
+DETAIL:     {QUERY 
+   :commandType 6 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt 
+      {VARIABLESETSTMT 
+      :kind 0 
+      :name debug_print_rewritten 
+      :args (
+         {A_CONST 
+         :val "on" 
+         :location 26
+         }
+      )
+      :is_local false
+      }
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree <> 
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList <> 
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 28
+   }
+
+LOG:  parse tree:
+DETAIL:     {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree 
+      {FROMEXPR 
+      :fromlist <> 
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {FUNCEXPR 
+         :funcid 16496 
+         :funcresulttype 114 
+         :funcretset false 
+         :funcvariadic false 
+         :funcformat 0 
+         :funccollid 0 
+         :inputcollid 0 
+         :args <> 
+         :location 7
+         }
+      :resno 1 
+      :resname diagnostic_closed_resources 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+
+LOG:  rewritten parse tree:
+DETAIL:  (
+   {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree 
+      {FROMEXPR 
+      :fromlist <> 
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {FUNCEXPR 
+         :funcid 16496 
+         :funcresulttype 114 
+         :funcretset false 
+         :funcvariadic false 
+         :funcformat 0 
+         :funccollid 0 
+         :inputcollid 0 
+         :args <> 
+         :location 7
+         }
+      :resno 1 
+      :resname diagnostic_closed_resources 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+)
+
+LOG:  plan:
+DETAIL:     {PLANNEDSTMT 
+   :commandType 1 
+   :queryId 0 
+   :hasReturning false 
+   :hasModifyingCTE false 
+   :canSetTag true 
+   :transientPlan false 
+   :dependsOnRole false 
+   :parallelModeNeeded false 
+   :jitFlags 0 
+   :planTree 
+      {RESULT 
+      :plan.startup_cost 0 
+      :plan.total_cost 0.26 
+      :plan.plan_rows 1 
+      :plan.plan_width 32 
+      :plan.parallel_aware false 
+      :plan.parallel_safe false 
+      :plan.async_capable false 
+      :plan.plan_node_id 0 
+      :plan.targetlist (
+         {TARGETENTRY 
+         :expr 
+            {FUNCEXPR 
+            :funcid 16496 
+            :funcresulttype 114 
+            :funcretset false 
+            :funcvariadic false 
+            :funcformat 0 
+            :funccollid 0 
+            :inputcollid 0 
+            :args <> 
+            :location 7
+            }
+         :resno 1 
+         :resname diagnostic_closed_resources 
+         :ressortgroupref 0 
+         :resorigtbl 0 
+         :resorigcol 0 
+         :resjunk false
+         }
+      )
+      :plan.qual <> 
+      :plan.lefttree <> 
+      :plan.righttree <> 
+      :plan.initPlan <> 
+      :plan.extParam (b)
+      :plan.allParam (b)
+      :resconstantqual <>
+      }
+   :rtable (
+      {RANGETBLENTRY 
+      :alias <> 
+      :eref 
+         {ALIAS 
+         :aliasname *RESULT* 
+         :colnames <>
+         }
+      :rtekind 8 
+      :lateral false 
+      :inFromCl false 
+      :securityQuals <>
+      }
+   )
+   :permInfos <> 
+   :resultRelations <> 
+   :appendRelations <> 
+   :subplans <> 
+   :rewindPlanIDs (b)
+   :rowMarks <> 
+   :relationOids <> 
+   :invalItems (
+      {PLANINVALITEM 
+      :cacheId 45 
+      :hashValue 1764760802
+      }
+   )
+   :paramExecTypes <> 
+   :utilityStmt <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+

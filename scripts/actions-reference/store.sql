@@ -1,4 +1,4 @@
--- TD-056 lossless qualification store. Bounded digest indexes never establish exact identity.
+-- TD-901 lossless qualification store. Bounded digest indexes never establish exact identity.
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE FUNCTION action_identity_lookup(value text) RETURNS bytea LANGUAGE SQL IMMUTABLE STRICT
  AS $$ SELECT public.digest(value,'sha256') $$;

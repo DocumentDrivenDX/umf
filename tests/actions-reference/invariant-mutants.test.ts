@@ -111,7 +111,7 @@ async function prefixHistory(store:ReferenceActionStore,name:string,Projection:t
  equal(await view.deliver(name,'primary',{epoch:'epoch',sequence:'2'}),{status:'delivered',prefix:'2'},'projection duplicate idempotency');
 }
 
-/** @covers US-056-AC8 @covers US-056-AC12 */
+/** @covers US-901-AC8 @covers US-901-AC12 */
 test('native alias and projection histories kill actual canonicalization and prefix-gap implementation mutants',async()=>{
  const root=new URL('../../',import.meta.url).pathname,directory=await mkdtemp(join(tmpdir(),'umf-action-invariant-mutants-'));
  try{await withReferenceStore(async(store,nativeVersion)=>{

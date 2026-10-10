@@ -1,0 +1,125 @@
+{
+  "checks": [
+    {
+      "id": "fresh-rust-source-build-inventory",
+      "status": "passed"
+    },
+    {
+      "id": "actual-complete-core-and-five-controls",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-conditional-proof-inputs",
+      "status": "passed"
+    },
+    {
+      "id": "five-laws-fifteen-fresh-context-replays",
+      "status": "passed"
+    },
+    {
+      "id": "qualification-boundaries",
+      "status": "passed"
+    }
+  ],
+  "formalReplays": [
+    {
+      "law": "whole-capability-before-source-quantifier",
+      "kind": "violation",
+      "smtSha256": "2961fc23dea54e8f30f1f428527b9dccfd0df8943c9876e6e29a0483d4237281",
+      "result": "unsat"
+    },
+    {
+      "law": "whole-capability-before-source-quantifier",
+      "kind": "negativeControl",
+      "smtSha256": "27b878779c5b50dd997b182742bd9b51a01981a88e7fd1ea97e0e25493824304",
+      "result": "sat"
+    },
+    {
+      "law": "whole-capability-before-source-quantifier",
+      "kind": "positivePopulation",
+      "smtSha256": "7b177d5febe03a98c1ece9699c1e594033fb9ef8c2068dc699ef5a8bb5d7ecc4",
+      "result": "sat"
+    },
+    {
+      "law": "different-scopes-may-use-different-complete-capabilities",
+      "kind": "violation",
+      "smtSha256": "a58a59ab4670575951632daba266617bb3b2cd21240a11e2158db41d77c592b9",
+      "result": "unsat"
+    },
+    {
+      "law": "different-scopes-may-use-different-complete-capabilities",
+      "kind": "negativeControl",
+      "smtSha256": "62f7fcaf2e0e0372b66d93bf50bc034c76094d92104a5398b410d50689c41b79",
+      "result": "sat"
+    },
+    {
+      "law": "different-scopes-may-use-different-complete-capabilities",
+      "kind": "positivePopulation",
+      "smtSha256": "1aa28f7e6fe12a15341ee55d38fc8872bd4333f83a0aef721895f86fc56625ab",
+      "result": "sat"
+    },
+    {
+      "law": "original-use-needs-primary-original-and-application",
+      "kind": "violation",
+      "smtSha256": "3922cf644c02c78800f0c878bc90f5d10d8b7840b6dc8ad2acaa238df74ff3cd",
+      "result": "unsat"
+    },
+    {
+      "law": "original-use-needs-primary-original-and-application",
+      "kind": "negativeControl",
+      "smtSha256": "9a954116b41c9e7b45a467c33358e2dd38e0a02b265f0f89562a2e1dcf833c1c",
+      "result": "sat"
+    },
+    {
+      "law": "original-use-needs-primary-original-and-application",
+      "kind": "positivePopulation",
+      "smtSha256": "8f035f24a90f16b77c3ee1b3850a873ee0eb9a4560bfa436265e4ac70377d79f",
+      "result": "sat"
+    },
+    {
+      "law": "equal-marginals-cannot-substitute-scoped-edges",
+      "kind": "violation",
+      "smtSha256": "3f26174d4369d547dbc0a31336ae2512e50de4e8f5c6ac02dd632d61ca5ebb66",
+      "result": "unsat"
+    },
+    {
+      "law": "equal-marginals-cannot-substitute-scoped-edges",
+      "kind": "negativeControl",
+      "smtSha256": "87018e958b3ad517cfc9471f9df372588ba2ca1f64eb91f8512eef59c1295bd8",
+      "result": "sat"
+    },
+    {
+      "law": "equal-marginals-cannot-substitute-scoped-edges",
+      "kind": "positivePopulation",
+      "smtSha256": "311dcca6d60e293fdad3e8f55db73db92014ceee5ae9fee3bd03a5e0c702acc1",
+      "result": "sat"
+    },
+    {
+      "law": "source-correspondence-cannot-discharge-native-execution",
+      "kind": "violation",
+      "smtSha256": "dbae4e2c55c4b3bc744ac09f06b7626884d17a571e55661ee8310a16bb83033d",
+      "result": "unsat"
+    },
+    {
+      "law": "source-correspondence-cannot-discharge-native-execution",
+      "kind": "negativeControl",
+      "smtSha256": "f76cc611f41f020b72ad3c5dc299c896096968632e865a756aa0635e592d94d5",
+      "result": "sat"
+    },
+    {
+      "law": "source-correspondence-cannot-discharge-native-execution",
+      "kind": "positivePopulation",
+      "smtSha256": "4efbfd48e063fb2404d40cdb05e12cb627a850440a3965a664df39b8794cc7ab",
+      "result": "sat"
+    }
+  ],
+  "inputDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/validate-source-demands.py": "075ece53be0b5f8aa5d1eb283468082a2c74e95f22deffaeec9f832a1c4cad86",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-source-demands.json": "8038697147ba89d4c542096b44b0d88612cc4fb8f42f894bb98ae9374352d611",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/source-demands-formal.json": "afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/source_demand_inputs.py": "03003b230299c5c952c1653fab17cd4b8499aebefbc396c9719b5bf9ee8d3c95"
+  },
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Scoped retained command/output/source correspondence and fresh-context finite formula replay under trusted runners. No independent Rust rerun, source authentication, matcher completeness or native acceptance."
+}

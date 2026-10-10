@@ -1,0 +1,1128 @@
+LOG:  parse tree:
+DETAIL:     {QUERY 
+   :commandType 6 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt 
+      {VARIABLESETSTMT 
+      :kind 0 
+      :name debug_print_rewritten 
+      :args (
+         {A_CONST 
+         :val "on" 
+         :location 26
+         }
+      )
+      :is_local false
+      }
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree <> 
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList <> 
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 28
+   }
+
+LOG:  parse tree:
+DETAIL:     {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree 
+      {FROMEXPR 
+      :fromlist <> 
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {FUNCEXPR 
+         :funcid 16496 
+         :funcresulttype 114 
+         :funcretset false 
+         :funcvariadic false 
+         :funcformat 0 
+         :funccollid 0 
+         :inputcollid 0 
+         :args <> 
+         :location 7
+         }
+      :resno 1 
+      :resname diagnostic_closed_resources 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+
+LOG:  rewritten parse tree:
+DETAIL:  (
+   {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree 
+      {FROMEXPR 
+      :fromlist <> 
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {FUNCEXPR 
+         :funcid 16496 
+         :funcresulttype 114 
+         :funcretset false 
+         :funcvariadic false 
+         :funcformat 0 
+         :funccollid 0 
+         :inputcollid 0 
+         :args <> 
+         :location 7
+         }
+      :resno 1 
+      :resname diagnostic_closed_resources 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+)
+
+LOG:  plan:
+DETAIL:     {PLANNEDSTMT 
+   :commandType 1 
+   :queryId 0 
+   :hasReturning false 
+   :hasModifyingCTE false 
+   :canSetTag true 
+   :transientPlan false 
+   :dependsOnRole false 
+   :parallelModeNeeded false 
+   :jitFlags 0 
+   :planTree 
+      {RESULT 
+      :plan.startup_cost 0 
+      :plan.total_cost 0.26 
+      :plan.plan_rows 1 
+      :plan.plan_width 32 
+      :plan.parallel_aware false 
+      :plan.parallel_safe false 
+      :plan.async_capable false 
+      :plan.plan_node_id 0 
+      :plan.targetlist (
+         {TARGETENTRY 
+         :expr 
+            {FUNCEXPR 
+            :funcid 16496 
+            :funcresulttype 114 
+            :funcretset false 
+            :funcvariadic false 
+            :funcformat 0 
+            :funccollid 0 
+            :inputcollid 0 
+            :args <> 
+            :location 7
+            }
+         :resno 1 
+         :resname diagnostic_closed_resources 
+         :ressortgroupref 0 
+         :resorigtbl 0 
+         :resorigcol 0 
+         :resjunk false
+         }
+      )
+      :plan.qual <> 
+      :plan.lefttree <> 
+      :plan.righttree <> 
+      :plan.initPlan <> 
+      :plan.extParam (b)
+      :plan.allParam (b)
+      :resconstantqual <>
+      }
+   :rtable (
+      {RANGETBLENTRY 
+      :alias <> 
+      :eref 
+         {ALIAS 
+         :aliasname *RESULT* 
+         :colnames <>
+         }
+      :rtekind 8 
+      :lateral false 
+      :inFromCl false 
+      :securityQuals <>
+      }
+   )
+   :permInfos <> 
+   :resultRelations <> 
+   :appendRelations <> 
+   :subplans <> 
+   :rewindPlanIDs (b)
+   :rowMarks <> 
+   :relationOids <> 
+   :invalItems (
+      {PLANINVALITEM 
+      :cacheId 45 
+      :hashValue 1764760802
+      }
+   )
+   :paramExecTypes <> 
+   :utilityStmt <> 
+   :stmt_location 0 
+   :stmt_len 49
+   }
+
+LOG:  rewritten parse tree:
+DETAIL:  (
+   {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs true 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks false 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity true 
+   :isReturn false 
+   :cteList <> 
+   :rtable (
+      {RANGETBLENTRY 
+      :alias <> 
+      :eref 
+         {ALIAS 
+         :aliasname resource 
+         :colnames ("id" "value")
+         }
+      :rtekind 0 
+      :relid 16434 
+      :inh true 
+      :relkind r 
+      :rellockmode 1 
+      :perminfoindex 1 
+      :tablesample <> 
+      :lateral false 
+      :inFromCl true 
+      :securityQuals (
+         {FUNCEXPR 
+         :funcid 16458 
+         :funcresulttype 16 
+         :funcretset false 
+         :funcvariadic false 
+         :funcformat 0 
+         :funccollid 0 
+         :inputcollid 100 
+         :args (
+            {VAR 
+            :varno 1 
+            :varattno 1 
+            :vartype 25 
+            :vartypmod -1 
+            :varcollid 100 
+            :varnullingrels (b)
+            :varlevelsup 0 
+            :varnosyn 1 
+            :varattnosyn 1 
+            :location -1
+            }
+         )
+         :location -1
+         }
+      )
+      }
+   )
+   :rteperminfos (
+      {RTEPERMISSIONINFO 
+      :relid 16434 
+      :inh true 
+      :requiredPerms 2 
+      :checkAsUser 0 
+      :selectedCols (b 8 9)
+      :insertedCols (b)
+      :updatedCols (b)
+      }
+   )
+   :jointree 
+      {FROMEXPR 
+      :fromlist (
+         {RANGETBLREF 
+         :rtindex 1
+         }
+      )
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {COALESCEEXPR 
+         :coalescetype 114 
+         :coalescecollid 0 
+         :args (
+            {AGGREF 
+            :aggfnoid 3175 
+            :aggtype 114 
+            :aggcollid 0 
+            :inputcollid 0 
+            :aggtranstype 0 
+            :aggargtypes (o 114)
+            :aggdirectargs <> 
+            :args (
+               {TARGETENTRY 
+               :expr 
+                  {FUNCEXPR 
+                  :funcid 3198 
+                  :funcresulttype 114 
+                  :funcretset false 
+                  :funcvariadic false 
+                  :funcformat 0 
+                  :funccollid 0 
+                  :inputcollid 100 
+                  :args (
+                     {VAR 
+                     :varno 1 
+                     :varattno 1 
+                     :vartype 25 
+                     :vartypmod -1 
+                     :varcollid 100 
+                     :varnullingrels (b)
+                     :varlevelsup 0 
+                     :varnosyn 1 
+                     :varattnosyn 1 
+                     :location 43
+                     }
+                     {VAR 
+                     :varno 1 
+                     :varattno 2 
+                     :vartype 25 
+                     :vartypmod -1 
+                     :varcollid 100 
+                     :varnullingrels (b)
+                     :varlevelsup 0 
+                     :varnosyn 1 
+                     :varattnosyn 2 
+                     :location 46
+                     }
+                  )
+                  :location 26
+                  }
+               :resno 1 
+               :resname <> 
+               :ressortgroupref 0 
+               :resorigtbl 0 
+               :resorigcol 0 
+               :resjunk false
+               }
+               {TARGETENTRY 
+               :expr 
+                  {VAR 
+                  :varno 1 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 1 
+                  :varattnosyn 1 
+                  :location 62
+                  }
+               :resno 2 
+               :resname <> 
+               :ressortgroupref 1 
+               :resorigtbl 0 
+               :resorigcol 0 
+               :resjunk true
+               }
+            )
+            :aggorder (
+               {SORTGROUPCLAUSE 
+               :tleSortGroupRef 1 
+               :eqop 98 
+               :sortop 664 
+               :nulls_first false 
+               :hashable true
+               }
+            )
+            :aggdistinct <> 
+            :aggfilter <> 
+            :aggstar false 
+            :aggvariadic false 
+            :aggkind n 
+            :aggpresorted false 
+            :agglevelsup 0 
+            :aggsplit 0 
+            :aggno -1 
+            :aggtransno -1 
+            :location 17
+            }
+            {CONST 
+            :consttype 114 
+            :consttypmod -1 
+            :constcollid 0 
+            :constlen -1 
+            :constbyval false 
+            :constisnull false 
+            :location 66 
+            :constvalue 6 [ 24 0 0 0 91 93 ]
+            }
+         )
+         :location 8
+         }
+      :resno 1 
+      :resname coalesce 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 0
+   }
+)
+
+LOG:  rewritten parse tree:
+DETAIL:  (
+   {QUERY 
+   :commandType 1 
+   :querySource 0 
+   :canSetTag true 
+   :utilityStmt <> 
+   :resultRelation 0 
+   :hasAggs false 
+   :hasWindowFuncs false 
+   :hasTargetSRFs false 
+   :hasSubLinks true 
+   :hasDistinctOn false 
+   :hasRecursive false 
+   :hasModifyingCTE false 
+   :hasForUpdate false 
+   :hasRowSecurity false 
+   :isReturn false 
+   :cteList <> 
+   :rtable <> 
+   :rteperminfos <> 
+   :jointree 
+      {FROMEXPR 
+      :fromlist <> 
+      :quals <>
+      }
+   :mergeActionList <> 
+   :mergeTargetRelation 0 
+   :mergeJoinCondition <> 
+   :targetList (
+      {TARGETENTRY 
+      :expr 
+         {SUBLINK 
+         :subLinkType 0 
+         :subLinkId 0 
+         :testexpr <> 
+         :operName <> 
+         :subselect 
+            {QUERY 
+            :commandType 1 
+            :querySource 0 
+            :canSetTag true 
+            :utilityStmt <> 
+            :resultRelation 0 
+            :hasAggs false 
+            :hasWindowFuncs false 
+            :hasTargetSRFs false 
+            :hasSubLinks false 
+            :hasDistinctOn false 
+            :hasRecursive false 
+            :hasModifyingCTE false 
+            :hasForUpdate false 
+            :hasRowSecurity false 
+            :isReturn false 
+            :cteList <> 
+            :rtable (
+               {RANGETBLENTRY 
+               :alias 
+                  {ALIAS 
+                  :aliasname o 
+                  :colnames <>
+                  }
+               :eref 
+                  {ALIAS 
+                  :aliasname o 
+                  :colnames ("resource_id" "project_id")
+                  }
+               :rtekind 0 
+               :relid 16441 
+               :inh true 
+               :relkind r 
+               :rellockmode 1 
+               :perminfoindex 1 
+               :tablesample <> 
+               :lateral false 
+               :inFromCl true 
+               :securityQuals <>
+               }
+               {RANGETBLENTRY 
+               :alias 
+                  {ALIAS 
+                  :aliasname a 
+                  :colnames <>
+                  }
+               :eref 
+                  {ALIAS 
+                  :aliasname a 
+                  :colnames ("employee_id" "project_id" "active")
+                  }
+               :rtekind 0 
+               :relid 16417 
+               :inh true 
+               :relkind r 
+               :rellockmode 1 
+               :perminfoindex 2 
+               :tablesample <> 
+               :lateral false 
+               :inFromCl true 
+               :securityQuals <>
+               }
+               {RANGETBLENTRY 
+               :alias <> 
+               :eref 
+                  {ALIAS 
+                  :aliasname unnamed_join 
+                  :colnames ("resource_id" "project_id" "employee_id" "project
+                  _id" "active")
+                  }
+               :rtekind 2 
+               :jointype 0 
+               :joinmergedcols 0 
+               :joinaliasvars (
+                  {VAR 
+                  :varno 1 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 1 
+                  :varattnosyn 1 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 1 
+                  :varattno 2 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 1 
+                  :varattnosyn 2 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 1 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 2 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 2 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 3 
+                  :vartype 16 
+                  :vartypmod -1 
+                  :varcollid 0 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 3 
+                  :location -1
+                  }
+               )
+               :joinleftcols (i 1 2)
+               :joinrightcols (i 1 2 3)
+               :join_using_alias <> 
+               :lateral false 
+               :inFromCl true 
+               :securityQuals <>
+               }
+               {RANGETBLENTRY 
+               :alias 
+                  {ALIAS 
+                  :aliasname e 
+                  :colnames <>
+                  }
+               :eref 
+                  {ALIAS 
+                  :aliasname e 
+                  :colnames ("id" "native_login")
+                  }
+               :rtekind 0 
+               :relid 16408 
+               :inh true 
+               :relkind r 
+               :rellockmode 1 
+               :perminfoindex 3 
+               :tablesample <> 
+               :lateral false 
+               :inFromCl true 
+               :securityQuals <>
+               }
+               {RANGETBLENTRY 
+               :alias <> 
+               :eref 
+                  {ALIAS 
+                  :aliasname unnamed_join 
+                  :colnames ("resource_id" "project_id" "employee_id" "project
+                  _id" "active" "id" "native_login")
+                  }
+               :rtekind 2 
+               :jointype 0 
+               :joinmergedcols 0 
+               :joinaliasvars (
+                  {VAR 
+                  :varno 1 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 1 
+                  :varattnosyn 1 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 1 
+                  :varattno 2 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 1 
+                  :varattnosyn 2 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 1 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 2 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 2 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 2 
+                  :varattno 3 
+                  :vartype 16 
+                  :vartypmod -1 
+                  :varcollid 0 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 2 
+                  :varattnosyn 3 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 4 
+                  :varattno 1 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 4 
+                  :varattnosyn 1 
+                  :location -1
+                  }
+                  {VAR 
+                  :varno 4 
+                  :varattno 2 
+                  :vartype 25 
+                  :vartypmod -1 
+                  :varcollid 100 
+                  :varnullingrels (b)
+                  :varlevelsup 0 
+                  :varnosyn 4 
+                  :varattnosyn 2 
+                  :location -1
+                  }
+               )
+               :joinleftcols (i 1 2 3 4 5)
+               :joinrightcols (i 1 2)
+               :join_using_alias <> 
+               :lateral false 
+               :inFromCl true 
+               :securityQuals <>
+               }
+            )
+            :rteperminfos (
+               {RTEPERMISSIONINFO 
+               :relid 16441 
+               :inh true 
+               :requiredPerms 2 
+               :checkAsUser 0 
+               :selectedCols (b 8 9)
+               :insertedCols (b)
+               :updatedCols (b)
+               }
+               {RTEPERMISSIONINFO 
+               :relid 16417 
+               :inh true 
+               :requiredPerms 2 
+               :checkAsUser 0 
+               :selectedCols (b 8 9 10)
+               :insertedCols (b)
+               :updatedCols (b)
+               }
+               {RTEPERMISSIONINFO 
+               :relid 16408 
+               :inh true 
+               :requiredPerms 2 
+               :checkAsUser 0 
+               :selectedCols (b 8 9)
+               :insertedCols (b)
+               :updatedCols (b)
+               }
+            )
+            :jointree 
+               {FROMEXPR 
+               :fromlist (
+                  {JOINEXPR 
+                  :jointype 0 
+                  :isNatural false 
+                  :larg 
+                     {JOINEXPR 
+                     :jointype 0 
+                     :isNatural false 
+                     :larg 
+                        {RANGETBLREF 
+                        :rtindex 1
+                        }
+                     :rarg 
+                        {RANGETBLREF 
+                        :rtindex 2
+                        }
+                     :usingClause <> 
+                     :join_using_alias <> 
+                     :quals 
+                        {OPEXPR 
+                        :opno 98 
+                        :opfuncid 67 
+                        :opresulttype 16 
+                        :opretset false 
+                        :opcollid 0 
+                        :inputcollid 100 
+                        :args (
+                           {VAR 
+                           :varno 2 
+                           :varattno 2 
+                           :vartype 25 
+                           :vartypmod -1 
+                           :varcollid 100 
+                           :varnullingrels (b)
+                           :varlevelsup 0 
+                           :varnosyn 2 
+                           :varattnosyn 2 
+                           :location 111
+                           }
+                           {VAR 
+                           :varno 1 
+                           :varattno 2 
+                           :vartype 25 
+                           :vartypmod -1 
+                           :varcollid 100 
+                           :varnullingrels (b)
+                           :varlevelsup 0 
+                           :varnosyn 1 
+                           :varattnosyn 2 
+                           :location 124
+                           }
+                        )
+                        :location 123
+                        }
+                     :alias <> 
+                     :rtindex 3
+                     }
+                  :rarg 
+                     {RANGETBLREF 
+                     :rtindex 4
+                     }
+                  :usingClause <> 
+                  :join_using_alias <> 
+                  :quals 
+                     {OPEXPR 
+                     :opno 98 
+                     :opfuncid 67 
+                     :opresulttype 16 
+                     :opretset false 
+                     :opcollid 0 
+                     :inputcollid 100 
+                     :args (
+                        {VAR 
+                        :varno 4 
+                        :varattno 1 
+                        :vartype 25 
+                        :vartypmod -1 
+                        :varcollid 100 
+                        :varnullingrels (b)
+                        :varlevelsup 0 
+                        :varnosyn 4 
+                        :varattnosyn 1 
+                        :location 170
+                        }
+                        {VAR 
+                        :varno 2 
+                        :varattno 1 
+                        :vartype 25 
+                        :vartypmod -1 
+                        :varcollid 100 
+                        :varnullingrels (b)
+                        :varlevelsup 0 
+                        :varnosyn 2 
+                        :varattnosyn 1 
+                        :location 175
+                        }
+                     )
+                     :location 174
+                     }
+                  :alias <> 
+                  :rtindex 5
+                  }
+               )
+               :quals 
+                  {BOOLEXPR 
+                  :boolop and 
+                  :args (
+                     {OPEXPR 
+                     :opno 98 
+                     :opfuncid 67 
+                     :opresulttype 16 
+                     :opretset false 
+                     :opcollid 0 
+                     :inputcollid 100 
+                     :args (
+                        {VAR 
+                        :varno 1 
+                        :varattno 1 
+                        :vartype 25 
+                        :vartypmod -1 
+                        :varcollid 100 
+                        :varnullingrels (b)
+                        :varlevelsup 0 
+                        :varnosyn 1 
+                        :varattnosyn 1 
+                        :location 196
+                        }
+                        {PARAM 
+                        :paramkind 0 
+                        :paramid 1 
+                        :paramtype 25 
+                        :paramtypmod -1 
+                        :paramcollid 100 
+                        :location 210
+                        }
+                     )
+                     :location 209
+                     }
+                     {VAR 
+                     :varno 2 
+                     :varattno 3 
+                     :vartype 16 
+                     :vartypmod -1 
+                     :varcollid 0 
+                     :varnullingrels (b)
+                     :varlevelsup 0 
+                     :varnosyn 2 
+                     :varattnosyn 3 
+                     :location 217
+                     }
+                     {OPEXPR 
+                     :opno 98 
+                     :opfuncid 67 
+                     :opresulttype 16 
+                     :opretset false 
+                     :opcollid 0 
+                     :inputcollid 950 
+                     :args (
+                        {VAR 
+                        :varno 4 
+                        :varattno 2 
+                        :vartype 25 
+                        :vartypmod -1 
+                        :varcollid 100 
+                        :varnullingrels (b)
+                        :varlevelsup 0 
+                        :varnosyn 4 
+                        :varattnosyn 2 
+                        :location 230
+                        }
+                        {FUNCEXPR 
+                        :funcid 406 
+                        :funcresulttype 25 
+                        :funcretset false 
+                        :funcvariadic false 
+                        :funcformat 1 
+                        :funccollid 950 
+                        :inputcollid 950 
+                        :args (
+                           {SQLVALUEFUNCTION 
+                           :op 12 
+                           :type 19 
+                           :typmod -1 
+                           :location 245
+                           }
+                        )
+                        :location 257
+                        }
+                     )
+                     :location 244
+                     }
+                  )
+                  :location 213
+                  }
+               }
+            :mergeActionList <> 
+            :mergeTargetRelation 0 
+            :mergeJoinCondition <> 
+            :targetList (
+               {TARGETENTRY 
+               :expr 
+                  {CONST 
+                  :consttype 23 
+                  :consttypmod -1 
+                  :constcollid 0 
+                  :constlen 4 
+                  :constbyval true 
+                  :constisnull false 
+                  :location 23 
+                  :constvalue 4 [ 1 0 0 0 0 0 0 0 ]
+                  }
+               :resno 1 
+               :resname ?column? 
+               :ressortgroupref 0 
+               :resorigtbl 0 
+               :resorigcol 0 
+               :resjunk false
+               }
+            )
+            :override 0 
+            :onConflict <> 
+            :returningList <> 
+            :groupClause <> 
+            :groupDistinct false 
+            :groupingSets <> 
+            :havingQual <> 
+            :windowClause <> 
+            :distinctClause <> 
+            :sortClause <> 
+            :limitOffset <> 
+            :limitCount <> 
+            :limitOption 0 
+            :rowMarks <> 
+            :setOperations <> 
+            :constraintDeps <> 
+            :withCheckOptions <> 
+            :stmt_location 0 
+            :stmt_len 0
+            }
+         :location 9
+         }
+      :resno 1 
+      :resname exists 
+      :ressortgroupref 0 
+      :resorigtbl 0 
+      :resorigcol 0 
+      :resjunk false
+      }
+   )
+   :override 0 
+   :onConflict <> 
+   :returningList <> 
+   :groupClause <> 
+   :groupDistinct false 
+   :groupingSets <> 
+   :havingQual <> 
+   :windowClause <> 
+   :distinctClause <> 
+   :sortClause <> 
+   :limitOffset <> 
+   :limitCount <> 
+   :limitOption 0 
+   :rowMarks <> 
+   :setOperations <> 
+   :constraintDeps <> 
+   :withCheckOptions <> 
+   :stmt_location 0 
+   :stmt_len 0
+   }
+)
+

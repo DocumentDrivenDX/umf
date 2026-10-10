@@ -11,13 +11,13 @@ ddx:
       kind: informed_by
     - id: umf.architecture
       kind: informed_by
-    - id: FEAT-008
+    - id: FEAT-900
       kind: informed_by
-    - id: SD-008
+    - id: SD-900
       kind: informed_by
     - id: US-900
       kind: informed_by
-    - id: US-056
+    - id: US-901
       kind: informed_by
     - id: CONTRACT-900
       kind: references
@@ -25,11 +25,11 @@ ddx:
       kind: references
     - id: TD-900
       kind: informed_by
-    - id: TD-056
+    - id: TD-901
       kind: informed_by
     - id: STP-900
       kind: informed_by
-    - id: STP-056
+    - id: STP-901
       kind: informed_by
     - id: umf.design-system
       kind: references

@@ -2,7 +2,7 @@
 
 The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.
 
-## Current integrated qualification
+## Frozen integrated qualification
 
 The current [merged acceptance certificate](../../evidence/actions-integrated-certification.md) qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its [machine-readable certificate](../../evidence/actions-integrated-certification.json) and [independent audit](../../evidence/actions-merged-integration/audit.json) bind the actual commands, inputs, runtime versions and retained results.
 
@@ -16,6 +16,14 @@ The current [merged acceptance certificate](../../evidence/actions-integrated-ce
 The [immutable strict baseline](../../evidence/actions-documentation/qualification-integrated-5be80ab9/README.md) separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source `5be80ab9`. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.
 
 Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.
+
+## Subsequent main integration
+
+Later main changes add shared security metadata and extend core 0.8 inspection. They have a [separate integration record](../../evidence/actions-security-integration/README.md); they do not change the frozen certificate above.
+
+Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.
+
+The combined release verification is still in progress. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.
 
 ## Historical qualification
 

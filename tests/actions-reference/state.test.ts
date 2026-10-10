@@ -7,7 +7,7 @@ import {seedReferenceEntity,freezeReferenceState,referenceAliasIdentity} from '.
 import {encodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC8 */
+/** @covers US-901-AC8 */
 test('native frozen frames resolve primary/alternate Keys to one resource and reject duplicate alias writes atomically',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0],record=source.modules[0]!.elements.find(element=>element.id==='order')!;action.authorization.profile={id:'umf.actions.roles',version:'1'};

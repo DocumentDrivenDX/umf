@@ -1,0 +1,1852 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "nativeImplementationQualified": false,
+  "sourceDigests": {
+    "tools/security/prove-original-graph-ir.py": "c05ebd2bf01d9486ed44d8eadd55c4651680a5de9476756ebcce8fcdfecc8bb1",
+    "tests/security/weft-source-fixture.json": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150",
+    "/Users/erik/Projects/weft/Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "/Users/erik/Projects/weft/Cargo.lock": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+    "/Users/erik/Projects/weft/crates/weft-core/Cargo.toml": "1d7e0eb769344add1e9b21d3bdbe7ddb3148003eba9bc2b22d53c25f412b0786",
+    "/Users/erik/Projects/weft/.cargo/config.toml": "6e87ded1a3f6228bb0aee5f62f89e72f87c1f9281d882ef7ac1dd8844315a64f",
+    "/Users/erik/Projects/weft/vendor/ahash/.github/workflows/rust.yml": "0d0bc3c9d0fda45f18bc7dc169d90b78d2757a01f3e789fea5011c4e4d3ebd8f",
+    "/Users/erik/Projects/weft/vendor/ahash/.gitignore": "4a59e617f7716cf2af51dbbd620c4a11f3ae00106cab84be3e2ce7b4128f5464",
+    "/Users/erik/Projects/weft/vendor/ahash/Cargo.toml": "b7d68dbac6096d63748886353cadb023c60f2cba231b0c36ffed40d2bff7207b",
+    "/Users/erik/Projects/weft/vendor/ahash/Cargo.toml.orig": "84591ea3bef6c64be7d7b22aa3d12e3cdd723ec3afb6236c103bb497a8097dde",
+    "/Users/erik/Projects/weft/vendor/ahash/FAQ.md": "9eb41898523ee209a0a937f9bcb78afe45ad55ca0556f8a4d4063558098f6d1e",
+    "/Users/erik/Projects/weft/vendor/ahash/LICENSE-APACHE": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+    "/Users/erik/Projects/weft/vendor/ahash/LICENSE-MIT": "0444c6991eead6822f7b9102e654448d51624431119546492e8b231db42c48bb",
+    "/Users/erik/Projects/weft/vendor/ahash/README.md": "d7f74d616a751bcca23d5d3b58a6daf556356a526c5f0b6aa0504715d176549a",
+    "/Users/erik/Projects/weft/vendor/ahash/build.rs": "d7dd5428c78b80bb3c99068561641ec661f0f94defbda17f85b443e358ab6396",
+    "/Users/erik/Projects/weft/vendor/ahash/rustfmt.toml": "e090969e99df9360705680cc0097cfaddae10c22dc2e01470592cf3b9787fd36",
+    "/Users/erik/Projects/weft/vendor/ahash/src/aes_hash.rs": "c29c24588676f669c9c5d928100d5743325a8a7aa19dae9e899b7108c2bf5309",
+    "/Users/erik/Projects/weft/vendor/ahash/src/convert.rs": "85789aaa5da2a1d37d91570ba6fa14ef261ff264dac40a624a88178f41c5494b",
+    "/Users/erik/Projects/weft/vendor/ahash/src/fallback_hash.rs": "6061ff5c42423f9028f487e4b042449424da6a5de5fd57fdb5f2b8063124312d",
+    "/Users/erik/Projects/weft/vendor/ahash/src/hash_map.rs": "1df153463e3c1f818bebf09938bfe63f18dc34cfeaf3041a67e2a604135e3f84",
+    "/Users/erik/Projects/weft/vendor/ahash/src/hash_quality_test.rs": "61a5d8a24b1882479ef72590f9165a2cfd5af3a26e1aca3e172061798d93f35e",
+    "/Users/erik/Projects/weft/vendor/ahash/src/hash_set.rs": "222d4563ea3749bc63ab7ded5c4a4239a0a1515b6a64301c0e04cf095386776d",
+    "/Users/erik/Projects/weft/vendor/ahash/src/lib.rs": "de037bb4e0535fdf4c432f87f0e0d0e5ba9a4ba25033f97c9a76ded33574aa9e",
+    "/Users/erik/Projects/weft/vendor/ahash/src/operations.rs": "dae1c602718e29e5839fad52e512a8cf168c1d888cfa9cd074302db7dbabb3d4",
+    "/Users/erik/Projects/weft/vendor/ahash/src/random_state.rs": "3a28f818165289071339299c49d8deb93fb27bf31ab1416349132d3af5ec2ad4",
+    "/Users/erik/Projects/weft/vendor/ahash/src/specialize.rs": "f2fe0de5d79851ee8ef6d977f418db8d5df5469eaa18a5173fa16cd61df8312e",
+    "/Users/erik/Projects/weft/vendor/ahash/tests/bench.rs": "e84993bb03089b11b8df0dccce273eab4d7aab966a71bc609d1e220ca783f023",
+    "/Users/erik/Projects/weft/vendor/ahash/tests/map_tests.rs": "fd6028cc96e1892b7d27cb5f55bf290b8e331305515598b35a54a3f349c5d7a7",
+    "/Users/erik/Projects/weft/vendor/ahash/tests/nopanic.rs": "0d28a46248d77283941db1d9fd154c68b965c81a0e3db1fe4a43e06fc448da8f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_ir.rs": "6653d07a2eeeb632cbbff53419590f1a950240fa8934e3ffd52a1d9eae232a1c",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_model.rs": "240a65d6d8f4aacfea6c6e8aadb6d35c8af32602eb3ad3d1c72fef14b769ab5f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_resolve.rs": "df48e51b8d08b881ee9ab3d3cdc9ea04a7ce7ddd52d3aff436c1b2396e22b6fa",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_syntax.rs": "6a0159d49c6d5000dcf639837dbe8f1a64511875a9b0f2f4c004367dc420f082",
+    "/Users/erik/Projects/weft/crates/weft-core/src/backend.rs": "45c63ae9ddcbcf435c5d30042574bf85124e0ee4793edc38301f5a0440b1bb4b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/backend_emission.rs": "ac850e4b0bf0ac481b3fbc3e6cfc2e1d21a268955651555a5e60f10c97544645",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/error.rs": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa",
+    "/Users/erik/Projects/weft/crates/weft-core/src/exact.rs": "97934f708fec6281ffd48b185fdd921c9a2ce4a9a0182ffb09755114922a68f1",
+    "/Users/erik/Projects/weft/crates/weft-core/src/ir.rs": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "d41ee32d326697733ac6bd3e74d01a881bd2306ab391932b710e7f056f273b74",
+    "/Users/erik/Projects/weft/crates/weft-core/src/model.rs": "c64e2d60ddf3d42228f346a4aede536e29320368d7344e5678eefcab9220eee5",
+    "/Users/erik/Projects/weft/crates/weft-core/src/resolve.rs": "f9569ca7451a9b85957d3f852fdfee2cff22929ddde48591303df952b074b70e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_association_ref.rs": "7683d8989a765c2713272d7643b41fdd2f73cb513a04a7ed97abeb53884d5a3e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_dependencies.rs": "e914f1ff5e5fa0f5ca6367b1d199be4c30e10d4a3bc6cdedc12e3c7ca0f59423",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_incidence.rs": "3c318f0bf460647279bbd8b6461556f58a4617f481fb5d61e8b034c16d86d9a6",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_ir.rs": "8870ab073cdaff2dc34c6904240ea6766e8f5ff82e405c8a8760261ffb3da1d3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_ontology.rs": "e1fb1492cc68b7ee385138ae7d4524a24190ea1dbcb034a3aab2407b77f1870f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_policy_types.rs": "f1a42c3068c771bcfe8c322b0a305115aa33f31a78cf6b5c98b6694e88bd631f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_composition.rs": "6fa62658499a4d60308235d010bea0e9bfc0caf03fcbf61cca932be9f441674d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_evaluation.rs": "04044dfca332b52a0753901d1b030000ea6c6944bbb6e27e19131e46a04de665",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "881ee322e3ba861c08ab2f96268f486fbb265c57872c02a5fdff6b9da13c8c12",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "571e3131fe5b67eb402ff4e5b87eda249d6867440eeb7fd0cf3ae419cd9a10bf",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_policy_types.rs": "0e26b8fd4e2da7a80ccc84d7ae4ad05495e334cdd0cc0e3c59633d7663fb7d06",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_profile.rs": "6af9b6c910b6e6b2c1f20710de2a34abbbce81bd0a6b2e841c69d1b690ab9ad3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_uses.rs": "71d57b69776cf6217fb4b25780e0eae815c4f589cf21aff0e289efbf164d9183",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_record_homes.rs": "f14274118bfd09166676c775b2c893cc28624c526300752049df6f79b28aa51d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "2d75f65f3831562574a43403597731b7bfef9f3e27eb99a579be06d07b697c23",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "168a09338fc736cc34b1e72c27ecc73f3dc8cdbb398e9f2e4140942ad39d264a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_selection.rs": "67ba1894fa681cca7b66779f799a0f6a75d5496b29a9f7238f257dff48e47cc8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "ff8a8472cc97a731a4dcb5cba0ccab1d44d4d0e6c2f334a2339bc550ff8bee72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_source.rs": "d7d98da8b12ed8897100c71c242bcbbabb7c18637f9668b9776085a0caa2634e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/syntax.rs": "d3dc34a52d04550b59fe96f9f95decaf5bd80cdf5ecd5e4b730de816b4707233",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.7.0.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.8.0.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.8.0.source.json": "e9cb65ca44211e1ee57fad549e31aa8c3fdba94ef2bd10d7489993a8748022cf",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.1.0-selected.schema.json": "bc9423587424e83ccf20a90054d31dda1a7656d5860e822c69db3bc8cf01a066",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.1.0.schema.json": "590c2d2d851280bad715ac928ad333215617e53b23d52c6bd9e4982b8566fcef",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.2.0-draft-selected.schema.json": "7e605eaee2f580336c7117de3717c8c6281485851126b5187a6e9583c1aaa4a7",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.2.0-draft.schema.json": "46248b7f8e45eb8dd883ff45b43f54bd63bf6fe19a2469b4fc6b6cd57214cb4c",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.1.0-selected.schema.json": "e14fd4d7acac1a901a171ca942e9ba227218353c63a8af966429e4cdfdc498f3",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.1.0.schema.json": "da6875e8889a7d0adb215964e4298b6642ba6667710d7a274888dcff2a9ef6fc",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.2.0-draft-selected.schema.json": "40e942605f166f6bece3b55919cc646808eb275076c0df221be99e8617737ef2",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.2.0-draft.schema.json": "bdaa033eeac6989bdc63e3e3e64e5ac030596868e9fc213597a5a498b7bd1a3e",
+    "/Users/erik/Projects/weft/spec/upstream/weft-record-homes-spike-0.1.0.schema.json": "ede23e1a814b1e2bfe1b1e06758f20a2cdf7f1a71cdeb68e690ec2e04cacde91",
+    "/Users/erik/Projects/weft/spec/upstream/weft-record-homes-spike-0.1.0.source.json": "2b0eac5cb23f2b38699b1e57c937f6ffb9c3eedae87a213e44db4f8ef9629528",
+    "/Users/erik/Projects/weft/crates/weft-core/examples/security_candidate_ir.rs": "a8ee96a1b6cf0a29fbfaee2845128891a3f3ba97566a25fbd4fbde4f3b5fa19d",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "bcacdc84de19ba38e32abd86413bbc067f98e017bde9baf054839c8794ddb4f2",
+    "docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
+    "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2"
+  },
+  "buildCommand": [
+    "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+    "build",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--example",
+    "security_candidate_ir",
+    "--target-dir",
+    "/private/tmp/umf-security-weft-bridge-target"
+  ],
+  "binarySha256": "7ffa77d7069c62fd9c1e24e986985ab245dd039bd89a75b7fd18432238422359",
+  "artifacts": [
+    {
+      "id": "nested",
+      "request": {
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{}},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{}},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{}},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerId\"},{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerId\"}]}],\"extensions\":{}},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentId\"},{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentId\"}]}],\"extensions\":{}},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"WorksOn\",\"name\":\"WorksOn\",\"source\":[{\"module\":\"m\",\"element\":\"Staff\"}],\"target\":[{\"module\":\"m\",\"element\":\"Project\",\"key\":\"pk\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-1",
+              "umfVersion": "0.8.0",
+              "sha256": "6932701f49ddaaf7cdfa87658a68415a82e86f0fd9b19f65032fbb60ff00c0cb"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.2.0\",\"id\":\"project-access\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"draft2\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"outer\",\"where\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"inner\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"outer\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"variable\",\"name\":\"inner\",\"endpoint\":\"staff\"}},{\"op\":\"not\",\"arg\":{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"outer\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"inner\",\"endpoint\":\"project\"}}}]}}},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+        "ontologyJson": "{\"version\":\"0.2.0\",\"documentId\":\"domain\",\"revision\":\"draft2\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}]}],\"associations\":[{\"kind\":\"record-members\",\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"kind\":\"core-relationship\",\"relationship\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"witness\":{\"kind\":\"opaque-existential\"},\"endpoints\":[{\"role\":\"staff\",\"side\":\"source\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\"},{\"role\":\"project\",\"side\":\"target\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\"}]}],\"context\":[],\"actions\":[\"read\",\"update\"]}"
+      },
+      "rules": [
+        {
+          "id": "reader",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "exists": {
+              "slot": 0,
+              "association": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "relationshipId": "WorksOn"
+              },
+              "witness": "opaqueExistential",
+              "condition": {
+                "exists": {
+                  "slot": 1,
+                  "association": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "relationshipId": "WorksOn"
+                  },
+                  "witness": "opaqueExistential",
+                  "condition": {
+                    "and": [
+                      {
+                        "equal": [
+                          {
+                            "endpoint": {
+                              "binding": {
+                                "variable": 0
+                              },
+                              "association": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "relationshipId": "WorksOn"
+                              },
+                              "role": "staff",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Staff"
+                              },
+                              "keyId": "pk",
+                              "carrier": {
+                                "incidence": {
+                                  "side": "source"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "endpoint": {
+                              "binding": {
+                                "variable": 1
+                              },
+                              "association": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "relationshipId": "WorksOn"
+                              },
+                              "role": "staff",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Staff"
+                              },
+                              "keyId": "pk",
+                              "carrier": {
+                                "incidence": {
+                                  "side": "source"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "not": {
+                          "equal": [
+                            {
+                              "endpoint": {
+                                "binding": {
+                                  "variable": 0
+                                },
+                                "association": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "relationshipId": "WorksOn"
+                                },
+                                "role": "project",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Project"
+                                },
+                                "keyId": "pk",
+                                "carrier": {
+                                  "incidence": {
+                                    "side": "target"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "endpoint": {
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "association": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "relationshipId": "WorksOn"
+                                },
+                                "role": "project",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Project"
+                                },
+                                "keyId": "pk",
+                                "carrier": {
+                                  "incidence": {
+                                    "side": "target"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "disclosure": [
+            [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "withheld"
+            ]
+          ]
+        },
+        {
+          "id": "membership",
+          "effect": "require",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "literal": true
+          },
+          "disclosure": []
+        }
+      ],
+      "mutant": {
+        "exists": {
+          "slot": 0,
+          "association": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "relationshipId": "WorksOn"
+          },
+          "witness": "opaqueExistential",
+          "condition": {
+            "exists": {
+              "slot": 1,
+              "association": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "relationshipId": "WorksOn"
+              },
+              "witness": "opaqueExistential",
+              "condition": {
+                "and": [
+                  {
+                    "equal": [
+                      {
+                        "endpoint": {
+                          "binding": {
+                            "variable": 1
+                          },
+                          "association": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "relationshipId": "WorksOn"
+                          },
+                          "role": "staff",
+                          "target": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Staff"
+                          },
+                          "keyId": "pk",
+                          "carrier": {
+                            "incidence": {
+                              "side": "source"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "endpoint": {
+                          "binding": {
+                            "variable": 1
+                          },
+                          "association": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "relationshipId": "WorksOn"
+                          },
+                          "role": "staff",
+                          "target": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Staff"
+                          },
+                          "keyId": "pk",
+                          "carrier": {
+                            "incidence": {
+                              "side": "source"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "not": {
+                      "equal": [
+                        {
+                          "endpoint": {
+                            "binding": {
+                              "variable": 0
+                            },
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "relationshipId": "WorksOn"
+                            },
+                            "role": "project",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Project"
+                            },
+                            "keyId": "pk",
+                            "carrier": {
+                              "incidence": {
+                                "side": "target"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "endpoint": {
+                            "binding": {
+                              "variable": 1
+                            },
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "relationshipId": "WorksOn"
+                            },
+                            "role": "project",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Project"
+                            },
+                            "keyId": "pk",
+                            "carrier": {
+                              "incidence": {
+                                "side": "target"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "negated",
+      "request": {
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{}},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{}},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{}},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerId\"},{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerId\"}]}],\"extensions\":{}},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentId\"},{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentId\"}]}],\"extensions\":{}},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"WorksOn\",\"name\":\"WorksOn\",\"source\":[{\"module\":\"m\",\"element\":\"Staff\"}],\"target\":[{\"module\":\"m\",\"element\":\"Project\",\"key\":\"pk\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-1",
+              "umfVersion": "0.8.0",
+              "sha256": "6932701f49ddaaf7cdfa87658a68415a82e86f0fd9b19f65032fbb60ff00c0cb"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.2.0\",\"id\":\"project-access\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"draft2\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"not\",\"arg\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"outer\",\"where\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"inner\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"outer\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"variable\",\"name\":\"inner\",\"endpoint\":\"staff\"}},{\"op\":\"not\",\"arg\":{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"outer\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"inner\",\"endpoint\":\"project\"}}}]}}}},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+        "ontologyJson": "{\"version\":\"0.2.0\",\"documentId\":\"domain\",\"revision\":\"draft2\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}]}],\"associations\":[{\"kind\":\"record-members\",\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"kind\":\"core-relationship\",\"relationship\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"witness\":{\"kind\":\"opaque-existential\"},\"endpoints\":[{\"role\":\"staff\",\"side\":\"source\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\"},{\"role\":\"project\",\"side\":\"target\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\"}]}],\"context\":[],\"actions\":[\"read\",\"update\"]}"
+      },
+      "rules": [
+        {
+          "id": "reader",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "not": {
+              "exists": {
+                "slot": 0,
+                "association": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "relationshipId": "WorksOn"
+                },
+                "witness": "opaqueExistential",
+                "condition": {
+                  "exists": {
+                    "slot": 1,
+                    "association": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "relationshipId": "WorksOn"
+                    },
+                    "witness": "opaqueExistential",
+                    "condition": {
+                      "and": [
+                        {
+                          "equal": [
+                            {
+                              "endpoint": {
+                                "binding": {
+                                  "variable": 0
+                                },
+                                "association": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "relationshipId": "WorksOn"
+                                },
+                                "role": "staff",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Staff"
+                                },
+                                "keyId": "pk",
+                                "carrier": {
+                                  "incidence": {
+                                    "side": "source"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "endpoint": {
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "association": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "relationshipId": "WorksOn"
+                                },
+                                "role": "staff",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Staff"
+                                },
+                                "keyId": "pk",
+                                "carrier": {
+                                  "incidence": {
+                                    "side": "source"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "not": {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 0
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "relationshipId": "WorksOn"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "incidence": {
+                                      "side": "target"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "relationshipId": "WorksOn"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "incidence": {
+                                      "side": "target"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "disclosure": [
+            [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "withheld"
+            ]
+          ]
+        },
+        {
+          "id": "membership",
+          "effect": "require",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "literal": true
+          },
+          "disclosure": []
+        }
+      ],
+      "mutant": {
+        "not": {
+          "exists": {
+            "slot": 0,
+            "association": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "relationshipId": "WorksOn"
+            },
+            "witness": "opaqueExistential",
+            "condition": {
+              "exists": {
+                "slot": 1,
+                "association": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "relationshipId": "WorksOn"
+                },
+                "witness": "opaqueExistential",
+                "condition": {
+                  "and": [
+                    {
+                      "equal": [
+                        {
+                          "endpoint": {
+                            "binding": {
+                              "variable": 1
+                            },
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "relationshipId": "WorksOn"
+                            },
+                            "role": "staff",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Staff"
+                            },
+                            "keyId": "pk",
+                            "carrier": {
+                              "incidence": {
+                                "side": "source"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "endpoint": {
+                            "binding": {
+                              "variable": 1
+                            },
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "relationshipId": "WorksOn"
+                            },
+                            "role": "staff",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Staff"
+                            },
+                            "keyId": "pk",
+                            "carrier": {
+                              "incidence": {
+                                "side": "source"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "not": {
+                        "equal": [
+                          {
+                            "endpoint": {
+                              "binding": {
+                                "variable": 0
+                              },
+                              "association": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "relationshipId": "WorksOn"
+                              },
+                              "role": "project",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Project"
+                              },
+                              "keyId": "pk",
+                              "carrier": {
+                                "incidence": {
+                                  "side": "target"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "endpoint": {
+                              "binding": {
+                                "variable": 1
+                              },
+                              "association": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "relationshipId": "WorksOn"
+                              },
+                              "role": "project",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Project"
+                              },
+                              "keyId": "pk",
+                              "carrier": {
+                                "incidence": {
+                                  "side": "target"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "mixed",
+      "request": {
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{}},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{}},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{}},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerId\"},{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerId\"}]}],\"extensions\":{}},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentId\"},{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentId\"}]}],\"extensions\":{}},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"WorksOn\",\"name\":\"WorksOn\",\"source\":[{\"module\":\"m\",\"element\":\"Staff\"}],\"target\":[{\"module\":\"m\",\"element\":\"Project\",\"key\":\"pk\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-1",
+              "umfVersion": "0.8.0",
+              "sha256": "6932701f49ddaaf7cdfa87658a68415a82e86f0fd9b19f65032fbb60ff00c0cb"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.2.0\",\"id\":\"project-access\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"draft2\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"owner\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"owner\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"assignment\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"assignment\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"assignment\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"owner\",\"endpoint\":\"project\"}}]}}]}},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+        "ontologyJson": "{\"version\":\"0.2.0\",\"documentId\":\"domain\",\"revision\":\"draft2\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}]}],\"associations\":[{\"kind\":\"record-members\",\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"kind\":\"core-relationship\",\"relationship\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"witness\":{\"kind\":\"opaque-existential\"},\"endpoints\":[{\"role\":\"staff\",\"side\":\"source\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\"},{\"role\":\"project\",\"side\":\"target\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\"}]}],\"context\":[],\"actions\":[\"read\",\"update\"]}"
+      },
+      "rules": [
+        {
+          "id": "reader",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "exists": {
+              "slot": 0,
+              "association": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Ownership"
+              },
+              "witness": {
+                "recordKey": {
+                  "owner": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "Ownership"
+                  },
+                  "keyId": "pk",
+                  "key": {
+                    "fields": [
+                      {
+                        "element": "ownerId",
+                        "module": "m"
+                      }
+                    ],
+                    "id": "pk",
+                    "name": "Key"
+                  }
+                }
+              },
+              "condition": {
+                "and": [
+                  {
+                    "equal": [
+                      {
+                        "endpoint": {
+                          "binding": {
+                            "variable": 0
+                          },
+                          "association": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Ownership"
+                          },
+                          "role": "resource",
+                          "target": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Resource"
+                          },
+                          "keyId": "pk",
+                          "carrier": {
+                            "members": {
+                              "fields": [
+                                {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "ownerResource"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "value": {
+                          "identity": {
+                            "binding": "resource",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Resource"
+                            },
+                            "keyId": "pk"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "exists": {
+                      "slot": 1,
+                      "association": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "relationshipId": "WorksOn"
+                      },
+                      "witness": "opaqueExistential",
+                      "condition": {
+                        "and": [
+                          {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "relationshipId": "WorksOn"
+                                  },
+                                  "role": "staff",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Staff"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "incidence": {
+                                      "side": "source"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "value": {
+                                  "identity": {
+                                    "binding": "subject",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Staff"
+                                    },
+                                    "keyId": "pk"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "relationshipId": "WorksOn"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "incidence": {
+                                      "side": "target"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 0
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Ownership"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "members": {
+                                      "fields": [
+                                        {
+                                          "documentId": "domain",
+                                          "moduleId": "m",
+                                          "elementId": "ownerProject"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "disclosure": [
+            [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "withheld"
+            ]
+          ]
+        },
+        {
+          "id": "membership",
+          "effect": "require",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "literal": true
+          },
+          "disclosure": []
+        }
+      ],
+      "mutant": {
+        "exists": {
+          "slot": 0,
+          "association": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "witness": {
+            "recordKey": {
+              "owner": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Ownership"
+              },
+              "keyId": "pk",
+              "key": {
+                "fields": [
+                  {
+                    "element": "ownerId",
+                    "module": "m"
+                  }
+                ],
+                "id": "pk",
+                "name": "Key"
+              }
+            }
+          },
+          "condition": {
+            "and": [
+              {
+                "equal": [
+                  {
+                    "endpoint": {
+                      "binding": {
+                        "variable": 0
+                      },
+                      "association": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "Ownership"
+                      },
+                      "role": "resource",
+                      "target": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "Resource"
+                      },
+                      "keyId": "pk",
+                      "carrier": {
+                        "members": {
+                          "fields": [
+                            {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "ownerResource"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "value": {
+                      "identity": {
+                        "binding": "resource",
+                        "target": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "Resource"
+                        },
+                        "keyId": "pk"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "exists": {
+                  "slot": 1,
+                  "association": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "relationshipId": "WorksOn"
+                  },
+                  "witness": "opaqueExistential",
+                  "condition": {
+                    "and": [
+                      {
+                        "equal": [
+                          {
+                            "endpoint": {
+                              "binding": {
+                                "variable": 1
+                              },
+                              "association": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "relationshipId": "WorksOn"
+                              },
+                              "role": "staff",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Staff"
+                              },
+                              "keyId": "pk",
+                              "carrier": {
+                                "incidence": {
+                                  "side": "source"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "value": {
+                              "identity": {
+                                "binding": "subject",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Staff"
+                                },
+                                "keyId": "pk"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "exists": {
+                          "slot": 2,
+                          "association": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Ownership"
+                          },
+                          "witness": {
+                            "recordKey": {
+                              "owner": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Ownership"
+                              },
+                              "keyId": "pk",
+                              "key": {
+                                "fields": [
+                                  {
+                                    "element": "ownerId",
+                                    "module": "m"
+                                  }
+                                ],
+                                "id": "pk",
+                                "name": "Key"
+                              }
+                            }
+                          },
+                          "condition": {
+                            "equal": [
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 1
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "relationshipId": "WorksOn"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "incidence": {
+                                      "side": "target"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "endpoint": {
+                                  "binding": {
+                                    "variable": 2
+                                  },
+                                  "association": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Ownership"
+                                  },
+                                  "role": "project",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Project"
+                                  },
+                                  "keyId": "pk",
+                                  "carrier": {
+                                    "members": {
+                                      "fields": [
+                                        {
+                                          "documentId": "domain",
+                                          "moduleId": "m",
+                                          "elementId": "ownerProject"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "mixed-negated",
+      "request": {
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{}},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{}},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{}},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerId\"},{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerId\"}]}],\"extensions\":{}},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentId\"},{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentId\"}]}],\"extensions\":{}},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"WorksOn\",\"name\":\"WorksOn\",\"source\":[{\"module\":\"m\",\"element\":\"Staff\"}],\"target\":[{\"module\":\"m\",\"element\":\"Project\",\"key\":\"pk\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-1",
+              "umfVersion": "0.8.0",
+              "sha256": "6932701f49ddaaf7cdfa87658a68415a82e86f0fd9b19f65032fbb60ff00c0cb"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.2.0\",\"id\":\"project-access\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"draft2\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"not\",\"arg\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"owner\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"owner\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"as\":\"assignment\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"assignment\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"assignment\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"owner\",\"endpoint\":\"project\"}}]}}]}}},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+        "ontologyJson": "{\"version\":\"0.2.0\",\"documentId\":\"domain\",\"revision\":\"draft2\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}]}],\"associations\":[{\"kind\":\"record-members\",\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"kind\":\"core-relationship\",\"relationship\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"relationshipId\":\"WorksOn\"},\"witness\":{\"kind\":\"opaque-existential\"},\"endpoints\":[{\"role\":\"staff\",\"side\":\"source\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\"},{\"role\":\"project\",\"side\":\"target\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\"}]}],\"context\":[],\"actions\":[\"read\",\"update\"]}"
+      },
+      "rules": [
+        {
+          "id": "reader",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "not": {
+              "exists": {
+                "slot": 0,
+                "association": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Ownership"
+                },
+                "witness": {
+                  "recordKey": {
+                    "owner": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "Ownership"
+                    },
+                    "keyId": "pk",
+                    "key": {
+                      "fields": [
+                        {
+                          "element": "ownerId",
+                          "module": "m"
+                        }
+                      ],
+                      "id": "pk",
+                      "name": "Key"
+                    }
+                  }
+                },
+                "condition": {
+                  "and": [
+                    {
+                      "equal": [
+                        {
+                          "endpoint": {
+                            "binding": {
+                              "variable": 0
+                            },
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Ownership"
+                            },
+                            "role": "resource",
+                            "target": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Resource"
+                            },
+                            "keyId": "pk",
+                            "carrier": {
+                              "members": {
+                                "fields": [
+                                  {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "ownerResource"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "value": {
+                            "identity": {
+                              "binding": "resource",
+                              "target": {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "Resource"
+                              },
+                              "keyId": "pk"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "exists": {
+                        "slot": 1,
+                        "association": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "relationshipId": "WorksOn"
+                        },
+                        "witness": "opaqueExistential",
+                        "condition": {
+                          "and": [
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "association": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "relationshipId": "WorksOn"
+                                    },
+                                    "role": "staff",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Staff"
+                                    },
+                                    "keyId": "pk",
+                                    "carrier": {
+                                      "incidence": {
+                                        "side": "source"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "value": {
+                                    "identity": {
+                                      "binding": "subject",
+                                      "target": {
+                                        "documentId": "domain",
+                                        "moduleId": "m",
+                                        "elementId": "Staff"
+                                      },
+                                      "keyId": "pk"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "association": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "relationshipId": "WorksOn"
+                                    },
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Project"
+                                    },
+                                    "keyId": "pk",
+                                    "carrier": {
+                                      "incidence": {
+                                        "side": "target"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "endpoint": {
+                                    "binding": {
+                                      "variable": 0
+                                    },
+                                    "association": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Ownership"
+                                    },
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Project"
+                                    },
+                                    "keyId": "pk",
+                                    "carrier": {
+                                      "members": {
+                                        "fields": [
+                                          {
+                                            "documentId": "domain",
+                                            "moduleId": "m",
+                                            "elementId": "ownerProject"
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "disclosure": [
+            [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "withheld"
+            ]
+          ]
+        },
+        {
+          "id": "membership",
+          "effect": "require",
+          "actions": [
+            "read"
+          ],
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "condition": {
+            "literal": true
+          },
+          "disclosure": []
+        }
+      ],
+      "mutant": {
+        "not": {
+          "exists": {
+            "slot": 0,
+            "association": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Ownership"
+            },
+            "witness": {
+              "recordKey": {
+                "owner": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Ownership"
+                },
+                "keyId": "pk",
+                "key": {
+                  "fields": [
+                    {
+                      "element": "ownerId",
+                      "module": "m"
+                    }
+                  ],
+                  "id": "pk",
+                  "name": "Key"
+                }
+              }
+            },
+            "condition": {
+              "and": [
+                {
+                  "equal": [
+                    {
+                      "endpoint": {
+                        "binding": {
+                          "variable": 0
+                        },
+                        "association": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "Ownership"
+                        },
+                        "role": "resource",
+                        "target": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "Resource"
+                        },
+                        "keyId": "pk",
+                        "carrier": {
+                          "members": {
+                            "fields": [
+                              {
+                                "documentId": "domain",
+                                "moduleId": "m",
+                                "elementId": "ownerResource"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "identity": {
+                          "binding": "resource",
+                          "target": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Resource"
+                          },
+                          "keyId": "pk"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "exists": {
+                    "slot": 1,
+                    "association": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "relationshipId": "WorksOn"
+                    },
+                    "witness": "opaqueExistential",
+                    "condition": {
+                      "and": [
+                        {
+                          "equal": [
+                            {
+                              "endpoint": {
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "association": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "relationshipId": "WorksOn"
+                                },
+                                "role": "staff",
+                                "target": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Staff"
+                                },
+                                "keyId": "pk",
+                                "carrier": {
+                                  "incidence": {
+                                    "side": "source"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "value": {
+                                "identity": {
+                                  "binding": "subject",
+                                  "target": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "Staff"
+                                  },
+                                  "keyId": "pk"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "exists": {
+                            "slot": 2,
+                            "association": {
+                              "documentId": "domain",
+                              "moduleId": "m",
+                              "elementId": "Ownership"
+                            },
+                            "witness": {
+                              "recordKey": {
+                                "owner": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "Ownership"
+                                },
+                                "keyId": "pk",
+                                "key": {
+                                  "fields": [
+                                    {
+                                      "element": "ownerId",
+                                      "module": "m"
+                                    }
+                                  ],
+                                  "id": "pk",
+                                  "name": "Key"
+                                }
+                              }
+                            },
+                            "condition": {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "association": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "relationshipId": "WorksOn"
+                                    },
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Project"
+                                    },
+                                    "keyId": "pk",
+                                    "carrier": {
+                                      "incidence": {
+                                        "side": "target"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "endpoint": {
+                                    "binding": {
+                                      "variable": 2
+                                    },
+                                    "association": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Ownership"
+                                    },
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "moduleId": "m",
+                                      "elementId": "Project"
+                                    },
+                                    "keyId": "pk",
+                                    "carrier": {
+                                      "members": {
+                                        "fields": [
+                                          {
+                                            "documentId": "domain",
+                                            "moduleId": "m",
+                                            "elementId": "ownerProject"
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "nested/inequivalence",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (distinct (exists ((witness_1 OriginalGraphWitness))\n            (let ((a!1 (exists ((witness_2 OriginalGraphWitness))\n                         (and (complete_membership witness_2)\n                              (= (staff_key witness_1) (staff_key witness_2))\n                              (not (= (project_key witness_1)\n                                      (project_key witness_2)))))))\n              (and (complete_membership witness_1) a!1)))\n          (exists ((witness_3 OriginalGraphWitness))\n            (let ((a!1 (exists ((witness_4 OriginalGraphWitness))\n                         (and (complete_membership witness_4)\n                              (= (staff_key witness_3) (staff_key witness_4))\n                              (not (= (project_key witness_3)\n                                      (project_key witness_4)))))))\n              (and (complete_membership witness_3) a!1)))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": null
+    },
+    {
+      "id": "nested/valid-population",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (and (exists ((witness_7 OriginalGraphWitness)) (complete_membership witness_7))\n     (exists ((witness_1 OriginalGraphWitness))\n       (let ((a!1 (exists ((witness_2 OriginalGraphWitness))\n                    (and (complete_membership witness_2)\n                         (= (staff_key witness_1) (staff_key witness_2))\n                         (not (= (project_key witness_1)\n                                 (project_key witness_2)))))))\n         (and (complete_membership witness_1) a!1)))\n     (exists ((witness_3 OriginalGraphWitness))\n       (let ((a!1 (exists ((witness_4 OriginalGraphWitness))\n                    (and (complete_membership witness_4)\n                         (= (staff_key witness_3) (staff_key witness_4))\n                         (not (= (project_key witness_3)\n                                 (project_key witness_4)))))))\n         (and (complete_membership witness_3) a!1)))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[staff_key = [OriginalGraphWitness!val!3 ->\n              StaffCompleteKey!val!1,\n              OriginalGraphWitness!val!4 ->\n              StaffCompleteKey!val!1,\n              else -> StaffCompleteKey!val!0],\n project_key = [OriginalGraphWitness!val!2 ->\n                ProjectCompleteKey!val!1,\n                OriginalGraphWitness!val!3 ->\n                ProjectCompleteKey!val!2,\n                OriginalGraphWitness!val!4 ->\n                ProjectCompleteKey!val!3,\n                else -> ProjectCompleteKey!val!0],\n complete_membership = [else -> True]]"
+    },
+    {
+      "id": "nested/broken-correlation",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (let ((a!1 (not (exists ((witness_1 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_2 OriginalGraphWitness))\n                               (and (complete_membership witness_2)\n                                    (= (staff_key witness_1)\n                                       (staff_key witness_2))\n                                    (not (= (project_key witness_1)\n                                            (project_key witness_2)))))))\n                    (and (complete_membership witness_1) a!1))))))\n  (and (exists ((witness_5 OriginalGraphWitness))\n         (let ((a!1 (exists ((witness_6 OriginalGraphWitness))\n                      (and (complete_membership witness_6)\n                           (= (staff_key witness_6) (staff_key witness_6))\n                           (not (= (project_key witness_5)\n                                   (project_key witness_6)))))))\n           (and (complete_membership witness_5) a!1)))\n       a!1)))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[project_key = [OriginalGraphWitness!val!1 ->\n                ProjectCompleteKey!val!1,\n                else -> ProjectCompleteKey!val!0],\n staff_key = [OriginalGraphWitness!val!1 ->\n              StaffCompleteKey!val!0,\n              else -> StaffCompleteKey!val!1],\n complete_membership = [else -> True]]"
+    },
+    {
+      "id": "negated/inequivalence",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (let ((a!1 (not (exists ((witness_8 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_9 OriginalGraphWitness))\n                               (and (complete_membership witness_9)\n                                    (= (staff_key witness_8)\n                                       (staff_key witness_9))\n                                    (not (= (project_key witness_8)\n                                            (project_key witness_9)))))))\n                    (and (complete_membership witness_8) a!1)))))\n      (a!2 (not (exists ((witness_10 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_11 OriginalGraphWitness))\n                               (and (complete_membership witness_11)\n                                    (= (staff_key witness_10)\n                                       (staff_key witness_11))\n                                    (not (= (project_key witness_10)\n                                            (project_key witness_11)))))))\n                    (and (complete_membership witness_10) a!1))))))\n  (distinct a!1 a!2)))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": null
+    },
+    {
+      "id": "negated/valid-population",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (let ((a!1 (not (exists ((witness_8 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_9 OriginalGraphWitness))\n                               (and (complete_membership witness_9)\n                                    (= (staff_key witness_8)\n                                       (staff_key witness_9))\n                                    (not (= (project_key witness_8)\n                                            (project_key witness_9)))))))\n                    (and (complete_membership witness_8) a!1)))))\n      (a!2 (not (exists ((witness_10 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_11 OriginalGraphWitness))\n                               (and (complete_membership witness_11)\n                                    (= (staff_key witness_10)\n                                       (staff_key witness_11))\n                                    (not (= (project_key witness_10)\n                                            (project_key witness_11)))))))\n                    (and (complete_membership witness_10) a!1))))))\n  (and (exists ((witness_14 OriginalGraphWitness))\n         (complete_membership witness_14))\n       a!1\n       a!2)))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[staff_key = [else -> StaffCompleteKey!val!0],\n project_key = [else -> ProjectCompleteKey!val!0],\n complete_membership = [else -> True]]"
+    },
+    {
+      "id": "negated/broken-correlation",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(assert (let ((a!1 (not (exists ((witness_8 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_9 OriginalGraphWitness))\n                               (and (complete_membership witness_9)\n                                    (= (staff_key witness_8)\n                                       (staff_key witness_9))\n                                    (not (= (project_key witness_8)\n                                            (project_key witness_9)))))))\n                    (and (complete_membership witness_8) a!1)))))\n      (a!2 (not (exists ((witness_12 OriginalGraphWitness))\n                  (let ((a!1 (exists ((witness_13 OriginalGraphWitness))\n                               (and (complete_membership witness_13)\n                                    (= (staff_key witness_13)\n                                       (staff_key witness_13))\n                                    (not (= (project_key witness_12)\n                                            (project_key witness_13)))))))\n                    (and (complete_membership witness_12) a!1))))))\n  (and a!1 (not a!2))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[project_key = [OriginalGraphWitness!val!1 ->\n                ProjectCompleteKey!val!1,\n                else -> ProjectCompleteKey!val!0],\n staff_key = [OriginalGraphWitness!val!1 ->\n              StaffCompleteKey!val!0,\n              else -> StaffCompleteKey!val!1],\n complete_membership = [else -> True]]"
+    },
+    {
+      "id": "mixed/inequivalence",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(assert (let ((a!1 (exists ((mixed_witness_15 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_16 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_16)\n                               (= (staff_key mixed_witness_16)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_16)\n                                  (owner_project_key mixed_witness_15))))))\n               (and (complete_ownership mixed_witness_15)\n                    (= (owner_resource_key mixed_witness_15)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_17 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_18 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_18)\n                               (= (staff_key mixed_witness_18)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_18)\n                                  (owner_project_key mixed_witness_17))))))\n               (and (complete_ownership mixed_witness_17)\n                    (= (owner_resource_key mixed_witness_17)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (distinct a!1 a!2)))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": null
+    },
+    {
+      "id": "mixed/valid-population",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(assert (let ((a!1 (exists ((mixed_witness_15 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_16 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_16)\n                               (= (staff_key mixed_witness_16)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_16)\n                                  (owner_project_key mixed_witness_15))))))\n               (and (complete_ownership mixed_witness_15)\n                    (= (owner_resource_key mixed_witness_15)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_17 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_18 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_18)\n                               (= (staff_key mixed_witness_18)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_18)\n                                  (owner_project_key mixed_witness_17))))))\n               (and (complete_ownership mixed_witness_17)\n                    (= (owner_resource_key mixed_witness_17)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (and (exists ((mixed_witness_22 RawOwnershipWitness))\n         (complete_ownership mixed_witness_22))\n       (exists ((mixed_witness_23 OriginalGraphWitness))\n         (complete_membership mixed_witness_23))\n       a!1\n       a!2)))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[authenticated_subject_key_premise = StaffCompleteKey!val!0,\n selected_resource_key_premise = ResourceCompleteKey!val!0,\n complete_ownership = [else -> True],\n staff_key = [else -> StaffCompleteKey!val!0],\n project_key = [OriginalGraphWitness!val!2 ->\n                ProjectCompleteKey!val!1,\n                else -> ProjectCompleteKey!val!0],\n complete_membership = [else -> True],\n owner_project_key = [RawOwnershipWitness!val!2 ->\n                      ProjectCompleteKey!val!1,\n                      else -> ProjectCompleteKey!val!0],\n owner_resource_key = [else -> ResourceCompleteKey!val!0]]"
+    },
+    {
+      "id": "mixed/broken-correlation",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(assert (let ((a!1 (exists ((mixed_witness_19 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_20 OriginalGraphWitness))\n                          (let ((a!1 (exists ((mixed_witness_21 RawOwnershipWitness))\n                                       (and (complete_ownership\n                                              mixed_witness_21)\n                                            (= (project_key mixed_witness_20)\n                                               (owner_project_key\n                                                 mixed_witness_21))))))\n                            (and (complete_membership mixed_witness_20)\n                                 (= (staff_key mixed_witness_20)\n                                    authenticated_subject_key_premise)\n                                 a!1)))))\n               (and (complete_ownership mixed_witness_19)\n                    (= (owner_resource_key mixed_witness_19)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_15 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_16 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_16)\n                               (= (staff_key mixed_witness_16)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_16)\n                                  (owner_project_key mixed_witness_15))))))\n               (and (complete_ownership mixed_witness_15)\n                    (= (owner_resource_key mixed_witness_15)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (and a!1 (not a!2))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[selected_resource_key_premise = ResourceCompleteKey!val!0,\n authenticated_subject_key_premise = StaffCompleteKey!val!0,\n complete_membership = [else -> True],\n complete_ownership = [else -> True],\n owner_resource_key = [RawOwnershipWitness!val!1 ->\n                       ResourceCompleteKey!val!1,\n                       else -> ResourceCompleteKey!val!0],\n staff_key = [else -> StaffCompleteKey!val!0],\n project_key = [else -> ProjectCompleteKey!val!0],\n owner_project_key = [RawOwnershipWitness!val!1 ->\n                      ProjectCompleteKey!val!0,\n                      else -> ProjectCompleteKey!val!1]]"
+    },
+    {
+      "id": "mixed-negated/inequivalence",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(assert (let ((a!1 (exists ((mixed_witness_24 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_25 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_25)\n                               (= (staff_key mixed_witness_25)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_25)\n                                  (owner_project_key mixed_witness_24))))))\n               (and (complete_ownership mixed_witness_24)\n                    (= (owner_resource_key mixed_witness_24)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_26 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_27 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_27)\n                               (= (staff_key mixed_witness_27)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_27)\n                                  (owner_project_key mixed_witness_26))))))\n               (and (complete_ownership mixed_witness_26)\n                    (= (owner_resource_key mixed_witness_26)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (distinct (not a!1) (not a!2))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": null
+    },
+    {
+      "id": "mixed-negated/valid-population",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(assert (let ((a!1 (exists ((mixed_witness_24 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_25 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_25)\n                               (= (staff_key mixed_witness_25)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_25)\n                                  (owner_project_key mixed_witness_24))))))\n               (and (complete_ownership mixed_witness_24)\n                    (= (owner_resource_key mixed_witness_24)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_26 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_27 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_27)\n                               (= (staff_key mixed_witness_27)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_27)\n                                  (owner_project_key mixed_witness_26))))))\n               (and (complete_ownership mixed_witness_26)\n                    (= (owner_resource_key mixed_witness_26)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (and (exists ((mixed_witness_31 RawOwnershipWitness))\n         (complete_ownership mixed_witness_31))\n       (exists ((mixed_witness_32 OriginalGraphWitness))\n         (complete_membership mixed_witness_32))\n       (not a!1)\n       (not a!2))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[authenticated_subject_key_premise = StaffCompleteKey!val!0,\n selected_resource_key_premise = ResourceCompleteKey!val!1,\n complete_membership = [else -> True],\n complete_ownership = [else -> True],\n owner_resource_key = [else -> ResourceCompleteKey!val!0],\n staff_key = [else -> StaffCompleteKey!val!0],\n project_key = [else -> ProjectCompleteKey!val!0],\n owner_project_key = [else -> ProjectCompleteKey!val!1]]"
+    },
+    {
+      "id": "mixed-negated/broken-correlation",
+      "smt": "(declare-sort ProjectCompleteKey 0)\n(declare-sort RawOwnershipWitness 0)\n(declare-sort OriginalGraphWitness 0)\n(declare-sort StaffCompleteKey 0)\n(declare-sort ResourceCompleteKey 0)\n(declare-fun owner_project_key (RawOwnershipWitness) ProjectCompleteKey)\n(declare-fun project_key (OriginalGraphWitness) ProjectCompleteKey)\n(declare-fun complete_ownership (RawOwnershipWitness) Bool)\n(declare-fun authenticated_subject_key_premise () StaffCompleteKey)\n(declare-fun staff_key (OriginalGraphWitness) StaffCompleteKey)\n(declare-fun complete_membership (OriginalGraphWitness) Bool)\n(declare-fun selected_resource_key_premise () ResourceCompleteKey)\n(declare-fun owner_resource_key (RawOwnershipWitness) ResourceCompleteKey)\n(assert (let ((a!1 (exists ((mixed_witness_24 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_25 OriginalGraphWitness))\n                          (and (complete_membership mixed_witness_25)\n                               (= (staff_key mixed_witness_25)\n                                  authenticated_subject_key_premise)\n                               (= (project_key mixed_witness_25)\n                                  (owner_project_key mixed_witness_24))))))\n               (and (complete_ownership mixed_witness_24)\n                    (= (owner_resource_key mixed_witness_24)\n                       selected_resource_key_premise)\n                    a!1))))\n      (a!2 (exists ((mixed_witness_28 RawOwnershipWitness))\n             (let ((a!1 (exists ((mixed_witness_29 OriginalGraphWitness))\n                          (let ((a!1 (exists ((mixed_witness_30 RawOwnershipWitness))\n                                       (and (complete_ownership\n                                              mixed_witness_30)\n                                            (= (project_key mixed_witness_29)\n                                               (owner_project_key\n                                                 mixed_witness_30))))))\n                            (and (complete_membership mixed_witness_29)\n                                 (= (staff_key mixed_witness_29)\n                                    authenticated_subject_key_premise)\n                                 a!1)))))\n               (and (complete_ownership mixed_witness_28)\n                    (= (owner_resource_key mixed_witness_28)\n                       selected_resource_key_premise)\n                    a!1)))))\n  (and (not a!1) (not (not a!2)))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "model": "[selected_resource_key_premise = ResourceCompleteKey!val!0,\n authenticated_subject_key_premise = StaffCompleteKey!val!0,\n complete_membership = [else -> True],\n complete_ownership = [else -> True],\n owner_resource_key = [RawOwnershipWitness!val!0 ->\n                       ResourceCompleteKey!val!0,\n                       else -> ResourceCompleteKey!val!1],\n staff_key = [else -> StaffCompleteKey!val!0],\n project_key = [else -> ProjectCompleteKey!val!0],\n owner_project_key = [RawOwnershipWitness!val!0 ->\n                      ProjectCompleteKey!val!1,\n                      else -> ProjectCompleteKey!val!0]]"
+    }
+  ],
+  "scope": "Four actual original Rust source-admitted draft fixtures: two opaque graph-only and two mixed raw Ownership/opaque WorksOn profiles; complete faithful Boolean membership, exact nominal role-specific complete Key correspondence and unrestricted witness populations are premises. Source lexical names and actual emitted slots preserve nested correlation and negation. Broken outer-to-inner binding or detached raw owner Project correlation yields SAT false grants and false denials under negation. Mixed profiles retain nominal Staff/Project/Resource Key sorts, qualified raw member carriers, original Record witness Key metadata and intrinsic subject/resource identities; exact projections and complete membership remain premises. Not arbitrary AST induction, actual interpreter refinement, unknown facts, authenticated grouping/cuts, original scalar codecs or native enforcement. No backend acceptance."
+}

@@ -10,7 +10,7 @@
 <a href="support-and-evidence.html" aria-current="page">Check support and evidence</a>
 <a href="glossary.html">Words used in this guide</a></nav></aside><main id="content"><h1 id="check-support-and-evidence">Check support and evidence</h1>
 <p>The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.</p>
-<h2 id="current-integrated-qualification">Current integrated qualification</h2>
+<h2 id="frozen-integrated-qualification">Frozen integrated qualification</h2>
 <p>The current <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.md">merged acceptance certificate</a> qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source <code>1fa21f6ea1d7a3e1009746da99f1a61d444cd489</code>. Its <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.json">machine-readable certificate</a> and <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-merged-integration/audit.json">independent audit</a> bind the actual commands, inputs, runtime versions and retained results.</p>
 <ul>
 <li>Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.</li>
@@ -22,6 +22,10 @@
 </ul>
 <p>The <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-documentation/qualification-integrated-5be80ab9/README.md">immutable strict baseline</a> separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source <code>5be80ab9</code>. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.</p>
 <p>Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.</p>
+<h2 id="subsequent-main-integration">Subsequent main integration</h2>
+<p>Later main changes add shared security metadata and extend core 0.8 inspection. They have a <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-security-integration/README.md">separate integration record</a>; they do not change the frozen certificate above.</p>
+<p>Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.</p>
+<p>The combined release verification is still in progress. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.</p>
 <h2 id="historical-qualification">Historical qualification</h2>
 <ul>
 <li>Core document version: 0.8.0. Action extension: umf.actions 0.1.0.</li>
@@ -44,4 +48,4 @@
 <p>Public comparisons with Palantir, Smithy, Dafny, Koka, Axon, Cedar and Temporal informed design choices. No connected Palantir tenant or those action runtimes was exercised. They are not interchangeable implementations of this protocol.</p>
 <h2 id="predict-the-result">Predict the result</h2>
 <p>If a profile supplies an evidence URL for every obligation and declaredCompatible becomes true, has UMF verified execution?</p>
-<p>Answer: no. Locators are inert strings. executionVerified remains false. Runtime qualification is separate.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"f4eeb9ad3f3476642ce9459f2f77b4b6a5ac72aa16b59d14af142d502e70932c"}</script></body></html>
+<p>Answer: no. Locators are inert strings. executionVerified remains false. Runtime qualification is separate.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"84287e292ed30b4b5f2dc505902fcf1570bc73143e643353f85b0dc7406983fc"}</script></body></html>

@@ -8,7 +8,7 @@ import {seedReferenceEntity} from '../../scripts/actions-reference/state';
 import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
 import {decodeReferenceJson,encodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC2 @covers US-056-AC4 @covers US-056-AC11 */
+/** @covers US-901-AC2 @covers US-901-AC4 @covers US-901-AC11 */
 test('native SET invocation atomically commits typed verification, replays, preserves no-op versions and rolls back audit failure',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};source.modules[0]!.elements.find(element=>element.id==='status')!.facets={length:{max:8,unit:'unicode-scalar'}};action.parameters.push({id:'note',kind:'value',field:{module:'sales',element:'status'},required:false});
@@ -30,7 +30,7 @@ test('native SET invocation atomically commits typed verification, replays, pres
  });
 },60000);
 
-/** @covers US-056-AC3 @covers US-056-AC4 */
+/** @covers US-901-AC3 @covers US-901-AC4 */
 test('native missing/version/precondition terminal decisions persist and replay without reevaluating state',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};action.failures=[{code:'DECLINED',message:'declined',retryable:false}];action.preconditions=[{id:'false',failure:{code:'DECLINED',message:'declined'},rule:{language:'umf.actions.rules',version:'1',expression:'{"literal":{"boolean":false}}',references:[]}}];
@@ -44,7 +44,7 @@ test('native missing/version/precondition terminal decisions persist and replay 
  });
 },60000);
 
-/** @covers US-056-AC4 @covers US-056-AC8 */
+/** @covers US-901-AC4 @covers US-901-AC8 */
 test('native concurrent invokes retain one same-token result and serialize distinct-token resource assertions',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};

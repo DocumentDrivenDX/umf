@@ -7,7 +7,7 @@ import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor'
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
 import {decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC9 @covers US-056-AC10 @covers US-056-AC11 */
+/** @covers US-901-AC9 @covers US-901-AC10 @covers US-901-AC11 */
 test('actual command-process death before commit rolls back; death after native acknowledgement reconciles once in a fresh process',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,target={module:'sales',action:'approve',revision:'process-recovery'};(source.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile={id:'umf.actions.roles',version:'1'};await executor.admission.revisions.retain('s',target,source);await policy.membership('s','human','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,source,{module:'sales',element:'order'},{'["sales","id"]':{string:'one'},'["sales","status"]':{string:'pending'}},'v0'));const request={protocol:'umf.actions.tx/1',target,key:'same-after-death',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'one'}]}}},prefix=new URL('../../scripts/actions-reference/',import.meta.url).pathname,path='/tmp/umf-command-process-'+crypto.randomUUID()+'.ts';

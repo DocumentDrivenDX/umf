@@ -7,7 +7,7 @@ ddx:
   authoring:
     home: repo
   links:
-    - id: FEAT-008
+    - id: FEAT-900
       kind: derived_from
     - id: umf.prd
       kind: derived_from
@@ -15,7 +15,7 @@ ddx:
 
 # US-900: Author and inspect a declarative action
 
-**Feature:** FEAT-008. **Feature Requirements:** ACT-01–08; ACT-09–13 add profile metadata
+**Feature:** FEAT-900. **Feature Requirements:** ACT-01–08; ACT-09–13 add profile metadata
 obligations, while runtime behavior is allocated to separate executor witnesses.
 **PRD Requirements:** FR-51; supporting FR-4/5/22/27/34/39/41.
 **Priority:** Design selected; build ordering unselected. **Status:** Draft.
@@ -96,7 +96,7 @@ can distinguish links sharing endpoints. Report mode cannot waive obligations.
 
 ## Dependencies
 
-FEAT-008, CONTRACT-900, SD-008, TD-900, STP-900; core 0.8.0 and existing registry
+FEAT-900, CONTRACT-900, SD-900, TD-900, STP-900; core 0.8.0 and existing registry
 and serialization. US-050 is not required for this local-only slice. Planned
 STP-900 tests are not executed evidence.
 

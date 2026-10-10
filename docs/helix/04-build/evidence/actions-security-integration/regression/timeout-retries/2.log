@@ -1,0 +1,11 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/owl/annotations.test.ts:
+(pass) US-029 nested axiom annotations preserve term identity and source edits [687.42ms]
+(pass) US-029 nested annotations expose graph links in traversal order [44.36ms]
+(pass) US-029 annotation identity and malformed reifications agree with independent RDF parsing [2431.41ms]
+
+ 3 pass
+ 0 fail
+ 126 expect() calls
+Ran 3 tests across 1 file. [6.11s]

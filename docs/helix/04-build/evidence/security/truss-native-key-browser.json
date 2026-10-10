@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-native-key.ts": "0190bf385159decd0e5e89340936a2e324bff9a5f6291791a492caa6226c1d51",
+    "tools/security/truss-native-key-browser.ts": "b60925041c723a577ff7c58acc954cb4384ef94cecf7855d28b97bd3e7051e15",
+    "docs/helix/04-build/evidence/security/truss-native-key.json": "dfdb1ad8bf4fd4facb387ede93f1cb10cfffca6a272b0d917e19f47e4c9ff0e8"
+  },
+  "browser": "153.0.8010.12",
+  "observed": {
+    "original": true,
+    "raw": true,
+    "refusals": [
+      true,
+      true,
+      true
+    ],
+    "hostGlobals": []
+  },
+  "externalRequests": 0,
+  "scope": "Actual portable backend key correspondence in real Chromium on native retained typed TEXT/int4 keys/catalog observations, plus key order/catalog type/scalar key mapping controls. No original browser native authentication, installed graph business-key/property/FK/profile/authority or full admission qualification."
+}

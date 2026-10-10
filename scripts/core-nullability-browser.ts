@@ -1,7 +1,7 @@
 import {chromium} from 'playwright';
 import {validateDocument} from '../src/validation/document';
 const cases:unknown[]=[];
-for(const umf of ['0.1.0','0.2.0','0.3.0'])for(const kind of ['field','record','group','future-kind',undefined])for(const nullability of ['required','absent-allowed','unspecified','future-availability',null,42,{},[],undefined,'']){
+for(const umf of ['0.1.0','0.2.0','0.3.0','0.8.0'])for(const kind of ['field','record','group','future-kind',undefined])for(const nullability of ['required','absent-allowed','unspecified','future-availability',null,42,{},[],undefined,'']){
  cases.push({umf,id:'availability-'+cases.length,vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'sales',elements:[{id:'e',extensions:{future:{is_nullable:true,default:null,unknown:[1,'雪']}},...(kind===undefined?{}:{kind}),...(nullability===undefined?{}:{nullability})}]}]});
 }
 const expected=cases.map(c=>validateDocument(c));
@@ -18,9 +18,9 @@ try{
    const source=cases[i],result=u.validateDocument(source);if(JSON.stringify(result)!==JSON.stringify(expected[i]))throw Error('Validation parity '+i);
    if(!result.valid){refusals++;continue;}
    const inspected=u.inspectCoreNullability(source,{module:'m',element:'e'}),element=source.modules[0].elements[0];
-   const expectedState=Object.hasOwn(element,'nullability')?(source.umf!=='0.3.0'?'legacy':u.NULLABILITIES.includes(element.nullability)?'known':'unknown'):(source.umf==='0.3.0'&&element.kind!=='field'?'inapplicable':'missing');
-   if(inspected.meaning.state!==expectedState||inspected.provenance!=='unverified')throw Error('Availability inspection');inspections++;
-   if(source.umf!=='0.3.0'&&Object.hasOwn(source.modules[0].elements[0],'nullability')){
+   const expectedState=Object.hasOwn(element,'nullability')?(!['0.3.0','0.8.0'].includes(source.umf)?'legacy':u.NULLABILITIES.includes(element.nullability)?'known':'unknown'):(['0.3.0','0.8.0'].includes(source.umf)&&element.kind!=='field'?'inapplicable':'missing');
+   if(inspected.meaning.state!==expectedState||inspected.provenance!=='unverified')throw Error('Availability inspection');if(source.umf==='0.8.0'&&inspected.version!=='6.0.0')throw Error('Original0.8 inspection contract');inspections++;
+   if(!['0.3.0','0.8.0'].includes(source.umf)&&Object.hasOwn(source.modules[0].elements[0],'nullability')){
     if(!result.diagnostics.some((d:any)=>d.code==='UNKNOWN_CORE_FIELD'&&d.path==='/modules/0/elements/0/nullability'))throw Error('Legacy interpretation');legacyCollisions++;
    }
    if(source.umf==='0.2.0')for(const format of ['json','yaml']){

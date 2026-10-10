@@ -1,0 +1,998 @@
+---
+ddx:
+  id: SEC-PG-RAW
+  type: test-procedures
+  activity: test
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: STP-056
+      kind: informed_by
+    - id: STP-057
+      kind: informed_by
+---
+
+# PostgreSQL relational security qualification
+
+## Scope
+
+Independent backend acceptance for US-056/057 under CONTRACT-062/063. All cases
+below are P0 and required; static source inspection and unrelated benchmarks
+cannot close them. Matrix is a procedural expansion of the story test plans.
+
+## Prerequisites
+
+Version/profile: PostgreSQL 17.9 synthetic spike; production engine/build remains independently selected.
+Fixture: Ordinary employee/company/m2m tables plus Clients, Projects, Staff, Assignment, Ownership and ProjectResource; separately protected columns/views.
+Mechanisms: RLS USING/WITH CHECK; GRANT/roles; secured field projections. Force/owner/bypass/constraint-error controls; no policy definer substitutions for original actor.
+Use actual least-privilege subject connections and separately excluded assessor
+and installer identities. Complete issuer/fact/authority inventory is required.
+Seed Alice active on A, inactive on B; Bob active B; both Projects share Client C.
+Resource RA belongs to A, RB to B, RO is ownerless; include multiple owners,
+identity collisions, null/absent/sensitive fields and historical owner changes.
+Every destructive drift control uses a disposable namespace/installation.
+
+## Procedures
+
+| Case ID | AC coverage | Required assertion |
+| --- | --- | --- |
+| pg-raw.B01 | US-056-AC1 | read-membership: Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases. |
+| pg-raw.B02 | US-056-AC1 | association-endpoints: Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse. |
+| pg-raw.B03 | US-056-AC1 | collection-operators: Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets. |
+| pg-raw.B04 | US-056-AC5 | direct-storage-bypass: Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy. |
+| pg-raw.B05 | US-056-AC5 | native-role-escalation: Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions. |
+| pg-raw.B06 | US-056-AC5 | definer-resolution: Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority. |
+| pg-raw.B07 | US-056-AC6 | logical-property-masking: Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier. |
+| pg-raw.B08 | US-056-AC6 | mask-query-semantics: Filter/sort/group/join/aggregate on protected properties cannot use raw value without explicit separate permission. |
+| pg-raw.B09 | US-056-AC7 | unsupported-activation: Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains. |
+| pg-raw.B10 | US-056-AC8 | private-fact-observation: Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none. |
+| pg-raw.B11 | US-056-AC9 | inventory-drift: Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses. |
+| pg-raw.B12 | US-056-AC10 | receipt-source-custody: Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses. |
+| pg-raw.B13 | US-056-AC1 | identity-carrier-collision: Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects. |
+| pg-raw.B14 | US-056-AC5 | privileged-negative-control: Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority. |
+| pg-raw.B15 | US-056-AC7 | incomplete-collection: Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt. |
+| pg-raw.B16 | US-056-AC10 | performance-resource-budget: At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output. |
+| pg-raw.L01 | US-057-AC1 | write-old-new-state: Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects. |
+| pg-raw.L02 | US-057-AC1 | field-write-authority: Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass. |
+| pg-raw.L03 | US-057-AC2 | revocation-drain-barrier: Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release. |
+| pg-raw.L04 | US-057-AC2 | streaming-revocation: Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output. |
+| pg-raw.L05 | US-057-AC3 | read-after-acknowledgment: After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources. |
+| pg-raw.L06 | US-057-AC3 | old-snapshot-new-generation: Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts. |
+| pg-raw.L07 | US-057-AC4 | historical-owner-current-authority: Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs. |
+| pg-raw.L08 | US-057-AC4 | native-history-policy-eligibility: Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed. |
+| pg-raw.L09 | US-057-AC5 | cursor-cache-rebinding: Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission. |
+| pg-raw.L10 | US-057-AC6 | derived-copy-feed-propagation: Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness. |
+| pg-raw.L11 | US-057-AC7 | missing-custody-or-guard: Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects. |
+| pg-raw.L12 | US-057-AC8 | activation-rollback: Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access. |
+| pg-raw.L13 | US-057-AC3 | authority-change-exhaustiveness: Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions. |
+| pg-raw.L14 | US-057-AC7 | effective-date-boundary: Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses. |
+
+For each row, instantiate positive and negative controls at the native surface.
+Record original caller, complete native inventory, expected oracle outcome and
+actual rows/fields/effects. Role tests must connect as the ordinary identity,
+not merely SET ROLE from a superuser connection. Concurrent cases use explicit
+barriers and independent lock/commit observations, with bounded deadlines;
+sleep alone cannot establish ordering. Execute public driver/decoder paths too.
+
+Guard failure expansion: cancel/crash an admitted worker, roll back its transaction,
+stall a stream and abandon a cursor. Revocation must either drain before its
+configured deadline or fail without acknowledging completion. Include both
+released native resources and still-live application buffers.
+
+## Execution
+
+Current runner gate: `bun docs/helix/02-design/spikes/security/acceptance.ts`.
+Backend production commands remain unimplemented and are explicitly null in
+`cases.json`; the gate must fail until real exercising commands and receipts
+exist. PostgreSQL spike replay is `python3 docs/helix/02-design/spikes/security/native.py`
+in its isolated named container; it closes no actual Truss/Ashlar cases.
+Native Delta runs must use an admitted existing test workspace and bounded
+resources; this plan does not authorize production policy/role changes.
+
+## Evidence Capture
+
+Each case retains CONTRACT-063 EvidenceCase with AC citation, source digests,
+versions/build, actual role, native descriptors, command, expected/observed
+outcomes and artifacts. Include failed attempts and original transaction outcome.
+Record schema/source inventory before and after drift and rollback cases.
+
+## Pass/Fail Rules
+
+100% required cases must exercise their assertions and pass at matching source
+and profile. Not-run/blocked/skip/timeout never passes. Unsupported-feature
+refusal verifies safety only; it cannot replace a required positive support case.
+No unauthorized raw field, row, count, diagnostic or committed effect is allowed
+within the declared profile. Timing/constraint-error limits must be explicit.
+
+## Troubleshooting
+
+Stale snapshots restart/refuse; they do not reuse a new generation with old facts.
+Missing role/policy privileges are profile failures, not reason to grant ownership.
+Native capability gaps remain explicit and cannot be solved by post-fetch filtering.
+
+## Handoff
+
+Implement these named cases before marking backend admission qualified. Preserve
+an independently computed oracle and match exact physical identities. Report
+performance observations separately from security correctness. Required native
+commands and profile adoption remain open until original consumer integration.
+
+
+### B08 query-use binding controls
+
+Exercise predicate/order/group/join/aggregate with a protected field omitted from
+the output projection. Retain positive exact original-action binding and negative
+controls for a caller-supplied unrelated granted action, changed binding sources,
+withholding, missing separate grants, forbids, empty prohibited selections and
+incomplete dependencies used only by the original action. Admission must precede
+native filtering/aggregation; evaluating permissions after a raw predicate has
+already filtered rows is insufficient. Conditional logical simulation and a
+self-asserted action label do not close this native case.
+
+
+## Executed B01 fixture scope
+
+`pg-raw.B01` now runs an owned disposable PostgreSQL 17.9 installation of raw
+company/project/employee tables and employee-project/resource-project junctions.
+A private non-login, non-superuser owner supplies the fixed-search-path RLS helper;
+ordinary Alice/Bob/outsider login connections are independently observed. Authored
+result vectors cover active/inactive assignments, sibling Projects sharing a
+company, ownerless resources and multiple owners. The installer compares all
+private seed facts to the separate oracle. Receipts retain actual image/build,
+namespace, relations/owners/ACLs, columns, constraints, policies, routine definition/
+identity/ACL/settings, native roles/memberships and observed ordinary actors.
+Cleanup finishes before successful evidence is published.
+
+This closes the stable-cut read-membership case only. It does not qualify the
+complete raw backend, arbitrary model/codec lowering, concurrent authority,
+helper probing, masking, mutation, performance or remaining B/L procedures.
+All full security acceptance criteria remain open until the required gate passes.
+The initial B01 witness used local disposable trust authentication. Current
+replays use distinct generated SCRAM credentials over TCP for ordinary subjects;
+local installer/assessor access remains an explicitly excluded container-host
+boundary. This does not establish a production authentication or host profile.
+
+
+## Executed B03 collection scope
+
+`pg-raw.B03` reuses the owned raw-table installation and independent ordinary
+connections. Lookup, list, count, min/max, SUM of unprotected value lengths,
+secured resource-to-Project traversal, offset pages and keyset pages are compared
+to authored per-actor vectors. An outsider exercises the all-hidden population;
+explicit ownerless/sibling and empty predicates retain empty results. A secured
+barrier view checks source eligibility and active target-Project membership while
+raw fact junctions remain private. Its native definition/settings and column
+metadata are retained. A disposable RLS-disabled count control exposes all five
+rows; restoration returns the exact authorized counts.
+
+These are original, unprotected scalar outputs at a stable cut. They do not
+qualify protected-field query modes, reusable cursor/source provenance, concurrent
+authority or the compiler-to-native mapping bridge. Those B/L cases remain open.
+
+
+## Executed B14 privileged-control scope
+
+`pg-raw.B14` verifies the excluded PostgreSQL administrator's actual superuser/
+bypass attributes and all five resource rows under forced RLS. Each ordinary
+connection has neither inherited administrator/guardian authority nor successful
+SET ROLE/SET SESSION AUTHORIZATION adoption (native SQLSTATE 42501). Using each
+ordinary credential to reconnect as administrator fails native SCRAM authentication.
+All TCP authentication rules and credential-mechanism boolean checks are retained;
+secret values and stored credential hashes are never recorded. The owner remains
+non-login/non-superuser; ordinary logins are separate, unique generated credentials.
+Owned-fixture cleanup reconciles uncertain creation outcomes by exact name and
+label before deletion, and precedes passing receipt publication.
+
+This is the declared administrator/owner exclusion case, not complete role/pool
+closure, definer/search-path qualification, host authentication or native profile
+qualification. The initial native boolean transport failure is retained separately;
+JSON encoding now preserves that scalar outcome.
+
+
+## Executed B06 definer/name-resolution scope
+
+`pg-raw.B06` uses independently authenticated ordinary sessions to create temporary
+shadow employee/assignment/ownership tables with fabricated complete memberships,
+change the caller search path, call an always-true caller predicate and invoke a
+caller-owned SECURITY DEFINER wrapper. Direct and wrapped protected resource
+outputs retain the independent authorized IDs. Actual temporary routine owners,
+settings and native definitions are retained separately from correctness assertions.
+Protected helper overload creation, body replacement and SECURITY INVOKER alteration
+refuse with native SQLSTATE 42501. Unauthorized PUBLIC EXECUTE grant attempts are
+judged by their actual ACL effect; PostgreSQL can return a no-op warning.
+
+A meaningful excluded-assessor control replaces only this owned fixture's helper
+with an unqualified pg_temp-first lookup. The same ordinary shadow attack then
+exposes all five resources for every ordinary actor. Restoring the exact original
+native definition restores the independent authorized IDs, with native definition
+equality checked. This qualifies the fixture's selected routine/name-resolution
+surface, not every PostgreSQL routine, extension, search-path context, host/pool
+API, protected-property mode or complete backend/source mapping.
+
+
+## Executed B04 storage-carrier scope
+
+The raw fixture now includes a private JSONB property/retained-bytea carrier and
+a dependent FK child carrier, separately owned from the public projection surface.
+`pg-raw.B04` tests each ordinary SCRAM actor against direct/list/count/COPY reads
+of private issuer, assignment, ownership, Project/company and private carrier
+tables; private joins, property aggregates and retained-byte projections also
+refuse with native SQLSTATE 42501 and no stdout values. Public SELECT ONLY and
+COPY return the exact authorized public rows. Native server-file reads, writes
+and COPY PROGRAM refuse using a file created only in the owned container.
+
+A disposable private-carrier SELECT grant then exposes all private bags/retained
+bytes to Alice despite the parent RLS predicate; revocation restores denial.
+This demonstrates that parent RLS does not substitute for private carrier grants.
+Installed private seed values are independently checked and native carrier
+columns/constraints/owners/ACLs retained. JSONB's unordered object keys are
+compared canonically while array order and exact scalar/retained byte tokens remain
+unchanged. The child carrier is a dependent relation, not a claim of generic native
+inheritance or partition closure. Protected-field projection/masking, dynamic
+carrier drift admission, external files/endpoints, current authority and actual
+graph storage remain separately unqualified.
+
+
+## Executed B07 typed field-publication scope
+
+`pg-raw.B07` publishes ordered resource-ID/note/salary cells from a secured native
+view through `umf.security.disclosure/0.1.0`. Note JSON null is original null; a
+missing note property is absent. Salary is withheld with no value, or transformed
+for RAB to the explicit string domain `resourceId` with constant `restricted`.
+No original salary/bag/retained bytes are granted to ordinary actors. The native
+frames are compared with independent authored vectors and decoded by the portable
+UMF codec against an explicitly revised core/ontology/policy fixture. Codec
+acceptance establishes shape/domain only, not authorization. Native RLS and exact
+per-actor vectors independently establish this fixture's authorized publication.
+
+A native note encoder rejects non-object bags and non-null/non-string note values
+without coercion. The secured view uses LEFT JOIN so a missing required carrier
+refuses instead of silently omitting a resource. Numeric-note and missing-carrier
+controls fail the whole aggregate JSON publication with no stdout rows; restoration
+recovers exact frames. This qualifies the fixed aggregate field-publication path,
+not every direct streaming path, query-use mode, transform, codec, source binding
+or authority-release boundary. Those B/L cases remain open. The first metadata
+fixture omitted the mandatory extensions envelope and was rejected; the fixture
+was corrected without weakening the codec or core validator.
+
+
+## B10 diagnostic counterexample (not passed)
+
+`tools/security/pg-private-diagnostics.py` retains twelve ordinary/native
+observations and an excluded-assessor metric snapshot. An unrelated private
+Assignment changes visible pg_class estimates without changing authorized rows.
+A direct pg_class restriction is bypassed through public statistics view/function
+access. Restricting the three known families blocks those probes while preserving
+authorized rows, but does not qualify complete diagnostics. B10 still has no
+passing runner. Qualification must include a complete supported diagnostic
+allowlist, alternate public views/functions, explain/history/size surfaces and
+explicit timing/metadata disclosure assumptions. No privacy exception is inferred.
+
+## Native role and ordinary-principal pool isolation
+
+B05 exercises PostgreSQL 17.9 and Bun 1.4.2 with dedicated SCRAM-authenticated
+ordinary-principal pools. Actual role membership options are retained. Owner,
+internal and file/program roles cannot be inherited or adopted through SET ROLE
+or SET SESSION AUTHORIZATION. An internal role's private-carrier SELECT grant
+does not become ordinary authority.
+
+A deliberately available lower role has INHERIT FALSE, SET TRUE and no resource
+RLS policy. On the same native PID, the host lease restores the pinned principal
+and exact independent resource IDs after a role-changing commit and SQLSTATE
+22012 abort. Results are returned only after rollback/reset and identity checking.
+Omitting reset leaves the lower role active on that same connection; the secure
+lease restores it before admitting another operation. Cleanup closes pools before
+owned-container destruction. This does not establish shared service-login subject
+attestation, arbitrary host pooling, connection-loss recovery or lifecycle guards.
+
+## Native installed-inventory drift admission
+
+B11 independently captures PostgreSQL 17.9 descriptors in a single catalog
+statement: engine, namespace, relation ownership/ACL/RLS/options, columns/defaults,
+constraints, policies, views, routine signatures/bodies/settings/ACL, role flags
+and membership options. The host pins that observed inventory by value. A fresh
+capture must match exactly before the buffered protected query may execute.
+
+Owned installer mutations change owner, private-carrier grant, membership,
+definer mode, RLS predicate, column name and bypass attribute. Each mutation must
+refuse all ordinary actors with zero protected-query executions. Exact restoration
+must recover every independent actor's eligible IDs. Omitting admission during the
+carrier-grant mutation actually exposes private carrier contents. Missing inventory,
+failed buffered operations and lazy output cannot publish rows. Mutation inventories
+are retained for audit; the pin is unaffected by later caller mutation of its input.
+
+This is a stable-cut host admission witness. Equality does not authenticate the
+provider, establish complete diagnostic closure or guard concurrent DDL/final
+release. Production compiler/model correspondence, every reachable privilege path
+and current-authority coordination remain independent admission obligations.
+
+## Native incomplete-authority collection admission
+
+B15 checks exact native correspondence with the independently authored complete
+source cut for five required fact relations. It exercises missing active/inactive
+assignments, missing ownership, changed subject binding, a same-count endpoint
+replacement, required-attribute NULL and an unavailable source. Every actor must
+refuse list/count/aggregate/page/traversal and empty list/count/page before any
+protected-query execution. Exact restoration must recover each independent
+collection vector. Ordinary outsider/all-hidden sets must still undergo admission.
+
+Controls omit source admission: empty native selections still succeed; selected
+corruptions silently remove eligible rows, and moving Alice's endpoint A-to-D
+actually grants RD despite unchanged Assignment population. A later mutation of
+the pinned input cannot change admission. Full corrupted native fact cuts are
+retained; diagnostics and counts are not returned on refusal.
+
+The first endpoint control incorrectly expected no unguarded rows; native RD
+exposure corrected that oracle without weakening refusal. PostgreSQL independently
+refused changing active's type while the secured view depends on it; that result
+is retained, and a native-installable required NULL now exercises unknown input.
+This is a frozen, externally stable source-cut host witness, not authenticated
+production ingestion, dynamic cut transition or arbitrary direct-SQL admission.
+
+## Native typed association correspondence
+
+B02 admits selected logical Assignment/Ownership roles and type homes by value,
+then independently captures PostgreSQL table columns, ordered keys, FK target
+homes/columns, validation/deferral/actions and trigger-enforcement states. Logical
+identity uses qualified document/module/element references; physical homes use
+catalog/schema/table triples. Compatible TEXT columns alone do not bind a type.
+Unknown mapping qualifiers refuse; supported endpoint keys are nonnullable,
+deterministically collated TEXT with natural junction identities and validated,
+nondeferrable, no-action native foreign keys.
+
+Mapping reversal, wrong logical type/column, duplicate role and reversed identity
+order refuse before traversal. Native controls install a fully validated FK to
+Employee instead of Project using shared A/B/D key labels, reorder the junction
+primary key and disable FK triggers. Visible traversal stays unchanged, but typed
+admission must refuse each mismatch. Exact restoration must recover independent
+per-actor vectors. RAB's A/B junction identities remain distinct. A reversed TEXT
+join runs successfully and silently loses traversal when admission is omitted.
+
+These are raw-junction controls, not actual Ashlar/Truss edge-store qualification.
+The witness does not qualify composite/native non-TEXT domains, surrogate/parallel
+edge identifiers, source issuer authentication, production query derivation or
+concurrent mapping changes. Those meanings require separate admitted profiles
+and evidence; they are not inferred from this subset.
+
+
+## B08 native query-use component and counterexample (not passed)
+
+`tools/security/pg-mask-query.py` executes an owned PostgreSQL 17.9 raw-table
+fixture with ordinary SCRAM identities and records 32 observations. The public
+barrier view has only resource identity and a constant transformed salary display;
+original salary filter/order/group/join/aggregate expressions fail with SQLSTATE
+42703 before any rows are emitted. A distinct native view grants original salary
+query use to Alice only; all five operations match authored vectors. Bob and the
+outsider cannot SELECT that separate view (42501). Actual session/effective actors
+and non-superuser/non-bypass attributes, view definitions/ACLs and source digests
+are retained in `../../04-build/evidence/security/pg-mask-query.json`.
+
+A deliberately weakened barrier view applies an original salary threshold before
+publishing the same constant mask. Bob has no separate salary query grant. Changing
+his hidden RB salary from 200 to 100 removes RB from that view, while Bob's
+permitted public publication remains exactly unchanged; restoring 200 restores
+the weak selection. This is unauthorized selection inference even though the
+raw salary never appears in output. A barrier flag alone does not bind field use
+to permission. The initial runner error-format failure is retained separately.
+
+This component establishes fixed native separation and a meaningful weakened
+control. B08 remains required and unpassed: the implementation still must bind
+original query lineage/actions and complete dependencies to semantic grants,
+refuse caller-supplied unrelated actions and forbidden/empty selections, and
+prove the compiled physical plan rather than rely on self-asserted surface names.
+No graph profile, concurrent authority or complete backend qualification follows.
+
+The companion `tools/security/prove-mask-query.py` retains five Z3 conditional checks in `../../04-build/evidence/security/mask-query-formal.json`. Each checks two resource identities, shared eligibility, separately symbolic before/after publications constrained to the same constant mask, and changed hidden values. Predicate selection, stable order, group count, equality join selection and aggregate sum are unchanged (UNSAT violations); populations and corresponding raw-value weakened controls are SAT. This finite abstraction excludes SQL NULL/domain/error/timing semantics, arbitrary transforms, compiler lineage and installed enforcement. It closes no additional acceptance case.
+
+B08 query-use component expansion: the current replay has 51 observations. Bob and the outsider refuse all five original-field modes even for constant-false selections or zero-limit ordering. Alice receives exact permitted empty count/collection values. Removing her separate native salary-use grant causes all five empty modes to refuse before stdout output, while public masked publication remains intact; restoring the grant restores the authored sum 433. These are separate ordinary connections at sequential committed cuts. They do not establish cached-plan invalidation, shared service identity, revocation drain or late application-buffer release.
+
+
+### PostgreSQL prepared-query privilege recheck — 2026-10-08
+
+The native protected-query component now passes 57 observations. A bounded interactive ordinary Alice transport prepares the salary aggregate once, returning the authored sum 433. After the excluded assessor commits revocation of the separate salary-query grant, EXECUTE on that original native session refuses with SQLSTATE 42501 and no stdout result. Restoring the exact grant allows the same prepared statement to return 433 again; independently captured backend PID equality establishes connection continuity. Request/response boundaries use explicit native markers, selector-based reads, five-second deadlines and a one-MiB capture bound; the ordinary transport closes before owned-container cleanup and receipt publication. Password delivery stays on private stdin and is not retained. Evidence is `../../04-build/evidence/security/pg-mask-query.json`. This closes the prepared-query stale privilege component for this fixed PostgreSQL 17.9 surface, not B08 or L09 in full: original compiler lineage, semantic cursor/cache binding, concurrent guard drain and final application-buffer release remain unproven. The active goal and authoritative 22/132 acceptance gate remain unchanged.
+
+
+## Original compiler key/native endpoint composition (component only)
+
+`tools/security/pg-compiler-key-probe.py` consumes retained original Rust handoffs
+and captures native PostgreSQL 17.9 descriptors in its owned fixture. Ten checks
+show that the original surrogate Assignment/Ownership key profile cannot map to
+the junction primary keys. A separately declared natural-composite-key model,
+ontology and policy revision emits a new source-pinned compiler packet and
+matches ordered native primary keys. No surrogate ID is synthesized and the
+original source meaning remains preserved. Missing or reversed components refuse.
+
+A same-shape Project-to-Staff home swap passes key shape alone. Composing that
+check with ordered native FK endpoints, selected physical homes, constraint
+validation and active enforcement triggers refuses the swap. Both checks precede
+three ordinary fixture self-join counts, each matching independent actor vectors.
+Managed helper source is checked before compiling the same in-memory bytes;
+executed helper digests and native inventory are retained in
+`../../04-build/evidence/security/pg-compiler-keys.json`.
+
+This is the raw TEXT-key/natural-junction mapping component. It does not establish
+full fact issuer/domain/attribute mapping, original compiler policy lowering,
+production source authority, concurrent cuts, generic graph row discriminators
+or final output release. Native count SQL remains an independent fixture witness;
+it is not claimed as emitted by the security compiler. No B02/B08 or full criterion
+is additionally closed by this component. Graph tables may share physical homes,
+so their type/endpoint discrimination requires separate native evidence.
+
+
+The original-compiler mapping component now has 19 observations. Both retained
+surrogate/natural count-self-join artifacts are freshly reproduced by the pinned
+actual Rust executable before correspondence checks; the native runner refuses
+source/binary drift rather than treating the retained packet as proof by itself.
+Complete action fact groups and scan projection/query fields are checked in the
+selected required single-value, unrefined TEXT/BOOLEAN subset. Missing active
+binding refuses. Native alternate Assignment tables preserve identical ordered
+keys, validated FKs and enforcement triggers, but one encodes active as TEXT and
+one permits NULL: key/endpoint checks alone pass, while required-field checks
+refuse both before ordinary output. The original BOOLEAN NOT NULL profile remains
+admitted. Context-provider mappings, nullable/multivalue/domain-refinement codecs
+and other scalar families refuse or remain unimplemented in this component.
+Matching types do not establish trusted issuer or semantic attribute meaning.
+
+
+The current actual compiler packet is `weft.security.mapping-handoff/0.2.0`,
+including `securityLogicalPlan` (`weft.security.logical-ir/0.1.0`). It retains
+all admitted normalized rules: effects, actions, targets, typed term domains and
+literals, field dispositions and correlated lexical slots. This makes rules
+available for backend-owned SQL translation without a second policy parser.
+The native mapping component now passes 20 observations, including explicit
+refusal of the superseded 0.1 handoff. Physical policy translation is still open;
+retaining the normalized rule tree is not evidence that native SQL implements it.
+
+
+## Actual Truss normalized-IR row-predicate lowering component
+
+`tools/security/truss-policy-lowering-probe.py` executes the actual portable
+Truss backend lowerer against fresh actual Rust normalized rules in an owned
+PostgreSQL 17.9 raw-table fixture. Forty-six observations pass. Generated SQL
+installs as the existing fixed-search-path, private non-login-owner function
+under forced RLS; ordinary original actors receive exact resource IDs. Only
+resource-ID column publication remains granted; unmapped value, prior disclosure
+view and private Assignment access refuse. An explicit complete native login
+roster includes the unassigned outsider. NULL helper key input remains unknown
+through STRICT and explicit qualified JSON truth encoding.
+
+The mandatory membership rule is weakened through the actual Rust source
+compiler to a permit. Its generated native function exposes all five IDs to
+every ordinary actor. Reinstalling the exact original generated definition
+restores every authored vector. Source/keyword/identifier/operator qualification
+and bounded emission are backend-owned; SQL identifiers above 63 UTF-8 bytes,
+unrecognized rule/term forms, context terms, unsupported domains/refinements
+and oversized/deep output refuse. Native lowering currently admits only required
+unrefined TEXT/BOOLEAN predicate facts. The emitter uses explicit three-valued
+existence CASEs and permit-is-true/require-is-true/forbid-is-false composition.
+
+`tools/security/truss-predicate-browser.ts` runs the same actual portable module
+in real Chromium 148.0.7778.96 and emits SQL exactly equal to both native-tested
+original and weakened predicates; no Bun/process/Buffer globals or external
+requests occur. Initial normalized-domain and NULL-transport failures are
+retained separately. A qualified JSON object envelope passes; the prior empty
+unqualified scalar/object transport attempts are not positive evidence.
+
+This is a native row-policy translation component on raw tables, not an installed
+type-defined Truss graph profile. Complete host/issuer/fact/current-authority
+admission, field-disclosure lowering, temporal/write/stream/cache/release controls,
+privacy closure and production support remain unqualified. Public compiler
+security activation remains unsupported; no B/L or full acceptance criterion
+is credited by this component.
+
+Current replay expansion: 49 observations include actual native routine owner/security/PUBLIC ACL flags and forced-RLS/ID-only column privilege vectors. The emitter refuses multiple logical types sharing one physical table without a discriminator bridge; browser replay independently verifies that refusal. The earlier 46-observation increment is retained as history. Current receipt paths are unchanged.
+
+
+## Native three-valued existence diagnostics
+
+`tools/security/truss-existence-truth-probe.py` records 63 observations, including
+the 49 row-lowering foundation controls. Negative-existence and forbid variants
+are emitted by the actual Rust owner from revised source policies and lowered
+by the actual Truss module. Known-subject complements match authored vectors.
+The unassigned subject is then deliberately removed for primitive SQL diagnostics
+outside the admitted complete-subject cut. For RA/RAB/RB, unknown witnesses under
+negative-existence and forbid deny. A deliberately naive native `NOT EXISTS`
+collapses unknown to false and grants those same primitive decisions. The exact
+original generated function and complete subject roster are restored before
+normal final checks and cleanup. This is not a valid whole-collection read with
+missing subject: host admission must refuse that incomplete context.
+
+`tools/security/prove-existence-truth.py` supplies three conditional Z3 checks
+in `existence-truth-formal.json`: logical Kleene-OR existence corresponds to the
+SQL CASE priority algebra; unknown negative-existence and forbids cannot grant.
+Two optional witnesses cover all T/F/U states and empty populations. Violations
+are UNSAT, independent positive populations SAT, and naive-EXISTS controls SAT.
+Identical complete stable native/logical witnesses and scalar truth correspondence
+are premises. Source pins do not prove SQL/compiler implementation correctness;
+actual native diagnostic execution is separate evidence. No full criterion or
+missing-subject collection admission is credited.
+
+### Identity carrier collision probe prepared
+
+`tools/security/pg-raw-identity-probe.py` and the independent authored `tests/security/native/pg-raw-identity-oracle.json` cover exact case, normalization-distinct text, supplementary Unicode and delimiter text in original resource keys. The probe uses original forced-RLS policy and SCRAM actors; Alice and Bob must see opposite original keys, and the outsider neither. A deliberately lossy `lower(id)` installer diagnostic must merge the case pair, showing the corpus catches normalization shortcuts. Separate original native array controls distinguish delimiter placement, NULL/empty text and lower-bound framing. These primitives do not establish full composite authorization or cross-home/hash routing identity, so full B13 remains open even if the component passes.
+
+Python syntax compilation passed. The execution attempt terminated at Docker inventory timeout before fixture creation. `pg-raw-identity-pending.json` retains exact current sources and the failure stage; there are no native observations or passing receipt. Run this probe after engine recovery, then extend the full B13 coverage before registering an acceptance case.
+
+### First owner-derived field/operator enforcement integration
+
+`weft-original-use.json` retains five operator artifacts and a separately authored unrelated-action profile from the actual compiler inspection owner. `truss-original-use.json` retains 62 native observations covering emitted application SQL, independently compiled read membership, exact bound original action before execution, populated/empty queries for all five uses, private original salary source/carrier ACLs, unrelated-profile refusal and original native routine properties. The native fixtures validate required signed64 JSON salary before bigint extraction and transport output text without JS numeric conversion. `truss-original-use-browser.json` matches all ten native-installed program outputs and four admission refusals in real Chrome 153.
+
+B08 remains open: this first component uses fixed trusted authored fixture sources, resource-independent separate actions and an inspection-owner export. Full activation and immutable query/source provenance custody, authenticated fact/issuer/current authority through final release, general protected-field disclosure, nullable/other native domains, additional operators/history/page and private diagnostic closure remain required. The current library refuses unsupported paths instead of weakening them. Do not promote the 62 primitive/integration observations into full B08 acceptance.
+
+### Query-use binding and eligible source completeness — 2026-10-08
+
+The experimental raw query home is now captured as exact original binding bytes (`truss.security.raw-query-home/0.1.0`). The portable consumer verifies binding, ontology and profile hashes, joins the profile binding to the handoff binding, checks native mapping against captured binding content, derives protection and operator/action selection from the captured ontology/profile, and captures inputs synchronously before asynchronous hashing. These establish source correspondence under the trusted original-owner premise; hashes do not establish issuer authenticity or current authority.
+
+Before every application statement, the fixed native routine requires exactly one private original carrier with non-null required native fields for each eligible root row. Original action admission and this collection check precede application filtering, including empty results. Fresh PostgreSQL 17.9 evidence passes 74 observations: missing eligible carriers refuse all ten populated/empty routines, exact restoration recovers the result, and deleting an ineligible carrier does not alter the eligible aggregate. This does not yet qualify arbitrary domains, graph storage, concurrent authority changes or full privacy closure.
+
+Real Chromium 153 matches ten native programs, refuses nine profile/capability/projection/action/mapping/source substitutions, and confirms that input mutation cannot change the captured result or repair an initially invalid mapping during asynchronous validation. The complete 132-case goal remains unchanged; B08 and the full backend acceptance criteria remain open.
+
+### Conditional original-source completeness theorem — 2026-10-08
+
+`original-source-completeness-formal.json` retains four quantified Z3 checks over arbitrary eligible resource populations. An independently stated universal specification (each eligible resource has exactly one carrier with all required fields) is equivalent to anti-existence admission. Empty application results cannot hide unavailable source; unauthorized original actions and duplicate/null carriers cannot admit. Each check has an UNSAT violation, SAT weakened control and SAT positive control. Exact native key correspondence, truthful eligible-root RLS, complete carriers, field availability, independent action authorization and a stable authority/source cut through final release are explicit premises. This proves the admission algebra, not SQL generation or backend isolation. The current 74 native observations cover missing eligible carriers and restoration, but do not establish every formal premise or all duplicate/null implementations. Full B08 and graph/native acceptance remain open.
+
+### Malformed original carrier refusal — 2026-10-08
+
+The fixed private PostgreSQL query routine now normalizes caught execution errors to an authored 42501 refusal before results are returned. Added eligible-carrier controls for null, text sentinel, fractional number, signed64 overflow and object values across all ten populated/empty application routines, plus exact restoration. Fresh PostgreSQL 17.9 receipt passes 125 observations. These controls require no output, 42501, and absence of the sentinel/cast diagnostic categories in ordinary-client stderr. This is not a general proof of diagnostic noninterference; cancellation/assertion exceptions, timing, logs, concurrent mutation and complete physical admission remain unqualified. The boundary is the explicitly authored fixed spike installer, not an activated production compiler/runtime API. B08/B10 and graph criteria remain open.
+
+### Duplicate original-source cardinality controls — 2026-10-08
+
+Fresh PostgreSQL 17.9 evidence now passes 138 observations. Owner-authored replacement of the private original view duplicates the eligible RAB projection while retaining base-table primary keys. All ten populated/empty query routines refuse before results; exact restoration recovers the aggregate. Duplicating ineligible RB leaves the eligible aggregate unchanged, followed by restoration. This concretely exercises the exactly-one-carrier branch of the conditional completeness theorem. The mutation is an authored fixture owner change: it does not demonstrate authenticated source installation, native dependency sealing, current-epoch/source drift admission or concurrent stable-cut enforcement. Full B08/B10 and actual graph backend cases remain unqualified.
+
+### Hidden carrier error interference counterexample and native fix — 2026-10-09
+
+The expanded native test found an actual privacy counterexample: changing only unreadable RB salary to JSON null made Alice's eligible predicate query fail. The vulnerable fixture source and observed failure are retained as `original-use-hidden-carrier-vulnerable.py.txt` and `original-use-hidden-carrier-counterexample.json`. Root RLS alone did not isolate malformed carrier evaluation in the native query.
+
+The fixed spike installer enables and forces SELECT membership RLS on the private original carrier relation, using the same compiler-derived read membership predicate. PostgreSQL catalog observations independently verify enabled/forced RLS, guardian ownership and the authored SELECT policy. Fresh PostgreSQL 17.9 evidence passes 240 observations, including all five malformed hidden-carrier variants across all ten operator/empty-result programs: eligible outputs remain unchanged and client diagnostics are empty. Restoration, eligible missing/malformed/duplicate refusal and private-source access controls also pass.
+
+Physical lowering must isolate every protected carrier before operations that can evaluate its stored values or errors; root row filtering plus a private view alone is insufficient evidence. Require either native policy on the carrier or an independently validated equivalent barrier, including hidden malformed-value regression controls. This applies to raw and graph carrier homes. The fixed authored installer is still a spike; native dependency/source sealing, concurrent authority cuts, timing/log noninterference, full backend B08/B10 and public compiler activation remain open. Full gate remains 22/132.
+
+### Captured complete physical mapping inputs — 2026-10-09
+
+Experimental raw-query-home binding 0.2.0 includes the subject and complete authored physical type mappings (root, subject and associations), in addition to the original carrier home and target. The portable consumer compares captured inputs to the exact original binding and the profile/handoff binding identity before lowering. The reviewed bridge reads physical mappings from these captured bytes. This closes the prior caller-substitution gap for completeness-root and policy association mappings; binding hashes establish correspondence, not issuer authenticity or native catalog equivalence.
+
+Actual owner export passes ten checks/six artifacts; freshly replayed native programs retain 240 passing observations. Four conditional source-completeness proofs are refreshed against the consumer source. Chromium controls additionally refuse substituted root table, association field column and subject type. Native mapping admission, schema drift/epoch, authenticated source custody and final-release guards remain host duties and open backend acceptance. Full gate remains 22/132.
+
+### Exact original integer boundaries and aggregate widening — 2026-10-09
+
+Fresh PostgreSQL 17.9 evidence passes 252 observations. Added signed64 minimum/maximum carriers across all ten operator/empty programs and exact restoration. Actual owner IR declares each SUM argument signed64 but its nullable integer result has no integer-width facet. PostgreSQL's numeric SUM result therefore preserves the admitted result: summing two signed64 maxima yields lexical `18446744073709551614`, and summing minimum plus maximum yields `-1`. Stored boundary values are authored as native numeric SQL literals; outputs stay text and never pass through JS Number. This qualifies the fixed integer subset only, not arbitrary aggregate facets/domains, protected projection, complete backend acceptance or issuer/current-cut guarantees. Full gate remains 22/132.
+
+### Original-value carrier isolation regression protocol — 2026-10-09
+
+Required expansion of pg-raw.B08 (US-056-AC6), pg-raw.B10 (US-056-AC8) and pg-raw.B15 (US-056-AC7). The retained PostgreSQL raw spike counterexample `original-use-hidden-carrier-counterexample.json` demonstrates that protecting a root relation alone can let hidden malformed carriers affect eligible results. Its fix and 252 observations are motivation, not acceptance evidence for this backend.
+
+1. Establish actual ordinary-subject outputs for predicate, order, group, join and aggregate, including populated and empty-result variants; separately bind original-value action authority. Retain rows and client diagnostics, including success with an empty authorized set.
+2. Change only an unreadable resource's carrier to null, text, fractional numeric, overflow and structured object values outside the selected native field domain. For every operator and empty variant require identical eligible outputs and no new ordinary diagnostic payload. Restore exact carrier bytes. Compare successful request/error outcomes as well as returned rows; a generic failure is observable interference.
+3. Apply the same changes to an eligible required carrier. Require whole-request refusal before any row, aggregate, page or success receipt, including empty application results. Repeat with a missing carrier and duplicated selected carrier projection; restore each state and prove successful recovery.
+4. Test same native key bytes in another logical type/home and reversed or wrong-type endpoint bindings. Required source completeness must consider exactly the eligible selected type population. A hidden/ineligible carrier or carrier of a different type cannot satisfy an eligible dependency or cause its refusal.
+5. Inspect native policy/barrier metadata for every protected carrier before evaluating stored values, including child and retained homes. Use an assessor's inventory rather than installer declarations. Denying direct SELECT or filtering the root relation does not establish evaluation isolation. Retain native execution-plan evidence where available, while treating observed query behavior as the decisive regression result.
+6. Change carrier policy, original routine, type selection or source mapping in a disposable installation. Public admission must detect drift or retain a demonstrated immutable dependency cut. Retain the prior installation and show migration failure does not broaden access. Link these results to pg-raw.B11/B12 and L12; fixed installer edits do not qualify current-source custody.
+7. Use explicit barriers to mutate carrier/authority after admission and before final release. Require the declared stable source/authority cut, coordinated drain or refusal without partial output. Link to pg-raw.L03/L06/L11; a sequential fixed-statement test does not qualify concurrent final-release behavior.
+8. Retain source pins, selected field/input/result domains and the full ordinary driver result/error path. Signed64 input extrema and widened aggregate results must remain exact native/lexical values. Do not route stored identities or numeric values through JS Number. Compare unmasked input authorization separately from disclosed output semantics.
+
+Backend instantiation: use actual admitted relational mappings and selected private carrier homes. Native forced carrier RLS is one tested spike mechanism; public installation, source inventory and final-release behavior still require their own evidence.
+
+No new cases or criteria are removed or marked accepted by this procedural expansion. Execute it as part of the existing required case IDs.
+
+Formal obligation: `carrier-error-isolation-formal.json` proves conditional eligible-only carrier evaluation over two worlds; pg-raw.B08/B10/B15 must independently establish native eligibility/barrier/cardinality/scalar/cut premises. SAT unsafe evaluation is a mandatory negative-control pattern, not a passing backend receipt.
+
+### Original-query epoch integration and stale-snapshot control — 2026-10-09
+
+Fixed authored native original-use routines now check private table/sequence authority generation before original-action admission, source completeness and application execution. An actual ordinary TCP/SCRAM connection establishes repeatable-read with a returned snapshot barrier; installer commits Assignment revocation plus generation advancement before the first protected read. The old connection refuses without output. A fresh connection after exact assignment restoration and another generation advance succeeds. Native generation is independently observed as lexical `2` after revocation. Fresh PostgreSQL 17.9 evidence passes 256 observations.
+
+The first integration run failed stale-snapshot refusal because the newly created sequence's first nextval reused generation 1. The vulnerable source is retained as `original-use-epoch-initialization-vulnerable.py.txt`; initialization now explicitly sets generation 1 as already called, matching the existing epoch spike. No stale-row output was retained from that failing assertion, so this record does not claim its exact returned value. Fixed evidence tests actual advancement and refusal.
+
+This is explicit installer-controlled authority mutation and stale-snapshot rejection, not exhaustive authority-change detection or drain coordination. The sequence is non-MVCC and nontransactional; abort/advance may conservatively refuse until repaired. No guard through final client release, revocation acknowledgment/drain, public activation, native source custody or full L06 qualification is claimed. Full gate remains 22/132.
+
+### Epoch rollback and ordinary custody controls — 2026-10-09
+
+Fresh original-use PostgreSQL 17.9 evidence passes 270 observations. A sequence advance inside a rolled-back authority transaction persists while the epoch row rolls back; the next fresh ordinary request refuses with no output. Explicit installation of a new generation restores the expected aggregate. Alice, Bob and outsider independently cannot read the epoch table, read the sequence, invoke nextval or call the private epoch helper. This verifies conservative mismatch refusal and least-privilege custody in the fixed installer.
+
+Repair is an explicit assessor/installer action; no public recovery API or automatic acknowledgment is claimed. Authority changes remain manually enumerated in this spike, and no drain/final-release barrier or exhaustive authority invalidation is established. Link these controls to B05/L06/L11/L12/L13 qualification without promoting those cases. Full gate remains 22/132.
+
+### Guarded native buffer/publication integration — 2026-10-09
+
+Actual UMF SecurityAuthorityGuard now participates in a reviewed native pipeline spike around the original compiler-derived PostgreSQL aggregate. The ordinary query completes and decodes exact lexical output, then waits at an explicit publication barrier while the read callback still holds its guard. A participating change queues; its callback has not started, and an independent native assessor query confirms Assignment remains active. Publication completes before change callback admission; revocation and epoch advancement commit, and the next guarded ordinary query sees no eligible rows. A guarded restoration recovers the expected result. Six new observations produce 276 native observations overall.
+
+The initial test oracle expected the word true, whereas psql's ordinary boolean carrier is t; correcting that lexical oracle and rerunning passes. No native safety failure is claimed for that oracle mismatch.
+
+This demonstrates one-process read/change participation through buffered publication, not a production transport receipt, distributed/native-exclusive lock, all authority writers, streaming, cancellation/crash or final byte delivery. Public issuer/source/guard custody and exhaustive mutation participation remain open; L03/L05 are not promoted. Full gate stays 22/132.
+
+### Guarded publication/transition failure controls — 2026-10-09
+
+Extended the actual UMF guard/native publication pipeline with two failure paths. A buffered native result whose publication callback throws rejects the read and releases the guard, allowing the previously queued participating revocation to commit; subsequent protected reads have no eligible resources. A participating change that commits native revocation then throws an acknowledgment error produces SECURITY_TRANSITION_UNKNOWN, closes the guard, refuses subsequent reads before any native query, and refuses self-repair through that closed guard. Native assessor observation verifies committed revocation; separate explicit assessor restoration recovers the raw fixture.
+
+Fresh PostgreSQL 17.9 aggregate receipt passes 287 observations. These are controlled single-process callback failures, not process crash, network acknowledgment ambiguity, distributed custody, final bytes delivered, all native writers or production recovery qualification. No L03/L11/L12 criterion is closed by the component. Full gate stays 22/132.
+
+### Queued revocation cancellation and retry — 2026-10-09
+
+Actual UMF guard/native pipeline now includes an AbortSignal-cancelled authority change queued behind a buffered read. The queue rejects with SECURITY_GUARD_REFUSED; the mutation callback never starts, an independent native observation confirms Assignment still active, and the active guarded read returns its original exact result. An explicit later participating retry commits revocation and the next protected read is empty. Restoration is separate and guarded. Fresh PostgreSQL 17.9 aggregate receipt passes 292 observations.
+
+This qualifies cancellation before change callback admission only. Cancellation of a callback already executing, process crash, distributed/native-exclusive coordination, canceled native transactions and full guard participation remain open. No revocation acknowledgment is emitted for the cancelled request. Full gate stays 22/132.
+
+Drain proof obligation: publication-drain-formal.json gives an inductive abstract invariant. pg-raw.L03/L04/L11 must prove individual native lease custody through actual final release and all mutation participation; an application callback promise alone does not establish those premises. Include the premature-release negative control and failure/cancellation protocols.
+
+### Separate-connection native publication drain — 2026-10-09
+
+Added actual PostgreSQL coordination across separate native connections: an ordinary TCP/SCRAM read transaction acquires an explicitly authored shared transaction advisory lock, queries the compiler-derived routine and holds its lexical decoded result. A separate installer transaction attempts the matching exclusive advisory lock before assignment revocation/epoch advancement. The assessor observes PostgreSQL pg_stat_activity advisory wait and independently observes active Assignment while the read lease is retained. Publication precedes reader COMMIT; reader exits without diagnostics; revoker then commits and returns acknowledgment. A fresh ordinary read is empty, and explicit restoration recovers the fixture. Fresh aggregate receipt passes 302 observations.
+
+The lock key is fixed coordination metadata, not a native resource identity. This proves the authored participating transactions' drain ordering and native lease lifetime through controlled publication. It does not seal all mutators, prove source/role lock custody, enforce lock use in public activation, cover distributed application buffers beyond the declared lease, final byte delivery, streaming, crashes, cancellation/deadlines or full L03/L05 acceptance. The original test's bounded deadline and actual native lock-wait observation establish ordering; elapsed sleep is not used as evidence. Conditional publication-drain proof source pins are refreshed, but the theorem does not verify advisory-lock implementation. Full gate remains 22/132.
+
+### Native DML writer participation in the fixture — 2026-10-09
+
+The fixed installer now creates statement triggers on employee, project, resource, Assignment junction, Ownership junction and private original carrier tables. BEFORE INSERT/UPDATE/DELETE/TRUNCATE acquires the selected exclusive transaction advisory lock; AFTER advances the non-MVCC generation and epoch row. PostgreSQL catalog evidence independently verifies all twelve enabled triggers and their selected routines. The separate native revoker now omits both explicit lock acquisition and explicit epoch advancement: its update blocks under the retained reader lease, and the trigger alone advances generation after drain. Fresh PostgreSQL 17.9 receipt passes 304 observations, retaining prior query/domain/privacy/epoch/guard controls.
+
+This enforces participation for ordinary SQL DML on the six authored fixture tables with these enabled triggers. It does not seal trigger/role/function/schema changes, disabled-trigger or replication paths, excluded owner/admin bypass, independent native data sources, all selected graph homes, public read-lease acquisition, statement snapshot semantics beyond tested cuts or final client delivery. Protected read methods must still retain the native lease; ordinary direct invocation alone does not establish final-release drain. Installer/source inventory admission and comprehensive writer/read-path closure remain open. Conditional proofs retain updated source pins without claiming native-code verification. Full gate remains 22/132.
+
+### Native revocation lock timeout — 2026-10-09
+
+While the ordinary native reader holds its publication lease and a revoker is independently observed waiting in PostgreSQL, a second revoker executes an Assignment update with native lock_timeout=100ms. The trigger-enforced lock wait returns 55P03, no output/acknowledgment, and the connection ends without committing. Independent native observations show Assignment and epoch unchanged. Publication then completes and the original waiting revoker commits successfully. Fresh PostgreSQL 17.9 receipt passes 307 observations.
+
+This verifies bounded native lock timeout without authority effects for the authored transaction, not elapsed-time ordering, canceled active callbacks, process crash/connection loss, complete deadline budget containment, distributed acknowledgment or production recovery. No drain acknowledgment is issued on timeout. The full required backend scope remains unchanged at 22/132 accepted cases. Conditional drain proof source pins are refreshed without native implementation proof claims.
+
+### Protected-routine automatic native lease — 2026-10-09
+
+The fixed native original-query routines acquire the selected shared transaction advisory lock before epoch checking, original-action admission, completeness validation and query evaluation. The ordinary retained read transaction no longer calls an explicit lock helper. After the query-result barrier, independent PostgreSQL pg_locks/pg_stat_activity observations confirm the ordinary reader's granted ShareLock on the selected coordination key. Trigger-only revocation still waits and timeout remains without acknowledgment/effects until publication and reader commit. Fresh PostgreSQL 17.9 receipt passes 308 observations.
+
+Moving the catalog observation after the actual buffered-result barrier avoids timing-based lease evidence. Epoch checking follows acquisition so old data/authority snapshots cannot masquerade as current solely by obtaining a new lease. Autocommit releases the transaction before later application publication; production hosts must retain the admitted native transaction through their declared final-release boundary and qualify all read surfaces. This is a fixed authored installer protocol, not a public physical/compiler activation or complete source/role/mutator/graph closure. Full gate remains 22/132; conditional proof pins are refreshed without native code verification claims.
+
+Mandatory pg-raw.L03/L11 backend-loss control: retain a live client publication buffer, terminate only its native session, then attempt revocation acknowledgment. Native-session lock release is not buffer drain. Require separately proved publisher lease/acknowledgment or bounded refusal; exercise cleanup of live publisher versus dead owner. PostgreSQL retained native-lease-loss counterexample motivates this test without transferring results to this backend.
+
+### Persistent enrolled publication lease spike — 2026-10-09
+
+Added a private persistent publication-lease registry and a separately enrolled aggregate wrapper to the fixed raw PostgreSQL fixture. A trusted issuer registers original actor/native backend before the wrapper executes. Unenrolled ordinary callers refuse, and all three ordinary actors cannot read the registry. Native writer triggers acquire the exclusive guard then refuse while any unresolved enrolled publication exists. Writers using repeatable-read are explicitly unsupported and refuse before effects, preventing an old writer snapshot from treating unseen leases as absent. The current ordinary read profile remains separately tested; this enrolled wrapper is not a public activation.
+
+Actual enrolled reader buffers its compiler-derived aggregate, then the assessor terminates its backend. Its persistent publication record remains. Revocation returns 42501 with no acknowledgment; independent native observations prove Assignment and epoch unchanged while the live client retains the old buffer. Only after client failure is observed, trusted publisher explicitly discards its buffer and issuer clears the lease does a later native revocation commit. Fresh receipt passes 333 observations, retaining the unregistered native-lock-loss counterexample as a negative control.
+
+This closes the observed backend-loss interleaving in the enrolled authored spike under trusted registration/release, not the whole system. Current binding uses actor/native PID; PID reuse, session incarnation/opaque token custody, public issuer authentication, lease recovery/owner-death proof, complete read enrollment, streaming/final bytes, DDL/trigger drift and graph/Delta implementation remain open. Cleanup is never inferred from backend disappearance or elapsed timeout. The unregistered base routine remains a spike control and cannot qualify publication custody. Conditional proof source pins are refreshed without claiming verification of registry snapshots or SQL implementation. Full backend gate remains 22/132.
+
+### Exact issuer-created publication ID — 2026-10-09
+
+The enrolled native aggregate wrapper now takes a UUID publication ID and requires the private row to match that ID, original native actor and backend PID. The trusted issuer captures the exact native RETURNING lease_id text and passes it through without numeric conversion. The actual enrolled ordinary session tests wrong and NULL IDs under savepoint controls; neither returns a result. Its exact ID then succeeds, and persistent backend-loss refusal/explicit trusted release still pass. Fresh PostgreSQL 17.9 receipt has 335 observations.
+
+Opaque ID matching strengthens enrollment but does not authenticate the issuer, prove UUID entropy, provide public token custody or prove native session incarnation/PID-reuse safety. An old known token plus a reused PID must not be treated as a new publisher; actual incarnation/fresh-enrollment binding remains open. Private token values are not copied into observation receipts. The separately admitted public read/release protocol, immutable lease fields, cleanup evidence and recovery remain unqualified. Full gate stays 22/132; conditional proof source pins are refreshed without native source refinement claims.
+
+### Native backend-start binding and metadata capability — 2026-10-09
+
+The enrolled publication row now includes a native timestamptz backend-start value captured by the issuer from pg_stat_activity. The wrapper requires exact native equality for the current backend alongside UUID, original actor and PID. Controlled incarnation mismatch keeps those three other fields valid but substitutes -infinity: no result escapes. Restoring the actual native backend-start value admits the query. Values remain native timestamps; no JS Date or timestamp string conversion is used.
+
+Initial direct stats lookup under the guardian role withheld metadata, so the valid enrolled request failed closed with Publication custody unavailable. The selected fixture now explicitly grants pg_read_all_stats to the internal guardian and uses pg_stat_activity; native checks establish that Alice, Bob and outsider cannot inherit this capability. Fresh PostgreSQL 17.9 receipt passes 339 observations. This additional capability is part of this fixture's qualified subset, not a default public role grant or a least-privilege production role proof.
+
+Backend-start matching detects the tested mismatch; it is not a formal proof of globally unique session incarnation under clock/PID reuse, metadata-source authenticity or public token custody. Production must qualify the native identity source and isolate/retain its required capability. Issuer authorization, immutable lease/enrollment fields, reused tokens, owner cleanup, all read paths and final delivery remain open. Full gate stays 22/132; conditional proof pins are refreshed without native code verification claims.
+
+### Isolated native incarnation metadata capability — 2026-10-09
+
+Replaced the fixture guardian's broad pg_read_all_stats membership with a dedicated umf_sec_incarnation NOLOGIN/NOSUPERUSER/NOBYPASSRLS owner of the private stable, fixed-search-path original_backend_incarnation helper. It returns only the current backend's native start timestamp. Guardian receives only EXECUTE on that exact helper. Independent catalog evidence verifies stats capability on the helper owner, absence on guardian, restricted definer metadata, no PUBLIC EXECUTE and no resource/publication-registry SELECT for the helper role. Alice, Bob and outsider cannot invoke the helper or inherit the helper role; they also retain no stats membership. Enrolled wrong-incarnation refusal and restored admission still pass. Fresh PostgreSQL 17.9 receipt has 346 observations.
+
+The prior guardian-wide metadata grant is historical spike evidence and is superseded by this isolated fixture capability. This is not a complete production privilege/dependency inventory or native metadata authenticity/uniqueness proof. Public issuer/cleanup/session/token custody, source drift and actual graph/Delta profiles remain open. Full gate stays 22/132; conditional source-isolation proof pins are refreshed without backend refinement claims.
+
+### Exact publication release and sibling-owner counterexample — 2026-10-09
+
+Two actual ordinary Alice publisher sessions enroll independently, buffer their admitted aggregate and lose only their native backends. The first tested cleanup still deleted by original actor; the exact-release-retains-sibling-publication control failed. Vulnerable source and actual failed control are retained in original-publication-actor-cleanup-vulnerable.ts.txt and original-publication-actor-cleanup-counterexample.json. The failing control did not retain its returned count, so no exact failed count is claimed.
+
+Fixed cleanup deletes only the first exact publication UUID after its explicit trusted buffer discard. The second private lease remains, its live client still holds the original buffer, and another revocation refuses 42501 without acknowledgment or authority effects. Only after the second client detects native loss, discards its own buffer and releases its own UUID can revocation commit. Fresh PostgreSQL 17.9 evidence passes 354 observations. This closes the observed actor-wide cleanup interleaving in the authored enrolled spike, not public issuer/release authenticity, immutable lease history/token reuse, recovery, final delivery or graph/Delta custody. Full gate remains 22/132.
+
+### Terminal publication lease history — 2026-10-09
+
+Explicit exact release now marks the retained UUID row released instead of deleting it. Native primary-key history rejects attempted re-enrollment of the same UUID; release-state trigger rejects revival, deletion and truncation. Pending enrollment uses a partial actor/backend uniqueness index so terminal history does not block a future distinct lease. The query wrapper and writer-drain check consider pending rows only. Two-publisher exact release still retains the sibling blocker, and both terminal rows remain afterward. Fresh PostgreSQL 17.9 receipt passes 359 observations, including five terminal history controls.
+
+These constraints apply to the enabled authored fixture triggers and ordinary DML paths. Pending record binding fields remain mutable under the trusted fixture issuer; immutable enrollment, privileged source/trigger changes, recovery/history retention bounds, public token/issuer custody and graph/Delta implementation remain open. Terminal UUID retention is not an authenticated lease protocol by itself. Conditional proof pins are refreshed without backend verification claims. Full gate stays 22/132. A read-only Astra re-review of the accumulated source/proof/protocol changes has been requested under the owner's existing review instruction.
+
+### Required publication retirement interleavings
+
+For US-057-AC2/3/5/7, retain an enrolled ordinary repeatable-read reader after its first result is drained and attempt exact lease retirement before ending the native read lease. Retirement must refuse or wait without acknowledgment or effects; terminal state must never admit a second buffer. Also establish an older ordinary snapshot without a protected read lock, retire its enrolled lease, then attempt first protected use: restart/refusal without data is required. Cover overlapping read-committed statements independently; selecting read-committed alone does not establish freshness. Observe current lease state, native coordinator ownership, authority generation, output custody and mutation acknowledgment separately. Preserve a negative schedule and prove equivalent fencing for each actual storage backend; the raw PostgreSQL spike does not accept graph or Delta implementation cases.
+
+For the same lifecycle criteria, test both coordinator orders with native barriers: retain retirement's exclusive guard before an older snapshot requests protected use, independently observe the blocked reader and exclusive holder, then commit retirement and require refusal without a result. Also roll back retirement after generation advancement and verify that obsolete snapshots and fresh statements cannot self-repair or emit data; recovery must use the selected explicit coordinated protocol. Separately inventory transactional and non-transactional state, retained lease custody and issuer authority. These schedules remain required on actual graph/Delta backends even when the raw PostgreSQL authored spike passes.
+
+Publication enrollment tests must attempt independent changes to the enrolled identifier, original caller, native backend identity and backend incarnation before release. Each must refuse without changing the binding or eligibility. Wrong-incarnation controls must preserve immutable enrollment: use an initially invalid distinct enrollment and separately admitted replacement, with retained terminal history. Inventory insertion provenance and privileged trigger/table replacement separately; immutable ordinary UPDATE behavior alone does not qualify the issuer or complete installation.
+
+Typed original-carrier completeness must be evaluated by exact selected type plus exact native key. Seed a selected-type root with a missing carrier and a sibling-type carrier carrying the same local key: admission must refuse. Then vary sibling cardinality and malformed required fields while holding selected-type facts fixed; admission must remain unchanged. Test selected-type duplication independently. Retain compiler-owned selectors, installed native correspondence and the complete eligible population before application filtering. The quantified typed-source-completeness algebra is conditional evidence; each backend must independently establish its premises.
+
+For pg-raw.B10, include cumulative mutation statistics independently of live-row estimates: alter an unrelated hidden authorization fact, hold authorized Resource outputs constant, and inspect ordinary access to pg_stat_get_tuples_inserted and all equivalent exposed views/functions. Three known diagnostic-family restrictions are insufficient. Retain two-world outcomes and actual deployment scope; database-wide PUBLIC ACL changes in a disposable fixture do not establish a per-user production privacy profile.
+
+A deny-first native routine profile must independently establish effective ACL closure and supported client/deployment behavior. Count all selected catalog/fact relation SELECT privileges and catalog routine EXECUTE privileges for the original ordinary identities, while retaining exact authorized routine results. Independently test implicit operators/types/languages/extensions and other native commands; zero explicit ACL counts do not prove those surfaces. PUBLIC revocations in an owned isolated fixture cannot certify a shared production database. Keep the existing direct-RLS profile and candidate evidence separate.
+
+For a selected deny-first routine candidate, include COPY and private-table EXPLAIN, direct private helper execution and caller-owned temporary definer wrappers forwarding to a catalog getter. Each must refuse without private output. Compare the admitted routine's nonexecuting EXPLAIN and authorized rows across unrelated hidden fact changes; separately qualify executing instrumentation and implicit operator/type/language/extension behavior rather than inferring it from explicit ACL counts.
+
+Include a native operator backed by a denied private diagnostic getter, with ordinary namespace resolution and separately retained direct-call denial. Require refusal without output. In the disposable control only, an explicit grant must make the same operator return the assessor value, then revoke it. This distinguishes a real privilege boundary from an invalid operator test; it does not qualify all operator/cast/language paths.
+
+
+### B16 execution qualification — 2026-10-09
+
+pg-raw.B16 is freshly accepted for the authored stable raw PostgreSQL17.9 profile by tests/security/native/pg-raw-scale.py and pg-raw-scale-oracle.json. Exact table populations are1k/100k/1M; all three ordinary roles execute the actual host driver. Complete source/native inventory, paired plans, native timeout without partial data and explicit same-session recovery are retained in pg-raw-B16.json. This acceptance is scoped to the case assertion and current source/profile; other B/L cases and complete US-056-AC10 remain required. Source closure includes the shared host adapter and managed pg dependencies under CONTRACT-063, with actual resolution checked at the importer.
+
+
+### Composite identity native witness and verification — 2026-10-09
+
+The original `tools/security/pg-raw-identity-probe.py` now retains 32 PostgreSQL 17.9 observations. Four independently authored two-component namespace/resource pairs exercise delimiter collisions, empty components, equal resource labels across namespaces and normalization-distinct Unicode. Actual composite primary/foreign keys and forced RLS use exact component equality; ordinary SCRAM Alice/Bob connections see their respective Project-owned rows and the outsider sees none. A deliberately delimiter-concatenated policy exposes both colliding resources to both assigned readers. Restoring exact component equality restores separate visibility. This is a fixed authored native installer witness, not compiler admission, hash routing, subject-composite coverage, arbitrary cross-home correspondence or full pg-raw.B13 acceptance.
+
+`pg-raw-identity-component.json` pins the original probe, fixture helper, baseline SQL, new composite SQL and independent oracle. The earlier Docker-unavailable attempt remains historical evidence; the present OrbStack replay succeeds. Refreshed gate-receipt regression passes four controls; aggregate components pass nine command groups; evidence validation passes 85 checks and the 470-criterion ledger is current. Complete backend acceptance remains 23/132, with 109 required cases missing/failed and all 28 complete security criteria open.
+
+
+### Qualified composite subject identity — 2026-10-09
+
+The identity component now passes 41 native PostgreSQL 17.9 observations. The independent oracle assigns two distinct namespace/Staff identities to original SCRAM Alice and Bob logins, with respective Project A/B assignments. Composite subject primary keys and assignment foreign keys preserve the complete identity. The private RLS helper binds SESSION_USER to its subject and joins assignments using both namespace and subject ID. Both ordinary actors receive their respective resource and the outsider receives none. Deliberately omitting the subject namespace makes both assigned actors receive both delimiter-pair resources; restoring the exact join restores the independent oracle outcomes. The outsider is checked in the unsafe and restored profiles too.
+
+This exercises the complete-identity premise of the retained logical key correspondence analysis at one fixed native corpus. It does not prove universal native/compiler refinement or authenticated subject enrollment. Source-current `pg-raw-identity-component.json` retains all 41 observations. Aggregate components pass nine groups and evidence validation passes 85 checks. Hash-routing collisions, wider cross-home identity and admitted compiler lowering remain open; no full B13 promotion or acceptance-count change is made. The full gate remains 23/132 accepted, 109 required cases missing/failed, and all 28 complete security criteria open.
+
+
+### Native hash collision and conditional key refinement — 2026-10-09
+
+CONTRACT-062 requires complete typed Key identity rather than a hash alone; CONTRACT-063 requires exact native correspondence. The independently frozen PostgreSQL 17.9 corpus now includes `hash-key-13383` and `hash-key-42423`. Separate original native evaluations verify both `pg_catalog.hashtext` results as exact text `-1315717682` before the collision test proceeds. The native fixture stores generated routing hashes, retains full resource IDs in primary/foreign key constraints, and indexes candidate hashes. Forced RLS consults a private helper that compares both candidate hash and complete resource ID before accepting Project assignment. Ordinary SCRAM Alice/Bob see their respective resources; outsider sees none. Replacing that predicate with hash-only equality leaks both resources to both assigned actors; restoring exact equality restores the oracle. All three profiles independently check outsider denial.
+
+The source-current identity receipt passes 52 native observations. This adds a fixed real native hash collision to the preceding scalar/composite resource and qualified subject witnesses. It does not qualify arbitrary hash algorithms, hash-based subject enrollment, cross-home/graph identity or public compiler admission. Full pg-raw.B13 remains required and unaccepted.
+
+`tools/security/prove-hash-key.py` and `hash-key-formal.json` retain two conditional Z3 4.15.4 checks over an unbounded uninterpreted complete-identity domain, arbitrary authorization predicate and deterministic non-injective hash. Independently stated direct authorization equals existential lookup with hash plus exact identity. The violation is UNSAT; a colliding positive population and a hash-only false-positive control are SAT. Complete truthful identity equality, the same hash semantics on each side, complete current facts and native eligible-only evaluation remain physical/authority premises. This is a refinement of the abstract lookup expression, not a proof of the SQL implementation or complete compiler/backend.
+
+Aggregate components pass nine groups; evidence validation now includes the new proof receipt and passes 86 checks. The full acceptance state remains 23/132, with 109 required cases missing/failed and all 28 complete security criteria open.
+
+
+### Raw PostgreSQL B13 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.B13 under US-056-AC1 with 144 observations. The fixed PostgreSQL 17.9 raw profile uses non-null ordered TEXT identity components, explicit C collation and exact session-bound subjects. It does not hash subject identities. Scalar case, normalization-distinct and supplementary Unicode, delimiter-bearing composite keys, equal Staff labels in distinct namespaces, and a real native hashtext collision remain isolated. Genuine case-distinct quoted/unquoted table homes carry equal local resource labels with opposite Project ownership. Deliberately lossy delimiter, subject-label and hash-only policies disclose both resources to assigned actors; exact restoration recovers the independent oracle. No general compiler activation or graph/lifecycle support follows from this case.
+
+The public actual pg-runtime decoder independently exercises scalar/composite/hash/quoted homes and unfiltered final corpus reads for three ordinary SCRAM actors. It retains 81 original queries with exact memory/disk request-frame-outcome correspondence and unique complete custody. Missing and duplicate-replacement controls refuse. Exact independent schema/table/routine privileges and effective column permissions are asserted, including no authority-table writes; all 16 installed identity/authority fact sets are independently compared. Native columns/collations, ordered constraints/FKs, generated hash expressions, routines/policies, role attributes/membership, authentication, encodings, client build and image identity are retained. Eighty-six source bindings include actual adapter modules and the selected managed pg8.16.3 closure (14 packages/70 files); actual resolution from both probe and importer matches the selected entry.
+
+Astra ultra identified the quoted-home, decoder, full-fact, privilege-assertion and journal-bijection gaps, then found no actionable issue after the fresh 143-observation component replay. The first gate attempt refused duplicate relative/absolute source-path bindings; the second refused unordered JSONB member serialization in one private fact comparison. Both attempts and source archives are retained as b13-registration-path-failure.json / b13-registration-json-order-failure.json. The corrected runner pins one exact test-source spelling and applies the membership runner's existing unordered-object normalization to evidence, preserving arrays/scalars and original journal bytes. The third fresh full gate accepted B13.
+
+Current full acceptance is 24/132, with 108 required cases missing/failed. All 28 complete security criteria remain open. Ten component command groups pass, including repeatable strict identity-runtime TypeScript checking; evidence validation passes 88 checks and the 470-criterion ledger is current. B13 qualifies the authored raw identity assertion at fixed stable cuts. Arbitrary cross-home/hash algorithms, authenticated enrollment/issuers, complete native/compiler refinement, live concurrent authority/final publication, full raw backend and actual graph/Delta acceptance remain independently required.
+
+
+### Raw PostgreSQL L01 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.L01 under US-057-AC1 with 962 matching observations, its preserved gate UUID and exact 87-source bindings. The independently authored PostgreSQL17.9 raw profile exercises create/delete/update and ownership-changing writes across original/proposed states, changed-field actions and separate changeOwner/changePolicy permissions. Native hidden-original zero-row commands remain indistinguishable from absent targets. Dependent multirow refusal preserves the complete committed business snapshot, with excluded private sequence instrumentation demonstrating prior authorized processing. Direct ordinary authority mutations, trigger disable and TRUNCATE refuse.
+
+The actual public pg-runtime decodes native RETURNING values/counts and commits permitted commands; rejected commands retain zero data/command frames, 42501 then25P02, explicit rollback acknowledgment and same-native-PID recovery. All525 original query journals have bijective request/frame/outcome custody, with missing/duplicate and protocol-valid partial-row controls. Both execution phases retain independent full authority fact comparisons and installation descriptors, including original enrollment/assignment/project key/login constraints and ordinary effective table/column privileges. NativeInventory ordinaryActor/digest, executed managed-source metadata, SCRAM, image/client and dependency resolution are retained. A separate source-current component passes961 observations. Astra ultra found no remaining implementation or registration defect after the archived receipt-aliasing failure and partial-row/dependency corrections.
+
+The complete gate now accepts25/132 required cases and leaves107 missing/failed. All28 complete security acceptance criteria remain open. Eleven aggregate command groups,91 evidence checks and the470-criterion traceability check pass. L01 qualifies this authored stable-cut raw assertion; it does not accept L02 or any other remaining case, general compiler lowering/refinement, live concurrent authority/final publication, or actual graph/Delta implementations. The full original goal remains active.
+
+
+### Raw PostgreSQL L02 accepted at authored stable cut — 2026-10-09
+
+The fresh complete gate accepts pg-raw.L02 under US-057-AC1 with1120 matching observations, its preserved fresh case/run UUID and exact88-source closure. The34-vector fixed three-non-null-TEXT-field corpus runs through actual pg-runtime and ordinary SQL. It retains separate OLD/NEW owner-field refusals with object, membership, ownership-change and policy-change grants present; the same actor's value-only success at the forbidden-owner Project confirms field isolation. Existing identity/value/policy refusals, unchanged-field positive controls, independent complete business/authority facts, original native response custody, explicit transaction recovery and before/after installation/privilege checks remain exercised.
+
+Native action grids independently verify the selected raw WHERE/RETURNING read precondition for all11 ordinary actors. Semantic read/write actions remain distinct; write-without-read is unqualified for this wrapper. Eleven conditional Z3 checks establish the independent authorization algebra under stated premises, not SQL/compiler admission or concurrent authority. The source-current standalone component retains1119 matching unique observations and595 original query journals. Astra ultra found no remaining scope/isolation blocker after the same-actor and read-precondition refinements.
+
+The complete gate now accepts26/132 required cases, leaving106 missing/failed and all28 complete security criteria open. Twelve aggregate command groups,94 evidence checks and the470-criterion traceability check pass. L02 accepts its declared fixed raw field-authority assertion only. L03 revocation/drain, all other unaccepted raw cases, general compiler/refinement, live concurrent authority/final publication and actual graph/Delta implementations remain required. The full goal stays active.
+
+### Operator privilege revocation replay — 2026-10-09
+
+The private-diagnostic spike now reuses the same installed operator after
+revoking its backing getter privilege. All three original ordinary SCRAM
+identities refuse without output; their admitted closed-routine results still
+match the independent authored vectors. The preceding explicit-grant control
+returns the assessor's count, distinguishing privilege refusal from an invalid
+operator or missing object. Fresh PostgreSQL 17.9 evidence retains 65 observations
+in `../../04-build/evidence/security/pg-private-diagnostics.json`.
+
+This owned disposable installation still reproduces default catalog and
+cumulative-statistics leakage. The deny-first candidate's selected surfaces
+are component controls, not complete diagnostic closure or shared-database
+deployment qualification. pg-raw.B10 remains counterexample-found; no required
+acceptance case is promoted by this replay.
+
+Astra ultra independently checked the 65-observation receipt and its three
+current source hashes. All three operator positive controls returned assessor
+count `6`; each subsequent revocation control refused before operator removal.
+No actionable finding remained. Calls open fresh connections: cached-plan and
+in-flight revocation behavior are separate unqualified obligations.
+
+### Prepared operator revocation — 2026-10-09
+
+The private-diagnostics receipt now retains 68 PostgreSQL 17.9 observations.
+Each original ordinary SCRAM identity prepares and successfully executes the
+installed private-counter operator, invokes an installer-owned revoke-only test
+hook, then executes the same prepared statement on the same connection. Exact
+initial count and revocation marker precede permission refusal for the backing
+getter; an independent assessor confirms effective EXECUTE privilege is false.
+The no-argument hook accepts no caller-selected routine or identity, grants no
+authority, and is dropped before removing the operator. It is a disposable
+ordering witness, not a production interface or authenticated issuer protocol.
+
+This adds prepared-statement privilege invalidation evidence to fresh-session
+refusal controls. It does not establish in-flight revocation, streaming/buffer
+drain, all cached execution mechanisms or complete diagnostic noninterference.
+B10 and full lifecycle acceptance remain open.
+
+Astra ultra independently reviewed the same-session schedule and current
+68-observation receipt. Exact positive output, the getter-specific refusal and
+independent effective ACL distinguish a real committed revocation from an invalid
+prepared statement or rolled-back hook. No actionable defect remained within
+the stated component scope.
+
+### Native transactional policy and grant rollback — 2026-10-09
+
+`tools/security/pg-policy-activation.py` retains 38 PostgreSQL 17.9 native
+observations in `../../04-build/evidence/security/pg-policy-activation.json`.
+The owned raw fixture runs three original ordinary SCRAM identities. A held
+installer transaction disables resource RLS, drops its ordinary read policy,
+changes the private version and grants the selected actor private-carrier SELECT.
+The original installer and reader emit native PIDs and original/effective
+identities. Independent native lock observations bind exact PID, user,
+application and relation: installer owns AccessExclusiveLock while the ordinary
+reader waits for AccessShareLock. The uncommitted private grant remains invisible.
+
+An injected division error terminates the installer connection and rolls back
+without compensating restore. The blocked reader receives its exact prior
+authorized IDs; full observed resource-policy/RLS/ACL, private-carrier ACL and
+version inventory equals baseline. A direct `resource_read` deny-all replacement
+commits at version 2 and original predicate restoration advances to version 3.
+The separate view-owner policy is unchanged; deny-all across views is not claimed.
+
+A deliberately nontransactional RLS disable exposes all five independently
+authored resources to each actor without changing version 3. Re-enabling RLS
+restores the exact observed inventory. This demonstrates that a version scalar
+alone does not bind the physical installation. The receipt freezes the helper's
+complete plan/declared input closure before execution and verifies all captured
+bytes unchanged. It does not establish complete native dependency authenticity.
+
+This is native evidence for the atomic-visibility/rollback premises in the
+conditional activation model, not full B09/L12 acceptance. Semantic candidate
+admission, concurrent installers, source-complete predecessor comparison,
+publication drain and actual Truss/Delta/Ashlar activation remain required.
+
+Astra ultra independently verified all 38 unique observations, including 35
+expected/observed checks and three exact original-session custody records, and
+all five current source pins. Review corrections closed helper-input custody,
+exact PID/user lock binding and actual grant-rollback coverage. No actionable
+finding remained within this transactional fixture scope.
+
+### Serialized native installer predecessor — 2026-10-09
+
+The activation component now retains 75 PostgreSQL 17.9 observations. A private
+invoker routine locks the singleton predecessor row with `FOR UPDATE`, requires
+nonnull exact expected version and a strictly greater replacement, then applies
+one of two fixed authored direct-policy templates and updates version in the
+same transaction. Ordinary callers cannot execute it. This is an installer
+fixture candidate, not semantic policy compilation or a deployment credential.
+
+Two original installer connections retain native PID and original/effective
+identity. One holds the version-row lock at version 3; the second attempts a
+replacement based on version 3. Independent `pg_blocking_pids` and native
+relation-lock observations bind the exact loser and holder. The winner commits
+the direct deny policy at version 4. The loser then observes a stale predecessor
+and refuses before policy replacement. Winning inventory is compared to the
+prior independent baseline with only version and direct policy expression
+changed; all three ordinary readers retain empty direct-table results.
+
+Unsupported/null native template, null predecessor/replacement, reused/lower
+replacement version and stale predecessor all refuse with case-specific error
+and SQLSTATE 42501 while preserving the winning inventory. Missing or ambiguous
+predecessor rows refuse through native strict cardinality checks and roll back
+the corrupting test transaction. Restoration advances to version 5 and restores
+authored ordinary outputs.
+
+This establishes a serialized fixed native version-row protocol in the owned
+fixture. It does not bind that scalar to the complete authenticated physical
+bundle, fence independent privileged writers, support arbitrary semantic policy
+activation or qualify publication drain. The retained nontransactional owner
+bypass shows why those premises cannot be inferred. B09/L12 remain open.
+
+Astra ultra verified the final 75 unique observations (71 expectation checks
+and four custody records), all five current pins and the exact native refusal
+predicate using correct/wrong message and wrong SQLSTATE controls. No actionable
+finding remained within this fixed native routine/component scope.
+
+### Post-comparison routine writer counterexample — 2026-10-09
+
+The latest refusal/native-preservation increment retains 197 observations. Run
+`python3 tools/security/activation-compiler-boundary.py` before the native
+activation spike so its original compiler build/input receipt is current; run
+`python3 tools/security/pg-policy-activation.py` against the owned disposable
+PostgreSQL 17.9 fixture. The native spike freshly executes all nine compiler
+requests while the original protection is installed. Each of eight refusal
+cases must preserve the complete inventory/authority/version baseline and all
+three independently expected ordinary read vectors. Full requests/responses
+and the baseline are retained, alongside 49 bridge assertions. The positive
+compiler callback is deliberately noninstalling, and native installer controls
+are separate; this does not constitute an admitted compiler-to-installer path.
+
+The evidence gate independently requires all original fixture catalog objects,
+columns, constraints, policies, routines, views and roles with complete record
+fields; exact resource RLS/policy/helper meaning; and original-oracle authority
+facts. Equal truncated profiles must refuse. Astra exercised 685 omission
+mutants and erased definitions/disabled RLS against the corrected gate; all
+refused while the actual baseline passed. The native receipt pins the compiler
+receipt bytes, so any compiler regeneration requires another native run before
+the final source-current gate. Actual historical-source and conflicting-mask
+composition tests, supported positive activation and complete host admission
+remain open. B09 is not promoted by this increment.
+
+The compiler-boundary foundation separately executes nine actual Weft
+`compile_json_with_factory` cases with exact diagnostics and a positive
+factory-reachability control and a supported constant-mask source-admission
+control. The unsupported mask changes only the transform name, preserving a
+valid literal and current version. Security refusal returns no SQL/parameters/plan
+and never invokes the factory, including allowCandidate. Unsupported path/mask
+source and a prohibited protected-field predicate exercise their respective
+source/query refusals; an invalid history-profile input and unknown report
+options exercise input refusal. Actual history and conflicting-disclosure
+composition controls remain required. This is
+not yet the native B09 preservation runner. Its native integration must freshly
+prepare original source/query/binding inputs through the owner and complete
+consumer obligations before obtaining any installer connection, and verify the
+complete prior native bundle and ordinary results survive each refusal.
+
+The subsequent enforced routine-writer spike passes 148 total observations. A
+database-local `ddl_command_start` event trigger for `CREATE FUNCTION` takes the
+same exclusive transaction advisory guard as a private serialized installer
+wrapper, before the original version/profile checks. `CREATE OR REPLACE
+FUNCTION` therefore participates automatically. The native schedule binds the
+waiting helper writer to the exact installer PID and advisory key, observes the
+unchanged helper body/version before commit, commits installation, and verifies
+the writer resumes and rolls back its change. The complete profile differs
+only by the two explicitly installed private invoker routines and version 9;
+all three ordinary result vectors match the independent membership oracle.
+
+This is implementation evidence for the selected routine-writer boundary. It
+does not qualify other DDL tags, role/membership changes, event-trigger
+administration, committed-writer generation advancement, authenticated public
+installation, or existing paths bypassing the private wrapper. PostgreSQL 17
+[event-trigger behavior](https://www.postgresql.org/docs/17/event-trigger-definition.html)
+excludes shared objects such as roles and event triggers themselves, so the
+mechanism cannot establish complete writer closure alone. B09/L12 remain open.
+
+The expanded activation spike retains 137 observations. After a matching
+version-7 profile is compared and the original policy is installed for version
+8 inside an open transaction, the exact installer PID demonstrably holds the
+resource AccessExclusiveLock. A separate excluded owner session nevertheless
+commits replacement of the authorization helper with `SELECT true`, under a
+three-second statement deadline. Nonblocking native catalog/version reads show
+the changed helper body while the visible version remains 7. The installer then
+commits successfully, exposing all five authored resources to the independently
+authenticated ordinary outsider. Restoring the helper returns the complete
+profile to its original content with only version advanced to 8.
+
+This is a negative control establishing missing catalog-writer serialization,
+not an ordinary-user escalation or accepted B09/L12 implementation. The owner
+writer is excluded from the ordinary threat profile but must participate in a
+qualified deployment's activation protocol. The full profile comparison cannot
+substitute for stabilizing every dependency through commit. Initial observer
+attempts failed on Boolean JSON transport and then a blocking full-profile read;
+the final probe uses nonblocking catalog/version reads before commit and a full
+restoration comparison afterward. These failures are harness defects, not
+passing counterexample evidence.
+
+### Native profile comparison and current fact cut — 2026-10-09
+
+The activation component now retains 128 observations and seven current source
+pins, including the original native inventory and authority-cut collectors. A
+private overload holds the predecessor row and SHARE locks on the selected fact
+and carrier tables before comparing exact captured catalog descriptors,
+authority facts and version. Helper-body, private-grant, assignment-active and
+column-name changes at version 5 refuse with a specific 42501, leave the changed
+profile without installer effects, and restore exactly under explicit test repair.
+Null/empty profiles refuse. Matching profile installation at version 6 is checked
+against the entire prior profile with only the expected direct-policy/version
+changes; restoration at version 7 restores all other captured content.
+
+An initial invoker collector failed a matching-profile activation because its
+forced-RLS installer saw no Resource roots while the excluded privileged capture
+saw all five. The retained negative control demonstrates this visibility
+mismatch. Collection now uses an explicit excluded NOLOGIN/NOSUPERUSER/BYPASSRLS
+assessor with SELECT on only the selected fact/version tables. Its fixed-search-
+path definer collector grants EXECUTE to the private fixture installer, not
+ordinary actors. All ordinary collector/guarded-installer/assessor-role attempts
+refuse; the complete authored Resource identity population is independently
+compared. This fixture assessor is not a production issuer/authentication profile.
+
+Astra identified that table locks do not refresh an older Repeatable Read
+snapshot. The guarded overload now rejects Repeatable Read/Serializable before
+any lock or profile work. Native controls establish a snapshot then require the
+guard-specific 42501 and unchanged profile. A coordinated Read Committed
+installer is observed waiting on the exact assignment-table SHARE lock behind
+the exact fact-writer session. After the assignment commits at unchanged version
+5, installation refuses. The full observed profile differs only by Alice/B
+active=true; direct policy/version remain original and exact fact restoration
+recovers the captured profile.
+
+Two failed attempts remain separately recorded with explicit limits: the
+invoker/full-assessor profile mismatch and a test expectation that preceded the
+new assessor SELECT grant. Those notes are terminal failure provenance, not
+complete failed-run receipts. Selected table locks do not establish complete
+catalog/role writer participation or authenticated semantic/native bundle
+binding. The earlier three-argument version-only fixture remains an explicitly
+unqualified protocol witness. Full B09/L12 and public compiler activation remain
+open. Astra independently verified 123 expectation checks, five custody records
+and all seven pins, finding no remaining actionable issue in this component.

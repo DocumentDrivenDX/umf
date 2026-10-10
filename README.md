@@ -249,7 +249,7 @@ package presence does not establish full JavaScript or native-adapter parity.
 UMF owns the reusable Delta generator used by Ashlar. Physical choices live in
 `umf.delta.definition` and exact schemas in `umf.delta`; unsupported meaning stays
 serializable and blocks generation. See
-[CONTRACT-062](docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md).
+[CONTRACT-064](docs/helix/02-design/contracts/CONTRACT-064-delta-ddl.md).
 
 ```typescript
 import {defineDeltaTable, generateDeltaDDLBundle} from '@umf/core';

@@ -1,0 +1,1111 @@
+{
+  "id": "pg-private-planner-astra-review",
+  "status": "qualified-retained-planner-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T12:20:40.479781+00:00",
+  "sourceDigests": {
+    "/private/tmp/pg-private-planner-astra-review.py": "13c4a3b31f89d996ac1f2b73de8bfdf6e71e5ef5e3a3eba0764526ce96ae82a3",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-diagnostics.json": "57ec1259363c4f9003331e5c836de8b2500f7c074d174a250ab1afe1f47d3c44",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-private-diagnostics.py": "612f64a7a279812b932446246f8f3cdfee9bd45972dc94d82356bc8ab22e9880",
+    "/Users/erik/.codex/worktrees/1598/umf/tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "/Users/erik/.codex/worktrees/1598/umf/tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "/Users/erik/.codex/worktrees/1598/umf/tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "f9d151f9e6518bc6c800198c9c507fc5163775df263498b4774fee867a670db1",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/pg-planner-observation-v0.1.md": "5a3249f85eb0fec2e161eb405af04e76e43a5c7363dadc8a3ca9950390c4592a",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/03-test/test-plans/STP-056-security-bindings.md": "feafd4591dddd83d4437db5c2a10aba494d7e48e9a35417d748191410ae04377",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-caller.log": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-caller.log": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-caller.log": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-changed-private-population.log": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-changed-private-population.log": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-changed-private-population.log": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded-changed-world.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded-changed-world.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded-changed-world.log": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_plan.log": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_plan.log": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_plan.log": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_parse.log": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_parse.log": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_parse.log": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_rewritten.log": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_rewritten.log": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_rewritten.log": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/private/tmp/pg-private-planner-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "13c4a3b31f89d996ac1f2b73de8bfdf6e71e5ef5e3a3eba0764526ce96ae82a3",
+    "source": "\"\"\"Read retained planner transcripts; do not execute native helpers or producers.\"\"\"\nimport hashlib, json, re, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF = Path('/private/tmp/pg-private-planner-astra-review.py')\nif Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF or len(sys.argv) != 1:\n    raise RuntimeError('Unknown exact review invocation')\nBASE = ROOT / 'docs/helix/04-build/evidence/security'\nNATIVE = BASE / 'pg-private-diagnostics.json'\nOUT = BASE / 'pg-private-planner-astra-review.json'\nsha = lambda b: hashlib.sha256(b).hexdigest()\ncanonical = lambda x: json.dumps(x, sort_keys=True, separators=(',', ':'), allow_nan=False)\ndef equal(a, b):\n    assert canonical(a) == canonical(b), (a, b)\n\nsource_names = [\n    'tools/security/pg-private-diagnostics.py',\n    'tests/security/native/pg-raw-membership.py',\n    'docs/helix/03-test/security/cases.json',\n    'tests/security/native/pg-raw-membership-oracle.json',\n    'tests/security/native/pg-raw-membership.sql',\n]\ndocs = [\n    'docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md',\n    'docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md',\n    'docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md',\n    'docs/helix/02-design/spikes/security/pg-planner-observation-v0.1.md',\n    'docs/helix/03-test/test-plans/STP-056-security-bindings.md',\n]\nfrozen = {str(p):p.read_bytes() for p in [SELF, NATIVE, Path(sys.executable).resolve(),\n    *(ROOT/n for n in source_names + docs)]}\nprior = OUT.read_bytes() if OUT.exists() else None\nnative = json.loads(frozen[str(NATIVE)])\nassert native['status'] == 'counterexample-reproduced'\nassert native['engine']['number'] == '170009'\nassert native['restrictedPrototypeOnly'] is True\nequal(native['sourceDigests'], {n:sha(frozen[str(ROOT/n)]) for n in source_names})\nplan = json.loads(frozen[str(ROOT/source_names[2])])\nselected = [c for c in plan['cases'] if c['id'] == 'pg-raw.B01']\nassert len(selected) == 1\nclosure = [selected[0]['testSource'], selected[0]['oracleSource'], *selected[0]['implementationSources']]\nequal(closure, ['tests/security/native/pg-raw-membership.py',\n    'tests/security/native/pg-raw-membership-oracle.json', 'tests/security/native/pg-raw-membership.sql'])\nequal(native['frozenHelperInputs'], closure)\nassert native['fixtureSqlExecutedFromCapturedBytes'] is True\nhelper = frozen[str(ROOT/source_names[1])].decode('utf-8')\nmarker = 'receipt=None\\ntry:\\n'\nassert helper.count(marker) == 1\nprefix = helper.split(marker)[0]\nreplacements = [\n    (\"plan=json.loads((ROOT/'docs/helix/03-test/security/cases.json').read_text())\", \"plan=json.loads(_captured['docs/helix/03-test/security/cases.json'])\"),\n    ('sources={p:digest((ROOT/p).read_bytes()) for p in paths}', 'sources={p:digest(_captured[p]) for p in paths}'),\n    (\"oracle=json.loads((ROOT/case['oracleSource']).read_text())\", \"oracle=json.loads(_captured[case['oracleSource']])\"),\n]\nfor before, after in replacements:\n    assert prefix.count(before) == 1\n    prefix = prefix.replace(before, after)\nassert sha(prefix.encode()) == native['executedHelperPrefixSha256']\n\nactors = ['umf_sec_alice', 'umf_sec_bob', 'umf_sec_outsider']\nexpected_rows = {\n    'umf_sec_alice': [['RA','A-only'], ['RAB','multiple-owners']],\n    'umf_sec_bob': [['RAB','multiple-owners'], ['RB','B-only']],\n    'umf_sec_outsider': [],\n}\noracle = json.loads(frozen[str(ROOT/source_names[3])])\nequal(list(oracle['actors']), actors)\nequal({a:oracle['actors'][a]['rows'] for a in actors}, expected_rows)\nall_observations = native['observations']\nassert len(all_observations) == 94\nstages = {\n    'caller-planner-diagnostics':3, 'caller-planner-two-private-worlds':3,\n    'routine-local-planner-diagnostic-guard':3, 'guarded-planner-two-private-worlds':3,\n    'planner-guard-restores-caller-settings':3, 'individual-planner-guard-weakened':9,\n    'planner-guard-restored-native-configuration':1, 'planner-guard-independent-wrapper-inventory':1,\n}\nreviewed = [o for o in all_observations if o['stage'] in stages]\nassert len(reviewed) == 26\nfor stage, count in stages.items():\n    assert len([o for o in reviewed if o['stage'] == stage]) == count\nsuffixes = {\n    'caller-planner-diagnostics':'caller',\n    'caller-planner-two-private-worlds':'changed-private-population',\n    'routine-local-planner-diagnostic-guard':'guarded',\n    'guarded-planner-two-private-worlds':'guarded-changed-world',\n}\nlog_records = []\nfor observation in reviewed:\n    if 'diagnosticLog' not in observation:\n        continue\n    suffix = suffixes.get(observation['stage'])\n    if observation['stage'] == 'individual-planner-guard-weakened':\n        assert observation['parameter'] in ['debug_print_plan','debug_print_parse','debug_print_rewritten']\n        suffix = 'weakened-' + observation['parameter']\n    expected_path = BASE / ('pg-private-planner-' + native['runId'] + '-' + observation['actor'] + '-' + suffix + '.log')\n    assert observation['diagnosticLog'] == str(expected_path.relative_to(ROOT))\n    frozen[str(expected_path)] = expected_path.read_bytes()\n    raw = frozen[str(expected_path)]\n    text = raw.decode('utf-8')\n    assert text.encode('utf-8') == raw\n    assert sha(raw) == observation['diagnosticSha256']\n    log_records.append({'path':str(expected_path), 'sha256':sha(raw), 'bytes':len(raw),\n        'actor':observation['actor'], 'stage':observation['stage'],\n        'parameter':observation.get('parameter'),\n        'relationOids':re.findall(r':relid\\s+([0-9]+)',text),\n        'planRowEstimates':re.findall(r'plan_rows\\s+([0-9.]+)',text)})\nassert len(log_records) == 21 and len({l['path'] for l in log_records}) == 21\n\ndef row(stage, actor=None, parameter=None):\n    found = [o for o in reviewed if o['stage'] == stage and o.get('actor') == actor and o.get('parameter') == parameter]\n    assert len(found) == 1, (stage, actor, parameter)\n    return found[0]\ndef log(o):\n    return next(l for l in log_records if l['path'] == str(ROOT/o['diagnosticLog']))\nobservations = []\ndef record(identifier, expected, observed):\n    equal(expected, observed)\n    observations.append({'id':identifier, 'expected':expected, 'observed':observed})\nrecord('exact-frozen-native-source-inventory', 5, len(native['sourceDigests']))\nrecord('exact-selected-helper-closure', closure, native['frozenHelperInputs'])\nrecord('captured-helper-prefix-correspondence', sha(prefix.encode()), native['executedHelperPrefixSha256'])\nrecord('retained-receipt-and-reviewed-stage-counts', {'total':94,'reviewed':26,'transcripts':21},\n       {'total':len(all_observations),'reviewed':len(reviewed),'transcripts':len(log_records)})\nfor actor in actors:\n    initial = row('caller-planner-diagnostics',actor)\n    changed = row('caller-planner-two-private-worlds',actor)\n    guarded = row('routine-local-planner-diagnostic-guard',actor)\n    guarded_changed = row('guarded-planner-two-private-worlds',actor)\n    restored = row('planner-guard-restores-caller-settings',actor)\n    oid = initial['privateAssignmentOid']\n    assert type(oid) is str and re.fullmatch('[1-9][0-9]*',oid)\n    assert initial['privateAssignmentPlanVisible'] is True and oid in log(initial)['relationOids']\n    equal(initial['planRowEstimates'], log(initial)['planRowEstimates'])\n    equal(changed['priorEstimates'], log(initial)['planRowEstimates'])\n    equal(changed['changedEstimates'], log(changed)['planRowEstimates'])\n    assert changed['priorEstimates'] != changed['changedEstimates']\n    assert oid in log(changed)['relationOids']\n    record(actor+'/private-world-dependence', True, changed['priorEstimates'] != changed['changedEstimates'])\n    record(actor+'/changed-world-authorized-rows', expected_rows[actor], changed['authorizedRows'])\n    equal(guarded['privateAssignmentOid'],oid)\n    assert guarded['privateAssignmentPlanVisible'] is False\n    equal(guarded['planRowEstimates'],['1'])\n    record(actor+'/nonvacuous-guarded-transcript', {'oids':[],'estimates':['1']},\n        {'oids':log(guarded)['relationOids'],'estimates':log(guarded)['planRowEstimates']})\n    record(actor+'/guarded-authorized-rows',expected_rows[actor],guarded['authorizedRows'])\n    assert guarded_changed['exactTraceUnchanged'] is True\n    record(actor+'/guarded-private-world-transcript-equality',True,\n        frozen[str(ROOT/guarded['diagnosticLog'])] == frozen[str(ROOT/guarded_changed['diagnosticLog'])])\n    record(actor+'/second-guarded-world-authorized-rows',expected_rows[actor],guarded_changed['authorizedRows'])\n    record(actor+'/caller-settings-restored',['on','on','on'],restored['callerSettingsAfterCall'])\n    equal(restored['authorizedRows'],expected_rows[actor])\n    for parameter in ['debug_print_plan','debug_print_parse','debug_print_rewritten']:\n        weakened = row('individual-planner-guard-weakened',actor,parameter)\n        equal(weakened['privateAssignmentOid'],oid)\n        assert weakened['privateAssignmentPlanVisible'] is True\n        record(actor+'/individual-weakening/'+parameter,True,oid in log(weakened)['relationOids'])\n        equal(weakened['authorizedRows'],expected_rows[actor])\nconfiguration = ['search_path=pg_catalog','debug_print_plan=off','debug_print_parse=off','debug_print_rewritten=off']\nwrapper = {'owner':'umf_sec_guardian','language':'sql','definer':True,'volatility':'s','arguments':0,\n    'configuration':configuration,\n    'body':\" SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource \",\n    'publicExecute':False,'ordinaryExecute':[True,True,True]}\nfor stage, expected in [('planner-guard-restored-native-configuration',configuration),('planner-guard-independent-wrapper-inventory',wrapper)]:\n    observed = row(stage)\n    equal(observed['expected'],expected)\n    record(stage,expected,observed['observed'])\n\nannex = frozen[str(ROOT/docs[3])].decode()\nassert 'text-mode subprocess capture is not a raw-wire byte capture' in annex\nassert 'Prepared/cached calls across guard mutation' in annex\nassert 'counterexample-found' in annex and '26/132' in annex\nsource_review = [\n    {'id':'capture-before-helper-execution', 'finding':'Reviewed exact self/root guard, selected B01 plan/closure capture, three single-occurrence input-read substitutions, context closure/oracle comparison, captured SQL execution and final digest recheck. Reconstructed prefix was hashed but never executed by this review.'},\n    {'id':'native-actor-and-password-boundary', 'finding':'Reviewed helper ordinary TCP SCRAM path using private stdin credentials, original actor/session checks, and excluded installer/assessor connection. No independent native authentication execution.'},\n    {'id':'bounded-owned-fixture-side-effects', 'finding':'Two explicit 1000-row population changes and finite 3-actor/3-setting loops execute only in a uniquely named disposable database container. Individual settings reset in finally. This is not a total resource bound.'},\n    {'id':'cleanup-source-review', 'finding':'Preexisting fixture refuses; cleanup resolves exact generated name if needed, verifies the unique run label before removal, and final receipt publishes only after successful cleanup. No independent cleanup or cancellation fault injection.'},\n    {'id':'guard-scope-and-caller-restoration', 'finding':'Whole fixed definer routine carries all three local debug flags off. Nonempty outer plan remains visible; each flag independently weakened restores the private OID. Same-session caller flags remain on. No prepared/cached guard-mutation claim.'},\n    {'id':'documentation-and-requirement-scope', 'finding':'Final annex distinguishes UTF-8 retained decoded stderr from raw-wire custody, the separate routine experiment from original direct-RLS B10, and the tested diagnostic channels from complete observation closure. Configuration drift and complete reachable closure remain unimplemented obligations.'},\n]\nfor path, raw in frozen.items():\n    assert Path(path).read_bytes() == raw, 'Input changed: '+path\nassert (OUT.read_bytes() if OUT.exists() else None) == prior\nreceipt = {\n    'id':'pg-private-planner-astra-review', 'status':'qualified-retained-planner-review-passed',\n    'reviewer':'/root/astra_security_review', 'generatedAt':datetime.now(timezone.utc).isoformat(),\n    'sourceDigests':{p:sha(b) for p,b in frozen.items()}, 'sourcesUnchanged':True,\n    'reviewCommand':{'argv':[sys.executable,str(SELF)],'cwd':str(ROOT),\n        'sourceSha256':sha(frozen[str(SELF)]),'source':frozen[str(SELF)].decode()},\n    'nativeReceipt':{'path':str(NATIVE),'sha256':sha(frozen[str(NATIVE)]),\n        'status':native['status'],'engine':native['engine'],'runId':native['runId'],\n        'observationCount':94,'reviewedPlannerObservationCount':26,\n        'executionAttribution':'Parent native execution; independent review reads retained receipt and logs only.',\n        'independentlyExecuted':False},\n    'sourceCustody':{'exactNativeSourceDigests':native['sourceDigests'],'frozenHelperInputs':closure,\n        'executedHelperPrefixSha256':sha(prefix.encode()),'exactInputReadReplacementCount':3,\n        'fixtureSqlExecutedFromCapturedBytes':True,'helperExecutedByReview':False},\n    'transcriptAudit':{'count':21,'encoding':'UTF-8 serialization of text-mode decoded stderr; not native raw-wire custody',\n        'allDigestsMatched':True,'observations':log_records},\n    'observations':observations,'sourceReview':source_review,\n    'scope':'Read-only source and retained-evidence audit of the PostgreSQL17.9 planner/parse/rewrite diagnostic counterexample and bounded routine-local mitigation. Independently checked exact five-source closure, reconstructed executed helper-prefix digest, all21 transcript hashes/content,26 planner-stage records, independent authorized row oracle and wrapper metadata expectations. Total94 receipt count is checked but prior68 native paths are not independently reexecuted or comprehensively reviewed here. No PostgreSQL, Cargo, producer, Docker acquisition or helper code executed. Sources and transcript bytes pinned before audit and checked unchanged. Parent text-mode evidence cannot establish raw-wire byte custody. Selected Python executable is pinned; standard library/platform remain trusted. No complete native observation closure, source authentication, runtime hermeticity, production configuration-drift guard or backend admission is proved.',\n    'remainingOpenObligations':['prepared/cached calls across guard mutation','complete reachable diagnostic/routine/operator/view and extension closure','installation/configuration drift binding and enforcement','timing/resource/error/cancellation/asynchronous observation coverage'],\n    'remainingFindings':[], 'nativeImplementationQualified':False,'independentNativeExecution':False,\n    'acceptanceCriteria':['US-056-AC8'],'backendCase':'pg-raw.B10','caseStatus':'counterexample-found',\n    'acceptanceCasesPromoted':[],\n}\nif prior is not None:\n    archive = OUT.with_name(OUT.stem+'-prior-'+sha(prior)[:16]+'.json')\n    if archive.exists():\n        assert archive.read_bytes() == prior\n    else:\n        archive.write_bytes(prior)\n    receipt['preservedPredecessor']={'path':str(archive),'sha256':sha(prior)}\nOUT.write_text(json.dumps(receipt,indent=2)+'\\n')\nprint(json.dumps({'status':receipt['status'],'path':str(OUT),'sha256':sha(OUT.read_bytes()),\n    'sourcePins':len(frozen),'nativeReceiptObservations':94,'plannerObservationsReviewed':26,\n    'transcripts':21,'independentChecks':len(observations),'remainingFindings':[]}))\n"
+  },
+  "nativeReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-diagnostics.json",
+    "sha256": "57ec1259363c4f9003331e5c836de8b2500f7c074d174a250ab1afe1f47d3c44",
+    "status": "counterexample-reproduced",
+    "engine": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "runId": "dad9db8a-47ee-45bc-baa7-8d0e329a08ff",
+    "observationCount": 94,
+    "reviewedPlannerObservationCount": 26,
+    "executionAttribution": "Parent native execution; independent review reads retained receipt and logs only.",
+    "independentlyExecuted": false
+  },
+  "sourceCustody": {
+    "exactNativeSourceDigests": {
+      "tools/security/pg-private-diagnostics.py": "612f64a7a279812b932446246f8f3cdfee9bd45972dc94d82356bc8ab22e9880",
+      "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+      "docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+      "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+      "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
+    },
+    "frozenHelperInputs": [
+      "tests/security/native/pg-raw-membership.py",
+      "tests/security/native/pg-raw-membership-oracle.json",
+      "tests/security/native/pg-raw-membership.sql"
+    ],
+    "executedHelperPrefixSha256": "ec6dca96ad94ff9dfb73f91a1d1eccfcda48fac7c0fde23aab240d25d34fe30c",
+    "exactInputReadReplacementCount": 3,
+    "fixtureSqlExecutedFromCapturedBytes": true,
+    "helperExecutedByReview": false
+  },
+  "transcriptAudit": {
+    "count": 21,
+    "encoding": "UTF-8 serialization of text-mode decoded stderr; not native raw-wire custody",
+    "allDigestsMatched": true,
+    "observations": [
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-caller.log",
+        "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+        "bytes": 86097,
+        "actor": "umf_sec_alice",
+        "stage": "caller-planner-diagnostics",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "5",
+          "4",
+          "4",
+          "4",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-caller.log",
+        "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+        "bytes": 86097,
+        "actor": "umf_sec_bob",
+        "stage": "caller-planner-diagnostics",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "5",
+          "4",
+          "4",
+          "4",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-caller.log",
+        "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+        "bytes": 86097,
+        "actor": "umf_sec_outsider",
+        "stage": "caller-planner-diagnostics",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "5",
+          "4",
+          "4",
+          "4",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-changed-private-population.log",
+        "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+        "bytes": 85575,
+        "actor": "umf_sec_alice",
+        "stage": "caller-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-changed-private-population.log",
+        "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+        "bytes": 85575,
+        "actor": "umf_sec_bob",
+        "stage": "caller-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-changed-private-population.log",
+        "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+        "bytes": 85575,
+        "actor": "umf_sec_outsider",
+        "stage": "caller-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_alice",
+        "stage": "routine-local-planner-diagnostic-guard",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_bob",
+        "stage": "routine-local-planner-diagnostic-guard",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_outsider",
+        "stage": "routine-local-planner-diagnostic-guard",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded-changed-world.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_alice",
+        "stage": "guarded-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded-changed-world.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_bob",
+        "stage": "guarded-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded-changed-world.log",
+        "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+        "bytes": 5829,
+        "actor": "umf_sec_outsider",
+        "stage": "guarded-planner-two-private-worlds",
+        "parameter": null,
+        "relationOids": [],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_plan.log",
+        "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+        "bytes": 37795,
+        "actor": "umf_sec_alice",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_plan",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_plan.log",
+        "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+        "bytes": 37795,
+        "actor": "umf_sec_bob",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_plan",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_plan.log",
+        "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+        "bytes": 37795,
+        "actor": "umf_sec_outsider",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_plan",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1",
+          "1",
+          "293",
+          "293",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_parse.log",
+        "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+        "bytes": 29409,
+        "actor": "umf_sec_alice",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_parse",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_parse.log",
+        "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+        "bytes": 29409,
+        "actor": "umf_sec_bob",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_parse",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_parse.log",
+        "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+        "bytes": 29409,
+        "actor": "umf_sec_outsider",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_parse",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_rewritten.log",
+        "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+        "bytes": 30007,
+        "actor": "umf_sec_alice",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_rewritten",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_rewritten.log",
+        "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+        "bytes": 30007,
+        "actor": "umf_sec_bob",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_rewritten",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      },
+      {
+        "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_rewritten.log",
+        "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+        "bytes": 30007,
+        "actor": "umf_sec_outsider",
+        "stage": "individual-planner-guard-weakened",
+        "parameter": "debug_print_rewritten",
+        "relationOids": [
+          "16434",
+          "16434",
+          "16441",
+          "16417",
+          "16408",
+          "16441",
+          "16417",
+          "16408"
+        ],
+        "planRowEstimates": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "exact-frozen-native-source-inventory",
+      "expected": 5,
+      "observed": 5
+    },
+    {
+      "id": "exact-selected-helper-closure",
+      "expected": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "observed": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tests/security/native/pg-raw-membership.sql"
+      ]
+    },
+    {
+      "id": "captured-helper-prefix-correspondence",
+      "expected": "ec6dca96ad94ff9dfb73f91a1d1eccfcda48fac7c0fde23aab240d25d34fe30c",
+      "observed": "ec6dca96ad94ff9dfb73f91a1d1eccfcda48fac7c0fde23aab240d25d34fe30c"
+    },
+    {
+      "id": "retained-receipt-and-reviewed-stage-counts",
+      "expected": {
+        "total": 94,
+        "reviewed": 26,
+        "transcripts": 21
+      },
+      "observed": {
+        "total": 94,
+        "reviewed": 26,
+        "transcripts": 21
+      }
+    },
+    {
+      "id": "umf_sec_alice/private-world-dependence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice/changed-world-authorized-rows",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice/nonvacuous-guarded-transcript",
+      "expected": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      },
+      "observed": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "umf_sec_alice/guarded-authorized-rows",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice/guarded-private-world-transcript-equality",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice/second-guarded-world-authorized-rows",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice/caller-settings-restored",
+      "expected": [
+        "on",
+        "on",
+        "on"
+      ],
+      "observed": [
+        "on",
+        "on",
+        "on"
+      ]
+    },
+    {
+      "id": "umf_sec_alice/individual-weakening/debug_print_plan",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice/individual-weakening/debug_print_parse",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice/individual-weakening/debug_print_rewritten",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob/private-world-dependence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob/changed-world-authorized-rows",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob/nonvacuous-guarded-transcript",
+      "expected": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      },
+      "observed": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "umf_sec_bob/guarded-authorized-rows",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob/guarded-private-world-transcript-equality",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob/second-guarded-world-authorized-rows",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob/caller-settings-restored",
+      "expected": [
+        "on",
+        "on",
+        "on"
+      ],
+      "observed": [
+        "on",
+        "on",
+        "on"
+      ]
+    },
+    {
+      "id": "umf_sec_bob/individual-weakening/debug_print_plan",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob/individual-weakening/debug_print_parse",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_bob/individual-weakening/debug_print_rewritten",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider/private-world-dependence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider/changed-world-authorized-rows",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider/nonvacuous-guarded-transcript",
+      "expected": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      },
+      "observed": {
+        "oids": [],
+        "estimates": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "umf_sec_outsider/guarded-authorized-rows",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider/guarded-private-world-transcript-equality",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider/second-guarded-world-authorized-rows",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider/caller-settings-restored",
+      "expected": [
+        "on",
+        "on",
+        "on"
+      ],
+      "observed": [
+        "on",
+        "on",
+        "on"
+      ]
+    },
+    {
+      "id": "umf_sec_outsider/individual-weakening/debug_print_plan",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider/individual-weakening/debug_print_parse",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider/individual-weakening/debug_print_rewritten",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "planner-guard-restored-native-configuration",
+      "expected": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ],
+      "observed": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ]
+    },
+    {
+      "id": "planner-guard-independent-wrapper-inventory",
+      "expected": {
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "publicExecute": false,
+        "ordinaryExecute": [
+          true,
+          true,
+          true
+        ]
+      },
+      "observed": {
+        "owner": "umf_sec_guardian",
+        "language": "sql",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog",
+          "debug_print_plan=off",
+          "debug_print_parse=off",
+          "debug_print_rewritten=off"
+        ],
+        "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+        "publicExecute": false,
+        "ordinaryExecute": [
+          true,
+          true,
+          true
+        ]
+      }
+    }
+  ],
+  "sourceReview": [
+    {
+      "id": "capture-before-helper-execution",
+      "finding": "Reviewed exact self/root guard, selected B01 plan/closure capture, three single-occurrence input-read substitutions, context closure/oracle comparison, captured SQL execution and final digest recheck. Reconstructed prefix was hashed but never executed by this review."
+    },
+    {
+      "id": "native-actor-and-password-boundary",
+      "finding": "Reviewed helper ordinary TCP SCRAM path using private stdin credentials, original actor/session checks, and excluded installer/assessor connection. No independent native authentication execution."
+    },
+    {
+      "id": "bounded-owned-fixture-side-effects",
+      "finding": "Two explicit 1000-row population changes and finite 3-actor/3-setting loops execute only in a uniquely named disposable database container. Individual settings reset in finally. This is not a total resource bound."
+    },
+    {
+      "id": "cleanup-source-review",
+      "finding": "Preexisting fixture refuses; cleanup resolves exact generated name if needed, verifies the unique run label before removal, and final receipt publishes only after successful cleanup. No independent cleanup or cancellation fault injection."
+    },
+    {
+      "id": "guard-scope-and-caller-restoration",
+      "finding": "Whole fixed definer routine carries all three local debug flags off. Nonempty outer plan remains visible; each flag independently weakened restores the private OID. Same-session caller flags remain on. No prepared/cached guard-mutation claim."
+    },
+    {
+      "id": "documentation-and-requirement-scope",
+      "finding": "Final annex distinguishes UTF-8 retained decoded stderr from raw-wire custody, the separate routine experiment from original direct-RLS B10, and the tested diagnostic channels from complete observation closure. Configuration drift and complete reachable closure remain unimplemented obligations."
+    }
+  ],
+  "scope": "Read-only source and retained-evidence audit of the PostgreSQL17.9 planner/parse/rewrite diagnostic counterexample and bounded routine-local mitigation. Independently checked exact five-source closure, reconstructed executed helper-prefix digest, all21 transcript hashes/content,26 planner-stage records, independent authorized row oracle and wrapper metadata expectations. Total94 receipt count is checked but prior68 native paths are not independently reexecuted or comprehensively reviewed here. No PostgreSQL, Cargo, producer, Docker acquisition or helper code executed. Sources and transcript bytes pinned before audit and checked unchanged. Parent text-mode evidence cannot establish raw-wire byte custody. Selected Python executable is pinned; standard library/platform remain trusted. No complete native observation closure, source authentication, runtime hermeticity, production configuration-drift guard or backend admission is proved.",
+  "remainingOpenObligations": [
+    "prepared/cached calls across guard mutation",
+    "complete reachable diagnostic/routine/operator/view and extension closure",
+    "installation/configuration drift binding and enforcement",
+    "timing/resource/error/cancellation/asynchronous observation coverage"
+  ],
+  "remainingFindings": [],
+  "nativeImplementationQualified": false,
+  "independentNativeExecution": false,
+  "acceptanceCriteria": [
+    "US-056-AC8"
+  ],
+  "backendCase": "pg-raw.B10",
+  "caseStatus": "counterexample-found",
+  "acceptanceCasesPromoted": []
+}

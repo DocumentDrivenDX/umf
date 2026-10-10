@@ -6,7 +6,7 @@ import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {ReferenceActionOutcomes} from '../../scripts/actions-reference/outcomes';
 import type {ReferenceInvokeRequest} from '../../scripts/actions-reference/protocol';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC4 */
+/** @covers US-901-AC4 */
 test('native protected terminal lookup retains original decisions across retirement, service changes and restart',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),outcomes=new ReferenceActionOutcomes(policy),source=structuredClone(fixture) as unknown as Document;

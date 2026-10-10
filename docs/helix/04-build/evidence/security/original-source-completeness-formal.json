@@ -1,0 +1,95 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-original-source-completeness.py": "c91bf099f78d4f28e40cccc3384decbb7e758a15a9e627020ffd184bb1d08155",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts": "796ba775eb864b0ad1b93702072b149490ab175427a5eb280a0598296bb335b0"
+  },
+  "cases": [
+    {
+      "id": "arbitrary-eligible-population-refinement",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root))))))\n      (a!2 (exists ((root Int))\n             (and (eligible root)\n                  (or (distinct (carrier_count root) 1)\n                      (has_missing_required_field root))))))\n  (distinct (and original_action_authorized a!1)\n            (and original_action_authorized (not a!2)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun application_selected (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (and (eligible root) (application_selected root))\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root))))))\n      (a!2 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized\n       a!1\n       (not (and original_action_authorized a!2))\n       original_action_authorized\n       (eligible 0)\n       (= (carrier_count 0) 0)\n       (forall ((root Int)) (not (application_selected root))))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n application_selected = [else -> False],\n eligible = [else -> True],\n has_missing_required_field = [else -> True],\n carrier_count = [0 -> 0, else -> 2]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized a!1)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n eligible = [else -> True],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 1]]"
+      }
+    },
+    {
+      "id": "empty-result-does-not-hide-missing-source",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun application_selected (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (exists ((root Int))\n             (and (eligible root)\n                  (or (distinct (carrier_count root) 1)\n                      (has_missing_required_field root))))))\n  (and original_action_authorized\n       (not a!1)\n       original_action_authorized\n       (eligible 0)\n       (= (carrier_count 0) 0)\n       (forall ((root Int)) (not (application_selected root))))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun application_selected (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (and (eligible root) (application_selected root))\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized\n       a!1\n       original_action_authorized\n       (eligible 0)\n       (= (carrier_count 0) 0)\n       (forall ((root Int)) (not (application_selected root))))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n application_selected = [else -> False],\n eligible = [else -> True],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 0]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun application_selected (Int) Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized\n       a!1\n       (forall ((root Int)) (not (application_selected root))))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n application_selected = [else -> False],\n eligible = [else -> False],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 2]]"
+      }
+    },
+    {
+      "id": "unauthorized-original-action-never-admits",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (exists ((root Int))\n             (and (eligible root)\n                  (or (distinct (carrier_count root) 1)\n                      (has_missing_required_field root))))))\n  (and original_action_authorized (not a!1) (not original_action_authorized))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (exists ((root Int))\n             (and (eligible root)\n                  (or (distinct (carrier_count root) 1)\n                      (has_missing_required_field root))))))\n  (and (not a!1) (not original_action_authorized))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = False,\n eligible = [else -> False],\n has_missing_required_field = [else -> True],\n carrier_count = [else -> 2]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized a!1 original_action_authorized)))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n eligible = [else -> False],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 1]]"
+      }
+    },
+    {
+      "id": "duplicate-or-null-carrier-refuses",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (exists ((root Int))\n             (and (eligible root)\n                  (or (distinct (carrier_count root) 1)\n                      (has_missing_required_field root))))))\n  (and original_action_authorized\n       (not a!1)\n       (eligible 0)\n       (or (= (carrier_count 0) 2) (has_missing_required_field 0)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun application_selected (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(declare-fun has_missing_required_field (Int) Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (and (eligible root) (application_selected root))\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized\n       a!1\n       original_action_authorized\n       (eligible 0)\n       (= (carrier_count 0) 2)\n       (forall ((root Int)) (not (application_selected root))))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n application_selected = [else -> False],\n eligible = [else -> True],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 2]]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun carrier_count (Int) Int)\n(declare-fun has_missing_required_field (Int) Bool)\n(declare-fun eligible (Int) Bool)\n(declare-fun original_action_authorized () Bool)\n(assert (forall ((root Int)) (>= (carrier_count root) 0)))\n(assert (let ((a!1 (forall ((root Int))\n             (=> (eligible root)\n                 (and (= (carrier_count root) 1)\n                      (not (has_missing_required_field root)))))))\n  (and original_action_authorized\n       a!1\n       (eligible 0)\n       (= (carrier_count 0) 1)\n       (not (has_missing_required_field 0)))))\n",
+        "replayResult": "sat",
+        "witness": "[original_action_authorized = True,\n eligible = [else -> True],\n has_missing_required_field = [else -> False],\n carrier_count = [else -> 1]]"
+      }
+    }
+  ],
+  "scope": "Quantified first-order arbitrary eligible resource populations with abstract native carrier counts and required-field availability. Independent universal completeness specification equals anti-existence admission; selected application rows cannot restrict admission. Premises: exact native key correspondence, truthful eligible-root RLS, complete carrier population, required-field truth, independently authorized original action and one stable source/authority cut through final release. Abstract integer indices/counts are not stored IDs or value transport. This proves an admission algebra, not the actual SQL generator, PostgreSQL isolation/privileges, authenticated owner, graph mappings, or complete compiler/backend refinement."
+}

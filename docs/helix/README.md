@@ -39,21 +39,21 @@ reconciled when that gate is framed.
 ## Declarative action requirements and design
 
 Owner-directed action planning (2026-10-08) is captured in
-[FEAT-008](01-frame/features/FEAT-008-declarative-actions.md),
+[FEAT-900](01-frame/features/FEAT-900-declarative-actions.md),
 [US-900](01-frame/user-stories/US-900-declarative-actions.md),
-[CONTRACT-056](02-design/contracts/CONTRACT-900-declarative-actions.md),
-[SD-008](02-design/solution-designs/SD-008-declarative-actions.md),
+[CONTRACT-900](02-design/contracts/CONTRACT-900-declarative-actions.md),
+[SD-900](02-design/solution-designs/SD-900-declarative-actions.md),
 [TD-900](02-design/technical-designs/TD-900-declarative-actions.md) and
 [STP-900](03-test/test-plans/STP-900-declarative-actions.md).
-[CONTRACT-057](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
+[CONTRACT-901](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
 the proposed first executable consumer profile and protocol. These draft artifacts
 define a local core 0.8.0 `umf.actions` extension for authored declarations and
 executor capability comparison. An experimental portable implementation and bounded
 rule/selector interpretation now have [scoped passing evidence](04-build/evidence/actions-certification.md).
 The transactional reference consumer is allocated in
-[US-056](01-frame/user-stories/US-056-transactional-actions.md),
-[TD-056](02-design/technical-designs/TD-056-transactional-actions.md) and
-[STP-056](03-test/test-plans/STP-056-transactional-actions.md). Its historical certificate records completed bounded execution and qualification
+[US-901](01-frame/user-stories/US-901-transactional-actions.md),
+[TD-901](02-design/technical-designs/TD-901-transactional-actions.md) and
+[STP-901](03-test/test-plans/STP-901-transactional-actions.md). Its historical certificate records completed bounded execution and qualification
 at captured sources. Current integrated qualification and release acceptance
 remain open. Execution remains
 consumer-owned; DDD operation metadata and native Delta log actions are separate.
@@ -1263,3 +1263,4 @@ first-class source artifact collections and Documents/Imaging/Other browser view
 The [plan](04-build/artifact-collections-plan.md) and
 [evidence](04-build/evidence/artifact-collections.md) qualify reference validation,
 rights-aware download links and the updated packs.
+Security planning: [shared security feature](01-frame/features/FEAT-008-shared-security.md), [semantic contract](02-design/contracts/CONTRACT-062-security-semantics.md), and [design](02-design/solution-designs/SD-008-shared-security.md). Native qualification is separate from spike results.

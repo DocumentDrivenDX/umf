@@ -7,7 +7,7 @@ import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor'
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
 import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC1 */
+/** @covers US-901-AC1 */
 test('native preview is advisory, ordered and write-free under independent SQL write guards',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};action.reads.push({...structuredClone(action.writes[0]),id:'__proto__'});

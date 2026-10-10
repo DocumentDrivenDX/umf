@@ -1,3 +1,4 @@
+import {historicalCoreFacetPatch} from '../model/facets';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
@@ -46,7 +47,7 @@ export function projectFacetsToAvro(input:Author,options:FacetsAvroRequest):Face
  let intended:CoreFacetPatch={};
  if(author.operation==='declare-core-facets'){
   const meaning=inspectCoreFacets(source,author.identity).meaning;
-  if(meaning.state==='known'||meaning.state==='partial'){intended=meaning.interpreted;if(meaning.state==='partial')loss(path+'/facets',meaning.facets,'Unknown facet qualifiers remain attached; no native interpretation is fabricated');}
+  if(meaning.state==='known'||meaning.state==='partial'){intended=historicalCoreFacetPatch(meaning.interpreted);if(meaning.state==='partial')loss(path+'/facets',meaning.facets,'Unknown facet qualifiers remain attached; no native interpretation is fabricated');}
  }else if(element.facets!==undefined)loss(path+'/facets',element.facets,'A Field-kind receipt does not establish authorship of facet members');
  const fixed=request.nativeType==='fixed'||request.nativeType==='decimal-fixed',decimal=request.nativeType==='decimal-bytes'||request.nativeType==='decimal-fixed';
  if(fixed&&(request.fixedSize!>4096||request.fixedName===request.recordName))block('/request',request,'Fixed carrier exceeds the 4096-byte execution profile or collides with the record name');

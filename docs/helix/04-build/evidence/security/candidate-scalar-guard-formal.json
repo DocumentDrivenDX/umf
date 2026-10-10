@@ -1,0 +1,65 @@
+{
+  "status": "conditional-proof-passed",
+  "sourcesUnchanged": true,
+  "sourceDigests": {
+    "tools/security/prove-candidate-scalar-guard.py": "c507ce829814b0ec2c0191a1978541899451e1c94b4aec1c7c22c94fda65de62",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-candidate-condition.ts": "30afd759e0565cf3205982735cefded352f9ba32c5f1f1803b7f1d4b12ea0c12"
+  },
+  "solverVersion": "4.15.4",
+  "queries": [
+    {
+      "id": "unbounded-selected-preflight-correspondence",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (forall ((w ScalarRow))\n             (=> (and (present w) (= (logical_type w) selected))\n                 (= (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n  (distinct (and (= parameter_validity 1) a!1)\n            (and (= parameter_validity 1) (not a!2)))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "invalid-preflight-cannot-produce-true",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (forall ((w ScalarRow))\n             (=> (and (present w) (= (logical_type w) selected))\n                 (= (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n(let ((a!3 (= (ite (and (= parameter_validity 1) (not a!2)) authored_truth 2) 1)))\n  (and (not (and (= parameter_validity 1) a!1)) a!3))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "valid-preflight-preserves-authored-truth",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (forall ((w ScalarRow))\n             (=> (and (present w) (= (logical_type w) selected))\n                 (= (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n(let ((a!3 (distinct (ite (and (= parameter_validity 1) (not a!2))\n                          authored_truth\n                          2)\n                     authored_truth)))\n  (and (= parameter_validity 1) a!1 a!3))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "invalid-selected-row-overrides-authored-true",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (logical_type w) selected)\n                  (distinct (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n(let ((a!3 (distinct (ite (and (= parameter_validity 1) (not a!2))\n                          authored_truth\n                          2)\n                     2)))\n  (and a!1 (= authored_truth 1) a!3))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "removed-guard-selected-row-false-grant",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (logical_type w) selected)\n                  (distinct (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n(let ((a!3 (= (ite (and (= parameter_validity 1) (not a!2)) authored_truth 2) 2)))\n  (and (= parameter_validity 1) a!1 (= authored_truth 1) a!3))))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "model": "[authored_truth = 1,\n selected = 3,\n parameter_validity = 1,\n logical_type = [ScalarRow!val!0 -> 3,\n                 ScalarRow!val!1 -> 3,\n                 else -> native_type(Var(0))],\n present = [else -> True],\n native_type = [else -> 3],\n valid = [ScalarRow!val!1 -> 0, else -> 2]]"
+    },
+    {
+      "id": "foreign-invalid-row-cannot-poison",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (forall ((w ScalarRow))\n             (=> (present w) (distinct (logical_type w) selected))))\n      (a!2 (exists ((w ScalarRow)) (and (present w) (distinct (valid w) 1))))\n      (a!3 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1)))))\n  (and (= parameter_validity 1)\n       a!1\n       a!2\n       (not (and (= parameter_validity 1) (not a!3))))))\n",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "model": null
+    },
+    {
+      "id": "nonempty-selected-valid-positive",
+      "smt": "(declare-sort ScalarRow 0)\n(declare-fun parameter_validity () Int)\n(declare-fun authored_truth () Int)\n(declare-fun valid (ScalarRow) Int)\n(declare-fun native_type (ScalarRow) Int)\n(declare-fun logical_type (ScalarRow) Int)\n(declare-fun present (ScalarRow) Bool)\n(declare-fun selected () Int)\n(assert (>= parameter_validity 0))\n(assert (<= parameter_validity 2))\n(assert (>= authored_truth 0))\n(assert (<= authored_truth 2))\n(assert (forall ((w ScalarRow)) (and (>= (valid w) 0) (<= (valid w) 2))))\n(assert (forall ((w ScalarRow)) (=> (present w) (= (logical_type w) (native_type w)))))\n(assert (let ((a!1 (exists ((w ScalarRow))\n             (and (present w)\n                  (= (native_type w) selected)\n                  (distinct (valid w) 1))))\n      (a!2 (exists ((w ScalarRow))\n             (and (present w) (= (logical_type w) selected) (= (valid w) 1)))))\n  (and (= parameter_validity 1) (not a!1) (= authored_truth 1) a!2)))\n",
+      "result": "sat",
+      "replayResult": "sat",
+      "model": "[authored_truth = 1,\n selected = 0,\n parameter_validity = 1,\n logical_type = [ScalarRow!val!0 -> 0,\n                 else -> native_type(Var(0))],\n present = [else -> True],\n native_type = [else -> 0],\n valid = [else -> 1]]"
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "covers": [
+    "US-056-AC2"
+  ],
+  "scope": "Unbounded abstract declared scalar rows with complete stable population, faithful logical/native selected type tags and truthful native domain-validity results; parameter validity summarizes every declared scalar parameter. Proves whole-condition guard algebra, selected invalid row isolation from authored truth and foreign-row exclusion. Invalid maps to diagnostic Unknown, not admission or authorization. Does not prove numeric validity SQL, query evaluation order, native column types, Key/endpoints, AST/emitter refinement, authenticated complete facts or policy composition."
+}

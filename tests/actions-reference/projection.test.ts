@@ -14,7 +14,7 @@ const relation={module:'sales',relationship:'loop'},record={module:'sales',eleme
 function source(){const doc=structuredClone(fixture) as unknown as Document,module=doc.modules[0]!,action=(module.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};module.elements.push({id:'external',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}});const model=module.elements.find(item=>item.id==='order')!;(model.members as any[]).push({module:'sales',element:'external'});(model.keys as any[]).push({id:'external',name:'external',primary:false,fields:[{module:'sales',element:'external'}]});module.relationships=[{id:'loop',name:'loop',source:[record],target:[{...record,key:'pk'}],sourceMultiplicity:{min:0,max:1},targetMultiplicity:{min:0,max:1},targetLifecycle:'independent',directed:true}];return {doc,action};}
 /** Independent SQL oracle: this never folds facts or calls the projection snapshot implementation. */
 async function nativeGraph(store:ReferenceActionStore):Promise<ReferenceProjectionGraph>{const entities=await store.sql`select id::text,record,fields,version from action_entity order by id`,links=await store.sql`select relationship,source_entity::text,target_entity::text from action_link order by identity`;return {profile:{id:'umf.actions.native-graph',version:'1'},entities:entities.map((row:any)=>({id:row.id,record:decodeReferenceJson(row.record),fields:decodeReferenceJson(row.fields),version:decodeReferenceJson(row.version)})),links:links.map((row:any)=>({relationship:decodeReferenceJson(row.relationship),sourceEntity:row.source_entity,targetEntity:row.target_entity}))} as ReferenceProjectionGraph;}
-/** @covers US-056-AC12 */
+/** @covers US-901-AC12 */
 test('native full graph baseline and reordered duplicate delivery preserve all primitives, exact receipts and independent named prefixes',async()=>{
  await withReferenceStore(async store=>{
   // Force every digest into one bucket before any row exists: exact identities still distinguish receipts and views.
@@ -33,7 +33,7 @@ test('native full graph baseline and reordered duplicate delivery preserve all p
  });
 },60000);
 
-/** @covers US-056-AC12 */
+/** @covers US-901-AC12 */
 test('projection authority cannot collide with business audit roles; malformed retained meaning refuses without loss',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),view=new ReferenceActionProjection(policy),credential=issuer.issue({tenant:'tenant',principal:'reader',service:'service'});
@@ -45,7 +45,7 @@ test('projection authority cannot collide with business audit roles; malformed r
  });
 },60000);
 
-/** @covers US-056-AC12 */
+/** @covers US-901-AC12 */
 test('unknown native fact meaning remains queued and never advances its sequence',async()=>{
  await withReferenceStore(async store=>{
  await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),view=new ReferenceActionProjection(policy);await view.register('s','primary',[]);const bodies=[encodeReferenceJson({profile:{id:'umf.actions.native-facts',version:'1'},changes:[],entities:[],deleted:[],links:[],unlinked:[]}),'{future opaque malformed body'];await store.transaction('s',async(tx,control)=>{await tx`update action_store set business_sequence=2 where id=${control.id}`;for(let index=0;index<2;index++)await tx`insert into action_outbox(store,identity,epoch,sequence,facts) values (${control.id},${encodeReferenceIdentity(['epoch',String(index+1)])},${encodeReferenceJson('epoch')},${String(index+1)},${bodies[index]})`;});

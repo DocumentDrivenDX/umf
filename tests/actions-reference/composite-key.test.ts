@@ -18,7 +18,7 @@ const record={module:'sales',element:'order'},key={...record,key:'pk'};
 const entity=(region:string,id:string)=>({key,components:[{string:region},{string:id}]});
 const fieldMap=(region:string,id:string)=>({'["sales","region"]':{string:region},'["sales","id"]':{string:id},'["sales","status"]':{string:'pending'}});
 
-/** @covers US-056-AC2 @covers US-056-AC3 @covers US-056-AC4 @covers US-056-AC8 @covers US-056-AC10 */
+/** @covers US-901-AC2 @covers US-901-AC3 @covers US-901-AC4 @covers US-901-AC8 @covers US-901-AC10 */
 test('native composite Keys preserve ordered components through preparation, freeze, typed results and restarted replay',async()=>{
  await withReferenceStore(async(store,nativeVersion)=>{
   await store.create('s','tenant','epoch');
@@ -78,7 +78,7 @@ test('native composite Keys preserve ordered components through preparation, fre
  });
 },30000);
 
-/** @covers US-056-AC1 @covers US-056-AC2 @covers US-056-AC8 */
+/** @covers US-901-AC1 @covers US-901-AC2 @covers US-901-AC8 */
 test('native owned and association-Record declarations refuse before business access or any transactional write',async()=>{
  await withReferenceStore(async(store,nativeVersion)=>{
   await store.create('s','tenant','epoch');

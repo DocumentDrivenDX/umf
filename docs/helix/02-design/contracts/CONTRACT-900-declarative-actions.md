@@ -7,7 +7,7 @@ ddx:
   authoring:
     home: repo
   links:
-    - id: FEAT-008
+    - id: FEAT-900
       kind: informed_by
     - id: umf.architecture
       kind: informed_by

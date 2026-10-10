@@ -79,9 +79,9 @@ not a researched completeness claim or a list of mandatory core primitives.
 
 ## Proposed declarative action boundary
 
-[FR-51/FEAT-008](../01-frame/features/FEAT-008-declarative-actions.md) introduces
+[FR-51/FEAT-900](../01-frame/features/FEAT-900-declarative-actions.md) introduces
 a proposed independently versioned `umf.actions` extension. The feature-level
-[SD-008](solution-designs/SD-008-declarative-actions.md) separates declaration
+[SD-900](solution-designs/SD-900-declarative-actions.md) separates declaration
 validation/inspection and profile comparison from consumer-owned execution.
 [CONTRACT-900](contracts/CONTRACT-900-declarative-actions.md) owns exact action
 semantics; [TD-900](technical-designs/TD-900-declarative-actions.md) describes the

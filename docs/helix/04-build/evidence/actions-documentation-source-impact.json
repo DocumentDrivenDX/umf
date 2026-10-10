@@ -9202,5 +9202,15 @@
       "signed page verification",
       "merged live deployment verification"
     ]
+  },
+  "combinedSecurityMainIntegration": {
+    "main": "cd4cc93769925d11b8480a0c2be4f009a4c737ac",
+    "scope": "43 changed shared source/schema files; nine action implementation bodies unchanged from published head. Shared JSON guard, six historical core closures and five facet projectors were freshly checked. Security backend acceptance remains separate.",
+    "deltaEvidence": "actions-security-integration/reviewed-implementation-delta.json",
+    "semanticEvidence": "actions-security-integration/semantic/record.json",
+    "unrestrictedRegression": "actions-security-integration/regression/unrestricted-original.json",
+    "timeoutRetries": "actions-security-integration/regression/timeout-retries/record.json",
+    "currentStrictAdmissionClaim": false,
+    "deliveryPending": true
   }
 }

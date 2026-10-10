@@ -7,9 +7,9 @@ ddx:
   authoring:
     home: repo
   links:
-    - id: FEAT-008
+    - id: FEAT-900
       kind: informed_by
-    - id: SD-008
+    - id: SD-900
       kind: informed_by
     - id: CONTRACT-900
       kind: references
@@ -442,6 +442,6 @@ Derive EX-01–EX-05 in STP-900: static branch checking and numeric bounds; froz
 explicit-key selection and aliases; current auth/revision/replay/lookup;
 phantom/create conflicts and denied handler access; preview/audit/receipt epochs.
 Execution status, actual test mappings and source/runtime fingerprints are recorded
-in STP-056 and the current action certification evidence. Earlier prototype probes
+in STP-901 and the current action certification evidence. Earlier prototype probes
 alone qualify only their recorded synthetic subsets. Certification requires the
 corresponding current native witnesses and complete core regression gates.

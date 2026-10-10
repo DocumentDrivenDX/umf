@@ -15,11 +15,11 @@ ddx:
       kind: informed_by
     - id: US-900
       kind: informed_by
-    - id: US-056
+    - id: US-901
       kind: informed_by
     - id: STP-900
       kind: informed_by
-    - id: STP-056
+    - id: STP-901
       kind: informed_by
 ---
 
@@ -192,3 +192,18 @@ This is design approval, not completed certification. Final command inventories,
 certificate hashes, source revision, results and deployment URLs remain unknown
 until their actual execution and audit. A later primary change requires a new
 exact impact decision before merge.
+
+
+## Security/core main integration decision (2026-10-10)
+
+Main `cd4cc93769925d11b8480a0c2be4f009a4c737ac` adds shared security and changes shared JSON carrier validation, six core operation closures and five facet projectors. The earlier unchanged-core exception for revision 322 does not describe this integration. Astra Ultra independently reviewed this combined delta and the exact identity/conflict resolutions.
+
+The shared JSON change refuses non-index array properties rather than silently losing their content. Original core 0.8 inspection is supported by six versioned operation closures; the dedicated facet schema-properties browser probe also checks retained meaning, author-version refusal, JSON/YAML recovery and getter nonexecution. Five historical facet projectors refuse meaning they cannot represent instead of dropping newer bounds. Native scope is bounded by fresh affected TableSpec model/consumer, PostgreSQL, SQL Server, Avro and Parquet projection checks, the four affected storage/codec compositions and their actual Chromium probes. This decision does not qualify shared security backend acceptance or integrate security policy execution automatically with actions.
+
+Fresh action verification requires the actual 119-test PostgreSQL foundation, current public browser corpus and actual native beginner tutorial. Those checks must bind the combined source and actual supported versions. The completed report inventory is in [combined integration evidence](evidence/actions-security-integration/README.md).
+
+The complete current behavior regression and the current-source eight-check semantic allocation remain required. Preserve the five selected original tests, the exact facet assertions, all three Key helpers and their assertions, and the nine-file relationship binding replay. Bind consumed fixtures and referenced Parquet bytes. Replaying captured native data remains distinct from fresh engine execution. Record and resolve ordinary behavioral failures; do not treat timeouts as passes.
+
+All 17 original strict admission tests, their positive controls and tampering assertions remain immutable baseline executions. Preserve the actual unrestricted current-source run and its identified stale-input refusals separately; do not call that run passing. Never replace historical fingerprints merely to admit changed source, weaken `verify-current-core-evidence.ts`, or count a strict refusal as successful current admission. A fresh positive strict certificate requires the full 174-command campaign and original 17-test proof closure. The bounded release does not claim that new strict certificate. If any remaining shared semantic/native impact cannot be bounded by the reviewed delta and current checks, rerun the affected native matrix; if the affected scope cannot be bounded, rerun all 174.
+
+Final documentation build and seven negative controls, portable examples, signed pages, responsive/zoom visual checks, green release CI, main merge, actual deployed byte/signature/browser verification and release verification remain required.

@@ -4,7 +4,7 @@ import {ReferenceActionIssuer} from '../../scripts/actions-reference/authenticat
 import {admitReferenceRequest,canonicalReferenceVersions} from '../../scripts/actions-reference/protocol';
 import fixture from '../../fixtures/actions/approve.json';
 import type {Action} from '../../src/extensions/actions';
-// Partial protocol/issuer witnesses; complete US-056 end-to-end criteria remain unqualified.
+// Partial protocol/issuer witnesses; complete US-901 end-to-end criteria remain unqualified.
 test('trusted issuer authenticates human and service independently and refuses credential tampering',()=>{
  const issuer=new ReferenceActionIssuer(),identity={tenant:'tenant',principal:'human',service:'service'},credential=issuer.issue(identity);
  expect(issuer.authenticate(credential)).toEqual(identity);expect(()=>new ReferenceActionIssuer().authenticate(credential)).toThrow('AUTHENTICATION');

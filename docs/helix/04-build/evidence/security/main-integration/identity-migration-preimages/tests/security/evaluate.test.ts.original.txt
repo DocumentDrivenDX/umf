@@ -1,0 +1,148 @@
+import {test,expect} from 'bun:test';
+import {ref} from './fixture';
+import {evaluateSecurityAccess,evaluateSecurityCollection} from '../../src/extensions/security/evaluate';
+
+import {evaluationFixture} from './evaluation-fixture';
+
+const access=(f:ReturnType<typeof evaluationFixture>)=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[ref('salary')]},f.resource);
+
+test('correlated ownership and active same-Project assignment govern a broad read grant',()=>{
+  // @covers US-055-AC1
+  // @covers US-055-AC4
+  // @covers US-055-AC5
+  const valid=evaluationFixture();expect(access(valid)).toEqual({decision:'permit',output:[{field:ref('salary'),disposition:'withheld'}]});
+  for(const mutation of ['inactive','missing','sibling','other-staff','ownerless']){
+    const f=evaluationFixture();
+    if(mutation==='inactive')f.assignment.fields.find(f=>f.field.elementId==='active')!.value={boolean:false};
+    if(mutation==='missing')f.cut.facts=[f.owner];
+    if(mutation==='ownerless')f.cut.facts=[f.assignment];
+    if(mutation==='sibling')f.assignment.fields.find(f=>f.field.elementId==='assignmentProject')!.value={string:'p2'};
+    if(mutation==='other-staff')f.assignment.fields.find(f=>f.field.elementId==='assignmentStaff')!.value={string:'bob'};
+    expect(access(f).decision,mutation).toBe('deny');
+  }
+});
+
+test('incomplete, stale, malformed or ambiguous host inputs refuse the whole collection',()=>{
+  // @covers US-055-AC6
+  for(const mutation of ['trust','generation','policy','subject','ambiguous','coverage','attribute','duplicate','budget']){
+    const f=evaluationFixture();
+    if(mutation==='trust')f.cut.trusted=false;
+    if(mutation==='generation')f.cut.generation='g2';
+    if(mutation==='policy')f.cut.policyRevision='old';
+    if(mutation==='subject')f.cut.subjects=[];
+    if(mutation==='ambiguous')f.cut.subjects.push(f.cut.subjects[0]!);
+    if(mutation==='coverage')f.cut.coverage.find(c=>c.type.elementId==='Assignment')!.complete=false;
+    if(mutation==='attribute')f.assignment.fields=f.assignment.fields.filter(f=>f.field.elementId!=='active');
+    if(mutation==='duplicate')f.cut.facts.push(f.assignment);
+    if(mutation==='budget')f.cut.maxSteps=1;
+    expect(access(f).decision,mutation).toBe('indeterminate');
+    expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,{action:'read',output:[ref('salary')],resources:[f.resource]}),mutation).toEqual({status:'refused',rows:[]});
+  }
+});
+
+test('forbids dominate and false permits never add masks',()=>{
+  // @covers US-055-AC4
+  // @covers US-055-AC7
+  const f=evaluationFixture();f.policy.rules.push({id:'false',effect:'permit',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:false},disclosure:[{field:ref('salary'),disposition:{kind:'original'}}]});
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'withheld'}]);
+  f.policy.rules.push({id:'forbid',effect:'forbid',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:true}});
+  expect(access(f).decision).toBe('deny');f.policy.rules.reverse();expect(access(f).decision).toBe('deny');
+});
+
+test('query-use admission refuses withholding and requires a separate original-value action',()=>{
+  // @covers US-055-AC8
+  for(const operator of ['predicate','order','group','join','aggregate'] as const){
+    const f=evaluationFixture(),salary=f.resolution.ontology.entities[2]!.fields.find(f=>f.ref.elementId==='salary')!;
+    const request={action:'read',output:[],queryUses:[{field:ref('salary'),operator}]};
+    expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision).toBe('indeterminate');
+    salary.queryUse={[operator]:'disclosed'};
+    expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision).toBe('indeterminate');
+    salary.queryUse={[operator]:'original-authorized'};f.resolution.ontology.actions.push('query-original');
+    const original={...request,queryUses:[{field:ref('salary'),operator,originalAction:'query-original'}]};
+    expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,original,f.resource).decision).toBe('indeterminate');
+    f.policy.rules.push({id:'query-original',effect:'permit',actions:['query-original'],target:[ref('Resource')],condition:{op:'literal',value:true}});
+    expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,original,f.resource).decision).toBe('permit');
+  }
+});
+
+test('original null, absence and typed constant replacement remain distinct',()=>{
+  // @covers US-055-AC7
+  const f=evaluationFixture();f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.nullability='absent-allowed';
+  f.policy.rules[0]!.disclosure![0]!.disposition={kind:'original'};f.resource.fields.find(f=>f.field.elementId==='salary')!.value=null;
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'original',value:null}]);
+  f.resource.fields=f.resource.fields.filter(f=>f.field.elementId!=='salary');f.resource.absent=[ref('salary')];
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'absent'}]);
+  f.policy.rules[0]!.disclosure![0]!.disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'redacted'}};
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]);
+});
+
+test('hostile accessors cannot run at the evaluation boundary',()=>{
+  // @covers US-055-AC3
+  const f=evaluationFixture();let invoked=false;
+  const request={get action(){invoked=true;return 'read';},output:[]};
+  expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision).toBe('indeterminate');expect(invoked).toBe(false);
+});
+
+test('an empty collection still admits every scoped complete dependency',()=>{
+  // @covers US-055-AC6
+  const f=evaluationFixture(),request={action:'read',targets:[ref('Resource')],output:[],resources:[]};
+  expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,request)).toEqual({status:'evaluated',rows:[]});
+  f.cut.coverage=f.cut.coverage.filter(c=>c.type.elementId!=='Assignment');
+  expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,request)).toEqual({status:'refused',rows:[]});
+});
+
+test('transform conflicts refuse; withholding dominates all transform permutations',()=>{
+  // @covers US-055-AC7
+  const f=evaluationFixture();
+  f.policy.rules[0]!.disclosure![0]!.disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'x'}};
+  f.policy.rules.push({...f.policy.rules[0]!,id:'second',disclosure:[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'y'}}}]});
+  expect(access(f)).toEqual({decision:'conflict',output:[]});
+  f.policy.rules.push({...f.policy.rules[0]!,id:'withheld',disclosure:[{field:ref('salary'),disposition:{kind:'withheld'}}]});
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'withheld'}]);f.policy.rules.reverse();
+  expect(access(f).output).toEqual([{field:ref('salary'),disposition:'withheld'}]);
+});
+
+test('any/all owners and nonempty-owner requirements have explicit different meanings',()=>{
+  // @covers US-055-AC5
+  const f=evaluationFixture();
+  const own=f.policy.rules[1]!.condition;
+  if(own.op!=='exists'||own.where.op!=='and')throw new Error('Expected authored fixture');
+  const matchResource=own.where.args[0]!,assignment=own.where.args[1]!;
+  f.cut.facts.push({...f.owner,key:[{string:'o2'}],fields:f.owner.fields.map(x=>({...x,value:x.field.elementId==='ownerId'?{string:'o2'}:x.field.elementId==='ownerProject'?{string:'p2'}:x.value}))});
+  expect(access(f).decision).toBe('permit');
+  f.policy.rules[1]!.condition={op:'not',arg:{op:'exists',association:ref('Ownership'),as:'o',where:{op:'and',args:[matchResource,{op:'not',arg:assignment}]}}};
+  expect(access(f).decision).toBe('deny');
+  f.cut.facts=[f.assignment];expect(access(f).decision).toBe('permit');
+  f.policy.rules[1]!.condition={op:'and',args:[{op:'exists',association:ref('Ownership'),as:'o',where:matchResource},f.policy.rules[1]!.condition]};
+  expect(access(f).decision).toBe('deny');
+});
+
+test('keys compare exact Unicode and integers without normalization or host rounding',()=>{
+  // @covers US-055-AC2
+  const f=evaluationFixture();f.cut.subjects[0]!.key=[{string:'é'}];f.cut.subjects[0]!.fields[0]!.value={string:'é'};
+  f.assignment.fields.find(f=>f.field.elementId==='assignmentStaff')!.value={string:'é'};
+  expect(access(f).decision).toBe('deny');
+  for(const name of ['staffId','assignmentStaff'])f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id===name)!.scalarType='integer';
+  f.cut.subjects[0]!.key=[{integerToken:'9007199254740993'}];f.cut.subjects[0]!.fields[0]!.value={integerToken:'9007199254740993'};
+  f.assignment.fields.find(f=>f.field.elementId==='assignmentStaff')!.value={integerToken:'9007199254740992'};
+  expect(access(f).decision).toBe('deny');
+  f.assignment.fields.find(f=>f.field.elementId==='assignmentStaff')!.value={integerToken:'9007199254740993'};
+  expect(access(f).decision).toBe('permit');
+});
+
+test('empty queries preflight prohibited fields and all original-action dependencies',()=>{
+  // @covers US-055-AC6
+  // @covers US-055-AC8
+  for(const operator of ['predicate','order','group','join','aggregate'] as const){
+    const f=evaluationFixture();
+    const request={action:'read',targets:[ref('Resource')],resources:[],output:[],queryUses:[{field:ref('salary'),operator,originalAction:'query-original'}]};
+    expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,{...request,queryUses:[{field:ref('salary'),operator}]})).toEqual({status:'refused',rows:[]});
+    f.resolution.ontology.entities.find(t=>t.type.elementId==='Resource')!.fields.find(p=>p.ref.elementId==='salary')!.queryUse={[operator]:'original-authorized'};
+    f.resolution.ontology.actions.push('query-original');
+    const membership=f.policy.rules[1]!.condition;f.policy.rules[1]!.condition={op:'literal',value:true};
+    f.policy.rules.push({id:'original',effect:'permit',actions:['query-original'],target:[ref('Resource')],condition:membership});
+    expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,request)).toEqual({status:'evaluated',rows:[]});
+    f.cut.coverage.find(c=>c.type.elementId==='Assignment')!.complete=false;
+    expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,request)).toEqual({status:'refused',rows:[]});
+  }
+});

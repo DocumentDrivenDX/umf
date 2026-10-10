@@ -1,0 +1,51 @@
+{
+  "status": "private-scoped-declaration-decoder-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 122,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0
+  },
+  "rawOutputSha256": "9e5a59cd3ef9d5a9c003467f1fe912656d65e1b902c4c424195852823755bdb1",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b"
+  },
+  "scope": "Bounded private0.2 declaration grammar and original custody only. Pin is not complete build-custody inventory. Independent profile, matcher, formal proof and integrated refresh remain open.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": [],
+  "controls": [
+    "Exact independently authored paired subject set",
+    "Legacy0.1 projects and scoped decoder refuses",
+    "Eight malformed declaration mutants",
+    "Complete original prerequisite DAG",
+    "Exact/minus-one measured phase work/text budget",
+    "4096 aggregate atoms pass;4097 refuse",
+    "8192 repeated-origin atoms refuse",
+    "2048 multibyte characters/4096UTF8bytes pass;2049/4098bytes refuse for obligated and empty-capability selections"
+  ],
+  "review": {
+    "reviewer": "Astra ultra",
+    "independentCargoRun": false,
+    "scope": "read-only decoder implementation and test review",
+    "feedbackImplemented": [
+      "Exact subject assertions",
+      "4097 boundary fixture",
+      "Complete selected capability UTF8 identity validation"
+    ],
+    "result": "Final read-only review clean after all three feedback items; no independent Cargo/native execution."
+  }
+}

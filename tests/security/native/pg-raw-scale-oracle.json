@@ -1,0 +1,151 @@
+{
+  "version": "pg-raw-scale-oracle/0.1.0",
+  "engine": "170009",
+  "baselineResources": 5,
+  "stages": [
+    {
+      "totalResources": 1000,
+      "generatedResources": 995,
+      "sampleIds": [
+        "perf-1",
+        "perf-2",
+        "perf-994",
+        "perf-995"
+      ],
+      "actors": {
+        "umf_sec_alice": {
+          "count": "499",
+          "samples": [
+            [
+              "perf-2",
+              "2"
+            ],
+            [
+              "perf-994",
+              "994"
+            ]
+          ]
+        },
+        "umf_sec_bob": {
+          "count": "500",
+          "samples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-995",
+              "995"
+            ]
+          ]
+        },
+        "umf_sec_outsider": {
+          "count": "0",
+          "samples": []
+        }
+      }
+    },
+    {
+      "totalResources": 100000,
+      "generatedResources": 99995,
+      "sampleIds": [
+        "perf-1",
+        "perf-2",
+        "perf-99994",
+        "perf-99995"
+      ],
+      "actors": {
+        "umf_sec_alice": {
+          "count": "49999",
+          "samples": [
+            [
+              "perf-2",
+              "2"
+            ],
+            [
+              "perf-99994",
+              "99994"
+            ]
+          ]
+        },
+        "umf_sec_bob": {
+          "count": "50000",
+          "samples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-99995",
+              "99995"
+            ]
+          ]
+        },
+        "umf_sec_outsider": {
+          "count": "0",
+          "samples": []
+        }
+      }
+    },
+    {
+      "totalResources": 1000000,
+      "generatedResources": 999995,
+      "sampleIds": [
+        "perf-1",
+        "perf-2",
+        "perf-999994",
+        "perf-999995"
+      ],
+      "actors": {
+        "umf_sec_alice": {
+          "count": "499999",
+          "samples": [
+            [
+              "perf-2",
+              "2"
+            ],
+            [
+              "perf-999994",
+              "999994"
+            ]
+          ]
+        },
+        "umf_sec_bob": {
+          "count": "500000",
+          "samples": [
+            [
+              "perf-1",
+              "1"
+            ],
+            [
+              "perf-999995",
+              "999995"
+            ]
+          ]
+        },
+        "umf_sec_outsider": {
+          "count": "0",
+          "samples": []
+        }
+      }
+    }
+  ],
+  "budgets": {
+    "originalResponseTimeoutMs": 30000,
+    "statementTimeoutMs": 1,
+    "runtimeProcessSeconds": 90
+  },
+  "expectedTimeoutSqlstate": "57014",
+  "expectedFailedSqlstate": "25P02",
+  "recoveredAliceIds": [
+    "RA",
+    "RAB"
+  ],
+  "recoveryCandidates": [
+    "RA",
+    "RAB",
+    "RB",
+    "RD",
+    "RO"
+  ]
+}

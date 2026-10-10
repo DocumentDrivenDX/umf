@@ -1,0 +1,36 @@
+"""Conditional publisher-custody model, with native lock-loss mutant; no SQL proof."""
+import hashlib,json
+from pathlib import Path
+import z3
+buffer,durable,lock,ack=z3.Bools('buffer_live durable_publisher native_lock revocation_ack')
+b2,d2,l2,a2=z3.Bools('next_buffer next_publisher next_lock next_ack')
+inv=lambda b,d,a:z3.And(z3.Implies(b,d),z3.Implies(a,z3.And(z3.Not(b),z3.Not(d))))
+state=inv(buffer,durable,ack);after=inv(b2,d2,a2)
+initial=z3.And(z3.Not(buffer),z3.Not(durable),z3.Not(lock),z3.Not(ack))
+admit=z3.And(z3.Not(ack),z3.Not(buffer),b2,d2,l2,a2==ack)
+commit_data=z3.And(b2==buffer,d2==durable,l2==lock,a2==ack)
+backend_loss=z3.And(b2==buffer,d2==durable,z3.Not(l2),a2==ack)
+consumer_drain=z3.And(z3.Not(b2),z3.Not(d2),l2==lock,a2==ack)
+unlock=z3.And(z3.Not(buffer),b2==buffer,d2==durable,z3.Not(l2),a2==ack)
+revoke=z3.And(z3.Not(lock),z3.Not(durable),b2==buffer,d2==durable,l2==lock,a2)
+transitions=z3.Or(admit,commit_data,backend_loss,consumer_drain,unlock,revoke)
+# Unsafe native-only release forgets the live publication when its backend dies.
+forget=z3.And(buffer,durable,b2==buffer,z3.Not(d2),z3.Not(l2),a2==ack)
+queries=[
+ ('initial-custody',z3.And(initial,z3.Not(state)),z3.And(buffer,z3.Not(durable),z3.Not(state)),z3.And(initial,state)),
+ ('transitions-preserve-custody',z3.And(state,transitions,z3.Not(after)),z3.And(state,forget,z3.Not(after)),z3.And(state,backend_loss,buffer,after)),
+ ('backend-loss-excludes-revocation-ack',z3.And(state,backend_loss,buffer,z3.Not(l2),z3.Not(d2)),z3.And(state,forget,buffer,z3.Not(l2),z3.Not(d2)),z3.And(state,backend_loss,buffer,d2)),
+ ('acknowledgment-excludes-live-buffer',z3.And(state,ack,buffer),z3.And(buffer,z3.Not(lock),ack,z3.Not(durable)),z3.And(state,ack,z3.Not(buffer))),
+]
+cases=[]
+for name,violation,control,positive in queries:
+ results=[]
+ for formula,expected in [(violation,z3.unsat),(control,z3.sat),(positive,z3.sat)]:
+  solver=z3.Solver();solver.set(timeout=10000);solver.add(formula);answer=solver.check()
+  if answer!=expected:raise RuntimeError(name+': '+str(answer))
+  results.append({'result':str(answer),'smt':solver.sexpr(),'model':str(solver.model()) if answer==z3.sat else None})
+ cases.append({'id':name,'violation':results[0],'negativeControl':results[1],'positivePopulation':results[2]})
+paths=[Path(__file__),Path('docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md'),Path('tools/security/pg-raw-drain-runtime.ts'),Path('tests/security/native/pg-raw-drain-oracle.json')]
+receipt={'status':'conditional-proof-passed','solverVersion':z3.get_version_string(),'sourceDigests':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},'cases':cases,'nativeImplementationQualified':False,'scope':'Single admitted publisher Boolean protocol: live buffer implies unresolved durable publisher custody; every revoker requires native lock exclusion AND no durable publisher before acknowledgment. Backend loss changes native lock only, never publication custody. Consumer drain retires custody only after actual final delivery/discard acknowledgment. Safety properties are inductive for modeled transitions. Premises: truthful complete durable registry, authenticated enrollment/retirement, fresh native writer observations, atomic participating writer guard and complete release paths. Does not verify SQL/TS refinement, caller/lease issuer authenticity, native registry implementation, PID/incarnation correspondence, process death recovery, multiple publishers, liveness/fairness or backend acceptance. Current lock-only native component is the unsafe negative control, not this persistent implementation.'}
+Path('docs/helix/04-build/evidence/security/persistent-publication-formal.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps({'status':receipt['status'],'checks':len(cases)}))

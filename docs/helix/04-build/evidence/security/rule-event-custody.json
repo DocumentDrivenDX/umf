@@ -1,0 +1,35 @@
+{
+  "status": "private-rule-semantic-custody-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 128,
+    "failed": 0
+  },
+  "selectedPostRunSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "3130863e6c071bd3dd15100dc74e22d840decc0a1fc8e3fdcfc86eb1ce41788a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "06f995cea6f98dfac0e19b1a0d876090fadadc9a7ee543bc1b6a2761748f63be"
+  },
+  "rawOutputSha256": "f5832654533bed9a3fab27395f3337fac5fd3ea43ee9360b1fc4f3bc3acb594d",
+  "scope": "Borrowed actual rule semantics at typed source events, not complete obligation-kind path enumeration, independent template issuance, authenticated profile or native discharge. Post-run selected pins are not complete frozen build custody.",
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": [],
+  "controls": [
+    "independent rule occurrence IDs and exact original pointers",
+    "populated false branch and self-join custody",
+    "same pointer repetition versus separately allocated equal rule refusal",
+    "independent exact6visit/74byte new copy and minus-one bounds",
+    "actual two scans/two actions/two rules scope and pointer inventory"
+  ]
+}

@@ -7,7 +7,7 @@ import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor'
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
 import {encodeReferenceIdentity,encodeReferenceJson,decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('native terminal audit protects executor attempt/profile, trusted actor/policy and omits raw inputs',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document,action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.authorization.profile={id:'umf.actions.roles',version:'1'};action.parameters.push({id:'private-note',kind:'value',field:{module:'sales',element:'status'},required:false});
@@ -19,7 +19,7 @@ test('native terminal audit protects executor attempt/profile, trusted actor/pol
   for(const column of ['actor','deployment','policy_version','decision','correlation','details','header','family','identity','revision','store','expires_at','expired'])await expect(store.transaction('s',async tx=>{await tx.unsafe(`update action_audit set ${column}=${column} where id=${row!.id}`);})).rejects.toThrow('immutable protected terminal audit');await expect(store.transaction('s',async tx=>{await tx`delete from action_audit where id=${row!.id}`;})).rejects.toThrow('immutable protected terminal audit');expect(await store.sql`select * from action_audit`).toHaveLength(1);expect(await store.sql`select * from action_outcome`).toHaveLength(1);expect(await store.sql`select * from action_outbox`).toHaveLength(1);
  });
 },30000);
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('native audit access denies before row queries and separates header/detail roles and family scope',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document;(source.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile={id:'umf.actions.roles',version:'1'};const target={module:'sales',action:'approve',revision:'read-audit'},credential=issuer.issue({tenant:'tenant',principal:'human',service:'application'}),request={protocol:'umf.actions.tx/1',target,key:'token',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]}}};
@@ -41,7 +41,7 @@ expect(await audit.read('s',credential,lookup)).toEqual(denied);expect(await aud
  });
 },30000);
 
-/** @covers US-056-AC11 */
+/** @covers US-901-AC11 */
 test('native audit horizon is pinned, expiry irreversible and payload selection stops before disclosure',async()=>{
  await withReferenceStore(async store=>{
   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),source=structuredClone(fixture) as unknown as Document;(source.modules[0]!.extensions!['umf.actions'] as any).actions[0].authorization.profile={id:'umf.actions.roles',version:'1'};const target={module:'sales',action:'approve',revision:'audit-retention'},credential=issuer.issue({tenant:'tenant',principal:'human',service:'application'}),request={protocol:'umf.actions.tx/1',target,key:'token',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]}}};

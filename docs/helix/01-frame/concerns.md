@@ -85,3 +85,6 @@ separates schema, data, native-engine and realism evidence; review requires
 independently releasable pack scopes; runtime boundaries keep dataset execution
 in TableSpec. Ecology additionally preserves sampling effort, taxonomy revisions,
 censoring, coordinate uncertainty and source-specific reuse restrictions.
+## Shared security concern application (2026-10-08)
+
+FEAT-008 retains the selected fidelity, qualified identity, bounded processing, conformance, browser portability and durable runtime-boundary concerns. Policy metadata is untrusted input; authenticated attributes and current authority are host obligations. No account UI or authentication-provider slot is added to this library. Unknown policy meaning may be retained but cannot authorize execution.

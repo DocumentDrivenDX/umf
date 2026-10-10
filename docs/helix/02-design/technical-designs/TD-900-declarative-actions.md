@@ -9,7 +9,7 @@ ddx:
   links:
     - id: US-900
       kind: informed_by
-    - id: SD-008
+    - id: SD-900
       kind: informed_by
     - id: CONTRACT-900
       kind: references
@@ -22,7 +22,7 @@ ddx:
 # TD-900: Portable action declaration tooling
 
 **User Story:** [[US-900-declarative-actions]].
-**Feature:** FEAT-008. **Solution Design:** [[SD-008-declarative-actions]].
+**Feature:** FEAT-900. **Solution Design:** [[SD-900-declarative-actions]].
 
 ## Scope
 

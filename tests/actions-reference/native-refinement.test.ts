@@ -41,7 +41,7 @@ async function trace(store:ReferenceActionStore,name:string,steps:Step[],impleme
  }
  return {calls,transitions:steps.length};
 }
-/** @covers US-056-AC2 @covers US-056-AC4 @covers US-056-AC5 @covers US-056-AC6 @covers US-056-AC11 */
+/** @covers US-901-AC2 @covers US-901-AC4 @covers US-901-AC5 @covers US-901-AC6 @covers US-901-AC11 */
 test('native bounded traces refine independent authorization, token, retirement and atomic-state semantics',async()=>{
  await withReferenceStore(async(store,version)=>{let checked=0,transitions=0;for(const word of words(3)){const result=await trace(store,'finite-'+checked,word);checked++;transitions+=result.transitions;}expect(checked).toBe(216);expect(transitions).toBe(648);console.log(JSON.stringify({nativeRefinement:{profile:'umf.actions.finite-idempotent-set/1',nativeVersion:version,alphabet,depth:3,traces:checked,transitions,mismatches:0,scope:'One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim'}}));});
 },180000);
