@@ -58,3 +58,14 @@ rights/download/no-network checks remain intact. Browser review confirmed that
 collection opens with its original `selected-originals` ID and absence statement.
 Search also now accepts displayed labels as well as exact IDs, and reveals the
 catalog after focus mode. Three presentation/search tests pass (11 assertions).
+
+## Content-density continuation
+
+Breadcrumbs and actions now share a wrapping toolbar: measured 34 px tall at
+1280 px and 63.5 px at 390 px. Site/header spacing is reduced. Actual overflow
+controls horizontal-scroll guidance rather than a fixed viewport breakpoint;
+guidance is hidden for the 1280 px medical table and visible at 390 px, with no
+page overflow at either size. Resize observers disconnect on schema changes.
+Mobile export opening/Escape dismissal and ontology CMS inpatient → beneficiary
+selection pass in the real browser; graph links and stable IDs remain present.
+Graph structure and layout are unchanged. TypeScript validation passes.

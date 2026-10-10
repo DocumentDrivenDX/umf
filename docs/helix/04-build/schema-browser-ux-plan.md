@@ -90,3 +90,12 @@ structured execution/scenario metadata occupies narrow property cards.
 UX-1 through UX-4 implemented and visually iterated. See
 [evidence and screenshots](evidence/schema-browser-ux.md) for actual browser
 widths, interaction outcomes, regression checks and comparison limits.
+
+## Continuation — content density
+
+Combine breadcrumbs and actions in one wrapping inspector toolbar; reduce the
+site/header introduction spacing. Keep descriptions and qualification statements
+visible. Show horizontal-scroll guidance only when the actual table overflows,
+including narrow ontology tables; disconnect observers on schema navigation.
+Recheck embedded/mobile containment, exports and ontology navigation before
+publication. Graph pan/zoom remains outside this refinement.

@@ -6,6 +6,7 @@ import {parseEntry,key,matches,type Entry,type Parsed,type Definition} from './e
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const catalog=$('catalog'), inspector=$('inspector'), status=$('status');
 let downloadUrl:string|undefined;
+const tableObservers:ResizeObserver[]=[];
 let entries:Entry[]=[], selected:Entry|undefined, parsed:Parsed|undefined, definition:Definition|undefined;
 const search=$<HTMLInputElement>('search'),category=$<HTMLSelectElement>('category');
 function node(tag:string,text?:string,className?:string):HTMLElement {const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
@@ -62,8 +63,8 @@ function breadcrumbs(){
 function domainTypeLink(type:string){const pack=selected&&packFor(selected);const def=pack&&packView(pack).definitions.find(d=>d.id===type);return pack&&def?definitionLink(pack,def):node('span',`${type} · not declared in this pack`,'unresolved');}
 
 function render(){
- clearDownloads();if(downloadUrl)URL.revokeObjectURL(downloadUrl);
- inspector.replaceChildren();if(!selected||!parsed)return;breadcrumbs();workspaceActions();renderDownloads(inspector,selected,parsed);
+ for(const observer of tableObservers.splice(0))observer.disconnect();clearDownloads();if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+ inspector.replaceChildren();if(!selected||!parsed)return;breadcrumbs();workspaceActions();const header=node('div',undefined,'inspector-toolbar');header.append(...Array.from(inspector.children));inspector.append(header);renderDownloads(inspector,selected,parsed);
  if(parsed.native){renderNative();enhanceTables();return;}
  const doc=parsed.document!,top=node('div',undefined,'detail-top'),title=node('div');title.append(node('span',selected.category==='domain'?'Domain pack':'Example','tag'),node('h2',displayLabel(selected.title)),node('p',doc.id,'schema-id'));top.append(title);
  const download=node('a','Download source','button secondary') as HTMLAnchorElement;download.href=downloadUrl=URL.createObjectURL(new Blob([selected.text],{type:'text/plain'}));download.download=selected.path.split('/').pop()??'schema.json';download.onclick=()=>setTimeout(()=>URL.revokeObjectURL(download.href),1000);top.append(download);inspector.append(top);renderFamily();
@@ -162,7 +163,7 @@ function workspaceActions(){
  const focus=node('button',document.body.classList.contains('inspector-focus')?'Show catalog':'Focus schema','secondary focus-toggle');focus.setAttribute('type','button');focus.setAttribute('aria-pressed',String(document.body.classList.contains('inspector-focus')));focus.onclick=()=>{document.body.classList.toggle('inspector-focus');focus.textContent=document.body.classList.contains('inspector-focus')?'Show catalog':'Focus schema';focus.setAttribute('aria-pressed',String(document.body.classList.contains('inspector-focus')));};actions.append(browse,focus);inspector.append(actions);
 }
 function enhanceTables(){
- for(const wrap of inspector.querySelectorAll<HTMLElement>('.table-wrap')){const table=wrap.querySelector('table');if(!table)continue;wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Schema fields; scroll horizontally for all columns');
+ for(const wrap of inspector.querySelectorAll<HTMLElement>('.table-wrap')){const table=wrap.querySelector('table');if(!table)continue;const hint=node('p','Scroll horizontally for more columns →','table-scroll-hint');wrap.after(hint);const update=()=>{hint.hidden=wrap.scrollWidth<=wrap.clientWidth+1;};const observer=new ResizeObserver(update);observer.observe(wrap);tableObservers.push(observer);requestAnimationFrame(update);wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Schema fields; scroll horizontally for all columns');
   const rows=Array.from(table.querySelectorAll('tr')).slice(1);if(rows.length<6)continue;const bar=node('div',undefined,'field-toolbar'),label=node('label','Filter fields'),input=document.createElement('input');input.type='search';input.placeholder='Field name, type or description…';input.setAttribute('aria-label','Filter fields');const count=node('span',`${rows.length} fields`,'quiet');input.oninput=()=>{let shown=0;for(const row of rows){row.hidden=!(row.textContent??'').toLowerCase().includes(input.value.trim().toLowerCase());if(!row.hidden)shown++;}count.textContent=`${shown} of ${rows.length} fields`;};label.append(input);bar.append(label,count);wrap.before(bar);
  }
 }
