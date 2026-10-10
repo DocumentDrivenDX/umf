@@ -261,3 +261,25 @@ retention ledgers and their minus-one refusals pass. Astra independently audits
 all828 prefrozen repository inputs, terminal counts and full retained log hash;
 no remaining findings within the qualified subset. These are compiler component
 controls, not execution of the original132 backend cases or formal Rust refinement.
+
+
+### Original required-case catalog binding
+
+The private Weft catalog reader retains the exact original132-case plan byte
+snapshot under a separately trusted digest and backend/registration association.
+It checks the full12+4x30 ID closure before selecting42 original records for one
+backend. Catalog-bound template issuance requires all42 profile case IDs and the
+exact bounded registered-source hash. Original assertion text/IDs (including
+S10:disclosure), ordered command/source metadata, null evidence/procedures and
+counterexample status remain in the retained records. These are required pending
+cases; the compiler executes no command and grants no native admission.
+
+This removes arbitrary two-case fixture inventories from the catalog-bound path,
+without changing the existing private trusted-case experiment. Complete backend
+kind/applicability/assertion sufficiency, authenticated issuer selection, actual
+procedure/source/current installation qualification and runtime authority remain
+open. Expected hashes/backend association are explicit trusted premises, not an
+authentication mechanism. Test template-to-case mappings are synthetic. Full132
+acceptance and historical26/132 remain unchanged.
+
+The catalog binding checkpoint is merged directly into Weft main at `f7a682e27db5d3530678bea3312a5ea2211d4f28`: 573 workspace tests /44 groups, 230 core, 833 unchanged declared inputs, and an independent Astra ultra receipt audit. Retained evidence: [checkpoint](../../../04-build/evidence/security/weft-case-catalog/checkpoint.json). This component result does not promote any original native acceptance case.

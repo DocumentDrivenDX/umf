@@ -9941,3 +9941,7 @@ is claimed. Historical26/132 and all132 required cases remain unchanged; the goa
 remains active. Next author and validate the exact backend template/case catalogs
 and profile authentication before permitting native physical dispatch. Direct main
 integration continues without new PRs.
+
+### Original security acceptance catalog binding checkpoint
+
+Weft main `f7a682e27db5d3530678bea3312a5ea2211d4f28` retains the exact original 132-case plan and requires the complete 42-case semantic/backend inventory for private catalog-bound issuance. Full assertion metadata, including S10 disclosure and nullable pending procedures, is preserved. The frozen workspace passed 573 tests across 44 groups (230 core); all 833 input pins remained unchanged. Astra ultra independently audited the receipts and four new controls with no blockers. [Retained checkpoint](evidence/security/weft-case-catalog/checkpoint.json) and [integration provenance](evidence/security/weft-case-catalog/integration.json) link this component evidence to US-056 AC7/AC10. Backend labels and registration pins remain trusted host premises; production template adequacy, authentication, and native enforcement remain open. All 42 selected cases stay pending and historical required acceptance remains 26/132.
