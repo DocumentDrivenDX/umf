@@ -46,3 +46,10 @@ Publication integration: concurrent main commit e44cd15f (bounded core evolution
 was merged while preserving both exports. Integrated typecheck/build passed;
 20 core-evolution/artifact tests passed (71 assertions), all 367 audited schemas
 passed, and the rebuilt installed wheel again passed 43 Python tests.
+
+Publication: feature tag artifact-collections-v1.0.0 and Python tag python-v0.8.2
+pin integrated commit 953aa38c. Python build/test/twine succeeded in run
+38015801432; its exact wheel/sdist are published on GitHub with SHA256SUMS.
+PyPI upload refused invalid-publisher (no matching trusted publisher for
+DocumentDrivenDX/umf, pypi.yml, environment pypi); account configuration remains
+required for PyPI publication. GitHub installation is available independently.
