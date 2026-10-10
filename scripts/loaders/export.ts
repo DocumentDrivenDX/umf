@@ -27,6 +27,7 @@ export async function snapshotPack(input:string,includeSources=false):Promise<{p
   add(entry.reference,bytes);
  }
  if(pack.loader)for(const [name,bytes] of await verifyCompanion(pack,root,undefined,budget))add(name,bytes);
+ const companionPaths=new Set<string>(pack.loader?.artifacts.map((a:any)=>a.reference)??[]);
  const profile=pack.execution_profile;
  const inclusion=profile?new Set<string>([...profile.include_sources,...(pack.source_bindings??[]).filter((b:any)=>b.role==='rows'&&profile.targets.tabular?.includes(b.schema_id)).map((b:any)=>b.source_id)]):null;
  if(includeSources)for(const [id,source] of Object.entries(pack.sources??{}) as [string,any][]){
@@ -34,7 +35,11 @@ export async function snapshotPack(input:string,includeSources=false):Promise<{p
   const reference=source.reference;if(!reference||reference.includes(':'))continue;
   if(source.kind!=='external'||source.license?.redistribution!=='allowed')throw Error('Source redistribution is not cleared');
   if(source.checksum?.algorithm!=='sha256')throw Error('Source checksum is required');
-  const bytes=await read(reference);if(hash(bytes)!==source.checksum.value)throw Error('Source checksum differs');add(reference,bytes);
+  const bytes=await read(reference);if(hash(bytes)!==source.checksum.value)throw Error('Source checksum differs');
+  // A source annotation may describe an already verified canonical companion.
+  // Preserve its metadata, but emit those same bytes only once. Other collisions refuse.
+  if(companionPaths.has(reference)&&entries.has(reference)){if(hash(entries.get(reference)!)!==hash(bytes))throw Error('Companion source differs');continue;}
+  add(reference,bytes);
  }
  if([...entries.values()].some(b=>b.length>10*1024*1024)||[...entries.values()].reduce((a,b)=>a+b.length,0)>100*1024*1024)throw Error('Pack export exceeds byte budget');
  return {pack,entries};

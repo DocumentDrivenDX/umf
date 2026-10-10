@@ -37,3 +37,12 @@ pages with Innsigle before pushing. Use `.innsigle/AGENTS.md` for the commands.
 Actions verifies the signatures and copies the public keys and attestations
 into `.well-known/innsigle/` in the published site. Stale or missing signatures
 block publication. CI does not receive the signing key.
+
+## Domain-pack releases
+
+[Three component releases](domain-pack-release-notes.md) publish the shared loader,
+appellate corpus and public-company intelligence corpus at 1.0.0. The website
+explorer exposes their original-source assets and complete ZIPs. The Pages build
+runs `scripts/build-domain-pack-releases.ts` after loader packaging and before
+rebuilding the catalog; deterministic ZIP bytes keep website and release hashes
+aligned. HTML and its existing signatures are unchanged.

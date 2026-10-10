@@ -15,7 +15,7 @@ ddx:
 
 **Scope:** UMF domain schemas and schema tooling, with TableSpec-owned dataset generation and consumer qualification.
 **Owner:** Product owner for selection; UMF and TableSpec maintainers for design and evidence.
-**Last Revised:** 2026-10-08; owner requested plans for the researched catalog and added ecology/water management and archaeology.
+**Last Revised:** 2026-10-09; owner added public-company intelligence with a fixed SEC evidence scenario.
 
 ## Horizon and Cadence
 
@@ -92,6 +92,7 @@ Every plan defines initial scope, native-source candidates, semantic distinction
 | Construction | [FEAT-023](features/FEAT-023-construction-domain-pack.md) | [US-074](user-stories/US-074-construction-domain-pack.md) | Next candidates; uncommitted |
 | Ecology and water management | [FEAT-024](features/FEAT-024-ecology-domain-pack.md) | [US-075](user-stories/US-075-ecology-domain-pack.md) | Near horizon |
 | Archaeology | [FEAT-025](features/FEAT-025-archaeology-domain-pack.md) | [US-076](user-stories/US-076-archaeology-domain-pack.md) | Later candidate; source inventory first |
+| Public-company intelligence | [FEAT-027](features/FEAT-027-public-company-intelligence.md) | [US-078](user-stories/US-078-public-company-intelligence.md) | Fixed SEC evidence slice; live application remains consumer work |
 
 ## Design and Test Handoff
 
@@ -118,3 +119,13 @@ review and producer/consumer/browser checks. Native graph intake, open-source co
 adapters, independently varied scientific/topological dimensions and population
 realism remain separately planned work; catalog membership does not complete those
 broader acceptance criteria.
+
+## Public-company intelligence addition
+
+The owner requested a separate issuer-evidence pack under FEAT-027.
+CONTRACT-058 and TD-078/STP-078 reuse CONTRACT-052/053 fixed-mode profiles.
+The selected 25-company universe, item-metadata screen and scoped financial
+observations are independent of licensed S&P membership and legal firm data.
+[evidence/public-company-intelligence.md](../04-build/evidence/public-company-intelligence.md)
+qualifies local source/consumer/browser results and unresolved narrative access.
+Model routing, live Databricks, admin UI, scheduling and email remain consumer work.

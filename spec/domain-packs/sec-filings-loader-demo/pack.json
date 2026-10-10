@@ -1,6 +1,6 @@
 {
   "id": "sec-filings-loader-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reusable sec-filings loader companion; empty operator-selected inventory. No observed corpus or complete discovery claim.",
   "domain_types": {
     "source_document": {
@@ -62,5 +62,15 @@
         "sha256": "284f9140e67c8bf6c773a119e9422bf1f439f91ee814a50b45d79cf9098e6380"
       }
     ]
+  },
+  "preservation": {
+    "version": "1.0.0",
+    "handoff": "BagIt-1.0",
+    "fixity": "sha256",
+    "events": "PREMIS-3.0-semantic-mapping",
+    "provenance": "PROV-O-JSON-LD",
+    "originals": "authoritative-immutable-bytes",
+    "primary_runtime": "tablespec-python",
+    "qualification": "TableSpec native Python acquisition and offline BagIt transfer. PREMIS semantic JSON mapping and PROV-O source revision graph; no PREMIS XML, OCFL archive or WARC capture claim. Domain projections remain separately qualified."
   }
 }

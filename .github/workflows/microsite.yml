@@ -14,6 +14,7 @@ on:
       - 'scripts/export-domain-pack.ts'
       - 'scripts/loaders/**'
       - 'scripts/build-domain-pack-loaders.ts'
+      - 'scripts/build-domain-pack-releases.ts'
       - 'docs/helix/05-deploy/domain-pack-loaders.md'
       - 'scripts/domain-packs/ontology.ts'
       - 'tests/domain-packs/**'
@@ -34,6 +35,7 @@ on:
       - 'scripts/export-domain-pack.ts'
       - 'scripts/loaders/**'
       - 'scripts/build-domain-pack-loaders.ts'
+      - 'scripts/build-domain-pack-releases.ts'
       - 'docs/helix/05-deploy/domain-pack-loaders.md'
       - 'scripts/domain-packs/ontology.ts'
       - 'tests/domain-packs/**'
@@ -66,6 +68,8 @@ jobs:
           bun test tests/domain-packs
       - name: Verify and package loader companions
         run: bun scripts/build-domain-pack-loaders.ts --check --site
+      - name: Package fixed domain-pack releases
+        run: bun scripts/build-domain-pack-releases.ts
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog

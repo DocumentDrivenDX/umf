@@ -15,7 +15,7 @@ ddx:
 
 # US-061: Exercise the legal domain pack
 
-**Feature:** FEAT-010. **Feature Requirements:** DOMAIN-01–DOMAIN-06; FEAT-009 PACK-01–PACK-06.
+**Feature:** FEAT-010. **Feature Requirements:** DOMAIN-01–DOMAIN-07; FEAT-009 PACK-01–PACK-06.
 **PRD Requirements:** FR-45; FR-29/41 apply to consumer reuse. **Priority:** P0 under FR-45. **Status:** Draft.
 
 ## Story
@@ -48,6 +48,11 @@ Which time entries belong to eligible matter-team members, and which fabricated 
 - **US-061-AC6:** Given the generated CSV archive, when exported and reloaded, then typed values and relationship identities agree under its declared encoding and target profile.
 - **US-061-AC7:** Given native fixtures and synthetic records, when their origins are inspected, then the two can be distinguished with source, release and transformation lineage.
 - **US-061-AC8:** Given a required unknown or unsupported meaning, when a dependent consumer operation is requested, then the operation refuses or reports explicitly incomplete support while retaining the source.
+
+- **US-061-AC9:** Given the appellate subpack, when inspected, then full original PDFs, comparison identities, court levels, page evidence and source rights are available separately from provisional interpretation.
+- **US-061-AC10:** Given fixed temporal replay fixtures, when consumed, then independently expected duplicate, amendment, vacatur, retry and per-recipient delivery outcomes can be checked without sending email.
+- **US-061-AC11:** Given expected collection windows, when attempts are inspected, then successful-empty windows and unresolved collection, retrieval, extraction and screening failures remain distinguishable.
+- **US-061-AC12:** Given counsel evidence or missing information, when inspected, then represented-party scope, source/as-of provenance and unattempted or fabricated enrichment remain explicit.
 
 ## Edge Cases
 

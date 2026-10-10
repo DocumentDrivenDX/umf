@@ -3213,3 +3213,13 @@ replacement, independent count/FK audits and exact Unicode/multiline source JSON
 read-back. Partial dates, timezone offsets, decimal text, native interpretation
 labels and unresolved references must remain recoverable. Structural/data checks
 do not establish clinical validity, native FHIR conformance or population realism.
+
+## Public-company intelligence fixed corpus
+
+US-078 and STP-078 own the AC matrix for FEAT-027/CONTRACT-058. Layer allocation:
+Bun exercises exact source/context retention and independent screen controls;
+TableSpec archive plus DuckDB independently verify cell values, source/schema
+bytes and FK closure; actual Chromium exercises projections, pack/table/ontology
+navigation and manifest download. Fixed observed inputs are not replayed.
+Full EDGAR coverage, narrative extraction, native graph and live Databricks/model/
+email qualification remain separate gates.

@@ -24,9 +24,9 @@ ddx:
 ## Purpose
 
 Distribute one reusable acquisition mechanism for building public releases and
-operator-scheduled refresh. UMF owns declarations; this explicitly installed Bun
-companion owns acquisition/archive publication. TableSpec remains the owner of
-tabular ingestion, CSV archives and database sinks. No pack read executes code.
+operator-scheduled refresh. UMF owns declarations. TableSpec owns the primary native Python acquisition,
+offline BagIt handoff and database publication runtime. The published Bun
+companion 1.0.0 is a retained compatibility reference. No pack read executes code.
 
 ## Scope and Boundaries
 
@@ -180,3 +180,35 @@ and [developer guidance](https://www.sec.gov/about/developer-resources).
 Submissions discovery and Company Facts projections require subsequent profiles.
 The first companion is published as a downloadable source bundle on GitHub Pages;
 installation requires Bun, no npm publication or running hosted service.
+
+### Source annotations for companion artifacts
+
+A source record may independently annotate a canonical companion reference.
+Export retains that record in the manifest and emits one artifact only after
+canonical trust, source rights and both byte-hash declarations agree. Other
+artifact path collisions still refuse.
+
+
+## Preservation profile and native Python consumer
+
+`preservation` is optional extensible metadata with exact required fields:
+`version:1.0.0`, `handoff:BagIt-1.0`, `fixity:sha256`,
+`events:PREMIS-3.0-semantic-mapping`, `provenance:PROV-O-JSON-LD`,
+`originals:authoritative-immutable-bytes`, `primary_runtime:tablespec-python`.
+Unknown annotations survive. Unsupported known values refuse profile admission.
+Optional `derivations` entries name a resolvable pack schema ID, explicit
+`source_identity` and qualification; they do not infer source-revision bindings.
+
+TableSpec 0.0.8 executes the installed canonical inventory/admission contract in
+Python without invoking the compatibility runner. `loader.runtime:bun` remains
+the historical companion declaration; preservation.primary_runtime identifies
+the primary consumer. Pack and loader contract versions remain separate from
+the Python implementation agent version. Its native state layout differs from
+TS state: only original bytes and revision hashes are parity claims.
+
+Complete [BagIt 1.0](https://www.rfc-editor.org/rfc/rfc8493.html) directories MUST
+checksum payload and tags, including the retained pack closure, PREMIS semantic
+JSON and PROV-O JSON-LD. The semantic mapping MUST retain every media/context
+assertion and inventory rights without inferring legal clearance. PREMIS XML,
+OCFL repository layout and WARC HTTP capture are not implied support claims.
+See [preservation operator guidance](../../05-deploy/document-preservation.md).

@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "table_name": "documents",
+  "description": "Public-company intelligence documents; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "documents.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "filing_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "documents.filing_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "documents.source_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_url",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "documents.native_url; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "availability",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "documents.availability; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "format",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "documents.format; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "extraction_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "documents.extraction_status; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "filing_id",
+        "references_table": "filings",
+        "references_column": "id"
+      },
+      {
+        "column": "source_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

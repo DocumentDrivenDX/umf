@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "table_name": "decision_groups",
+  "description": "CONTRACT-058 bounded appellate fixture: decision_groups.",
+  "columns": [
+    {
+      "name": "association_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_groups.association_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_groups.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "issue_group_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_groups.issue_group_id; preserve source scope and qualification."
+    },
+    {
+      "name": "comparison_role",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_groups.comparison_role; preserve source scope and qualification."
+    },
+    {
+      "name": "distinction",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_groups.distinction; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "association_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      },
+      {
+        "column": "issue_group_id",
+        "references_table": "issue_groups",
+        "references_column": "issue_group_id"
+      }
+    ]
+  }
+}

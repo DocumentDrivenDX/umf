@@ -370,7 +370,20 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   combine explicitly fabricated firm operations with observed public filings and
   discovery evidence, retaining original documents, case/source identities,
   extraction limits and source-specific rights. Real litigants must not acquire
-  invented client or matter relationships. Ontological sample
+  invented client or matter relationships. A historical appellate-monitoring
+  subpack must support split-screening development with opinions, designated
+  orders, comparison evidence, counsel provenance and labeled replay/failure
+  records. Attorney judgments and synthetic workflow events remain distinct
+  from observed judicial facts. Live retrieval and notifications are consumer-owned.
+  Supreme Court docket monitoring is separate.
+  Public-company intelligence packs must
+  retain source-qualified issuer identities, dated research-universe selection,
+  filing and financial context, exact values and evidence lineage. Observed
+  company disclosures, deterministic signals and authored opportunity hypotheses
+  must remain distinct. A selected issuer universe must not imply authoritative
+  S&P index membership; source-specific rights and coverage limits remain explicit.
+  Live collection, model routing, admin applications, scheduling and email belong
+  to explicit consumers rather than pack metadata. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
   The medical pack must cover the carrier lifecycle: payer/plan and member
   enrollment, coverage and benefits, eligibility requests and responses, prior

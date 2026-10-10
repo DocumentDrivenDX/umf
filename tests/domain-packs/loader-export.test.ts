@@ -47,3 +47,9 @@ test('special files and oversized check destinations refuse promptly @covers US-
  await Bun.write(path,JSON.stringify(pack));const output=join(root,'export');await exportPack(path,output);
  const fd=await import('node:fs/promises').then(m=>m.open(join(output,'run.ts'),'w'));await fd.truncate(20*1024*1024);await fd.close();await expect(exportPack(path,output,{check:true})).rejects.toThrow('Stale pack export');
 }));
+test('source annotations reuse only verified canonical companion bytes @covers US-060-AC12',async()=>setup(async root=>{
+ const source=join(root,'source');await cp(sample,source,{recursive:true});const path=join(source,'pack.json'),pack=await Bun.file(path).json(),artifact=pack.loader.artifacts[0];
+ pack.sources.companion={kind:'external',data_kind:'unknown',reference:artifact.reference,format:'text',checksum:{algorithm:'sha256',value:artifact.sha256},license:{redistribution:'allowed'},metadata:{meaning:'independent source annotation'}};
+ await Bun.write(path,JSON.stringify(pack));const snapshot=await snapshotPack(path,true);expect(snapshot.entries.size).toBe(7);expect(snapshot.pack.sources.companion.metadata.meaning).toBe('independent source annotation');
+ pack.sources.companion.checksum.value='0'.repeat(64);await Bun.write(path,JSON.stringify(pack));await expect(snapshotPack(path,true)).rejects.toThrow('Source checksum differs');
+}));

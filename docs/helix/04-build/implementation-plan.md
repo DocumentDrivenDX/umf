@@ -5665,3 +5665,25 @@ explicit finite-inventory source scope. Astra ultra plan and implementation
 reviews, process/TLS tests, real Chromium and regression evidence are required
 before deployment. [Execution evidence](evidence/domain-pack-loaders.md) records
 actual qualification and downstream integration feedback.
+### Historical appellate development pack — 2026-10-09
+
+Owner-requested plan, Astra review and build are complete for the bounded
+US-061-AC9–AC12 slice. The independent legal-appellate 1.0.0 pack has 34 original
+judicial PDFs, 13 issue groups, provisional evidence-linked screening annotations,
+partial counsel observations and independent temporal workflow expectations.
+Shared finite-inventory loader bytes are pinned and qualified against all selected
+originals plus offline archive replay. Schema/browser/native fixed ingestion,
+source export and local catalog checks pass. See [scoped plan](legal-appellate-plan.md)
+and [measured evidence](evidence/legal-appellate.md). No live monitoring, email,
+PACER or Supreme Court docket workflow is claimed.
+## Public-company intelligence pack — 2026-10-09
+
+Owner-directed FEAT-027 / US-078 / TD-078 / STP-078 implement CONTRACT-059
+under existing CONTRACT-052/053. Build a fixed SEC-selected issuer corpus,
+exact source-preserving projections, tables/ontology, independently reviewed
+item-metadata screens and authored opportunity hypotheses. Qualify offline
+regeneration/export, TableSpec local ingestion, independent engine readback
+and actual Chromium discovery. Record outcomes in
+[evidence/public-company-intelligence.md](evidence/public-company-intelligence.md).
+Databricks egress, S&P licensing, narrative extraction, model evals and
+production scheduler/email remain separately owned consumer work.

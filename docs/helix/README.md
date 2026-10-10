@@ -3,7 +3,7 @@
 ## Domain-pack planning
 
 The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
-16 domains, including ecology/water management. UMF owns schemas and schema
+17 planned domains, including ecology/water management and public-company intelligence. UMF owns schemas and schema
 tooling; TableSpec owns dataset generation, CSV ZIP output, loading and data
 tests. FEAT-009 defines catalog behavior; separate features/stories define each
 domain outcome. [SD-024](02-design/solution-designs/SD-024-ecology-domain-pack.md)
@@ -12,6 +12,13 @@ proposes an ecology model with explicit scientific comparability boundaries.
 context-linked archaeological evidence and specialist analyses grounded in
 Madaba Plains Project source candidates. These draft plans do not claim
 delivered packs or native equivalence.
+
+The [public-company intelligence pack](../../spec/domain-packs/public-company-intelligence/GUIDE.md)
+adds 25 selected SEC issuers, 340 filing records and 647 exact financial
+observations with separate item-metadata signals and authored hypotheses.
+[Scoped evidence](04-build/evidence/public-company-intelligence.md) qualifies
+fixed local ingestion and browser inspection; narrative documents returned
+HTTP 403, and live Databricks/model/email execution remains consumer work.
 
 ## Ecosystem integration direction
 
@@ -1200,3 +1207,10 @@ CC BY 3.0 TCIA DICOM slice with retained originals. The Medical overview links
 all five packs; source/row downloads, ontology/table navigation and old bookmarks
 have real-browser evidence. See the [integrated medical evidence](04-build/evidence/medical-subpacks.md#integrated-medical-family-110--2026-10-08)
 and [complete family export](../../spec/domain-packs/medical/README.md#complete-family-export-and-browser).
+
+## Domain-pack loader and research releases
+
+The [release notes](05-deploy/domain-pack-release-notes.md) cover loader 1.0.0,
+legal-appellate 1.0.0 and public-company-intelligence 1.0.0. These fixed corpora
+ship the same canonical loader and verified publication reader; their qualified
+source coverage and consumer boundaries remain separate.

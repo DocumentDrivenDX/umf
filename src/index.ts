@@ -391,6 +391,7 @@ export {default as domainPackPackage} from '../spec/extensions/domain-pack/packa
 
 export {generateDatasetSourceSchema} from './domain-packs/source-schema';
 export * from './domain-packs/medical';
+export * from './domain-packs/public-company';
 export {default as datasetSourceSchema} from '../spec/extensions/dataset-source/schema.json';
 export {default as datasetSourcePackage} from '../spec/extensions/dataset-source/package.json';
 export {inspectDomainPack,requireDomainPackProfile} from './domain-packs/profile';

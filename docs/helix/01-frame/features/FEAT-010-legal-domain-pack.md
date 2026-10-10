@@ -53,6 +53,8 @@ Independent examples can disagree about domain identities, constraints and nativ
 
 Apply FEAT-009 PACK-01–PACK-06 and the selected fidelity, identity, reproducibility, bounded-processing, conformance, review and runtime-boundary concerns. Published evidence must identify schema/generator versions, subset, scale and actual engine. Zero unexplained source-content loss and zero unlabeled injected anomalies are required on the accepted corpus. Schema tooling remains browser-compatible under ADR-002.
 
+- DOMAIN-07: Provide a historical appellate-monitoring subpack with original opinions and designated orders, comparison decisions, source-qualified case/counsel metadata, provisional screening annotations, and separately fabricated replay events for duplicate suppression, amendment/vacatur, optional counsel enrichment and visible collection/processing gaps. Preserve attorney review as the decision boundary. Live collection, email delivery and PACER execution are consumer-owned; Supreme Court docket monitoring is separately undefined.
+
 ## User Stories
 
 - [US-061: Exercise the legal pack](../user-stories/US-061-legal-domain-pack.md).
