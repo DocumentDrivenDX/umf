@@ -357703,6 +357703,248 @@ function verifyCompactWithWork(receiptInput, current, expectedInput) {
     return limit2(error);
   }
 }
+// src/model/internal/json-byte-budget.ts
+function boundedJsonBytes(value, maximum = 4000000) {
+  let bytes = 0;
+  const add = (n) => {
+    bytes += n;
+    if (bytes > maximum)
+      throw new UmfError("LIMIT", "Boolean lexical serialized JSON exceeds byte limit");
+  };
+  const string = (s) => {
+    add(2);
+    for (let i = 0;i < s.length; i++) {
+      const c = s.charCodeAt(i);
+      if (c === 34 || c === 92)
+        add(2);
+      else if (c < 32)
+        add([8, 9, 10, 12, 13].includes(c) ? 2 : 6);
+      else if (c >= 55296 && c <= 56319) {
+        const next = s.charCodeAt(i + 1);
+        if (next >= 56320 && next <= 57343) {
+          add(4);
+          i++;
+        } else
+          add(6);
+      } else if (c >= 56320 && c <= 57343)
+        add(6);
+      else
+        add(c < 128 ? 1 : c < 2048 ? 2 : 3);
+    }
+  };
+  const visit = (v) => {
+    if (typeof v === "string") {
+      string(v);
+      return;
+    }
+    if (v === null) {
+      add(4);
+      return;
+    }
+    if (typeof v === "boolean") {
+      add(v ? 4 : 5);
+      return;
+    }
+    if (typeof v === "number") {
+      add(JSON.stringify(v).length);
+      return;
+    }
+    if (Array.isArray(v)) {
+      add(2 + Math.max(0, v.length - 1));
+      for (const child of v)
+        visit(child);
+      return;
+    }
+    const keys = Object.keys(v);
+    add(2 + Math.max(0, keys.length - 1));
+    for (const key of keys) {
+      string(key);
+      add(1);
+      visit(v[key]);
+    }
+  };
+  visit(value);
+  return bytes;
+}
+// spec/core/csv-boolean-lexical-operation.schema.json
+var csv_boolean_lexical_operation_schema_default = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "urn:umf:csv-boolean-lexical-operation:1.0.0",
+  title: "Explicit finite CSV Boolean lexical conversion receipt",
+  type: "object",
+  properties: {
+    operation: {
+      const: "validate-csv-boolean-lexical"
+    },
+    version: {
+      const: "1.0.0"
+    },
+    source: {
+      $ref: "urn:umf:core:0.8.0"
+    },
+    request: {
+      $ref: "#/$defs/request"
+    },
+    value: {
+      type: "object",
+      properties: {
+        boolean: {
+          type: "boolean"
+        }
+      },
+      required: [
+        "boolean"
+      ],
+      additionalProperties: false
+    },
+    validation: {
+      type: "object",
+      properties: {
+        valid: {
+          type: "boolean"
+        },
+        complete: {
+          type: "boolean"
+        },
+        diagnostics: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              code: {
+                type: "string"
+              },
+              path: {
+                type: "string"
+              },
+              message: {
+                type: "string"
+              },
+              severity: {
+                enum: [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            required: [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            additionalProperties: false
+          }
+        }
+      },
+      required: [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      additionalProperties: false
+    },
+    provenance: {
+      const: "unverified"
+    }
+  },
+  required: [
+    "operation",
+    "version",
+    "source",
+    "request",
+    "value",
+    "validation",
+    "provenance"
+  ],
+  additionalProperties: false,
+  $defs: {
+    request: {
+      type: "object",
+      properties: {
+        profile: {
+          const: "umf.csv-boolean-lexical/1.0.0"
+        },
+        field: {
+          type: "object",
+          properties: {
+            module: {
+              type: "string",
+              minLength: 1
+            },
+            element: {
+              type: "string",
+              minLength: 1
+            }
+          },
+          required: [
+            "module",
+            "element"
+          ],
+          additionalProperties: false
+        },
+        token: {
+          enum: [
+            "true",
+            "false",
+            "True",
+            "False"
+          ]
+        },
+        sourceContext: {}
+      },
+      required: [
+        "profile",
+        "field",
+        "token",
+        "sourceContext"
+      ],
+      additionalProperties: false
+    }
+  }
+};
+
+// src/model/csv-boolean-lexical.ts
+var schema4 = snapshotSchema(csv_boolean_lexical_operation_schema_default);
+var validator99 = createValidator();
+validator99.addSchema(snapshotSchema(schema_properties_document_schema_default));
+validator99.addSchema(schema4);
+var checkReceipt2 = validator99.getSchema(schema4.$id);
+var checkRequest57 = validator99.compile({ $ref: schema4.$id + "#/$defs/request" });
+var fail12 = (message) => {
+  throw new UmfError("CSV_BOOLEAN_LEXICAL", message);
+};
+var budget = (value) => {
+  boundedJsonBytes(value);
+};
+function validateCsvBooleanLexical(sourceInput, requestInput) {
+  const source = copyJson(sourceInput);
+  const request = copyJson(requestInput);
+  budget({ source, request });
+  if (!checkRequest57(request))
+    fail12("Expected explicit closed Boolean lexical profile request");
+  inspectCoreSchemaProperties(source, { scope: "element", ...request.field });
+  const field = source.modules.find((m) => m.id === request.field.module).elements.find((e) => e.id === request.field.element);
+  if (field.kind !== "field" || field.scalarType !== "boolean" || field.cardinality === "array" || field.cardinality === "map")
+    fail12("Authored core Boolean Field required");
+  const value = { boolean: request.token === "true" || request.token === "True" };
+  const validation = validateCoreFieldValue(source, request.field, value);
+  const receipt = copyJson({ operation: "validate-csv-boolean-lexical", version: "1.0.0", source, request, value, validation, provenance: "unverified" });
+  budget(receipt);
+  if (!checkReceipt2(receipt))
+    fail12("Boolean lexical receipt violates versioned schema");
+  return receipt;
+}
+function verifyCsvBooleanLexical(receiptInput, sourceInput, requestInput) {
+  const receipt = copyJson(receiptInput);
+  budget(receipt);
+  if (!checkReceipt2(receipt))
+    fail12("Malformed Boolean lexical receipt");
+  const expected = validateCsvBooleanLexical(sourceInput, requestInput);
+  if (canonicalSchemaJson(receipt) !== canonicalSchemaJson(expected))
+    fail12("Stale or forged Boolean lexical receipt");
+  return expected;
+}
 export {
   ARROW_EXTENSION,
   ARROW_FLATBUFFER_EXTENSION,
@@ -357927,6 +358169,7 @@ export {
   createSmithyJavaScriptJsonSchemaBackend,
   createSmithyJavaScriptSelectionBackend,
   createSmithyWorkerBackend,
+  csv_boolean_lexical_operation_schema_default as csvBooleanLexicalOperationSchema,
   dashboardPackage,
   dashboardRegistry,
   package_default63 as datasetSourcePackage,
@@ -358639,6 +358882,7 @@ export {
   validateCoreDatasetValuesCompact,
   validateCoreFieldValue,
   validateCoreRecordValues,
+  validateCsvBooleanLexical,
   validateDocument,
   validatePostgresqlAst,
   validatePostgresqlRelationshipLayout,
@@ -358661,6 +358905,7 @@ export {
   verifyCoreNullabilityDeclaration,
   verifyCoreRecordTypeDeclaration,
   verifyCoreRelationshipOperation,
+  verifyCsvBooleanLexical,
   verifyDddGraphqlProjection,
   verifyDddPostgresqlProjection,
   verifyFieldClassificationInspection,
@@ -358712,4 +358957,4 @@ export {
   writeJsonValue
 };
 
-//# debugId=2B38B551B6EE29DE64756E2164756E21
+//# debugId=CAAAD71BE66FF73164756E2164756E21

@@ -1,8 +1,8 @@
 bun test v1.4.2 (744846f84)
 
 tests/core-ideals/cardinality-conformance.test.ts:
-(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [388759.52ms]
-(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [24764.63ms]
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [255821.84ms]
+(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [50247.11ms]
 
 tests/core-ideals/facets-conformance.test.ts:
 facets tablespec 0
@@ -52,35 +52,35 @@ facets parquet 80
 facets parquet 120
 facets parquet 160
 facets parquet 200
-(pass) all five facet bindings preserve authored ideals, native refinements and explicit losses [987722.63ms]
+(pass) all five facet bindings preserve authored ideals, native refinements and explicit losses [887379.51ms]
 
 tests/core-ideals/facets-evidence.test.ts:
-(pass) facet evidence requires all five accepted bindings without granting ideal admission [2269.08ms]
-(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [2518.21ms]
-(pass) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [5133.08ms]
+(pass) facet evidence requires all five accepted bindings without granting ideal admission [33079.57ms]
+(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [2252.78ms]
+(pass) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [3976.04ms]
 
 tests/core-ideals/relationship-conformance.test.ts:
-(pass) authored shape corpus preserves unknown content, keyed association and migration rollback [14610.49ms]
-(pass) ideal admission and qualified five-system delivery require current executable proofs [192271.50ms]
-(pass) missing, failed, stale, tampered and version-mismatched proofs refuse admission [10086.48ms]
+(pass) authored shape corpus preserves unknown content, keyed association and migration rollback [12950.33ms]
+(pass) ideal admission and qualified five-system delivery require current executable proofs [131602.23ms]
+(pass) missing, failed, stale, tampered and version-mismatched proofs refuse admission [6293.16ms]
 
 tests/core-ideals/key-evidence.test.ts:
-(pass) Key evidence requires complete current five-system qualifications without granting admission [408.34ms]
-(pass) Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs [107.13ms]
+(pass) Key evidence requires complete current five-system qualifications without granting admission [161.82ms]
+(pass) Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs [96.86ms]
 
 tests/core-ideals/field-conformance.test.ts:
-(pass) all five binding contracts enforce policy and recover ideal/native representations [6092.20ms]
-(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [5126.67ms]
-(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [4.48ms]
+(pass) all five binding contracts enforce policy and recover ideal/native representations [3306.42ms]
+(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [2766.30ms]
+(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [8.82ms]
 
 tests/core-ideals/key-conformance.test.ts:
-(pass) Key ideal admission and five-system delivery retain both recovery directions without native equivalence [60119.20ms]
+(pass) Key ideal admission and five-system delivery retain both recovery directions without native equivalence [38098.67ms]
 
 tests/core-ideals/nullability-conformance.test.ts:
-(pass) five Nullability bindings preserve ideals, native payloads and explicit loss policy [13604.95ms]
-(pass) Nullability gate requires current core and five native/browser evidence records [4111.05ms]
+(pass) five Nullability bindings preserve ideals, native payloads and explicit loss policy [11882.43ms]
+(pass) Nullability gate requires current core and five native/browser evidence records [2163.03ms]
 
  17 pass
  0 fail
  210 expect() calls
-Ran 17 tests across 8 files. [1724.79s]
+Ran 17 tests across 8 files. [1446.15s]

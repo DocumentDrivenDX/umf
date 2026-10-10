@@ -45,6 +45,20 @@ Figure V7. A handler receives bounded transaction capabilities through a control
 
 The reference profile serializes a store through a control lock. Arbitrary outside writers, new triggers, broader concurrency, external effects and cross-store commits require new qualification.
 
+## Recover an unresolved handler launch
+
+A handler launch has a durable ownership record: the consumer records which container it owns before starting it. If launch or cleanup cannot be confirmed within the profile's limits, the reference consumer returns LIMIT and keeps new handler admission closed. A restart does not erase that record. Even an absent container is insufficient evidence that the ownership record was reconciled.
+
+Run the recovery demonstration after installing the pinned native test dependencies described in the getting-started guide:
+
+```sh
+bun test tests/actions-reference/launch-owner.test.ts
+```
+
+The first test deliberately delays Docker's create response. It verifies that the handler never starts, a restarted consumer refuses another launch, and recovery without the required acknowledgement refuses. It then supplies the actual acknowledged container ID to recoverReferenceHandlerLaunch, verifies removal, and successfully runs a fresh handler. This demonstrates failure, explicit recovery and successful execution with real containers.
+
+Recovery belongs to the trusted operator. The helper validates the retained owner, Docker endpoint and daemon, removes only the acknowledged owned container, independently confirms absence, and releases that owner's slot. Do not delete the ownership directory to bypass refusal. Recovery of a launcher is separate from replay of a business command; reconcile any uncertain business result using its original request and token.
+
 ## Predict the result
 
 A commit response times out. Should you allocate a fresh key to try again?

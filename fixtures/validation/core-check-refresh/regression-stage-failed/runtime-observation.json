@@ -1,0 +1,92 @@
+{
+  "native": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "native"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-40e83200",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-40e83200",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-40e83200"
+    ]
+  },
+  "auxiliary": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "auxiliary"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-40e83200",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      },
+      {
+        "source": "/private/tmp/umf-integrated-qualification-40e83200",
+        "destination": "/work",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-40e83200"
+    ]
+  },
+  "regression": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "regression"
+    ],
+    "entrypoint": [
+      "/opt/venv/bin/python",
+      "/opt/replay.py"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-40e83200",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-40e83200",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-40e83200"
+    ]
+  }
+}
