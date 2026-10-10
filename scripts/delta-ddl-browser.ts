@@ -34,7 +34,7 @@ try {
     const before=JSON.stringify(bundleDocs);
     for(const format of ['json','yaml']){
       const result=u.generateDeltaDDLBundle(bundleDocs.map(doc=>u.readDocument(u.writeDocument(doc,format),format)));
-      if(result.tables.map(table=>table.documentId).join(',')!=='first,second'||result.sql!==bundleDocs.map(doc=>u.generateDeltaDDL(doc).sql).join('\n'))throw Error('Bundle recovery mismatch');
+      if(result.tables.map((table:{documentId:string})=>table.documentId).join(',')!=='first,second'||result.sql!==bundleDocs.map(doc=>u.generateDeltaDDL(doc).sql).join('\n'))throw Error('Bundle recovery mismatch');
     }
     if(JSON.stringify(bundleDocs)!==before)throw Error('Bundle source mutated');
     bundleDocs[1].extensions['umf.delta.definition'].future=true;
