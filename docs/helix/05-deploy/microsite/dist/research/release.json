@@ -1,13 +1,181 @@
 {
-  "version": "1.0.0",
-  "scope": "Authored discovery/qualification tools and evidence; acquired original archive excluded because redistribution rights are unknown",
-  "bundles": [
+  "version": "1.0.1",
+  "scope": "Individual authored discovery/qualification tools and evidence; generated archives are consumer-built",
+  "artifacts": [
     {
-      "id": "document-research-tools",
-      "version": "1.0.0",
-      "reference": "document-research-tools-1.0.0.zip",
-      "sha256": "a403c1882dcd0e8e3101a0f2fe56e546903108de4a73d20a31fbbef8ff5c19cc",
-      "bytes": 243152
+      "reference": "tools/docs/helix/02-design/contracts/CONTRACT-060-supreme-court-mirror.md",
+      "sha256": "81e77a76ae23f6dd7fd69fbdd694d2f5a72e8728e432cf2038c98d5a5a71e5bf",
+      "bytes": 4593
+    },
+    {
+      "reference": "tools/docs/helix/02-design/technical-designs/TD-061-supreme-court-mirror.md",
+      "sha256": "e1983e2adbdab234b7825cc2f2c40d76707f52088b0916b3c0883fa7af23da40",
+      "bytes": 3199
+    },
+    {
+      "reference": "tools/docs/helix/03-test/test-plans/STP-061-supreme-court-mirror.md",
+      "sha256": "90cef3f47ab94896c30f68e2bab400d3913c6b2b3dc59ae7d8e8d0371815376e",
+      "bytes": 2478
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/public-company-live-qualification.json",
+      "sha256": "d2585b30b270cb5328d388db098dff6f19164030e4d5bbbfea0d59bd5d65a3a4",
+      "bytes": 2629
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/public-company-live-qualification.md",
+      "sha256": "cf2a80e68d300e0d875b3cae3ef326a85a359e227ffb396670fab4171341c30a",
+      "bytes": 4133
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-mirror-archive.json",
+      "sha256": "dca198931e52bf9f51be8a3b36b1106ba4286c9f049ce1b733675e7775fcefcd",
+      "bytes": 244
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-mirror-coverage.json",
+      "sha256": "6ecd4a3dddd28a0fd2a9e1c7800944bd371fd9ffaf772c63bff318fbe993a1fd",
+      "bytes": 794
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-mirror-pdf-acquisition.json",
+      "sha256": "e443e5cdae0dae2325fd6c1d2bb961030e6f50568f1c272200635ffbf0f8fe26",
+      "bytes": 210683
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-mirror-software.json",
+      "sha256": "71ca3e9b5a4b111806cf6c1da9ce5a15b7aca61fefa6f0d126403d67a0fa380d",
+      "bytes": 1483
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-mirror.md",
+      "sha256": "1314db17e9d0ecdaa69b57227db939312355c9a3ac23f69b8bdb6bd25ea181ff",
+      "bytes": 7454
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-spark-inventory.json",
+      "sha256": "d976dec3b2a9044d90310d872a9d1e6678d3567399063b7cbe4f506fc21393e6",
+      "bytes": 2199
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-spark-runtime.json",
+      "sha256": "9807332efbe3e8b11be888a91fd354b6188493543b70f08da74defec835118e7",
+      "bytes": 8171
+    },
+    {
+      "reference": "tools/docs/helix/04-build/evidence/supreme-court-spark-runtime.md",
+      "sha256": "9dedb0b54a96348bced8a90edf65718c794e38d156a454f1985c2dcadec2f1d0",
+      "bytes": 4376
+    },
+    {
+      "reference": "tools/docs/helix/04-build/supreme-court-mirror-plan.md",
+      "sha256": "a0323b711e19c8cc5411e8aaf8163f6a053e4860e1845e2a922c6cb90e3eefb3",
+      "bytes": 2465
+    },
+    {
+      "reference": "tools/docs/helix/05-deploy/document-research.md",
+      "sha256": "9c05e4cd4df1d74e1acdd865a26bb507290848105e46e6a635831f9a306e5f5c",
+      "bytes": 3293
+    },
+    {
+      "reference": "tools/scripts/build-document-research-release.py",
+      "sha256": "d6997467328959cbd1b40e4c9915ce6ab4f4135ee48b81ee5c841fdaa905e80c",
+      "bytes": 3438
+    },
+    {
+      "reference": "tools/scripts/build-domain-pack-releases.ts",
+      "sha256": "9994693c004942223e9023dcc2169b06589cf32d740d68af087aaef0a507d8a6",
+      "bytes": 2352
+    },
+    {
+      "reference": "tools/scripts/domain-packs/qualify-sec-acquisition.py",
+      "sha256": "626741e61c90c05928dd83e882990cb60064eaa2c6da0b840e1249b28e1e0683",
+      "bytes": 5385
+    },
+    {
+      "reference": "tools/scripts/domain-packs/supreme-court-acquire.py",
+      "sha256": "3584deb8d12281ceaaa87cfdfc9cfa717cea3533bad41ebdb1ba852e736b6bf2",
+      "bytes": 4752
+    },
+    {
+      "reference": "tools/scripts/domain-packs/supreme-court-batches.py",
+      "sha256": "6ee877073dac009ebb9da84da4404c31b0a55508397d40691160fb3645efd58d",
+      "bytes": 2919
+    },
+    {
+      "reference": "tools/scripts/domain-packs/supreme-court-mirror.py",
+      "sha256": "aae9784ae2c17ff7f4e096ccf683330ed21f1464f20bc5dd9f880bf73d97ccfc",
+      "bytes": 15406
+    },
+    {
+      "reference": "tools/scripts/qualification/supreme-court-spark-observed.py",
+      "sha256": "1acfd2c12098b25d5b8963b4f9fe424930e48d2b0dd8f5d68f6082b345a5549c",
+      "bytes": 6081
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/GUIDE.md",
+      "sha256": "9cc7d816acec997a96433566db16a8cfb1f0ec673bcfa116259feb5daac92139",
+      "bytes": 5935
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/README.md",
+      "sha256": "284f9140e67c8bf6c773a119e9422bf1f439f91ee814a50b45d79cf9098e6380",
+      "bytes": 9229
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/case-inventory.json",
+      "sha256": "39fecc69bee2c23400ec55bfcdee5c4f854709fe519f291d22bd0565420cdf53",
+      "bytes": 29608
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/collection.json",
+      "sha256": "761b5bd18224ecd223cdc92e8d9aa68a9972a65cd577fb9ab43b770e1d6e0d57",
+      "bytes": 1477
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/companion.json",
+      "sha256": "fd8a17de72e964b4ba49051544d034309120699374fdbc8689dd619750d7e043",
+      "bytes": 1594
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/inventory.schema.json",
+      "sha256": "a9a1b67bcba686f7b13463867aa7ca19f0a3bc830fecc832eae64e1bc8f6d5ce",
+      "bytes": 2613
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/loader-release.json",
+      "sha256": "6750776e5534d232f617ff83667f8ad131e39a64758ec1ec893e7652a6ce65fc",
+      "bytes": 773
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/loader.schema.json",
+      "sha256": "b5c7a02960e71ccad8aaff5bbcc7e6e77b047a7fe65bc2e3544bf58c7445236b",
+      "bytes": 1410
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/read-publication.ts",
+      "sha256": "2da3e35038d1b27c34d86b8cc2abe94d10c110ac2df9d573d09af266740fd25b",
+      "bytes": 250282
+    },
+    {
+      "reference": "tools/spec/domain-packs/legal-supreme-court/run.ts",
+      "sha256": "78d174cab9e8ca8a8e23670d920ad51759bbaaa33ce1e03a2f931d0debda1c27",
+      "bytes": 591658
+    },
+    {
+      "reference": "tools/tests/domain-packs/fixtures/supreme-court/23-477.html",
+      "sha256": "2cb6e02685701e5c3a90d5d2c20019ac08b8c82fdea23b1f2d6e9d70adc49cf7",
+      "bytes": 932
+    },
+    {
+      "reference": "tools/tests/domain-packs/fixtures/supreme-court/provenance.json",
+      "sha256": "7870e4d8658e1756a91b20aa32240f9eaec9db69219dd619d40e1e2e18631946",
+      "bytes": 194
+    },
+    {
+      "reference": "tools/tests/domain-packs/supreme-court-mirror_test.py",
+      "sha256": "0363e68344cfd67d7394f42c6aa88dedc841b2421af9c6048ed86e8b3ac476cb",
+      "bytes": 6074
     }
   ],
   "qualification": {

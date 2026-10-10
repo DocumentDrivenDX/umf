@@ -26,28 +26,17 @@ for(const root of roots){const paths=await files(root);
    const demo=['court-documents-loader-demo','sec-filings-loader-demo'].includes(pack.id);
    if(pack.family?.id!=='medical'&&!['legal-appellate','public-company-intelligence'].includes(pack.id))await exportPack(path,join(dist,'pack-assets',identity),{includeSources:demo});
    packEntry.assets=[...(packEntry.assets??[]),...pack.loader.artifacts.map((a:any)=>({id:'loader:'+a.reference,reference:a.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+a.reference,format:a.reference.endsWith('.ts')?'bun-source':a.reference.endsWith('.md')?'markdown':'json-schema',dataKind:'authored companion',sha256:a.sha256}))];
-   if(demo){
-    packEntry.assets.push({id:'inventory',reference:'inventory.json',url:'pack-assets/'+encodeURIComponent(identity)+'/inventory.json',format:'json',dataKind:'empty authored selection',sha256:pack.sources.inventory.checksum.value});
-    const releasePath=join(dist,'loaders/release.json');
-    if(await Bun.file(releasePath).exists()){
-     const release=await Bun.file(releasePath).json(),reference=pack.id+'.zip',bundle=release.bundles?.find((b:any)=>b.reference===reference);
-     if(bundle&&await Bun.file(join(dist,'loaders',reference)).exists()&&new Bun.CryptoHasher('sha256').update(await Bun.file(join(dist,'loaders',reference)).arrayBuffer()).digest('hex')===bundle.sha256)packEntry.assets.push({id:'bundle',reference,url:'loaders/'+reference,format:'zip',dataKind:'authored companion',sha256:bundle.sha256});
-    }
-   }
-  }
-  if(['legal-appellate','public-company-intelligence'].includes(pack.id)){
-   const releasePath=join(dist,'packs/release.json');
-   if(await Bun.file(releasePath).exists()){
-    const release=await Bun.file(releasePath).json(),bundle=release.bundles?.find((b:any)=>b.id===pack.id&&b.version===pack.version);
-    if(bundle&&await Bun.file(join(dist,'packs',bundle.reference)).exists()&&new Bun.CryptoHasher('sha256').update(await Bun.file(join(dist,'packs',bundle.reference)).arrayBuffer()).digest('hex')===bundle.sha256)packEntry.assets!.push({id:'bundle',reference:bundle.reference,url:'packs/'+bundle.reference,format:'zip',dataKind:'qualified fixed corpus',sha256:bundle.sha256});
-   }
+   if(demo)packEntry.assets.push({id:'inventory',reference:'inventory.json',url:'pack-assets/'+encodeURIComponent(identity)+'/inventory.json',format:'json',dataKind:'empty authored selection',sha256:pack.sources.inventory.checksum.value});
   }
   if(['legal-appellate','public-company-intelligence'].includes(pack.id)){
    const research=join(dist,'research/release.json');
    if(await Bun.file(research).exists()){
-    const release=await Bun.file(research).json(),bundle=release.bundles[0],archive=join(dist,'research',bundle.reference);
-    if(new Bun.CryptoHasher('sha256').update(await Bun.file(archive).arrayBuffer()).digest('hex')!==bundle.sha256)throw Error('Research bundle hash mismatch');
-    packEntry.assets=[...(packEntry.assets??[]),{id:'research-tools',reference:bundle.reference,url:'research/'+bundle.reference,format:'zip',dataKind:'discovery tools and scoped runtime evidence; no acquired originals',sha256:bundle.sha256}];
+    const release=await Bun.file(research).json();
+    for(const artifact of release.artifacts.filter((a:any)=>a.reference.endsWith('.py'))){
+     const source=join(dist,'research',artifact.reference);
+     if(new Bun.CryptoHasher('sha256').update(await Bun.file(source).arrayBuffer()).digest('hex')!==artifact.sha256)throw Error('Research tool hash mismatch');
+     packEntry.assets=[...(packEntry.assets??[]),{id:'research:'+artifact.reference,reference:artifact.reference,url:'research/'+artifact.reference,format:'python',dataKind:'consumer discovery/qualification tool',sha256:artifact.sha256}];
+    }
    }
   }
   entries.push(packEntry);

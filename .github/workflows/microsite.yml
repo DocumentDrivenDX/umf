@@ -84,14 +84,20 @@ jobs:
           bun test tests/domain-packs
       - name: Verify and package loader companions
         run: bun scripts/build-domain-pack-loaders.ts --check --site
-      - name: Package fixed domain-pack releases
-        run: bun scripts/build-domain-pack-releases.ts
-      - name: Package document research tools and evidence
+      - name: Publish individual document research tools and evidence
         run: python3 scripts/build-document-research-release.py
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
+      - name: Verify tools-only distribution
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          archives = list(Path('docs/helix/05-deploy/microsite/dist').rglob('*.zip'))
+          if archives:
+              raise SystemExit('Generated ZIPs must remain consumer-local: ' + str(archives))
+          PY
       - name: Get Innsigle verifier
         uses: actions/checkout@v4
         with:

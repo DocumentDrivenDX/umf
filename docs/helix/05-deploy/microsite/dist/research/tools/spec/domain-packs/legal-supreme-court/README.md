@@ -7,12 +7,11 @@ metadata rows with revision hashes. The distribution requires **Bun 1.3.14**.
 
 ## Install and select sources
 
-Use a trusted [UMF source checkout](https://github.com/DocumentDrivenDX/umf/tree/main).
-Court/SEC manifests and authored inventories live under `spec/domain-packs/`;
-[canonical release checksums](https://documentdrivendx.github.io/umf/loaders/release.json)
-remain available independently. Install TableSpec 0.0.9 for native Python execution.
-The Bun runner below is the retained compatibility reference. Generated companion
-ZIPs are no longer distributed.
+Download a companion from the UMF GitHub Pages distribution:
+
+- [Court documents](https://documentdrivendx.github.io/umf/loaders/court-documents-loader-demo.zip)
+- [SEC filings](https://documentdrivendx.github.io/umf/loaders/sec-filings-loader-demo.zip)
+- [Release inventory and checksums](https://documentdrivendx.github.io/umf/loaders/release.json)
 
 Trust the published release before running downloaded code. A checksum proves
 consistency, not authorship; arbitrary downloaded `run.ts` files are outside this
@@ -20,7 +19,7 @@ trust boundary. The repository's exporter independently matches companion bytes
 to its installed canonical release and refuses replaced code even when a pack
 updates its own checksums. The standalone runner then checks installation integrity.
 
-Use the source checkout in a directory you control. Copy `inventory.json` to an external
+Extract the ZIP into a directory you control. Copy `inventory.json` to an external
 configuration directory and add explicit entries. Empty examples deliberately
 contain no live records. Example entry (replace every source-specific value):
 

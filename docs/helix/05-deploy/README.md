@@ -42,10 +42,9 @@ block publication. CI does not receive the signing key.
 
 [Three component releases](domain-pack-release-notes.md) publish the shared loader,
 appellate corpus and public-company intelligence corpus at 1.0.0. The website
-explorer exposes their original-source assets and complete ZIPs. The Pages build
-runs `scripts/build-domain-pack-releases.ts` after loader packaging and before
-rebuilding the catalog; deterministic ZIP bytes keep website and release hashes
-aligned. HTML and its existing signatures are unchanged.
+explorer exposes source metadata and individual collector/qualification tools.
+Pages does not build or serve generated ZIPs. Consumers invoke
+`scripts/build-domain-pack-releases.ts --output DIRECTORY` to build local archives. HTML and its existing signatures are unchanged.
 
 
 The [document research tools 1.0.0](document-research.md) publish Supreme Court discovery,

@@ -23,7 +23,7 @@ UMF publishes three independently versioned releases: `loader-v1.0.0`,
 `legal-appellate-v1.0.0` and `public-company-intelligence-v1.0.0`. GitHub release
 assets and the public schema explorer serve the same qualified companions and
 fixed corpora. The release owner is the repository owner. These releases do not
-change core document versions. TableSpec 0.0.8 separately delivers the primary
+change core document versions. TableSpec 0.0.9 separately delivers the primary
 native Python document loader; court/SEC demo packs are 1.0.1.
 
 ## Audience and Channels
@@ -31,8 +31,8 @@ native Python document loader; court/SEC demo packs are 1.0.1.
 | Audience | Impact | Channel |
 | --- | --- | --- |
 | Pack builders and operators | Reusable acquisition, refresh and replay | GitHub releases and loader guide |
-| Legal researchers | Source-linked appellate development corpus | Explorer, ZIP and domain guide |
-| Company researchers | Selected SEC research corpus and exact financial literals | Explorer, ZIP and domain guide |
+| Legal researchers | Source-linked appellate development corpus | Explorer, source tooling and domain guide |
+| Company researchers | Selected SEC research corpus and exact financial literals | Explorer, source tooling and domain guide |
 
 ## Highlights
 
@@ -47,8 +47,8 @@ native Python document loader; court/SEC demo packs are 1.0.1.
 
 ## Required Actions Summary
 
-Download the desired release and verify SHA-256 checksums. Loader execution
-uses native Python in TableSpec 0.0.8 with an explicit source inventory; the
+Check out the desired source revision and verify the canonical tooling hashes. Loader execution
+uses native Python in TableSpec 0.0.9 with an explicit source inventory; the
 retained compatibility runner requires Bun 1.3.14. SEC acquisition also needs
 an identifying contact User-Agent. Read the domain `GUIDE.md` before using a pack.
 Existing metadata consumers need no migration. Pack builders should retain the
@@ -57,7 +57,7 @@ canonical five-artifact companion rather than maintain separate downloaders.
 ## Changes and Fixes
 
 Both domain packs now use the independently verified loader closure. Their local
-sources, canonical companions and whole-pack ZIPs are available through the
+schemas, individual tools and canonical companions are available through the
 website catalog. Packaging fixes avoid exporting a companion twice when source
 metadata independently describes it, while retaining those annotations and
 checking both declared hashes. Non-companion path collisions still refuse.
@@ -74,7 +74,7 @@ original bytes before changing inventory or installation.
 
 ## Migration or Rollback Guidance
 
-Install versioned ZIPs in separate directories. Verify artifact hashes and the
+Use versioned source checkouts in separate directories. Verify tooling hashes and the
 pack manifest, then use the documented reader and fixed-data ingestion route.
 To roll back, select the previous installation and its corresponding state.
 Reverting the integration commit on main redeploys the earlier website.
@@ -117,3 +117,13 @@ The [document research tools 1.0.0](document-research.md) publish Supreme Court 
 batching/acquisition configuration, SEC qualification harness and scoped local
 Spark evidence. Original local-use archives are excluded; live SEC/Databricks
 qualification remains pending. CONTRACT-060 governs the source mirror.
+
+
+## Distribution correction
+
+Owner direction withdraws generated ZIP assets from releases and the microsite.
+Archive creation is a consumer operation: `bun scripts/build-domain-pack-releases.ts
+--output DIRECTORY` or the TableSpec packaging commands in each pack GUIDE.
+Python wheels/sdists remain normal installable package artifacts. Research tools
+1.0.1 publish individual source files, checksums and evidence; no dataset archive
+is served. Original-source rights and historical execution records remain unchanged.

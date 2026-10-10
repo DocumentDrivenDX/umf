@@ -1,6 +1,5 @@
 import {resolve,join} from 'node:path';
-import {readFile,mkdir,rm,mkdtemp,cp} from 'node:fs/promises';
-import {tmpdir} from 'node:os';
+import {readFile,mkdir,rm,cp} from 'node:fs/promises';
 import {generateDomainPackLoaderSchema} from '../src/domain-packs/loader';
 import {generateLoaderInventorySchema} from '../src/domain-packs/loader-inventory';
 import {hash,json} from './loaders/state';
@@ -26,18 +25,16 @@ for(const profile of ['court-documents','sec-filings'] as const){
  await write(join(directory,'pack.json'),json(pack));await write(join(directory,'inventory.json'),inventoryText);
  for(const [name,text] of files)await write(join(directory,name),text);
 }
-// Optional site assets use the trusted exporter and contain only authored demo configs.
+// Publish individual authored configurations and canonical tools, never generated archives.
 if(process.argv.includes('--site')){
- const {exportPack}=await import('./loaders/export');const dist=join(repo,'docs/helix/05-deploy/microsite/dist/loaders');await mkdir(dist,{recursive:true});
- const temp=await mkdtemp(join(tmpdir(),'umf-loader-bundle-'));
- try{
-  for(const profile of ['court-documents','sec-filings']){
-   const id=profile+'-loader-demo',out=join(temp,id);await exportPack(join(repo,'spec/domain-packs',id,'pack.json'),out,{includeSources:true});
-   await cp(join(repo,'spec/domain-packs',id,'GUIDE.md'),join(out,'GUIDE.md'));
-   const zip=Bun.spawn(['zip','-qr',join(temp,id+'.zip'),id],{cwd:temp,stdout:'pipe',stderr:'pipe'});if(await zip.exited)throw Error(await new Response(zip.stderr).text());
-   await cp(join(temp,id+'.zip'),join(dist,id+'.zip'));
-  }
-  await Bun.write(join(dist,'README.md'),await readFile(join(repo,'docs/helix/05-deploy/document-preservation.md'),'utf8')); await Bun.write(join(dist,'release.json'),json({id:'umf.document-loader',version:'1.0.0',artifacts,bundles:await Promise.all(['court-documents','sec-filings'].map(async p=>({reference:p+'-loader-demo.zip',sha256:hash(new Uint8Array(await readFile(join(dist,p+'-loader-demo.zip'))))})))}));
- }finally{await rm(temp,{recursive:true,force:true});}
+ const {exportPack}=await import('./loaders/export');const dist=join(repo,'docs/helix/05-deploy/microsite/dist/loaders');
+ await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
+ for(const profile of ['court-documents','sec-filings']){
+  const id=profile+'-loader-demo',out=join(dist,id);
+  await exportPack(join(repo,'spec/domain-packs',id,'pack.json'),out,{includeSources:true});
+  await cp(join(repo,'spec/domain-packs',id,'GUIDE.md'),join(out,'GUIDE.md'));
+ }
+ await Bun.write(join(dist,'README.md'),await readFile(join(repo,'docs/helix/05-deploy/document-preservation.md'),'utf8'));
+ await Bun.write(join(dist,'release.json'),json({id:'umf.document-loader',version:'1.0.0',artifacts,distribution:'Individual tools/configuration; archives are consumer-built'}));
 }
 console.log(json({id:'umf.document-loader',version:'1.0.0',artifacts:artifacts.length,check}));

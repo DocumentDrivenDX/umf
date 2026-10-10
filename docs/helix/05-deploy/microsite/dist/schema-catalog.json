@@ -806,14 +806,6 @@
           "format": "json",
           "dataKind": "empty authored selection",
           "sha256": "cf1b3795380e5442ad48dcbc8a30bed64e161671492b2417b9216db8eb822698"
-        },
-        {
-          "id": "bundle",
-          "reference": "court-documents-loader-demo.zip",
-          "url": "loaders/court-documents-loader-demo.zip",
-          "format": "zip",
-          "dataKind": "authored companion",
-          "sha256": "71d7be27f73fdfb53442b53de065c26a3b63bb65579740c32ca024b199e69a1b"
         }
       ]
     },
@@ -2375,20 +2367,60 @@
           "sha256": "284f9140e67c8bf6c773a119e9422bf1f439f91ee814a50b45d79cf9098e6380"
         },
         {
-          "id": "bundle",
-          "reference": "legal-appellate-1.0.0.zip",
-          "url": "packs/legal-appellate-1.0.0.zip",
-          "format": "zip",
-          "dataKind": "qualified fixed corpus",
-          "sha256": "a2b57e5a3aeba7ad17cc578442b14d94e575ff07ee19322dee8a59c35c064aa4"
+          "id": "research:tools/scripts/build-document-research-release.py",
+          "reference": "tools/scripts/build-document-research-release.py",
+          "url": "research/tools/scripts/build-document-research-release.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "d6997467328959cbd1b40e4c9915ce6ab4f4135ee48b81ee5c841fdaa905e80c"
         },
         {
-          "id": "research-tools",
-          "reference": "document-research-tools-1.0.0.zip",
-          "url": "research/document-research-tools-1.0.0.zip",
-          "format": "zip",
-          "dataKind": "discovery tools and scoped runtime evidence; no acquired originals",
-          "sha256": "a403c1882dcd0e8e3101a0f2fe56e546903108de4a73d20a31fbbef8ff5c19cc"
+          "id": "research:tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "reference": "tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "url": "research/tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "626741e61c90c05928dd83e882990cb60064eaa2c6da0b840e1249b28e1e0683"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-acquire.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-acquire.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-acquire.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "3584deb8d12281ceaaa87cfdfc9cfa717cea3533bad41ebdb1ba852e736b6bf2"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-batches.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-batches.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-batches.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "6ee877073dac009ebb9da84da4404c31b0a55508397d40691160fb3645efd58d"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-mirror.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-mirror.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-mirror.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "aae9784ae2c17ff7f4e096ccf683330ed21f1464f20bc5dd9f880bf73d97ccfc"
+        },
+        {
+          "id": "research:tools/scripts/qualification/supreme-court-spark-observed.py",
+          "reference": "tools/scripts/qualification/supreme-court-spark-observed.py",
+          "url": "research/tools/scripts/qualification/supreme-court-spark-observed.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "1acfd2c12098b25d5b8963b4f9fe424930e48d2b0dd8f5d68f6082b345a5549c"
+        },
+        {
+          "id": "research:tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "reference": "tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "url": "research/tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "0363e68344cfd67d7394f42c6aa88dedc841b2421af9c6048ed86e8b3ac476cb"
         }
       ]
     },
@@ -5544,20 +5576,60 @@
           "sha256": "284f9140e67c8bf6c773a119e9422bf1f439f91ee814a50b45d79cf9098e6380"
         },
         {
-          "id": "bundle",
-          "reference": "public-company-intelligence-1.0.0.zip",
-          "url": "packs/public-company-intelligence-1.0.0.zip",
-          "format": "zip",
-          "dataKind": "qualified fixed corpus",
-          "sha256": "665e7243522ba8e125fa5f5da4cade7d444b29bc0c03382bd3c8fc721c6e3819"
+          "id": "research:tools/scripts/build-document-research-release.py",
+          "reference": "tools/scripts/build-document-research-release.py",
+          "url": "research/tools/scripts/build-document-research-release.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "d6997467328959cbd1b40e4c9915ce6ab4f4135ee48b81ee5c841fdaa905e80c"
         },
         {
-          "id": "research-tools",
-          "reference": "document-research-tools-1.0.0.zip",
-          "url": "research/document-research-tools-1.0.0.zip",
-          "format": "zip",
-          "dataKind": "discovery tools and scoped runtime evidence; no acquired originals",
-          "sha256": "a403c1882dcd0e8e3101a0f2fe56e546903108de4a73d20a31fbbef8ff5c19cc"
+          "id": "research:tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "reference": "tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "url": "research/tools/scripts/domain-packs/qualify-sec-acquisition.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "626741e61c90c05928dd83e882990cb60064eaa2c6da0b840e1249b28e1e0683"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-acquire.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-acquire.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-acquire.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "3584deb8d12281ceaaa87cfdfc9cfa717cea3533bad41ebdb1ba852e736b6bf2"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-batches.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-batches.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-batches.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "6ee877073dac009ebb9da84da4404c31b0a55508397d40691160fb3645efd58d"
+        },
+        {
+          "id": "research:tools/scripts/domain-packs/supreme-court-mirror.py",
+          "reference": "tools/scripts/domain-packs/supreme-court-mirror.py",
+          "url": "research/tools/scripts/domain-packs/supreme-court-mirror.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "aae9784ae2c17ff7f4e096ccf683330ed21f1464f20bc5dd9f880bf73d97ccfc"
+        },
+        {
+          "id": "research:tools/scripts/qualification/supreme-court-spark-observed.py",
+          "reference": "tools/scripts/qualification/supreme-court-spark-observed.py",
+          "url": "research/tools/scripts/qualification/supreme-court-spark-observed.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "1acfd2c12098b25d5b8963b4f9fe424930e48d2b0dd8f5d68f6082b345a5549c"
+        },
+        {
+          "id": "research:tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "reference": "tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "url": "research/tools/tests/domain-packs/supreme-court-mirror_test.py",
+          "format": "python",
+          "dataKind": "consumer discovery/qualification tool",
+          "sha256": "0363e68344cfd67d7394f42c6aa88dedc841b2421af9c6048ed86e8b3ac476cb"
         }
       ]
     },
@@ -6064,14 +6136,6 @@
           "format": "json",
           "dataKind": "empty authored selection",
           "sha256": "6730218ce3c9ae34ddcc95b3a41136f013627a5cd0b0abef6e39140b21a14975"
-        },
-        {
-          "id": "bundle",
-          "reference": "sec-filings-loader-demo.zip",
-          "url": "loaders/sec-filings-loader-demo.zip",
-          "format": "zip",
-          "dataKind": "authored companion",
-          "sha256": "f1154bfbbd45f055cd1cc30e8c6b5912689193ea7fcdd0b5d6008fa2cd6eec41"
         }
       ]
     },

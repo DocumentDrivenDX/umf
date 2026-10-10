@@ -1,7 +1,7 @@
 # Python document loading and preservation
 
 TableSpec 0.0.9 is the primary executable runtime for document domain packs.
-UMF publishes declarations, source schemas, selected originals and the historical
+UMF publishes declarations, source schemas, collector/build tools and the historical
 Bun companion 1.0.0 compatibility reference. No Bun process is required by Python.
 The court and SEC demos are pack 1.0.1; legal-appellate and
 public-company-intelligence 1.0.0 include preservation declarations and GUIDEs.
@@ -38,3 +38,18 @@ interfaces; native Spark/Unity Catalog and DuckDB sinks implement TableSpec's
 publication interface. Snowflake remains separately qualified future work.
 
 [New discovery tools and runtime evidence](https://documentdrivendx.github.io/umf/research/README.md) complement the fixed packs. Local Spark 4.0.1/Delta 4.0.0 is qualified for the documented three-court-document driver subset; live Databricks remains pending.
+
+
+## Distribution and local archives
+
+Install TableSpec from its wheel and use a trusted UMF source checkout. UMF
+release assets and the microsite expose tools/configuration, not generated ZIPs.
+Build an archive locally when needed:
+
+```sh
+bun scripts/build-domain-pack-releases.ts --output /absolute/path/local-archives
+```
+
+The canonical 1.0.0 README remains immutable historical compatibility material;
+its old ZIP installation instructions are superseded by the current Python and
+[source tooling guide](https://documentdrivendx.github.io/umf/research/README.md).
