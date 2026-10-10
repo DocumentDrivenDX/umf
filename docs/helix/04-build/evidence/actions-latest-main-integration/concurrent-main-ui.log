@@ -1,0 +1,31 @@
+Explorer built: 28 packs, 312 catalog entries.
+$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json
+bun test v1.4.2 (43848b5a7)
+
+tests/domain-packs/download.test.ts:
+(pass) all nine targets retain exact source and produce complete fields [298.11ms]
+(pass) unknown types and contextual nullability block rather than drop columns [43.80ms]
+(pass) SQL identifier quoting and source preservation [53.73ms]
+(pass) core optional members use explicit absence mapping and binary carriers [8.70ms]
+(pass) Protobuf schema parses with a native source parser [1670.09ms]
+(pass) native recovery retains JSON Schema resource bundle [1064.79ms]
+(pass) human schema exports default to YAML and JSON remains selectable [100.01ms]
+
+tests/domain-packs/artifacts.test.ts:
+(pass) collections preserve unknown annotations and permit shared sources [25.93ms]
+(pass) structural and semantic refusal is explicit [15.77ms]
+(pass) empty collections require an explicit valid inventory [0.23ms]
+(pass) document-driven packs expose explicit original collections [19.78ms]
+
+tests/domain-packs/ontology-layout.test.ts:
+(pass) parallel declarations remain separately inspectable with a stable midpoint in either direction [0.14ms]
+(pass) self relationship badge stays outside its record [0.02ms]
+
+tests/domain-packs/ontology-browser.test.ts:
+(pass) ontology inspection separates records and fields without changing relationship meaning [71.03ms]
+(pass) catalog owns each ontology once and retains legacy deep-link aliases [9.36ms]
+
+ 15 pass
+ 0 fail
+ 84 expect() calls
+Ran 15 tests across 4 files. [4.25s]

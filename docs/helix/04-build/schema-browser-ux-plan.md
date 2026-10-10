@@ -99,3 +99,15 @@ visible. Show horizontal-scroll guidance only when the actual table overflows,
 including narrow ontology tables; disconnect observers on schema navigation.
 Recheck embedded/mobile containment, exports and ontology navigation before
 publication. Graph pan/zoom remains outside this refinement.
+
+## Astra Ultra review — tables, artifacts and diagrams
+
+Requested independent Astra Ultra review with live browser and source evidence.
+Implement compact artifact inventory/filtering with expandable retained metadata;
+keep rights, provenance kind, source reference and verified download availability
+visible. Suppress unsupported scalar conversion on artifact collections. Preserve
+field filter/table scroll through drill-in and Back. Default ontology overview to
+the full model, qualify neighborhoods with shown/total counts, separate coincident
+parallel relationships and move self-loop badges outside nodes. Expose interactive
+SVG content as a named group with links, and honor hidden export serialization.
+Verify all of these in the real browser and retain original schemas/bytes/IDs.

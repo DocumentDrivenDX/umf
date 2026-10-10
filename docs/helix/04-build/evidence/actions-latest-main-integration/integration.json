@@ -187,5 +187,79 @@
     "field": "sha256",
     "verifiedCurrentInputCount": 1319,
     "allCurrentHashesMatch": true
+  },
+  "concurrentUiIntegration": {
+    "mainRevision": "5cc29553b18766d852011de9c1790c4e8d93e34e",
+    "qualificationUnchanged": true,
+    "verifiedNativeInputHashes": 1319,
+    "testedWorkingTreeSha256": {
+      "docs/helix/04-build/evidence/schema-browser-ux.md": "715845d5d6e03f60087514a23dd0537aa2f3245b3019a30c118c4f7de742ec97",
+      "docs/helix/04-build/evidence/schema-browser-ux/astra-artifacts.jpg": "5a81e2fed6b172a24e16def084d3d5ba1d979360bc89b1b041201a174870bab9",
+      "docs/helix/04-build/evidence/schema-browser-ux/astra-ontology.jpg": "3053532b805c5da56600a9d42b69c26d04b5784cafad441282d8a71004c2ac29",
+      "docs/helix/04-build/evidence/schema-browser-ux/astra-table.jpg": "3d470426c760228b160420806583f6c89f5c994d8821d9c07a7d10c88876fc2b",
+      "docs/helix/04-build/schema-browser-ux-plan.md": "733c3536d88d65d991b42dab51ef570541c8ffabf153bed26a804287fdc79c0e",
+      "docs/helix/05-deploy/microsite/dist/explorer.css": "40fcfcd4e9446b97b94722c0bebea4511d6ac90133cfecd61fcb8da7103b0d2c",
+      "docs/helix/05-deploy/microsite/dist/explorer.js": "49e27141912415af30cc49f4796dfec65ffcda303d3689c787fbebfaf8d8f4ef",
+      "docs/helix/05-deploy/microsite/download-view.ts": "592d045945cce298ef5c4471b08de82609a1313cafa97df3d6d799169f9355d8",
+      "docs/helix/05-deploy/microsite/explorer.ts": "f5c1bed62664ee25fc6cf2b1f9d65ec4b1d1a42f2fc3274fc3f46ea014f05e8c",
+      "docs/helix/05-deploy/microsite/ontology-layout.ts": "b3871d5c8c77f82a3c0db30f426251a6c7bc2326eadb78018253702cb210220e",
+      "docs/helix/05-deploy/microsite/ontology-view.ts": "44ed01359667b653d4986ad10e01d28e2fab7bdb2de9490c98af4a5d1246ea63",
+      "docs/helix/05-deploy/microsite/verify-explorer.ts": "6bfee2120c2d36cd38e8969658dbc9a56cddd797980100fe56d56a2c59f8a98a",
+      "scripts/artifact-collections-browser.ts": "b4428bc28bfc11550375dd07989c0c9533c6a20946c2cad5b5dcbad18b579a8d",
+      "scripts/delta-ddl-browser.ts": "2f6d072f263e6866173a2dafec73174e2d51ab6bb252bccf03f40dc12a292e7f",
+      "scripts/public-company-browser.ts": "170994280690617e1d7f021d62dfd49fe22b85015be6fe9a136f2d1c4a9f87a7",
+      "tests/domain-packs/ontology-layout.test.ts": "833463c1b5442072b6b3df2d4851b971f3876469f946d99a92a29b6839419147"
+    },
+    "generatedExplorerSha256": "49e27141912415af30cc49f4796dfec65ffcda303d3689c787fbebfaf8d8f4ef",
+    "commands": [
+      {
+        "command": "bun docs/helix/05-deploy/microsite/build-explorer.ts",
+        "exitCode": 0
+      },
+      {
+        "command": "bun run typecheck",
+        "exitCode": 0
+      },
+      {
+        "command": "bun test tests/domain-packs/ontology-layout.test.ts tests/domain-packs/download.test.ts tests/domain-packs/artifacts.test.ts tests/domain-packs/ontology-browser.test.ts",
+        "exitCode": 0
+      },
+      {
+        "command": "docker pinned Bun runtime scripts/artifact-collections-browser.ts",
+        "exitCode": 0
+      },
+      {
+        "command": "docker pinned Bun runtime scripts/public-company-browser.ts",
+        "exitCode": 0
+      },
+      {
+        "command": "docker pinned Bun runtime concurrent-explorer-ux.cjs",
+        "exitCode": 0
+      },
+      {
+        "command": "bun scripts/actions-docs/build.ts --check",
+        "exitCode": 0
+      },
+      {
+        "command": "bun run test:docs:browser",
+        "exitCode": 0
+      },
+      {
+        "command": "node pinned Innsigle cli verify --all",
+        "exitCode": 0
+      }
+    ],
+    "behaviorTests": 15,
+    "behaviorAssertions": 84,
+    "artifactBrowserChecks": 37,
+    "companyBrowserChecks": 8,
+    "companyUiChecks": 3,
+    "responsiveWidths": [
+      1440,
+      390
+    ],
+    "exportSourceCompanionDownloaded": true,
+    "validSignatureClaims": 15,
+    "astraReview": "No substantive integration issue; obsolete public-company ontology locator corrected and fresh probe passes. Historical helper verify-explorer is not claimed executed."
   }
 }

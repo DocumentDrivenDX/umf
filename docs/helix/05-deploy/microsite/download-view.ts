@@ -5,6 +5,7 @@ import type {Entry,Parsed} from './explorer-model';
 let urls:string[]=[];
 export function clearDownloads(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];}
 export function renderDownloads(parent:HTMLElement,entry:Entry,parsed:Parsed){
+ if(entry.schemaFormat==='artifact-collection')return;
  const panel=document.createElement('details');panel.className='export-panel';const title=document.createElement('summary');title.textContent='Export schema';panel.append(title);const content=document.createElement('div');content.className='export-content';panel.append(content);
  const note=document.createElement('p');note.textContent='Generate scalar schemas for the whole source. Review mappings and limits before downloading. The companion bundle retains the original source.';content.append(note);
  const native=nativeDownloads(parsed);if(native.length){const p=document.createElement('p');p.textContent='Native recovery uses the retained adapter payload. Download the source companion too: dependencies and unrelated metadata may be required.';content.append(p);native.push({name:'source-companion.'+entry.format,content:entry.text});}

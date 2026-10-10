@@ -31,7 +31,7 @@ try{
  await page.locator('#inspector').getByRole('link',{name:'Filings',exact:true}).click();await page.getByRole('heading',{name:'Fields',exact:true}).waitFor();
  await page.goto(origin+'/explorer.html#schema=schema%3Apublic-company-intelligence%401.0.0%3Aontology');
  await page.getByRole('heading',{name:'Public company intelligence ontology',exact:true}).waitFor();
- await page.getByRole('img',{name:'Record relationship neighborhood',exact:true}).waitFor();
+ await page.getByRole('group',{name:'Full record relationship map',exact:true}).waitFor();
  if(errors.length)throw Error(errors.join('\n'));
  console.log(JSON.stringify({browser:browser.version(),...result,ui_checks:3,page_errors:errors}));
 }finally{await browser.close();server.stop(true);}
