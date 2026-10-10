@@ -1,4 +1,6 @@
 import {readJsonValue} from '../../../../src/model/serialization';
+import {generateArtifactCollectionSchema} from '../../../../src/domain-packs/artifacts';
+import {createValidator} from '../../../../src/validation/schema';
 import {inspectDomainPack} from '../../../../src/domain-packs/profile';
 import {parseNativeJson,parseNativeYaml,renderTree,type NativeJson} from '../../../../src/model/native-json';
 import {importTableSpec,inspectTableSpec} from '../../../../src/adapters/tablespec';
@@ -14,6 +16,7 @@ export function parseEntry(entry:Entry):Parsed {
  const tree=entry.format==='json'?parseNativeJson(entry.text):parseNativeYaml(entry.text);
  const native=nativeView(tree);
  if(!native||typeof native!=='object'||Array.isArray(native))throw new Error('Expected a schema or pack object.');
+ if(entry.schemaFormat==='artifact-collection'){const validate=createValidator().compile(generateArtifactCollectionSchema());if(!validate(readJsonValue(renderTree(tree),'json')))throw Error('Artifact collection metadata refused: '+JSON.stringify(validate.errors));return {native,label:'Artifact collection 1.0.0',definitions:[],valid:true,complete:false,diagnostics:'Declared artifact metadata only. Collection inspection retrieves no originals and certifies no native interpretation.'};}
  if(typeof native.umf!=='string'){
   if(native.table_name&&Array.isArray(native.columns)){
    const document=importTableSpec(entry.text,{id:entry.id,format:entry.format}),checked=inspectTableSpec(document);

@@ -408,3 +408,5 @@ export * from './model/csv-boolean-lexical';
 
 export {generateDomainPackLoaderSchema,inspectDomainPackLoader} from './domain-packs/loader';
 export {generateLoaderInventorySchema} from './domain-packs/loader-inventory';
+
+export {generateArtifactCollectionSchema} from './domain-packs/artifacts';

@@ -8,6 +8,7 @@ on:
       - 'docs/helix/05-deploy/microsite/**'
       - 'src/**'
       - 'spec/**'
+      - 'scripts/artifact-collections-browser.ts'
       - 'scripts/build-medical-subpacks.ts'
       - 'scripts/domain-pack-family.ts'
       - 'scripts/export-domain-family.ts'
@@ -37,6 +38,7 @@ on:
       - 'docs/helix/05-deploy/microsite/**'
       - 'src/**'
       - 'spec/**'
+      - 'scripts/artifact-collections-browser.ts'
       - 'scripts/build-medical-subpacks.ts'
       - 'scripts/domain-pack-family.ts'
       - 'scripts/export-domain-family.ts'
@@ -90,6 +92,10 @@ jobs:
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
+      - name: Qualify artifact collection browser
+        run: |
+          bun x playwright install --with-deps chromium
+          bun scripts/artifact-collections-browser.ts
       - name: Verify tools-only distribution
         run: |
           python3 - <<'PY'

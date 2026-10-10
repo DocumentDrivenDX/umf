@@ -31,6 +31,234 @@
       }
     ],
     "properties": {
+      "artifact_collections": {
+        "type": "array",
+        "maxItems": 64,
+        "items": {
+          "type": "object",
+          "required": [
+            "version",
+            "id",
+            "title",
+            "view",
+            "semantic_kinds",
+            "source_ids"
+          ],
+          "properties": {
+            "version": {
+              "const": "1.0.0"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string"
+            },
+            "view": {
+              "enum": [
+                "documents",
+                "imaging",
+                "other"
+              ]
+            },
+            "semantic_kinds": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "source_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "media_types": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "metadata_schema_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "derived_schema_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "ontology_schema_ids": {
+              "type": "array",
+              "maxItems": 10000,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "loader_inventory_source_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identity": {
+              "type": "object",
+              "required": [
+                "description"
+              ],
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fields": {
+                  "type": "array",
+                  "maxItems": 10000,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "additionalProperties": true
+            },
+            "grouping": {
+              "type": "object",
+              "required": [
+                "description"
+              ],
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fields": {
+                  "type": "array",
+                  "maxItems": 10000,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "anyOf": [
+            {
+              "properties": {
+                "source_ids": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "required": [
+                "loader_inventory_source_id"
+              ],
+              "properties": {
+                "loader_inventory_source_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ],
+          "additionalProperties": true
+        }
+      },
+      "preservation": {
+        "type": "object",
+        "required": [
+          "version",
+          "handoff",
+          "fixity",
+          "events",
+          "provenance",
+          "originals",
+          "primary_runtime"
+        ],
+        "properties": {
+          "version": {
+            "const": "1.0.0"
+          },
+          "handoff": {
+            "const": "BagIt-1.0"
+          },
+          "fixity": {
+            "const": "sha256"
+          },
+          "events": {
+            "const": "PREMIS-3.0-semantic-mapping"
+          },
+          "provenance": {
+            "const": "PROV-O-JSON-LD"
+          },
+          "originals": {
+            "const": "authoritative-immutable-bytes"
+          },
+          "primary_runtime": {
+            "const": "tablespec-python"
+          },
+          "qualification": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "schema_id",
+                "source_identity"
+              ],
+              "properties": {
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_identity": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "qualification": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      },
       "id": {
         "type": "string",
         "minLength": 1

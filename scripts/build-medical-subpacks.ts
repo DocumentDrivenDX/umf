@@ -6,7 +6,7 @@ import {generateDomainPackSchema} from '../src/domain-packs/schema';
 import {importTableSpec,exportTableSpec} from '../src/adapters/tablespec';
 import {ontology} from './domain-packs/ontology';
 
-const packVersion='1.1.0';
+const packVersion='1.2.0';
 const familyLabels:Record<string,string>={'medical-carrier':'Carrier: eligibility, claims and payments','medical-epidemiology':'Epidemiology','medical-imaging':'Imaging: DICOM and PACS metadata','medical-terminology':'Terminology'};
 const base='spec/domain-packs',check=process.argv.includes('--check');
 const validate=createValidator().compile(generateDomainPackSchema());
@@ -65,7 +65,7 @@ async function build(id:string,tables:MedicalTables,sources:Record<string,any>,q
  }
  await output(join(root,'ontology.json'),serialize(ontology(id,nativeSpecs)));
  schemas.push({id:'ontology',format:'umf',reference:'ontology.json'});
- const pack={id,version:packVersion,family:{id:'medical',version:packVersion,label:familyLabels[id]},execution_profile:{version:'1.0.0',targets:{tabular:nativeSpecs.map(s=>s.table_name),graph:['ontology']},mode:'fixed',include_sources:Object.keys(sources).filter(k=>!sources[k].reference.includes(':')),qualification:'Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim.'},description:'Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.',
+ const pack={...(id==='medical-imaging'?{artifact_collections:[{version:'1.0.0',id:'dicom-originals',title:'DICOM original instances',view:'imaging',semantic_kinds:['DICOM_instance'],source_ids:['dicom_binary','tcia_binary'],media_types:['application/dicom'],metadata_schema_ids:['instances'],derived_schema_ids:['attributes'],ontology_schema_ids:['ontology'],description:'Original Part 10 bytes; DICOM JSON and attribute tables are separate projections. Selected instances only; no complete study, pixel decoding or live PACS qualification.',identity:{description:'Source-declared Study, Series and SOP Instance UIDs; no inferred patient identity.',fields:['StudyInstanceUID','SeriesInstanceUID','SOPInstanceUID']},grouping:{description:'Selected instances may belong to a series; full series completeness is not asserted.'}}]}:{}),id,version:packVersion,family:{id:'medical',version:packVersion,label:familyLabels[id]},execution_profile:{version:'1.0.0',targets:{tabular:nativeSpecs.map(s=>s.table_name),graph:['ontology']},mode:'fixed',include_sources:Object.keys(sources).filter(k=>!sources[k].reference.includes(':')),qualification:'Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim.'},description:'Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.',
   domain_types:{source_qualified_identity:{description:'Source namespace and native identity; no inferred patient identity.'},exact_native_literal:{description:'Numeric and temporal source spelling retained as text.'}},
   schemas,sources,source_bindings,csv_conventions:{encoding:'UTF-8',null_value:'\\N',header:true,quote:'"'},fixture_counts,qualification};
  if(!validate(pack))throw Error('Invalid generated metadata: '+JSON.stringify(validate.errors));

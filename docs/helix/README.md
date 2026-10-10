@@ -1220,3 +1220,11 @@ The [document research tools 1.0.0](05-deploy/document-research.md) publish Supr
 batching/acquisition configuration, SEC qualification harness and scoped local
 Spark evidence. Original local-use archives are excluded; live SEC/Databricks
 qualification remains pending. CONTRACT-060 governs the source mirror.
+
+## Artifact collections
+
+[CONTRACT-061](02-design/contracts/CONTRACT-061-artifact-collections.md) defines
+first-class source artifact collections and Documents/Imaging/Other browser views.
+The [plan](04-build/artifact-collections-plan.md) and
+[evidence](04-build/evidence/artifact-collections.md) qualify reference validation,
+rights-aware download links and the updated packs.

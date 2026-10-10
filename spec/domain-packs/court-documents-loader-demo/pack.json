@@ -1,6 +1,26 @@
 {
+  "artifact_collections": [
+    {
+      "version": "1.0.0",
+      "id": "selected-originals",
+      "title": "Operator-selected originals",
+      "view": "documents",
+      "semantic_kinds": [
+        "court_document"
+      ],
+      "source_ids": [],
+      "loader_inventory_source_id": "inventory",
+      "media_types": [
+        "application/pdf",
+        "text/html",
+        "application/json",
+        "text/plain"
+      ],
+      "description": "Empty acquisition inventory; no collected originals are bundled."
+    }
+  ],
   "id": "court-documents-loader-demo",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Reusable court-documents loader companion; empty operator-selected inventory. No observed corpus or complete discovery claim.",
   "domain_types": {
     "source_document": {
