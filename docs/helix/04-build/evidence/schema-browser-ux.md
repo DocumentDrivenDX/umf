@@ -105,3 +105,43 @@ interactive roles and Back restoration alongside existing rights/network checks.
 Screenshots: [artifact inventory](schema-browser-ux/astra-artifacts.jpg),
 [ontology neighborhood](schema-browser-ux/astra-ontology.jpg),
 [filtered table](schema-browser-ux/astra-table.jpg).
+
+## Reusable browser package 1.0.0 (2026-10-10)
+
+Owner amendment PACK-09 distributes the same renderer as
+`@documentdrivendx/umf-schema-browser` 1.0.0. Framework-neutral `mountSchemaBrowser`
+accepts explicit entries/catalog URL and asset base, returns iframe/ready/destroy,
+and isolates hash routes, CSS and instance state. A standalone empty-catalog page
+accepts local sources. Source strings remain inert JSON; download schemes refuse
+non-HTTP(S). The package contains software and no public source corpus.
+
+Owner explicitly selected dual MIT/Apache-2.0 licensing. Both texts ship together;
+actual bundled dependency license/notice texts are generated from Bun's input
+metafile, with two pinned upstream fallbacks and retained source copyright/BSD
+headers. Missing unrecognized notices fail the build.
+
+Clean consumer installed the npm tarball offline with no dependencies or scripts.
+Actual Chromium UI checks confirmed Claims field navigation and filter return,
+parent state/hash unchanged, second archaeology model still 22 records/28 edges,
+SEC artifact filter returning 2/100 rows, and destruction leaving one functioning
+instance. Base background is rgb(244,241,233). Real-browser checks exposed and
+resolved fragment links inheriting the parent base URL and font-import stripping
+that swallowed CSS; regression checks cover both. No external fonts are required.
+CI also qualifies tarball installation, local-only requests, standalone local
+source inspection and page-error absence before website publication.
+
+The distribution is an installable GitHub release tarball; npm registry
+publication is not claimed. Consumers host static assets with HTTP(S), appropriate
+module MIME types and CSP/CORS permissions. No PDF/DICOM rendering, collector,
+reasoning or native semantic support is added. Full browser engine portability
+beyond the qualified Chromium run remains unmeasured.
+
+Package qualification evidence: GitHub run 38084718940 on
+5ae947229d07f236a3ced65d21a467604843fda8 passed 93 domain-pack tests,
+14 installed-package Chromium checks and the existing 37 artifact/browser checks
+(Chromium 153.0.8010.12), with no external data/corpus requests. Its deploy gate
+refused the new unsigned reuse-guide page. The guide now has a retained Innsigle
+attestation; rebuilding the page and verifying all six page claims passed locally.
+The initial new package step also exposed Chromium installation ordering, corrected
+before the qualified run. Final deployment is independently checked after these
+publication corrections; earlier partial runs are not reported as full success.

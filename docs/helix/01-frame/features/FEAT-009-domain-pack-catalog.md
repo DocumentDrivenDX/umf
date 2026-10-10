@@ -45,6 +45,8 @@ Example schemas and fake values alone leave relationships, semantic rules and co
 
 - PACK-08: The browser presents a compact, responsive workspace with readable display labels and exact identifiers, adequate field widths, searchable field details, and explicit links between tables, ontology and source artifacts. Structured technical metadata uses progressive disclosure; original metadata and material qualifications remain accessible.
 
+- PACK-09: Distribute the schema browser as an independently versioned reusable software package. Consumers can host the assets and mount the same tables, artifact and ontology views with their own catalog, without a UMF microsite dependency or end-user Bun runtime. Embed routing and styles remain isolated; original metadata and rights guarantees apply unchanged.
+
 ## User Stories
 
 - [US-060: Reuse a domain pack across schema and dataset tooling](../user-stories/US-060-domain-pack-catalog.md).
