@@ -41,3 +41,8 @@ No live PACS, full DICOM series/study, pixel decoding or live Databricks claims
 are added. Loader companion 1.0.0 and preservation 1.0.0 stay unchanged. Existing
 loader state pins pack metadata; refreshed pack versions require fresh state.
 Generated archives remain consumer-local, not release artifacts.
+
+Publication integration: concurrent main commit e44cd15f (bounded core evolution)
+was merged while preserving both exports. Integrated typecheck/build passed;
+20 core-evolution/artifact tests passed (71 assertions), all 367 audited schemas
+passed, and the rebuilt installed wheel again passed 43 Python tests.
