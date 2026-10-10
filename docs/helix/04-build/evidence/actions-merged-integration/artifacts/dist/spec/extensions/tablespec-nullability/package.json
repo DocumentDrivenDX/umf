@@ -1,0 +1,86 @@
+{
+  "id": "umf.tablespec.nullability",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Retained profile, context and absence-carrier scope for a TableSpec availability observation; not native execution or equivalence",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:tablespec:nullability-binding:1.0.0",
+    "title": "Retained TableSpec availability binding scope",
+    "type": "object",
+    "required": [
+      "origin",
+      "binding",
+      "profile",
+      "context",
+      "carrier",
+      "interpretation",
+      "nativePath"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.tablespec.nullability",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "runtime-model",
+          "checked-schema",
+          "unresolved"
+        ]
+      },
+      "context": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "carrier": {
+        "enum": [
+          "null-value",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-041 TableSpec up-classification; core 0.3.0 ideal label is qualified by this retained scope. Unknown refinements must remain attached.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "TableSpec",
+      "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee"
+    },
+    "evidence": [
+      "tests/core-ideals/nullability-tablespec.test.ts",
+      "fixtures/validation/nullability-tablespec-profile-native.json"
+    ]
+  }
+}

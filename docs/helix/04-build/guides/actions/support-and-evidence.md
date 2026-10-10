@@ -2,7 +2,22 @@
 
 The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.
 
-## Recorded qualification
+## Current integrated qualification
+
+The current [merged acceptance certificate](../../evidence/actions-integrated-certification.md) qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its [machine-readable certificate](../../evidence/actions-integrated-certification.json) and [independent audit](../../evidence/actions-merged-integration/audit.json) bind the actual commands, inputs, runtime versions and retained results.
+
+- Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.
+- Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.
+- Public browser interpretation: 44 cases with Bun parity. The tutorial observes commit, SQL rollback, durable refusal and replay, query visibility and revoked-replay denial.
+- Integration checks: 371 schemas, 63 extension packages, type and browser builds, 43 Python tests, CSV controls and five affected browser integrations.
+- Bounded design checks: 22 SMT outcomes and 13 TLC runs using the pinned public Java runtime. These check the stated model bounds, not arbitrary deployments.
+- All 21 action acceptance criteria have executed passing witnesses. Seven audit controls reject omitted or forged inputs and invalid execution claims.
+
+The [immutable strict baseline](../../evidence/actions-documentation/qualification-integrated-5be80ab9/README.md) separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source `5be80ab9`. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.
+
+Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.
+
+## Historical qualification
 
 - Core document version: 0.8.0. Action extension: umf.actions 0.1.0.
 - Portable declarations: public registration, authoring, inspection, editing and profile comparison; 54 portable tests in the recorded campaign.

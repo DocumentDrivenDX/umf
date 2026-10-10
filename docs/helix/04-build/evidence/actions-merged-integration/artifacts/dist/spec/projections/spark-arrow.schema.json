@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:spark-arrow:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestampUtc": {
+          "type": "boolean"
+        },
+        "largeTypes": {
+          "type": "boolean"
+        },
+        "rejectNestedDuplicates": {
+          "type": "boolean"
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "timestampUtc",
+        "largeTypes",
+        "rejectNestedDuplicates",
+        "lossPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "loss",
+              "unsupported",
+              "representation-change"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    }
+  },
+  "required": [
+    "status",
+    "complete",
+    "source",
+    "policy",
+    "issues"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {}
+        },
+        "required": [
+          "target"
+        ]
+      },
+      "else": {
+        "not": {
+          "properties": {
+            "target": {}
+          },
+          "required": [
+            "target"
+          ]
+        }
+      }
+    }
+  ]
+}

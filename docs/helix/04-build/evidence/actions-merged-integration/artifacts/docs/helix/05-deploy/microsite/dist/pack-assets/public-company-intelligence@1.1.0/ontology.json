@@ -1,0 +1,2456 @@
+{
+  "umf": "0.8.0",
+  "id": "urn:umf:domain:public-company-intelligence",
+  "title": "public-company-intelligence ontology",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "domain",
+      "namespace": "urn:umf:domain:public-company-intelligence:",
+      "elements": [
+        {
+          "id": "companies",
+          "kind": "record",
+          "name": "companies",
+          "title": "companies",
+          "description": "Public-company intelligence companies; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "companies.id"
+            },
+            {
+              "module": "domain",
+              "element": "companies.name"
+            },
+            {
+              "module": "domain",
+              "element": "companies.source_id"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "companies.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "companies.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "companies.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "companies.name",
+          "name": "name",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "companies.name; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "companies.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "companies.source_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "identifiers",
+          "kind": "record",
+          "name": "identifiers",
+          "title": "identifiers",
+          "description": "Public-company intelligence identifiers; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "identifiers.id"
+            },
+            {
+              "module": "domain",
+              "element": "identifiers.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "identifiers.scheme"
+            },
+            {
+              "module": "domain",
+              "element": "identifiers.native_value"
+            },
+            {
+              "module": "domain",
+              "element": "identifiers.source_id"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "identifiers.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "identifiers.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "identifiers.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "identifiers.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "identifiers.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "identifiers.scheme",
+          "name": "scheme",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "identifiers.scheme; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "identifiers.native_value",
+          "name": "native_value",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "identifiers.native_value; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "identifiers.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "identifiers.source_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "universes",
+          "kind": "record",
+          "name": "universes",
+          "title": "universes",
+          "description": "Public-company intelligence universes; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "universes.id"
+            },
+            {
+              "module": "domain",
+              "element": "universes.title"
+            },
+            {
+              "module": "domain",
+              "element": "universes.membership_basis"
+            },
+            {
+              "module": "domain",
+              "element": "universes.window_start"
+            },
+            {
+              "module": "domain",
+              "element": "universes.window_end"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "universes.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "universes.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "universes.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "universes.title",
+          "name": "title",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "universes.title; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "universes.membership_basis",
+          "name": "membership_basis",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "universes.membership_basis; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "universes.window_start",
+          "name": "window_start",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "universes.window_start; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "universes.window_end",
+          "name": "window_end",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "universes.window_end; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "memberships",
+          "kind": "record",
+          "name": "memberships",
+          "title": "memberships",
+          "description": "Public-company intelligence memberships; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "memberships.id"
+            },
+            {
+              "module": "domain",
+              "element": "memberships.universe_id"
+            },
+            {
+              "module": "domain",
+              "element": "memberships.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "memberships.selected_at"
+            },
+            {
+              "module": "domain",
+              "element": "memberships.basis"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "memberships.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "memberships.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "memberships.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "memberships.universe_id",
+          "name": "universe_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "memberships.universe_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "memberships.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "memberships.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "memberships.selected_at",
+          "name": "selected_at",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "memberships.selected_at; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "memberships.basis",
+          "name": "basis",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "memberships.basis; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots",
+          "kind": "record",
+          "name": "source_snapshots",
+          "title": "source_snapshots",
+          "description": "Public-company intelligence source_snapshots; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "source_snapshots.id"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.kind"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.reference"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.upstream_url"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.sha256"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.retrieved_at"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.coverage"
+            },
+            {
+              "module": "domain",
+              "element": "source_snapshots.upstream_source_id"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "source_snapshots.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "source_snapshots.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.kind",
+          "name": "kind",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.kind; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.reference",
+          "name": "reference",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.reference; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.upstream_url",
+          "name": "upstream_url",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.upstream_url; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.sha256",
+          "name": "sha256",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.sha256; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.retrieved_at",
+          "name": "retrieved_at",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.retrieved_at; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.coverage",
+          "name": "coverage",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source_snapshots.coverage; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "source_snapshots.upstream_source_id",
+          "name": "upstream_source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "source_snapshots.upstream_source_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings",
+          "kind": "record",
+          "name": "filings",
+          "title": "filings",
+          "description": "Public-company intelligence filings; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "filings.id"
+            },
+            {
+              "module": "domain",
+              "element": "filings.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "filings.snapshot_id"
+            },
+            {
+              "module": "domain",
+              "element": "filings.accession"
+            },
+            {
+              "module": "domain",
+              "element": "filings.filing_date"
+            },
+            {
+              "module": "domain",
+              "element": "filings.report_date"
+            },
+            {
+              "module": "domain",
+              "element": "filings.form"
+            },
+            {
+              "module": "domain",
+              "element": "filings.items"
+            },
+            {
+              "module": "domain",
+              "element": "filings.primary_document"
+            },
+            {
+              "module": "domain",
+              "element": "filings.primary_url"
+            },
+            {
+              "module": "domain",
+              "element": "filings.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "filings.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "filings.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "filings.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.snapshot_id",
+          "name": "snapshot_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.snapshot_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.accession",
+          "name": "accession",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.accession; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.filing_date",
+          "name": "filing_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.filing_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.report_date",
+          "name": "report_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "filings.report_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.form",
+          "name": "form",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.form; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.items",
+          "name": "items",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "filings.items; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.primary_document",
+          "name": "primary_document",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "filings.primary_document; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.primary_url",
+          "name": "primary_url",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "filings.primary_url; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.native_path; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "filings.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "filings.native_json; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents",
+          "kind": "record",
+          "name": "documents",
+          "title": "documents",
+          "description": "Public-company intelligence documents; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "documents.id"
+            },
+            {
+              "module": "domain",
+              "element": "documents.filing_id"
+            },
+            {
+              "module": "domain",
+              "element": "documents.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "documents.native_url"
+            },
+            {
+              "module": "domain",
+              "element": "documents.availability"
+            },
+            {
+              "module": "domain",
+              "element": "documents.format"
+            },
+            {
+              "module": "domain",
+              "element": "documents.extraction_status"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "documents.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "documents.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "documents.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.filing_id",
+          "name": "filing_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "documents.filing_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "documents.source_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.native_url",
+          "name": "native_url",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "documents.native_url; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.availability",
+          "name": "availability",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "documents.availability; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.format",
+          "name": "format",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "documents.format; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "documents.extraction_status",
+          "name": "extraction_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "documents.extraction_status; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations",
+          "kind": "record",
+          "name": "financial_observations",
+          "title": "financial_observations",
+          "description": "Public-company intelligence financial_observations; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "financial_observations.id"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.snapshot_id"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.taxonomy"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.concept"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.unit"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.ordinal"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.value"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.value_state"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.start_date"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.end_date"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.accession"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.filed_date"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.form"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.fiscal_year"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.fiscal_period"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.frame"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.native_json"
+            },
+            {
+              "module": "domain",
+              "element": "financial_observations.concept_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "financial_observations.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.snapshot_id",
+          "name": "snapshot_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.snapshot_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.taxonomy",
+          "name": "taxonomy",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.taxonomy; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.concept",
+          "name": "concept",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.concept; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.unit",
+          "name": "unit",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.unit; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.ordinal",
+          "name": "ordinal",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.ordinal; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.value",
+          "name": "value",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.value; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.value_state",
+          "name": "value_state",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.value_state; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.start_date",
+          "name": "start_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.start_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.end_date",
+          "name": "end_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.end_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.accession",
+          "name": "accession",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.accession; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.filed_date",
+          "name": "filed_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.filed_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.form",
+          "name": "form",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.form; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.fiscal_year",
+          "name": "fiscal_year",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.fiscal_year; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.fiscal_period",
+          "name": "fiscal_period",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.fiscal_period; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.frame",
+          "name": "frame",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "financial_observations.frame; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.native_path; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.native_json; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "financial_observations.concept_json",
+          "name": "concept_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "financial_observations.concept_json; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events",
+          "kind": "record",
+          "name": "business_events",
+          "title": "business_events",
+          "description": "Public-company intelligence business_events; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "business_events.id"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.filing_id"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.event_kind"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.evidence_basis"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.reported_at"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.event_date"
+            },
+            {
+              "module": "domain",
+              "element": "business_events.native_item"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "business_events.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "business_events.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.filing_id",
+          "name": "filing_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.filing_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.event_kind",
+          "name": "event_kind",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.event_kind; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.evidence_basis",
+          "name": "evidence_basis",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.evidence_basis; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.reported_at",
+          "name": "reported_at",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.reported_at; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.event_date",
+          "name": "event_date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "business_events.event_date; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "business_events.native_item",
+          "name": "native_item",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "business_events.native_item; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions",
+          "kind": "record",
+          "name": "signal_definitions",
+          "title": "signal_definitions",
+          "description": "Public-company intelligence signal_definitions; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "signal_definitions.id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_definitions.version"
+            },
+            {
+              "module": "domain",
+              "element": "signal_definitions.title"
+            },
+            {
+              "module": "domain",
+              "element": "signal_definitions.method"
+            },
+            {
+              "module": "domain",
+              "element": "signal_definitions.meaning"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "signal_definitions.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_definitions.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions.version",
+          "name": "version",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_definitions.version; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions.title",
+          "name": "title",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_definitions.title; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions.method",
+          "name": "method",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_definitions.method; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_definitions.meaning",
+          "name": "meaning",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_definitions.meaning; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations",
+          "kind": "record",
+          "name": "signal_observations",
+          "title": "signal_observations",
+          "description": "Public-company intelligence signal_observations; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "signal_observations.id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.company_id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.event_id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.rule_id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.run_id"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.result"
+            },
+            {
+              "module": "domain",
+              "element": "signal_observations.evidence_basis"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "signal_observations.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.company_id",
+          "name": "company_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.company_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.event_id",
+          "name": "event_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.event_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.rule_id",
+          "name": "rule_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.rule_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.run_id",
+          "name": "run_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.run_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.result",
+          "name": "result",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.result; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "signal_observations.evidence_basis",
+          "name": "evidence_basis",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "signal_observations.evidence_basis; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses",
+          "kind": "record",
+          "name": "opportunity_hypotheses",
+          "title": "opportunity_hypotheses",
+          "description": "Public-company intelligence opportunity_hypotheses; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.id"
+            },
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.signal_id"
+            },
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.run_id"
+            },
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.interpretation"
+            },
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.review_status"
+            },
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses.offering_scope"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "opportunity_hypotheses.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.signal_id",
+          "name": "signal_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.signal_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.run_id",
+          "name": "run_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.run_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.interpretation",
+          "name": "interpretation",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.interpretation; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.review_status",
+          "name": "review_status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.review_status; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "opportunity_hypotheses.offering_scope",
+          "name": "offering_scope",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "opportunity_hypotheses.offering_scope; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs",
+          "kind": "record",
+          "name": "analysis_runs",
+          "title": "analysis_runs",
+          "description": "Public-company intelligence analysis_runs; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "analysis_runs.id"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.method"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.version"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.model_id"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.prompt_version"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.source_revision"
+            },
+            {
+              "module": "domain",
+              "element": "analysis_runs.analyzed_at"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "analysis_runs.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "analysis_runs.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.method",
+          "name": "method",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "analysis_runs.method; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.version",
+          "name": "version",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "analysis_runs.version; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.model_id",
+          "name": "model_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "analysis_runs.model_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.prompt_version",
+          "name": "prompt_version",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "analysis_runs.prompt_version; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.source_revision",
+          "name": "source_revision",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "analysis_runs.source_revision; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "analysis_runs.analyzed_at",
+          "name": "analyzed_at",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "analysis_runs.analyzed_at; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links",
+          "kind": "record",
+          "name": "evidence_links",
+          "title": "evidence_links",
+          "description": "Public-company intelligence evidence_links; source/context and interpretation qualifications apply.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "evidence_links.id"
+            },
+            {
+              "module": "domain",
+              "element": "evidence_links.signal_id"
+            },
+            {
+              "module": "domain",
+              "element": "evidence_links.filing_id"
+            },
+            {
+              "module": "domain",
+              "element": "evidence_links.snapshot_id"
+            },
+            {
+              "module": "domain",
+              "element": "evidence_links.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "evidence_links.citation_kind"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "evidence_links.id"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.signal_id",
+          "name": "signal_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.signal_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.filing_id",
+          "name": "filing_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.filing_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.snapshot_id",
+          "name": "snapshot_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.snapshot_id; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.native_path; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        },
+        {
+          "id": "evidence_links.citation_kind",
+          "name": "citation_kind",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "evidence_links.citation_kind; exact source literal or explicitly authored research metadata.",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "companies.source_id",
+          "name": "companies.source_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "companies"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "identifiers.company_id",
+          "name": "identifiers.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "identifiers"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "identifiers.source_id",
+          "name": "identifiers.source_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "identifiers"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "memberships.universe_id",
+          "name": "memberships.universe_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "memberships"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "universes",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "memberships.company_id",
+          "name": "memberships.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "memberships"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "source_snapshots.company_id",
+          "name": "source_snapshots.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "source_snapshots"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "source_snapshots.upstream_source_id",
+          "name": "source_snapshots.upstream_source_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "source_snapshots"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "filings.company_id",
+          "name": "filings.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "filings"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "filings.snapshot_id",
+          "name": "filings.snapshot_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "filings"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "documents.filing_id",
+          "name": "documents.filing_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "documents"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "filings",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "documents.source_id",
+          "name": "documents.source_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "documents"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "financial_observations.company_id",
+          "name": "financial_observations.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "financial_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "financial_observations.snapshot_id",
+          "name": "financial_observations.snapshot_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "financial_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "business_events.company_id",
+          "name": "business_events.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "business_events"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "business_events.filing_id",
+          "name": "business_events.filing_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "business_events"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "filings",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "signal_observations.company_id",
+          "name": "signal_observations.company_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "signal_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "companies",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "signal_observations.event_id",
+          "name": "signal_observations.event_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "signal_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "business_events",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "signal_observations.rule_id",
+          "name": "signal_observations.rule_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "signal_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "signal_definitions",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "signal_observations.run_id",
+          "name": "signal_observations.run_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "signal_observations"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "analysis_runs",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "opportunity_hypotheses.signal_id",
+          "name": "opportunity_hypotheses.signal_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "signal_observations",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "opportunity_hypotheses.run_id",
+          "name": "opportunity_hypotheses.run_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "opportunity_hypotheses"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "analysis_runs",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "evidence_links.signal_id",
+          "name": "evidence_links.signal_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "evidence_links"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "signal_observations",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "evidence_links.filing_id",
+          "name": "evidence_links.filing_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "evidence_links"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "filings",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "evidence_links.snapshot_id",
+          "name": "evidence_links.snapshot_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "evidence_links"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "source_snapshots",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:hybrid-values:0.1.0",
+  "description": "Internal raw hybrid decoder result; no automatic handling of level or dictionary prefixes",
+  "type": "object",
+  "required": [
+    "values",
+    "consumedBytes",
+    "padding"
+  ],
+  "properties": {
+    "values": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      }
+    },
+    "consumedBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 8388608
+    },
+    "padding": {
+      "type": "array",
+      "maxItems": 7,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      }
+    }
+  },
+  "additionalProperties": false
+}

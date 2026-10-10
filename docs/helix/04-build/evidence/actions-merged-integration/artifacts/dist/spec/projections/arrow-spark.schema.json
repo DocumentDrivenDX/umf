@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:arrow-spark:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "id",
+        "preferTimestampNtz",
+        "variant",
+        "lossPolicy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preferTimestampNtz": {
+          "type": "boolean"
+        },
+        "variant": {
+          "enum": [
+            "spark-tagged-struct",
+            "preserve-struct"
+          ]
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "loss",
+              "unsupported",
+              "representation-change"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    }
+  },
+  "required": [
+    "status",
+    "complete",
+    "source",
+    "policy",
+    "issues"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {}
+        },
+        "required": [
+          "target"
+        ]
+      },
+      "else": {
+        "not": {
+          "properties": {
+            "target": {}
+          },
+          "required": [
+            "target"
+          ]
+        }
+      }
+    }
+  ]
+}

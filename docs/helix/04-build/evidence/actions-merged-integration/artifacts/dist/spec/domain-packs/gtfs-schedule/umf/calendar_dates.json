@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "table_name": "calendar_dates",
+  "description": "Service additions/removals; do not force every service into calendar.",
+  "columns": [
+    {
+      "name": "service_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Service identifier, including dates-only service.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "YYYYMMDD spelling.",
+      "domain_type": "gtfs_date"
+    },
+    {
+      "name": "exception_type",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "1 adds service; 2 removes service."
+    }
+  ],
+  "primary_key": [
+    "service_id",
+    "date"
+  ]
+}

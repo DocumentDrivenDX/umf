@@ -10,7 +10,19 @@
 <a href="support-and-evidence.html" aria-current="page">Check support and evidence</a>
 <a href="glossary.html">Words used in this guide</a></nav></aside><main id="content"><h1 id="check-support-and-evidence">Check support and evidence</h1>
 <p>The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.</p>
-<h2 id="recorded-qualification">Recorded qualification</h2>
+<h2 id="current-integrated-qualification">Current integrated qualification</h2>
+<p>The current <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.md">merged acceptance certificate</a> qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source <code>1fa21f6ea1d7a3e1009746da99f1a61d444cd489</code>. Its <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.json">machine-readable certificate</a> and <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-merged-integration/audit.json">independent audit</a> bind the actual commands, inputs, runtime versions and retained results.</p>
+<ul>
+<li>Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.</li>
+<li>Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.</li>
+<li>Public browser interpretation: 44 cases with Bun parity. The tutorial observes commit, SQL rollback, durable refusal and replay, query visibility and revoked-replay denial.</li>
+<li>Integration checks: 371 schemas, 63 extension packages, type and browser builds, 43 Python tests, CSV controls and five affected browser integrations.</li>
+<li>Bounded design checks: 22 SMT outcomes and 13 TLC runs using the pinned public Java runtime. These check the stated model bounds, not arbitrary deployments.</li>
+<li>All 21 action acceptance criteria have executed passing witnesses. Seven audit controls reject omitted or forged inputs and invalid execution claims.</li>
+</ul>
+<p>The <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-documentation/qualification-integrated-5be80ab9/README.md">immutable strict baseline</a> separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source <code>5be80ab9</code>. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.</p>
+<p>Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.</p>
+<h2 id="historical-qualification">Historical qualification</h2>
 <ul>
 <li>Core document version: 0.8.0. Action extension: umf.actions 0.1.0.</li>
 <li>Portable declarations: public registration, authoring, inspection, editing and profile comparison; 54 portable tests in the recorded campaign.</li>
@@ -32,4 +44,4 @@
 <p>Public comparisons with Palantir, Smithy, Dafny, Koka, Axon, Cedar and Temporal informed design choices. No connected Palantir tenant or those action runtimes was exercised. They are not interchangeable implementations of this protocol.</p>
 <h2 id="predict-the-result">Predict the result</h2>
 <p>If a profile supplies an evidence URL for every obligation and declaredCompatible becomes true, has UMF verified execution?</p>
-<p>Answer: no. Locators are inert strings. executionVerified remains false. Runtime qualification is separate.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"f61599c04956df69c4334299a20ff4d12a4d0681c157a7541b9efb4af82131cf"}</script></body></html>
+<p>Answer: no. Locators are inert strings. executionVerified remains false. Runtime qualification is separate.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"75ce46bbce180739cecba648223446f8c7d8c7c225d433b27328899971f0657c"}</script></body></html>

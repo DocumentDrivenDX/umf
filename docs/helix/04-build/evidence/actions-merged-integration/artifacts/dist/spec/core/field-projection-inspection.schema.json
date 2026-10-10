@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:field-projection-inspection:1.0.0",
+  "title": "Verified common authored Field projection metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "receipt",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "inspect-field-projection"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "receipt": {
+      "oneOf": [
+        {
+          "$ref": "urn:umf:core:field-tablespec-projection:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:field-postgresql-projection:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:field-sqlserver-projection:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:field-avro-projection:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:field-parquet-projection:1.0.0"
+        }
+      ]
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "binding",
+        "basis",
+        "outcome"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string"
+        },
+        "nativePath": {
+          "type": "string"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "version",
+            "nativeVersion",
+            "subset"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "nativeVersion": {
+              "type": "string"
+            },
+            "subset": {
+              "type": "string"
+            }
+          }
+        },
+        "basis": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "nativeType"
+          ],
+          "properties": {
+            "kind": {
+              "const": "explicit-native-carrier"
+            },
+            "nativeType": {
+              "type": "string"
+            }
+          }
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourcePath",
+          "sourceValue",
+          "targetPath",
+          "outcome",
+          "reason",
+          "binding",
+          "recovery"
+        ],
+        "properties": {
+          "sourcePath": {
+            "type": "string"
+          },
+          "sourceValue": {},
+          "targetPath": {
+            "type": "null"
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "version",
+              "nativeVersion",
+              "subset"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "nativeVersion": {
+                "type": "string"
+              },
+              "subset": {
+                "type": "string"
+              }
+            }
+          },
+          "recovery": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "strategy",
+              "receiptPath",
+              "instruction"
+            ],
+            "properties": {
+              "strategy": {
+                "const": "retained-receipt"
+              },
+              "receiptPath": {
+                "const": "/receipt/source"
+              },
+              "instruction": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://umf.dev/extensions/postgresql-catalog/cardinality-v1.schema.json",
+  "description": "Bounded PostgreSQL type relationship observations; no inferred core cardinality or enforcement claim.",
+  "type": "object",
+  "required": [
+    "profile",
+    "version",
+    "serverVersion",
+    "columns",
+    "types"
+  ],
+  "properties": {
+    "profile": {
+      "const": "postgresql-cardinality-catalog"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "serverVersion": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema",
+          "relation",
+          "name",
+          "ordinal",
+          "declaredDimensions",
+          "type"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "ordinal": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "declaredDimensions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "$ref": "#/$defs/identity"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "identity",
+          "kind",
+          "category",
+          "element",
+          "base",
+          "standardArray"
+        ],
+        "properties": {
+          "identity": {
+            "$ref": "#/$defs/identity"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "element": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/identity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "base": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/identity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "standardArray": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": [
+        "schema",
+        "name"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

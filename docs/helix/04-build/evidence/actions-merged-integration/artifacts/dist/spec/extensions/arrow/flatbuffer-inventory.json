@@ -1,0 +1,1119 @@
+{
+  "source": {
+    "repository": "https://github.com/apache/arrow",
+    "tag": "apache-arrow-21.0.0",
+    "commit": "ee4d09ebef61c663c1efbfa4c18e518a03b798be",
+    "files": {
+      "Schema.fbs": "e46bc54638a2de387113ae658861428d705fa90cadcc1d4def6113d9e406d6f8",
+      "Message.fbs": "32a1464cede1b90d1351faf65726d465d95fbf3a85bd96e2d7222ac979fe20e4",
+      "File.fbs": "646bf4e173192900f64c08823b67f5e0a8c2cbcd2d48c83f8b42faa864ab8087",
+      "Tensor.fbs": "0ea5297a55f8ad00b125a98314f616c2c6249351bdbfea8f429913255b2a07f7",
+      "SparseTensor.fbs": "4a340d4ed601fb1c3cb1d60c2bdb139bffa446c0f2c7d7e9fde5a28949075266",
+      "LICENSE.txt": "82f5f9b0e6592da7f79022fc930add132a76c56727d29813f94058157a2b2d11",
+      "NOTICE.txt": "c946470d6b024c77feebdfb686bf92a828402c0ffc27c769bca7d8bef08e1db7"
+    }
+  },
+  "definitions": [
+    {
+      "kind": "enum",
+      "name": "MetadataVersion",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "V1",
+          "value": 0
+        },
+        {
+          "name": "V2",
+          "value": 1
+        },
+        {
+          "name": "V3",
+          "value": 2
+        },
+        {
+          "name": "V4",
+          "value": 3
+        },
+        {
+          "name": "V5",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "Feature",
+      "file": "Schema.fbs",
+      "base": "long",
+      "members": [
+        {
+          "name": "UNUSED",
+          "value": 0
+        },
+        {
+          "name": "DICTIONARY_REPLACEMENT",
+          "value": 1
+        },
+        {
+          "name": "COMPRESSED_BODY",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Null",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "Struct_",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "List",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "LargeList",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "ListView",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "LargeListView",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "FixedSizeList",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "listSize",
+          "type": "int",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Map",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "keysSorted",
+          "type": "bool",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "UnionMode",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "Sparse",
+          "value": 0
+        },
+        {
+          "name": "Dense",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Union",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "mode",
+          "type": "UnionMode",
+          "required": false
+        },
+        {
+          "name": "typeIds",
+          "type": "[ int ]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Int",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "bitWidth",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "is_signed",
+          "type": "bool",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "Precision",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "HALF",
+          "value": 0
+        },
+        {
+          "name": "SINGLE",
+          "value": 1
+        },
+        {
+          "name": "DOUBLE",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "FloatingPoint",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "precision",
+          "type": "Precision",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Utf8",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "Binary",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "LargeUtf8",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "LargeBinary",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "Utf8View",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "BinaryView",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "FixedSizeBinary",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "byteWidth",
+          "type": "int",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Bool",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "RunEndEncoded",
+      "file": "Schema.fbs",
+      "fields": []
+    },
+    {
+      "kind": "table",
+      "name": "Decimal",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "precision",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "scale",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "bitWidth",
+          "type": "int",
+          "default": "128",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "DateUnit",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "DAY",
+          "value": 0
+        },
+        {
+          "name": "MILLISECOND",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Date",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "unit",
+          "type": "DateUnit",
+          "default": "MILLISECOND",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "TimeUnit",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "SECOND",
+          "value": 0
+        },
+        {
+          "name": "MILLISECOND",
+          "value": 1
+        },
+        {
+          "name": "MICROSECOND",
+          "value": 2
+        },
+        {
+          "name": "NANOSECOND",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Time",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "unit",
+          "type": "TimeUnit",
+          "default": "MILLISECOND",
+          "required": false
+        },
+        {
+          "name": "bitWidth",
+          "type": "int",
+          "default": "32",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Timestamp",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "unit",
+          "type": "TimeUnit",
+          "required": false
+        },
+        {
+          "name": "timezone",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "IntervalUnit",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "YEAR_MONTH",
+          "value": 0
+        },
+        {
+          "name": "DAY_TIME",
+          "value": 1
+        },
+        {
+          "name": "MONTH_DAY_NANO",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Interval",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "unit",
+          "type": "IntervalUnit",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Duration",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "unit",
+          "type": "TimeUnit",
+          "default": "MILLISECOND",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "union",
+      "name": "Type",
+      "file": "Schema.fbs",
+      "members": [
+        {
+          "name": "Null",
+          "value": 1
+        },
+        {
+          "name": "Int",
+          "value": 2
+        },
+        {
+          "name": "FloatingPoint",
+          "value": 3
+        },
+        {
+          "name": "Binary",
+          "value": 4
+        },
+        {
+          "name": "Utf8",
+          "value": 5
+        },
+        {
+          "name": "Bool",
+          "value": 6
+        },
+        {
+          "name": "Decimal",
+          "value": 7
+        },
+        {
+          "name": "Date",
+          "value": 8
+        },
+        {
+          "name": "Time",
+          "value": 9
+        },
+        {
+          "name": "Timestamp",
+          "value": 10
+        },
+        {
+          "name": "Interval",
+          "value": 11
+        },
+        {
+          "name": "List",
+          "value": 12
+        },
+        {
+          "name": "Struct_",
+          "value": 13
+        },
+        {
+          "name": "Union",
+          "value": 14
+        },
+        {
+          "name": "FixedSizeBinary",
+          "value": 15
+        },
+        {
+          "name": "FixedSizeList",
+          "value": 16
+        },
+        {
+          "name": "Map",
+          "value": 17
+        },
+        {
+          "name": "Duration",
+          "value": 18
+        },
+        {
+          "name": "LargeBinary",
+          "value": 19
+        },
+        {
+          "name": "LargeUtf8",
+          "value": 20
+        },
+        {
+          "name": "LargeList",
+          "value": 21
+        },
+        {
+          "name": "RunEndEncoded",
+          "value": 22
+        },
+        {
+          "name": "BinaryView",
+          "value": 23
+        },
+        {
+          "name": "Utf8View",
+          "value": 24
+        },
+        {
+          "name": "ListView",
+          "value": 25
+        },
+        {
+          "name": "LargeListView",
+          "value": 26
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "KeyValue",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "DictionaryKind",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "DenseArray",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "DictionaryEncoding",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "id",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "indexType",
+          "type": "Int",
+          "required": false
+        },
+        {
+          "name": "isOrdered",
+          "type": "bool",
+          "required": false
+        },
+        {
+          "name": "dictionaryKind",
+          "type": "DictionaryKind",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Field",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "nullable",
+          "type": "bool",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "Type",
+          "required": false
+        },
+        {
+          "name": "dictionary",
+          "type": "DictionaryEncoding",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "[ Field ]",
+          "required": false
+        },
+        {
+          "name": "custom_metadata",
+          "type": "[ KeyValue ]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "Endianness",
+      "file": "Schema.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "Little",
+          "value": 0
+        },
+        {
+          "name": "Big",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "Buffer",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "offset",
+          "type": "long",
+          "required": true
+        },
+        {
+          "name": "length",
+          "type": "long",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Schema",
+      "file": "Schema.fbs",
+      "fields": [
+        {
+          "name": "endianness",
+          "type": "Endianness",
+          "default": "Little",
+          "required": false
+        },
+        {
+          "name": "fields",
+          "type": "[Field]",
+          "required": false
+        },
+        {
+          "name": "custom_metadata",
+          "type": "[ KeyValue ]",
+          "required": false
+        },
+        {
+          "name": "features",
+          "type": "[ Feature ]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "FieldNode",
+      "file": "Message.fbs",
+      "fields": [
+        {
+          "name": "length",
+          "type": "long",
+          "required": true
+        },
+        {
+          "name": "null_count",
+          "type": "long",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "CompressionType",
+      "file": "Message.fbs",
+      "base": "byte",
+      "members": [
+        {
+          "name": "LZ4_FRAME",
+          "value": 0
+        },
+        {
+          "name": "ZSTD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "BodyCompressionMethod",
+      "file": "Message.fbs",
+      "base": "byte",
+      "members": [
+        {
+          "name": "BUFFER",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "BodyCompression",
+      "file": "Message.fbs",
+      "fields": [
+        {
+          "name": "codec",
+          "type": "CompressionType",
+          "default": "LZ4_FRAME",
+          "required": false
+        },
+        {
+          "name": "method",
+          "type": "BodyCompressionMethod",
+          "default": "BUFFER",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "RecordBatch",
+      "file": "Message.fbs",
+      "fields": [
+        {
+          "name": "length",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "nodes",
+          "type": "[FieldNode]",
+          "required": false
+        },
+        {
+          "name": "buffers",
+          "type": "[Buffer]",
+          "required": false
+        },
+        {
+          "name": "compression",
+          "type": "BodyCompression",
+          "required": false
+        },
+        {
+          "name": "variadicBufferCounts",
+          "type": "[long]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "DictionaryBatch",
+      "file": "Message.fbs",
+      "fields": [
+        {
+          "name": "id",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "RecordBatch",
+          "required": false
+        },
+        {
+          "name": "isDelta",
+          "type": "bool",
+          "default": "false",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "union",
+      "name": "MessageHeader",
+      "file": "Message.fbs",
+      "members": [
+        {
+          "name": "Schema",
+          "value": 1
+        },
+        {
+          "name": "DictionaryBatch",
+          "value": 2
+        },
+        {
+          "name": "RecordBatch",
+          "value": 3
+        },
+        {
+          "name": "Tensor",
+          "value": 4
+        },
+        {
+          "name": "SparseTensor",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Message",
+      "file": "Message.fbs",
+      "fields": [
+        {
+          "name": "version",
+          "type": "org.apache.arrow.flatbuf.MetadataVersion",
+          "required": false
+        },
+        {
+          "name": "header",
+          "type": "MessageHeader",
+          "required": false
+        },
+        {
+          "name": "bodyLength",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "custom_metadata",
+          "type": "[ KeyValue ]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Footer",
+      "file": "File.fbs",
+      "fields": [
+        {
+          "name": "version",
+          "type": "org.apache.arrow.flatbuf.MetadataVersion",
+          "required": false
+        },
+        {
+          "name": "schema",
+          "type": "org.apache.arrow.flatbuf.Schema",
+          "required": false
+        },
+        {
+          "name": "dictionaries",
+          "type": "[ Block ]",
+          "required": false
+        },
+        {
+          "name": "recordBatches",
+          "type": "[ Block ]",
+          "required": false
+        },
+        {
+          "name": "custom_metadata",
+          "type": "[ KeyValue ]",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "Block",
+      "file": "File.fbs",
+      "fields": [
+        {
+          "name": "offset",
+          "type": "long",
+          "required": true
+        },
+        {
+          "name": "metaDataLength",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "bodyLength",
+          "type": "long",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "TensorDim",
+      "file": "Tensor.fbs",
+      "fields": [
+        {
+          "name": "size",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "Tensor",
+      "file": "Tensor.fbs",
+      "fields": [
+        {
+          "name": "type",
+          "type": "Type",
+          "required": true
+        },
+        {
+          "name": "shape",
+          "type": "[TensorDim]",
+          "required": true
+        },
+        {
+          "name": "strides",
+          "type": "[long]",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "Buffer",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "SparseTensorIndexCOO",
+      "file": "SparseTensor.fbs",
+      "fields": [
+        {
+          "name": "indicesType",
+          "type": "Int",
+          "required": true
+        },
+        {
+          "name": "indicesStrides",
+          "type": "[long]",
+          "required": false
+        },
+        {
+          "name": "indicesBuffer",
+          "type": "Buffer",
+          "required": true
+        },
+        {
+          "name": "isCanonical",
+          "type": "bool",
+          "required": false
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "SparseMatrixCompressedAxis",
+      "file": "SparseTensor.fbs",
+      "base": "short",
+      "members": [
+        {
+          "name": "Row",
+          "value": 0
+        },
+        {
+          "name": "Column",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "SparseMatrixIndexCSX",
+      "file": "SparseTensor.fbs",
+      "fields": [
+        {
+          "name": "compressedAxis",
+          "type": "SparseMatrixCompressedAxis",
+          "required": false
+        },
+        {
+          "name": "indptrType",
+          "type": "Int",
+          "required": true
+        },
+        {
+          "name": "indptrBuffer",
+          "type": "Buffer",
+          "required": true
+        },
+        {
+          "name": "indicesType",
+          "type": "Int",
+          "required": true
+        },
+        {
+          "name": "indicesBuffer",
+          "type": "Buffer",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "SparseTensorIndexCSF",
+      "file": "SparseTensor.fbs",
+      "fields": [
+        {
+          "name": "indptrType",
+          "type": "Int",
+          "required": true
+        },
+        {
+          "name": "indptrBuffers",
+          "type": "[Buffer]",
+          "required": true
+        },
+        {
+          "name": "indicesType",
+          "type": "Int",
+          "required": true
+        },
+        {
+          "name": "indicesBuffers",
+          "type": "[Buffer]",
+          "required": true
+        },
+        {
+          "name": "axisOrder",
+          "type": "[int]",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "union",
+      "name": "SparseTensorIndex",
+      "file": "SparseTensor.fbs",
+      "members": [
+        {
+          "name": "SparseTensorIndexCOO",
+          "value": 1
+        },
+        {
+          "name": "SparseMatrixIndexCSX",
+          "value": 2
+        },
+        {
+          "name": "SparseTensorIndexCSF",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "name": "SparseTensor",
+      "file": "SparseTensor.fbs",
+      "fields": [
+        {
+          "name": "type",
+          "type": "Type",
+          "required": true
+        },
+        {
+          "name": "shape",
+          "type": "[TensorDim]",
+          "required": true
+        },
+        {
+          "name": "non_zero_length",
+          "type": "long",
+          "required": false
+        },
+        {
+          "name": "sparseIndex",
+          "type": "SparseTensorIndex",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "Buffer",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

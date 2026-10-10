@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:tablespec:0.1.0",
+  "type": "object",
+  "required": [
+    "profile",
+    "root",
+    "originalSource",
+    "originalFormat"
+  ],
+  "properties": {
+    "profile": {
+      "const": "tablespec-table-1"
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    },
+    "originalSource": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "originalFormat": {
+      "enum": [
+        "json",
+        "yaml"
+      ]
+    },
+    "splitFiles": {
+      "type": "object",
+      "required": [
+        "table.yaml"
+      ],
+      "minProperties": 2,
+      "maxProperties": 1000,
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 4000000
+      },
+      "properties": {
+        "table.yaml": {
+          "type": "string",
+          "maxLength": 4000000
+        }
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

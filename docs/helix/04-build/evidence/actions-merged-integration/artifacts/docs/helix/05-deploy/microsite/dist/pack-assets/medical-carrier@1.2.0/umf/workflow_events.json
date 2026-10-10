@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "table_name": "workflow_events",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "event_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "event key"
+    },
+    {
+      "name": "event_type",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "event type"
+    },
+    {
+      "name": "subject_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "subject key"
+    },
+    {
+      "name": "claim_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "claim key"
+    },
+    {
+      "name": "prior_event_key",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "prior event key"
+    },
+    {
+      "name": "date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "date"
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "status"
+    },
+    {
+      "name": "amount",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "amount"
+    },
+    {
+      "name": "currency",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "currency"
+    },
+    {
+      "name": "details_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "details json"
+    }
+  ],
+  "primary_key": [
+    "event_key"
+  ]
+}

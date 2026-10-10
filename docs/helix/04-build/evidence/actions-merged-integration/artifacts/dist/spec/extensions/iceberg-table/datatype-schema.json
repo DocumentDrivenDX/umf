@@ -1,0 +1,941 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:iceberg:table-json:0.1.0",
+  "type": "object",
+  "properties": {
+    "format-version": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647
+    }
+  },
+  "required": [
+    "format-version"
+  ],
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "format-version": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "table-uuid": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "last-sequence-number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "last-updated-ms": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "last-column-id": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "schema": {
+            "$ref": "#/$defs/Schema"
+          },
+          "schemas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Schema"
+            }
+          },
+          "current-schema-id": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "partition-spec": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PartitionField"
+            }
+          },
+          "partition-specs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PartitionSpec"
+            }
+          },
+          "default-spec-id": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "last-partition-id": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "current-snapshot-id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "int64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "snapshots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Snapshot"
+            }
+          },
+          "snapshot-log": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp-ms": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "snapshot-id": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "required": [
+                "timestamp-ms",
+                "snapshot-id"
+              ],
+              "additionalProperties": true
+            }
+          },
+          "metadata-log": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp-ms": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "metadata-file": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "timestamp-ms",
+                "metadata-file"
+              ],
+              "additionalProperties": true
+            }
+          },
+          "sort-orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/SortOrder"
+            }
+          },
+          "default-sort-order-id": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "refs": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/Ref"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "statistics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Statistics"
+            }
+          },
+          "partition-statistics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PartitionStatistics"
+            }
+          },
+          "next-row-id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "encryption-keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/EncryptionKey"
+            }
+          }
+        },
+        "required": [
+          "format-version",
+          "location",
+          "last-updated-ms",
+          "last-column-id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "const": 1
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "schema",
+          "partition-spec"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "enum": [
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "table-uuid",
+          "last-sequence-number",
+          "schemas",
+          "current-schema-id",
+          "partition-specs",
+          "default-spec-id",
+          "last-partition-id",
+          "sort-orders",
+          "default-sort-order-id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "const": 3
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "next-row-id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "enum": [
+              1,
+              2
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "partition-spec": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source-id": {}
+              },
+              "required": [
+                "source-id"
+              ]
+            }
+          },
+          "partition-specs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "source-id": {}
+                    },
+                    "required": [
+                      "source-id"
+                    ]
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": true
+            }
+          },
+          "sort-orders": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "source-id": {}
+                    },
+                    "required": [
+                      "source-id"
+                    ]
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "format-version": {
+            "enum": [
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "partition-spec": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field-id": {}
+              },
+              "required": [
+                "field-id"
+              ]
+            }
+          },
+          "partition-specs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field-id": {}
+                    },
+                    "required": [
+                      "field-id"
+                    ]
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "field": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "initial-default": {},
+        "write-default": {}
+      },
+      "required": [
+        "id",
+        "name",
+        "required",
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "type": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "struct"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/field"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "fields"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "element-id": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "element-required": {
+              "type": "boolean"
+            },
+            "element": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "type",
+            "element-id",
+            "element-required",
+            "element"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "map"
+            },
+            "key-id": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "key": {
+              "$ref": "#/$defs/type"
+            },
+            "value-id": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "value-required": {
+              "type": "boolean"
+            },
+            "value": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "type",
+            "key-id",
+            "key",
+            "value-id",
+            "value-required",
+            "value"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "struct",
+                  "list",
+                  "map"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "Schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "struct"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "schema-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "identifier-field-ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "type",
+        "fields"
+      ],
+      "additionalProperties": true
+    },
+    "PartitionField": {
+      "type": "object",
+      "properties": {
+        "source-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "source-ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "minItems": 1
+        },
+        "field-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "name": {
+          "type": "string"
+        },
+        "transform": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "transform"
+      ],
+      "additionalProperties": true,
+      "oneOf": [
+        {
+          "properties": {
+            "source-id": {},
+            "source-ids": {}
+          },
+          "required": [
+            "source-id"
+          ],
+          "not": {
+            "properties": {
+              "source-ids": {}
+            },
+            "required": [
+              "source-ids"
+            ]
+          }
+        },
+        {
+          "properties": {
+            "source-id": {},
+            "source-ids": {}
+          },
+          "required": [
+            "source-ids"
+          ],
+          "not": {
+            "properties": {
+              "source-id": {}
+            },
+            "required": [
+              "source-id"
+            ]
+          }
+        }
+      ]
+    },
+    "PartitionSpec": {
+      "type": "object",
+      "properties": {
+        "spec-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PartitionField"
+          }
+        }
+      },
+      "required": [
+        "spec-id",
+        "fields"
+      ],
+      "additionalProperties": true
+    },
+    "SortField": {
+      "type": "object",
+      "properties": {
+        "source-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "source-ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "minItems": 1
+        },
+        "transform": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "null-order": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "transform",
+        "direction",
+        "null-order"
+      ],
+      "additionalProperties": true,
+      "oneOf": [
+        {
+          "properties": {
+            "source-id": {},
+            "source-ids": {}
+          },
+          "required": [
+            "source-id"
+          ],
+          "not": {
+            "properties": {
+              "source-ids": {}
+            },
+            "required": [
+              "source-ids"
+            ]
+          }
+        },
+        {
+          "properties": {
+            "source-id": {},
+            "source-ids": {}
+          },
+          "required": [
+            "source-ids"
+          ],
+          "not": {
+            "properties": {
+              "source-id": {}
+            },
+            "required": [
+              "source-id"
+            ]
+          }
+        }
+      ]
+    },
+    "SortOrder": {
+      "type": "object",
+      "properties": {
+        "order-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SortField"
+          }
+        }
+      },
+      "required": [
+        "order-id",
+        "fields"
+      ],
+      "additionalProperties": true
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "parent-snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sequence-number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "timestamp-ms": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "manifest-list": {
+          "type": "string"
+        },
+        "manifests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "summary": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "schema-id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "first-row-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "added-rows": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "snapshot-id",
+        "timestamp-ms"
+      ],
+      "additionalProperties": true
+    },
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "min-snapshots-to-keep": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "max-snapshot-age-ms": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "max-ref-age-ms": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "snapshot-id",
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "Blob": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sequence-number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "snapshot-id",
+        "sequence-number",
+        "fields"
+      ],
+      "additionalProperties": true
+    },
+    "Statistics": {
+      "type": "object",
+      "properties": {
+        "snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "statistics-path": {
+          "type": "string"
+        },
+        "file-size-in-bytes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "file-footer-size-in-bytes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "key-metadata": {
+          "type": "string"
+        },
+        "blob-metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Blob"
+          }
+        }
+      },
+      "required": [
+        "snapshot-id",
+        "statistics-path",
+        "file-size-in-bytes",
+        "file-footer-size-in-bytes",
+        "blob-metadata"
+      ],
+      "additionalProperties": true
+    },
+    "PartitionStatistics": {
+      "type": "object",
+      "properties": {
+        "snapshot-id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "statistics-path": {
+          "type": "string"
+        },
+        "file-size-in-bytes": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "snapshot-id",
+        "statistics-path",
+        "file-size-in-bytes"
+      ],
+      "additionalProperties": true
+    },
+    "EncryptionKey": {
+      "type": "object",
+      "properties": {
+        "key-id": {
+          "type": "string"
+        },
+        "key-metadata": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key-id",
+        "key-metadata"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

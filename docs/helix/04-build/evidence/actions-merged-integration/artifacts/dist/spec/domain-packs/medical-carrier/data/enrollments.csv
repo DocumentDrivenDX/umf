@@ -1,0 +1,4 @@
+resource_key,direction,status,created,candidate_json,coverage_json,request_json,outcome
+hl7::EnrollmentRequest/22345,request,active,2014-08-16,"{""reference"":""Patient/1""}","{""reference"":""Coverage/9876B1""}",\N,\N
+supplement::EnrollmentRequest/enroll,request,active,2026-01-01,"{""reference"":""Patient/member""}","{""reference"":""Coverage/active""}",\N,\N
+supplement::EnrollmentResponse/enrolled,response,active,2026-01-01,\N,\N,"{""reference"":""EnrollmentRequest/enroll""}",complete

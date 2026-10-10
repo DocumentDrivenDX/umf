@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:avro-tablespec:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,127}(?![\\s\\S])"
+        },
+        "fields": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,127}(?![\\s\\S])"
+              },
+              "representation": {
+                "enum": [
+                  "string",
+                  "integer32",
+                  "float32",
+                  "boolean",
+                  "decimal",
+                  "date",
+                  "timestamp",
+                  "local-timestamp",
+                  "hex-text",
+                  "json-text"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "representation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "tableName",
+        "fields",
+        "lossPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "representation-change",
+              "not-enforced",
+              "unsupported",
+              "annotation-only"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourcePath": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "column": {
+            "type": "string"
+          },
+          "representation": {
+            "enum": [
+              "string",
+              "integer32",
+              "float32",
+              "boolean",
+              "decimal",
+              "date",
+              "timestamp",
+              "local-timestamp",
+              "hex-text",
+              "json-text"
+            ]
+          },
+          "nullable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "sourcePath",
+          "field",
+          "column",
+          "representation",
+          "nullable"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeSchema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "source",
+    "policy",
+    "issues",
+    "mappings"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "$ref": "urn:umf:core:0.1.0"
+          },
+          "nativeSchema": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "nativeSchema"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "properties": {
+                "target": {
+                  "$ref": "urn:umf:core:0.1.0"
+                }
+              },
+              "required": [
+                "target"
+              ]
+            },
+            {
+              "properties": {
+                "nativeSchema": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nativeSchema"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

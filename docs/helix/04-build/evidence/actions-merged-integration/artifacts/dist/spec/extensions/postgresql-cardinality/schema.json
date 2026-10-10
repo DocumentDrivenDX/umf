@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:postgresql:cardinality-binding:1.0.0",
+  "title": "Retained PostgreSQL Cardinality scope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "nativeSupplement",
+    "binding",
+    "profile",
+    "interpretation",
+    "nativePath",
+    "basis"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "nativeSupplement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.cardinality",
+        "version": "1.0.0"
+      }
+    },
+    "profile": {
+      "enum": [
+        "stored-value",
+        "unresolved"
+      ]
+    },
+    "interpretation": {
+      "enum": [
+        "declared",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "nativePath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basis": {
+      "const": "Explicit captured native type relationships; bounds, rank, item and execution semantics remain native"
+    }
+  }
+}

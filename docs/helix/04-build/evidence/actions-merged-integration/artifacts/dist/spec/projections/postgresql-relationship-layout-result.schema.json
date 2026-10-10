@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:postgresql:relationship-layout-result:1.0.0",
+  "title": "Retained PostgreSQL relationship layout validation result",
+  "type": "object",
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "lossPolicy",
+    "logical",
+    "binding",
+    "policy",
+    "diagnostics",
+    "residuals"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "const": "validate-postgresql-relationship-layout"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "validated",
+        "reported",
+        "blocked"
+      ]
+    },
+    "lossPolicy": {
+      "enum": [
+        "strict",
+        "report"
+      ]
+    },
+    "logical": {},
+    "binding": {},
+    "policy": {},
+    "diagnostics": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "path",
+          "reason",
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "enum": [
+              "logical",
+              "binding",
+              "policy"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {}
+        }
+      }
+    },
+    "candidate": {
+      "$ref": "urn:umf:postgresql:relationship-layout:1.0.0"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "blocked"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "candidate"
+          ]
+        }
+      },
+      "else": {
+        "required": [
+          "candidate"
+        ],
+        "properties": {
+          "logical": {
+            "$ref": "urn:umf:core:0.7.0"
+          }
+        }
+      }
+    }
+  ]
+}

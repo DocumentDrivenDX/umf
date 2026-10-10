@@ -64,14 +64,16 @@ def diagram(f,mobile):
   box(W/2-105,110,210,140,'1 · create order','Explicit Key. Effect ID: create.')
   box(20,390,(W-60)/2,140,'Customer','existing input')
   box(W/2+10,390,(W-60)/2,140,'Product','existing input')
-  arrow(W/2-30,250,90 if mobile else 175,390,'2 · link')
-  arrow(W/2+30,250,W-90 if mobile else W-175,390,'3 · link')
+  arrow(W/2-30,250,90 if mobile else 175,390,'' if mobile else '2 · link')
+  arrow(W/2+30,250,W-90 if mobile else W-175,390,'' if mobile else '3 · link')
+  if mobile:
+   text(20,320,'2 · link',16,85);text(W-85,320,'3 · link',16,75)
   text(25,555,'Both sources bind created:create.',17,W-50)
   box(20,590,W-40,160,'Frozen permission frame','Permit create + these links. Required effects are distinct from permission. No forward reference or allocated Key.',True)
  elif k=='retry':
   xs=[60,W-65] if mobile else [110,355,610]
   names=['Client','Consumer / store'] if mobile else ['Client','Consumer','Native store']
-  for x,name in zip(xs,names):text(x-40,125,name,16,140,True);parts.append(f'<path d="M{x} 165 V650" stroke="#738972" stroke-dasharray="4 5"/>')
+  for x,name in zip(xs,names):text(x-40,125,name,16,140,True);parts.append(f'<path d="M{x} 165 V440 M{x} 525 V650" stroke="#738972" stroke-dasharray="4 5"/>')
   arrow(xs[0],205,xs[1],205);text(25,185,'1 · Original request + token',17,W-50)
   if not mobile:arrow(xs[1],285,xs[2],285);text(380,265,'2 · Atomic commit',17,280)
   else:box(130,250,210,105,'2 · Commit','Business + outcome retained.')
@@ -95,12 +97,13 @@ def diagram(f,mobile):
     x=35+j*(W/2-20);box(x,y+90,W/2-35,70,'Position '+num,status)
    text(35,y+205,prefix,16,W-60,True)
    if y<630:arrow(W/2,y+225,W/2,y+258)
-  box(20,905,W-40,180,'Receipt scope','Matching store + epoch + opaque version and correct projection content. Positions shown are internal, not receipt versions.',True)
-  height=1120
+  box(20,905,W-40,260,'Authorization + freshness','Check reader authorization first; denial returns no content. A receipt grants no access. Authorized readers still need matching store, epoch, opaque version and qualified content. Positions are internal.',True)
+  height=1200
  elif k=='handler':
   height=980
   box(20,110,W-40,165,'ISOLATED HANDLER','Only transaction capability messages. No raw SQL, database secrets or ambient network.')
-  arrow(W/2,275,W/2,340);text(25,310,'Bounded authenticated RPC',17,W-50)
+  connector=W-35 if mobile else W/2
+  arrow(connector,275,connector,340);text(25,310,'Bounded authenticated RPC',17,W-50)
   parts.append(f'<rect x="15" y="340" width="{W-30}" height="450" rx="12" fill="#dce7d5" stroke="#53732e" stroke-width="2"/>')
   text(30,375,'TRUSTED CONSUMER HOST',17,W-60,True)
   box(35,405,W-70,125,'Capability gateway','Freeze aliases. Refuse outside-frame attempts before access.')

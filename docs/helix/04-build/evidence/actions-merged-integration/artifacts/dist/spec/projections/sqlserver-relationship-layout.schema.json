@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:sqlserver:relationship-layout:1.0.0",
+  "title": "SQL Server 2022 relationship endpoint layout policy",
+  "type": "object",
+  "required": [
+    "profile",
+    "targetVersion",
+    "fieldLayouts",
+    "keyLayouts",
+    "relationshipLayouts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "profile": {
+      "const": "sqlserver-relationship-layout-1"
+    },
+    "targetVersion": {
+      "const": "2022"
+    },
+    "fieldLayouts": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/fieldLayout"
+      }
+    },
+    "keyLayouts": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/keyLayout"
+      }
+    },
+    "relationshipLayouts": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/$defs/layout"
+      }
+    }
+  },
+  "$defs": {
+    "field": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "bound": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "key": {
+      "type": "object",
+      "required": [
+        "module",
+        "element",
+        "key"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "fieldLayout": {
+      "type": "object",
+      "required": [
+        "coreField",
+        "boundField",
+        "table",
+        "column",
+        "sqlType",
+        "nullable",
+        "collation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "coreField": {
+          "$ref": "#/$defs/field"
+        },
+        "boundField": {
+          "$ref": "#/$defs/bound"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sqlType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "collation": {
+          "enum": [
+            null,
+            "Latin1_General_100_BIN2"
+          ]
+        }
+      }
+    },
+    "keyComponent": {
+      "type": "object",
+      "required": [
+        "keyField",
+        "boundField",
+        "column",
+        "sqlType",
+        "nullable",
+        "collation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "keyField": {
+          "$ref": "#/$defs/field"
+        },
+        "boundField": {
+          "$ref": "#/$defs/bound"
+        },
+        "column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sqlType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "collation": {
+          "enum": [
+            null,
+            "Latin1_General_100_BIN2"
+          ]
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "keyField",
+        "endpointField",
+        "endpointColumn",
+        "carrierColumn",
+        "sqlType",
+        "nullable",
+        "collation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "keyField": {
+          "$ref": "#/$defs/field"
+        },
+        "endpointField": {
+          "$ref": "#/$defs/bound"
+        },
+        "endpointColumn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "carrierField": {
+          "$ref": "#/$defs/bound"
+        },
+        "carrierColumn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sqlType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "collation": {
+          "enum": [
+            null,
+            "Latin1_General_100_BIN2"
+          ]
+        }
+      }
+    },
+    "keyLayout": {
+      "type": "object",
+      "required": [
+        "record",
+        "key",
+        "table",
+        "constraint",
+        "components"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/field"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "constraint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/keyComponent"
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "required": [
+        "relationship",
+        "storage",
+        "carrierTable",
+        "targetKey",
+        "targetConstraint",
+        "targetComponents"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "relationship": {
+          "type": "object",
+          "required": [
+            "module",
+            "id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "storage": {
+          "enum": [
+            "foreign_key",
+            "junction",
+            "edge"
+          ]
+        },
+        "carrierTable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetKey": {
+          "$ref": "#/$defs/key"
+        },
+        "targetConstraint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetComponents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/key"
+        },
+        "sourceConstraint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceComponents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "associationRecord": {
+          "$ref": "#/$defs/field"
+        },
+        "associationKey": {
+          "$ref": "#/$defs/key"
+        },
+        "discriminator": {
+          "type": "object",
+          "required": [
+            "column",
+            "value",
+            "sqlType",
+            "nullable",
+            "collation"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "column": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sqlType": {
+              "type": "string",
+              "minLength": 1
+            },
+            "nullable": {
+              "type": "boolean"
+            },
+            "collation": {
+              "enum": [
+                null,
+                "Latin1_General_100_BIN2"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

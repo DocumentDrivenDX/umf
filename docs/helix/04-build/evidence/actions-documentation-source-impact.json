@@ -9157,5 +9157,50 @@
     "removed": 0,
     "changed": 29,
     "comparisonPathAtCommit": "docs/helix/04-build/evidence/actions-documentation-source-impact.json"
+  },
+  "finalDocumentationPackaging": {
+    "qualifiedExecutionSource": "1fa21f6ea1d7a3e1009746da99f1a61d444cd489",
+    "scope": "Authorization-first explanation and query diagram; actual qualification navigation and release notes. No core, action, native implementation or dependency changes. Later generated guide output is checked separately by the final documentation build and browser gates. Decorative replay lifelines leave the explanatory note unobstructed. Mobile link and RPC arrow labels are unobstructed.",
+    "preRenderChangedInputs": [
+      {
+        "path": "docs/helix/04-build/evidence/actions-documentation-execution.md",
+        "beforeSha256": "a6cd058ece3cf92a67a3e16b0dfb0e5e96a7e6ea6fc0e745df0aa94dfcf037f7",
+        "afterSha256": "bc730e80b3ceea9081f34fc873b3d0ef92d1e9ce968b2f837fefa3c0ab3f8d0c"
+      },
+      {
+        "path": "docs/helix/04-build/guides/actions/diagrams/source.json",
+        "beforeSha256": "63198b13a26e45aa89cdce8dcf9d2b9f0bafd2428995da5b32d2f25d9efef03b",
+        "afterSha256": "4280b87d6df3982d43d15b1b65883557ee40f33d19ca721882f725bebb354043"
+      },
+      {
+        "path": "docs/helix/04-build/guides/actions/receipts-and-queries.md",
+        "beforeSha256": "c7587d76f86821b0f08d1d6aff89dcd69b9cb91cf035ec58356b273795dff869",
+        "afterSha256": "e0e347b49fbaee50004d63282378661e285157a133e95231e249b701aedaf142"
+      },
+      {
+        "path": "docs/helix/04-build/guides/actions/support-and-evidence.md",
+        "beforeSha256": "e9f59e600a5884db24651119da663d3061d2fb22b992ebad8bb89fd124e3f17b",
+        "afterSha256": "47f5afb3a2d1f424d3f107f5f56421cfc12bec29d3946aee487908549503569f"
+      },
+      {
+        "path": "docs/helix/05-deploy/release-notes.md",
+        "beforeSha256": null,
+        "afterSha256": "4acec32043575f7deb618bde89f161a20f12e3b5ed3a0988f1646536f90e8ee4"
+      },
+      {
+        "path": "scripts/actions-docs/render-diagrams.py",
+        "beforeSha256": "458034ec5455228574869d6139c36bdfa80501962d9a874c669c8791663ab8e8",
+        "afterSha256": "222c5926844f90eabfd5e50a0eea5a6f64adc78a06602e11cee5d7cea2479705"
+      }
+    ],
+    "checksRequired": [
+      "build:docs",
+      "test:docs:build",
+      "test:docs:examples",
+      "test:docs:browser",
+      "Astra Ultra visual review",
+      "signed page verification",
+      "merged live deployment verification"
+    ]
   }
 }

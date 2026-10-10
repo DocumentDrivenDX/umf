@@ -1,0 +1,297 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:owl:0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "enum": [
+        "rdf11-nquads",
+        "rdf11-turtle",
+        "rdf11-trig"
+      ]
+    },
+    "baseIRI": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "namedGraphs": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "iri"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "blank"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      }
+    },
+    "blankNodeScope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "quads": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "iri"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "blank"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              }
+            ]
+          },
+          "predicate": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "iri"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          "object": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "iri"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "blank"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "literal"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "datatype": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "string",
+                    "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value",
+                  "datatype"
+                ],
+                "additionalProperties": true
+              }
+            ]
+          },
+          "graph": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "iri"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "blank"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "default"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "required": [
+          "subject",
+          "predicate",
+          "object",
+          "graph"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "originalSource": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "owlVersion": {
+      "const": "2"
+    }
+  },
+  "required": [
+    "profile",
+    "blankNodeScope",
+    "quads",
+    "originalSource",
+    "owlVersion"
+  ],
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "profile": {
+            "enum": [
+              "rdf11-turtle",
+              "rdf11-trig"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "baseIRI": {}
+        },
+        "required": [
+          "baseIRI"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "profile": {
+            "const": "rdf11-trig"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "namedGraphs": {}
+        },
+        "required": [
+          "namedGraphs"
+        ]
+      }
+    }
+  ]
+}

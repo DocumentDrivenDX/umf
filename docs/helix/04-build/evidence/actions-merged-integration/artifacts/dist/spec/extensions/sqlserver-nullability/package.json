@@ -1,0 +1,75 @@
+{
+  "id": "umf.sqlserver.nullability",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Retained relation and SQL-NULL carrier scope for a SQL Server availability observation; not native execution or equivalence",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:sqlserver:nullability-binding:1.0.0",
+    "title": "Retained SQL Server availability binding scope",
+    "type": "object",
+    "required": [
+      "origin",
+      "binding",
+      "scope",
+      "carrier",
+      "interpretation",
+      "nativePath"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.sqlserver.nullability",
+          "version": "1.0.0"
+        }
+      },
+      "scope": {
+        "enum": [
+          "stored-relation",
+          "query-result",
+          "write-input",
+          "unresolved"
+        ]
+      },
+      "carrier": {
+        "enum": [
+          "sql-null",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-041 SQL Server up-classification; core 0.3.0 ideal label is qualified by this retained scope. Unknown refinements must remain attached.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "SQL Server",
+      "version": "16.0.4295.3",
+      "subset": "Captured SQL Server 16.0.4295.3 stored-column declarations; excludes query results and input omission; not live enforcement verification"
+    },
+    "evidence": [
+      "tests/core-ideals/nullability-sqlserver.test.ts",
+      "fixtures/validation/nullability-sqlserver-native.json"
+    ]
+  }
+}

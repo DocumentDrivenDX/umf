@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:sqlserver:cardinality-binding:1.0.0",
+  "title": "Retained SQL Server Cardinality scope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "physicalColumn",
+    "binding",
+    "profile",
+    "interpretation",
+    "nativePath",
+    "basis"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "physicalColumn": {
+      "type": "string",
+      "minLength": 1
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.cardinality",
+        "version": "1.0.0"
+      }
+    },
+    "profile": {
+      "enum": [
+        "native-scalar",
+        "json-array",
+        "json-object",
+        "unresolved"
+      ]
+    },
+    "interpretation": {
+      "enum": [
+        "declared",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "nativePath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basis": {
+      "const": "Explicit representation selection and pinned catalog constraint profile; physical column and logical Field remain distinct"
+    }
+  }
+}

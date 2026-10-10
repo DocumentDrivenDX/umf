@@ -1,0 +1,24 @@
+{"runtimeDependencies": {"pydantic": "2.11.10", "jsonschema": "4.25.1", "ruamel.yaml": "0.19.1", "pytest": "9.1.1", "packaging": "26.3", "pluggy": "1.6.0"}}
+Collecting hatchling==1.27.0 (from -r .cache/actions-merged-python/requirements.txt (line 1))
+  Downloading hatchling-1.27.0-py3-none-any.whl (75 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.8/75.8 kB 5.0 MB/s eta 0:00:00
+Collecting pathspec==0.12.1 (from -r .cache/actions-merged-python/requirements.txt (line 2))
+  Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+Collecting trove-classifiers==2025.1.15.22 (from -r .cache/actions-merged-python/requirements.txt (line 3))
+  Downloading trove_classifiers-2025.1.15.22-py3-none-any.whl (13 kB)
+Installing collected packages: trove-classifiers, pathspec, hatchling
+Successfully installed hatchling-1.27.0 pathspec-0.12.1 trove-classifiers-2025.1.15.22
+Processing ./python
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: umf-core
+  Building wheel for umf-core (pyproject.toml): started
+  Building wheel for umf-core (pyproject.toml): finished with status 'done'
+  Created wheel for umf-core: filename=umf_core-0.8.2-py3-none-any.whl size=246247 sha256=ba9064963e2752c3408e89c3c8a1e3aef4cebd87ba5668bb2970a0fdecd29572
+  Stored in directory: /tmp/pip-ephem-wheel-cache-xxbw71yo/wheels/11/0d/06/3c2c9a6ce910b7a856a69ea6a3d9a4a35a48a82aee8a9c9ea8
+Successfully built umf-core
+Installing collected packages: umf-core
+Successfully installed umf-core-0.8.2
+...........................................                              [100%]
+43 passed in 0.23s
+{"buildTools": {"hatchling": "1.27.0", "pathspec": "0.12.1", "trove-classifiers": "2025.1.15.22"}}

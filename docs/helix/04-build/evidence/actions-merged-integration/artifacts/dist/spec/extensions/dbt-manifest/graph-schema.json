@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:dbt:manifest-graph:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "checked",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "collection": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "collection",
+          "path"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dependent": {
+            "type": "string"
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "resource",
+              "macro"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "resolved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "dependent",
+          "dependency",
+          "kind",
+          "path",
+          "resolved"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "status",
+    "complete",
+    "nodes",
+    "edges",
+    "diagnostics"
+  ],
+  "additionalProperties": false
+}

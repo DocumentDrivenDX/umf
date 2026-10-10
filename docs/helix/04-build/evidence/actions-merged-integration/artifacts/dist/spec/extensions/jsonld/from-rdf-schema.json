@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:jsonld:from-rdf:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "id": {
+      "type": "string"
+    },
+    "baseIRI": {
+      "type": "string"
+    },
+    "processingMode": {
+      "enum": [
+        "json-ld-1.0",
+        "json-ld-1.1"
+      ]
+    },
+    "lossPolicy": {
+      "enum": [
+        "report",
+        "reject"
+      ]
+    },
+    "useNativeTypes": {
+      "type": "boolean"
+    },
+    "useRdfType": {
+      "type": "boolean"
+    },
+    "rdfDirection": {
+      "enum": [
+        null,
+        "i18n-datatype",
+        "compound-literal"
+      ]
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "candidate": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "id",
+    "baseIRI",
+    "processingMode",
+    "lossPolicy",
+    "useNativeTypes",
+    "useRdfType",
+    "rdfDirection",
+    "status",
+    "complete",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "candidate"
+          ]
+        }
+      }
+    }
+  ]
+}

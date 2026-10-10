@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:arrow-rename:0.1.0",
+  "type": "object",
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "diagnostics",
+    "policy"
+  ],
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "transformed",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "output": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "unchangedPrefixBytes": {
+      "type": "integer",
+      "minimum": 4
+    },
+    "rename": {
+      "type": "object",
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "to": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "parquetFrom": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "parquetTo": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parquetIndex",
+        "arrowFieldPath",
+        "name",
+        "uninterpretedMetadata"
+      ],
+      "properties": {
+        "parquetIndex": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "arrowFieldPath": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "uninterpretedMetadata": {
+          "const": "preserve-and-report"
+        },
+        "parquetName": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "transformed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "output": true,
+          "rename": true,
+          "unchangedPrefixBytes": true
+        },
+        "required": [
+          "output",
+          "rename",
+          "unchangedPrefixBytes"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "properties": {
+                "output": true
+              },
+              "required": [
+                "output"
+              ]
+            },
+            {
+              "properties": {
+                "rename": true
+              },
+              "required": [
+                "rename"
+              ]
+            },
+            {
+              "properties": {
+                "unchangedPrefixBytes": true
+              },
+              "required": [
+                "unchangedPrefixBytes"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "title": "Coordinated Parquet and embedded Arrow field rename"
+}

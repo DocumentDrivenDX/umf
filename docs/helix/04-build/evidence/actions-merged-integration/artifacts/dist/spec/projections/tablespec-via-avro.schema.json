@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:tablespec-via-avro:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "policy": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sourceKind": {
+              "const": "postgresql"
+            },
+            "toAvro": {
+              "$ref": "urn:umf:projection:postgresql-avro:0.1.0#/properties/policy"
+            },
+            "toTableSpec": {
+              "$ref": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+            }
+          },
+          "required": [
+            "sourceKind",
+            "toAvro",
+            "toTableSpec"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceKind": {
+              "const": "sqlserver"
+            },
+            "toAvro": {
+              "$ref": "urn:umf:projection:sqlserver-avro:0.1.0#/properties/policy"
+            },
+            "toTableSpec": {
+              "$ref": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+            }
+          },
+          "required": [
+            "sourceKind",
+            "toAvro",
+            "toTableSpec"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceKind": {
+              "const": "parquet"
+            },
+            "toAvro": {
+              "$ref": "urn:umf:projection:parquet-avro:0.1.0#/properties/policy"
+            },
+            "toTableSpec": {
+              "$ref": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+            }
+          },
+          "required": [
+            "sourceKind",
+            "toAvro",
+            "toTableSpec"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "stages": {
+      "type": "object",
+      "properties": {
+        "sourceToAvro": {
+          "anyOf": [
+            {
+              "$ref": "urn:umf:projection:postgresql-avro:0.1.0"
+            },
+            {
+              "$ref": "urn:umf:projection:sqlserver-avro:0.1.0"
+            },
+            {
+              "$ref": "urn:umf:projection:parquet-avro:0.1.0"
+            }
+          ]
+        },
+        "avroToTableSpec": {
+          "$ref": "urn:umf:projection:avro-tablespec:0.1.0"
+        }
+      },
+      "required": [
+        "sourceToAvro"
+      ],
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "stage": {
+                "const": "sourceToAvro"
+              },
+              "sourceDocumentPath": {
+                "const": "/stages/sourceToAvro/source"
+              },
+              "issue": {
+                "$ref": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+              }
+            },
+            "required": [
+              "stage",
+              "sourceDocumentPath",
+              "issue"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "stage": {
+                "const": "avroToTableSpec"
+              },
+              "sourceDocumentPath": {
+                "const": "/stages/avroToTableSpec/source"
+              },
+              "issue": {
+                "$ref": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+              }
+            },
+            "required": [
+              "stage",
+              "sourceDocumentPath",
+              "issue"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeSchema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "source",
+    "policy",
+    "stages",
+    "issues"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "$ref": "urn:umf:core:0.1.0"
+          },
+          "nativeSchema": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "nativeSchema"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "properties": {
+                "target": {
+                  "$ref": "urn:umf:core:0.1.0"
+                }
+              },
+              "required": [
+                "target"
+              ]
+            },
+            {
+              "properties": {
+                "nativeSchema": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nativeSchema"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "status": {
+              "const": "blocked"
+            },
+            "stages": {
+              "type": "object",
+              "properties": {
+                "sourceToAvro": {
+                  "allOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "$ref": "urn:umf:projection:postgresql-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:sqlserver-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:parquet-avro:0.1.0"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "const": "blocked"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sourceToAvro"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "blocked"
+            },
+            "stages": {
+              "type": "object",
+              "properties": {
+                "sourceToAvro": {
+                  "allOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "$ref": "urn:umf:projection:postgresql-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:sqlserver-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:parquet-avro:0.1.0"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "const": "projected"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "avroToTableSpec": {
+                  "allOf": [
+                    {
+                      "$ref": "urn:umf:projection:avro-tablespec:0.1.0"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "const": "blocked"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sourceToAvro",
+                "avroToTableSpec"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "projected"
+            },
+            "stages": {
+              "type": "object",
+              "properties": {
+                "sourceToAvro": {
+                  "allOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "$ref": "urn:umf:projection:postgresql-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:sqlserver-avro:0.1.0"
+                        },
+                        {
+                          "$ref": "urn:umf:projection:parquet-avro:0.1.0"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "const": "projected"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "avroToTableSpec": {
+                  "allOf": [
+                    {
+                      "$ref": "urn:umf:projection:avro-tablespec:0.1.0"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "const": "projected"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sourceToAvro",
+                "avroToTableSpec"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "policy": {
+            "type": "object",
+            "properties": {
+              "sourceKind": {
+                "const": "postgresql"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stages": {
+            "type": "object",
+            "properties": {
+              "sourceToAvro": {
+                "$ref": "urn:umf:projection:postgresql-avro:0.1.0"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "policy": {
+            "type": "object",
+            "properties": {
+              "sourceKind": {
+                "const": "sqlserver"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stages": {
+            "type": "object",
+            "properties": {
+              "sourceToAvro": {
+                "$ref": "urn:umf:projection:sqlserver-avro:0.1.0"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "policy": {
+            "type": "object",
+            "properties": {
+              "sourceKind": {
+                "const": "parquet"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stages": {
+            "type": "object",
+            "properties": {
+              "sourceToAvro": {
+                "$ref": "urn:umf:projection:parquet-avro:0.1.0"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -6,11 +6,11 @@ An approved order can be committed while a search page still shows its old statu
 
 ![Out-of-order delivery and contiguous applied prefix](diagrams/visibility.svg)
 
-Figure V6. Business changes, terminal outcome and an outbox fact commit together. Fact 2 can arrive before fact 1; receiving 2 alone leaves the complete applied prefix at 0. Applying 1 and then 2 updates content and prefix atomically. Only then can a qualified projection satisfy a receipt for commit 2.
+Figure V6. Business changes, terminal outcome and an outbox fact commit together. Fact 2 can arrive before fact 1; receiving 2 alone leaves the complete applied prefix at 0. Applying 1 and then 2 updates content and prefix atomically. Only then can a qualified projection satisfy a receipt for commit 2 for an authorized reader. A receipt does not grant read permission.
 
 ## Read the receipt
 
-A receipt has store, epoch and opaque version. The consumer maps that version under its qualified adapter; do not sort it as a string or assume it is a portable integer clock. readAtLeast binds the receipt to a named projection and returns visible, pending or unsupported.
+A receipt has store, epoch and opaque version. The consumer maps that version under its qualified adapter; do not sort it as a string or assume it is a portable integer clock. readAtLeast first checks current reader authorization. A denied reader receives denied/AUTHORIZATION, without projection content. A receipt states a freshness requirement; it grants no access. For an authorized reader, readAtLeast binds the receipt to a named projection and reports visible, pending or unsupported.
 
 Visible requires both the applied complete commit prefix and the projection's content semantics to expose the relevant changes. A high maximum seen event ID is insufficient. Pending reads cannot secretly query live state to disguise projection lag.
 

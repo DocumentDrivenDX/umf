@@ -6,7 +6,7 @@
     "kind": "model",
     "panels": [
       {
-        "title": "UMF document \u00b7 metadata",
+        "title": "UMF document · metadata",
         "text": "sales.id and sales.status are required string Fields."
       },
       {
@@ -15,7 +15,7 @@
       },
       {
         "title": "Module extension",
-        "text": "sales.extensions \u2192 umf.actions \u2192 approve declares the permitted status assignment."
+        "text": "sales.extensions → umf.actions → approve declares the permitted status assignment."
       },
       {
         "title": "Separate business data",
@@ -30,7 +30,7 @@
     "kind": "lanes",
     "panels": [
       {
-        "title": "Library \u00b7 browser-compatible",
+        "title": "Library · browser-compatible",
         "text": "Read a document. Register vocabulary. Inspect and compare declarations. No authentication or business writes."
       },
       {
@@ -38,7 +38,7 @@
         "text": "Compile supported rules/selectors. Evaluate rules only with supplied state. This is separate from inspection."
       },
       {
-        "title": "Consumer \u00b7 host-only",
+        "title": "Consumer · host-only",
         "text": "Authenticate principal and service. Authorize. Freeze identities. Execute and verify under the native transaction boundary."
       },
       {
@@ -54,15 +54,15 @@
     "kind": "states",
     "panels": [
       {
-        "title": "First request token \u00b7 business change",
+        "title": "First request token · business change",
         "text": "Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact."
       },
       {
-        "title": "Fresh request token \u00b7 business no-op",
+        "title": "Fresh request token · business no-op",
         "text": "Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance."
       },
       {
-        "title": "Original request token \u00b7 replay",
+        "title": "Original request token · replay",
         "text": "Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op."
       }
     ]
@@ -74,15 +74,15 @@
     "kind": "recipe",
     "panels": [
       {
-        "title": "1 \u00b7 create",
+        "title": "1 · create",
         "text": "Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier."
       },
       {
-        "title": "2 \u00b7 link-customer",
+        "title": "2 · link-customer",
         "text": "Source is created:create. Target is the existing customer parameter, using the authored relationship orientation."
       },
       {
-        "title": "3 \u00b7 link-product",
+        "title": "3 · link-product",
         "text": "Source is created:create. Target is the existing product parameter. Forward references would refuse."
       },
       {
@@ -98,19 +98,19 @@
     "kind": "sequence",
     "panels": [
       {
-        "title": "Client \u2192 consumer",
+        "title": "Client → consumer",
         "text": "Send original token, revision, typed inputs and expected versions. Trusted context supplies actor identity."
       },
       {
-        "title": "Consumer \u2192 native store",
+        "title": "Consumer → native store",
         "text": "Commit business changes, verification and terminal outcome atomically. Then the acknowledgement is lost."
       },
       {
-        "title": "Client knowledge \u00b7 indeterminate",
+        "title": "Client knowledge · indeterminate",
         "text": "Unknown whether commit occurred. Timeout does not prove rollback. Keep the original request; do not mint a fresh token."
       },
       {
-        "title": "Client \u2192 protected lookup",
+        "title": "Client → protected lookup",
         "text": "Current discovery and original-result authorization gate lookup. Return the retained original outcome; lookup never executes."
       },
       {
@@ -126,20 +126,20 @@
     "kind": "timeline",
     "panels": [
       {
-        "title": "Write transaction \u00b7 commit",
+        "title": "Write transaction · commit",
         "text": "Business change + terminal outcome + outbox fact commit together. Receipt carries store, epoch and opaque version."
       },
       {
-        "title": "Delivery \u00b7 position 2 arrives first",
+        "title": "Delivery · position 2 arrives first",
         "text": "Position 1 is missing. Complete applied prefix stays 0. A larger received position proves no visibility."
       },
       {
-        "title": "Projection \u00b7 position 1 then 2",
+        "title": "Projection · position 1 then 2",
         "text": "Apply exact facts in order. Update read content and contiguous prefix atomically. Repeated delivery is deduplicated."
       },
       {
         "title": "Read at least the receipt",
-        "text": "Visible only for the matching store/epoch and qualified content through that complete prefix; otherwise pending or unsupported."
+        "text": "Check current reader authorization first: denied readers receive no content. A receipt grants no access. Authorized freshness is visible only for the matching store/epoch and qualified content through the complete prefix; otherwise pending or unsupported."
       },
       {
         "title": "Restore boundary",
@@ -179,10 +179,10 @@
     "panels": [
       {
         "title": "Incomplete property",
-        "text": "post.stock = pre.stock \u2212 quantity is insufficient by itself. This is a handler example, not the approve recipe."
+        "text": "post.stock = pre.stock − quantity is insufficient by itself. This is a handler example, not the approve recipe."
       },
       {
-        "title": "Counterexample \u00b7 quantity zero",
+        "title": "Counterexample · quantity zero",
         "text": "Stock can remain unchanged and the equation still holds. A promised reservation might also be absent."
       },
       {

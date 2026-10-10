@@ -1,0 +1,243 @@
+{
+  "id": "medical-epidemiology",
+  "version": "1.2.0",
+  "family": {
+    "id": "medical",
+    "version": "1.2.0",
+    "label": "Epidemiology"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "measures",
+        "supplemental_measures"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "cdc",
+      "cdc_metadata",
+      "supplement",
+      "notices",
+      "csv_measures",
+      "csv_supplemental_measures"
+    ],
+    "qualification": "Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim."
+  },
+  "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
+  "domain_types": {
+    "source_qualified_identity": {
+      "description": "Source namespace and native identity; no inferred patient identity."
+    },
+    "exact_native_literal": {
+      "description": "Numeric and temporal source spelling retained as text."
+    }
+  },
+  "schemas": [
+    {
+      "id": "measures",
+      "format": "tablespec",
+      "reference": "umf/measures.json"
+    },
+    {
+      "id": "supplemental_measures",
+      "format": "tablespec",
+      "reference": "umf/supplemental_measures.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
+    }
+  ],
+  "sources": {
+    "cdc": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "sources/cdc-mortality.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8a21a792545b670db71b8a53b86b09d75bc471f9c327c5079e47d2c6a74701e4"
+      },
+      "license": {
+        "id": "USGOV_WORKS",
+        "reference": "https://data.cdc.gov/api/views/bi63-dtpu.json",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "CDC/NCHS",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://data.cdc.gov/resource/bi63-dtpu.json?$limit=12&$order=year,state,cause_name",
+        "transformations": []
+      },
+      "revision": "bi63-dtpu-rowsUpdatedAt-1571926785"
+    },
+    "cdc_metadata": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "sources/cdc-metadata.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "abd2439f7c8f43d9cc551bf9fcb805fb191f57385d69a2250ef6619a9b5b3592"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "CDC/NCHS",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "supplement": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "847575df6aacdc8e2aa007267125f8d3729d6946b6ee8eb8380597fc20c7823b"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "wonder": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://wonder.cdc.gov/",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "CDC/NCHS"
+      }
+    },
+    "notices": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "licenses/NOTICE.txt",
+      "format": "text",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "fd61c614ae31a5b53877fc0f4246c3f444057f58fb1c0df9f6772bf1b2e77978"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "csv_measures": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "data/measures.csv",
+      "format": "csv",
+      "revision": "medical-epidemiology-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "be23947804729c7a64bb5b5d0071a20e5bba619d27cfaa5504188482969f71ab"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "cdc",
+          "cdc_metadata"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_supplemental_measures": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/supplemental_measures.csv",
+      "format": "csv",
+      "revision": "medical-epidemiology-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "05cd03ec8cf05416a2cf296b5272b0540bd87ffd0e44cfc6399c1f93524de415"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "supplement"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    }
+  },
+  "source_bindings": [
+    {
+      "schema_id": "measures",
+      "source_id": "csv_measures",
+      "role": "rows"
+    },
+    {
+      "schema_id": "measures",
+      "source_id": "cdc",
+      "role": "reference"
+    },
+    {
+      "schema_id": "measures",
+      "source_id": "cdc_metadata",
+      "role": "reference"
+    },
+    {
+      "schema_id": "supplemental_measures",
+      "source_id": "csv_supplemental_measures",
+      "role": "rows"
+    },
+    {
+      "schema_id": "supplemental_measures",
+      "source_id": "supplement",
+      "role": "reference"
+    }
+  ],
+  "csv_conventions": {
+    "encoding": "UTF-8",
+    "null_value": "\\N",
+    "header": true,
+    "quote": "\""
+  },
+  "fixture_counts": {
+    "measures": 12,
+    "supplemental_measures": 2
+  },
+  "qualification": {
+    "subset": "12 CDC/NCHS leading-causes-of-death aggregate records and two separate fabricated zero/suppression cases.",
+    "limits": "Observed deaths and age-adjusted rates use native international ICD-10 cause groups, not ICD-10-CM billing diagnoses. Source rows omit denominators and uncertainty. No rate recomputation, inference of patients, epidemiological comparability or current-year surveillance is claimed."
+  }
+}

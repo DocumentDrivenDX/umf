@@ -1,0 +1,79 @@
+{
+  "id": "umf.avro.nullability",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Retained Avro underlying field-value availability scope; native content, defaults, logical and ancestor meanings remain separate",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:avro:nullability-binding:1.0.0",
+    "title": "Retained Avro availability scope",
+    "type": "object",
+    "required": [
+      "origin",
+      "binding",
+      "scope",
+      "carrier",
+      "interpretation",
+      "nativePath"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.avro.nullability",
+          "version": "1.0.0"
+        }
+      },
+      "scope": {
+        "enum": [
+          "underlying-field-value",
+          "write-input",
+          "reader-resolution",
+          "unresolved"
+        ]
+      },
+      "carrier": {
+        "enum": [
+          "avro-null",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "dependencyId": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-041; operation requires core 0.3.0 and explicit Field kind. Scope is underlying declared field-value null permission, not semantic optionality or native equivalence.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "Avro",
+      "version": "1.12.0",
+      "subset": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements"
+    },
+    "evidence": [
+      "tests/core-ideals/nullability-avro.test.ts",
+      "fixtures/validation/nullability-avro-native.json"
+    ]
+  }
+}

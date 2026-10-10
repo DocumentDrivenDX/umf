@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "systems",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 native ICD-10-CM FY2026 October 2025 order-file records; six separately identified system/access descriptors.",
+  "columns": [
+    {
+      "name": "system_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "system key"
+    },
+    {
+      "name": "system",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "system"
+    },
+    {
+      "name": "release",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "release"
+    },
+    {
+      "name": "availability",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "availability"
+    },
+    {
+      "name": "description",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "description"
+    }
+  ],
+  "primary_key": [
+    "system_key"
+  ]
+}

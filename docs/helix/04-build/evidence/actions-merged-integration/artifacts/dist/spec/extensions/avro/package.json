@@ -1,0 +1,168 @@
+{
+  "id": "umf.avro",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Avro JSON schema preservation and typed tree access",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:avro:0.1.0",
+    "title": "UMF Avro native schema tree",
+    "type": "object",
+    "required": [
+      "version",
+      "root"
+    ],
+    "properties": {
+      "version": {
+        "const": "1.12.0"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      },
+      "dependencies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "root"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        }
+      }
+    },
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-007. Native JSON tokens preserve exact numbers, order, defaults, aliases, logical types and unknown metadata. Pinned JavaScript validator limitations remain explicit; no parsing-canonical-form reduction is used for retention.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Avro JSON schema",
+      "version": "1.12.0; avsc 5.7.9 validation profile",
+      "subset": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation."
+    },
+    "evidence": [
+      "tests/avro/native.test.ts",
+      "tests/avro/corpus.test.ts",
+      "fixtures/avro/corpus-oracle-results.json",
+      "tests/avro/bundle.test.ts",
+      "fixtures/avro/dependency-oracle-results.json",
+      "tests/avro/native-schema.test.ts",
+      "fixtures/avro/native-schema-oracle.json",
+      "fixtures/avro/native-schema-browser.json"
+    ]
+  }
+}

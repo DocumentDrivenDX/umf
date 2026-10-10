@@ -1,0 +1,908 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:martech",
+    "revision": "1.0.0",
+    "sha256": "0c5f0ebb781f7cf60ceb9887ab8a86c15f9b2cc8c52abc3cfda9c634093c7b1b"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "martech",
+    "version": "1.0.0",
+    "sha256": "762ec32fb7d3d2f42a5878359bb98341cecc3730cec20e11e64939d431ab2404"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_attribution_rules",
+          "template_attributions",
+          "template_campaigns",
+          "template_channels",
+          "template_consent_events",
+          "template_consents",
+          "template_conversions",
+          "template_identity_assertions",
+          "template_profiles",
+          "template_sessions",
+          "template_source_identities",
+          "template_touchpoints"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_attribution_rules": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "77ec941684343c3cece0fb600d6020cd5966fa95e825817f574427c9cf15b8e7"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/attribution_rules.csv",
+      "revision": "1.0.0"
+    },
+    "template_attributions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "df4469e036dedd660f3f91077023ab5d5d42bdb1f41b6da3f51c01d2a0da3c4c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/attributions.csv",
+      "revision": "1.0.0"
+    },
+    "template_campaigns": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "7099db80dd8f0206da966a4628edbbf0e8ebeca0729f6c33edcbf519e2a096b2"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/campaigns.csv",
+      "revision": "1.0.0"
+    },
+    "template_channels": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "af5084cc7042247442676df703978f07227fa82038c6cc9652609ef9f8e924e7"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/channels.csv",
+      "revision": "1.0.0"
+    },
+    "template_consent_events": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c9269209d6a0c1352c3bd1c8be47108f5ff531024b2457ea6b76603c4650d85a"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/consent_events.csv",
+      "revision": "1.0.0"
+    },
+    "template_consents": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "93a4dc931869854171a9151d8addd6bd502d875061c8e2820e57f3fd706e6c28"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/consents.csv",
+      "revision": "1.0.0"
+    },
+    "template_conversions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "efa7ca7262ce1401a84bf50b236bd2999ae1d6f5a9b7317c359c5d58d3277478"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/conversions.csv",
+      "revision": "1.0.0"
+    },
+    "template_identity_assertions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "11efc56dd024d0f643a0b117ccfcf5a3298c66c381cd4efb2f0a38a55603c7bb"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/identity_assertions.csv",
+      "revision": "1.0.0"
+    },
+    "template_profiles": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "25c9ef87426c2152f7e45283a63d83dd1b1559de8be55ef0d4bc3660e9c2328b"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/profiles.csv",
+      "revision": "1.0.0"
+    },
+    "template_sessions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "eaac4f5860bab4fba94ba24cafa94ea89456b9b318991e749a47e2cd90463766"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/sessions.csv",
+      "revision": "1.0.0"
+    },
+    "template_source_identities": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "7f0f5c7f6f94aa79dc6f79bb831a4c3bfdc63f2a5974779f043bf2b7514d1924"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/source_identities.csv",
+      "revision": "1.0.0"
+    },
+    "template_touchpoints": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "81fb9cf5b9db874af11d0ba3dd0665dd52d6f516f0f6c5aa69a4f7ac66d03160"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/touchpoints.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "profiles",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "source_identities",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "campaigns",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "channels",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "consents",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "sessions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "identity_assertions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "touchpoints",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "consent_events",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "conversions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "attribution_rules",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "attributions",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_attribution_rules": {
+        "algorithm": "sha256",
+        "value": "77ec941684343c3cece0fb600d6020cd5966fa95e825817f574427c9cf15b8e7"
+      },
+      "template_attributions": {
+        "algorithm": "sha256",
+        "value": "df4469e036dedd660f3f91077023ab5d5d42bdb1f41b6da3f51c01d2a0da3c4c"
+      },
+      "template_campaigns": {
+        "algorithm": "sha256",
+        "value": "7099db80dd8f0206da966a4628edbbf0e8ebeca0729f6c33edcbf519e2a096b2"
+      },
+      "template_channels": {
+        "algorithm": "sha256",
+        "value": "af5084cc7042247442676df703978f07227fa82038c6cc9652609ef9f8e924e7"
+      },
+      "template_consent_events": {
+        "algorithm": "sha256",
+        "value": "c9269209d6a0c1352c3bd1c8be47108f5ff531024b2457ea6b76603c4650d85a"
+      },
+      "template_consents": {
+        "algorithm": "sha256",
+        "value": "93a4dc931869854171a9151d8addd6bd502d875061c8e2820e57f3fd706e6c28"
+      },
+      "template_conversions": {
+        "algorithm": "sha256",
+        "value": "efa7ca7262ce1401a84bf50b236bd2999ae1d6f5a9b7317c359c5d58d3277478"
+      },
+      "template_identity_assertions": {
+        "algorithm": "sha256",
+        "value": "11efc56dd024d0f643a0b117ccfcf5a3298c66c381cd4efb2f0a38a55603c7bb"
+      },
+      "template_profiles": {
+        "algorithm": "sha256",
+        "value": "25c9ef87426c2152f7e45283a63d83dd1b1559de8be55ef0d4bc3660e9c2328b"
+      },
+      "template_sessions": {
+        "algorithm": "sha256",
+        "value": "eaac4f5860bab4fba94ba24cafa94ea89456b9b318991e749a47e2cd90463766"
+      },
+      "template_source_identities": {
+        "algorithm": "sha256",
+        "value": "7f0f5c7f6f94aa79dc6f79bb831a4c3bfdc63f2a5974779f043bf2b7514d1924"
+      },
+      "template_touchpoints": {
+        "algorithm": "sha256",
+        "value": "81fb9cf5b9db874af11d0ba3dd0665dd52d6f516f0f6c5aa69a4f7ac66d03160"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "0c5f0ebb781f7cf60ceb9887ab8a86c15f9b2cc8c52abc3cfda9c634093c7b1b",
+      "umf/attribution_rules.json": "d55d8860e0dbc05714c63815b55a0bc2562946427d3d491c9f98e8235c9df577",
+      "umf/attributions.json": "cc6297fe3a40ad1f6020479340552e62760133c116b244139657c104a4d9b982",
+      "umf/campaigns.json": "509b7fb6125b7565dc3b054dabdce9bcd2556d7310e01dfed3991d28469ded7b",
+      "umf/channels.json": "7c077aac23a53bb53719a88ef88ddf1d5095e5c888a42d6d477b584ef7e981c2",
+      "umf/consent_events.json": "f38ace254b8e0bdb88bb6b1570ddf7075432b395bcf3584faba2a23639a65f7a",
+      "umf/consents.json": "9c895712c8fd6c7fa805b4359fec1eea3688f6571bcd4f57188e26afb400242f",
+      "umf/conversions.json": "ce7f9dddfd9cfb98b0611a820711fab3bdc052d0b586eb5f890bf2b780fc6968",
+      "umf/identity_assertions.json": "1197588ffdb5e6f91ee166a7ec37878d5042dd9ef29ca88f72aad7fd2f2457dc",
+      "umf/profiles.json": "f757a0a46d27221be12e55d67232099c7bdff3e368a43911f30a9a37ffbf05a4",
+      "umf/sessions.json": "fce53091156baad3cd90d65cc6139e94267a62601fadeca7bae51eee71f9c862",
+      "umf/source_identities.json": "3af8b89e78515929fb2ba43c3ad6dd6a047aec9e8435edb5153d07e21b193193",
+      "umf/touchpoints.json": "435a34cb8a8f945bd872efca89faa8106279391b3590590c58f3c37c7bc00758"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "martech",
+      "sha256": "762ec32fb7d3d2f42a5878359bb98341cecc3730cec20e11e64939d431ab2404",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "1af1673dcb9d7fd94f2cbbdf6314769bba4f54003536dc7ac0dae3989f1cb472",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "profiles"
+      },
+      "values": {
+        "profiles.id": "[42,0,\"P1\"]",
+        "profiles.name": "Synthetic profile"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "source_identities"
+      },
+      "values": {
+        "source_identities.id": "[42,0,\"SI1\"]",
+        "source_identities.profile_id": "[42,0,\"P1\"]",
+        "source_identities.publisher": "channel-a",
+        "source_identities.native_id": "same"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "source_identities"
+      },
+      "values": {
+        "source_identities.id": "[42,0,\"SI2\"]",
+        "source_identities.profile_id": "[42,0,\"P1\"]",
+        "source_identities.publisher": "channel-b",
+        "source_identities.native_id": "same"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"campaigns\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "campaigns"
+      },
+      "values": {
+        "campaigns.id": "[42,0,\"C1\"]",
+        "campaigns.name": "Synthetic campaign"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"channels\",[\"[42,0,\\\"CH1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "channels"
+      },
+      "values": {
+        "channels.id": "[42,0,\"CH1\"]",
+        "channels.name": "email"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consents\",[\"[42,0,\\\"CO1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "consents"
+      },
+      "values": {
+        "consents.id": "[42,0,\"CO1\"]",
+        "consents.profile_id": "[42,0,\"P1\"]",
+        "consents.channel_id": "[42,0,\"CH1\"]",
+        "consents.status": "granted",
+        "consents.valid_from": "2026-01-01",
+        "consents.valid_to": "2026-01-05",
+        "consents.purpose": "campaign-email",
+        "consents.source_identity_id": "[42,0,\"SI1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"sessions\",[\"[42,0,\\\"SE1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "sessions"
+      },
+      "values": {
+        "sessions.id": "[42,0,\"SE1\"]",
+        "sessions.profile_id": "[42,0,\"P1\"]",
+        "sessions.source_identity_id": "[42,0,\"SI1\"]",
+        "sessions.started_at": "2026-01-01T10:00Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"identity_assertions\",[\"[42,0,\\\"IA1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "identity_assertions"
+      },
+      "values": {
+        "identity_assertions.id": "[42,0,\"IA1\"]",
+        "identity_assertions.left_id": "[42,0,\"SI1\"]",
+        "identity_assertions.right_id": "[42,0,\"SI2\"]",
+        "identity_assertions.evidence": "synthetic user confirmation",
+        "identity_assertions.status": "asserted"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "touchpoints"
+      },
+      "values": {
+        "touchpoints.id": "[42,0,\"T1\"]",
+        "touchpoints.profile_id": "[42,0,\"P1\"]",
+        "touchpoints.campaign_id": "[42,0,\"C1\"]",
+        "touchpoints.channel_id": "[42,0,\"CH1\"]",
+        "touchpoints.event_day": "1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "touchpoints"
+      },
+      "values": {
+        "touchpoints.id": "[42,0,\"T2\"]",
+        "touchpoints.profile_id": "[42,0,\"P1\"]",
+        "touchpoints.campaign_id": "[42,0,\"C1\"]",
+        "touchpoints.channel_id": "[42,0,\"CH1\"]",
+        "touchpoints.event_day": "2"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consent_events\",[\"[42,0,\\\"CE1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "consent_events"
+      },
+      "values": {
+        "consent_events.id": "[42,0,\"CE1\"]",
+        "consent_events.consent_id": "[42,0,\"CO1\"]",
+        "consent_events.status": "withdrawn",
+        "consent_events.event_time": "2026-01-05",
+        "consent_events.purpose": "campaign-email"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "conversions"
+      },
+      "values": {
+        "conversions.id": "[42,0,\"CV1\"]",
+        "conversions.profile_id": "[42,0,\"P1\"]",
+        "conversions.event_day": "3",
+        "conversions.amount": "1E+1",
+        "conversions.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "conversions"
+      },
+      "values": {
+        "conversions.id": "[42,0,\"CV2\"]",
+        "conversions.profile_id": "[42,0,\"P1\"]",
+        "conversions.event_day": "20",
+        "conversions.amount": "2E+1",
+        "conversions.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attribution_rules\",[\"[42,0,\\\"AR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "attribution_rules"
+      },
+      "values": {
+        "attribution_rules.id": "[42,0,\"AR1\"]",
+        "attribution_rules.window_days": "7",
+        "attribution_rules.algorithm": "illustrative-last-touch"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "attributions"
+      },
+      "values": {
+        "attributions.id": "[42,0,\"A1\"]",
+        "attributions.conversion_id": "[42,0,\"CV1\"]",
+        "attributions.touchpoint_id": "[42,0,\"T2\"]",
+        "attributions.rule_id": "[42,0,\"AR1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "element": "attributions"
+      },
+      "values": {
+        "attributions.id": "[42,0,\"A2\"]",
+        "attributions.conversion_id": "[42,0,\"CV2\"]",
+        "attributions.touchpoint_id": null,
+        "attributions.rule_id": "[42,0,\"AR1\"]"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "source_identities.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "source_identities.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consents.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"consents\\\",[\\\"[42,0,\\\\\\\"CO1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "consents.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"consents\",[\"[42,0,\\\"CO1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consents.channel_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"consents\\\",[\\\"[42,0,\\\\\\\"CO1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "consents.channel_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"consents\",[\"[42,0,\\\"CO1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"channels\",[\"[42,0,\\\"CH1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consents.source_identity_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"consents\\\",[\\\"[42,0,\\\\\\\"CO1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "consents.source_identity_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"consents\",[\"[42,0,\\\"CO1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"sessions.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"SE1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "sessions.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"sessions\",[\"[42,0,\\\"SE1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"sessions.source_identity_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"SE1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "sessions.source_identity_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"sessions\",[\"[42,0,\\\"SE1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"identity_assertions.left_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"identity_assertions\\\",[\\\"[42,0,\\\\\\\"IA1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "identity_assertions.left_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"identity_assertions\",[\"[42,0,\\\"IA1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"identity_assertions.right_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"identity_assertions\\\",[\\\"[42,0,\\\\\\\"IA1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"source_identities\\\",[\\\"[42,0,\\\\\\\"SI2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "identity_assertions.right_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"identity_assertions\",[\"[42,0,\\\"IA1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"source_identities\",[\"[42,0,\\\"SI2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.campaign_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"campaigns\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.campaign_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"campaigns\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.channel_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.channel_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"channels\",[\"[42,0,\\\"CH1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.campaign_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"campaigns\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.campaign_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"campaigns\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints.channel_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"CH1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "touchpoints.channel_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"channels\",[\"[42,0,\\\"CH1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"consent_events.consent_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"consent_events\\\",[\\\"[42,0,\\\\\\\"CE1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"consents\\\",[\\\"[42,0,\\\\\\\"CO1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "consent_events.consent_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"consent_events\",[\"[42,0,\\\"CE1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"consents\",[\"[42,0,\\\"CO1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"conversions.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"conversions\\\",[\\\"[42,0,\\\\\\\"CV1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "conversions.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"conversions.profile_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"conversions\\\",[\\\"[42,0,\\\\\\\"CV2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"profiles\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "conversions.profile_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"profiles\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions.conversion_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attributions\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"conversions\\\",[\\\"[42,0,\\\\\\\"CV1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "attributions.conversion_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions.touchpoint_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attributions\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"touchpoints\\\",[\\\"[42,0,\\\\\\\"T2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "attributions.touchpoint_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"touchpoints\",[\"[42,0,\\\"T2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions.rule_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attributions\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attribution_rules\\\",[\\\"[42,0,\\\\\\\"AR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "attributions.rule_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"attribution_rules\",[\"[42,0,\\\"AR1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions.conversion_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attributions\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"conversions\\\",[\\\"[42,0,\\\\\\\"CV2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "attributions.conversion_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"conversions\",[\"[42,0,\\\"CV2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:martech\",\"domain\",\"attributions.rule_id\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attributions\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:martech\\\",\\\"domain\\\",\\\"attribution_rules\\\",[\\\"[42,0,\\\\\\\"AR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:martech",
+        "module": "domain",
+        "id": "attributions.rule_id"
+      },
+      "source": "[\"urn:umf:domain:martech\",\"domain\",\"attributions\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:martech\",\"domain\",\"attribution_rules\",[\"[42,0,\\\"AR1\\\"]\"]]"
+    }
+  ]
+}

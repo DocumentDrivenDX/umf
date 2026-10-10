@@ -1,0 +1,144 @@
+{
+  "version": "1.0",
+  "table_name": "financial_observations",
+  "description": "Public-company intelligence financial_observations; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "company_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.company_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "snapshot_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.snapshot_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "taxonomy",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.taxonomy; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "concept",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.concept; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "unit",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.unit; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "ordinal",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.ordinal; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "value",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.value; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "value_state",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.value_state; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "start_date",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.start_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "end_date",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.end_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "accession",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.accession; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "filed_date",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.filed_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "form",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.form; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "fiscal_year",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.fiscal_year; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "fiscal_period",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.fiscal_period; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "frame",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "financial_observations.frame; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_path",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.native_path; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_json",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.native_json; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "concept_json",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "financial_observations.concept_json; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "company_id",
+        "references_table": "companies",
+        "references_column": "id"
+      },
+      {
+        "column": "snapshot_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

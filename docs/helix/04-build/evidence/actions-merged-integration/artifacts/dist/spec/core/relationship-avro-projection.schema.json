@@ -1,0 +1,393 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-avro-projection:1.0.0",
+  "title": "Authored relationship projection to Avro target-key reference values",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "outcome",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-relationship-avro"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "approximated",
+        "not-expressible",
+        "unknown"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:relationship-operation:1.0.0#/$defs/declaration"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "profile",
+        "relationship",
+        "mode",
+        "recordName",
+        "namespace",
+        "fieldName",
+        "keyRecordName",
+        "shape",
+        "components"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "const": "target-key-record"
+        },
+        "relationship": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "id"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "recordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "fieldName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyRecordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shape": {
+          "enum": [
+            "one",
+            "nullable-one",
+            "array"
+          ]
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "targetField",
+              "name",
+              "type"
+            ],
+            "properties": {
+              "targetField": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "enum": [
+                  "boolean",
+                  "int",
+                  "long",
+                  "float",
+                  "double",
+                  "bytes",
+                  "string"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.avro.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "1.12.0",
+        "subset": "Explicit single-source/single-target named key-record value carrier, tested with Apache Avro 1.12.0 and fastavro 1.12.2; no target existence, participation, lifecycle or authored intent inferred from native import"
+      }
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "nativeArchive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "dependencies"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "idealPath",
+          "nativePath",
+          "outcome",
+          "targetKey",
+          "componentPaths"
+        ],
+        "properties": {
+          "idealPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "const": "approximated"
+          },
+          "targetKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "componentPaths": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "outcome",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Retained receipt recovers authored source and emitted native archive; native-only import does not establish authored intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeArchive"
+        ],
+        "properties": {
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          },
+          "outcome": {
+            "const": "approximated"
+          },
+          "mappings": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeArchive": false,
+          "mappings": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

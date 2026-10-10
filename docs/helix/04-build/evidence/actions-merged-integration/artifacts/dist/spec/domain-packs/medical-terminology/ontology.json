@@ -1,0 +1,271 @@
+{
+  "umf": "0.8.0",
+  "id": "urn:umf:domain:medical-terminology",
+  "title": "medical-terminology ontology",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "domain",
+      "namespace": "urn:umf:domain:medical-terminology:",
+      "elements": [
+        {
+          "id": "systems",
+          "kind": "record",
+          "name": "systems",
+          "title": "systems",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 native ICD-10-CM FY2026 October 2025 order-file records; six separately identified system/access descriptors.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "systems.system_key"
+            },
+            {
+              "module": "domain",
+              "element": "systems.system"
+            },
+            {
+              "module": "domain",
+              "element": "systems.release"
+            },
+            {
+              "module": "domain",
+              "element": "systems.availability"
+            },
+            {
+              "module": "domain",
+              "element": "systems.description"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "systems.system_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "systems.system_key",
+          "name": "system_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "system key",
+          "extensions": {}
+        },
+        {
+          "id": "systems.system",
+          "name": "system",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "system",
+          "extensions": {}
+        },
+        {
+          "id": "systems.release",
+          "name": "release",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "release",
+          "extensions": {}
+        },
+        {
+          "id": "systems.availability",
+          "name": "availability",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "availability",
+          "extensions": {}
+        },
+        {
+          "id": "systems.description",
+          "name": "description",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "description",
+          "extensions": {}
+        },
+        {
+          "id": "concepts",
+          "kind": "record",
+          "name": "concepts",
+          "title": "concepts",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 native ICD-10-CM FY2026 October 2025 order-file records; six separately identified system/access descriptors.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "concepts.concept_key"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.system"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.release"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.code"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.billable"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.short_display"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.display"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.effective_start"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.effective_end"
+            },
+            {
+              "module": "domain",
+              "element": "concepts.native_line"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "concepts.concept_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "concepts.concept_key",
+          "name": "concept_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "concept key",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.system",
+          "name": "system",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "system",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.release",
+          "name": "release",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "release",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.code",
+          "name": "code",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "code",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.billable",
+          "name": "billable",
+          "kind": "field",
+          "scalarType": "boolean",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "billable",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.short_display",
+          "name": "short_display",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "short display",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.display",
+          "name": "display",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "display",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.effective_start",
+          "name": "effective_start",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "effective start",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.effective_end",
+          "name": "effective_end",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "effective end",
+          "extensions": {}
+        },
+        {
+          "id": "concepts.native_line",
+          "name": "native_line",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native line",
+          "extensions": {}
+        }
+      ],
+      "relationships": []
+    }
+  ]
+}

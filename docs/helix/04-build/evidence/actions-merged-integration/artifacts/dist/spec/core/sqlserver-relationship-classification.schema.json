@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:sqlserver-relationship-classification:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "const": "classify-sqlserver-relationships"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nativeSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "const": "captured-foreign-keys"
+        }
+      },
+      "required": [
+        "nativeSource",
+        "mode",
+        "profile"
+      ]
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "16.0.4295.3",
+        "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "table": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "schema",
+              "name"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nativeForeignKey": {},
+          "referencedKeys": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "nativeKey": {}
+              },
+              "required": [
+                "path",
+                "nativeKey"
+              ]
+            },
+            "minItems": 0
+          },
+          "sourceFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module",
+                "element"
+              ]
+            },
+            "minItems": 0
+          },
+          "targetFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module",
+                "element"
+              ]
+            },
+            "minItems": 0
+          },
+          "enforcement": {
+            "enum": [
+              "enabled-trusted",
+              "enabled-untrusted",
+              "disabled",
+              "unknown"
+            ]
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "provenance": {
+            "const": "inferred"
+          },
+          "deleteAction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "updateAction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "notForReplication": {
+            "type": "boolean"
+          },
+          "resolution": {
+            "enum": [
+              "captured-tuple-candidate",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "nativePath",
+          "table",
+          "name",
+          "nativeForeignKey",
+          "referencedKeys",
+          "sourceFields",
+          "targetFields",
+          "enforcement",
+          "authorIntent",
+          "provenance",
+          "deleteAction",
+          "updateAction",
+          "notForReplication",
+          "resolution"
+        ]
+      },
+      "minItems": 0
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "recovery": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ]
+      },
+      "minItems": 1
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "observations",
+    "residuals",
+    "diagnostics"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ]
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    }
+  ]
+}

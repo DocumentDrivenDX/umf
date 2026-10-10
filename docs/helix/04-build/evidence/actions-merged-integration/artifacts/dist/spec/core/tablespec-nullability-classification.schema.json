@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:tablespec-nullability-classification:1.0.0",
+  "title": "TableSpec selected-context availability classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-tablespec-nullability"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "column",
+        "mode",
+        "profile",
+        "context",
+        "carrier"
+      ],
+      "properties": {
+        "column": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "runtime-model",
+            "checked-schema",
+            "unresolved"
+          ]
+        },
+        "context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "null-value",
+            "unresolved"
+          ]
+        },
+        "author": {
+          "$ref": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.tablespec.nullability",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Declared nullable metadata in an explicitly selected profile/context; explicit null-value carrier; no omitted-member or native enforcement equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "nativeFragment",
+        "nullability",
+        "interpretation",
+        "outcome",
+        "context",
+        "carrier",
+        "basis"
+      ],
+      "properties": {
+        "origin": {
+          "const": "classified"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeFragment": {
+          "$ref": "urn:umf:native-json:0.1.0"
+        },
+        "nullability": {
+          "enum": [
+            "required",
+            "absent-allowed",
+            "unspecified"
+          ]
+        },
+        "interpretation": {
+          "enum": [
+            "declared",
+            "unknown",
+            "unsupported"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "null-value",
+            "unresolved"
+          ]
+        },
+        "basis": {
+          "const": "Native declaration under selected profile and context; not runtime coercion or row validation"
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Retain the complete source and native archive; unknown native meaning is not replaced by the core label"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              },
+              "interpretation": {
+                "const": "declared"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
