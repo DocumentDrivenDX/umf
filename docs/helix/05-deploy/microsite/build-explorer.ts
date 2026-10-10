@@ -59,5 +59,4 @@ for(const root of roots){const allPaths=await files(root);const paths=root===joi
 for(const root of roots){for(const path of (await files(root)).filter(p=>p.endsWith('pack.json'))){const pack=await Bun.file(path).json();if(!pack.composition)continue;const members=await resolveDomainFamily(path);for(const member of members)if(!entries.some(e=>e.id===`pack:${member.pack.id}@${member.pack.version}`))throw Error('Family component missing from catalog');}}
 const path='fixtures/core/schema-properties.json',text=await Bun.file(join(repo,path)).text();entries.push({id:path,title:'Orders · core schema properties',category:'example',path,text,format:'json'});
 await Bun.write(join(dist,'schema-catalog.json'),JSON.stringify({version:1,entries},null,2)+'\n');
-const build=await Bun.build({entrypoints:[join(import.meta.dir,'explorer.ts')],outdir:dist,target:'browser',minify:true});if(!build.success)throw new Error(build.logs.join('\n'));
-console.log(`Explorer built: ${entries.filter(e=>e.id.startsWith('pack:')).length} packs, ${entries.length} catalog entries.`);
+console.log(`Catalog built: ${entries.filter(e=>e.id.startsWith('pack:')).length} packs, ${entries.length} catalog entries.`);

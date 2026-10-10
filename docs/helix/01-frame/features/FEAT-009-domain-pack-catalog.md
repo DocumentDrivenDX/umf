@@ -45,7 +45,9 @@ Example schemas and fake values alone leave relationships, semantic rules and co
 
 - PACK-08: The browser presents a compact, responsive workspace with readable display labels and exact identifiers, adequate field widths, searchable field details, and explicit links between tables, ontology and source artifacts. Structured technical metadata uses progressive disclosure; original metadata and material qualifications remain accessible.
 
-- PACK-09: Distribute the schema browser as an independently versioned reusable software package. Consumers can host the assets and mount the same tables, artifact and ontology views with their own catalog, without a UMF microsite dependency or end-user Bun runtime. Embed routing and styles remain isolated; original metadata and rights guarantees apply unchanged.
+- PACK-09: Distribute the schema browser as an independently versioned reusable software package. Consumers can host the assets and mount the same tables, artifact and ontology views with their own catalog, without a UMF microsite dependency or end-user Bun runtime. Embed routing and styles remain isolated; original metadata and rights guarantees apply unchanged. Publish to npm for installation by name; the microsite consumes an exact integrity-locked released package and verifies asset/workspace parity, with no independent renderer build.
+
+- PACK-10: Publish a versioned embedding contract and catalog schema with bounded inline/lazy sources, configurable categories, annotations and revision history. Hosts can select entries and receive readiness, navigation and structured errors through an ESM API or origin-checked iframe protocol. Strict-CSP source inspection requires no dynamic code generation. Ship independent themed assets and reusable keyboard-accessible property/map components, structural revision comparison, reproducible build provenance and exact-source preservation. Qualify these in a generic browser host before release.
 
 ## User Stories
 
