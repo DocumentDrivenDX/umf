@@ -10026,3 +10026,41 @@ and current enforcement evidence still remain required. This is not a formal
 Rust/native refinement proof. All132 original acceptance obligations remain
 binding, historical required acceptance remains26/132, and the full goal stays
 active. Neither this candidate nor deployment-catalog provenance closes it.
+
+
+### Rule domain/literal verification-demand component checkpoint
+
+Weft main `5120c54f76acbd17e2ac0a6a53721fdd16a4d274` contains the separate
+private template0.3 experiment described in the
+[issuer annex](../02-design/spikes/security/backend-requirement-issuer-v0.2.md).
+Actual borrowed Field/Context/Constant operand domains and constant0.1.0 transform
+output domains now produce mandatory occurrence-specific verification duties.
+Exact RulePath framing keeps both Equal operands and ordered disclosures distinct
+even with equal values and a populated false condition. Literal duties preserve
+wrapper family and typed absence without cloning/normalizing owner payloads.
+Unknown selected transform names/revisions or unsupported wrapper shapes refuse.
+Earlier template0.1/0.2 paths retain their meaning and reject new rule-only selectors.
+
+The [unchanged Weft checkpoint](evidence/security/weft-rule-payload/checkpoint.json)
+and [integration receipt](evidence/security/weft-rule-payload/integration.json)
+retain component evidence for US-056-AC7/AC10:588 release workspace tests across
+44 groups,245 core, four new controls,842 fresh frozen inputs unchanged, zero
+failed/ignored/measured/filtered and independent Astra ultra source/pin/log audit
+with no landing blocker in this conditional demand-extraction scope. A manually
+authored28-duty actual-owner golden covers both Equal sides and distinct target
+Fields with identical transform output Field/domain/value. All applicable selector/
+origin omissions and whole0.3 ledger minus-one controls refuse. Direct dispatch
+controls cover all five scalar wrappers, typed absence and independently counted
+Boolean4-visit/7-text versus null3-visit/0-text pre-encoding ledgers.
+
+Astra's fixture feedback was applied: original source admission continues to reject
+duplicate disclosure target Fields. The repeated-target direct typed test qualifies
+framing only. The development correction is retained as diagnostics without exact
+failed-source snapshots; only the final fresh frozen run qualifies current sources.
+Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures.
+
+These checks do not prove exact numeric/literal native representability, complete
+authenticated profile selection, original assertion/procedure sufficiency or
+Rust/database refinement. Native bodies/current-cut/enforcement qualification
+and all132 original acceptance obligations remain required. Historical required
+acceptance stays26/132; no case is promoted and the full goal remains active.

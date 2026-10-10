@@ -365,3 +365,42 @@ independent Astra ultra review. The
 [integration receipt](../../../04-build/evidence/security/weft-payload-applicability/integration.json)
 keeps the Weft source-pin namespace explicit. No original acceptance case is
 promoted.
+
+
+#### Rule domain/literal verification demand candidate — template0.3
+
+The next private Weft template experiment extends typed payload dispatch to the
+actual borrowed RulePayload domains and literals. Field/Context/Constant operands
+and constant0.1.0 output domains produce mandatory role/scalar/nullability/facet
+family duties; constants/transforms produce scalar-wrapper-family and typed
+absence/nonabsence duties. Unknown transform names/revisions and unsupported
+selected wrapper shapes refuse. Identity/Endpoint terms retain the existing
+structural and actual key obligations. Earlier0.1/0.2 template semantics remain
+unchanged and reject rule-only selectors.
+
+Each exact RulePath is framed beneath rule-payload with its specific payload
+address. Both Equal sides, populated false branches and repeated transform output
+values at separate disclosure positions remain distinct verification demands.
+The original source/type admission still rejects duplicate disclosed target Fields
+in one rule; the admitted golden uses distinct target Fields with identical output
+Field/domain/value. A direct repeated-target primitive control tests framing only
+and cannot widen source admission. Original immutable domain/literal values remain
+in owner custody; the visitor neither clones payload JSON nor renormalizes values.
+
+These are duty-extraction checks. A scalar/facet family or absent/nonabsent marker
+is not exact numeric-value equality, physical representability or native semantic
+qualification. Source admission retains responsibility for exact scalar interpretation
+and refinements; future backend verification must discharge those original duties
+against complete native/profile evidence. Existing conditional requirement-matching
+laws do not establish Rust/database refinement. Complete authenticated profile
+selection, native enforcement, assertion/procedure sufficiency and all132 required
+acceptance obligations remain open. Historical acceptance stays26/132.
+
+The template0.3 candidate is merged directly into Weft main at
+`5120c54f76acbd17e2ac0a6a53721fdd16a4d274`. The
+[retained checkpoint](../../../04-build/evidence/security/weft-rule-payload/checkpoint.json)
+records588 workspace tests/44 groups,245 core,842 unchanged input pins and
+independent Astra ultra source/receipt review. The
+[integration receipt](../../../04-build/evidence/security/weft-rule-payload/integration.json)
+preserves the explicit Weft source-pin namespace. All original acceptance
+qualifications remain unchanged.
