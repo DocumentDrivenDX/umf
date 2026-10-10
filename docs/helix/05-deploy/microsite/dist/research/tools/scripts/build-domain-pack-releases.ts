@@ -5,8 +5,9 @@ import {tmpdir} from 'node:os';
 import {exportPack} from './loaders/export';
 import {hash,json} from './loaders/state';
 const outputIndex=process.argv.indexOf('--output');
-if(outputIndex<0||!process.argv[outputIndex+1])throw Error('Usage: bun scripts/build-domain-pack-releases.ts --output DIRECTORY (local archives only)');
-const repo=resolve(import.meta.dir,'..'),dist=resolve(process.argv[outputIndex+1]);
+const outputPath=outputIndex>=0?process.argv[outputIndex+1]:undefined;
+if(!outputPath)throw Error('Usage: bun scripts/build-domain-pack-releases.ts --output DIRECTORY (local archives only)');
+const repo=resolve(import.meta.dir,'..'),dist=resolve(outputPath);
 await mkdir(dist,{recursive:true});const temp=await mkdtemp(join(tmpdir(),'umf-pack-release-'));
 const bundles=[];
 try{
