@@ -1,4 +1,4 @@
-# medical-imaging 1.1.0
+# medical-imaging 1.2.0
 
 One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence; one unchanged public TCIA LIDC-IDRI CT slice with publisher-deidentified source identity.
 

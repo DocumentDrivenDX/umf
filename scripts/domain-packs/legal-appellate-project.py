@@ -184,7 +184,7 @@ for name, layout in LAYOUT.items():
                 raise ValueError(f'Dangling reference: {name}/{value}')
 
 preservation = json.loads((ROOT.parents[1] / 'loader-preservation/1.0.0/profile.json').read_text())
-pack = dict(preservation=preservation, id='legal-appellate', version='1.0.0',
+pack = dict(preservation=preservation, id='legal-appellate', version='1.1.0', artifact_collections=[dict(version='1.0.0',id='court-opinions',title='Original court opinions',view='documents',semantic_kinds=['court_opinion'],source_ids=[k for k,v in sources.items() if v.get('format')=='pdf'],media_types=['application/pdf'],metadata_schema_ids=['cases','decisions','courts','counsel'],derived_schema_ids=['decision_pages','annotations','annotation_evidence'],description='Original judicial PDFs are authoritative; extracted text and provisional annotations remain separate projections.')],
  description='Historical judicial PDFs, provisional split-screening annotations and fixed workflow fixtures; no live monitor.',
  domain_types={'source_scoped_identity': {'description': 'Court/docket, content-version and PDF page identity; never inferred from party names.'}},
  sources=sources, source_bindings=bindings, schemas=schemas,

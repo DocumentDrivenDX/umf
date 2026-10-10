@@ -6,7 +6,7 @@ a competing definition of the format. Consumer extension schemas and execution
 policies remain in consumer repositories.
 
 Install from an UMF checkout with `pip install ./python`, or install a built
-wheel. This change does not publish a PyPI release or an npm package.
+wheel. Released wheels and source distributions are pinned in GitHub releases; PyPI publication requires a matching trusted-publisher configuration for the repository workflow.
 
 ```python
 from umf import Document, read_document, validate_document, write_document

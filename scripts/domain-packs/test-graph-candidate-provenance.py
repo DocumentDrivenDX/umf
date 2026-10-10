@@ -32,7 +32,7 @@ class GraphCandidateProvenanceTests(unittest.TestCase):
         audit = module.verify_inventory(BASE)
         historical = [r for r in audit['candidates'] if r['classification'] == 'historical-pack']
         self.assertEqual([r['pack'] for r in historical], ['legal', 'medical'])
-        self.assertTrue(all((r['source_version'], r['current_version']) == ('1.0.0', '1.1.0') for r in historical))
+        self.assertTrue(all((r['source_version'], r['current_version']) == ('1.0.0', '1.2.0') for r in historical))
         self.assertEqual(len(audit['candidates']), 16)
         self.assertIn('gtfs-schedule', audit['without_candidate'])
         self.assertIn('medical-carrier', audit['without_candidate'])

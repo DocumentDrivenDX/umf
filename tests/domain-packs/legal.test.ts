@@ -10,7 +10,7 @@ const root='spec/domain-packs/legal';
 test('mixed legal corpus pins originals and keeps real evidence separate from fabricated operations',async()=>{
  const pack=await Bun.file(root+'/pack.json').json();
  expect(createValidator().compile(generateDomainPackSchema())(pack)).toBe(true);
- expect(pack.version).toBe('1.1.0');
+ expect(pack.version).toBe('1.2.0');
  expect(pack.fixture_counts).toEqual({cases:1,evidence_documents:7,evidence_pages:383});
  for(const entry of pack.schemas){
   if(entry.format!=='tablespec')continue;
