@@ -23,7 +23,7 @@ ddx:
       kind: informed_by
 ---
 
-# Integrate the current primary branch without losing qualification meaning
+# Qualify the current primary integration under the original strict profile
 
 The primary branch advanced and was renamed to `main` while the exact-source
 40e qualification ran. Its new domain-pack loader, public-company and evolution
@@ -42,7 +42,19 @@ action tests. Its certificate describes that immutable source, not the later
 merged source. Preserve the full certificate and logs under an immutable Git
 commit and content-addressed retained inventory before replacing generated paths.
 
-Create a separate composition certificate for one frozen integrated source.
+For this release, create a new exact-current-source strict certificate for one
+frozen integrated source: rerun all 174 native/browser commands, six auxiliary
+commands, all current disjoint regression tests, the original unchanged 17
+admission tests, all six current integrity verifiers and 119 native action tests.
+Also run current browser, metadata, native tutorial, formal and website checks.
+Inherited native evidence is not counted as fresh. This retains the existing
+source-fingerprint authority and avoids introducing a new evidence-admission
+mechanism during delivery.
+
+The reviewed alternative below is future design guidance, not the selected
+release path and not an additional implementation requirement. If a future
+release uses composition, create a separate composition certificate for one
+frozen integrated source.
 This certificate must label the 40e native campaign as inherited prerequisite
 evidence and separately enumerate every freshly executed current command.
 It must not rename inherited records as current, rewrite raw native fingerprints,
@@ -50,7 +62,7 @@ mock old-byte readers as current verification, or alter the existing strict
 fingerprint guards. A support claim remains limited to the named versions,
 subsets, native runtimes and evidence.
 
-## Executable composition admission
+## Reviewed future alternative: executable composition admission
 
 1. Validate the immutable baseline certificate, every prerequisite command/result,
    raw log, source inventory and proof-closure hash. Reject missing, failed or
@@ -74,7 +86,7 @@ subsets, native runtimes and evidence.
    container exits, closed raw logs and output hashes. Reject stale, incomplete
    or unlisted execution.
 
-## Fresh execution and assertion allocation
+## Fresh execution and assertion allocation for the future alternative
 
 Run current public-entrypoint and browser initialization, changed domain-pack
 admission/export/loader/evolution tests, complete behavior regression, schema
@@ -124,6 +136,9 @@ and native bodies are unchanged; `preflightBytes` gains only an export keyword;
 new initialization creates private validators; domain-pack behavior changes.
 Astra found composition defensible with the executable obligations above and
 required complete assertion allocation for the original 17 admission tests.
+The selected release path instead reruns the complete strict profile, so all
+17 original admission tests execute unchanged on the current source. No extracted
+assertions or new composition authority are used for this release.
 This is design approval, not completed certification. Final command inventories,
 certificate hashes, source revision, results and deployment URLs remain unknown
 until their actual execution and audit. A later primary change requires a new
