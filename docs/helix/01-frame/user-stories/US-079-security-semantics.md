@@ -15,7 +15,7 @@ ddx:
 
 # US-079: Author and analyze shared security policies
 
-**Feature:** FEAT-008. **Feature Requirements:** SEC-01–05, SEC-12. **PRD Requirements:** FR-45. **Priority:** P0.
+**Feature:** FEAT-008. **Feature Requirements:** SEC-01–05, SEC-12. **PRD Requirements:** FR-46. **Priority:** P0.
 
 ## Story
 
@@ -65,7 +65,7 @@ Unsupported native behavior cannot be downgraded to a successful translation.
 
 ## Dependencies
 
-FEAT-008, FR-45, CONTRACT-062/063, SD-008, TD-079. US-056 and US-057 depend on US-079 interpretation.
+FEAT-008, FR-46, CONTRACT-062/063, SD-008, TD-079. US-056 and US-057 depend on US-079 interpretation.
 
 ## Out of Scope
 

@@ -5784,7 +5784,7 @@ compute, migration or protocol admission is claimed. Ashlar's existing pinned
 single-table generator remains compatible; consumer repinning is separate work.
 ## Shared security execution goal (2026-10-08)
 
-Owner authorization covers requirements/design, bounded formal/native spikes, robust backend plans and an active goal to make implementations pass all allocated tests. Governed slice: FR-45, FEAT-008, US-079–057, CONTRACT-062/063, SD-008 and TD/STP-079–057.
+Owner authorization covers requirements/design, bounded formal/native spikes, robust backend plans and an active goal to make implementations pass all allocated tests. Governed slice: FR-46, FEAT-008, US-079–057, CONTRACT-062/063, SD-008 and TD/STP-079–057.
 
 1. Specify meaning and qualified binding admission; retain formal assumptions.
 2. Execute a small independent oracle/formal/physical-mapping spike.

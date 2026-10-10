@@ -7,7 +7,8 @@
     "TD-055": "TD-079",
     "STP-055": "STP-079",
     "CONTRACT-052": "CONTRACT-062",
-    "CONTRACT-053": "CONTRACT-063"
+    "CONTRACT-053": "CONTRACT-063",
+    "FR-45": "FR-46"
   },
   "qualification": "Aliases apply only to the legacy security artifact paths/preimage digests, never globally to main medical/domain IDs. Historical evidence bytes remain unchanged and do not qualify integrated source. Original132 case IDs and acceptance gate remain unchanged; live criterion citations migrate explicitly. Pre-existing main CONTRACT050/058 collisions are separate.",
   "changes": [
@@ -22,21 +23,21 @@
       "oldPath": "docs/helix/01-frame/user-stories/US-055-security-semantics.md",
       "newPath": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
       "beforeSha256": "cab8a06e7f0aa0bd4051d8605b8e7135c1f6f4ec65729372e41f2be193e3f7f7",
-      "afterSha256": "5dc27de051b232e1d5fd286b494e712e45b923a92f003df14e05e58a5adc50d4",
+      "afterSha256": "22350481cca305282d837d2da6bc8a0bd6ff0d7d335e8fd2b754b79ad532a67f",
       "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-055-security-semantics.md.original.txt"
     },
     {
       "oldPath": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
       "newPath": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
       "beforeSha256": "dd386a619042ca2c69167651e7cf150f5a1785e5f884ece274ea579f4e54a5e6",
-      "afterSha256": "ffa5f0eb0492588327b141efdf74c56693d3e547eba88737eee7a8492ed76aec",
+      "afterSha256": "cb1cebdd91512a4d0bc3f6e0b50455f3de1b255583abad2ff09e57976f1204d4",
       "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-057-security-lifecycle.md.original.txt"
     },
     {
       "oldPath": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
       "newPath": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
       "beforeSha256": "308c3be4ebd0caf369900f3ed187a4f7f76434af1a93243a01689bb69147b574",
-      "afterSha256": "8b61244639dd1dee86007820d279210a52fa4f9cfe20ab2244434f2b8ca61bda",
+      "afterSha256": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
       "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-056-security-bindings.md.original.txt"
     },
     {
@@ -337,7 +338,7 @@
       "oldPath": "docs/helix/01-frame/prd.md",
       "newPath": "docs/helix/01-frame/prd.md",
       "beforeSha256": "2e5d5854c1aef2292e70a324b3912ba59605db8692e8000c1c5fc1f52caf5571",
-      "afterSha256": "201baebff693ad8a10544eacf0d1def9b1d1c0ab36b779b0a2f324016d778bf8",
+      "afterSha256": "bb597e9931f3da9b9b0d816bdfd550e09de1d17861a2baadb639e531a9da0db4",
       "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/prd.md.original.txt"
     },
     {
@@ -351,7 +352,7 @@
       "oldPath": "docs/helix/04-build/implementation-plan.md",
       "newPath": "docs/helix/04-build/implementation-plan.md",
       "beforeSha256": "80424405168ffb33b36478996625ad06ad3abaff6dbf8f29f37ea95f4da97b77",
-      "afterSha256": "f14572d38eab77e093a6dc3d7cd3e2c6d60faf30138167fffb8041c101e00f83",
+      "afterSha256": "dc3233aacb045dd6337762b00fb697bc2868b6b43544bed66bed2c2d76130d57",
       "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/04-build/implementation-plan.md.original.txt"
     },
     {
@@ -2470,5 +2471,6 @@
   "correctedAttempts": [
     "Initial scope classifier also selected four main cybersecurity domain documents. Restored exact preimages; excluded them from the migration.",
     "Initial invariant expected only criterion aliases, so correctly failed on the separately declared contract path/citation aliases. Full declared mapping now reproduces the original132 plan exactly."
-  ]
+  ],
+  "requirementAliasScope": "Only the legacy shared-security requirement defined by FEAT-008 and the appended security PRD paragraph migrates FR45\u2192FR46. Main portable-domain FR45 and every NFR45 remain unchanged."
 }
