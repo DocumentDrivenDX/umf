@@ -9987,3 +9987,42 @@ prerequisites do not prove test sufficiency or Rust/native refinement. All42 cas
 remain pending at the issuer, historical required acceptance stays26/132, and all132
 original acceptance obligations remain intact. Continue toward admitted profiles
 and complete backend qualification; component correspondence cannot finish the goal.
+
+
+### Typed payload applicability component checkpoint
+
+Weft main `c6d8c531b9a467aaabeaf8daf6ae6e6ad3735f72` now contains the private
+template0.2 family/presence applicability subset described in the
+[issuer annex](../02-design/spikes/security/backend-requirement-issuer-v0.2.md).
+Actual borrowed payloads generate mandatory scalar/nullability/refinement-family/
+protection, key, query/output and ordered association occurrence duties. Each
+missing applicable selector or eligible origin refuses; template0.1 retains its
+earlier behavior and rejects payload selectors. Full payload values remain intact
+in the owner. No public compiler transport or native dispatch is activated.
+
+The [unchanged Weft checkpoint](evidence/security/weft-payload-applicability/checkpoint.json)
+and [integration receipt](evidence/security/weft-payload-applicability/integration.json)
+link this component evidence to US-056-AC7/AC10:584 release workspace tests across
+44 groups,241 core, six new controls,840 freshly frozen input pins unchanged,
+zero failed/ignored/measured/filtered, and an independent Astra ultra source/hash/
+log audit with no landing blocker within this subset. The independently authored
+33-occurrence/48-scoped-duty golden is compared with actual owner dispatch and
+issued requirements; exact/minus-one whole0.2 ledger checks are retained.
+Specification checks pass51 artifacts/31 schemas/30 criteria/636 fixtures.
+Development corrections remain diagnostic logs without failed-source snapshots.
+
+Astra's availability feedback was applied: required and absent-allowed are exact
+values, separate from logical-type nullability. Actual-owner tests exercise two
+scans/actions, Context/Stored, operator modes and ordered endpoint/member positions.
+Authentic source-plan extraction checks optional Field/COUNT/nullable SUM typing.
+An exact direct-original result contract passes for a required Field and refuses
+the equivalent absent-allowed Field; this does not assert blanket optional-source
+or owner-context refusal or aggregate result admission.
+
+Facet numeric values, allowed-value members, constant/transform domains/literals/
+revisions and complete physical compatibility remain unqualified. Authenticated
+complete profiles, original assertion/procedure adequacy, native backend bodies
+and current enforcement evidence still remain required. This is not a formal
+Rust/native refinement proof. All132 original acceptance obligations remain
+binding, historical required acceptance remains26/132, and the full goal stays
+active. Neither this candidate nor deployment-catalog provenance closes it.

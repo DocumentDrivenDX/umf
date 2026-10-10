@@ -324,3 +324,44 @@ unaltered and pending. The strict result does not emit SQL, activate a public
 transport or promote any of132 acceptance cases. The full goal remains active.
 
 The candidate-duty checkpoint is merged directly into Weft main at `60e82559941ff124fa38e248adb49af4f0a77a18`. [Retained evidence](../../../04-build/evidence/security/weft-deployment-catalog/checkpoint.json) records578 workspace tests/44 groups,235 core,837 unchanged declared inputs and an independent Astra ultra source/receipt audit. This does not promote any original acceptance case.
+
+
+#### Typed payload applicability candidate — template0.2
+
+The next Weft private issuer revision dispatches mandatory duties from actual
+borrowed field/key/query/association payloads, preserving source/scope/occurrence
+identities. The subset distinguishes scalar families, carrier nullability, facet
+family presence, protection, key primary absent/false/true, ordered members,
+operator kind/mode, exact descriptor availability and typed output families,
+nullability and facets. Association endpoint/member positions remain separate
+occurrences. The original full payloads remain attached to the owner; source
+token parsing and payload JSON cloning are not used for dispatch. Template0.1
+retains its earlier weaker behavior and rejects payload selectors.
+
+Independent golden source/address/scope expectations cover repeated outputs; each
+applicable selector and origin omission refuses. Additional actual-owner controls
+cover Context/Stored roles, two scans/actions, disclosed/original-authorized
+operators and ordered endpoint/member occurrences. Authentic resolved source-plan
+extraction distinguishes COUNT/SUM and absent-allowed Field output typing. An
+otherwise identical complete direct-original result contract succeeds for a
+required Field and refuses for an absent-allowed Field. This is a result-declaration
+boundary, not a blanket optional-source or owner-context refusal. No aggregate or
+optional-original result admission is established.
+
+These are bounded component applicability checks, not formal Rust/native refinement
+or complete semantic compatibility. Facet numeric values, allowed-value members,
+constant/transform domains/literals/revisions and endpoint direction remain intact
+but not qualified by these selectors. Authenticated complete profile selection,
+physical capability selection, original assertion/procedure adequacy and native
+backend execution remain open. DeploymentIssued continues to denote only the
+strict deployment-catalog gate, not payload/native admission. All132 original
+acceptance cases remain binding; historical required acceptance stays26/132.
+
+The candidate is merged directly into Weft main at
+`c6d8c531b9a467aaabeaf8daf6ae6e6ad3735f72`. The
+[retained checkpoint](../../../04-build/evidence/security/weft-payload-applicability/checkpoint.json)
+records584 workspace tests/44 groups,241 core,840 unchanged input pins and
+independent Astra ultra review. The
+[integration receipt](../../../04-build/evidence/security/weft-payload-applicability/integration.json)
+keeps the Weft source-pin namespace explicit. No original acceptance case is
+promoted.
