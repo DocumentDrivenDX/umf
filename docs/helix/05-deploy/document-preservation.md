@@ -1,6 +1,6 @@
 # Python document loading and preservation
 
-TableSpec 0.0.8 is the primary executable runtime for document domain packs.
+TableSpec 0.0.9 is the primary executable runtime for document domain packs.
 UMF publishes declarations, source schemas, selected originals and the historical
 Bun companion 1.0.0 compatibility reference. No Bun process is required by Python.
 The court and SEC demos are pack 1.0.1; legal-appellate and
