@@ -135,3 +135,13 @@ publication is not claimed. Consumers host static assets with HTTP(S), appropria
 module MIME types and CSP/CORS permissions. No PDF/DICOM rendering, collector,
 reasoning or native semantic support is added. Full browser engine portability
 beyond the qualified Chromium run remains unmeasured.
+
+Package qualification evidence: GitHub run 38084718940 on
+5ae947229d07f236a3ced65d21a467604843fda8 passed 93 domain-pack tests,
+14 installed-package Chromium checks and the existing 37 artifact/browser checks
+(Chromium 153.0.8010.12), with no external data/corpus requests. Its deploy gate
+refused the new unsigned reuse-guide page. The guide now has a retained Innsigle
+attestation; rebuilding the page and verifying all six page claims passed locally.
+The initial new package step also exposed Chromium installation ordering, corrected
+before the qualified run. Final deployment is independently checked after these
+publication corrections; earlier partial runs are not reported as full success.
