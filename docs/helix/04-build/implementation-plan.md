@@ -10126,3 +10126,32 @@ The [Astra ultra final read-only review](evidence/security/truss-native-membersh
 verified all current native/formal source pins and independently replayed12
 formulas, finding no remaining issue in this fixed-fixture scope. It did not
 execute a native rerun or promote acceptance.
+
+
+### Actual Truss inventory: native role transition authority, merged to main
+
+The reusable Truss private installed observer now captures an eleventh section
+using PostgreSQL16.15 native MEMBER/USAGE/SET/ADMIN semantics. Its fixed invoker
+profile refuses distinct SET or ADMIN routes independently of matching expected
+inventories. Direct effective ACL checks alone were insufficient: native
+INHERIT FALSE / SET TRUE direct and indirect memberships and an ADMIN-only
+self-grant can expose registry writes. Native controls demonstrate those effects,
+observer refusal and exact restoration; membership-only without those privileges
+can match a fresh scoped baseline. Legacy ten-section packets refuse.
+
+The [integration receipt](evidence/security/truss-installed-role-paths/integration.json)
+points to Truss main11f14e23a0fa747e6fca4fa61250fa41c78dcfef and retains305
+installed-wheel tests,63 native observations/29 inventories,20 verified original
+source pins, exact wheel file custody and200 Python boundary edges. Concurrent
+main's snapshot-neutral adoption fix is preserved and tested in that wheel.
+Astra ultra found a producer frozen-input custody defect; it was fixed, reviewed
+and natively rerun. Historical failed and earlier passing attempts remain in the
+owner repository at their captured bytes.
+
+This is component evidence toward US-056-AC5/AC9/AC10 and Truss PA01/PA02, not
+completion of those criteria. The native actor uses a local socket fixture;
+production authentication, coherent protected cuts and arbitrary mutator closure
+remain unqualified. Seven native helper routines are not the seven required
+semantic operation bodies. All132 original obligations remain required;
+historical acceptance stays26/132, no case is promoted, and the full goal remains
+active. Implementation and evidence were published directly to main without PRs.
