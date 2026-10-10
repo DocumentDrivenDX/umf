@@ -48,3 +48,13 @@ This is a visual and interaction qualification, not a comparative user study.
 DataHub and DBeaver informed the plan's navigation and disclosure patterns; no
 claim of feature or usability parity is established. Large graph layouts remain
 scrollable rather than supporting interactive pan/zoom or automatic layout.
+
+## Publication qualification follow-up
+
+The first CI run reached the artifact-browser check and timed out because its
+heading assertion still expected `Operator-selected originals`; the UI displays
+`Operator selected originals`. The check now shares the display-label convention;
+rights/download/no-network checks remain intact. Browser review confirmed that
+collection opens with its original `selected-originals` ID and absence statement.
+Search also now accepts displayed labels as well as exact IDs, and reveals the
+catalog after focus mode. Three presentation/search tests pass (11 assertions).

@@ -1,3 +1,4 @@
+import {displayLabel} from './presentation';
 import {readJsonValue} from '../../../../src/model/serialization';
 import {generateArtifactCollectionSchema} from '../../../../src/domain-packs/artifacts';
 import {createValidator} from '../../../../src/validation/schema';
@@ -31,7 +32,7 @@ export function parseEntry(entry:Entry):Parsed {
  const definitions=document.modules.flatMap((m,mi)=>m.elements.map((e,ei)=>({key:key(m.id,e.id),module:m.id,id:e.id,title:String(e.title??e.name??e.id),value:e,pointer:`/modules/${mi}/elements/${ei}`})));
  return {document,definitions,valid:checked.valid,complete:checked.complete,diagnostics:checked.diagnostics.map(d=>`${d.severity.toUpperCase()} ${d.code} ${d.path}: ${d.message}`).join('\n')};
 }
-export function matches(entry:Entry,query:string):boolean {return `${entry.title}\n${entry.path}\n${entry.pack??''}\n${entry.text}`.toLowerCase().includes(query.toLowerCase());}
+export function matches(entry:Entry,query:string):boolean {return `${entry.title}\n${displayLabel(entry.title)}\n${entry.path}\n${entry.pack??''}\n${displayLabel(entry.pack??'')}\n${entry.text}`.toLowerCase().includes(query.toLowerCase());}
 
 /** Numeric lexemes remain explicit tokens in the metadata view; source text stays exact. */
 function nativeView(tree:NativeJson):any {switch(tree.kind){case 'number':return {numberToken:tree.value};case 'string':case 'boolean':return tree.value;case 'null':return null;case 'array':return tree.items.map(nativeView);case 'object':return Object.fromEntries(Object.entries(tree.members).map(([k,v])=>[k,nativeView(v)]));}}
