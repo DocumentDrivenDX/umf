@@ -33,11 +33,11 @@ reconciled when that gate is framed.
 
 Owner-directed action planning (2026-10-08) is captured in
 [FEAT-008](01-frame/features/FEAT-008-declarative-actions.md),
-[US-078](01-frame/user-stories/US-078-declarative-actions.md),
+[US-900](01-frame/user-stories/US-900-declarative-actions.md),
 [CONTRACT-056](02-design/contracts/CONTRACT-900-declarative-actions.md),
 [SD-008](02-design/solution-designs/SD-008-declarative-actions.md),
-[TD-078](02-design/technical-designs/TD-078-declarative-actions.md) and
-[STP-078](03-test/test-plans/STP-078-declarative-actions.md).
+[TD-900](02-design/technical-designs/TD-900-declarative-actions.md) and
+[STP-900](03-test/test-plans/STP-900-declarative-actions.md).
 [CONTRACT-057](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
 the proposed first executable consumer profile and protocol. These draft artifacts
 define a local core 0.8.0 `umf.actions` extension for authored declarations and

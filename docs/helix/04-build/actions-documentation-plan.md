@@ -15,7 +15,7 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
-    - id: US-078
+    - id: US-900
       kind: informed_by
     - id: US-056
       kind: informed_by
@@ -23,11 +23,11 @@ ddx:
       kind: references
     - id: CONTRACT-901
       kind: references
-    - id: TD-078
+    - id: TD-900
       kind: informed_by
     - id: TD-056
       kind: informed_by
-    - id: STP-078
+    - id: STP-900
       kind: informed_by
     - id: STP-056
       kind: informed_by
@@ -45,7 +45,7 @@ Requested 2026-10-09: review the internal documentation, plan improvements and i
 
 The documentation already specifies the action model in substantial detail. The gap is a trustworthy learning path: current status is scattered, historical experiments look current, implementation references have drifted, and the website introduces neither actions nor their consumer protocol. See the [review and evidence inventory](evidence/actions-documentation-review.md).
 
-Governing behavior remains [CONTRACT-900](../02-design/contracts/CONTRACT-900-declarative-actions.md), [CONTRACT-901](../02-design/contracts/CONTRACT-901-transactional-action-profile.md), TD-078/056 and STP-078/056. [The acceptance certificate](evidence/actions-certification.md) qualifies core 0.8.0, actions 0.1.0 and the fixed reference consumer, including PostgreSQL 17.9 and Bun 1.4.2. It does not approve draft specifications or establish production/downstream adoption. No new action semantics, public execution service, framework migration or hosting provider is in scope.
+Governing behavior remains [CONTRACT-900](../02-design/contracts/CONTRACT-900-declarative-actions.md), [CONTRACT-901](../02-design/contracts/CONTRACT-901-transactional-action-profile.md), TD-900/056 and STP-900/056. [The acceptance certificate](evidence/actions-certification.md) qualifies core 0.8.0, actions 0.1.0 and the fixed reference consumer, including PostgreSQL 17.9 and Bun 1.4.2. It does not approve draft specifications or establish production/downstream adoption. No new action semantics, public execution service, framework migration or hosting provider is in scope.
 
 ## Shared Constraints
 
@@ -102,7 +102,7 @@ Commands prefixed **proposed** below do not exist yet. Existing qualification co
 
 | Slice | Outputs and governing references | Depends on | Completion gate |
 | --- | --- | --- | --- |
-| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-900/901, TD-078, STP-078 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
+| DOC-01 — Status and authority map | Audit/fact inventory; source ownership manifest; links in root/HELIX/canonical build plan; classify stale paragraphs in CONTRACT-900/901, TD-900, STP-900 and historical evidence | None | Every current support claim has exact scope/evidence; no historical pass/open statement presented as current; certificate impact report before any captured-file edit |
 | DOC-02 — Beginner portable journey | Concepts/glossary/getting started/declarations; fixture README; runnable examples from actual fixtures | DOC-01 | **proposed** `bun run test:docs:examples`: exercise actual exported APIs, unchanged source, diagnostic/result assertions and known-error/unknown-preservation cases; run the portable examples in Chromium |
 | DOC-03 — Consumer and reference | Execution/receipts/API/support chapters; consumer README; stable setup/reproduction entry points | DOC-01, DOC-02 | Inventory all public action exports/types and logical consumer operations; match bounded native outcomes to recorded exercising witnesses; mandatory fresh validation of exact published native setup/walkthrough/cleanup commands in an isolated store, with explicit environment/logs; otherwise ship only a labelled recorded walkthrough and keep runnable acceptance pending |
 | DOC-04 — Formal teaching and visuals | Formal chapter and V1–V8; editable sources, SVGs and accessible descriptions | DOC-02, DOC-03 | All eight semantic gates plus screenshot/accessibility review; pinned reproducers replace ephemeral path assumptions; glossary/prediction exercises checked |
@@ -122,7 +122,7 @@ Update both push/PR path filters for all declared documentation inputs and check
 
 ## Issue Decomposition
 
-DOC-01–07 are reviewable work packages, with the blockers above. No external work items or human assignments are created by this planning task. Future issues reference this plan, nearest governing artifact and completion gate, labelled `helix`, `activity:build`, `kind:build` and `area:actions-documentation`. Use US-078/056 when testing those existing behaviors; do not invent new action acceptance criteria or story identities for prose improvements. DOC-02/04 need technical writer and semantic review; DOC-05 needs build/security review; DOC-06 requires real runnable system demonstrations; reader sessions are follow-up. Owners are unassigned.
+DOC-01–07 are reviewable work packages, with the blockers above. No external work items or human assignments are created by this planning task. Future issues reference this plan, nearest governing artifact and completion gate, labelled `helix`, `activity:build`, `kind:build` and `area:actions-documentation`. Use US-900/056 when testing those existing behaviors; do not invent new action acceptance criteria or story identities for prose improvements. DOC-02/04 need technical writer and semantic review; DOC-05 needs build/security review; DOC-06 requires real runnable system demonstrations; reader sessions are follow-up. Owners are unassigned.
 
 ## Validation Plan
 

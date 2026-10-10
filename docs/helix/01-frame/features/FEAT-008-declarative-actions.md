@@ -95,7 +95,7 @@ establish that a transaction or permission check will occur.
 
 ## User Stories
 
-[US-078](../user-stories/US-078-declarative-actions.md) owns the library journey:
+[US-900](../user-stories/US-900-declarative-actions.md) owns the library journey:
 author, inspect, serialize and assess a declaration. Runtime execution is a
 separate consumer-owned qualification gate, not a UMF runtime story.
 
@@ -108,7 +108,7 @@ Executor replay, authorization races and atomic failures require consumer eviden
 
 ## Success Metrics
 
-All US-078 criteria must have exercising, cited Bun and scoped Chromium proof
+All US-900 criteria must have exercising, cited Bun and scoped Chromium proof
 where allocated. The declaration corpus must have zero unreported serialization
 loss. Execution claims must name executor version, profile/subset and evidence;
 metadata validation earns no execution claim. Resource-limit cases must publish
@@ -127,7 +127,7 @@ service. Initial references stay within one core 0.8.0 document.
 CONTRACT-001/040/041/049 own envelope, Record/Field/Key, relationships and values.
 CONTRACT-005 owns DDD independently. CONTRACT-056 owns the action surface; CONTRACT-057 owns the proposed first
 executable profile and protocol; SD-008,
-TD-078 and STP-078 own realization and verification. Cross-document action
+TD-900 and STP-900 own realization and verification. Cross-document action
 references await US-050 and a separate action extension revision.
 
 ## Out of Scope

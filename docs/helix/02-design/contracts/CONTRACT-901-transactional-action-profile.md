@@ -438,7 +438,7 @@ implementation acceptance; this request example is not an executable fixture.
 
 ## Validation Checklist
 
-Derive EX-01–EX-05 in STP-078: static branch checking and numeric bounds; frozen
+Derive EX-01–EX-05 in STP-900: static branch checking and numeric bounds; frozen
 explicit-key selection and aliases; current auth/revision/replay/lookup;
 phantom/create conflicts and denied handler access; preview/audit/receipt epochs.
 Execution status, actual test mappings and source/runtime fingerprints are recorded

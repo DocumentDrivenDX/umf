@@ -472,4 +472,4 @@ Resolve exact references and Key/Field membership; verify effect order and known
 value admission; retain unknowns with warnings; allocate every obligation;
 compare exact profile/source; refuse unsupported/unknown claims; check copy
 isolation and resource limits; exercise both serializations and real Chromium.
-Executor qualification additionally requires the separate witnesses in STP-078.
+Executor qualification additionally requires the separate witnesses in STP-900.
