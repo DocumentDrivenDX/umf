@@ -106,7 +106,7 @@
     "mobile": {
       "path": "explorer-390.png",
       "reviewed": true,
-      "result": "Readable inspector, filter and table; horizontal guidance visible for actual overflow. External header logo blocked by network-isolated test; live asset verification remains required."
+      "result": "Readable inspector, filter and overflowing table. Original ad hoc server omitted SVG MIME; later concurrent probe corrects that harness omission and explicitly verifies the local logo renders."
     },
     "desktop": {
       "path": "explorer-1440.png",
@@ -225,15 +225,15 @@
         "exitCode": 0
       },
       {
-        "command": "docker pinned Bun runtime scripts/artifact-collections-browser.ts",
+        "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 scripts/artifact-collections-browser.ts",
         "exitCode": 0
       },
       {
-        "command": "docker pinned Bun runtime scripts/public-company-browser.ts",
+        "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 scripts/public-company-browser.ts",
         "exitCode": 0
       },
       {
-        "command": "docker pinned Bun runtime concurrent-explorer-ux.cjs",
+        "command": "docker run --rm --network none -v /Users/erik/.codex/worktrees/actions-requirements-design/umf:/work -v /private/tmp/umf-final-explorer-ux.cjs:/tmp/explorer-ux.cjs:ro -w /work --entrypoint bun sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1 /tmp/explorer-ux.cjs",
         "exitCode": 0
       },
       {
@@ -245,7 +245,7 @@
         "exitCode": 0
       },
       {
-        "command": "node pinned Innsigle cli verify --all",
+        "command": "node /private/tmp/umf-actions-innsigle-verifier/src/cli.mjs verify --all",
         "exitCode": 0
       }
     ],
@@ -260,6 +260,8 @@
     ],
     "exportSourceCompanionDownloaded": true,
     "validSignatureClaims": 15,
-    "astraReview": "No substantive integration issue; obsolete public-company ontology locator corrected and fresh probe passes. Historical helper verify-explorer is not claimed executed."
+    "astraReview": "No substantive integration issue; obsolete public-company ontology locator corrected and fresh probe passes. Historical helper verify-explorer is not claimed executed.",
+    "localLogoRenderedAtBothWidths": true,
+    "manualMobileInspectionPassed": true
   }
 }
