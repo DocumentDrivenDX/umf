@@ -1,0 +1,966 @@
+{
+  "version": "umf.security.pg-routine-drift-spike/0.1.0",
+  "status": "scoped-checks-passed",
+  "runId": "95b5e86e-dd80-4755-b8a5-451829e798e3",
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "sourcePins": {
+    "tools/security/pg-routine-drift-probe.py": "530e4f4e1c88e2da22bad8bf09eee6eb1403c3dd8923a0af73ca66856605332a",
+    "tools/security/pg-routine-custody.py": "5bd63bc9272104eee95261df73b96fca45bd48e98707067c280ccb9979cc78e7",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+  },
+  "originalRoutine": {
+    "oid": "16495",
+    "owner": "umf_sec_guardian",
+    "language": "sql",
+    "definer": true,
+    "volatility": "s",
+    "signature": "",
+    "configuration": [
+      "search_path=pg_catalog",
+      "debug_print_plan=off",
+      "debug_print_parse=off",
+      "debug_print_rewritten=off"
+    ],
+    "body": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+    "binary": null,
+    "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}"
+  },
+  "originalB10Assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+  "observations": [
+    {
+      "stage": "engine-version",
+      "expected": "170009",
+      "observed": "170009"
+    },
+    {
+      "stage": "qualified-original:owner",
+      "expected": "umf_sec_guardian",
+      "observed": "umf_sec_guardian"
+    },
+    {
+      "stage": "qualified-original:language",
+      "expected": "sql",
+      "observed": "sql"
+    },
+    {
+      "stage": "qualified-original:definer",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "stage": "qualified-original:volatility",
+      "expected": "s",
+      "observed": "s"
+    },
+    {
+      "stage": "qualified-original:signature",
+      "expected": "",
+      "observed": ""
+    },
+    {
+      "stage": "qualified-original:configuration",
+      "expected": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ],
+      "observed": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ]
+    },
+    {
+      "stage": "qualified-original:body",
+      "expected": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource ",
+      "observed": " SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource "
+    },
+    {
+      "stage": "qualified-original:binary",
+      "expected": null,
+      "observed": null
+    },
+    {
+      "stage": "original-public-execute",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "stage": "ordinary-identity:umf_sec_alice",
+      "expected": {
+        "pid": 181,
+        "user": "umf_sec_alice",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 181,
+        "user": "umf_sec_alice",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "guarded-baseline:umf_sec_alice",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:SET debug_print_plan=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:SET debug_print_plan=on",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:SET debug_print_plan=on",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:RESET debug_print_plan",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:RESET debug_print_plan",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:RESET debug_print_plan",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:SET debug_print_parse=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:SET debug_print_parse=on",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:SET debug_print_parse=on",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:RESET debug_print_parse",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:RESET debug_print_parse",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:RESET debug_print_parse",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:SET debug_print_rewritten=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:SET debug_print_rewritten=on",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:SET debug_print_rewritten=on",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_alice:RESET debug_print_rewritten",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_alice:RESET debug_print_rewritten",
+      "expected": 181,
+      "observed": 181
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_alice:RESET debug_print_rewritten",
+      "expected": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RA",
+            "A-only"
+          ],
+          [
+            "RAB",
+            "multiple-owners"
+          ]
+        ],
+        "pid": 181,
+        "user": "umf_sec_alice"
+      }
+    },
+    {
+      "stage": "ordinary-identity:umf_sec_bob",
+      "expected": {
+        "pid": 554,
+        "user": "umf_sec_bob",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 554,
+        "user": "umf_sec_bob",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "guarded-baseline:umf_sec_bob",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:SET debug_print_plan=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:SET debug_print_plan=on",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:SET debug_print_plan=on",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:RESET debug_print_plan",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:RESET debug_print_plan",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:RESET debug_print_plan",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:SET debug_print_parse=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:SET debug_print_parse=on",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:SET debug_print_parse=on",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:RESET debug_print_parse",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:RESET debug_print_parse",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:RESET debug_print_parse",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:SET debug_print_rewritten=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:SET debug_print_rewritten=on",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:SET debug_print_rewritten=on",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_bob:RESET debug_print_rewritten",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_bob:RESET debug_print_rewritten",
+      "expected": 554,
+      "observed": 554
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_bob:RESET debug_print_rewritten",
+      "expected": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      },
+      "observed": {
+        "rows": [
+          [
+            "RAB",
+            "multiple-owners"
+          ],
+          [
+            "RB",
+            "B-only"
+          ]
+        ],
+        "pid": 554,
+        "user": "umf_sec_bob"
+      }
+    },
+    {
+      "stage": "ordinary-identity:umf_sec_outsider",
+      "expected": {
+        "pid": 926,
+        "user": "umf_sec_outsider",
+        "superuser": "off",
+        "bypass": false
+      },
+      "observed": {
+        "pid": 926,
+        "user": "umf_sec_outsider",
+        "superuser": "off",
+        "bypass": false
+      }
+    },
+    {
+      "stage": "guarded-baseline:umf_sec_outsider",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:SET debug_print_plan=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:SET debug_print_plan=on",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:SET debug_print_plan=on",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:RESET debug_print_plan",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:RESET debug_print_plan",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:RESET debug_print_plan",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:SET debug_print_parse=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:SET debug_print_parse=on",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:SET debug_print_parse=on",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:RESET debug_print_parse",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:RESET debug_print_parse",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:RESET debug_print_parse",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:SET debug_print_rewritten=on",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:SET debug_print_rewritten=on",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:SET debug_print_rewritten=on",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "drift-refusal:umf_sec_outsider:RESET debug_print_rewritten",
+      "expected": {
+        "refused": true,
+        "sentExecutions": 0
+      },
+      "observed": {
+        "refused": true,
+        "sentExecutions": 0
+      }
+    },
+    {
+      "stage": "same-session-after-refusal:umf_sec_outsider:RESET debug_print_rewritten",
+      "expected": 926,
+      "observed": 926
+    },
+    {
+      "stage": "restored-same-prepared-call:umf_sec_outsider:RESET debug_print_rewritten",
+      "expected": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      },
+      "observed": {
+        "rows": [],
+        "pid": 926,
+        "user": "umf_sec_outsider"
+      }
+    },
+    {
+      "stage": "guard-erasure-dispatch-control",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "stage": "unguarded-prepared-native-positive-control",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "positiveTraceSha256": "3ff3b5f90fa701178f47857607a79b624276d54d2b244178af65f6afab585126",
+  "scope": "PG17.9 actual SCRAM ordinary persistent prepared sessions. Trusted installer observes exact routine metadata before execution; detected config drift refuses without sending EXECUTE; restoration resumes same connection/plan. Positive control bypasses guard and exposes private plan. Only ten selected pg_proc metadata fields are checked. No authenticated production registration, atomic check-to-use exclusion, transitive dependencies, complete diagnostic closure, authority/publication boundary or B10/native acceptance promotion."
+}

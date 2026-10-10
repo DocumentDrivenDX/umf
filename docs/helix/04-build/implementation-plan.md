@@ -9838,3 +9838,38 @@ and original assertion mappings, implement authenticated issuance and physical
 bodies, and close B10/admission drift with integrated native evidence. The current
 Truss handoff still explicitly lacks seven native semantic protected bodies; its
 other checkpoint progress is not full backend qualification. The goal remains active.
+
+
+### Native prepared-call installation drift checkpoint — 2026-10-10
+
+Under the PostgreSQL planner-observation annex and original pg-raw.B10 assertion,
+a current-main spike now connects selected installed routine custody to actual
+prepared-call dispatch. The private observer helper snapshots ten explicit native
+metadata fields and refuses drift before the original ordinary connection sends
+EXECUTE. PG17.9 with SCRAM authentication passes72 native observations:18 individual
+flag-on/flag-removed refusals,18 unchanged-PID checks and18 restored same-prepared
+call results, plus independent fixture metadata/identity/baseline and actual
+guard-erasure disclosure controls. Four pure custody tests pass on Python3.9.6.
+The [execution checkpoint](evidence/security/pg-routine-drift/checkpoint.json)
+retains raw logs, current source pins, the full97,695-byte positive native trace
+and independently observed private OID16417, historical source-specific receipts
+and the initial missing-database failure. Native runs freeze five declared inputs
+and verify them unchanged; unit pins are qualified as post-run source custody.
+
+Astra ultra's review corrected a structurally vacuous zero-dispatch assertion by
+requiring one shared read/admit/execute path and an actual guard-erasure dispatch.
+Its other implemented feedback covers resilient owned cleanup, authenticated TCP
+readiness, exact executed-script binding, and retained positive disclosure evidence.
+The final independent read-only audit verifies all72 expectations, five source
+pins, the trace hash and six exact private-relid matches; no findings remain
+within the stated native JSON/trusted-installer premise.
+
+This is a physical detected-drift experiment, not complete backend enforcement.
+The selected tuple omits other metadata/dependencies; production registration
+authentication, atomic check-to-use exclusion, direct ordinary SQL bypass closure,
+complete diagnostic observation policy and authority/publication integration
+remain open. The original B10 case stays counterexample-found, historical26/132
+acceptance is unchanged and all132 required cases remain binding. No formal Rust/
+Python/native refinement proof follows from these runs. Next bind installation
+validation to common native exclusion and close direct SQL/dependency routes
+alongside the independent backend issuer and physical bodies. Goal remains active.
