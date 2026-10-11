@@ -1392,3 +1392,26 @@ Final Truss host original-occurrence-inventory/84531857 retains732 exact inputs/
 Final type-journals-native-cohort/00ff5a21 retains819 exact inputs and222 exercising PostgreSQL17.9 checks: all prior216 plus six named journal checks exactly once. Actual original staging yields three Records/two properties, exact schema_doc source text, whole request/journal bytes, independent owner profile and original event indices1/3/current reference bytes. Copied/crossed/falsy sidecars refuse before SQL; rollback removes catalog/property/document effects and retained journal consistency cannot authorize an ended report cut. Exact owned loopback fixture cleanup exits0. Astra independently verifies host/native pins, archives, outcomes and authority scope.54be2d9d is historical pre-final predicate/mixed-index evidence. An inherited exact-receipt non-promotion check used the wrong nested ruleName path; the final receipt/journal checks use the actual top-level field and injected-type negatives. Concurrent Truss6106084d/251a55e0 row-touch work is preserved; its new unused observe.sql/Python components are outside this executed snapshot. Every732/819 retained preimage remains exact after merge.
 
 Upstream owner host52ff1fd0 and conditional proofe541930c remain separate evidence with faithful model/owner/final-retention premises; they do not prove this consumer mapping or backend enforcement. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 receive journal ingress/native correspondence prerequisites only. Acceptance remains26/132 and the goal remains active. Next complete semantic/native family inventory and original type duty allocation while separately retaining authenticated issuer/current callable/cut authority, accepted persistence/publication/finalizer and protected data enforcement obligations.
+
+
+### Same-key original-value source controls
+
+B08, B09 and B11 for every backend must cover source interpretation, not only native
+field types and selected key populations (US-056-AC6/AC7/AC9). Start from a
+qualified ordinary caller whose protected predicate has an independently expected
+nonempty result. Preserve each selected eligible key exactly once and every
+required native domain/non-NULL carrier, then substitute a value expression that
+creates a match and one that suppresses a match. Both changes must invalidate
+admission before populated and empty application queries; restoration must
+recover the exact original oracle result. Keep excluded installer mutations
+separate from ordinary caller attempts to alter or replace the source.
+
+Also mutate a transitive value-producing callable/cast or backing carrier and
+relevant source owner/privileges/configuration without changing the outer field
+names/types. Require current inventory/refusal under the held authority cut,
+including an interleaving after initial admission and before final release.
+Retain a positive authorized data update and an oracle for its new data cut;
+a blanket rejection of all data changes is not faithful query execution. Raw
+PostgreSQL view controls do not substitute for actual Truss/Ashlar property and
+edge carriers or raw Delta expressions. These are required controls within the
+existing cases; no additional passing case or reduced backend scope is implied.

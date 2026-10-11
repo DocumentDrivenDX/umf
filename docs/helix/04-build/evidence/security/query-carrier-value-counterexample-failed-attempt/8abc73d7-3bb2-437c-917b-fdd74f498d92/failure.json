@@ -1,0 +1,6 @@
+{
+  "status": "failed-harness-attempt",
+  "failure": "fabricated-match:population-check-pass expected true, observed false",
+  "cause": "Direct administrative evaluation sees a different root RLS population than the issued guardian routine; it is not the ordinary-caller guard observation.",
+  "cleanup": "producer finally block returned without another exception; no standalone cleanup transcript was published"
+}

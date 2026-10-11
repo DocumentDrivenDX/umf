@@ -11380,3 +11380,33 @@ remain premises. It does not prove SQL generation, PostgreSQL refinement,
 NULL/collation conversions, issuer or callable/view-dependency/concurrent-DDL
 closure, graph storage or full B08/production admission. US-056-AC1/AC6/AC7 gain
 component evidence only; the original goal remains active at26/132.
+
+
+### Same-key original-value correspondence counterexample — 2026-10-11
+
+Native `evidence/security/query-carrier-value-correspondence-counterexample/882e3c1d-7aec-46c9-b037-fdc0158eae42`
+retains59 observations,12 exact source preimages, the actual issued populated and
+fresh owner-derived empty-query fragments,19 existing raw refusal controls and
+owned cleanup transcript. Two source-view mutations preserve eligible identities,
+exact-one multiplicity, non-NULL text/int8 domains and both native preflight checks
+in the actual guardian routine. Constant333 fabricates RA alongside original RAB;
+constant444 suppresses the original RAB predicate result. Actual ordinary Alice
+calls return successfully; restoration returns exactly RAB. This is an excluded
+installer source mutation counterexample to sufficiency of the existing checks,
+not evidence that Alice can change the source or a new backend admission pass.
+
+The first harness directly evaluated collectionReady as an administrator and
+observedfalse because that role sees a different root RLS population. The failed
+producer/diagnostic is retained under
+`evidence/security/query-carrier-value-counterexample-failed-attempt/`; the final
+run uses successful actual issued routine execution to witness both guard passes.
+Failed-run cleanup has only finally-block completion provenance, not a separate
+raw cleanup receipt. The successful run retains exact owned removal output.
+
+CONTRACT-063 now makes faithful value interpretation and complete installed
+source/dependency correspondence explicit. STP-056 allocates fabricated/suppressed
+matches, empty queries, dependency/authority drift, final-release interleavings
+and legitimate new-data-cut positive controls to existing B08/B09/B11 across all four
+backends. Next implement current installed-source authority and meaning admission;
+matching domains/populations or an unauthenticated definition hash cannot replace
+that obligation. Full acceptance remains26/132; no protected profile is promoted.

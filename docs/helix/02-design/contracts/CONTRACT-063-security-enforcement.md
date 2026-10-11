@@ -205,6 +205,33 @@ this native profile provenance. B08 qualification must retain both successful
 exact bindings and tampered/unrelated-action refusal controls.
 
 
+### Original-value source correspondence
+
+For original-authorized query use, native admission MUST establish that every
+selected field value has the interpretation specified by its qualified logical
+field and physical binding at the operation's data/authority cut. Exact native
+column domains and two-way key/population correspondence are necessary but do
+not establish value correspondence. A same-key source expression may fabricate
+or suppress a predicate match while preserving both checks.
+
+The installed-source inventory MUST bind the selected relation/view definition,
+field expressions and transitive relations, functions, operators and casts on
+which that interpretation depends, with their actual authority and relevant
+configuration. Source definition or dependency changes MUST invalidate admission
+before application SQL, including empty-result queries. Definition hashes alone
+do not authenticate the installer or establish complete dependencies. A source
+replacement carrying the same keys, column types and non-NULL values MUST NOT
+inherit qualification solely from those descriptors. Whole native callable/DDL
+closure and the held source/authority cut remain separately required.
+
+A qualified data update under the same faithful binding is a new data cut, not
+necessarily source-definition drift. Its query result MUST match the independent
+oracle at that cut. The consumer MUST distinguish authorized data changes from
+changes to the interpretation or authority of the source. This obligation applies
+to flat relational columns and graph property/edge carriers equally; native
+view-definition inspection alone does not qualify arbitrary graph storage.
+
+
 ## Private-fact diagnostic closure
 
 Private-fact protection MUST include derived diagnostic counts/estimates, not
