@@ -10347,3 +10347,62 @@ and preliminary SQL-expression-order run retain their original sources; the
 final receipt alone qualifies the explicit capture order.
 
 The [Astra ultra read-only review](evidence/security/truss-capture-observability-formal/4b3dbd6b-1c44-49f6-8480-0e84fd4c6a69/astra-review.json) independently replays all three formulas and verifies four native/seven formal pins plus the installed bodies/owners/settings/entry OID. No native execution or PA02 promotion follows from review.
+
+
+### Trusted-host protected capture candidate — 2026-10-10
+
+The [native candidate receipt](evidence/security/truss-protected-capture-candidate/90e12409-3a54-466f-8184-2a54c961669d/native.json) retains23 matching observations on
+PostgreSQL16.15, corrected pgserver0.1.4+truss.pg16.15 and pg8000 1.31.5.
+Original source bytes, seven source pins and actual installed routine OIDs,
+owners, settings and complete definitions accompany the receipt. The earlier
+19-observation run and preliminary23 run remain historical; the final run
+adds same-transaction absence checks, original frozen AdmissionCustody execution
+and guaranteed sanitized failure reporting even if the receipt sink fails.
+Two retained subprocess controls exercise secret-bearing exceptions with writable
+and unwritable evidence sinks; both suppress secret text and exception chaining.
+
+This implements an isolated physical candidate for the PA02 prerequisite:
+an INVOKER query captures native person/actor OIDs, database, backend PID and
+xid before elevation. A separately privileged trusted registrar inserts a
+private random 32-byte capability bound to those facts, original attempt and
+exact synthetic payload. The fixed host dispatch invokes an INVOKER gate and
+DEFINER writer; the writer atomically consumes the matching capability before
+inserting the synthetic effect. Ordinary callers cannot read capabilities,
+write effects directly, create routines in the candidate schema, or inherit
+writer/registrar roles. The wrapper gate refuses elevated acting identities.
+The capability is never public context or included in retained evidence.
+
+Actual native negatives refuse forged/copied public context, a different
+connection (even with the private capability), another login route, attempt/input
+substitution, unregistered wrapper invocation and direct private access.
+The exact native positive effect is inspected in its original transaction.
+For this inspection only, the fixture administrator temporarily grants effect
+SELECT, immediately revokes it, and verifies the final prohibition. This is
+an administrative test observation, not an adopted ordinary read surface.
+
+Native same-transaction reuse refuses, but savepoint rollback restores the
+native capability's unused state. The producer independently demonstrates
+successful direct native replay after rollback and verifies its actual effect.
+The existing original Truss AdmissionCustody ticket refuses that resubmission
+and retains one fixed dispatch. Therefore the composed candidate requires
+trusted exclusive host dispatch and private carrier custody; its native table
+alone does not provide rollback-resistant one-use authorization. This is not
+a qualified SQL-only route or protection from a malicious same-credential host.
+A changed transaction also refuses the old capability.
+
+The adjacent acceptance-map.json ties all23 observations to original requirement
+IDs without marking a complete schedule passed. The adjacent astra-review.json
+retains independent review: all three harness findings were fixed and the final
+seven pins, installed definitions and failure controls were independently checked.
+
+This advances US-056-AC5/AC10 physical component evidence and PA-N03/04/05/09
+schedule development, without promoting them to complete acceptance cases.
+Local trust authentication, synthetic registrar inputs and the fixed actor
+profile do not establish production authenticated subject mapping, SET ROLE,
+current owner authority, generation/configuration checks, complete callable
+closure, resource admission or publication. PA01–PA04 and all seven Truss
+semantic bodies remain unfinished; the original132-case goal remains26/132.
+Next integration must replace synthetic registrar facts with the original
+owner authority/artifact and coherent-cut protocol, qualify installed closure
+and protect the carrier throughout the registered adapter. No public API or
+ordinary registry grants are added to Truss.
