@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "sourceSha256": "2be0598e987f3909a7233917d993e492a7605822bcac0d3c2351b2f42dce8a7b",
+  "cases": [
+    {
+      "id": "copied-script",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/private/tmp/umf-graph-invocation-0dycip1p/copy.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+      "dockerCalled": false
+    },
+    {
+      "id": "extra-argument",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/truss-native-membership-probe.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+      "dockerCalled": false
+    },
+    {
+      "id": "wrong-working-directory",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/truss-native-membership-probe.py\", line 6, in <module>\n    if self_path!=root/'tools/security/truss-native-membership-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact invocation')\nRuntimeError: Unknown exact invocation\n",
+      "dockerCalled": false
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+---
+ddx:
+  id: CONTRACT-062
+  type: contract
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: FEAT-008
+      kind: informed_by
+    - id: SD-008
+      kind: informed_by
+---
+
+# CONTRACT-062: Shared security semantics
+
+**Version:** proposed `umf.security` 0.1.0. **Status:** draft; not core admission.
+
+## Purpose
+
+Define logical security independently of relational and node/edge storage.
+This contract governs policy meaning; CONTRACT-063 governs enforcement receipts.
+
+## Scope and Boundaries
+
+UMF owns meaning, structural/semantic validation and a pure reference evaluator.
+Hosts own authenticated identities, trusted context and complete fact supply.
+Consumers own enforcement. Native policy archives remain independently retained.
+The first interpreted subset is finite, nonrecursive and exact-typed.
+
+## Normative Surface
+
+### Identity and ontology
+
+An entity type or field reference MUST contain `documentId`, `moduleId` and
+`elementId`, resolved against an explicit immutable document revision. Display
+labels MUST NOT resolve authority. Instance identity is `{type, key}`, where
+`key` is a canonical existing UMF Key tuple, not a hash alone. Association facts
+carry their own identity, declared endpoint roles and typed attributes. Flat
+junction rows and graph edges bind to the same association meaning.
+
+### Policy document
+
+| Member | Required shape | Rules |
+| --- | --- | --- |
+| vocabulary/version | `umf.security` / `0.1.0` | Exact supported pair |
+| id/revision | nonempty strings | Immutable policy identity and revision |
+| ontology | qualified model reference + revision | Explicit resolution package |
+| rules | array of Rule | Unique nonempty rule IDs; maximum 256 |
+| native | opaque JSON archive | Optional; never executable authority |
+
+Rule is `{id,effect,actions,target,condition,disclosure?}`. `effect` is
+`permit`, `require` or `forbid`; actions are nonempty declared action IDs.
+`target` is an explicit nonempty list of qualified logical type references.
+`condition` is an Expr. Disclosure is allowed only on permit rules.
+Rule scope matches by exact action/type identity, not relationship reachability.
+Unknown members MUST survive round trips; unknown members/operators that might
+alter security meaning block enforcement until interpreted or explicitly proved
+irrelevant by a qualified profile. Preservation is still available.
+
+### Expression algebra
+
+Expr is exactly one tagged alternative:
+
+- `{op:"literal",value:boolean}`.
+- `{op:"eq",left:Term,right:Term}`; operands MUST have identical declared types.
+- `{op:"and"|"or",args:Expr[]}`; nonempty, at most 64 arguments.
+- `{op:"not",arg:Expr}`.
+- `{op:"exists",association:Ref,as:string,where:Expr}`; binds one fresh
+  association variable over a complete typed fact relation.
+
+Term is a tagged `subject`, `resource`, `context`, `variable` attribute/identity
+reference or a typed constant. Variable references include `name` and attribute
+path or endpoint role. Paths resolve through declared fields, with no dynamic
+member names. Constants use existing exact UMF literal carriers; comparison MUST
+NOT coerce strings, normalize Unicode, round numerics or equate null with absence.
+Authentication-to-Staff mapping is a trusted, unique instance binding; a missing
+or ambiguous mapping refuses evaluation.
+
+Maximum nesting is 16, maximum expression nodes is 4096 per document. A fact
+provider declares finite bounds and complete coverage for each referenced type,
+association and attribute at an admitted authority generation. Unknown fact
+coverage is not an empty relation. Exceeding bounds refuses the operation.
+
+`exists` supports nested correlated expressions (including joins through endpoint
+roles) under these bounds. It does not imply automatic ownership inheritance,
+unbounded paths or recursive group membership. All/any owner meaning MUST be
+expressed explicitly; `all(P)` is `not exists(not P)` over complete facts and is
+vacuously true for no owners unless a separate nonempty-owner requirement applies.
+
+### Evaluation and composition
+
+Conditions evaluate to T, F or U (indeterminate). Missing, malformed or untrusted
+required inputs, incomplete fact relations, unsupported operators and resource
+exhaustion produce U or pre-evaluation refusal. Boolean semantics use strong
+Kleene logic; `not U = U`, `F and U = F`, `T or U = T`. These truth tables do
+not authorize ignoring incomplete provider admission.
+
+All scoped rules MUST be evaluated against one admitted complete authority cut.
+If any scoped condition is U, the decision is `indeterminate` and MUST refuse
+effects/disclosure. Otherwise, permission holds exactly when at least one permit
+is T, every require is T, and every forbid is F. No scoped permits means `deny`.
+An empty require set imposes no additional restriction. Denial overrides grants;
+mandatory requirements cannot be bypassed by another permit or a broad native role.
+Rule order MUST NOT change the result. No fallback to privileged identities.
+For collection operations, incomplete dependency coverage or any scoped U decision
+refuses the entire operation before output. Silently omitting uncertain rows cannot
+satisfy counts, paging, aggregates or completeness. A partial-result profile would
+need separately versioned semantics and is outside 0.1.0.
+
+### Disclosure and query use
+
+Dispositions are `original`, `withheld` or `transformed`. A transformed field
+references a versioned typed deterministic transform and explicit output type.
+The initial interpreted transform subset is a typed constant replacement;
+other transforms are preservation-only until separately qualified. Withheld
+values cannot enter public diagnostics. Disposition metadata MUST distinguish
+original null, original absence and redaction; lossy SQL-null transport alone
+cannot satisfy that obligation.
+
+Only scope-matching permit rules whose conditions evaluate T contribute
+disclosure obligations. False permits contribute none. Every protected output
+field MUST have an explicit admitted disposition; omission refuses disclosure.
+Unprotected fields default to original only when explicitly classified as such
+by the model/profile. Original is the least restrictive disposition and does not
+cancel a transform. Withheld dominates original/transformed;
+different transforms on the same field produce `conflict` unless an explicit
+versioned composition is qualified. Omitted obligations do not cancel existing
+ones. For every field/action profile, predicate/order/group/join/aggregate use
+MUST select `disclosed`, `original-authorized` or `prohibited`; omission means
+`prohibited` for protected fields. `original-authorized` needs a separate exact
+action permission. Operators using withheld fields refuse. Canonical data is
+never overwritten by a read mask.
+
+### Writes and time
+
+Create requires proposed-state permission; delete requires original-state
+permission; update requires both plus each changed field's mutation permission.
+Changing ownership or policy attributes is a separate declared action, even if
+ordinary field update is permitted. Authorization and write effects MUST share
+the selected transaction/authority ordering from CONTRACT-063.
+
+Current policy and current subject assignment authority apply to selected
+historical data. Resource ownership comes from that data version's retained
+context, not a reused key or today's owner. Historical-policy replay requires a
+separate administrative action/profile. Missing retained context refuses access.
+Derived collections, feeds, exports and caches MUST declare source dependencies,
+policy propagation and revocation behavior; filtered feeds cannot claim complete
+source replication. Private authorization/integrity observation grants no public
+read permission on the observed records.
+
+## Precedence and Compatibility
+
+No core members or native security semantics are replaced. Exact extension,
+policy, ontology and binding versions are pinned together. Unknown versions
+permit preservation but block interpretation. Changes to composition, time,
+unknown handling or disclosure require a versioned semantic change and explicit
+migration/rollback; rollback MUST NOT broaden access. CONTRACT-063 cannot weaken
+this contract, including in fidelity report mode.
+
+## Error Semantics
+
+| Condition | Outcome | Recovery |
+| --- | --- | --- |
+| Well-formed, complete policy denies | deny | Change authorized policy/facts |
+| Unknown, missing, stale, untrusted or incomplete facts | indeterminate | Supply fresh admitted facts |
+| Invalid references/types/shape | invalid | Correct document; retain original |
+| Unsupported target obligation | unsupported | Select qualified profile |
+| Incompatible masks | conflict | Explicit composition or revised policy |
+| Bound exceeded | resource-exhausted | Explicit larger qualified bound |
+
+Only `permit` with all obligations successfully admitted authorizes effects or
+disclosure. Public errors are coarse; privileged evidence retains original reason
+without exposing hidden assignment identities, counts or values.
+
+## Examples
+
+### Serialized ontology and term resolution
+
+The representation schemas are `spec/extensions/security/schema.json` and
+`ontology.schema.json`; the policy schema is also embedded in the registered
+extension package. The document-scope extension payload is the policy itself.
+An explicit resolution argument carries `{ontology,documents}`; documents are
+`{revision,document}` entries, each an exact core 0.8.0 document. Neither URLs
+nor display names fetch or resolve a document. Duplicate document IDs, missing
+pins and revision disagreement refuse interpretation. Immutable revision
+provenance remains a host responsibility, not an authored string certificate.
+
+Ontology is `{version,documentId,revision,documents,subject,entities,
+associations,context,actions}`. `documents` pins `{documentId,revision}`;
+`subject` is a qualified entity type; `context` lists qualified context fields;
+actions are exact string IDs. Each entity is `{type,keyId,fields}`. `type`
+resolves to a logical core Record and `keyId` to an explicit stable Key. Every
+Record member has exactly one `{ref,protection,queryUse?}` classification,
+where protection is `protected` or `unprotected`. Query use maps the five
+operator names to the disposition-use modes above. Omitted protected-field
+operator entries mean prohibited.
+
+An association adds `endpoints:[{role,target,fields}]`. Roles are unique. Each
+ordered field list consists of association Record members and supplies exactly
+the target type's Key components, with matching declared domains. This is
+logical association meaning; it does not claim foreign-key enforcement or
+choose a junction-row, edge, or storage implementation. Both representations
+bind to the same Record/Key/endpoint identities. It need not adopt DDD semantics.
+
+Terms use `kind`. Subject/resource terms select either `identity:true` or one
+qualified `field`. Context selects a declared `field`. Variable adds `name`
+and selects exactly one of `identity:true`, `field`, or `endpoint` (role ID).
+Constant is `{kind:"constant",field,value}`, with `field` declaring its exact
+UMF literal domain. Bound-variable shadowing is refused. An identity term's
+declared type includes its exact qualified Record and stable Key; identity
+equality never compares only tuple bytes. Scalar equality requires matching
+declared scalar, cardinality, nullability, facets and allowed-value domain.
+The first interpreted scalar domains are singleton boolean, string, integer,
+explicit precision/scale decimal and binary. Float, temporal, collection and
+record-valued comparison requires later qualification and is refused now.
+
+Disclosure serializes as ordered `{field,disposition}` entries with unique
+qualified fields. Constant replacement is `{kind:"transformed",
+transform:"constant",version:"0.1.0",field,value}`: its field declares the
+output literal type. Output type may differ explicitly from canonical type;
+that distinction must survive disclosure encoding and query-use admission.
+
+`readSecuritySource`/`writeSecuritySource` preserve arbitrary bounded JSON/YAML
+content, including unfamiliar versions/operators. `inspectSecurityPolicy`
+retains copied source and reports valid/complete separately. Registry inspection
+without the explicit resolution package always reports incomplete closure.
+`requireSecurityInterpretation` refuses any invalid/incomplete interpretation.
+These APIs do not authenticate facts or authorize a native operation. Native
+archives are opaque retained data and never evaluated as code.
+
+The Staff restriction is a require rule on read of ProjectResource:
+`exists Ownership o where o.resource == resource.id and exists Assignment a
+where a.staff == subject.staff and a.project == o.project and a.active == true`.
+This chooses any qualifying owner; deployments requiring every owner MUST state
+that alternative and a nonempty-owner condition. A separate permit grants the
+read action. Assignment is independently inspectable by the trusted authorization
+provider without implying that the reader can list Assignment data.
+
+## Host fact-cut execution profile
+
+The first browser-compatible execution profile is bounded, nonrecursive read
+access over host-attested facts. A fact carries a qualified type, ordered core
+Key tuple, explicit field/value entries and explicit known-absent fields. Key
+field values, when supplied, MUST equal their tuple components. Duplicate facts,
+fields and contradictory absence declarations refuse admission.
+
+A fact cut carries exactly one resolved subject, policy and ontology revisions,
+current/expected authority generation, association/type coverage and typed
+context. Complete inventory and complete relevant attribute coverage are
+separate obligations. Empty associations are meaningful only with complete
+inventory. Every scoped dependency is admitted before expression evaluation,
+including for empty resource collections. Bounds admit at most 10,000 facts
+and 1,000,000 evaluation steps; deployments may select lower bounds. Exceeding
+any bound refuses the entire collection.
+
+`evaluateSecurityAccess` returns a decision and selected disclosed fields.
+`evaluateSecurityCollection` omits denied rows and atomically refuses on any
+indeterminate decision or disclosure conflict. It exposes no hidden fact keys
+or input ordinals. Original null, known absence, withholding and typed constant
+replacement remain distinct. Protected query-use admission covers predicate,
+order, group, join and aggregate; original use requires an independently granted
+separate action. These APIs admit semantic query use; they do not execute SQL
+or establish that a backend evaluates operators over the correct representation.
+
+`trusted`, revision and generation strings are host attestations, never
+credentials. The caller MUST independently establish authenticated principal,
+immutable registered policy/ontology provenance, compatible current fact cut,
+complete inventory and authority generation. Client-authored flags or a matching
+pair of generation strings cannot establish any of those obligations. Native
+bindings MUST enforce this boundary and CONTRACT-063 lifecycle controls. The
+read evaluator does not provide native authorization, write admission, history,
+cache revocation or final-release synchronization.
+
+## Immutable in-process read registration
+
+`SecurityReadRegistration` is a bounded trusted-host helper. It admits only
+complete policy interpretation, copies the admitted definition, and pins exact
+canonical content under policy ID/revision, ontology document ID/revision and
+each core document ID/revision. Reusing any registered identity with different
+content refuses atomically; failed registration MUST preserve prior definitions.
+This includes changing classification under an unchanged ontology revision.
+Opaque handles select definitions only within the owning registration instance;
+forged or foreign handles refuse. Input mutation cannot modify registered meaning.
+The profile bounds 32 definitions, 512 pinned identities and 16 million retained
+characters. It is browser-compatible and contains no I/O or credential provider.
+
+The host MUST control construction and registration and independently establish
+native source provenance/current authority. A handle is not a native credential.
+A new registration instance does not establish freshness or globally reconcile
+source revisions. Fact cuts still require the independently authenticated host
+provider and CONTRACT-063 guards. Source-authored issuer/native-role flags never
+supply those obligations.
+
+## Non-Normative Notes
+
+The initial proof fixture uses one owner per resource and an exact trusted Staff
+identity. It does not establish all expression, disclosure or lifecycle behavior.
+General semantic implementation and backend qualification remain separate gates.
+
+## Bounded write-admission profile
+
+`evaluateSecurityWrite` admits create/proposed, delete/original, or update/both
+states, without executing effects or returning private fields. A trusted host
+binding supplies the exact target type, distinct create/update/delete action IDs,
+a complete field-to-mutation-action mapping, separate ownership and policy-change
+actions, policy/ownership fields and declared ownership association types. Those
+special actions must differ from object and field actions. Source-native archives
+cannot supply or override this binding. Every target field must have complete
+coverage and a typed known value or explicitly known absence in each supplied
+state. Exact literal comparison distinguishes null, absence and changed values.
+
+Both update states must use the same subject, current policy/ontology, context
+and authority generation. Changed non-ownership authorization facts refuse;
+changed declared ownership association inventories require the separate ownership
+action on both states. Create/delete with declared ownership associations also
+require it. Every selected object, field, ownership and policy action is composed
+independently on the selected state(s); any unknown result refuses the write.
+The profile bounds distinct field actions to 64 and divides each state's step
+budget across all checks. Unknown binding members and missing field mappings
+refuse rather than weakening admission.
+
+The host MUST derive original/proposed states, classify every ownership and
+policy attribute, authenticate facts and prove that the checks and actual effects
+share the CONTRACT-063 transaction/authority boundary. Policy attribute writers
+must advance current authority through a qualified change protocol. This API
+supplies only a semantic decision; it does not prove native atomicity, mutation
+custody, field enforcement, current source provenance or concurrency participation.
+
+## Typed policy dependency closure
+
+`securityPolicyDependencies` requires complete typed interpretation and returns
+qualified live attribute and association-inventory dependencies. Attribute reads
+include subject/resource/context/bound-variable fields, every key component used
+by an identity operand, and association endpoint components plus their target
+key components. Constant literal-domain references are metadata, not live reads.
+Every exists expression contributes its exact association inventory. Closure is
+conservative across all scoped rule targets and preserves qualified identity.
+Unknown/incomplete meaning refuses; it cannot yield a complete-looking inventory.
+
+A write binding MUST classify every target field in this dependency closure as
+a policy attribute requiring the separate policy-change action. An association
+create/delete also requires it when that association inventory is used by a
+policy. Additional host-classified policy attributes remain allowed. Backend
+bindings must account for external/native authority attributes and all writers;
+this source analysis cannot establish native custody, complete role inventory,
+clock participation or facts from an authenticated provider.

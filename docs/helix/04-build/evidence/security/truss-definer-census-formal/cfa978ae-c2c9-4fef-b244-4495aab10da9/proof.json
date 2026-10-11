@@ -1,0 +1,983 @@
+{
+  "status": "pass",
+  "scope": "Exact SQL filter recognition and actual pure classifier tail, conditional on complete faithful immutable native rows; no full SQL/Python/temporal refinement",
+  "z3Version": "4.15.4",
+  "sourceSha256": {
+    "tools/security/truss-definer-census-proof.py": "58aaeba69c6d16401fd456903255af63187e597c991d9cdc16de2e6fd650753f",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.json": "8316e85542382986f2ade917d33c3fbee03f3df77890e5870be69f83d7abb265",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.start.json": "522c203bde6fccc964d84facc4937d3d2853bfbbf3849f76e666be1806047b18",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/integration.json": "6ed3488567ac79e0c0b49cd68014461318a855003ea56a07c85a15133f5f02b1",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/source-epoch-layout-0.16.owner-export.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/postgresql/native/issued-operation-admission/operation-admission.sql": "4b72ebf3727b9c887befce0280256f73587857fcae5fb363af0917b816b1e335",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/postgresql/native/issued-operation-admission/operation-asserted-origin-admission.sql": "4eb696139c90da5aae36d889f7bb46964f6ecb7b883f250cea1d7f90038cea8c",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/postgresql/native/issued-operation-admission/operation-epoch-context-admission.sql": "7cd28926d2dc34a81ef1ed35b44031e70f0e2bc9c2446e2fd7c52930cb6ccd95",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/postgresql/native/issued-operation-admission/operation-configuration-context-admission.sql": "aed1fde52b149f6e973c289d0917d1442dd4059d2a0a6e1031bcc06de050c529",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/postgresql/native/source-epoch-lock.sql": "e811a3656a45e941d588ca21b97ab524b789948d08585288e44b158b060d73cc",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/operation-configuration-storage.owner-export.sql": "55448d0e9b979ab62f48099e6c317e19ebe40ce5ff9c90472209deff8a618e3a",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_installed_admission_inventory.py": "4904b011ba5c961179dd0ffc4ade03f7df725a04a0dd09d8c7708b59ddf159c2",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/check_installed_admission_operator_native.py": "e461679dadb5403d0506e9b20c2cae2eef17b5a2c7a82930b3822e6414e0daff",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/native_fixture_safety.py": "0e1857df245a997a53c1ac8e39b2672d866d2aac62b5d6e15f9e389f0f103b54",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/routine-acl.sql": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/namespace-acl.sql": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/relation-acl.sql": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/column-acl.sql": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/manifest.json": "3544d094ff90df4b6966414cfd203db607ae347dd2a4923dc72c92758188f890",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/packages/python/src/truss/_inventory_sql/dependency.sql": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/bootstrap-routine-acl-observation.owner-export.sql": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/bootstrap-relation-acl-observation.owner-export.sql": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/bootstrap-column-acl-observation.owner-export.sql": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/bootstrap-namespace-acl-observation.owner-export.sql": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17",
+    "docs/helix/04-build/evidence/security/truss-operator-routes/installed-operator-final-native.preimages/docs/helix/04-build/evidence/design-audit/bootstrap-dependency-observation.owner-export.sql": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74"
+  },
+  "queries": [
+    {
+      "id": "hidden-executable-definer-cannot-be-filtered",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "824a7478c7420f5344a373c4d9667ed25cf1983e10936a29411aa23d0be5d05e",
+      "model": null
+    },
+    {
+      "id": "nonempty-census-cannot-match",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "d76e1932db488aa15170f9483a37fb66ce59a459e0fbf28ad6e700be5ceee1d9",
+      "model": null
+    },
+    {
+      "id": "prior-refusal-cannot-clear",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "1c6d86943682ef601d2eb475d406c741d1ccd653436353237099ffc2b647cacf",
+      "model": null
+    },
+    {
+      "id": "empty-safe-profile-population",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "1cd7c58daf18d83b418e0dde0b4a5c9bbdb6717c6feaa565bffed6f3a383c387",
+      "model": "[unsafe_role = False,\n definer = False,\n executable = False,\n other_selected = False,\n prior_reason = False]"
+    },
+    {
+      "id": "hidden-operator-witness",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "635afe42c0ab9b72cc79e7c5767a1bfd6856f73a14ad917b3ed1ffcbc52e5904",
+      "model": "[unsafe_role = False,\n namespace_usage = False,\n definer = True,\n executable = True,\n other_selected = False,\n prior_reason = False]"
+    },
+    {
+      "id": "namespace-filter-erasure",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "477564fcbd0455e982614cad5c5676c6d891459683bdd22fb5d768c884f5a46c",
+      "model": "[unsafe_role = False,\n namespace_usage = False,\n definer = True,\n executable = True,\n other_selected = False,\n prior_reason = False]"
+    }
+  ],
+  "vectors": [
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        false,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_match"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        false,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        false,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "result": "scoped_mismatch"
+    },
+    {
+      "inputs": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "result": "scoped_mismatch"
+    }
+  ],
+  "nativeTailReplays": [
+    {
+      "id": "before-original-configuration-composition",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "original-native-comparison-baseline",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "original",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "ordinary-login-revoked",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "ordinary-login-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "inherited-table",
+      "censusNonempty": false,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "inherited-table-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "public-table",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "public-table-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "column-insert",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "column-insert-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "schema-create",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "schema-create-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "extra-overload",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "extra-overload-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "body-drift",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "body-drift-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "public-root-execute",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "public-root-execute-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "root-grant-option",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "root-grant-option-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "cost-drift",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "cost-drift-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "direct-set-only",
+      "censusNonempty": false,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "direct-set-only-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "indirect-set-only",
+      "censusNonempty": false,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "indirect-set-only-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "admin-only",
+      "censusNonempty": false,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "admin-only-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "membership-only",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "membership-only-restored",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "external-public-definer",
+      "censusNonempty": true,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "external-definer-execute-revoked",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "external-definer-namespace-revoked",
+      "censusNonempty": true,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "external-definer-removed",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "hidden-operator-definer",
+      "censusNonempty": true,
+      "tailResult": "scoped_mismatch"
+    },
+    {
+      "id": "hidden-operator-execute-revoked",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    },
+    {
+      "id": "hidden-operator-removed",
+      "censusNonempty": false,
+      "tailResult": "scoped_match"
+    }
+  ],
+  "qualifiedNativeImplementation": false,
+  "acceptancePromoted": false,
+  "limitations": [
+    "SQL completeness and PostgreSQL effective privilege semantics are premises, not solver outputs",
+    "No packet ingress, private producer authority, dependency closure, current cut or protected publication proof",
+    "Operator evidence covers only the fixed native implementation function route; planner hooks, support routines and extension/type/trigger paths remain open"
+  ]
+}

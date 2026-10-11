@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "sourceSha256": {
+    "tools/security/prove-capture-observability.py": "91f34320b7e4a2e1cb03466925f755d3b7dff63d1a39a8d187ba96f9dd9fc186",
+    "docs/helix/04-build/evidence/security/truss-capture-observability/533c90f6-3dbe-4d7d-ae83-484617149b4a/native.json": "3fa189e1d2f17132c75bce4895c3437d0b00b0a7bb0b77631dc34bdbdc85f06b",
+    "docs/helix/04-build/evidence/security/truss-capture-observability/533c90f6-3dbe-4d7d-ae83-484617149b4a/start.json": "b211c34d2e8107fc08d2686cdcf4e414ea1fcc2a23e997070fd2befe4aaeebab",
+    "tools/security/truss-capture-observability.py": "67d8dbb5cd412989cd453edff6d0b81366ed1f9b29c4f3204e08d60a8cd83eaf",
+    "tools/security/truss-capture-observability.sql": "f2c4a6d794f2910fa55775bdaaa543b9a2784c7664ad5b8cf0ae9460d2c4a504",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171"
+  },
+  "z3Version": "4.15.4",
+  "queries": [
+    {
+      "id": "observed-tuple-cannot-separate-paths",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "f9457d1c62cec8ed6a820a09590f14ff2578dbf39b8a4f9196ff30f097e21cae",
+      "model": null
+    },
+    {
+      "id": "equal-extra-state-cannot-recover-actor",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "03abdf49e49bbca6c6a16840b148f583f22008e130ea897598f13b40a14b400b",
+      "model": null
+    },
+    {
+      "id": "distinct-trusted-pre-entry-actor-can-separate",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d126b7fbc620678efc5af7994670767fbdf364b154be70cb4da3d30c6af93610",
+      "model": "[nested_7 = \"16387\",\n direct_5 = \"731\",\n nested_2 = \"none\",\n nested_6 = \"16385\",\n direct_3 = \"postgres\",\n direct_7 = \"16387\",\n direct_0 = \"capture_ordinary\",\n direct_6 = \"16385\",\n nested_original_actor = \"capture_wrapper\",\n direct_original_actor = \"capture_ordinary\",\n nested_0 = \"capture_ordinary\",\n nested_1 = \"capture_writer\",\n direct_8 = \"16388\",\n direct_2 = \"none\",\n nested_8 = \"16388\",\n direct_4 = \"2726\",\n nested_4 = \"2726\",\n nested_3 = \"postgres\",\n direct_1 = \"capture_writer\",\n nested_5 = \"731\",\n decide_with_trusted_original_actor = [(Concat(Unit(99),\n                                        Concat(Unit(97),\n                                        Concat(Unit(112),\n                                        Concat(Unit(116),\n                                        Concat(Unit(117),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(95),\n                                        Concat(Unit(111),\n                                        Concat(Unit(114),\n                                        Concat(Unit(100),\n                                        Concat(Unit(105),\n                                        Concat(Unit(110),\n                                        Concat(Unit(97),\n                                        Concat(Unit(114),\n                                        Unit(121)))))))))))))))),\n                                        Concat(Unit(99),\n                                        Concat(Unit(97),\n                                        Concat(Unit(112),\n                                        Concat(Unit(116),\n                                        Concat(Unit(117),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(95),\n                                        Concat(Unit(119),\n                                        Concat(Unit(114),\n                                        Concat(Unit(105),\n                                        Concat(Unit(116),\n                                        Concat(Unit(101),\n                                        Unit(114)))))))))))))),\n                                        Concat(Unit(110),\n                                        Concat(Unit(111),\n                                        Concat(Unit(110),\n                                        Unit(101)))),\n                                        Concat(Unit(112),\n                                        Concat(Unit(111),\n                                        Concat(Unit(115),\n                                        Concat(Unit(116),\n                                        Concat(Unit(103),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Unit(115)))))))),\n                                        Concat(Unit(50),\n                                        Concat(Unit(55),\n                                        Concat(Unit(50),\n                                        Unit(54)))),\n                                        Concat(Unit(55),\n                                        Concat(Unit(51),\n                                        Unit(49))),\n                                        Concat(Unit(49),\n                                        Concat(Unit(54),\n                                        Concat(Unit(51),\n                                        Concat(Unit(56),\n                                        Unit(53))))),\n                                        Concat(Unit(49),\n                                        Concat(Unit(54),\n                                        Concat(Unit(51),\n                                        Concat(Unit(56),\n                                        Unit(55))))),\n                                        Concat(Unit(49),\n                                        Concat(Unit(54),\n                                        Concat(Unit(51),\n                                        Concat(Unit(56),\n                                        Unit(56))))),\n                                        Concat(Unit(99),\n                                        Concat(Unit(97),\n                                        Concat(Unit(112),\n                                        Concat(Unit(116),\n                                        Concat(Unit(117),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(95),\n                                        Concat(Unit(119),\n                                        Concat(Unit(114),\n                                        Concat(Unit(97),\n                                        Concat(Unit(112),\n                                        Concat(Unit(112),\n                                        Concat(Unit(101),\n                                        Unit(114)))))))))))))))) ->\n                                       False,\n                                       else -> True]]"
+    }
+  ],
+  "nativeFields": [
+    "person",
+    "effective",
+    "role_setting",
+    "database_name",
+    "backend_pid",
+    "xid",
+    "session_oid",
+    "writer_oid",
+    "entry_oid"
+  ],
+  "scope": "Arbitrary deterministic decisions over exactly nine equal observed post-elevation fields, with optional equal extra state",
+  "limitations": [
+    "No impossibility theorem for all PostgreSQL or all protocols",
+    "Different history/nonce/state, trusted pre-entry capture, host original call custody and native call-stack/frame evidence are outside the equal-input premise",
+    "SAT extra-actor population is not authentication or an implemented capture protocol",
+    "No MAC/signature primitive, private writer, owner authority or temporal/refinement proof"
+  ],
+  "PA02Complete": false,
+  "acceptancePromoted": false
+}

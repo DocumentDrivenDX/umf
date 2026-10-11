@@ -1,0 +1,516 @@
+{
+  "status": "conditional-source-guard-proof-passed",
+  "solverVersion": "4.15.4",
+  "scope": "Actual source-derived pointwise predicate and finite Boolean any-fold/terminal laws. Not a whole Python, packet-admission, PostgreSQL role graph, native effect, temporal cut or compiler refinement proof.",
+  "sourceSha256": {
+    "tools/security/truss-role-transition-proof.py": "6700eb90c0b154b720f48ebd1cb2bf3d7c3be272a708c2054efe135f6240b2a7",
+    "docs/helix/04-build/evidence/security/truss-installed-role-paths/source/packages/python/src/truss/_installed_admission_inventory.py": "7d925a5bc7c70a66f86e47f5bf75025be263189d9799bdf4e2f065495faa1f67",
+    "docs/helix/04-build/evidence/security/truss-installed-role-paths/installed-role-paths-merged-native.json": "e372d0ad477b10908be158895f2f5640eb3fbba4714d1834e6849370c9e0e1b2",
+    "docs/helix/04-build/evidence/security/truss-installed-role-paths/integration.json": "9a9e4888381b4830d23c713aa453bb06f64495ae3adc51d3d76ac1db448e66c3",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "6308b06510766b162bfa6eb6e410784f98ed2959a736ca29c51a1ddb4f40193a",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171"
+  },
+  "ownerMainCommit": "11f14e23a0fa747e6fca4fa61250fa41c78dcfef",
+  "actualPredicate": "row[1] != inventory.ordinary_role and (row[4] or row[5])",
+  "guardReason": "role_transition_privilege",
+  "queries": [
+    {
+      "id": "distinct-set-route-always-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "distinct-admin-route-always-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "matching-unsafe-baseline-cannot-admit",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "prior-refusal-cannot-be-cleared",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "ordinary-self-set-is-not-distinct-authority",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "membership-only-scoped-match-population",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[ordinary_role = \"\",\n selected_role = \"A\",\n prior_reason = False,\n selected_admin = False,\n selected_set = False,\n other_route = False]"
+    },
+    {
+      "id": "set-only-scoped-refusal-population",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[ordinary_role = \"A\",\n selected_role = \"\",\n prior_reason = False,\n selected_admin = False,\n selected_set = True,\n other_route = False]"
+    },
+    {
+      "id": "admin-only-scoped-refusal-population",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[ordinary_role = \"\",\n selected_role = \"A\",\n prior_reason = False,\n selected_admin = True,\n selected_set = False,\n other_route = False]"
+    },
+    {
+      "id": "erase-set-guard-admits-set-route",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[ordinary_role = \"\",\n selected_role = \"A\",\n prior_reason = False,\n selected_admin = False,\n selected_set = True,\n other_route = False]"
+    },
+    {
+      "id": "erase-admin-guard-admits-admin-route",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[ordinary_role = \"\",\n selected_role = \"A\",\n prior_reason = False,\n selected_admin = True,\n selected_set = False,\n other_route = False]"
+    },
+    {
+      "id": "erase-policy-append-admits-matching-unsafe-baseline",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "witness": "[selected_set = True,\n ordinary_role = \"\",\n selected_role = \"A\",\n selected_admin = False,\n prior_reason = False,\n other_route = False]"
+    }
+  ],
+  "truthTable": [
+    {
+      "different": false,
+      "set": false,
+      "admin": false,
+      "other": false,
+      "prior": false,
+      "result": "scoped_match"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": false,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": false,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": false,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": true,
+      "other": false,
+      "prior": false,
+      "result": "scoped_match"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": true,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": true,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": false,
+      "admin": true,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": false,
+      "other": false,
+      "prior": false,
+      "result": "scoped_match"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": false,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": false,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": false,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": true,
+      "other": false,
+      "prior": false,
+      "result": "scoped_match"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": true,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": true,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": false,
+      "set": true,
+      "admin": true,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": false,
+      "other": false,
+      "prior": false,
+      "result": "scoped_match"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": false,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": false,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": false,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": true,
+      "other": false,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": true,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": true,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": false,
+      "admin": true,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": false,
+      "other": false,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": false,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": false,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": false,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": true,
+      "other": false,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": true,
+      "other": false,
+      "prior": true,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": true,
+      "other": true,
+      "prior": false,
+      "result": "scoped_mismatch"
+    },
+    {
+      "different": true,
+      "set": true,
+      "admin": true,
+      "other": true,
+      "prior": true,
+      "result": "scoped_mismatch"
+    }
+  ],
+  "nativePolicyReplay": [
+    {
+      "id": "before-original-configuration-composition",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "original-native-comparison-baseline",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "original",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "inherited-table",
+      "rows": 2,
+      "rolePolicyRefusal": true
+    },
+    {
+      "id": "inherited-table-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "public-table",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "public-table-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "column-insert",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "column-insert-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "schema-create",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "schema-create-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "extra-overload",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "extra-overload-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "body-drift",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "body-drift-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "public-root-execute",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "public-root-execute-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "root-grant-option",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "root-grant-option-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "cost-drift",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "cost-drift-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "direct-set-only",
+      "rows": 2,
+      "rolePolicyRefusal": true
+    },
+    {
+      "id": "direct-set-only-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "indirect-set-only",
+      "rows": 3,
+      "rolePolicyRefusal": true
+    },
+    {
+      "id": "indirect-set-only-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "admin-only",
+      "rows": 2,
+      "rolePolicyRefusal": true
+    },
+    {
+      "id": "admin-only-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "membership-only",
+      "rows": 2,
+      "rolePolicyRefusal": false
+    },
+    {
+      "id": "membership-only-restored",
+      "rows": 1,
+      "rolePolicyRefusal": false
+    }
+  ],
+  "assumptions": [
+    "Execution reaches the selected tail; all prior successes are excluded by the source-shape check",
+    "Original packet admission provides complete finite immutable rows, exact strings and exact Boolean fields",
+    "Native SET/ADMIN facts are faithful and current; their authentication/completeness/coherent cut is not proved",
+    "Other rows fold through Python any with this exact predicate; other_route abstracts their Boolean disjunction",
+    "Prior reasons abstract every preceding refusal, including baseline drift; reasons are not removed after this tail"
+  ],
+  "criteria": [
+    "US-056-AC5",
+    "US-056-AC9",
+    "US-056-AC10"
+  ],
+  "originalRequiredCases": 132,
+  "acceptancePromoted": false,
+  "nativeEvidence": "Retained63-observation PG16.15/pg8000 1.31.5 fixture supplies independent direct/indirect SET and ADMIN-only effect witnesses; this producer does not rerun native SQL."
+}

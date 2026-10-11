@@ -1,0 +1,914 @@
+{
+  "status": "scoped-native-checks-passed",
+  "runId": "d9a30fbf-3f9b-4cb5-9070-8c214a2ba118",
+  "sourcePins": {
+    "tools/security/pg-old-snapshot-admission-probe.py": "c5740205e120a18f994e3ffd5121369b12d634ab9082b7d72a3131afa18ac24c",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-drain.sql": "c262ca3aef8139d2877e83861c1194d0815a911ccabd96d7dc0f7db52b3673f3",
+    "tests/security/native/pg-raw-persistent-drain.sql": "e43390b61f5db35ea0517bc4f3bc1e71afafc3a6818292855f85b2757f2e5d14",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+  },
+  "originalCase": {
+    "id": "pg-raw.L06",
+    "backend": "pg-raw",
+    "covers": [
+      "US-057-AC3"
+    ],
+    "name": "old-snapshot-new-generation",
+    "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+    "required": true,
+    "layer": "native-concurrent",
+    "status": "not-run",
+    "command": null,
+    "evidence": null,
+    "testSource": null,
+    "oracleSource": null,
+    "implementationSources": [],
+    "timeoutMs": 60000,
+    "assertionIds": [
+      "pg-raw.L06"
+    ]
+  },
+  "engine": {
+    "number": "170009",
+    "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+  },
+  "observations": [
+    {
+      "id": "engine",
+      "expected": "170009",
+      "observed": "170009"
+    },
+    {
+      "id": "ordinary:umf_sec_issuer",
+      "expected": {
+        "user": "umf_sec_issuer",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_issuer",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "ordinary:umf_sec_revoker",
+      "expected": {
+        "user": "umf_sec_revoker",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_revoker",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "repeatable-read:restored-assignments",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "b0735b00-6ece-434b-9ae7-db34d7b42966:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "b0735b00-6ece-434b-9ae7-db34d7b42966:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "repeatable-read:nonempty-original-path",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "repeatable-read:baseline-consumed",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "repeatable-read:snapshot-anchored",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "repeatable-read:revocation-acknowledged",
+      "expected": [
+        "revoked"
+      ],
+      "observed": [
+        "revoked"
+      ]
+    },
+    {
+      "id": "repeatable-read:committed-authority",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "26f87222-02e1-456e-a33e-dd835c60f9b4:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "26f87222-02e1-456e-a33e-dd835c60f9b4:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "repeatable-read:stale-first-read-sqlstate",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "repeatable-read:zero-output",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "repeatable-read:specific-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "repeatable-read:no-consumption",
+      "expected": "enrolled",
+      "observed": "enrolled"
+    },
+    {
+      "id": "repeatable-read:failed-transaction",
+      "expected": "25P02",
+      "observed": "25P02"
+    },
+    {
+      "id": "repeatable-read:same-original-backend",
+      "expected": [
+        "192"
+      ],
+      "observed": [
+        "192"
+      ]
+    },
+    {
+      "id": "repeatable-read:fresh-restart-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "repeatable-read:consumption-pending",
+      "expected": "pending",
+      "observed": "pending"
+    },
+    {
+      "id": "repeatable-read:retirement",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "repeatable-read:terminal-history",
+      "expected": "released",
+      "observed": "released"
+    },
+    {
+      "id": "serializable:restored-assignments",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "32a535e7-f1aa-4655-9fbc-aa945329a09a:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "32a535e7-f1aa-4655-9fbc-aa945329a09a:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "serializable:nonempty-original-path",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "serializable:baseline-consumed",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "serializable:snapshot-anchored",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "serializable:revocation-acknowledged",
+      "expected": [
+        "revoked"
+      ],
+      "observed": [
+        "revoked"
+      ]
+    },
+    {
+      "id": "serializable:committed-authority",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "e9165941-eed0-4cdb-a709-5ea627067acb:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "e9165941-eed0-4cdb-a709-5ea627067acb:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "serializable:stale-first-read-sqlstate",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "serializable:zero-output",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "serializable:specific-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "serializable:no-consumption",
+      "expected": "enrolled",
+      "observed": "enrolled"
+    },
+    {
+      "id": "serializable:failed-transaction",
+      "expected": "25P02",
+      "observed": "25P02"
+    },
+    {
+      "id": "serializable:same-original-backend",
+      "expected": [
+        "246"
+      ],
+      "observed": [
+        "246"
+      ]
+    },
+    {
+      "id": "serializable:fresh-restart-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "serializable:consumption-pending",
+      "expected": "pending",
+      "observed": "pending"
+    },
+    {
+      "id": "serializable:retirement",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "serializable:terminal-history",
+      "expected": "released",
+      "observed": "released"
+    },
+    {
+      "id": "read-committed:restored-assignments",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "a6a2a394-a97b-4450-a365-89f771c13606:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "a6a2a394-a97b-4450-a365-89f771c13606:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "read-committed:nonempty-original-path",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "read-committed:baseline-consumed",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "read-committed:snapshot-anchored",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "read-committed:revocation-acknowledged",
+      "expected": [
+        "revoked"
+      ],
+      "observed": [
+        "revoked"
+      ]
+    },
+    {
+      "id": "read-committed:committed-authority",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "a34549a0-e0cd-4056-860e-bf652342d0de:native-identity",
+      "expected": "umf_sec_alice",
+      "observed": "umf_sec_alice"
+    },
+    {
+      "id": "a34549a0-e0cd-4056-860e-bf652342d0de:enroll",
+      "expected": [
+        "enrolled"
+      ],
+      "observed": [
+        "enrolled"
+      ]
+    },
+    {
+      "id": "read-committed:fresh-statement-sqlstate",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "read-committed:fresh-statement-empty",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "read-committed:consumption-pending",
+      "expected": "pending",
+      "observed": "pending"
+    },
+    {
+      "id": "read-committed:retirement",
+      "expected": [
+        "retired"
+      ],
+      "observed": [
+        "retired"
+      ]
+    },
+    {
+      "id": "read-committed:terminal-history",
+      "expected": "released",
+      "observed": "released"
+    }
+  ],
+  "transcripts": [
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "stdoutHex": "7b227573657222203a2022756d665f7365635f697373756572222c2022737570657222203a20226f6666222c202262797061737322203a2066616c73657d",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "stdoutHex": "7b227573657222203a2022756d665f7365635f7265766f6b6572222c2022737570657222203a20226f6666222c202262797061737322203a2066616c73657d",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "313932",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('b0735b00-6ece-434b-9ae7-db34d7b42966'::uuid,'umf_sec_alice'::name,192,'2026-10-10 22:34:11.310063+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('b0735b00-6ece-434b-9ae7-db34d7b42966'::uuid) ORDER BY id COLLATE \"C\"",
+      "stdoutHex": "52410a524142",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('b0735b00-6ece-434b-9ae7-db34d7b42966'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL repeatable read",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT txid_current_snapshot()::text",
+      "stdoutHex": "3832373a3832373a",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT security_drain.revoke_alice()",
+      "stdoutHex": "7265766f6b6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "313932",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('26f87222-02e1-456e-a33e-dd835c60f9b4'::uuid,'umf_sec_alice'::name,192,'2026-10-10 22:34:11.310063+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('26f87222-02e1-456e-a33e-dd835c60f9b4'::uuid)",
+      "stdoutHex": "",
+      "diagnosticHex": "4552524f523a2020556e737570706f72746564207075626c697368657220736e617073686f740a434f4e544558543a2020504c2f706753514c2066756e6374696f6e2073656375726974795f647261696e2e726561645f656e726f6c6c6564287575696429206c696e6520342061742052414953450a",
+      "sqlstate": "42501",
+      "message": "Unsupported publisher snapshot"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT 1",
+      "stdoutHex": "",
+      "diagnosticHex": "4552524f523a202063757272656e74207472616e73616374696f6e2069732061626f727465642c20636f6d6d616e64732069676e6f72656420756e74696c20656e64206f66207472616e73616374696f6e20626c6f636b0a",
+      "sqlstate": "25P02",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "ROLLBACK",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL READ COMMITTED",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "313932",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('26f87222-02e1-456e-a33e-dd835c60f9b4'::uuid)",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "COMMIT",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('26f87222-02e1-456e-a33e-dd835c60f9b4'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "323436",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('32a535e7-f1aa-4655-9fbc-aa945329a09a'::uuid,'umf_sec_alice'::name,246,'2026-10-10 22:34:11.68441+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('32a535e7-f1aa-4655-9fbc-aa945329a09a'::uuid) ORDER BY id COLLATE \"C\"",
+      "stdoutHex": "52410a524142",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('32a535e7-f1aa-4655-9fbc-aa945329a09a'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL serializable",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT txid_current_snapshot()::text",
+      "stdoutHex": "3833353a3833353a",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT security_drain.revoke_alice()",
+      "stdoutHex": "7265766f6b6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "323436",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('e9165941-eed0-4cdb-a709-5ea627067acb'::uuid,'umf_sec_alice'::name,246,'2026-10-10 22:34:11.68441+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('e9165941-eed0-4cdb-a709-5ea627067acb'::uuid)",
+      "stdoutHex": "",
+      "diagnosticHex": "4552524f523a2020556e737570706f72746564207075626c697368657220736e617073686f740a434f4e544558543a2020504c2f706753514c2066756e6374696f6e2073656375726974795f647261696e2e726561645f656e726f6c6c6564287575696429206c696e6520342061742052414953450a",
+      "sqlstate": "42501",
+      "message": "Unsupported publisher snapshot"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT 1",
+      "stdoutHex": "",
+      "diagnosticHex": "4552524f523a202063757272656e74207472616e73616374696f6e2069732061626f727465642c20636f6d6d616e64732069676e6f72656420756e74696c20656e64206f66207472616e73616374696f6e20626c6f636b0a",
+      "sqlstate": "25P02",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "ROLLBACK",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL READ COMMITTED",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "323436",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('e9165941-eed0-4cdb-a709-5ea627067acb'::uuid)",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "COMMIT",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": "current transaction is aborted, commands ignored until end of transaction block"
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('e9165941-eed0-4cdb-a709-5ea627067acb'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "333030",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('a6a2a394-a97b-4450-a365-89f771c13606'::uuid,'umf_sec_alice'::name,300,'2026-10-10 22:34:12.056808+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('a6a2a394-a97b-4450-a365-89f771c13606'::uuid) ORDER BY id COLLATE \"C\"",
+      "stdoutHex": "52410a524142",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('a6a2a394-a97b-4450-a365-89f771c13606'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL read committed",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT txid_current_snapshot()::text",
+      "stdoutHex": "3834333a3834333a",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT security_drain.revoke_alice()",
+      "stdoutHex": "7265766f6b6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT pg_backend_pid()::text",
+      "stdoutHex": "333030",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.enroll_publisher('a34549a0-e0cd-4056-860e-bf652342d0de'::uuid,'umf_sec_alice'::name,300,'2026-10-10 22:34:12.056808+00'::timestamptz)",
+      "stdoutHex": "656e726f6c6c6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT id FROM security_drain.read_enrolled('a34549a0-e0cd-4056-860e-bf652342d0de'::uuid)",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "COMMIT",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    },
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT security_drain.retire_publisher('a34549a0-e0cd-4056-860e-bf652342d0de'::uuid)",
+      "stdoutHex": "72657469726564",
+      "diagnosticHex": "",
+      "sqlstate": "00000",
+      "message": ""
+    }
+  ],
+  "scope": "Fixed PG17.9 enrolled projection and dedicated ordinary SCRAM issuer/revoker/reader. Snapshot anchored before committed revocation; first repeatable-read/serializable protected read refuses without rows or consuming enrollment, failed transaction refuses, same backend restart reads no revoked rows. Read-committed first read observes revocation. No general compiler/authenticated broker, native inventory closure, diagnostics noninterference, streaming/final-publication qualification, or L06 acceptance promotion."
+}
