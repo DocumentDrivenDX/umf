@@ -36,7 +36,8 @@
     "docs:example:native": "bun scripts/actions-docs/native-example.ts",
     "docs:example:refusal": "bun scripts/actions-docs/refusal-example.ts",
     "docs:example:rule": "bun scripts/actions-docs/rule-example.ts",
-    "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts"
+    "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts",
+    "test:actions": "bun scripts/prepare-action-tests.ts && bun test tests/actions-reference"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",
