@@ -397,6 +397,94 @@ try:
   check('pending-value-candidate-generation-fault-full-restoration',generation_state,archive_state())
   check('pending-value-candidate-original-effect-definition-restored',[[original_effect_definition]],c.run(effect_definition_query))
   check('pending-value-candidate-generation-fault-restored-positive',physical_values,c.run(value_query,r=rev))
+  basis_query="SELECT encode(truss.runtime_collect_pending_association_report_basis_candidate(:r::int),'hex')"
+  basis_hex=c.run(basis_query,r=rev)[0][0];basis=json.loads(bytes.fromhex(basis_hex))
+  check('pending-report-basis-original-input',packet['originalInputHex'],basis['originalInputHex'])
+  check('pending-report-basis-original-binding',binding_bytes.hex(),basis['originalBindingHex'])
+  check('pending-report-basis-selected-values',[{'family':row[0],'identity':row[1],'physicalValue':row[2]} for row in physical_values],basis['metadataImage'])
+  check('pending-report-basis-full-native-documents',[row[0] for row in c.run('SELECT to_jsonb(d) FROM truss.schema_doc d WHERE rev=:r::int ORDER BY ord',r=rev)],basis['documents'])
+  check('pending-report-basis-actual-cut',actual_operation+[str(before_generation+4),rev],[basis['writerXid'],basis['operationOrdinal'],basis['effectGeneration'],basis['revision']])
+  check('pending-report-basis-not-accepted-report',False,basis['acceptedReportQualified'])
+  check('pending-report-basis-explicit-profile','truss-pending-association-report-basis-candidate/0.1.0',basis['profile'])
+  check('pending-report-basis-original-packet-bytes',basis_hex,c.run(basis_query,r=rev)[0][0])
+  check('pending-report-basis-original-packet-digest',sha(bytes.fromhex(basis_hex)),c.run("SELECT encode(sha256(truss.runtime_collect_pending_association_report_basis_candidate(:r::int)),'hex')",r=rev)[0][0])
+  (out/'report-basis.json').write_text(json.dumps({'basisHex':basis_hex,'sha256':sha(bytes.fromhex(basis_hex)),'profile':basis['profile'],'scope':'private-unregistered-original-source-and-five-family-value-basis'},indent=2)+'\n')
+
+  require_basis="SELECT truss.runtime_require_pending_association_report_basis_candidate(:r::int,decode(:b,'hex'))"
+  check('pending-report-basis-current-positive',[['']],c.run(require_basis,r=rev,b=basis_hex))
+  refusal('pending-report-basis-byte-substitution',require_basis,{'code':'55000','message':'current original pending association report basis correspondence required'},r=rev,b=(bytes.fromhex(basis_hex)+b' ').hex())
+  refusal('pending-report-basis-empty',require_basis,{'code':'22023','message':'bounded original pending association report basis required'},r=rev,b='')
+  refusal('pending-report-basis-null',require_basis,{'code':'22023','message':'bounded original pending association report basis required'},r=rev,b=None)
+  refusal('pending-report-basis-argument-exact-limit',"SELECT truss.runtime_require_pending_association_report_basis_candidate(:r::int,decode(repeat('00',8388608),'hex'))",{'code':'55000','message':'current original pending association report basis correspondence required'},r=rev)
+  refusal('pending-report-basis-argument-limit-over',"SELECT truss.runtime_require_pending_association_report_basis_candidate(:r::int,decode(repeat('00',8388609),'hex'))",{'code':'22023','message':'bounded original pending association report basis required'},r=rev)
+
+  refusal('ordinary-pending-report-basis',basis_query,{'code':'42501'},acting_role=True,r=rev)
+  refusal('ordinary-pending-report-basis-recheck',require_basis,{'code':'42501'},acting_role=True,r=rev,b=basis_hex)
+  c.run('SAVEPOINT pending_report_generation_fault');report_state=archive_state()
+  c.run('UPDATE truss.row_home_operation SET effect_generation=effect_generation+1')
+  refusal('pending-report-basis-stale-generation',require_basis,{'code':'55000','message':'current original pending association report basis correspondence required'},r=rev,b=basis_hex)
+  c.run('ROLLBACK TO SAVEPOINT pending_report_generation_fault');c.run('RELEASE SAVEPOINT pending_report_generation_fault')
+  check('pending-report-basis-generation-restored',report_state,archive_state())
+  check('pending-report-basis-restored-current-positive',[['']],c.run(require_basis,r=rev,b=basis_hex))
+  c.run('SAVEPOINT pending_report_internal_generation');report_state=archive_state()
+  value_definition_query="SELECT pg_get_functiondef('truss.runtime_collect_pending_association_value_candidate(integer)'::regprocedure)"
+  original_value_definition=c.run(value_definition_query)[0][0]
+  value_emission="RETURN QUERY SELECT v.value->>'family'"
+  check('pending-report-basis-generation-single-value-site',1,original_value_definition.count(value_emission))
+  c.run(original_value_definition.replace(value_emission,'UPDATE truss.row_home_operation SET effect_generation=effect_generation+1 WHERE original_writer_xid=pg_current_xact_id_if_assigned();\n '+value_emission))
+  refusal('pending-report-basis-internal-generation-change',basis_query,{'code':'55000','message':'pending association report basis generation changed'},r=rev)
+  c.run('ROLLBACK TO SAVEPOINT pending_report_internal_generation');c.run('RELEASE SAVEPOINT pending_report_internal_generation')
+  check('pending-report-basis-internal-generation-full-restoration',report_state,archive_state())
+  check('pending-report-basis-original-value-function-restored',[[original_value_definition]],c.run(value_definition_query))
+  check('pending-report-basis-internal-generation-restored-positive',[['']],c.run(require_basis,r=rev,b=basis_hex))
+
+  # Coherent changed source with identical mappings and physical values, retaining
+  # the original generation: excluded installer drift, not new owner authority.
+  changed_binding=json.loads(binding_bytes);changed_ontology=json.loads(base64.b64decode(changed_binding['ontologyArtifact']['bytesBase64']))
+  changed_ontology['uninterpretedReportBasisControl']='retained-source-change'
+  changed_ontology_bytes=json.dumps(changed_ontology,separators=(',',':')).encode()
+  changed_binding['ontologyArtifact']['bytesBase64']=base64.b64encode(changed_ontology_bytes).decode()
+  changed_binding['ontologyArtifact']['sha256']=sha(changed_ontology_bytes);changed_binding['ontologySha256']=sha(changed_ontology_bytes)
+  changed_binding_bytes=json.dumps(changed_binding,separators=(',',':')).encode()
+  if [json.dumps(m,separators=(',',':')).encode().hex() for m in changed_binding['mappings']]!=mapping_fragments:raise ValueError('Unchanged original mapping fragments required for source drift')
+  changed_input=json.loads(bytes.fromhex(packet['originalInputHex']));changed_input['binding']['artifact']['bytesBase64']=base64.b64encode(changed_binding_bytes).decode();changed_input['binding']['artifact']['sha256']=sha(changed_binding_bytes)
+  changed_input_bytes=json.dumps(changed_input,separators=(',',':')).encode()
+  original_guard=c.run("SELECT pg_get_functiondef('truss.runtime_guard_operation_originals()'::regprocedure)")[0][0]
+  source_definition_query="SELECT pg_get_functiondef('truss.runtime_collect_pending_association_source_candidate(integer)'::regprocedure)"
+  original_source_definition=c.run(source_definition_query)[0][0]
+  source_emission='EXCEPTION WHEN no_data_found OR too_many_rows THEN'
+  check('pending-report-basis-interleaved-single-source-site',1,original_source_definition.count(source_emission))
+  source_change=("UPDATE truss.row_home_operation SET original_input_bytes=decode('"+changed_input_bytes.hex()+"','hex'); "
+   +"UPDATE truss.catalog_binding_archive SET original_input_bytes=decode('"+changed_input_bytes.hex()+"','hex'),original_binding_bytes=decode('"+changed_binding_bytes.hex()+"','hex') WHERE revision="+rev+"; "
+   +"UPDATE truss.row_home_operation SET effect_generation="+str(before_generation+4)+"; "
+   +"EXECUTE convert_from(decode('"+original_guard.encode().hex()+"','hex'),'UTF8'); ALTER TABLE truss.catalog_binding_archive ENABLE ALWAYS TRIGGER runtime_binding_archive_immutable; ")
+  c.run('SAVEPOINT pending_report_source_drift');report_state=archive_state()
+  c.run('CREATE OR REPLACE FUNCTION truss.runtime_guard_operation_originals() RETURNS trigger LANGUAGE plpgsql VOLATILE SECURITY INVOKER SET search_path=pg_catalog,pg_temp AS $$BEGIN RETURN NEW; END;$$')
+  c.run('ALTER TABLE truss.catalog_binding_archive DISABLE TRIGGER runtime_binding_archive_immutable')
+  c.run(original_source_definition.replace(source_emission,"IF (SELECT original_input_bytes FROM truss.row_home_operation WHERE original_writer_xid=pg_current_xact_id_if_assigned())=decode('"+packet['originalInputHex']+"','hex') THEN "+source_change+" END IF;\n"+source_emission))
+  refusal('pending-report-basis-interleaved-equal-generation-source-drift',basis_query,{'code':'55000','message':'pending association report basis original operation changed'},r=rev)
+  c.run('ROLLBACK TO SAVEPOINT pending_report_source_drift');c.run('RELEASE SAVEPOINT pending_report_source_drift')
+  check('pending-report-basis-interleaved-full-restoration',report_state,archive_state())
+  check('pending-report-basis-interleaved-source-function-restored',[[original_source_definition]],c.run(source_definition_query))
+  check('pending-report-basis-interleaved-operation-guard-restored',[[original_guard]],c.run("SELECT pg_get_functiondef('truss.runtime_guard_operation_originals()'::regprocedure)"))
+  c.run('SAVEPOINT pending_report_aba_source');report_state=archive_state()
+  c.run('CREATE OR REPLACE FUNCTION truss.runtime_guard_operation_originals() RETURNS trigger LANGUAGE plpgsql VOLATILE SECURITY INVOKER SET search_path=pg_catalog,pg_temp AS $$BEGIN RETURN NEW; END;$$')
+  c.run('ALTER TABLE truss.catalog_binding_archive DISABLE TRIGGER runtime_binding_archive_immutable')
+  c.run("UPDATE truss.row_home_operation SET original_input_bytes=decode(:i,'hex')",i=changed_input_bytes.hex())
+  c.run("UPDATE truss.catalog_binding_archive SET original_input_bytes=decode(:i,'hex'),original_binding_bytes=decode(:b,'hex') WHERE revision=:r::int",i=changed_input_bytes.hex(),b=changed_binding_bytes.hex(),r=rev)
+  c.run('UPDATE truss.row_home_operation SET effect_generation=:g::bigint',g=str(before_generation+4));c.run(original_guard)
+  c.run('ALTER TABLE truss.catalog_binding_archive ENABLE ALWAYS TRIGGER runtime_binding_archive_immutable')
+  check('pending-report-basis-aba-same-cut',[basis['writerXid'],basis['operationOrdinal'],basis['effectGeneration']],c.run('SELECT original_writer_xid::text,operation_ordinal::text,effect_generation::text FROM truss.row_home_operation')[0])
+  check('pending-report-basis-aba-same-values',physical_values,c.run(value_query,r=rev))
+  changed_basis_hex=c.run(basis_query,r=rev)[0][0]
+  check('pending-report-basis-aba-new-source-retained',changed_binding_bytes.hex(),json.loads(bytes.fromhex(changed_basis_hex))['originalBindingHex'])
+  check('pending-report-basis-aba-new-source-current',[['']],c.run(require_basis,r=rev,b=changed_basis_hex))
+  refusal('pending-report-basis-aba-old-source-refuses',require_basis,{'code':'55000','message':'current original pending association report basis correspondence required'},r=rev,b=basis_hex)
+  c.run('ROLLBACK TO SAVEPOINT pending_report_aba_source');c.run('RELEASE SAVEPOINT pending_report_aba_source')
+  check('pending-report-basis-aba-full-restoration',report_state,archive_state())
+  check('pending-report-basis-aba-original-current',[['']],c.run(require_basis,r=rev,b=basis_hex))
+
+
 
   check('pending-effect-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('ordinary-pending-effect-candidate',effect_query,{'code':'42501'},acting_role=True,r=rev)
