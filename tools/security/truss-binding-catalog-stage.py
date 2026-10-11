@@ -46,8 +46,21 @@ frozen={str(p):p.read_bytes() for p in paths};sha=lambda b:hashlib.sha256(b).hex
 owner_receipt=json.loads(frozen[str(interpretation/'receipt.json')])
 if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h for p,h in owner_receipt['sourceDigests'].items()):raise ValueError('Original interpretation source changed')
 binding_bytes=frozen[str(interpretation/'binding.json')] if '--opaque' not in sys.argv else b'\x00\xffopaque 1e999999999999999999999999999999 -1e999999999999999999999999999999'
+authored_fixture='--authored-relationship' in sys.argv
+fixture_artifact=None
+if authored_fixture:
+ if not pending_layout or '--opaque' in sys.argv:raise ValueError('Authored coexistence requires original association pending layout')
+ fixture_artifact=next(a for a in json.loads(frozen[str(IR)])['artifacts'] if a['id']=='natural-count-self-join')
+ original_core=fixture_artifact['request']['modules'][0]['documentJson'];core=json.loads(original_core)
+ core['modules'][0]['relationships']=[{'id':'WorksWith','name':'Works with','source':[{'module':'m','element':'Staff'}],'target':[{'module':'m','element':'Project','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
+ fixture_artifact['request']['modules'][0]['documentJson']=json.dumps(core,separators=(',',':'))
+ new_core_sha=sha(fixture_artifact['request']['modules'][0]['documentJson'].encode());old_core_sha=json.loads(binding_bytes)['coreSha256']
+ fixture_artifact['request']['modules'][0]['pin']['sha256']=new_core_sha
+ if binding_bytes.count(old_core_sha.encode())!=1:raise ValueError('Unique original core digest required')
+ binding_bytes=binding_bytes.replace(old_core_sha.encode(),new_core_sha.encode())
 binding={'state':'present','vocabulary':{'identity':'uninterpreted-original-binding' if '--opaque' in sys.argv else 'truss-binary-association-candidate','version':'0.1.0' if '--opaque' in sys.argv else '0.2.0','sha256':sha(b'archive-custody-only-not-vocabulary-authority')},'artifact':{'identity':'original-binding-artifact','bytesBase64':base64.b64encode(binding_bytes).decode(),'sha256':sha(binding_bytes)}}
 out=ROOT/'docs/helix/04-build/evidence/security/truss-binding-catalog-stage'/str(uuid.uuid4());out.mkdir(parents=True)
+if authored_fixture:(out/'authored-fixture.json').write_text(json.dumps({'artifact':fixture_artifact,'bindingHex':binding_bytes.hex()},indent=2)+'\n')
 with zipfile.ZipFile(out/'preimages.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
  for p,b in frozen.items():archive.writestr(p.lstrip('/'),b)
 with zipfile.ZipFile(out/'preimages.zip') as archive:
@@ -97,7 +110,7 @@ try:
   c.run('ALTER TABLE truss.catalog_binding_archive ENABLE ALWAYS TRIGGER runtime_catalog_generation')
  prior_archive=c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision')
  phase='original-stage';c.run('BEGIN');prior_head=c.run('SELECT rev FROM truss.schema_head')
- artifact=next(a for a in json.loads(frozen[str(IR)])['artifacts'] if a['id']=='natural-count-self-join')
+ artifact=fixture_artifact or next(a for a in json.loads(frozen[str(IR)])['artifacts'] if a['id']=='natural-count-self-join')
  child=subprocess.Popen(['bun',str(bridge/'bridge.ts')],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
  init={'artifact':artifact,'fixture':json.loads(frozen[str(T/'docs/helix/02-design/contracts/bindings/acceptance-input-capacity-v0.1.fixture.json')]),'ownerDirectory':str(bridge/'owner'),'dependenciesPackage':str(dep_root/'package.json'),'binding':binding}
  def archive_state():
@@ -178,12 +191,12 @@ try:
  if packet.get('kind')!='result':raise ValueError(packet.get('reason','Original staging unavailable'))
  child.stdin.close();check('bridge-exit',0,child.wait(timeout=5))
  check('original-archive-bridge',artifact['request']['modules'][0]['documentJson'],packet['originalText'])
- check('five-records',5,len(packet['staged']['types']));check('nine-owned-fields',9,len(packet['staged']['properties']));check('five-keys',5,len(packet['staged']['keys']));check('no-invented-core-relationships',0,len(packet['staged']['relationships']))
+ check('five-records',5,len(packet['staged']['types']));check('nine-owned-fields',9,len(packet['staged']['properties']));check('five-keys',5,len(packet['staged']['keys']));check('original-core-relationship-count',int(authored_fixture),len(packet['staged']['relationships']))
  check('native-non-primary-keys',[[5,0]],c.run('SELECT count(*),count(*) FILTER(WHERE is_primary) FROM truss.key_def'))
  check('native-original-archive',[[packet['originalText']]],c.run('SELECT document::text FROM truss.schema_doc WHERE doc_id=\'domain\''))
  source=json.loads(packet['originalText']);elements={e['id']:e for e in source['modules'][0]['elements']};records=[e for e in elements.values() if e.get('kind')=='record']
  check('complete-original-native-types',sorted([['domain','m',record['id'],'accepted_document','domain'] for record in records]),c.run('SELECT document_id,module,element,definition_source_kind,definition_document_id FROM truss.type_def ORDER BY document_id,module,element'))
- check('no-native-relationships-or-endpoints',[[0,0]],c.run('SELECT (SELECT count(*) FROM truss.rel_def),(SELECT count(*) FROM truss.rel_endpoint)'))
+ check('original-native-relationship-and-endpoint-count',[[int(authored_fixture),int(authored_fixture)]],c.run('SELECT (SELECT count(*) FROM truss.rel_def),(SELECT count(*) FROM truss.rel_endpoint)'))
  observed_properties=c.run("SELECT t.element,p.element,p.scalar_type,p.nullability,p.cardinality,p.facets,p.home,p.definition_source_kind,p.definition_document_id,p.declaration_module FROM truss.prop_def p JOIN truss.type_def t ON t.type_id=p.type_id ORDER BY t.element,p.element")
  expected_properties=sorted([[record['id'],ref['element'],elements[ref['element']].get('scalarType'),elements[ref['element']]['nullability'],elements[ref['element']]['cardinality'],elements[ref['element']].get('facets'),'json','accepted_document','domain','m'] for record in records for ref in record['members']],key=lambda r:(r[0],r[1]))
  check('complete-original-property-projection',expected_properties,observed_properties)
@@ -205,7 +218,7 @@ try:
   except pg8000.exceptions.DatabaseError as error:check(label,{'code':'55000','message':'original prestate archive profile correspondence required'},{'code':error.args[0].get('C'),'message':error.args[0].get('M')})
   else:raise ValueError(label+' admitted')
   c.run('ROLLBACK TO SAVEPOINT profile_mismatch');c.run('RELEASE SAVEPOINT profile_mismatch');check(label+'-restored',baseline,archive_state())
- check('original-core-only-native-inventory', [['key',5],['property',9],['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_core_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
+ check('original-core-only-native-inventory', ([['endpoint',1]] if authored_fixture else [])+[['key',5],['property',9]]+([['relationship',1]] if authored_fixture else [])+[['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_core_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
  c.run('SAVEPOINT inventory_primary_fault');baseline=archive_state()
  c.run('UPDATE truss.key_def SET is_primary=true WHERE type_id=(SELECT min(type_id) FROM truss.key_def)')
  refusal('inventory-primary-substitution','SELECT * FROM truss.runtime_collect_new_core_catalog_inventory(:r::int)',{'code':'55000','message':'stored original ordered Key definition correspondence'},r=packet['staged']['provisionalRevision'])
@@ -269,37 +282,39 @@ try:
  check('prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a WHERE revision=0 ORDER BY revision'))
  if pending_layout:
   phase='pending-source-shape';baseline=archive_state();rev=packet['staged']['provisionalRevision']
+  candidate_ids=[str(int(c.run('SELECT coalesce(max(rel_type_id),0) FROM truss.rel_def')[0][0])+i+1) for i in range(2)]
+  prior_lineage=c.run('SELECT to_jsonb(l) FROM truss.relationship_lineage l ORDER BY rel_type_id')
   c.run('SAVEPOINT pending_candidate_batch');before_generation=c.run('SELECT effect_generation FROM truss.row_home_operation')[0][0]
   allocated=c.run('SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',r=rev)
-  check('pending-candidate-original-allocated-batch',[['/mappings/0','1'],['/mappings/1','2']],allocated)
+  check('pending-candidate-original-allocated-batch',[[f'/mappings/{i}',candidate_ids[i]] for i in range(2)],allocated)
   native_types={row[0]:row[1] for row in c.run("SELECT element,type_id::text FROM truss.type_def WHERE document_id='domain' AND module='m'")}
   expected=[]
   for index,(association,source,target) in enumerate([('Ownership','Resource','Project'),('Assignment','Staff','Project')]):
    fragment=next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{index}')
-   expected.append([str(index+1),association,native_types[association],native_types[source],native_types[target],'pk','operation_binding',f'/mappings/{index}',fragment])
-  check('pending-candidate-native-correspondence',expected,c.run("SELECT r.rel_type_id::text,r.rel_id,r.assoc_type_id::text,e.source_type::text,e.target_type::text,r.target_key,r.definition_source_kind,r.pending_mapping_pointer,encode(r.pending_mapping_bytes,'hex') FROM truss.rel_def r JOIN truss.rel_endpoint e USING(rel_type_id) ORDER BY r.rel_type_id"))
-  check('pending-candidate-exact-storage',[[0,None,0,None,'independent',True,False,None],[0,None,0,None,'independent',True,False,None]],c.run('SELECT source_min,source_max,target_min,target_max,lifecycle,directed,composition,inverse FROM truss.rel_def ORDER BY rel_type_id'))
+   expected.append([candidate_ids[index],association,native_types[association],native_types[source],native_types[target],'pk','operation_binding',f'/mappings/{index}',fragment])
+  check('pending-candidate-native-correspondence',expected,c.run("SELECT r.rel_type_id::text,r.rel_id,r.assoc_type_id::text,e.source_type::text,e.target_type::text,r.target_key,r.definition_source_kind,r.pending_mapping_pointer,encode(r.pending_mapping_bytes,'hex') FROM truss.rel_def r JOIN truss.rel_endpoint e USING(rel_type_id) WHERE r.definition_source_kind='operation_binding' ORDER BY r.rel_type_id"))
+  check('pending-candidate-exact-storage',[[0,None,0,None,'independent',True,False,None],[0,None,0,None,'independent',True,False,None]],c.run("SELECT source_min,source_max,target_min,target_max,lifecycle,directed,composition,inverse FROM truss.rel_def WHERE definition_source_kind='operation_binding' ORDER BY rel_type_id"))
   actual_operation=c.run('SELECT original_writer_xid::text,operation_ordinal::text FROM truss.row_home_operation')[0]
-  check('pending-candidate-original-operation',[actual_operation+[rev],actual_operation+[rev]],c.run('SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text FROM truss.rel_def ORDER BY rel_type_id'))
+  check('pending-candidate-original-operation',[actual_operation+[rev],actual_operation+[rev]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text FROM truss.rel_def WHERE definition_source_kind='operation_binding' ORDER BY rel_type_id"))
   check('pending-candidate-all-original-association-fields',[['Assignment',3],['Ownership',2]],c.run("SELECT t.element,count(p.prop_id)::int FROM truss.type_def t JOIN truss.prop_def p ON p.type_id=t.type_id WHERE t.element IN ('Assignment','Ownership') GROUP BY t.element ORDER BY t.element"))
-  check('pending-candidate-no-authored-lineage-fabrication',[[0]],c.run('SELECT count(*) FROM truss.relationship_lineage'))
+  check('pending-candidate-original-authored-lineage-preserved',prior_lineage,c.run('SELECT to_jsonb(l) FROM truss.relationship_lineage l ORDER BY rel_type_id'))
   check('pending-candidate-observed-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   source_query='SELECT * FROM truss.runtime_collect_pending_association_source_candidate(:r::int)'
-  expected_source=[[f'/mappings/{i}',str(i+1),sha(bytes.fromhex(expected[i][-1])),str(before_generation+4)] for i in range(2)]
+  expected_source=[[f'/mappings/{i}',candidate_ids[i],sha(bytes.fromhex(expected[i][-1])),str(before_generation+4)] for i in range(2)]
   check('pending-source-candidate-exact-original-cohort',expected_source,c.run(source_query,r=rev))
   check('pending-source-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('ordinary-pending-source-candidate',source_query,{'code':'42501'},acting_role=True,r=rev)
   for fault,mutation,message in [
-   ('bytes',"UPDATE truss.rel_def SET pending_mapping_bytes=convert_to('{}','UTF8') WHERE rel_type_id=2",'pending source candidate exact tuple correspondence required'),
-   ('pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/9' WHERE rel_type_id=2",'pending source candidate unique source correspondence required'),
-   ('duplicate-pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/0' WHERE rel_type_id=2",'pending source candidate unique source correspondence required')]:
-   c.run('SAVEPOINT pending_source_fault');original_state=archive_state();c.run(mutation)
+   ('bytes',"UPDATE truss.rel_def SET pending_mapping_bytes=convert_to('{}','UTF8') WHERE rel_type_id=:candidate_target::int",'pending source candidate exact tuple correspondence required'),
+   ('pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/9' WHERE rel_type_id=:candidate_target::int",'pending source candidate unique source correspondence required'),
+   ('duplicate-pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/0' WHERE rel_type_id=:candidate_target::int",'pending source candidate unique source correspondence required')]:
+   c.run('SAVEPOINT pending_source_fault');original_state=archive_state();c.run(mutation,candidate_target=candidate_ids[1])
    refusal('pending-source-candidate-'+fault,source_query,{'code':'55000','message':message},r=rev)
    c.run('ROLLBACK TO SAVEPOINT pending_source_fault');c.run('RELEASE SAVEPOINT pending_source_fault')
    check('pending-source-candidate-'+fault+'-restored',original_state,archive_state())
   c.run('SAVEPOINT pending_source_extra_fault');original_state=archive_state()
-  c.run("INSERT INTO truss.rel_def(document_id,rel_type_id,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,pending_mapping_pointer,pending_mapping_bytes) SELECT document_id,3,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,'/mappings/9',pending_mapping_bytes FROM truss.rel_def WHERE rel_type_id=2")
-  check('pending-source-candidate-extra-row-present',[[3]],c.run('SELECT count(*) FROM truss.rel_def'))
+  c.run("INSERT INTO truss.rel_def(document_id,rel_type_id,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,pending_mapping_pointer,pending_mapping_bytes) SELECT document_id,:extra_id::int,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,'/mappings/9',pending_mapping_bytes FROM truss.rel_def WHERE rel_type_id=:candidate_target::int",candidate_target=candidate_ids[1],extra_id=str(int(candidate_ids[1])+1))
+  check('pending-source-candidate-extra-row-present',[[3]],c.run("SELECT count(*) FROM truss.rel_def WHERE definition_source_kind='operation_binding'"))
   refusal('pending-source-candidate-extra-row',source_query,{'code':'55000','message':'pending source candidate complete source cohort required'},r=rev)
   c.run('ROLLBACK TO SAVEPOINT pending_source_extra_fault');c.run('RELEASE SAVEPOINT pending_source_extra_fault')
   check('pending-source-candidate-extra-row-restored',original_state,archive_state())
@@ -312,20 +327,27 @@ try:
   effect_query='SELECT * FROM truss.runtime_collect_pending_association_effect_candidate(:r::int) ORDER BY family,identity::text'
   actual_effects=c.run(effect_query,r=rev)
   check('pending-effect-candidate-complete-new-row-count',[[len(actual_effects)]],c.run("SELECT (SELECT count(*) FROM truss.type_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.prop_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.key_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.rel_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.rel_endpoint e JOIN truss.rel_def r USING(rel_type_id) WHERE r.since_rev=:r::int)",r=rev))
-  check('pending-effect-candidate-relationship-identities',[['relationship',[str(i+1),'domain','m',name]] for i,name in enumerate(['Ownership','Assignment'])],sorted([row for row in actual_effects if row[0]=='relationship'],key=lambda row:int(row[1][0])))
-  check('pending-effect-candidate-endpoint-identities',[['endpoint',[str(i+1),native_types[source],native_types[target]]] for i,(source,target) in enumerate([('Resource','Project'),('Staff','Project')])],sorted([row for row in actual_effects if row[0]=='endpoint'],key=lambda row:int(row[1][0])))
+  check('pending-effect-candidate-relationship-identities',[['relationship',[candidate_ids[i],'domain','m',name]] for i,name in enumerate(['Ownership','Assignment'])],sorted([row for row in actual_effects if row[0]=='relationship' and row[1][0] in candidate_ids],key=lambda row:int(row[1][0])))
+  check('pending-effect-candidate-endpoint-identities',[['endpoint',[candidate_ids[i],native_types[source],native_types[target]]] for i,(source,target) in enumerate([('Resource','Project'),('Staff','Project')])],sorted([row for row in actual_effects if row[0]=='endpoint' and row[1][0] in candidate_ids],key=lambda row:int(row[1][0])))
+  if authored_fixture:
+   check('pending-effect-candidate-authored-identities-retained',[['endpoint',['1',native_types['Staff'],native_types['Project']]],['relationship',['1','domain','m','WorksWith']]],sorted([row for row in actual_effects if row[0] in ('relationship','endpoint') and row[1][0] not in candidate_ids]))
+   c.run('SAVEPOINT authored_effect_fault');original_state=archive_state()
+   c.run("UPDATE truss.rel_def SET directed=false WHERE rel_id='WorksWith'")
+   refusal('pending-effect-candidate-authored-definition',effect_query,{'code':'55000','message':'stored original relationship definition correspondence'},r=rev)
+   c.run('ROLLBACK TO SAVEPOINT authored_effect_fault');c.run('RELEASE SAVEPOINT authored_effect_fault')
+   check('pending-effect-candidate-authored-definition-restored',original_state,archive_state())
   check('pending-effect-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('ordinary-pending-effect-candidate',effect_query,{'code':'42501'},acting_role=True,r=rev)
   for fault,mutation,message in [
-   ('storage',"UPDATE truss.rel_def SET directed=false WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
-   ('owner',"UPDATE truss.rel_def SET assoc_type_id=(SELECT type_id FROM truss.type_def WHERE element='Staff') WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
-   ('name',"UPDATE truss.rel_def SET name='substituted-name' WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
-   ('orientation',"UPDATE truss.rel_endpoint SET source_type=target_type,target_type=source_type WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
-   ('missing-endpoint',"DELETE FROM truss.rel_endpoint WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
-   ('extra-endpoint',"INSERT INTO truss.rel_endpoint(rel_type_id,source_type,target_type) SELECT rel_type_id,target_type,target_type FROM truss.rel_endpoint WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
-   ('fabricated-lineage',"INSERT INTO truss.relationship_lineage(rel_type_id,lineage_category,identity_profile,original_identity_bytes) VALUES(2,'authored','excluded-installer-fabrication',decode('abcd','hex'))",'pending association exact physical definition correspondence required'),
+   ('storage',"UPDATE truss.rel_def SET directed=false WHERE rel_type_id=:candidate_target::int",'pending association exact physical definition correspondence required'),
+   ('owner',"UPDATE truss.rel_def SET assoc_type_id=(SELECT type_id FROM truss.type_def WHERE element='Staff') WHERE rel_type_id=:candidate_target::int",'pending association exact physical definition correspondence required'),
+   ('name',"UPDATE truss.rel_def SET name='substituted-name' WHERE rel_type_id=:candidate_target::int",'pending association exact physical definition correspondence required'),
+   ('orientation',"UPDATE truss.rel_endpoint SET source_type=target_type,target_type=source_type WHERE rel_type_id=:candidate_target::int",'pending association exact physical endpoint correspondence required'),
+   ('missing-endpoint',"DELETE FROM truss.rel_endpoint WHERE rel_type_id=:candidate_target::int",'pending association exact physical endpoint correspondence required'),
+   ('extra-endpoint',"INSERT INTO truss.rel_endpoint(rel_type_id,source_type,target_type) SELECT rel_type_id,target_type,target_type FROM truss.rel_endpoint WHERE rel_type_id=:candidate_target::int",'pending association exact physical endpoint correspondence required'),
+   ('fabricated-lineage',"INSERT INTO truss.relationship_lineage(rel_type_id,lineage_category,identity_profile,original_identity_bytes) VALUES(:candidate_target::int,'authored','excluded-installer-fabrication',decode('abcd','hex'))",'pending association exact physical definition correspondence required'),
    ('core-field',"UPDATE truss.prop_def SET scalar_type='integer' WHERE prop_id=(SELECT min(prop_id) FROM truss.prop_def)",'stored original Field definition correspondence')]:
-   c.run('SAVEPOINT pending_effect_fault');original_state=archive_state();c.run(mutation)
+   c.run('SAVEPOINT pending_effect_fault');original_state=archive_state();c.run(mutation,candidate_target=candidate_ids[1])
    if fault in ('extra-endpoint','fabricated-lineage'):
     check('pending-effect-candidate-'+fault+'-source-custody-still-positive',allocated,c.run('SELECT mapping_pointer,relationship_id FROM truss.runtime_collect_pending_association_source_candidate(:r::int)',r=rev))
    refusal('pending-effect-candidate-'+fault,effect_query,{'code':'55000','message':message},r=rev)
@@ -369,7 +391,7 @@ try:
    check('candidate-paired-'+label+'-original-guard-body',[[original_guard]],c.run("SELECT pg_get_functiondef('truss.runtime_guard_operation_originals()'::regprocedure)"))
    check('candidate-paired-'+label+'-guards-restored',[['runtime_binding_archive_immutable','A'],['runtime_operation_originals','A']],c.run("SELECT tgname,tgenabled FROM pg_trigger WHERE tgname IN ('runtime_binding_archive_immutable','runtime_operation_originals') ORDER BY tgname"))
    if positive:
-    check('candidate-paired-'+label+'-retained',[['/mappings/0','1'],['/mappings/1','2']],c.run('SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',r=rev))
+    check('candidate-paired-'+label+'-retained',[[f'/mappings/{i}',candidate_ids[i]] for i in range(2)],c.run('SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',r=rev))
     check('candidate-paired-'+label+'-original-ontology',[[original_binding.hex()]],c.run("SELECT encode(original_binding_bytes,'hex') FROM truss.catalog_binding_archive WHERE revision=:r::int",r=rev))
    else:refusal('candidate-paired-'+label,'SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',expected_error,r=rev)
    c.run('ROLLBACK TO SAVEPOINT paired_candidate_source');c.run('RELEASE SAVEPOINT paired_candidate_source');check('candidate-paired-'+label+'-restored',baseline,archive_state())
@@ -377,7 +399,8 @@ try:
   native_op=c.run('SELECT original_writer_xid::text,operation_ordinal::text FROM truss.row_home_operation')[0]
   association_id=c.run("SELECT type_id::text FROM truss.type_def WHERE document_id='domain' AND module='m' AND element='Assignment'")[0][0]
   mapping_hex=next(o['observed'] for o in owner_receipt['observations'] if o['id']=='original-mapping-fragment-1')
-  base={'document_id':'domain','rel_type_id':'1','module':'m','rel_id':'Assignment','name':'Assignment','source_min':'0','source_max':None,'target_min':'0','target_max':None,'lifecycle':'independent','directed':True,'target_key':'pk','composition':False,'assoc_type_id':association_id,'since_rev':rev,'doc_ord':'0','definition_source_kind':'operation_binding','pending_writer_xid':native_op[0],'pending_operation_ordinal':native_op[1],'pending_binding_revision':rev,'pending_mapping_pointer':'/mappings/1','pending_mapping_bytes':mapping_hex}
+  shape_id=str(int(c.run('SELECT coalesce(max(rel_type_id),0) FROM truss.rel_def')[0][0])+1)
+  base={'document_id':'domain','rel_type_id':shape_id,'module':'m','rel_id':'Assignment','name':'Assignment','source_min':'0','source_max':None,'target_min':'0','target_max':None,'lifecycle':'independent','directed':True,'target_key':'pk','composition':False,'assoc_type_id':association_id,'since_rev':rev,'doc_ord':'0','definition_source_kind':'operation_binding','pending_writer_xid':native_op[0],'pending_operation_ordinal':native_op[1],'pending_binding_revision':rev,'pending_mapping_pointer':'/mappings/1','pending_mapping_bytes':mapping_hex}
   types={'rel_type_id':'int','source_min':'int','source_max':'int','target_min':'int','target_max':'int','directed':'boolean','composition':'boolean','assoc_type_id':'int','since_rev':'int','doc_ord':'int','pending_writer_xid':'xid8','pending_operation_ordinal':'bigint','pending_binding_revision':'int','definition_rev':'int','definition_doc_ord':'int','binding_source_rev':'int'}
   def pending_insert(values):
    cols=list(values);expr=[("decode(:"+name+"::text,'hex')" if name in ('pending_mapping_bytes','binding_source_bytes') else ':'+name+'::'+types.get(name,'text')) for name in cols]
@@ -385,7 +408,7 @@ try:
   c.run('SAVEPOINT pending_positive')
   generation=c.run('SELECT effect_generation FROM truss.row_home_operation')[0][0]
   check('pending-shape-complete-original-row',[['operation_binding']],c.run(pending_insert(base),**base))
-  check('pending-shape-native-custody',[[*native_op,rev,'/mappings/1',mapping_hex,association_id]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text,pending_mapping_pointer,encode(pending_mapping_bytes,'hex'),assoc_type_id::text FROM truss.rel_def WHERE rel_type_id=1"))
+  check('pending-shape-native-custody',[[*native_op,rev,'/mappings/1',mapping_hex,association_id]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text,pending_mapping_pointer,encode(pending_mapping_bytes,'hex'),assoc_type_id::text FROM truss.rel_def WHERE rel_type_id=:shape_id::int",shape_id=shape_id))
   check('pending-shape-observed-generation',[[generation+1]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('pending-complete-inventory-still-unregistered','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
   refusal('pending-source-observer-not-reusable',"SELECT truss.runtime_collect_original_association_mapping(:r::int,'/mappings/1')",{'code':'55000','message':'unique original declaration required'},r=rev)
@@ -421,7 +444,7 @@ try:
   check('pending-source-tests-whole-restored',baseline,archive_state())
  c.run('ROLLBACK');check('rollback-prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision'));check('rollback-catalog',[[0,0,0,0,1 if occupied else 0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc),(SELECT count(*) FROM truss.catalog_binding_archive)'))
  phase='source-current';check('source-pins-current',True,all(Path(p).read_bytes()==b for p,b in frozen.items()))
- receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver; pgserver startup/cleanup uses a single-handle subclass with a test-private mutex/socket directory and captured implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
+ receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'authoredCoexistenceInstallerFixture':authored_fixture,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Authored coexistence selection, when enabled, is an explicit source fixture validated by the original UMF producer; it is not newly owner-issued ontology meaning. Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver; pgserver startup/cleanup uses a single-handle subclass with a test-private mutex/socket directory and captured implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
 
 except Exception as error:
  (out/'failure.json').write_text(json.dumps({'status':'fail','phase':phase,'reason':str(error),'observations':checks,'sourceSha256':pins,'queryLog':query_log},indent=2)+'\n');print(json.dumps({'status':'fail','receipt':str(out/'failure.json'),'phase':phase,'reason':str(error)}));raise
