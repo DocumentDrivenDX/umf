@@ -26,7 +26,7 @@ if pending_layout:
  for name,key in [('sourcePath','sourceSha256'),('modelPath','modelSha256'),('ddlPath','ddlSha256')]:
   if hashlib.sha256(Path(capture[name]).read_bytes()).hexdigest()!=capture[key]:raise ValueError('Pending layout owner artifact changed')
 
-interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/f316ca00-80f1-4da5-8b97-686e6c278733'
+interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/8ed0ba2a-6fb7-407a-a6db-c9fa4e487551'
 paths += [interpretation/'binding.json',interpretation/'receipt.json']
 # Capture and execute the full declared Ajv dependency closure from copied packages.
 pending=[(ROOT/'node_modules/ajv').resolve()];dependencies={}
@@ -45,7 +45,7 @@ frozen={str(p):p.read_bytes() for p in paths};sha=lambda b:hashlib.sha256(b).hex
 owner_receipt=json.loads(frozen[str(interpretation/'receipt.json')])
 if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h for p,h in owner_receipt['sourceDigests'].items()):raise ValueError('Original interpretation source changed')
 binding_bytes=frozen[str(interpretation/'binding.json')] if '--opaque' not in sys.argv else b'\x00\xffopaque 1e999999999999999999999999999999 -1e999999999999999999999999999999'
-binding={'state':'present','vocabulary':{'identity':'uninterpreted-original-binding' if '--opaque' in sys.argv else 'truss-binary-association-candidate','version':'0.1.0','sha256':sha(b'archive-custody-only-not-vocabulary-authority')},'artifact':{'identity':'original-binding-artifact','bytesBase64':base64.b64encode(binding_bytes).decode(),'sha256':sha(binding_bytes)}}
+binding={'state':'present','vocabulary':{'identity':'uninterpreted-original-binding' if '--opaque' in sys.argv else 'truss-binary-association-candidate','version':'0.1.0' if '--opaque' in sys.argv else '0.2.0','sha256':sha(b'archive-custody-only-not-vocabulary-authority')},'artifact':{'identity':'original-binding-artifact','bytesBase64':base64.b64encode(binding_bytes).decode(),'sha256':sha(binding_bytes)}}
 out=ROOT/'docs/helix/04-build/evidence/security/truss-binding-catalog-stage'/str(uuid.uuid4());out.mkdir(parents=True)
 with zipfile.ZipFile(out/'preimages.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
  for p,b in frozen.items():archive.writestr(p.lstrip('/'),b)
