@@ -3,15 +3,15 @@
   "solverVersion": "4.15.4",
   "command": "/private/tmp/umf-security-proof-venv/bin/python3 docs/helix/02-design/spikes/security/prove.py",
   "sourceDigests": {
-    "docs/helix/02-design/spikes/security/prove.py": "6bd069c0d11dea43a3bad43be92523fcaa14ccac9beca92e1f18b03d572b2bd1",
-    "docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
-    "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2"
+    "docs/helix/02-design/spikes/security/prove.py": "2ec99fc12e5127a345350d522f4b86e1b0d16f8a687c3e897af55ca860519a03",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "6308b06510766b162bfa6eb6e410784f98ed2959a736ca29c51a1ddb4f40193a",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341"
   },
   "cases": [
     {
       "id": "composition-safety",
       "covers": [
-        "US-055-AC4"
+        "US-079-AC4"
       ],
       "layer": "formal",
       "scope": "Unbounded Boolean composition",
@@ -28,7 +28,7 @@
     {
       "id": "incomplete-refusal",
       "covers": [
-        "US-055-AC6"
+        "US-079-AC6"
       ],
       "layer": "formal",
       "scope": "Unbounded Boolean complete-cut admission",
@@ -144,7 +144,7 @@
     {
       "id": "assignment-removal",
       "covers": [
-        "US-055-AC5",
+        "US-079-AC5",
         "US-057-AC3"
       ],
       "layer": "formal",
@@ -206,7 +206,7 @@
     {
       "id": "protected-disposition-required",
       "covers": [
-        "US-055-AC7",
+        "US-079-AC7",
         "US-056-AC6"
       ],
       "layer": "formal",
@@ -224,7 +224,7 @@
     {
       "id": "qualified-identity-separation",
       "covers": [
-        "US-055-AC2"
+        "US-079-AC2"
       ],
       "layer": "formal",
       "scope": "Unbounded SMT string tuple identity; native collation/encoding is a binding assumption",
@@ -241,7 +241,7 @@
     {
       "id": "tri-state-scoped-unknown-refusal",
       "covers": [
-        "US-055-AC6"
+        "US-079-AC6"
       ],
       "layer": "formal",
       "scope": "Complete enumeration of one permit/require/forbid over F,T,U; unknown always refuses",
@@ -262,7 +262,7 @@
     {
       "id": "mask-order-invariance",
       "covers": [
-        "US-055-AC7"
+        "US-079-AC7"
       ],
       "layer": "formal",
       "scope": "Finite abstract disclosure domain; original cannot cancel transformed/withheld",
@@ -282,7 +282,7 @@
     {
       "id": "withholding-dominates",
       "covers": [
-        "US-055-AC7"
+        "US-079-AC7"
       ],
       "layer": "formal",
       "scope": "Finite abstract disclosure domain; typed transforms are independently validated",
@@ -302,7 +302,7 @@
     {
       "id": "false-permit-no-obligation",
       "covers": [
-        "US-055-AC7"
+        "US-079-AC7"
       ],
       "layer": "formal",
       "scope": "Finite abstract disposition composition; only true permits contribute",
@@ -322,7 +322,7 @@
     {
       "id": "mask-associativity",
       "covers": [
-        "US-055-AC7"
+        "US-079-AC7"
       ],
       "layer": "formal",
       "scope": "Finite 6-value disclosure algebra; three or more rules via associativity",
@@ -343,7 +343,7 @@
     {
       "id": "query-profile-exact-original-action",
       "covers": [
-        "US-055-AC8"
+        "US-079-AC8"
       ],
       "layer": "formal",
       "scope": "Unbounded qualified lookup/action labels; authentic immutable profile and exact actual query-use extraction are premises, not native authentication proofs",
@@ -365,8 +365,8 @@
     {
       "id": "query-profile-qualified-use-tuple",
       "covers": [
-        "US-055-AC2",
-        "US-055-AC8"
+        "US-079-AC2",
+        "US-079-AC8"
       ],
       "layer": "formal",
       "scope": "Unbounded document/module/element tuples and five operators; label-only or operator-omitting lookup has a satisfiable substitution control",

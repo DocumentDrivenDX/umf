@@ -11238,3 +11238,12 @@ fresh solver context inside the producer. Astra separately replayed all15 clean
 queries (five UNSAT/ten SAT). Adjacent audit/review/replay receipts retain this
 scoped review; no landing blocker remains. The broader acceptance run is separate
 from this review and does not inherit its verdict.
+
+Full fresh gate `bun docs/helix/02-design/spikes/security/acceptance.ts` finished
+with26/132 accepted executions and exit1. All26 registered runners passed;
+106 required backend cases lack executable bindings. Ten additional errors
+report unallocated US-055-AC1 through AC10, so the gate reports116 errors
+and28 allocated criteria. This allocation gap must be reconciled against the
+governing requirements, not removed to make the gate green. Exact full output
+is retained at `evidence/security/acceptance-runs/b48167fa-f6a5-44f1-a704-0c3fd70f08f8/acceptance.json`.
+The full objective remains active; component success is not backend admission.
