@@ -1,0 +1,79 @@
+{
+  "status": "conditional-proof-passed",
+  "z3Version": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-census-chunk-transport.py": "ea70585b03bfcb455e6cbac3d355c626a46902093ecab386131f37eaa924301f",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/security-source-census.ts": "1001e6fbb1d828f8d8bb9e4b02167d4c824bcdbaccf5c17bd0ad39b6b705f828",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/native-query.ts": "3ca0045cfc73b76577e5bb9b6d8811c97266335c203d203596d3ea88a49acc3b",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/wire.ts": "1a20210a71ea5ff7318be614ef027f940766aba0132da43d2b2c3d6747a283a5",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/journal.ts": "83acc32f461371df5108df7a1dd5177d7edea5a749ea4a1f07b71ed4073d3be3",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/security-query-source-census.sql": "3fc1e0e10e9acc09b8437877968de921c9a06982f8c052567766baeb261a1735"
+  },
+  "queries": [
+    {
+      "id": "next-chunk-is-positive-and-never-overshoots",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun offset () Int)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (>= offset 0))\n(assert\n (< offset total_bytes))\n(assert\n (let ((?x15 (- total_bytes offset)))\n(let ((?x17 (ite (< 32768 ?x15) 32768 ?x15)))\n(or (<= ?x17 0) (> (+ offset ?x17) total_bytes)))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "distinct-native-chunks-do-not-overlap",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun left_chunk () Int)\n(declare-fun right_chunk () Int)\n(declare-fun byte_position () Int)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (>= left_chunk 0))\n(assert\n (>= right_chunk 0))\n(assert\n (and (distinct left_chunk right_chunk) true))\n(assert\n (>= byte_position (* left_chunk 32768)))\n(assert\n (let ((?x48 (* (+ left_chunk 1) 32768)))\n (< byte_position (ite (< ?x48 total_bytes) ?x48 total_bytes))))\n(assert\n (>= byte_position (* right_chunk 32768)))\n(assert\n (let ((?x55 (* (+ right_chunk 1) 32768)))\n(< byte_position (ite (< ?x55 total_bytes) ?x55 total_bytes))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "complete-native-partition-covers-every-image-byte",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun byte_position () Int)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (>= byte_position 0))\n(assert\n (< byte_position total_bytes))\n(assert\n (let ((?x69 (* (+ (div byte_position 32768) 1) 32768)))\n(let ((?x18 (div byte_position 32768)))\n(or (< ?x18 0) (>= ?x18 (div (- (+ total_bytes 32768) 1) 32768)) (< byte_position (* ?x18 32768)) (>= byte_position (ite (< ?x69 total_bytes) ?x69 total_bytes))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "faithful-complete-byte-correspondence",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun source_byte () (Array Int Int))\n(declare-fun received_byte () (Array Int Int))\n(declare-fun original_end_of_cursor () Bool)\n(declare-fun offset () Int)\n(declare-fun byte_position () Int)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (forall ((byte Int) )(let (($x33 (= (select received_byte byte) (select source_byte byte))))\n (=> (and (>= byte 0) (< byte total_bytes)) $x33)))\n )\n(assert\n (let (($x24 (= offset total_bytes)))\n (and $x24 original_end_of_cursor)))\n(assert\n (>= byte_position 0))\n(assert\n (< byte_position total_bytes))\n(assert\n (let ((?x75 (select source_byte byte_position)))\n(let ((?x74 (select received_byte byte_position)))\n(and (distinct ?x74 ?x75) true))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "prefix-or-missing-terminal-cannot-release",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun original_end_of_cursor () Bool)\n(declare-fun offset () Int)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (let (($x24 (= offset total_bytes)))\n (and $x24 original_end_of_cursor)))\n(assert\n (let (($x77 (not original_end_of_cursor)))\n(let (($x27 (< offset total_bytes)))\n(or $x27 $x77))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "shape-and-completion-alone-allow-forged-source-bytes",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun original_end_of_cursor () Bool)\n(declare-fun offset () Int)\n(declare-fun byte_position () Int)\n(declare-fun source_byte () (Array Int Int))\n(declare-fun received_byte () (Array Int Int))\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (let (($x24 (= offset total_bytes)))\n (and $x24 original_end_of_cursor)))\n(assert\n (>= byte_position 0))\n(assert\n (< byte_position total_bytes))\n(assert\n (let ((?x75 (select source_byte byte_position)))\n(let ((?x74 (select received_byte byte_position)))\n(and (distinct ?x74 ?x75) true))))\n(check-sat)\n",
+      "witness": "[total_bytes = 1,\n byte_position = 0,\n received_byte = K(Int, 1),\n source_byte = K(Int, 0),\n offset = 1,\n original_end_of_cursor = True]"
+    },
+    {
+      "id": "truthful-materialized-snapshot-does-not-prove-current-execution-source",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun source_byte () (Array Int Int))\n(declare-fun received_byte () (Array Int Int))\n(declare-fun original_end_of_cursor () Bool)\n(declare-fun offset () Int)\n(declare-fun byte_position () Int)\n(declare-fun current_source_byte () (Array Int Int))\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (forall ((byte Int) )(let (($x33 (= (select received_byte byte) (select source_byte byte))))\n (=> (and (>= byte 0) (< byte total_bytes)) $x33)))\n )\n(assert\n (let (($x24 (= offset total_bytes)))\n (and $x24 original_end_of_cursor)))\n(assert\n (>= byte_position 0))\n(assert\n (< byte_position total_bytes))\n(assert\n (let ((?x75 (select source_byte byte_position)))\n(let ((?x79 (select current_source_byte byte_position)))\n(and (distinct ?x79 ?x75) true))))\n(check-sat)\n",
+      "witness": "[total_bytes = 1,\n current_source_byte = K(Int, 3),\n byte_position = 0,\n source_byte = K(Int, 2),\n received_byte = K(Int, 2),\n offset = 1,\n original_end_of_cursor = True]"
+    },
+    {
+      "id": "byte-complete-image-without-native-terminal-is-not-release",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun total_bytes () Int)\n(declare-fun offset () Int)\n(declare-fun original_end_of_cursor () Bool)\n(assert\n (> total_bytes 0))\n(assert\n (>= 16777216 total_bytes))\n(assert\n (= offset total_bytes))\n(assert\n (not original_end_of_cursor))\n(assert\n (let (($x24 (= offset total_bytes)))\n(let (($x25 (and $x24 original_end_of_cursor)))\n(not $x25))))\n(check-sat)\n",
+      "witness": "[total_bytes = 1,\n offset = 1,\n original_end_of_cursor = False]"
+    }
+  ],
+  "scope": "Unbounded integer chunk arithmetic within16MiB/32768-byte constants and conditional byte-array correspondence. Faithful materialized original byte observation, guarded completion and connection/SQL custody remain premises. Not an executable TypeScript/Buffer/TextDecoder or native cursor/SQL/journal refinement. No driver/source/issuer authentication, observer semantic completeness/injectivity, heap/CPU bound, current execution/authority cut, concurrent DDL, participating writer, Python16.15 port or graph/backend admission proof. SAT controls show complete shape permits forged bytes and a truthful materialized snapshot can differ from execution source."
+}

@@ -1430,3 +1430,10 @@ catalog/JSON refinement, external executable custody, runtime GUC correspondence
 or the final-release writer protocol. An explicit interior ABA countermodel must
 remain beside endpoint-comparison positives; production admission requires the
 held-cut protocol specified by CONTRACT-063.
+
+
+### Complete inventory transport controls
+
+B08/B09/B11 must independently qualify any partitioned private source-inventory transport (US-056-AC6/AC7/AC9/AC10). Exercise an image larger than one admitted response, exact chunk and image boundaries, a multibyte UTF-8 scalar crossing a chunk boundary, contiguous ordinals, exact total width, native descriptor/command/transaction correspondence and end-of-cursor. Missing, duplicated, reordered, malformed, inconsistent, oversized or prematurely terminated chunks must publish no accepted prefix. A well-shaped fabricated frame countercontrol must remain explicit: shape/coverage does not authenticate source custody.
+
+Retain the actual pre-parser native frames and exact source/fixture/build closure. Every qualifying build must occur after its inputs are frozen and retain before/after checks. A materialized snapshot is an observation cut, not proof of the later execution/authority cut. Test caller-transaction refusal with actual uncommitted work and a preserved caller cursor; only the caller's later rollback may remove them. Fail the private journal at final native COMMIT completion and require no image release plus discarded transport. Cleanup must independently verify owned removal/absence; unknown fixture state cannot pass. These are transport prerequisites within the existing cases, not new accepted backend cases.
