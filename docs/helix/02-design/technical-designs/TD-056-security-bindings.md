@@ -1105,3 +1105,30 @@ The [Astra ultra final read-only review](../../04-build/evidence/security/truss-
 verified all current native/formal source pins and independently replayed12
 formulas, finding no remaining issue in this fixed-fixture scope. It did not
 execute a native rerun or promote acceptance.
+
+
+## Installed role-route refusal and its source-derived laws
+
+Direct effective table privileges and role membership are distinct physical
+observations. In the selected PG16.15 Truss invoker profile, every distinct native
+SET-capable or ADMIN-capable role is forbidden; INHERIT FALSE cannot hide that
+route. A matching expected inventory cannot override this fixed deny rule.
+Mere membership without INHERIT, SET or ADMIN may match a fresh scoped baseline.
+Ordinary self-SET is not a distinct transition and does not alone cause refusal.
+
+The [actual merged component and native evidence](../../04-build/evidence/security/truss-installed-role-paths/integration.json)
+and [source-derived guard laws](../../04-build/evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/proof.json)
+separate the three layers: the normative route prohibition, the exact Python
+predicate/fold/terminal behavior, and native PG16.15 SET/ADMIN effect witnesses.
+The pure guard is extracted from the exact archived owner source, with32 complete
+Boolean/identity vectors checking translation and11 SMT queries checking safety,
+realizable populations and isolated guard erasures. Formula bytes are hashed and
+rechecked before publication, then independently replayable.
+
+Complete faithful immutable native role rows and their current authority are
+premises, not outputs of packet shape validation or the SMT analysis. The finite
+fold abstraction does not prove collection completeness, Python ingress/resource
+bounds, native role graph semantics, atomic installation or temporal freshness.
+Local native socket actors do not qualify production authentication. This adds
+component evidence for US-056-AC5/AC9/AC10; it does not admit a graph backend or
+replace the original caller/owner/authority handoff and seven operation bodies.

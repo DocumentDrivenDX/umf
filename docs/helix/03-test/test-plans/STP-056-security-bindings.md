@@ -421,3 +421,30 @@ The principal-binding count/preflight formulas are explicit guard-definition
 sanity checks; they do not independently model publication or prove SQL ordering.
 The final cardinality-erasure control retains JSON string typing. Earlier217
 and formal source snapshots remain historical rather than repinned.
+
+
+### Actual installed role routes: logical, semantic and native controls
+
+For US-056-AC5/AC9/AC10, keep the fixed invoker policy separate from baseline
+correspondence. Native tests must demonstrate direct and indirect INHERIT FALSE /
+SET TRUE routes while direct effective UPDATE remains false, actual SET ROLE
+registry writes, ADMIN-only self-grant escalation, before/after-reset denial and
+exact revocation restoration. Identical unsafe comparison packets still refuse;
+MEMBER-only without SET/ADMIN/INHERIT can match a fresh scoped baseline. Require
+all eleven sections, exact Boolean fields and self-role OID correspondence.
+An exact aggregate row budget succeeds; minus-one refuses at the final role read.
+
+Run `tools/security/truss-role-transition-proof.py` from the exact repository root
+with Z3 4.15.4. The [current source-qualified run](../../04-build/evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/proof.json)
+requires5 UNSAT violations,3 SAT populations and3 SAT erasures,32 actual-expression
+truth vectors,29 original native inventory predicate replays and11 saved formula
+byte digests. Independently replay every SMT result and verify source/preimage/
+formula hashes. Refuse unsupported source tails, filtered iteration, foreign
+columns, changed original pins or early success returns outside the selected tail.
+Previous receipts remain historical rather than repinned to changed producers.
+
+Complete native rows, authentic current SET/ADMIN facts and finite immutable fold
+inputs are explicit analysis premises. Neither this proof nor successful native
+fixture effects qualify the full protected cut, production authentication,
+arbitrary mutator closure or complete backend operations. These controls augment
+the original132-case plan without replacing or promoting any required case.

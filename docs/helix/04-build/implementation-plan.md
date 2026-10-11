@@ -10155,3 +10155,31 @@ remain unqualified. Seven native helper routines are not the seven required
 semantic operation bodies. All132 original obligations remain required;
 historical acceptance stays26/132, no case is promoted, and the full goal remains
 active. Implementation and evidence were published directly to main without PRs.
+
+
+### Source-derived Truss role guard laws
+
+The [current guard proof](evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/proof.json) extracts the pure role predicate,
+its complete unfiltered `any` iteration and terminal classification from the exact
+Truss module merged at11f14e23. It checks original native/module/integration pins;
+no handwritten replacement classifier is treated as the implementation. Five
+UNSAT violations cover distinct SET/ADMIN routes, matching unsafe baselines,
+nonclearing prior refusals and ordinary-self SET handling. Three SAT populations
+and three SAT guard-erasure counterexamples prevent an always-refuse or vacuous
+proof. All11 exact saved SMT byte digests and outcomes replay;32 Boolean/identity
+vectors compare the extracted actual Python expression with the restricted SMT
+translator. Policy-predicate replay covers29 original native inventories.
+
+Astra ultra requested saved-formula byte custody and clarified that native row
+completeness is an explicit premise. Both were applied before this fresh run.
+Earlier failed and passing producer attempts retain their exact inputs and scope.
+This is source-derived pointwise/finite-fold guard analysis, not whole Python
+packet-admission, native role-graph, SQL/compiler or temporal-cut refinement.
+`other_route` abstracts the remaining finite disjunction and `prior_reason`
+abstracts preceding baseline and other refusals. The independent original native
+receipt supplies real direct/indirect SET and ADMIN-only write witnesses; the
+formal producer does not rerun native SQL. Full authentication/cut/mutator/body/
+publication obligations remain required. Historical acceptance stays26/132,
+no original case is promoted, and the full goal remains active.
+
+The [final Astra ultra read-only review](evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/astra-review.json) independently replays11 formulas and reproduces32 actual Python vectors/29 native predicate results, confirming seven source/preimage pins and all formula hashes. Two exact invocation controls refuse wrong-root and extra-argument calls. No native rerun or full acceptance promotion follows from the review.
