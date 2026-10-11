@@ -1,0 +1,1418 @@
+{
+  "completeFactCuts": [
+    {
+      "cut": "initial",
+      "relations": {
+        "employee": [
+          [
+            "Alice",
+            "pc_actor"
+          ],
+          [
+            "Bob",
+            "pc_other"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "m2m_employee_project": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "m2m_resource_project": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "cut": "blocked-membership-revocation",
+      "relations": {
+        "employee": [
+          [
+            "Alice",
+            "pc_actor"
+          ],
+          [
+            "Bob",
+            "pc_other"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "m2m_employee_project": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "m2m_resource_project": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "cut": "final-membership-revocation",
+      "relations": {
+        "employee": [
+          [
+            "Alice",
+            "pc_actor"
+          ],
+          [
+            "Bob",
+            "pc_other"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "m2m_employee_project": [
+          [
+            "Alice",
+            "A",
+            false
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "m2m_resource_project": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      }
+    }
+  ],
+  "installedRoutines": [
+    [
+      "16477",
+      "protected_capture",
+      "capture",
+      "postgres",
+      false,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.capture()\n RETURNS TABLE(database_oid oid, backend_pid integer, xid xid8, person_oid oid, actor_oid oid)\n LANGUAGE sql\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ SELECT (SELECT oid FROM pg_database WHERE datname=current_database()),pg_backend_pid(),pg_current_xact_id(),\n(SELECT oid FROM pg_roles WHERE rolname=session_user),(SELECT oid FROM pg_roles WHERE rolname=current_user) $function$\n"
+    ],
+    [
+      "16475",
+      "protected_capture",
+      "check_authority",
+      "pc_authority",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.check_authority(actor oid, generation bigint, resource_id text)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ DECLARE a protected_capture.authority%ROWTYPE;\nBEGIN\n SELECT k.* INTO a FROM protected_capture.authority k WHERE k.actor_oid=$1 FOR SHARE;\n IF NOT FOUND OR NOT a.permitted OR a.generation<>$2 THEN\n  RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501';\n END IF;\n IF NOT protected_capture.ontology_allowed($3) THEN\n  RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501';\n END IF;\nEND $function$\n"
+    ],
+    [
+      "16479",
+      "protected_capture",
+      "entry",
+      "postgres",
+      false,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.entry(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ BEGIN\n -- This candidate admits the fixed login only; SET ROLE requires a separate profile.\n IF current_user <> session_user OR current_user <> 'pc_actor' THEN\n  RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501';\n END IF;\n PERFORM protected_capture.write($1,$2,$3);\nEND $function$\n"
+    ],
+    [
+      "16474",
+      "protected_capture",
+      "ontology_allowed",
+      "pc_authority",
+      false,
+      "{search_path=pg_catalog}",
+      "CREATE OR REPLACE FUNCTION protected_capture.ontology_allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE STRICT\n SET search_path TO 'pg_catalog'\nAS $function$ SELECT (((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"protected_capture\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"protected_capture\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"protected_capture\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"protected_capture\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"protected_capture\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE) $function$\n"
+    ],
+    [
+      "16476",
+      "protected_capture",
+      "revoke_actor",
+      "pc_authority",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.revoke_actor()\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ UPDATE protected_capture.authority SET permitted=false,generation=generation+1\n WHERE actor_oid=(SELECT oid FROM pg_roles WHERE rolname='pc_actor') $function$\n"
+    ],
+    [
+      "16481",
+      "protected_capture",
+      "revoke_assignment",
+      "pc_authority",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.revoke_assignment()\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ BEGIN\n UPDATE protected_capture.authority SET generation=generation+1\n WHERE actor_oid=(SELECT oid FROM pg_roles WHERE rolname='pc_actor');\n UPDATE protected_capture.m2m_employee_project SET active=false WHERE employee_id='Alice' AND project_id='A';\nEND $function$\n"
+    ],
+    [
+      "16480",
+      "protected_capture",
+      "wrapper",
+      "pc_wrapper",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.wrapper(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ SELECT protected_capture.entry($1,$2,$3) $function$\n"
+    ],
+    [
+      "16478",
+      "protected_capture",
+      "write",
+      "pc_writer",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.write(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ DECLARE c protected_capture.capability%ROWTYPE;\nBEGIN\n IF current_setting('transaction_isolation') <> 'read committed' THEN\n  RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501';\n END IF;\n UPDATE protected_capture.capability k SET used=true\n WHERE k.token=$1 AND NOT k.used AND k.attempt=$2 AND k.payload=$3\n AND k.database_oid=(SELECT oid FROM pg_database WHERE datname=current_database())\n AND k.backend_pid=pg_backend_pid() AND k.xid=pg_current_xact_id()\n AND k.person_oid=(SELECT oid FROM pg_roles WHERE rolname=session_user)\n RETURNING k.* INTO c;\n IF NOT FOUND THEN RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501'; END IF;\n PERFORM protected_capture.check_authority(c.actor_oid,c.authority_generation,convert_from(c.payload,'UTF8'));\n INSERT INTO protected_capture.effect VALUES(c.attempt,c.actor_oid,c.payload);\nEND $function$\n"
+    ]
+  ],
+  "loweredPredicateSha256": "de009242f670aaa8bf9bc12f3a0387ffd02766f90e8a5af316c848a2e181a14b",
+  "executedSqlSha256": "fe5286486bb720bcb4ec762ae3274fb4bf534b447f1cb4c94bad96d7c51650cc",
+  "status": "pass",
+  "sourceSha256": {
+    "tools/security/truss-ontology-capture-candidate.py": "52964e5c37d084f54434b07bf0ee5d005a191b1a1ba192222533aa218de154be",
+    "tools/security/truss-ontology-capture-candidate.sql": "ee14cadb3b33726efaaecc3b97fd01880deab26e4e7d863019174fd6eca3cf5b",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_operation_admission.py": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/adr/ADR-008-trusted-embedding-host.md": "0ce6283047c287d6032b67bf2effbcb108a8321bf9523935d92f6ca598d7d335",
+    "tools/security/check-ontology-capture-safety.py": "4af3d6c7636044b9a37329aa7db22d93ffcc65333bb5dcd0a5057f57ffadfc29",
+    "tools/security/truss-ontology-capture-lowerer.ts": "811489173d35bf876dfd913b5b3445854bfb1e469f27ba73e7a9e133728a9bbe",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27"
+  },
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "expected": [
+        [
+          "160015"
+        ]
+      ],
+      "observed": [
+        [
+          "160015"
+        ]
+      ]
+    },
+    {
+      "id": "fixed-bun-version",
+      "expected": "1.4.2",
+      "observed": "1.4.2"
+    },
+    {
+      "id": "ordinary-not-writer-or-registrar-member",
+      "expected": [
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "ordinary-cannot-create-schema",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-employee",
+      "expected": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-project",
+      "expected": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-resource",
+      "expected": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "observed": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "private-fact-owners-and-rls",
+      "expected": [
+        [
+          "employee",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "m2m_employee_project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "m2m_resource_project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "resource",
+          "pc_authority",
+          false,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          "employee",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "m2m_employee_project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "m2m_resource_project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "project",
+          "pc_authority",
+          false,
+          false
+        ],
+        [
+          "resource",
+          "pc_authority",
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "fixed-read-committed-isolation",
+      "expected": [
+        [
+          "read committed"
+        ]
+      ],
+      "observed": [
+        [
+          "read committed"
+        ]
+      ]
+    },
+    {
+      "id": "native-original-actor",
+      "expected": 16385,
+      "observed": 16385
+    },
+    {
+      "id": "forged-public-context",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "copied-public-context-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-different-login",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-attempt",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-input",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "unregistered-wrapper-even-with-private-capability",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "direct-registry-write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-read",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-authority-read",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-authority-update",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-authority-helper",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "revoker-no-direct-authority-write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "refusals-have-zero-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "host-pre-entry-native-context",
+      "expected": [
+        5,
+        15850,
+        "731",
+        16385,
+        16385
+      ],
+      "observed": [
+        5,
+        15850,
+        "731",
+        16385,
+        16385
+      ]
+    },
+    {
+      "id": "actual-original-effect",
+      "expected": [
+        [
+          1,
+          16385,
+          "5241"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "5241"
+        ]
+      ]
+    },
+    {
+      "id": "native-one-use-in-same-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "host-one-use-survives-savepoint-rollback",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "rollback-removes-effect",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "native-alone-replay-demonstrates-host-requirement",
+      "expected": [
+        [
+          1,
+          16385,
+          "5241"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "5241"
+        ]
+      ]
+    },
+    {
+      "id": "private-capability-new-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "final-zero-committed-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "actual-authority-revoked-generation",
+      "expected": [
+        [
+          2,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          2,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "revoked-after-capture",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "revoked-attempt-zero-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "refused-capability-not-consumed",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "current-generation-revoked-refuses",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "stale-generation-after-regrant",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "current-generation-native-effect",
+      "expected": [
+        [
+          1
+        ]
+      ],
+      "observed": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "revocation-blocked-by-authority-lock",
+      "expected": "55P03",
+      "observed": "55P03"
+    },
+    {
+      "id": "blocked-revocation-keeps-authority",
+      "expected": [
+        [
+          3,
+          true
+        ]
+      ],
+      "observed": [
+        [
+          3,
+          true
+        ]
+      ]
+    },
+    {
+      "id": "revocation-after-transaction-release",
+      "expected": [
+        [
+          4,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          4,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "authority-schedule-zero-committed-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "ontology-allowed-RA",
+      "expected": [
+        [
+          10,
+          16385,
+          "5241"
+        ]
+      ],
+      "observed": [
+        [
+          10,
+          16385,
+          "5241"
+        ]
+      ]
+    },
+    {
+      "id": "ontology-allowed-RAB",
+      "expected": [
+        [
+          11,
+          16385,
+          "524142"
+        ]
+      ],
+      "observed": [
+        [
+          11,
+          16385,
+          "524142"
+        ]
+      ]
+    },
+    {
+      "id": "ontology-denied-RB",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-denied-RD",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-denied-RO",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-denied-UNKNOWN",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-private-assignment-read",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-direct-assignment-write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-private-predicate-execute",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-revocation-blocked",
+      "expected": "55P03",
+      "observed": "55P03"
+    },
+    {
+      "id": "ontology-membership-unchanged-while-held",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "blocked-membership-revocation:complete-employee",
+      "expected": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ]
+    },
+    {
+      "id": "blocked-membership-revocation:complete-project",
+      "expected": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "blocked-membership-revocation:complete-resource",
+      "expected": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "observed": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ]
+    },
+    {
+      "id": "blocked-membership-revocation:complete-m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "blocked-membership-revocation:complete-m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-employee",
+      "expected": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-project",
+      "expected": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-resource",
+      "expected": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "observed": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          false
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          false
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "ontology-membership-revoked",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "ontology-current-generation-denies-revoked-membership",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "ontology-zero-effects-after-denials",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "restored-no-effect-select",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    }
+  ],
+  "nativeTuple": {
+    "postgresql": "16.15",
+    "pgserver": "0.1.4+truss.pg16.15",
+    "pg8000": "1.31.5"
+  },
+  "scope": "Experimental raw ontology read-admission receipts: captured normalized owner IR/lowerer plus registrar capability, native authority row lock and original host custody",
+  "limitations": [
+    "Synthetic local trust authentication; no production authenticated subject or current owner authority",
+    "Registrar is trusted and independently privileged; random capability is private, never public input or retained receipt content",
+    "Native consumption rolls back: direct replay after savepoint rollback succeeds; only the composed host restriction prevents resubmission",
+    "READ COMMITTED only; writer rejects other isolation levels",
+    "Raw fixed typed fact homes and captured normalized read-rule lowerer only; no admitted owner artifact, production subject mapping or complete authority mutation closure",
+    "No SET ROLE profile, general callable closure, full current-cut/publication protocol or Truss semantic bodies"
+  ],
+  "PA02Complete": false,
+  "acceptancePromoted": false
+}
