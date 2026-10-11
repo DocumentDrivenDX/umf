@@ -1,0 +1,256 @@
+{
+  "status": "passed",
+  "method": "Independent fresh-context saved-SMT replay and exact source/ZIP audit; producer not executed",
+  "receiptSha256": "1778955ab2e779aefb95fa1b245c9fa175f9815ee1b519b67cf02cb4b8c563a8",
+  "sourcePins": 520,
+  "exactZipEntrySet": true,
+  "currentSourcesMatch": true,
+  "archiveSha256": "e173d23818b7cf9e468d631dfe205269a7bfd4e2805e1d0a2020b6edef01cdbe",
+  "solver": "4.15.4",
+  "formulaCount": 30,
+  "unsat": 12,
+  "sat": 18,
+  "observations": [
+    {
+      "id": "absent-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "5964c384a22310fa9490a032837741af310c45b988b6799a65972834a4df8630",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Empty(Seq(FaithfulQualifiedOpaqueLink)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = False,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 0,\n owner_ordered_links = Empty(Seq(FaithfulQualifiedOpaqueLink)),\n observed_present = False,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 0,\n seq.nth_u = [else -> link(0, 0, 0, 0)]]"
+    },
+    {
+      "id": "explicit-empty-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "2442ef49555ab714cb5cc9a61ae53b6840a122ab3a40db85ebab57a7203ce954",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Empty(Seq(FaithfulQualifiedOpaqueLink)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 0,\n owner_ordered_links = Empty(Seq(FaithfulQualifiedOpaqueLink)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 0,\n seq.nth_u = [else -> link(0, 0, 0, 0)]]"
+    },
+    {
+      "id": "populated-link-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "6862b4b39642dc6bcef49ed72c63e3eb2e6348a9a338abb38f64d2ec359b8884",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "presence-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "2a8845e80e66ff7104533e95b5f0d6d529e99576e94e8cf2a572667b9cab2487",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "ordered-opaque-list-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "287ab6bed10af0181a649ecd7712e431cce2cb924dcb3c08c0880941122d75fe",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "crossed-context-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "15ad39ba9a482c6b31c34f9762d4579861d26abc941f0950fd93f9f660a0d431",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "crossed-occurrence-index-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "c9943e0b7516cd99b6874b65897fb3e96ae9bf8c321a42ef54509493e4b168fd",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "target-path-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "6ec04eb4f3a5de9a454d1bf950411a65cffac298e394c3886117f2c48a11f8c5",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "target-kind-presence-loss-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "040f0549501de0132749c5d4c0791df5df4a7381f95d6082ccbd9cc0ef20958f",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "target-kind-value-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "5d5304cd18183062db493daf3660981d3e53a504c8f95c2a687a1aaa7c0d2a2f",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "unknown-path-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "237d5ba05edc42dd56546575779d90e2e0b365727be90ae75b3e0cc1f1d7c5e9",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "opaque-source-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "bd0d32388a88eccac801bc6d0f2a4953c37e94f1cc0c49b6601a732dc36e3672",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "qualified-target-substitution-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "0acf9b540612ab65166e7fe50d6166b2b5bc3f4e0e480cf7fcd640a0f1883a84",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-presence-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "1f714b0dbfa2da1b6b5f676df021f7494e337b1d60acf9cbf4e3622b976670f5",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind = 0,\n owner_target_kind = 0,\n observed_present = False,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n references_present = True,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n owner_target_element = 3,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-ordered-opaque-list-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "880739dbdaaf083f72498dc542a9ebc511b629e131fbd1fe01675d0b72ba9c81",
+      "freshContext": true,
+      "model": "[source_index = 0,\n owner_ordered_links = Empty(Seq(FaithfulQualifiedOpaqueLink)),\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind = 0,\n owner_target_kind = 0,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n references_present = True,\n owner_target_element = 3,\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-context-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d974dd67ec2474088983092b6e237dd79d837019f634439fb9563a6ea953603e",
+      "freshContext": true,
+      "model": "[owner_context = 1,\n source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n source_context = 0,\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-occurrence-index-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "b1d8616f4c2abb86b4f58b75587800f477e4b0434ad9a5f30459aa632b674766",
+      "freshContext": true,
+      "model": "[source_index = 0,\n owner_index = 1,\n original_ordered_links = Unit(link(2, 2, 2, 2)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 2,\n owner_ordered_links = Unit(link(2, 2, 2, 2)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 2]"
+    },
+    {
+      "id": "erase-target-path-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "83763f77ab12ca3f870c940d69a516a305285ee6db9086f464bb553755d710b8",
+      "freshContext": true,
+      "model": "[owner_target_path = 1,\n source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_path = 0,\n original_target_kind = 0,\n owner_target_kind = 0,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n references_present = True,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-target-kind-presence-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e3d5c3d058a8a8d23b223e492986d328d02f5ec1be7000f93b27e9b6ecd7ac1c",
+      "freshContext": true,
+      "model": "[owner_target_kind_present = True,\n source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind_present = False,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n references_present = True,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-unknown-paths-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "881776f51e286afb5854ec54931ceeca6a729838d263e7d0c40ea80f6ebcb9db",
+      "freshContext": true,
+      "model": "[original_ordered_links = Unit(link(2, 2, 2, 2)),\n source_index = 0,\n original_unknown_paths = Unit(7),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 2,\n owner_ordered_links = Unit(link(2, 2, 2, 2)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 2]"
+    },
+    {
+      "id": "erase-opaque-source-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ed5bd2b351e5617bb46923de4eff561fc280d7351008b510df7b910776cbd36c",
+      "freshContext": true,
+      "model": "[owner_copy = 1,\n source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n source_copy = 0,\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-result-shape-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "2abb4d4fd7ed26f4ea16f9cd17183e3672133dc5d4a1df5d5e61c31017c8c3cd",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind = 0,\n owner_target_kind = 0,\n references_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n owner_target_element = 3,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = False,\n source_copy = 0,\n owner_copy = 0,\n owner_target_module = 3]"
+    },
+    {
+      "id": "erase-qualified-target-guard-admits-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "69b4678061dc9f1da36b5a888632ecf8185a958a09b6c5c6064bbcdfc0d08fc0",
+      "freshContext": true,
+      "model": "[owner_target_module = 4,\n source_index = 0,\n original_ordered_links = Unit(link(3, 3, 3, 3)),\n original_target_kind = 0,\n owner_target_kind = 0,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n references_present = True,\n owner_ordered_links = Unit(link(3, 3, 3, 3)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n source_context = 0,\n owner_context = 0,\n owner_index = 0,\n closed_result = True,\n source_copy = 0,\n owner_copy = 0]"
+    },
+    {
+      "id": "same-population-reversal-forbidden",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "9ef36e0164c109adf341a3dca71c90b2d44fd70634d3a836f10bf24f8f62238c",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-list-only-admits-same-population-reversal",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e3e8e7bca528f441a2e3a2b425e01e3953b61993f216c187095d0dbbc483f57e",
+      "freshContext": true,
+      "model": "[original_target_kind = 0,\n owner_target_kind = 0,\n original_ordered_links = Concat(Unit(link(2, 5, 6, 7)),\n                                 Unit(link(1, 2, 3, 4))),\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n source_index = 0,\n source_context = 0,\n owner_context = 0,\n source_copy = 0,\n owner_copy = 0,\n references_present = True,\n owner_target_element = 6,\n owner_ordered_links = Concat(Unit(link(1, 2, 3, 4)),\n                              Unit(link(2, 5, 6, 7))),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 0,\n closed_result = True,\n owner_target_module = 5]"
+    },
+    {
+      "id": "repeated-links-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "fbd69ac85e23e7208b207b4f310c06bf5f580000b02f7d88326a079f34ce9f03",
+      "freshContext": true,
+      "model": "[original_target_kind = 0,\n owner_target_kind = 0,\n original_ordered_links = Concat(Unit(link(1, 2, 3, 4)),\n                                 Unit(link(1, 2, 3, 4))),\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n source_index = 1,\n source_context = 0,\n owner_context = 0,\n source_copy = 0,\n owner_copy = 0,\n references_present = True,\n owner_target_element = 3,\n owner_ordered_links = Concat(Unit(link(1, 2, 3, 4)),\n                              Unit(link(1, 2, 3, 4))),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 1,\n closed_result = True,\n owner_target_module = 2]"
+    },
+    {
+      "id": "erased-index-can-cross-identical-repeated-links",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "1992efa25d3c6bcae44875048b77ba69109b1fd98df3a56173e3fa6d4ae6dc93",
+      "freshContext": true,
+      "model": "[original_target_kind = 0,\n owner_target_kind = 0,\n original_ordered_links = Concat(Unit(link(1, 2, 3, 4)),\n                                 Unit(link(1, 2, 3, 4))),\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n original_target_kind_present = False,\n owner_target_kind_present = False,\n source_index = 1,\n source_context = 0,\n owner_context = 0,\n source_copy = 0,\n owner_copy = 0,\n references_present = True,\n owner_target_element = 3,\n owner_ordered_links = Concat(Unit(link(1, 2, 3, 4)),\n                              Unit(link(1, 2, 3, 4))),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 0,\n closed_result = True,\n owner_target_module = 2]"
+    },
+    {
+      "id": "receipt-required-for-type-admission",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "6d7633713bc4802e952d3663522273b55d6e5386ac811ac650a1b6a34c671b80",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "bare-record-role-and-Record-target-do-not-imply-receipt",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "a5099ec67c58095b5e0a7da4e055cffafc027550e6439d4ab15c8dba34e67bba",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Unit(link(1, 4, 5, 6)),\n original_target_kind_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n owner_target_kind_present = True,\n source_context = 0,\n owner_context = 0,\n source_copy = 0,\n owner_copy = 0,\n admitted_type = False,\n original_target_kind = 1,\n references_present = True,\n owner_target_element = 5,\n owner_ordered_links = Unit(link(1, 4, 5, 6)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 0,\n closed_result = True,\n verified_type_receipt = False,\n owner_target_module = 4,\n owner_target_kind = 1]"
+    },
+    {
+      "id": "erased-receipt-gate-admits-bare-role-promotion",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "0b72693645fe941aeec307dffcaf28edeb4adf625bc844c40e48f8beea1f89df",
+      "freshContext": true,
+      "model": "[source_index = 0,\n original_ordered_links = Unit(link(1, 4, 5, 6)),\n original_target_kind_present = True,\n original_unknown_paths = Empty(Seq(Int)),\n owner_unknown_paths = Empty(Seq(Int)),\n owner_target_kind_present = True,\n source_context = 0,\n owner_context = 0,\n source_copy = 0,\n owner_copy = 0,\n admitted_type = True,\n original_target_kind = 1,\n references_present = True,\n owner_target_element = 5,\n owner_ordered_links = Unit(link(1, 4, 5, 6)),\n observed_present = True,\n original_target_path = 0,\n owner_target_path = 0,\n owner_index = 0,\n closed_result = True,\n verified_type_receipt = False,\n owner_target_module = 4,\n owner_target_kind = 1]"
+    }
+  ],
+  "acceptancePromoted": false
+}
