@@ -1,0 +1,830 @@
+{
+  "status": "source-audit-passed",
+  "sourceSha256": {
+    "tools/security/truss-security-owner-binding-audit.ts": "8290c1adc5c2143d2ea5536e60226cbebf33e04bc2cfa73cac0363bea1528770",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-declarations.ts": "fb0db06f9fafde070b58e93160b75c58b05e5a6ae7a75acb5b0ffa60d8bada9f",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-new-stage.ts": "9f40d1b03b4887e906847ab3597f92244791333ec57966f954096a5d8c6f185a",
+    "docs/helix/04-build/evidence/security/truss-graph-capture-candidate/f4186d8d-38ff-461d-9f0c-deefd7b8969f/native.json": "7cbb71735a60b89f622968eb5426ef6457c826f47914f8dfa0b30b8d1dbb5e4b"
+  },
+  "observations": [
+    {
+      "id": "original-five-records",
+      "expected": 5,
+      "observed": 5
+    },
+    {
+      "id": "original-five-unspecified-primary-roles",
+      "expected": [
+        "Staff",
+        "Project",
+        "Resource",
+        "Ownership",
+        "Assignment"
+      ],
+      "observed": [
+        "Staff",
+        "Project",
+        "Resource",
+        "Ownership",
+        "Assignment"
+      ]
+    },
+    {
+      "id": "original-core-no-relationships",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "ontology-associations-retain-endpoints",
+      "expected": [
+        [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          [
+            {
+              "role": "resource",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Resource"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "ownerResource"
+                }
+              ]
+            },
+            {
+              "role": "project",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "ownerProject"
+                }
+              ]
+            }
+          ]
+        ],
+        [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          [
+            {
+              "role": "staff",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Staff"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "assignmentStaff"
+                }
+              ]
+            },
+            {
+              "role": "project",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "assignmentProject"
+                }
+              ]
+            }
+          ]
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          [
+            {
+              "role": "resource",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Resource"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "ownerResource"
+                }
+              ]
+            },
+            {
+              "role": "project",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "ownerProject"
+                }
+              ]
+            }
+          ]
+        ],
+        [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          [
+            {
+              "role": "staff",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Staff"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "assignmentStaff"
+                }
+              ]
+            },
+            {
+              "role": "project",
+              "target": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "fields": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "assignmentProject"
+                }
+              ]
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "full-original-salary-field-preserved",
+      "expected": {
+        "scalarType": "integer",
+        "nullability": "required",
+        "cardinality": "one",
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "observed": {
+        "scalarType": "integer",
+        "nullability": "required",
+        "cardinality": "one",
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      }
+    },
+    {
+      "id": "collector-preserves-original-key-semantics",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "actual-stager-requires-explicit-primary-boolean",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "collector-preserves-complete-field-declarations",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "collector-preserves-entire-original-document",
+      "expected": {
+        "umf": "0.8.0",
+        "id": "domain",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "Staff",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "staffId"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "staffId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Staff"
+              },
+              {
+                "id": "staffId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "staffId"
+              },
+              {
+                "id": "Project",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "projectId"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "projectId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Project"
+              },
+              {
+                "id": "projectId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "projectId"
+              },
+              {
+                "id": "Resource",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "resourceId"
+                  },
+                  {
+                    "module": "m",
+                    "element": "salary"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "resourceId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Resource"
+              },
+              {
+                "id": "resourceId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "resourceId"
+              },
+              {
+                "id": "salary",
+                "kind": "field",
+                "scalarType": "integer",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "salary",
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Ownership",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "ownerResource"
+                  },
+                  {
+                    "module": "m",
+                    "element": "ownerProject"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "ownerResource"
+                      },
+                      {
+                        "module": "m",
+                        "element": "ownerProject"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Ownership"
+              },
+              {
+                "id": "ownerId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerId"
+              },
+              {
+                "id": "ownerResource",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerResource"
+              },
+              {
+                "id": "ownerProject",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerProject"
+              },
+              {
+                "id": "Assignment",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "assignmentStaff"
+                  },
+                  {
+                    "module": "m",
+                    "element": "assignmentProject"
+                  },
+                  {
+                    "module": "m",
+                    "element": "active"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "assignmentStaff"
+                      },
+                      {
+                        "module": "m",
+                        "element": "assignmentProject"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Assignment"
+              },
+              {
+                "id": "assignmentId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentId"
+              },
+              {
+                "id": "assignmentStaff",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentStaff"
+              },
+              {
+                "id": "assignmentProject",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentProject"
+              },
+              {
+                "id": "active",
+                "kind": "field",
+                "scalarType": "boolean",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "active"
+              }
+            ]
+          }
+        ]
+      },
+      "observed": {
+        "umf": "0.8.0",
+        "id": "domain",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "Staff",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "staffId"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "staffId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Staff"
+              },
+              {
+                "id": "staffId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "staffId"
+              },
+              {
+                "id": "Project",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "projectId"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "projectId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Project"
+              },
+              {
+                "id": "projectId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "projectId"
+              },
+              {
+                "id": "Resource",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "resourceId"
+                  },
+                  {
+                    "module": "m",
+                    "element": "salary"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "resourceId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Resource"
+              },
+              {
+                "id": "resourceId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "resourceId"
+              },
+              {
+                "id": "salary",
+                "kind": "field",
+                "scalarType": "integer",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "salary",
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Ownership",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "ownerResource"
+                  },
+                  {
+                    "module": "m",
+                    "element": "ownerProject"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "ownerResource"
+                      },
+                      {
+                        "module": "m",
+                        "element": "ownerProject"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Ownership"
+              },
+              {
+                "id": "ownerId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerId"
+              },
+              {
+                "id": "ownerResource",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerResource"
+              },
+              {
+                "id": "ownerProject",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "ownerProject"
+              },
+              {
+                "id": "Assignment",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "assignmentStaff"
+                  },
+                  {
+                    "module": "m",
+                    "element": "assignmentProject"
+                  },
+                  {
+                    "module": "m",
+                    "element": "active"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "pk",
+                    "name": "Key",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "assignmentStaff"
+                      },
+                      {
+                        "module": "m",
+                        "element": "assignmentProject"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {},
+                "name": "Assignment"
+              },
+              {
+                "id": "assignmentId",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentId"
+              },
+              {
+                "id": "assignmentStaff",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentStaff"
+              },
+              {
+                "id": "assignmentProject",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "assignmentProject"
+              },
+              {
+                "id": "active",
+                "kind": "field",
+                "scalarType": "boolean",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "active"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "reject-borrowed-mutation-composite-key-order",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reject-borrowed-mutation-salary-field-facet",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reject-borrowed-mutation-unknown-extension",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reject-incomplete-record-result",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reject-incomplete-field-result",
+      "expected": false,
+      "observed": false
+    }
+  ],
+  "unspecifiedPrimaryRoles": [
+    {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Staff",
+      "keyId": "pk"
+    },
+    {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Project",
+      "keyId": "pk"
+    },
+    {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Resource",
+      "keyId": "pk"
+    },
+    {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Ownership",
+      "keyId": "pk"
+    },
+    {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Assignment",
+      "keyId": "pk"
+    }
+  ],
+  "scope": "Actual frozen post-validation declaration collector plus literal source inspection of staging guard. No fresh owner validation, catalog preparation/staging or binding authority.",
+  "remaining": [
+    "Owner-issued native key-role selections must preserve unspecified core primary meaning; no inferred primary rewrite",
+    "Owner-issued physical relationship binding for both ontology associations with exact native source provenance",
+    "Complete record/property staging includes integer salary and unknown content even where read predicate selects only key fields",
+    "Authenticated owner/artifact/current-cut/installed closure and final publication remain separate"
+  ],
+  "acceptancePromoted": false
+}
