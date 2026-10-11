@@ -6,7 +6,7 @@ os.environ['UMF_SECURITY_CASE_ID']='pg-raw.B01'
 os.environ['UMF_SECURITY_RUN_ID']=str(uuid.uuid4())
 # Reuse only reviewed fixture setup/connection helpers, not model-provided code.
 root=Path.cwd().resolve();self_path=Path(__file__).resolve()
-if root!=Path('/Users/erik/.codex/worktrees/1598/umf') or self_path!=root/'tools/security/pg-private-diagnostics.py':raise RuntimeError('Unknown exact diagnostic probe invocation')
+if root not in [Path('/Users/erik/.codex/worktrees/1598/umf'),Path('/Users/erik/.codex/worktrees/security-main-integration/umf')] or self_path!=root/'tools/security/pg-private-diagnostics.py':raise RuntimeError('Unknown exact diagnostic probe invocation')
 plan_path='docs/helix/03-test/security/cases.json';plan_bytes=(root/plan_path).read_bytes()
 selected=next(c for c in json.loads(plan_bytes)['cases'] if c['id']=='pg-raw.B01')
 closure=[selected['testSource'],selected['oracleSource'],*selected['implementationSources']]
@@ -105,6 +105,26 @@ try:
   rows=value("SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.resource;",actor)
   if not denied or rows!=context['oracle']['actors'][actor]['ids']:raise AssertionError('Insert counter restriction failed')
   observations.append({'actor':actor,'stage':'insert-counter-restricted','diagnosticDenied':denied,'authorizedResourceIds':rows})
+ # Close the selected installed pg_stat_get_* routine family by exact native
+ # signature inventory, rather than adding one deny per discovered getter.
+ stats_family=value("SELECT json_agg(json_build_object('oid',p.oid::text,'name',p.proname,'arguments',pg_get_function_identity_arguments(p.oid),'publicExecute',EXISTS(SELECT 1 FROM aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE')) ORDER BY p.oid) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f';")
+ if not any(r['publicExecute'] for r in stats_family):raise AssertionError('Family control lacks initially public routines')
+ if not stats_family or len({r['oid'] for r in stats_family})!=len(stats_family):raise AssertionError('Complete installed statistics routine family required')
+ for actor in context['oracle']['actors']:require(sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;',actor))
+ require(sql("""DO $deny$ DECLARE r record; BEGIN
+ FOR r IN SELECT n.nspname,p.proname,pg_get_function_identity_arguments(p.oid) args FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f'
+ LOOP EXECUTE format('REVOKE EXECUTE ON FUNCTION %I.%I(%s) FROM PUBLIC',r.nspname,r.proname,r.args); END LOOP;
+ END $deny$;"""))
+ for actor in context['oracle']['actors']:
+  reachable=value("SELECT coalesce(json_agg(p.oid::text ORDER BY p.oid),'[]'::json) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f' AND has_function_privilege('"+actor+"',p.oid,'EXECUTE');")
+  if reachable:raise AssertionError('Ordinary statistics routine privilege remains')
+  for query in [inserted_query,"SELECT pg_catalog.pg_stat_get_snapshot_timestamp();"]:
+   denied=sql(query,actor)
+   if denied.returncode==0 or denied.stdout.strip() or 'permission denied' not in denied.stderr:raise AssertionError('Selected statistics getter did not refuse')
+  rows=value("SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.resource;",actor)
+  if rows!=context['oracle']['actors'][actor]['ids']:raise AssertionError('Family restriction damaged authorized reads')
+  observations.append({'authorizedResourceIds':rows,'actor':actor,'stage':'installed-statistics-getter-family-restricted','installedSignatureCount':len(stats_family),'remainingEffectiveExecute':reachable,'testedGetterDenials':2})
+ observations.append({'stage':'installed-statistics-getter-family-inventory','routines':stats_family,'completeForSelectedNameFamilyOnly':True})
  # Separate deny-first candidate, not a replacement qualification for the
  # existing direct-RLS profile. All modifications stay in this owned database.
  require(sql("SET ROLE umf_sec_guardian; CREATE FUNCTION security_raw.diagnostic_closed_resources() RETURNS json LANGUAGE SQL STABLE SECURITY DEFINER SET search_path=pg_catalog AS $closed$ SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource $closed$; REVOKE ALL ON FUNCTION security_raw.diagnostic_closed_resources() FROM PUBLIC; GRANT EXECUTE ON FUNCTION security_raw.diagnostic_closed_resources() TO umf_sec_alice,umf_sec_bob,umf_sec_outsider; RESET ROLE;"))
@@ -317,7 +337,7 @@ try:
  observations.append({'stage':'private-principal-independent-routine-metadata','expected':expected_routine,'observed':routine})
 
  if any(hashlib.sha256((root/p).read_bytes()).hexdigest()!=h for p,h in sources.items()):raise RuntimeError('Probe source changed')
- receipt={'status':'counterexample-reproduced','sourceDigests':sources,'executedHelperPrefixSha256':executed_helper_digest,'frozenHelperInputs':closure,'fixtureSqlExecutedFromCapturedBytes':True,'engine':version,'runId':run_id,'observations':observations,'restrictedPrototypeOnly':True,'assessorDiagnosticEstimates':{'baseline':baseline_live_estimate,'afterUnrelatedFact':assessor_live_estimate},'violates':'US-056-AC8 private authorization facts do not leak through diagnostics','scope':'PostgreSQL 17.9 ordinary SCRAM connections with default catalog privileges. A private Assignment change leaves authorized data unchanged but changes visible pg_class.reltuples. Direct-table-only catalog restriction remains bypassable through public views/functions. The three-family restriction remains bypassable through the cumulative insert-counter getter; revoking that additional function preserves authorized reads. A separate deny-first routine candidate preserves authorized rows and refuses six known direct/catalog/statistics/size/EXPLAIN surfaces. Caller-enabled planner/parse/rewrite diagnostics expose private relation plans and private-population-dependent estimates even in the deny-first candidate. Routine-local off settings preserve authorized rows and exact tested diagnostic traces across two private worlds; individual weakening restores disclosure, with scoped caller settings restored. Neither scoped restrictions nor that candidate establish complete diagnostic closure. Not a passing B10 receipt or complete backend qualification.'}
+ receipt={'status':'counterexample-reproduced','sourceDigests':sources,'executedHelperPrefixSha256':executed_helper_digest,'frozenHelperInputs':closure,'fixtureSqlExecutedFromCapturedBytes':True,'engine':version,'runId':run_id,'observations':observations,'restrictedPrototypeOnly':True,'installedStatisticsGetterFamily':stats_family,'assessorDiagnosticEstimates':{'baseline':baseline_live_estimate,'afterUnrelatedFact':assessor_live_estimate},'violates':'US-056-AC8 private authorization facts do not leak through diagnostics','scope':'PostgreSQL 17.9 ordinary SCRAM connections with default catalog privileges. A private Assignment change leaves authorized data unchanged but changes visible pg_class.reltuples. Direct-table-only catalog restriction remains bypassable through public views/functions. The three-family restriction remains bypassable through the cumulative insert-counter getter; revoking that additional function preserves authorized reads. A separate deny-first routine candidate preserves authorized rows and refuses six known direct/catalog/statistics/size/EXPLAIN surfaces. Caller-enabled planner/parse/rewrite diagnostics expose private relation plans and private-population-dependent estimates even in the deny-first candidate. Routine-local off settings preserve authorized rows and exact tested diagnostic traces across two private worlds; individual weakening restores disclosure, with scoped caller settings restored. The installed pg_stat_get_* function family is now revoked by complete native signatures with zero effective ordinary EXECUTE, and getter calls refuse. This closes only that selected name family; neither scoped restrictions nor that candidate establish complete diagnostic closure. Not a passing B10 receipt or complete backend qualification.'}
 finally:
  container=context.get('container')
  if container is None and context.get('creation_attempted'):

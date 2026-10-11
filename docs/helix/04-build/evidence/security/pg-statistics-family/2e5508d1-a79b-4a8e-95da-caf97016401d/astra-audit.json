@@ -1,0 +1,165 @@
+{
+  "status": "passed",
+  "method": "Independent read-only source/current-preimage/ZIP/prefix/native-receipt/trace audit; no native execution",
+  "receiptSha256": "aab2867ecea934e6e390b025e6bd22ac5abb51468b9fa0bbee94936084b47995",
+  "captureSha256": "0e458b12502004b6450b07b914f677e8fcac3e238b6dc710ef23daf6866724e1",
+  "sourceArchiveSha256": "008e231bd7b63ace22699b8e5b533f34efb69321df92d421bc668ec280425061",
+  "sourcePins": 5,
+  "currentSourceAndZipExact": true,
+  "independentInputClosureMatches": true,
+  "helperPrefixSha256": "ec6dca96ad94ff9dfb73f91a1d1eccfcda48fac7c0fde23aab240d25d34fe30c",
+  "nativeRunId": "11229a35-cd70-492d-b451-bfbec6ff710f",
+  "nativeEngine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "observationCount": 101,
+  "selectedRoutineCount": 110,
+  "publicExecutableAtFamilyEntry": 108,
+  "alreadyRevokedGetters": [
+    "pg_stat_get_live_tuples",
+    "pg_stat_get_tuples_inserted"
+  ],
+  "ordinaryActors": [
+    "umf_sec_alice",
+    "umf_sec_bob",
+    "umf_sec_outsider"
+  ],
+  "effectiveExecuteAfterFamilyRevoke": [],
+  "actualNegativeGetterCallsPerActor": 2,
+  "familyPhaseBeforeBroadDenial": true,
+  "authorizedResourceRowsPreserved": true,
+  "retainedDiagnosticTraces": [
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+      "stage": "caller-planner-diagnostics"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+      "stage": "caller-planner-diagnostics"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef",
+      "stage": "caller-planner-diagnostics"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+      "stage": "caller-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+      "stage": "caller-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68",
+      "stage": "caller-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "routine-local-planner-diagnostic-guard"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "routine-local-planner-diagnostic-guard"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "routine-local-planner-diagnostic-guard"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "guarded-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "guarded-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "stage": "guarded-planner-two-private-worlds"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3",
+      "stage": "individual-planner-guard-weakened"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_alice-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df",
+      "stage": "same-session-prepared-planner-guard-mutation"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_bob-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df",
+      "stage": "same-session-prepared-planner-guard-mutation"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-11229a35-cd70-492d-b451-bfbec6ff710f-umf_sec_outsider-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df",
+      "stage": "same-session-prepared-planner-guard-mutation"
+    }
+  ],
+  "cleanupEvidenceScope": "Producer requires label-checked Docker removal before publishing final receipt; this receipt has no separate native cleanup transcript. No Docker command was executed by reviewer.",
+  "limits": [
+    "Installed pg_catalog pg_stat_get_ ordinary-function family only, in this PostgreSQL17.9 fixture and selected-role cut.",
+    "Privileges for all110 are observed; only two selected getter calls are executed negatively, and inserted getter was revoked earlier. Snapshot getter executes successfully immediately before family revocation.",
+    "Not a complete indirect-call/role/schema/command/planner/current-authority closure or a native B10 pass.",
+    "Five captured sources and frozen SQL/helper bytes are not a hermetic interpreter/container/runtime closure.",
+    "Diagnostic hashes cover retained decoded UTF8 text, not raw wire bytes."
+  ],
+  "remainingFindings": [],
+  "nativeExecution": false,
+  "backendCasePromoted": false
+}
