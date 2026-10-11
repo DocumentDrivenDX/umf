@@ -14,7 +14,7 @@ paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
 for directory in ['packages/umf-bun/src','packages/postgresql/src','docs/helix/02-design/contracts/bindings']:
  paths += [p for p in (T/directory).rglob('*') if p.is_file() and p.suffix in ['.ts','.json']]
 paths += [T/'docs/helix/02-design/contracts/acceptance-input-v0.1.schema.json']
-interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/8da2bb4f-6362-4ff1-9b29-fd86e498084e'
+interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/f316ca00-80f1-4da5-8b97-686e6c278733'
 paths += [interpretation/'binding.json',interpretation/'receipt.json']
 # Capture and execute the full declared Ajv dependency closure from copied packages.
 pending=[(ROOT/'node_modules/ajv').resolve()];dependencies={}
