@@ -324,6 +324,8 @@ selected 1.1.2 because concurrent main had already published 1.1.1 for a separat
 reproducibility fix. The historical candidate/evidence above remains scoped to
 its tested source. Integrated release custody and fresh checks are recorded in
 [schema-browser-1.1.2-release.md](evidence/schema-browser-1.1.2-release.md).
+FOLLOW-5 completed with public 1.1.2 publication, the exact integrity-locked site
+pin, successful Pages build/deployment and independent live-byte/browser checks.
 
 Accept the requested capabilities within the scoped contract. Do not adopt the
 1.0.0 unsafe-eval allowance or unset-base-uri workaround as the current host

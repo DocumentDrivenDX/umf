@@ -68,3 +68,37 @@ The root package/site pin is exactly 1.1.2. `publish-site.ts` copies the install
 public package and validates every served asset and workspace markup. Production
 workflow and live-byte results are recorded below after rollout; local success
 alone does not establish deployment.
+
+## Production closeout
+
+Main rollout commit: `0bd0f887ea0009fa2cbb63a4f301bdc9415aac30`.
+[Pages run 38163915219](https://github.com/DocumentDrivenDX/umf/actions/runs/38163915219)
+completed successfully in both build and deploy jobs. Linux CI passed two clean
+producer builds with exact public package byte parity, 98 domain-pack tests /
+26,463 assertions, 14 consumer checks, 95 embedding checks, 37 artifact browser
+checks, ten desktop/mobile documentation routes, negative controls, tools-only
+distribution and all 16 signature checks. [Workflow outcomes](schema-browser-1.1.2-pages.json)
+retain the tested commit, steps and deployment completion separately from local evidence.
+
+The [live verification record](schema-browser-1.1.2-live.json) confirms version
+1.1.2, all 64 runtime assets matching the installed public package, all 16 signed
+HTML pages matching the assembled site, and all 16 public attestations matching
+the locally verified claims. Chromium 153 loaded the reuse page and Commerce
+ontology and exercised mobile catalog Escape with zero page errors.
+The first live verifier used a brace glob that selected no HTML files; coverage
+was corrected to explicit patterns and a 16-page/claim assertion before this
+passing replay. Its retained [source](../verification/schema-browser-release-live.ts)
+also passed standalone strict TypeScript checking. Exact public page URIs were
+preserved by explicitly setting the reuse-page URI when re-sealing; the signer's
+default trailing slash was corrected before deployment.
+
+Replay command:
+
+```text
+bun docs/helix/04-build/verification/schema-browser-release-live.ts https://documentdrivendx.github.io/umf/ 1.1.2 /private/tmp/umf-1.1.2-live-report.json
+```
+
+FOLLOW-5 is complete for 1.1.2. Registry/GitHub publication, exact site pin,
+production gates, page signing and live asset/browser checks are established.
+Broader native equivalence, universal accessibility and an isolated benchmark of
+this new producer remain outside these claims.
