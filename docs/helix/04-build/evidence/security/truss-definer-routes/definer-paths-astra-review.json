@@ -1,0 +1,22 @@
+{
+  "reviewer": "Astra ultra",
+  "mode": "read-only",
+  "status": "no remaining blockers within slice",
+  "nativeSha256": "4100afdee695f01277405595c7331ba13b3e9cb1fe3bce0f3420af036505ba53",
+  "observations": 97,
+  "inventories": 35,
+  "sourcePinsCurrent": 21,
+  "wheelEntriesExact": 53,
+  "feedbackApplied": [
+    "Immediate column-name text budget refusal for empty final sections",
+    "Retain EXECUTE-accessible definers independently of schema USAGE",
+    "Retain actual native prepared-call42501 and unchanged xmin, not a surviving-write assertion"
+  ],
+  "independentBudgetReplay": {
+    "80164": "pass",
+    "80163": "refuse",
+    "80076": "refuse"
+  },
+  "nativeExecutedByReviewer": false,
+  "acceptancePromoted": false
+}

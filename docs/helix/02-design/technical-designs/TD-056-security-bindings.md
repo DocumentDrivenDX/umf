@@ -1163,3 +1163,42 @@ or complete backend acceptance. Historical acceptance remains26/132; every
 original required case remains governed by the existing plan and the goal stays
 active. No source-derived formal theorem gains native/temporal premises merely
 from this fixture's success.
+
+
+### Native elevation routes outside the registered namespace — 2026-10-10
+
+[Verified direct-main integration](../../04-build/evidence/security/truss-definer-routes/integration.json) records Truss
+`71ba19f8373657cca34085250819220efd5ea79c`. The fixed invoker observer now requires a twelfth census
+section enumerating native EXECUTE-accessible SECURITY DEFINER routines across
+all schemas. Schema USAGE is retained independently and cannot filter the census.
+Any nonempty census refuses even against an identical unsafe baseline; legacy
+eleven-section packets refuse. This is a conservative profile-specific rule.
+Protected registered definer chains require a distinct admitted profile; UMF
+logical semantics do not prohibit all definers.
+
+The PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 SCRAM fixture passes97 observations across35 inventories with21 frozen
+inputs. An ordinary session with no direct UPDATE right invokes an external
+PUBLIC-executable definer owned by a distinct nonlogin role. The actual committed
+row UPDATE changes xmin, independently observed, while logical revision remains
+unchanged. Original and matching unsafe baselines refuse. Revoking EXECUTE removes
+the route; revoking only schema USAGE retains and refuses it. Native prepared-call
+revalidation in this fixed fixture returns42501 with unchanged xmin; it does not
+demonstrate a surviving write or prove behavior of every retained statement.
+
+Astra identified and verified fixes for the schema-USAGE filter and replayed
+packet budgets skipping empty final-section columns. Exact80164-unit budget
+passes;80163 and80076 refuse. Native final-section row overflow refuses. The
+separately installed wheel matches53 source/owner/typing files and passes334
+tests; Python boundary checks pass212 imports. Exact source/preimage, test,
+wheel/log/native digests and the read-only Astra review are retained. Owner
+historical attempts preserve earlier pins and two rejected prepared-call
+predictions instead of being repinned to the final producer.
+
+This advances US-056-AC5/AC9/AC10 and Truss PA01/PA02 component evidence.
+It is not complete installed call closure: operator/type/extension routes,
+trigger/default/RLS paths, indirect resolution, protected capture, current
+authority cuts and seven semantic operation bodies remain unqualified. Earlier
+source-derived role proofs retain their historical source scope; no fresh
+whole-program, SQL or temporal refinement proof follows. No original required
+case is promoted; acceptance remains26/132 and the full goal remains active.
