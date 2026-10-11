@@ -1,0 +1,171 @@
+[
+  {
+    "runId": "c870eec9-48b2-4011-9b30-120bbaa02188",
+    "status": "independent-audit-passed",
+    "producerStatus": "component-passed",
+    "sourcePins": 200,
+    "archiveExact": true,
+    "allSourcePinsCurrent": true,
+    "nativeBinaryDigests": 1614,
+    "binaryDigestsCurrent": true,
+    "testCount": 12,
+    "exactCapturedASTNamesAndTerminalLog": true,
+    "testOutcomes": [
+      {
+        "test": "test_actual_policy_selected_from_original_configuration",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_concurrent_archive_writes_excluded_until_transaction_end",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_late_configuration_change_refuses",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_later_rollback_and_savepoint_release_preserve_archive_cut",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_missing_duplicate_and_changed_archive_refuse",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_old_snapshot_and_readonly_release_selection_refuse",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_preexisting_archive_row_locker_refuses_without_waiting",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_preexisting_archive_writer_refuses_without_waiting",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_release_resources_and_embedded_policy_are_exact",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_rollback_across_selection_releases_archive_cut_same_xid",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_unknown_ambiguous_or_changed_selection_refuses",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_unrecognized_configuration_profile_cannot_select_release",
+        "outcome": "ok"
+      }
+    ],
+    "countercontrolExactSingleOmission": false,
+    "moduleBoundaryImports": 482,
+    "cleanup": {
+      "attempted": true,
+      "stopExitCode": 0,
+      "statusExitCode": 3,
+      "socketAbsent": true
+    },
+    "executionDirectoryAbsent": true,
+    "unixOnlyServer": true,
+    "ownedSocketAbsent": true,
+    "releaseProfileAndAllResourcesExact": true,
+    "artifactSha256": {
+      "boundaries.stdout.log": "31f282ae51d09172b24012f4421ca902aefc005ca8de34744414db4f7014b8cb",
+      "tests.stderr.log": "ee766630aa1b757fcb63433ddf0da399bda7c108de928a2f2090ccd16e51ab47",
+      "boundaries.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sources.zip": "7f85b3789b0ac45283906c0473ae9bda4d6bddd8044346f53039d10f95fbe260",
+      "server.log": "c884d36490f54d544a89f10c641d344bbc1301b820d3c477e1c7569b57e405b6",
+      "tests.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt.json": "15420d610766420b04f57d92d956c3a17a6d8d4fc35eb047510eadf9d89ed18e"
+    },
+    "executedReleaseSqlSha256": "c514a59e28cdbc3bdd5b367fde2a6aa362d65cd201d86a1088b26a94d6df595f"
+  },
+  {
+    "runId": "cc13998c-747a-4d1d-933b-010ec9d57956",
+    "status": "independent-audit-passed",
+    "producerStatus": "countercontrol-reproduced",
+    "sourcePins": 200,
+    "archiveExact": true,
+    "allSourcePinsCurrent": true,
+    "nativeBinaryDigests": 1614,
+    "binaryDigestsCurrent": true,
+    "testCount": 12,
+    "exactCapturedASTNamesAndTerminalLog": true,
+    "testOutcomes": [
+      {
+        "test": "test_actual_policy_selected_from_original_configuration",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_concurrent_archive_writes_excluded_until_transaction_end",
+        "outcome": "FAIL"
+      },
+      {
+        "test": "test_late_configuration_change_refuses",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_later_rollback_and_savepoint_release_preserve_archive_cut",
+        "outcome": "FAIL"
+      },
+      {
+        "test": "test_missing_duplicate_and_changed_archive_refuse",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_old_snapshot_and_readonly_release_selection_refuse",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_preexisting_archive_row_locker_refuses_without_waiting",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_preexisting_archive_writer_refuses_without_waiting",
+        "outcome": "FAIL"
+      },
+      {
+        "test": "test_release_resources_and_embedded_policy_are_exact",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_rollback_across_selection_releases_archive_cut_same_xid",
+        "outcome": "FAIL"
+      },
+      {
+        "test": "test_unknown_ambiguous_or_changed_selection_refuses",
+        "outcome": "ok"
+      },
+      {
+        "test": "test_unrecognized_configuration_profile_cannot_select_release",
+        "outcome": "ok"
+      }
+    ],
+    "countercontrolExactSingleOmission": true,
+    "moduleBoundaryImports": 482,
+    "cleanup": {
+      "attempted": true,
+      "stopExitCode": 0,
+      "statusExitCode": 3,
+      "socketAbsent": true
+    },
+    "executionDirectoryAbsent": true,
+    "unixOnlyServer": true,
+    "ownedSocketAbsent": true,
+    "releaseProfileAndAllResourcesExact": true,
+    "artifactSha256": {
+      "countercontrol-release-selection.sql": "83142a8c9cb01f6ca8006748b90271bc7d8878f7c08843ccbf5b0da27cbfd740",
+      "boundaries.stdout.log": "31f282ae51d09172b24012f4421ca902aefc005ca8de34744414db4f7014b8cb",
+      "tests.stderr.log": "deb29147c41cdee9169052fd16c77d38cf9b28bd5ce87c0d37a3700d0ea4a27a",
+      "boundaries.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sources.zip": "7f85b3789b0ac45283906c0473ae9bda4d6bddd8044346f53039d10f95fbe260",
+      "server.log": "deb0d9a7e7cdc6f5b88e275ec83bf8db56b81837cdf1e4c8bf0d02fe07a448e4",
+      "tests.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt.json": "7b1cd649c49fc0b4a0a09ee523fb5bf2ce4f5d61beae2bcdb71f22b5d8f28d2c"
+    },
+    "executedReleaseSqlSha256": "83142a8c9cb01f6ca8006748b90271bc7d8878f7c08843ccbf5b0da27cbfd740"
+  }
+]

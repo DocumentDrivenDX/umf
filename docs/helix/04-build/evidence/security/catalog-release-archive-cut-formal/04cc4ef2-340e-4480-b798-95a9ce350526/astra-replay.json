@@ -1,0 +1,100 @@
+{
+  "status": "independent-retained-formula-replay-passed",
+  "runId": "04cc4ef2-340e-4480-b798-95a9ce350526",
+  "sourcePins": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-catalog-release-archive-cut.py",
+      "sha256": "8b35bc4d42f9376f666dc85674212d6778bfe43607ac518bdc024ed6fb55062f",
+      "preimage": "source-0.py"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-report/release-selection.sql",
+      "sha256": "c514a59e28cdbc3bdd5b367fde2a6aa362d65cd201d86a1088b26a94d6df595f",
+      "preimage": "source-1.sql"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/python/tests/test_catalog_report_release_native.py",
+      "sha256": "62b8901acc893ddd3d2d685c608811fd130e453543bdd247d6c775b18afb1a9b",
+      "preimage": "source-2.py"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/scripts/check-python-catalog-report-release-native.py",
+      "sha256": "92773e19efdd560457b7339b1e0851de9316ddd2c34e5ff72ac7b7d08ceb2f2e",
+      "preimage": "source-3.py"
+    }
+  ],
+  "allCurrentAndExactPreimages": true,
+  "proofSha256": "14af7aa453d746e255de6044523dabf71acc0b3ea74b46eb7ea98382d4e36426",
+  "z3Version": "4.15.4",
+  "queries": [
+    {
+      "id": "fresh-admission-is-current-unique",
+      "smtFile": "fresh-admission-is-current-unique.smt2",
+      "smtSha256": "e5bc63d18a75e243b436ef8229c7bd41a038a35f0da830459e70d747ebb8801a",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat",
+      "witness": null
+    },
+    {
+      "id": "external-guard-step-preserves-uniqueness",
+      "smtFile": "external-guard-step-preserves-uniqueness.smt2",
+      "smtSha256": "8e4be6bceb5dca1ce45a9302ea65e061fbcff4c59d7e4126f4439975bf291ccf",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat",
+      "witness": null
+    },
+    {
+      "id": "fresh-unique-positive",
+      "smtFile": "fresh-unique-positive.smt2",
+      "smtSha256": "32adc8065c0ff94878b2c91f0bfdbc7d202b5bd91fdeed54b6628ced4809d814",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[fresh_snapshot = True,\n archive_guard_held = True,\n next_actual_matches = 1,\n actual_matches = 1,\n observed_matches = 1]"
+    },
+    {
+      "id": "fresh-duplicate-refusal-positive",
+      "smtFile": "fresh-duplicate-refusal-positive.smt2",
+      "smtSha256": "48da61c7f0722e55c3c1eab5bad28ed52ce512b778dd7d3c1518b596ac377f98",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[next_actual_matches = 0,\n fresh_snapshot = True,\n actual_matches = 2,\n observed_matches = 2]"
+    },
+    {
+      "id": "stale-snapshot-hides-committed-duplicate",
+      "smtFile": "stale-snapshot-hides-committed-duplicate.smt2",
+      "smtSha256": "24a5d32c3e9ffb03d9c3ae91098fa358259650a3bf9b1622d907d9acb409262d",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[next_actual_matches = 0,\n fresh_snapshot = False,\n archive_guard_held = True,\n actual_matches = 2,\n observed_matches = 1]"
+    },
+    {
+      "id": "unguarded-external-insert-breaks-uniqueness",
+      "smtFile": "unguarded-external-insert-breaks-uniqueness.smt2",
+      "smtSha256": "43370b2efbb645ebe53b6bf10cda29f24a042b7e1f35e4498ae29e3a14e4ec72",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[fresh_snapshot = True,\n archive_guard_held = False,\n next_actual_matches = 2,\n actual_matches = 1,\n observed_matches = 1,\n same_writer = False]"
+    },
+    {
+      "id": "same-writer-can-change-under-own-lock",
+      "smtFile": "same-writer-can-change-under-own-lock.smt2",
+      "smtSha256": "d89531f307fae0a691d5130030ab8b5191d46d0a418bcada4603ac3eb232cb6e",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[fresh_snapshot = True,\n archive_guard_held = True,\n next_actual_matches = 2,\n actual_matches = 1,\n observed_matches = 1,\n same_writer = True]"
+    },
+    {
+      "id": "released-guard-can-break-uniqueness-with-unchanged-parent",
+      "smtFile": "released-guard-can-break-uniqueness-with-unchanged-parent.smt2",
+      "smtSha256": "e272a1043074708e0f5aede309ba43f210fe12f19978cddbe60051630f8a5f22",
+      "expected": "sat",
+      "independentFreshContextResult": "sat",
+      "witness": "[parent_identity_before_rollback = 1,\n archive_guard_held_before_rollback = True,\n archive_guard_held = False,\n parent_identity_after_rollback = 1,\n observed_matches = 1,\n same_writer = False,\n next_actual_matches = 2,\n actual_matches = 1,\n fresh_snapshot = True]"
+    }
+  ],
+  "counts": {
+    "unsat": 2,
+    "sat": 6
+  },
+  "scope": "Conditional nonnegative archive-count algebra with fresh observation and exclusion premises; no native/Python refinement, byte correspondence, authenticated cut, protected final disclosure or backend acceptance."
+}
