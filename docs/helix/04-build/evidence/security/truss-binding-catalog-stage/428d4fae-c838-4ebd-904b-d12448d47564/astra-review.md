@@ -1,0 +1,3 @@
+# Astra ultra custody review — 2026-10-11
+
+Final audit clean for the narrow source-custody increment. Fresh428d4fae:338 unique matching observations, SHA2568fb832c6258f4be67eba63cb5a8e313d35dab56a6b90b04e0f91be587b9d9e45. Occupiedfb8dd6bc:346 observations, SHA256cd136ccd8f79f35ceca8809cd85c1fdd2ba813ddbe5637f82d331a71b798141d. Both713 current source hashes match exactly713 unique ZIP preimages; cleanup completed. Valid extra row observed at count3 then intended complete-source-cohort55000 and exact eight-component restoration. Original document carrier gap resolved. No landing blocker within source custody; semantic effects, authority, registered interpretation and publication remain open. Review read-only; native executions parent-attributed.

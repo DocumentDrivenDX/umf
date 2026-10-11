@@ -275,6 +275,31 @@ try:
   check('pending-candidate-all-original-association-fields',[['Assignment',3],['Ownership',2]],c.run("SELECT t.element,count(p.prop_id)::int FROM truss.type_def t JOIN truss.prop_def p ON p.type_id=t.type_id WHERE t.element IN ('Assignment','Ownership') GROUP BY t.element ORDER BY t.element"))
   check('pending-candidate-no-authored-lineage-fabrication',[[0]],c.run('SELECT count(*) FROM truss.relationship_lineage'))
   check('pending-candidate-observed-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
+  source_query='SELECT * FROM truss.runtime_collect_pending_association_source_candidate(:r::int)'
+  expected_source=[[f'/mappings/{i}',str(i+1),sha(bytes.fromhex(expected[i][-1])),str(before_generation+4)] for i in range(2)]
+  check('pending-source-candidate-exact-original-cohort',expected_source,c.run(source_query,r=rev))
+  check('pending-source-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
+  refusal('ordinary-pending-source-candidate',source_query,{'code':'42501'},acting_role=True,r=rev)
+  for fault,mutation,message in [
+   ('bytes',"UPDATE truss.rel_def SET pending_mapping_bytes=convert_to('{}','UTF8') WHERE rel_type_id=2",'pending source candidate exact tuple correspondence required'),
+   ('pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/9' WHERE rel_type_id=2",'pending source candidate unique source correspondence required'),
+   ('duplicate-pointer',"UPDATE truss.rel_def SET pending_mapping_pointer='/mappings/0' WHERE rel_type_id=2",'pending source candidate unique source correspondence required')]:
+   c.run('SAVEPOINT pending_source_fault');original_state=archive_state();c.run(mutation)
+   refusal('pending-source-candidate-'+fault,source_query,{'code':'55000','message':message},r=rev)
+   c.run('ROLLBACK TO SAVEPOINT pending_source_fault');c.run('RELEASE SAVEPOINT pending_source_fault')
+   check('pending-source-candidate-'+fault+'-restored',original_state,archive_state())
+  c.run('SAVEPOINT pending_source_extra_fault');original_state=archive_state()
+  c.run("INSERT INTO truss.rel_def(document_id,rel_type_id,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,pending_mapping_pointer,pending_mapping_bytes) SELECT document_id,3,module,rel_id,name,source_min,source_max,target_min,target_max,lifecycle,directed,target_key,composition,assoc_type_id,inverse,since_rev,doc_ord,definition_source_kind,pending_writer_xid,pending_operation_ordinal,pending_binding_revision,'/mappings/9',pending_mapping_bytes FROM truss.rel_def WHERE rel_type_id=2")
+  check('pending-source-candidate-extra-row-present',[[3]],c.run('SELECT count(*) FROM truss.rel_def'))
+  refusal('pending-source-candidate-extra-row',source_query,{'code':'55000','message':'pending source candidate complete source cohort required'},r=rev)
+  c.run('ROLLBACK TO SAVEPOINT pending_source_extra_fault');c.run('RELEASE SAVEPOINT pending_source_extra_fault')
+  check('pending-source-candidate-extra-row-restored',original_state,archive_state())
+  c.run('SAVEPOINT pending_source_document_fault');original_state=archive_state()
+  c.run("UPDATE truss.schema_doc SET doc_revision='substituted-after-pending' WHERE rev=:r::int",r=rev)
+  refusal('pending-source-candidate-original-document',source_query,{'code':'55000','message':'document carrier substitutes original admitted source bytes/order/identity'},r=rev)
+  c.run('ROLLBACK TO SAVEPOINT pending_source_document_fault');c.run('RELEASE SAVEPOINT pending_source_document_fault')
+  check('pending-source-candidate-original-document-restored',original_state,archive_state())
+  refusal('pending-source-candidate-other-revision',source_query,{'code':'55000','message':'pending source candidate unpublished exclusion required'},r=str(int(rev)+1))
   refusal('pending-candidate-complete-inventory-closed','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
   refusal('pending-candidate-repeat-source-closed','SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',{'code':'55000','message':'unique original declaration required'},r=rev)
   refusal('pending-candidate-finalizer-closed','SET CONSTRAINTS truss.runtime_operation_commit_barrier IMMEDIATE',{'code':'55000','message':'complete runtime finalizer is not installed'})
