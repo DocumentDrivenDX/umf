@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[2]
 if Path.cwd()!=ROOT:raise SystemExit('Exact root invocation required')
 T=Path('/private/tmp/truss-security-main-integration');O=Path('/private/tmp/truss-umf-runtime-LmpSsH')
 IR=ROOT/'docs/helix/04-build/evidence/security/weft-handoff.json'
-components=['operation-admission','operation-commit-barrier','catalog-generation-observer','catalog-document-batch','catalog-lineage-producer','catalog-source-integrity','catalog-type-match','catalog-type-stage','catalog-property-match','catalog-property-stage','catalog-key-match','catalog-key-stage','catalog-key-batch','catalog-relationship-match','catalog-relationship-stage','catalog-report-documents','catalog-new-inventory','catalog-observation-recheck','catalog-input-custody','catalog-prestate-capture','catalog-new-prestate-parity','catalog-new-counts','catalog-provisional-empty','catalog-report-immutability','catalog-original-context','operation-generation-observer','canonical-string-bytes','canonical-tree-bytes','object-key-stage','catalog-binding-archive','catalog-binding-observation']
+components=['operation-admission','operation-commit-barrier','catalog-generation-observer','catalog-document-batch','catalog-lineage-producer','catalog-source-integrity','catalog-type-match','catalog-type-stage','catalog-property-match','catalog-property-stage','catalog-key-match','catalog-key-stage','catalog-key-batch','catalog-relationship-match','catalog-relationship-stage','catalog-report-documents','catalog-new-inventory','catalog-observation-recheck','catalog-input-custody','catalog-prestate-capture','catalog-new-prestate-parity','catalog-new-counts','catalog-provisional-empty','catalog-report-immutability','catalog-original-context','operation-generation-observer','canonical-string-bytes','canonical-tree-bytes','object-key-stage','catalog-binding-archive','catalog-binding-observation','catalog-binding-mapping']
 layout=T/'docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql'
 paths=[Path(__file__),ROOT/'tools/security/truss-binding-catalog-stage.ts',IR,layout,O/'producer.js',O/'producer-manifest.json',ROOT/'docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md',ROOT/'docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md']
 paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
@@ -204,6 +204,37 @@ try:
  observed=c.run('SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',r=packet['staged']['provisionalRevision'])
  operation=c.run('SELECT original_writer_xid::text,operation_ordinal::text,effect_generation::text FROM truss.row_home_operation')[0]
  check('original-native-binding-observation',[[binding_bytes.hex(),packet['originalInputHex'],sha(binding_bytes),*operation]],observed)
+ if '--opaque' not in sys.argv:
+  for index in (0,1):
+   expected=next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{index}')
+   check(f'native-original-mapping-{index}',[[expected]],c.run("SELECT encode(truss.runtime_collect_original_association_mapping(:r::int,:p),'hex')",r=packet['staged']['provisionalRevision'],p=f'/mappings/{index}'))
+  fragment='{ "literal" : "\\\" } ] , mappings 雪", "nested": [{"x":true}], "numeric": 1e999999999999999999 }'.encode()
+  lexical=[('first',b'{"mappings":['+fragment+b', {}],"other":null}',fragment),('escaped-root',b' {"other":{"mappings":[]},"mapp\\u0069ngs" : [ \n'+fragment+b' ]} \n',fragment),('last',b'{"other":[{},false],"mappings":[null, {}]}',b'{}')]
+  lexical += [('last-index',b'{"mappings":['+b'null,'*4095+b'{}]}',b'{}'),('byte-limit',b'{"mappings":[{}]}'+b' '*(1048576-len(b'{"mappings":[{}]}')),b'{}'),('depth-limit',b'{"before":'+b'['*31+b'null'+b']'*31+b',"mappings":[{}]}',b'{}')]
+  lexical += [('suffix-depth-limit',b'{"mappings":[{}],"after":'+b'['*31+b'null'+b']'*31+b'}',b'{}'),('later-mapping-depth-limit',b'{"mappings":[{},'+b'['*30+b'null'+b']'*30+b']}',b'{}')]
+  for label,original,expected in lexical:
+   pointer='/mappings/4095' if label=='last-index' else '/mappings/1' if label=='last' else '/mappings/0'
+   check('native-lexical-'+label,[[expected.hex()]],c.run("SELECT encode(truss.runtime_extract_original_association_mapping(decode(:h,'hex'),:p),'hex')",h=original.hex(),p=pointer))
+  for label,original,pointer,code,message in [
+   ('duplicate-root',b'{"mappings":[{}],"mapp\\u0069ngs":[{}]}','/mappings/0','22023','unique original mapping JSON required'),
+   ('duplicate-nested',b'{"mappings":[{"a":0,"a":1}]}','/mappings/0','22023','unique original mapping JSON required'),
+   ('malformed',b'{"mappings":[{}]','/mappings/0','22023','unique original mapping JSON required'),
+   ('missing-array',b'{}','/mappings/0','22023','original mapping array required'),
+   ('wrong-array',b'{"mappings":{}}','/mappings/0','22023','original mapping array required'),
+   ('empty-array',b'{"mappings":[]}','/mappings/0','22023','original mapping index absent'),
+   ('absent-index',b'{"mappings":[{}]}','/mappings/1','22023','original mapping index absent'),
+   ('non-object',b'{"mappings":[null]}','/mappings/0','22023','original mapping object required'),
+   ('leading-zero',b'{"mappings":[{}]}','/mappings/00','22023','original mapping pointer required'),
+   ('out-of-range',b'{"mappings":[{}]}','/mappings/4096','54000','original mapping index exceeded'),
+   ('wrong-pointer',b'{"mappings":[{}]}','/other/0','22023','original mapping pointer required'),
+   ('depth',b'{"before":'+b'['*33+b'null'+b']'*33+b',"mappings":[{}]}','/mappings/0','54000','original JSON depth exceeded'),
+   ('deep-suffix',b'{"mappings":[{}],"after":'+b'['*32+b'null'+b']'*32+b'}','/mappings/0','54000','original JSON depth exceeded'),
+   ('deep-later-mapping',b'{"mappings":[{},'+b'['*31+b'null'+b']'*31+b']}','/mappings/0','54000','original JSON depth exceeded'),
+   ('whole-depth-limit-over',b'{"before":'+b'['*32+b'null'+b']'*32+b',"mappings":[{}]}','/mappings/0','54000','original JSON depth exceeded'),
+   ('oversize',b' '*1048577,'/mappings/0','22023','unique original mapping JSON required')]:
+   refusal('native-lexical-refusal-'+label,"SELECT truss.runtime_extract_original_association_mapping(decode(:h,'hex'),:p)",{'code':code,'message':message},h=original.hex(),p=pointer)
+  refusal('ordinary-mapping-helper',"SELECT truss.runtime_extract_original_association_mapping(decode(:h,'hex'),'/mappings/0')",{'code':'42501'},acting_role=True,h=b'{"mappings":[{}]}'.hex())
+  refusal('ordinary-original-mapping',"SELECT truss.runtime_collect_original_association_mapping(:r::int,'/mappings/0')",{'code':'42501'},acting_role=True,r=packet['staged']['provisionalRevision'])
  for label,column,expression,message in [('body','original_binding_bytes',"decode('01','hex')",'original binding archive artifact correspondence required'),('input','original_input_bytes',"decode('01','hex')",'original binding archive operation correspondence required'),('writer','original_writer_xid',"'1'::xid8",'original binding archive operation correspondence required'),('identity','artifact_identity_utf8',"decode('01','hex')",'original binding archive artifact correspondence required'),('vocabulary','vocabulary',"'{}'::jsonb",'original binding archive artifact correspondence required')]:
   baseline=archive_state();c.run('SAVEPOINT observed_binding_fault')
   check('observation-'+label+'-agreeing-positive',observed,c.run('SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',r=packet['staged']['provisionalRevision']))
@@ -237,6 +268,7 @@ try:
   check('pending-shape-native-custody',[[*native_op,rev,'/mappings/1',mapping_hex,association_id]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text,pending_mapping_pointer,encode(pending_mapping_bytes,'hex'),assoc_type_id::text FROM truss.rel_def WHERE rel_type_id=1"))
   check('pending-shape-observed-generation',[[generation+1]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('pending-complete-inventory-still-unregistered','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
+  refusal('pending-source-observer-not-reusable',"SELECT truss.runtime_collect_original_association_mapping(:r::int,'/mappings/1')",{'code':'55000','message':'unique original declaration required'},r=rev)
   refusal('pending-current-commit-barrier-still-closed','SET CONSTRAINTS truss.runtime_operation_commit_barrier IMMEDIATE',{'code':'55000','message':'complete runtime finalizer is not installed'})
   refusal('ordinary-pending-read','SELECT * FROM truss.rel_def',{'code':'42501'},acting_role=True)
   c.run('ROLLBACK TO SAVEPOINT pending_positive');c.run('RELEASE SAVEPOINT pending_positive');check('pending-shape-positive-restored',baseline,archive_state())
