@@ -11287,3 +11287,11 @@ governing criteria, unchanged132 required cases, exact eight control outcomes
 and original fresh executing receipts. The per-case accounting finding is
 resolved; adjacent review/audit records identify no scoped landing blocker.
 This verdict covers allocation/accounting only, not backend behavior.
+
+Final source-current full gate completed with26/132 accepted original executions,
+28 allocated governing criteria, exit1 and106 missing executable bindings.
+All26 registered runners passed; the ten stale identity errors are gone.
+All gate and per-run fingerprinted sources still match current bytes. Exact
+full output is retained at `evidence/security/acceptance-runs/d30ed421-7183-4b9c-8ac9-2723a5b56278/acceptance.json`.
+No additional backend case or support profile is promoted; the active full
+security objective remains open.
