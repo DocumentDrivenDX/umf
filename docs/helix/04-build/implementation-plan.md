@@ -10991,3 +10991,12 @@ REPORT-ASSERTION-CLOSURE/US-056-AC1/AC2/AC10 gain formal design and explicit run
 
 
 Astra final combined review independently replays all24 formulas (8 UNSAT/16 SAT) and verifies final seven formal pins plus698 host pins/exact archives. Host receipt SHA25695ce434758f02bcf59790af03fe318dad5ac906526297aeca9e5c2006b15ef6c; host ZIP03bd56bb59d29da083ce224e2c120e8ae430f12cb55eb6e339765a90f67a54a8. Reviews are retained beside both final receipts. Reviewer does not claim host/native test reruns. concurrent Python packaging c1810d83 is preserved outside this qualification.
+
+
+## Original-byte custody hardening — 2026-10-11
+
+Truss now uses one bounded intrinsic byte-copy helper before JSON inspection, report/input handoffs, canonical encoding and asserted-origin/context preparation. Caller properties, iterators and typed-array species cannot substitute validated bytes or retained archive/native-codec bytes. Wire/profile routes require actual ordinary ArrayBuffer storage; genuine cross-realm arrays and exact byte windows remain supported. Structural shared-storage copying is not an atomic concurrent snapshot. Trusted pristine runtime intrinsics remain a premise.
+
+Truss evidence `docs/helix/04-build/evidence/original-byte-custody/bbd42936-2f55-4f30-a491-b5444b540357/receipt.json` retains 775 exact source/schema/fixture/producer preimages, before/after hashes and ZIP. All 101 host tests/560 assertions and strict selected-source typing pass. Chromium 153.0.8010.12 passes 22 portable custody/scanner/codec/origin-context checks with no external requests or host globals. PostgreSQL 17.9 passes four temporary native canonical-codec oracle cases, including zero caller callbacks; the exact owned fixture container is removed. Native collector role/authority, complete semantic interpretation, accepted report production and backend security admission are outside this checkpoint. Earlier source-pinned receipts remain historical when their captured sources differ.
+
+This closes a byte-correspondence prerequisite for REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10; it does not establish semantic rule-family completeness or enforcement. Acceptance remains 26/132. Complete registered rule-family inventories, native authority and protected-data enforcement, persistence/promotion and final commit gates remain open.
