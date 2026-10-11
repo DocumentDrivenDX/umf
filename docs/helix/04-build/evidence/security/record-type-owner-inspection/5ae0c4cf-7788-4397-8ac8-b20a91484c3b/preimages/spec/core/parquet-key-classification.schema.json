@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:parquet-key-classification:1.0.0",
+  "title": "Parquet Key classification and original file byte recovery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "observations",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-parquet-keys"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        }
+      ]
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "profile"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "const": "file-schema"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.parquet.keys",
+        "version": "1.0.0",
+        "nativeVersion": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nativePath",
+          "index",
+          "path",
+          "kind",
+          "definitionLevel",
+          "repetitionLevel",
+          "nativeField",
+          "enforcement",
+          "authorIntent",
+          "provenance",
+          "scope"
+        ],
+        "properties": {
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "kind": {
+            "enum": [
+              "physical-leaf",
+              "physical-group"
+            ]
+          },
+          "definitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "repetitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nativeField": {},
+          "enforcement": {
+            "const": "not-expressible"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "provenance": {
+            "const": "inferred"
+          },
+          "scope": {
+            "const": "file-schema"
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "outcome",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "outcome": {
+            "const": "not-expressible"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Original native archive retained; no authored key inferred"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          },
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

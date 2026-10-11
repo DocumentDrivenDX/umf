@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:cardinality-avro-projection:1.0.0",
+  "title": "Authored Cardinality to an explicit Avro schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-cardinality-avro"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recordName",
+        "namespace",
+        "fieldName",
+        "nativeType",
+        "dependencies",
+        "availability",
+        "requireExactValues",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordName": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "namespace": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)?(?![\\s\\S])"
+        },
+        "fieldName": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "nativeType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "schema"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "availability": {
+          "enum": [
+            "avro-null-value",
+            "unresolved"
+          ]
+        },
+        "requireExactValues": {
+          "type": "boolean"
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        }
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "dependencies"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "schema"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.cardinality.avro",
+        "version": "1.0.0",
+        "nativeVersion": "1.12.0",
+        "subset": "Explicit native type matching for authored shape and referenced item/value Fields; no codec equivalence or implicit record conversion"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "cardinality",
+        "outcome",
+        "items"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cardinality": {
+          "enum": [
+            "one",
+            "array",
+            "map",
+            "unspecified"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "idealPath",
+              "nativeLocation"
+            ],
+            "properties": {
+              "idealPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeLocation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "dependencyId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "approximated",
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeBundle"
+        ],
+        "properties": {
+          "target": true,
+          "nativeBundle": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeBundle": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
