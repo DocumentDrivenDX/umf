@@ -8,6 +8,9 @@ const plan = await Bun.file(planPath).json();
 const errors: string[] = [];
 const ids = new Set<string>();
 const allocated = new Set<string>();
+// Security semantics migrated from the colliding US-055 identity to US-079.
+const requiredCriteria = new Set([[79, 10], [56, 10], [57, 8]].flatMap(([story, count]) =>
+  Array.from({length: count!}, (_, i) => `US-${String(story).padStart(3, "0")}-AC${i + 1}`)));
 const execution: unknown[] = [];
 const allowedRoots: Record<string, string[]> = {
   semantic: [process.cwd()], "pg-raw": [process.cwd(), "/Users/erik/Projects/truss/packages/pg-runtime", "/private/tmp/ashlar-truss-runtime/node_modules"], "delta-raw": [process.cwd()],
@@ -21,9 +24,13 @@ const permitted = (file: string, backend: string): boolean =>
   });
 const hash = async (file: string) => createHash("sha256").update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest("hex");
 for (const c of plan.cases) {
+  const caseErrorsBefore = errors.length;
   if (ids.has(c.id)) errors.push(`duplicate case ${c.id}`);
   ids.add(c.id);
-  for (const ac of c.covers) allocated.add(ac);
+  for (const ac of c.covers) {
+    if (!requiredCriteria.has(ac)) errors.push(`${c.id}: unrelated or unknown acceptance criterion ${ac}`);
+    else allocated.add(ac);
+  }
   if (!c.required) {errors.push(`${c.id}: all initial security cases are required`);continue;}
   // Stored receipts cannot self-certify; execute a reviewed runner freshly.
   if (!Array.isArray(c.command) || c.command.length < 2 || !["bun", "python3"].includes(c.command[0]) ||
@@ -65,17 +72,12 @@ for (const c of plan.cases) {
         !receipt.nativeInventory?.objects?.length))) {
     errors.push(`${c.id}: malformed, replayed or nonpassing execution evidence`);continue;
   }
-  const validationErrorsBefore=errors.length;
   for (const [file,expected] of Object.entries(fingerprints)) {
     if (receipt.sourceDigests[file] !== expected || await hash(file) !== expected) errors.push(`${c.id}: stale/missing source ${file}`);
   }
-  outcome.accepted=errors.length===validationErrorsBefore;
+  outcome.accepted=errors.length===caseErrorsBefore;
 }
-for (const [n, count] of [[55, 10], [56, 10], [57, 8]]) {
-  for (let i = 1; i <= count!; i++) if (!allocated.has(`US-${String(n).padStart(3, "0")}-AC${i}`)) {
-    errors.push(`unallocated US-${String(n).padStart(3, "0")}-AC${i}`);
-  }
-}
+for (const criterion of requiredCriteria) if (!allocated.has(criterion)) errors.push(`unallocated ${criterion}`);
 const receipt = {status: errors.length ? "failed" : "passed", requiredCases: ids.size,
   allocatedAcceptanceCriteria: allocated.size, errors,
   execution,planDigest:await hash(planPath),gateSourceDigests:{

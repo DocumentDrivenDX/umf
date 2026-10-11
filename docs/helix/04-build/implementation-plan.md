@@ -11247,3 +11247,43 @@ and28 allocated criteria. This allocation gap must be reconciled against the
 governing requirements, not removed to make the gate green. Exact full output
 is retained at `evidence/security/acceptance-runs/b48167fa-f6a5-44f1-a704-0c3fd70f08f8/acceptance.json`.
 The full objective remains active; component success is not backend admission.
+
+
+### Security criterion allocation and per-case accounting — 2026-10-11
+
+The full gate's ten unallocated US-055 errors were stale identity references.
+The governing semantics story/test plan are US-079/STP-079; cases and exercising
+source citations already use that identity. US-055 names unrelated stories.
+The gate now requires the unchanged28 security criteria: US-079-AC1..10,
+US-056-AC1..10 and US-057-AC1..8. Unknown/unrelated criterion references fail and
+are excluded from the allocation count. No required behavior or backend case
+is removed, and the original132-case plan remains intact.
+
+Run `python3 tools/security/check-acceptance-allocation.py`. The producer freezes
+seven sources, including the gate/helper, actual case plan and three governing
+story texts. It extracts original bold acceptance IDs and requires exact actual
+plan equality. Five isolated nonexecuting plan controls verify complete mapping,
+a missing semantic criterion, the retired identity, an unrelated criterion and
+an unknown criterion. Their full gates still fail without exercising runners.
+Astra identified that allocation errors preceded the prior final-validation
+baseline, allowing an invalid executing case to receive accepted=true despite
+global failure. An actual-gate synthetic metadata counterexample is retained
+under historical29fab1a3 without treating it as semantic/backend evidence.
+
+The corrected per-case error baseline is taken before duplicate/allocation
+checks. Three original executing metadata fixtures reach final receipt admission:
+unknown criterion accepted=false, a later independently valid case accepted=true,
+and a duplicate case accepted=false. The valid case is not poisoned by earlier
+errors. All eight allocation/accounting controls pass; final source-current
+archive and exact vectors are in
+`evidence/security/acceptance-allocation/4258223f-fdb4-4d19-94f2-8aeb60007581`.
+The four existing actual-gate receipt controls (valid, malformed, omitted
+assertion, changed source) also pass. These are gate-metadata regressions,
+not original semantic or native backend exercising cases. The earlier4c409d30
+and29fab1a3 captures are historical versions; final evidence must match4258223f.
+
+Astra ultra independently verified all seven final source/ZIP pins, the28
+governing criteria, unchanged132 required cases, exact eight control outcomes
+and original fresh executing receipts. The per-case accounting finding is
+resolved; adjacent review/audit records identify no scoped landing blocker.
+This verdict covers allocation/accounting only, not backend behavior.
