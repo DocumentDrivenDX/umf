@@ -7,14 +7,14 @@ ROOT=Path(__file__).resolve().parents[2]
 if Path.cwd()!=ROOT:raise SystemExit('Exact root invocation required')
 T=Path('/private/tmp/truss-security-main-integration');O=Path('/private/tmp/truss-umf-runtime-LmpSsH')
 IR=ROOT/'docs/helix/04-build/evidence/security/weft-handoff.json'
-components=['operation-admission','operation-commit-barrier','catalog-generation-observer','catalog-document-batch','catalog-lineage-producer','catalog-source-integrity','catalog-type-match','catalog-type-stage','catalog-property-match','catalog-property-stage','catalog-key-match','catalog-key-stage','catalog-key-batch','catalog-relationship-match','catalog-relationship-stage','catalog-report-documents','catalog-new-inventory','catalog-observation-recheck','catalog-input-custody','catalog-prestate-capture','catalog-new-prestate-parity','catalog-new-counts','catalog-provisional-empty','catalog-report-immutability','catalog-original-context','operation-generation-observer','canonical-string-bytes','canonical-tree-bytes','object-key-stage','catalog-binding-archive']
+components=['operation-admission','operation-commit-barrier','catalog-generation-observer','catalog-document-batch','catalog-lineage-producer','catalog-source-integrity','catalog-type-match','catalog-type-stage','catalog-property-match','catalog-property-stage','catalog-key-match','catalog-key-stage','catalog-key-batch','catalog-relationship-match','catalog-relationship-stage','catalog-report-documents','catalog-new-inventory','catalog-observation-recheck','catalog-input-custody','catalog-prestate-capture','catalog-new-prestate-parity','catalog-new-counts','catalog-provisional-empty','catalog-report-immutability','catalog-original-context','operation-generation-observer','canonical-string-bytes','canonical-tree-bytes','object-key-stage','catalog-binding-archive','catalog-binding-observation']
 layout=T/'docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql'
 paths=[Path(__file__),ROOT/'tools/security/truss-binding-catalog-stage.ts',IR,layout,O/'producer.js',O/'producer-manifest.json',ROOT/'docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md',ROOT/'docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md']
 paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
 for directory in ['packages/umf-bun/src','packages/postgresql/src','docs/helix/02-design/contracts/bindings']:
  paths += [p for p in (T/directory).rglob('*') if p.is_file() and p.suffix in ['.ts','.json']]
 paths += [T/'docs/helix/02-design/contracts/acceptance-input-v0.1.schema.json']
-interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/0e6a5088-80fd-4279-b8ef-4da50419248c'
+interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/8da2bb4f-6362-4ff1-9b29-fd86e498084e'
 paths += [interpretation/'binding.json',interpretation/'receipt.json']
 # Capture and execute the full declared Ajv dependency closure from copied packages.
 pending=[(ROOT/'node_modules/ajv').resolve()];dependencies={}
@@ -176,12 +176,30 @@ try:
   except pg8000.exceptions.DatabaseError as error:check(label,{'code':'55000','message':'original prestate archive profile correspondence required'},{'code':error.args[0].get('C'),'message':error.args[0].get('M')})
   else:raise ValueError(label+' admitted')
   c.run('ROLLBACK TO SAVEPOINT profile_mismatch');c.run('RELEASE SAVEPOINT profile_mismatch');check(label+'-restored',baseline,archive_state())
- check('complete-original-native-inventory', [['key',5],['property',9],['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
+ check('original-core-only-native-inventory', [['key',5],['property',9],['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_core_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
  c.run('SAVEPOINT inventory_primary_fault');baseline=archive_state()
  c.run('UPDATE truss.key_def SET is_primary=true WHERE type_id=(SELECT min(type_id) FROM truss.key_def)')
- refusal('inventory-primary-substitution','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'55000','message':'stored original ordered Key definition correspondence'},r=packet['staged']['provisionalRevision'])
+ refusal('inventory-primary-substitution','SELECT * FROM truss.runtime_collect_new_core_catalog_inventory(:r::int)',{'code':'55000','message':'stored original ordered Key definition correspondence'},r=packet['staged']['provisionalRevision'])
  c.run('ROLLBACK TO SAVEPOINT inventory_primary_fault');c.run('RELEASE SAVEPOINT inventory_primary_fault');check('inventory-primary-restored',baseline,archive_state())
- check('complete-original-native-counts',[['5','9','5','0','0','0']],c.run('SELECT * FROM truss.runtime_collect_new_catalog_counts(:r::int)',r=packet['staged']['provisionalRevision']))
+ refusal('complete-binding-inventory-unavailable','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=packet['staged']['provisionalRevision'])
+ refusal('complete-binding-counts-unavailable','SELECT * FROM truss.runtime_collect_new_catalog_counts(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=packet['staged']['provisionalRevision'])
+ observed=c.run('SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',r=packet['staged']['provisionalRevision'])
+ operation=c.run('SELECT original_writer_xid::text,operation_ordinal::text,effect_generation::text FROM truss.row_home_operation')[0]
+ check('original-native-binding-observation',[[binding_bytes.hex(),packet['originalInputHex'],sha(binding_bytes),*operation]],observed)
+ for label,column,expression,message in [('body','original_binding_bytes',"decode('01','hex')",'original binding archive artifact correspondence required'),('input','original_input_bytes',"decode('01','hex')",'original binding archive operation correspondence required'),('writer','original_writer_xid',"'1'::xid8",'original binding archive operation correspondence required'),('identity','artifact_identity_utf8',"decode('01','hex')",'original binding archive artifact correspondence required'),('vocabulary','vocabulary',"'{}'::jsonb",'original binding archive artifact correspondence required')]:
+  baseline=archive_state();c.run('SAVEPOINT observed_binding_fault')
+  check('observation-'+label+'-agreeing-positive',observed,c.run('SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',r=packet['staged']['provisionalRevision']))
+  c.run('ALTER TABLE truss.catalog_binding_archive DISABLE TRIGGER runtime_binding_archive_immutable')
+  c.run('UPDATE truss.catalog_binding_archive SET '+column+'='+expression+' WHERE revision=:r::int',r=packet['staged']['provisionalRevision'])
+  c.run('ALTER TABLE truss.catalog_binding_archive ENABLE ALWAYS TRIGGER runtime_binding_archive_immutable')
+  refusal('observation-'+label,'SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',{'code':'55000','message':message},r=packet['staged']['provisionalRevision'])
+  c.run('ROLLBACK TO SAVEPOINT observed_binding_fault');c.run('RELEASE SAVEPOINT observed_binding_fault');check('observation-'+label+'-restored',baseline,archive_state())
+ baseline=archive_state();c.run('SAVEPOINT observed_document_fault')
+ check('observation-document-agreeing-positive',observed,c.run('SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',r=packet['staged']['provisionalRevision']))
+ c.run("UPDATE truss.schema_doc SET doc_revision='substituted-original-revision' WHERE rev=:r::int",r=packet['staged']['provisionalRevision'])
+ refusal('observation-document-revision','SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',{'code':'55000','message':'document carrier substitutes original admitted source bytes/order/identity'},r=packet['staged']['provisionalRevision'])
+ c.run('ROLLBACK TO SAVEPOINT observed_document_fault');c.run('RELEASE SAVEPOINT observed_document_fault');check('observation-document-restored',baseline,archive_state())
+ refusal('ordinary-binding-observation','SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',{'code':'42501'},acting_role=True,r=packet['staged']['provisionalRevision'])
  check('host-archive-digest',sha(binding_bytes),packet['staged']['bindingArchiveSha256'])
  check('prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a WHERE revision=0 ORDER BY revision'))
  c.run('ROLLBACK');check('rollback-prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision'));check('rollback-catalog',[[0,0,0,0,1 if occupied else 0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc),(SELECT count(*) FROM truss.catalog_binding_archive)'))
