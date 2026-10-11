@@ -183,6 +183,7 @@ try:
   check('native-binding-routines-invoker',[[3,0]],c.run("SELECT count(*),count(*) FILTER(WHERE prosecdef) FROM pg_proc WHERE pronamespace='truss'::regnamespace AND proname IN ('runtime_stage_catalog_binding','runtime_capture_binding_catalog_prestate','runtime_refuse_binding_archive_change')"))
   c.run('ROLLBACK TO SAVEPOINT retained_binding');c.run('RELEASE SAVEPOINT retained_binding');check('probe-baseline-restored',baseline,archive_state())
 
+ init['pendingReportBasis']=pending_layout
  child.stdin.write((json.dumps(init)+'\n').encode());child.stdin.flush();buffer=b'';deadline=time.monotonic()+60;packet=None
  while packet is None:
   if time.monotonic()>deadline:raise TimeoutError('Bounded stage deadline')
@@ -209,7 +210,8 @@ try:
     except pg8000.exceptions.DatabaseError as error:response={'error':error.args[0].get('C','unknown')}
     child.stdin.write((json.dumps(response)+'\n').encode());child.stdin.flush()
  if packet.get('kind')!='result':raise ValueError(packet.get('reason','Original staging unavailable'))
- child.stdin.close();check('bridge-exit',0,child.wait(timeout=5))
+ if not pending_layout:
+  child.stdin.close();check('bridge-exit',0,child.wait(timeout=5))
  check('original-archive-bridge',artifact['request']['modules'][0]['documentJson'],packet['originalText'])
  check('five-records',5,len(packet['staged']['types']));check('complete-owned-field-count',owned_field_count,len(packet['staged']['properties']));check('five-keys',5,len(packet['staged']['keys']));check('original-core-relationship-count',int(authored_fixture),len(packet['staged']['relationships']))
  check('native-non-primary-keys',[[5,0]],c.run('SELECT count(*),count(*) FILTER(WHERE is_primary) FROM truss.key_def'))
@@ -397,8 +399,42 @@ try:
   check('pending-value-candidate-generation-fault-full-restoration',generation_state,archive_state())
   check('pending-value-candidate-original-effect-definition-restored',[[original_effect_definition]],c.run(effect_definition_query))
   check('pending-value-candidate-generation-fault-restored-positive',physical_values,c.run(value_query,r=rev))
+  child.stdin.write((json.dumps({'kind':'pendingReportBasis','revision':rev})+'\n').encode());child.stdin.flush()
+  pending_packet=None;deadline=time.monotonic()+60
+  while pending_packet is None:
+   if time.monotonic()>deadline:raise TimeoutError('Bounded pending report bridge deadline')
+   ready,_,_=select.select([child.stdout,child.stderr],[],[],min(1,deadline-time.monotonic()))
+   for stream in ready:
+    data=os.read(stream.fileno(),65536)
+    if stream is child.stderr:
+     if data:raise ValueError('Unexpected pending bridge stderr')
+     continue
+    if not data:raise ValueError('Pending bridge terminated without result')
+    buffer+=data
+    if len(buffer)>16777216:raise ValueError('Bounded pending bridge output')
+    while b'\n' in buffer:
+     line,buffer=buffer.split(b'\n',1);message=json.loads(line)
+     if message['kind']!='query':pending_packet=message;break
+     sql=message['sql'];params=message['parameters']
+     if not isinstance(sql,str) or len(sql)>4096 or len(params)>2 or not all(isinstance(v,str) and len(v)<=16777216 for v in params):raise ValueError('Bounded pending report query')
+     query_log.append({'sql':sql,'parametersSha256':sha(json.dumps(params,separators=(',',':')).encode())})
+     try:
+      converted=re.sub(r'\$(\d+)',lambda m:':p'+m[1],sql);rows=c.run(converted,**{'p'+str(i+1):v for i,v in enumerate(params)})
+      cols=[column['name'] for column in c.columns] if c.columns else []
+      response={'rows':[{name:str(v) for name,v in zip(cols,row)} for row in (rows or [])]}
+     except pg8000.exceptions.DatabaseError as error:response={'error':error.args[0].get('C','unknown')}
+     child.stdin.write((json.dumps(response)+'\n').encode());child.stdin.flush()
+  if pending_packet.get('kind')!='pendingReportResult':raise ValueError(pending_packet.get('reason','Original pending report bridge unavailable'))
+  child.stdin.close();check('bridge-exit',0,child.wait(timeout=5))
+  check('pending-report-original-host-custody',{'copied':'Original bound pending report basis required','connection':'Original bound pending report basis required','preparation':'Original validated catalog preparation required','recognizedPreparation':'Original bound pending report basis required'},pending_packet['refusals'])
+  check('pending-report-original-host-result-shape-refusals',{name:'Exact bounded original native report basis bytes required' for name in ['empty','duplicate','null','extra','uppercase','odd','nonhex','emptyHex','oversize']},pending_packet['shapeRefusals'])
+  check('pending-report-original-host-revision-no-coercion',{name:{'message':'Original positive native revision required','sqlCalls':0} for name in ['numeric','boxed','coercion']},pending_packet['revisionRefusals'])
+  check('pending-report-original-host-stale-native-basis','Native staging refusal 55000',pending_packet['staleRefusal'])
+  check('pending-report-original-host-scope','original_pending_association_report_basis_only',pending_packet['basis']['scope'])
+  check('pending-report-original-host-revision',rev,pending_packet['basis']['provisionalRevision'])
   basis_query="SELECT encode(truss.runtime_collect_pending_association_report_basis_candidate(:r::int),'hex')"
   basis_hex=c.run(basis_query,r=rev)[0][0];basis=json.loads(bytes.fromhex(basis_hex))
+  check('pending-report-original-host-exact-bytes',basis_hex,pending_packet['basis']['originalBasisHex'])
   check('pending-report-basis-original-input',packet['originalInputHex'],basis['originalInputHex'])
   check('pending-report-basis-original-binding',binding_bytes.hex(),basis['originalBindingHex'])
   check('pending-report-basis-selected-values',[{'family':row[0],'identity':row[1],'physicalValue':row[2]} for row in physical_values],basis['metadataImage'])
