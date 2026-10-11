@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B11",
   "backend": "pg-raw",
-  "runId": "b54c3e83-9786-450f-baeb-e860594df1ca",
+  "runId": "e8ff981e-3088-4e52-8fe2-2b5e9304fcf8",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -22,7 +22,7 @@
     "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
-    "tools/security/pg-inventory.py": "55b0de2ae01361273fb8aac91a253400e4cf593d6cf1b717c13864a3c32737b3",
+    "tools/security/pg-inventory.py": "5a069e586cede0aa47c65fe0afb7d140f3c9a2a9041040701bb4f503c609fbc0",
     "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e"
   },
   "observations": [
@@ -8175,9 +8175,9 @@
     },
     "executedManagedSourceDigests": {
       "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
-      "tools/security/pg-inventory.py": "55b0de2ae01361273fb8aac91a253400e4cf593d6cf1b717c13864a3c32737b3"
+      "tools/security/pg-inventory.py": "5a069e586cede0aa47c65fe0afb7d140f3c9a2a9041040701bb4f503c609fbc0"
     },
-    "digest": "45f6d2543bfef957268fef837eddd3d92236f0a9a3a78fb976b5fc22ebe1eac4"
+    "digest": "94af37a08beaecf352fe78e16b5e183e82a748bbe44eec9d60bcd2671dab2ec8"
   },
   "scope": "PostgreSQL 17.9 disposable raw-table read membership, selected collection operators private-storage, definer/name-resolution and administrator-exclusion controls at a stable cut only. Native source inventory retained; complete profile, concurrent authority, compiler lowering and all other B/L cases remain unqualified."
 }

@@ -1415,3 +1415,18 @@ a blanket rejection of all data changes is not faithful query execution. Raw
 PostgreSQL view controls do not substitute for actual Truss/Ashlar property and
 edge carriers or raw Delta expressions. These are required controls within the
 existing cases; no additional passing case or reduced backend scope is implied.
+
+
+The PostgreSQL source-census candidate must retain numeric OID aliases beside
+native display names. Change a preexisting aggregate transition reference between
+same-named overloads while retaining every pg_proc row; unaugmented catalog JSON
+may remain identical. Require current-source refusal before application execution;
+an inconsistent injected signature is a corruption control, never an admitted
+aggregate. Also change an existing aggregate initial value, parameter ACL and
+event-trigger enabled mapping independently of routine bodies. Include native
+per-section exact-row and one-over boundaries, serialization overflow and complete
+restoration. These are observer prerequisites; they do not prove complete native
+catalog/JSON refinement, external executable custody, runtime GUC correspondence
+or the final-release writer protocol. An explicit interior ABA countermodel must
+remain beside endpoint-comparison positives; production admission requires the
+held-cut protocol specified by CONTRACT-063.

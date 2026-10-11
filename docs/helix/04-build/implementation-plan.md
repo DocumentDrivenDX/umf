@@ -11410,3 +11410,84 @@ and legitimate new-data-cut positive controls to existing B08/B09/B11 across all
 backends. Next implement current installed-source authority and meaning admission;
 matching domains/populations or an unauthenticated definition hash cannot replace
 that obligation. Full acceptance remains26/132; no protected profile is promoted.
+
+
+### Native source-census and buffered-release correspondence — 2026-10-11
+
+Truss `packages/postgresql/native/security-query-source-census.sql` is a private
+PostgreSQL17.9 observation source. It inventories40 selected catalogs/sections
+across the database, including full routine bodies, views/rewrite trees, columns,
+policies, triggers, type/operator/cast/collation/aggregate mappings, roles,
+membership, parameter privileges, event triggers and procedural transforms.
+It captures routine-body changes even when pg_depend lacks the call edge.
+The added mappings follow PostgreSQL17's
+[aggregate catalog](https://www.postgresql.org/docs/17/catalog-pg-aggregate.html),
+[parameter privileges](https://www.postgresql.org/docs/17/catalog-pg-parameter-acl.html),
+[event catalog](https://www.postgresql.org/docs/17/catalog-pg-event-trigger.html) and
+[language transforms](https://www.postgresql.org/docs/17/catalog-pg-transform.html).
+These source images are private administrative evidence; opaque body/configuration
+content is not safe for ordinary disclosure merely because password columns are
+excluded.
+It excludes table data, private statistics and credential columns; foreign routes
+refuse. Native8192 rows/section,100000 total rows and16MiB serialized limits refuse
+rather than emit a complete prefix. They do not establish heap/CPU/aggregate-work
+bounds or complete installation authority.
+
+Existing `tools/security/pg-inventory.py` now compares the pinned source again
+after materializing a private result buffer and before returning rows. Final native
+`evidence/security/query-source-census/b4e127c5-bb11-4ae0-a42a-73c32aabff72`
+passes204 observations at14 frozen/current source inputs, retaining the complete
+compressed10,439,605-byte native image (40 sections/14,352 rows), changed native
+sections, actual issued predicate/owner-derived empty fragments,19 raw native
+refusals and successful owned cleanup. View substitution, cross-schema string-body
+changes, routine/namespace ACL and routine settings, RLS policy, aggregate initial
+state, parameter privilege and event-enabled changes refuse both applications with
+zero application calls. The aggregate initial value changes the independent native
+probe3→103 with unchanged pg_proc. A sequential excluded-installer change after an
+actual RAB buffer is read causes final refusal. A faithful data update yields the
+new RA/RAB oracle without source-definition drift; restoration recovers RAB.
+Actual pg_attribute8192/+1 controls and a17-million-character routine-definition
+serialization overflow refuse/recover as scoped native resource observations.
+
+Native OID aliases carry numeric references alongside original display spelling.
+The native schema independently enumerates28 selected regproc columns and their
+projections. Two overloads have distinct16583/16585 OIDs but identical regproc
+spelling; changing an aggregate reference between them leaves ordinary catalog
+JSON identical. The numeric projection detects the changed pg_aggregate reference.
+The alternative signature is an excluded corruption fixture and is never executed
+as a valid aggregate. This closes a demonstrated identity loss; it does not prove
+injectivity of the entire census or authenticate installation/caller/source custody.
+
+Host `query-source-guard-host/58798e74-0f0d-4209-97ff-6ce3371c0399` retains18
+synthetic controls and two exact preimages, including post-read unknown/failure,
+nonfinite final inventory observations, buffer/snapshot copy isolation and an explicit admitted interior
+ABA counterexample. Conditional formal
+`query-source-census-formal/4b4b8aff-89f8-488a-b21a-2f2b4a90a7b5` retains six
+pre-solve/fresh-context queries (three UNSAT/three SAT) and four current preimages.
+Truthful/injective complete observation, an independently qualified expected source
+and interior held-cut coordination remain premises. It does not prove native SQL,
+catalog/MVCC freshness, JSON/collation refinement, host driver/buffering behavior,
+external executable/files/runtime GUC or dynamic data-driven source resolution,
+writer participation, graph mappings or full backend admission. Native16MiB and
+host16,000,000 encoded-character budgets are distinct.
+
+The129/139/165-observation receipts and earlier formal receipts remain historical
+predecessors. The first ACL-restoration attempt retained only failed producer and
+diagnostic/finally-completion provenance; explicit ACL initialization fixed the
+NULL-versus-default native representation difference. Two later124-observation
+NULL transport harness failures retain raw observations, source archives and actual
+cleanup. Their source-image files contain JSON null, not the full baseline; adjacent
+scope notes make the unretained baseline explicit. Final transport uses explicit
+JSON null; future failed-image publication is marked not-retained.
+
+Fresh full gate `acceptance-runs/5bd59413-4a95-467b-8bd4-81668b73ea08` executes
+and accepts all26 registered cases at current fingerprints/28 allocated criteria.
+It exits1 because106 required cases have no executable binding. US-056-AC6/AC7/AC9
+and existing B08/B09/B11 gain source-observer prerequisites only. No case is added
+or promoted, and no public/native installed profile or Python/Truss graph runtime
+is activated. Next compose authenticated original installed-source/provider custody,
+current runtime configuration and complete dependency interpretation with the held
+source/authority/final-release cut in the protected runtime. The full goal remains
+active at26/132.
+
+The private census transport is not yet composed through the protected Truss runtime. This run retained a 10,439,605-byte source image; the current native-query response profile admits 1,048,576-byte frames and 4,194,304 total bytes, while installed-admission inventory permits at most 4,194,304 text units. A future runtime binding must qualify complete transport and accounting or a source-qualified compact native witness. Trimming, prefix acceptance and fallback are not admissible substitutes. These distinct profiles have not been widened by this spike.

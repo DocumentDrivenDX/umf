@@ -224,6 +224,19 @@ replacement carrying the same keys, column types and non-NULL values MUST NOT
 inherit qualification solely from those descriptors. Whole native callable/DDL
 closure and the held source/authority cut remain separately required.
 
+Native inventory references MUST preserve the actual engine-local identity
+alongside any display name. For PostgreSQL OID aliases such as regproc, a rendered
+routine name or ordinary catalog JSON does not uniquely identify an overloaded
+routine. Exact numeric OID references MUST remain bound to the same database,
+installation and qualified cut; they are not portable logical identities or
+installer credentials. Matching names cannot conceal changed aggregate,
+operator, conversion, type-support or language-transform references.
+The complete source census and its expected snapshot MUST remain in the trusted
+administrative/provider boundary. Opaque routine bodies and configuration values
+may contain sensitive source or facts; excluding native password columns does not
+make the inventory an ordinary-user disclosure surface. Provider authority,
+snapshot provenance and observer privilege closure require separate qualification.
+
 A qualified data update under the same faithful binding is a new data cut, not
 necessarily source-definition drift. Its query result MUST match the independent
 oracle at that cut. The consumer MUST distinguish authorized data changes from
