@@ -1,0 +1,171 @@
+{
+  "status": "pass",
+  "z3Version": "4.15.4",
+  "sourceSha256": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-binding-publication-order.py": "beb575b649a44755ce91689d378bbe4f43132d9d8c6e1d08e4aea6cb49e39753",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/security-association-binding.proposal.md": "c8c88b6323735b012f06b095a8afb98bfd3fea3dcaa9e02866e9c58214dae964",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/contracts/CONTRACT-001-storage-layout.md": "c6fa951c69d8eda49343a46ba96e4b87c5d2c252812b717e98ae7710b594e5e1",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-report-preparation.ts": "421dc89fe416e098225fe6265a63eb523f7d1fdf650178f8759678144d6e0dbf",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-ingress-report-basis.ts": "3d1650163c390a9ea58de1996b017aeae66b048fe72a6d37413d4d7fcd91e50e",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-new-inventory.sql": "13650d877ec81718810b71f8ae3022a08c4a21f38ee50cbcb5207d779255ab86",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-binding-observation.sql": "e2dfd6907eb700abfde70f333cffd2cdec013a06629ccb6dc60c4ed625f15215",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-report-immutability.sql": "c243b51682de3fee979b977626bb54279eccb3de22a24270e0bda467bd215167",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-generation-observer.sql": "9d1f354e746e1df856c2c1fb4c3b5493c8ae0b4725210920a86dbb95ad54522c",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/operation-commit-barrier.sql": "eed4f044a241db7d70dd9cf222a3313bedd484273c18d0e7063b614ad5bab93b"
+  },
+  "observations": [
+    {
+      "id": "accepted-source-before-report-cycle",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "3828ba18cc7b00651d274e85f25a4baf42d696825470d53fe31a0d2686901c9b",
+      "model": null
+    },
+    {
+      "id": "pending-source-protocol-has-valid-execution",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "028f02ec74b7019aac89e8e4cbbfa8e7d5df84739bb7d7afce3ab09de8fd228a",
+      "model": "[stage = 0,\n head_write = 5,\n recheck = 4,\n report_generation = 0,\n promote = 3,\n report = 2,\n inventory = 1,\n commit_publication = 7,\n commit_generation = 2,\n fault_definition = Definition!val!0,\n post_head_check = 6,\n final_generation = 1,\n original_head_transition_and_full_post_head_closure = True,\n pending_binding_source_remains = False,\n complete_final_closure = True,\n registered_interpretation = True,\n current_generation = 1,\n original_source_exact = True,\n head_generation = 2,\n post_head_checked_generation = 2,\n authenticated_operation = True,\n inventory_before = [else -> True],\n inventory_after = [else -> True],\n physical_value_after = [else -> 0],\n physical_value_before = [else -> 0]]"
+    },
+    {
+      "id": "publication-cannot-precede-report",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "8dc7d3477b414ca203582b9168cfd1b96bfacf7d0380eecbb83fb5378d1a2069",
+      "model": null
+    },
+    {
+      "id": "promotion-cannot-precede-report",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "fd2f95648eb0be2d8f9f624e0806e4717002450f41bcce80545b69006ee4a2ae",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-use-pre-promotion-recheck",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "61fd72914fff8b2e7312674183f9ce7222078a6a06bf187f27de0d482e83f59c",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-reuse-pre-report-generation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "e6ae8da5ee71e228fd36d176bf625dfdf8d055c150538e8b0a96aa13d354d605",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-ignore-later-effect",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "04fb07084af0c00c625909503952cb3c1afff0c3d8da0dd257361ec115c745dc",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-retain-pending-source",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "783fb38f6db9327222cd7702ce24100805e2625cfaf5ac0dbeff0daa83ba5e06",
+      "model": null
+    },
+    {
+      "id": "weakened-pending-source-gate-admits-unresolved-publication",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "68667545764980e3de2ae3b506bca17e0aece8831c75497194d19f2653768471",
+      "model": "[authenticated_operation = True,\n post_head_check = 6,\n stage = 0,\n head_write = 5,\n recheck = 4,\n report_generation = 0,\n promote = 3,\n report = 2,\n inventory = 1,\n commit_publication = 7,\n commit_generation = 2,\n final_generation = 1,\n pending_binding_source_remains = True,\n original_head_transition_and_full_post_head_closure = True,\n complete_final_closure = True,\n registered_interpretation = True,\n current_generation = 1,\n original_source_exact = True,\n head_generation = 2,\n post_head_checked_generation = 2,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 0],\n physical_value_before = [else -> 1]]"
+    },
+    {
+      "id": "post-head-check-cannot-precede-head-write",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "1a3fd47d95cfde2df2e166a33855851a61bd2634a61c2811813c9e5add506663",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-reuse-pre-head-readiness",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "047fa9f0496b927c41b76da90263649e02f003858565a4afb1611976fa733f87",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-ignore-post-head-effect",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "78fd841a970054ad0aba6b27dea695649b502ea2087c9692b8ccdca04d1229de",
+      "model": null
+    },
+    {
+      "id": "weakened-post-head-generation-gate-admits-later-effect",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "7297e3e38aeaf6c8be86c01bcd4be6575b194db0a2ac0acfb7ac22e4a32235fe",
+      "model": "[commit_publication = 7,\n post_head_checked_generation = 2,\n post_head_check = 6,\n stage = 0,\n head_write = 5,\n recheck = 4,\n promote = 3,\n report = 2,\n inventory = 1,\n report_generation = 0,\n commit_generation = 3,\n authenticated_operation = True,\n final_generation = 1,\n original_head_transition_and_full_post_head_closure = True,\n pending_binding_source_remains = False,\n complete_final_closure = True,\n registered_interpretation = True,\n current_generation = 1,\n original_source_exact = True,\n head_generation = 2,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 5],\n physical_value_before = [else -> 6]]"
+    },
+    {
+      "id": "complete-parity-forbids-extra-omitted-or-changed-effect",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "0a4b22b05f112f33cac2e4579e4c2e949093e7e3ad2c266f7d4c9118f95920d9",
+      "model": null
+    },
+    {
+      "id": "same-identity-inventory-can-hide-physical-value-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "8de012cd511be36dbbcf4c9f341d46776e3d6f8f0434d05029c819558facebc6",
+      "model": "[fault_definition = Definition!val!0,\n inventory_before = [Definition!val!0 -> True,\n                     else -> inventory_after(Var(0))],\n inventory_after = [else -> True],\n physical_value_after = [else -> 1],\n physical_value_before = [else -> 0]]"
+    },
+    {
+      "id": "weakened-generation-gate-admits-stale-publication",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "cb38b008b6d9340aa40e357a68c0bb627800aff8a8c168192069e5b48b0088c3",
+      "model": "[promote = 3,\n report = 2,\n authenticated_operation = True,\n inventory = 1,\n current_generation = 2,\n commit_publication = 7,\n post_head_check = 6,\n stage = 0,\n head_write = 5,\n report_generation = 0,\n recheck = 4,\n commit_generation = 2,\n final_generation = 1,\n original_head_transition_and_full_post_head_closure = True,\n pending_binding_source_remains = False,\n complete_final_closure = True,\n registered_interpretation = True,\n original_source_exact = True,\n head_generation = 2,\n post_head_checked_generation = 2,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 3],\n physical_value_before = [else -> 4]]"
+    },
+    {
+      "id": "weakened-order-gate-admits-report-before-observed-effects",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "1872fa5c882af62401ea54282b48cd63598b252119ce8d61a5a88516b9a70422",
+      "model": "[commit_generation = 2,\n report_generation = 0,\n report = 0,\n authenticated_operation = True,\n stage = 1,\n final_generation = 1,\n original_head_transition_and_full_post_head_closure = True,\n pending_binding_source_remains = False,\n complete_final_closure = True,\n registered_interpretation = True,\n current_generation = 1,\n original_source_exact = True,\n head_generation = 2,\n post_head_checked_generation = 2,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 3],\n physical_value_before = [else -> 4]]"
+    },
+    {
+      "id": "private-source-custody-alone-cannot-establish-authority",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "e007a0f0c1f4d3515d58711505118d7ddecb5705d1f3d14e9004ba693e9d648f",
+      "model": "[authenticated_operation = False,\n registered_interpretation = False,\n original_source_exact = True]"
+    }
+  ],
+  "scope": "Conditional causal ordering and exact inventory/generation parity for the selected pending-source protocol",
+  "limitations": [
+    "Fixed selected event families over unbounded integer order/generation; not arbitrary concurrent native execution or liveness",
+    "Registered interpretation, authenticated operation, original source equality, complete final closure and monotone generation correspondence are premises, not derived from bytes",
+    "Full physical inventory equality is an explicit quantified premise; native inventory decoding, permitted provenance promotion and report equality are not implemented by this model",
+    "No pending native source tuple/layout/decoder, SQL refinement, registered association staging, report producer, privilege/drain or publication implementation",
+    "The strict accepted-source-first cycle is an incompatible proposed ordering, not a claim that current code executes a cyclic protocol"
+  ],
+  "acceptancePromoted": false
+}
