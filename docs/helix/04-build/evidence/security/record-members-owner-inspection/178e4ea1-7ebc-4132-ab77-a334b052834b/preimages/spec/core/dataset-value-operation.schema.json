@@ -1,0 +1,469 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:dataset-value-operation:1.0.0",
+  "title": "Experimental supplied dataset value check receipt",
+  "type": "object",
+  "properties": {
+    "operation": {
+      "const": "validate-core-dataset-values"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "scope": {
+      "const": "supplied-dataset-only"
+    },
+    "provenance": {
+      "const": "unverified"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "input": {
+      "$ref": "#/$defs/input"
+    },
+    "documentValidation": {
+      "$ref": "#/$defs/validation"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "$ref": "#/$defs/recordCheck"
+          }
+        },
+        "required": [
+          "instanceId",
+          "result"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "$ref": "urn:umf:core:key-tuple-operation:3.0.0"
+          }
+        },
+        "required": [
+          "instanceId",
+          "result"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identity": {
+            "$ref": "#/$defs/relationshipIdentity"
+          },
+          "sourceInstanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "targetInstanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "targetKey": {
+            "$ref": "urn:umf:core:key-tuple-operation:3.0.0"
+          }
+        },
+        "required": [
+          "instanceId",
+          "identity",
+          "sourceInstanceId",
+          "targetInstanceId",
+          "targetKey"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "datasetValidation": {
+      "$ref": "#/$defs/validation"
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "enum": [
+              "dataset.keys",
+              "dataset.relationships"
+            ]
+          },
+          "state": {
+            "enum": [
+              "satisfied",
+              "invalid",
+              "unresolved"
+            ]
+          },
+          "scope": {
+            "const": "supplied-dataset-only"
+          }
+        },
+        "required": [
+          "id",
+          "state",
+          "scope"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "value",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "scope",
+    "provenance",
+    "source",
+    "input",
+    "documentValidation",
+    "records",
+    "keys",
+    "relationships",
+    "datasetValidation",
+    "obligations",
+    "residuals"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "relationshipIdentity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "fieldValue": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/identity"
+            },
+            "state": {
+              "const": "absent"
+            }
+          },
+          "required": [
+            "field",
+            "state"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/identity"
+            },
+            "state": {
+              "const": "present"
+            },
+            "value": {
+              "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+            }
+          },
+          "required": [
+            "field",
+            "state",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "closure": {
+              "const": "supplied-dataset-only"
+            }
+          },
+          "required": [
+            "id",
+            "closure"
+          ],
+          "additionalProperties": false
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "identity": {
+                "$ref": "#/$defs/identity"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/fieldValue"
+                }
+              }
+            },
+            "required": [
+              "instanceId",
+              "identity",
+              "values"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1000
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "identity": {
+                "$ref": "#/$defs/relationshipIdentity"
+              },
+              "sourceInstanceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "object",
+                "properties": {
+                  "identity": {
+                    "$ref": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+                    }
+                  }
+                },
+                "required": [
+                  "identity",
+                  "values"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "instanceId",
+              "identity",
+              "sourceInstanceId",
+              "target"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 10000
+        },
+        "context": {}
+      },
+      "required": [
+        "scope",
+        "records",
+        "relationships"
+      ],
+      "additionalProperties": false
+    },
+    "recordCheck": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "validate-core-record-values"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.8.0"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fieldValue"
+          }
+        },
+        "documentValidation": {
+          "$ref": "#/$defs/validation"
+        },
+        "validation": {
+          "$ref": "#/$defs/validation"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/identity"
+              },
+              "state": {
+                "enum": [
+                  "absent",
+                  "present"
+                ]
+              },
+              "validation": {
+                "$ref": "#/$defs/validation"
+              }
+            },
+            "required": [
+              "field",
+              "state",
+              "validation"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "values",
+        "documentValidation",
+        "validation",
+        "fields"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

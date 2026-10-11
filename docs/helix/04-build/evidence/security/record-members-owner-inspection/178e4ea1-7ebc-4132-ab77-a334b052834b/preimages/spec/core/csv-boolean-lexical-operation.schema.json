@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:csv-boolean-lexical-operation:1.0.0",
+  "title": "Explicit finite CSV Boolean lexical conversion receipt",
+  "type": "object",
+  "properties": {
+    "operation": {
+      "const": "validate-csv-boolean-lexical"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "boolean": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "boolean"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "const": "unverified"
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "source",
+    "request",
+    "value",
+    "validation",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "request": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.csv-boolean-lexical/1.0.0"
+        },
+        "field": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "module",
+            "element"
+          ],
+          "additionalProperties": false
+        },
+        "token": {
+          "enum": [
+            "true",
+            "false",
+            "True",
+            "False"
+          ]
+        },
+        "sourceContext": {}
+      },
+      "required": [
+        "profile",
+        "field",
+        "token",
+        "sourceContext"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

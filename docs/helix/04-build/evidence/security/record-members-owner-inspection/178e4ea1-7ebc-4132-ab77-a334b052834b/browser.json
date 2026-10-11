@@ -1,0 +1,153 @@
+{
+  "browserVersion": "153.0.8010.12",
+  "rows": [
+    {
+      "id": "absent-is-missing",
+      "passed": true
+    },
+    {
+      "id": "empty-is-explicit-known",
+      "passed": true
+    },
+    {
+      "id": "known-qualified-members",
+      "passed": true
+    },
+    {
+      "id": "exact-source-context",
+      "passed": true
+    },
+    {
+      "id": "unknown-qualifier-is-partial",
+      "passed": true
+    },
+    {
+      "id": "input-copy-isolation",
+      "passed": true
+    },
+    {
+      "id": "output-copy-isolation",
+      "passed": true
+    },
+    {
+      "id": "nonrecord-field",
+      "passed": true
+    },
+    {
+      "id": "nonrecord-group",
+      "passed": true
+    },
+    {
+      "id": "nonrecord-future-role",
+      "passed": true
+    },
+    {
+      "id": "nonrecord-undefined",
+      "passed": true
+    },
+    {
+      "id": "cross-module-member-retained",
+      "passed": true
+    },
+    {
+      "id": "member-order-retained",
+      "passed": true
+    },
+    {
+      "id": "missing-field",
+      "passed": true
+    },
+    {
+      "id": "nonfield-member",
+      "passed": true
+    },
+    {
+      "id": "duplicate-member",
+      "passed": true
+    },
+    {
+      "id": "semantic-duplicate-with-distinct-qualifiers",
+      "passed": true
+    },
+    {
+      "id": "nonrecord-members",
+      "passed": true
+    },
+    {
+      "id": "multiple-record-owners",
+      "passed": true
+    },
+    {
+      "id": "unsupported-0.6.0",
+      "passed": true
+    },
+    {
+      "id": "unsupported-0.8.0",
+      "passed": true
+    },
+    {
+      "id": "unsupported-future",
+      "passed": true
+    },
+    {
+      "id": "bad-identity-null",
+      "passed": true
+    },
+    {
+      "id": "bad-identity-[]",
+      "passed": true
+    },
+    {
+      "id": "bad-identity-{}",
+      "passed": true
+    },
+    {
+      "id": "bad-identity-{\"module\":\"m\",\"element\":\"\"}",
+      "passed": true
+    },
+    {
+      "id": "bad-identity-{\"module\":\"m\",\"element\":\"r\",\"extra\":true}",
+      "passed": true
+    },
+    {
+      "id": "missing-qualified-owner",
+      "passed": true
+    },
+    {
+      "id": "getter-refused",
+      "passed": true
+    },
+    {
+      "id": "getter-not-invoked",
+      "passed": true
+    },
+    {
+      "id": "closed-result-positive",
+      "passed": true
+    },
+    {
+      "id": "closed-result-known-with-unknown-paths",
+      "passed": true
+    },
+    {
+      "id": "closed-result-partial-without-unknown-paths",
+      "passed": true
+    },
+    {
+      "id": "closed-result-missing-with-members",
+      "passed": true
+    },
+    {
+      "id": "closed-result-extra-authority",
+      "passed": true
+    },
+    {
+      "id": "closed-result-invented-provenance",
+      "passed": true
+    },
+    {
+      "id": "closed-result-future-version",
+      "passed": true
+    }
+  ]
+}
