@@ -1,0 +1,28 @@
+{
+  "sourceSha256": {
+    "docs/helix/04-build/evidence/source-epoch-layout-0.16.owner-export.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f",
+    "packages/postgresql/native/issued-operation-admission/operation-admission.sql": "4b72ebf3727b9c887befce0280256f73587857fcae5fb363af0917b816b1e335",
+    "packages/postgresql/native/issued-operation-admission/operation-asserted-origin-admission.sql": "4eb696139c90da5aae36d889f7bb46964f6ecb7b883f250cea1d7f90038cea8c",
+    "packages/postgresql/native/issued-operation-admission/operation-epoch-context-admission.sql": "7cd28926d2dc34a81ef1ed35b44031e70f0e2bc9c2446e2fd7c52930cb6ccd95",
+    "packages/postgresql/native/issued-operation-admission/operation-configuration-context-admission.sql": "aed1fde52b149f6e973c289d0917d1442dd4059d2a0a6e1031bcc06de050c529",
+    "packages/postgresql/native/source-epoch-lock.sql": "e811a3656a45e941d588ca21b97ab524b789948d08585288e44b158b060d73cc",
+    "docs/helix/04-build/evidence/operation-configuration-storage.owner-export.sql": "55448d0e9b979ab62f48099e6c317e19ebe40ce5ff9c90472209deff8a618e3a",
+    "packages/python/src/truss/_installed_admission_inventory.py": "7d925a5bc7c70a66f86e47f5bf75025be263189d9799bdf4e2f065495faa1f67",
+    "docs/helix/04-build/evidence/design-audit/check_installed_admission_role_paths_native.py": "d4d1b6d8a8f0056dc2b30521e158018c0af7b216a7c91f67c3774bbf697029e6",
+    "packages/python/src/truss/_inventory_sql/routine-acl.sql": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e",
+    "packages/python/src/truss/_inventory_sql/namespace-acl.sql": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17",
+    "packages/python/src/truss/_inventory_sql/relation-acl.sql": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb",
+    "packages/python/src/truss/_inventory_sql/column-acl.sql": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd",
+    "packages/python/src/truss/_inventory_sql/manifest.json": "3544d094ff90df4b6966414cfd203db607ae347dd2a4923dc72c92758188f890",
+    "packages/python/src/truss/_inventory_sql/dependency.sql": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74",
+    "docs/helix/04-build/evidence/design-audit/bootstrap-routine-acl-observation.owner-export.sql": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e",
+    "docs/helix/04-build/evidence/design-audit/bootstrap-relation-acl-observation.owner-export.sql": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb",
+    "docs/helix/04-build/evidence/design-audit/bootstrap-column-acl-observation.owner-export.sql": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd",
+    "docs/helix/04-build/evidence/design-audit/bootstrap-namespace-acl-observation.owner-export.sql": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17",
+    "docs/helix/04-build/evidence/design-audit/bootstrap-dependency-observation.owner-export.sql": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74"
+  },
+  "argv": [
+    "docs/helix/04-build/evidence/design-audit/check_installed_admission_role_paths_native.py",
+    "installed-role-paths-merged-native.json"
+  ]
+}

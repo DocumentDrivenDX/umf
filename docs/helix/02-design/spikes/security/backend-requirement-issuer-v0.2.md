@@ -229,3 +229,178 @@ An independent Not(Equal(distinct operands)) ledger passes10visits and
 condition-child and disclosure positions are zero-based. The previous130 receipt
 is archived. Formal negative controls explicitly erase index, namespace or source
 coordinates; they do not claim Rust refinement or structural completeness.
+
+
+### Conditional typed template expansion checkpoint
+
+Weft's private requirement-templates0.1 issuer now expands explicit independently
+authored template contracts into required-instances0.2 from all18 owner event
+categories and exact structural Rule effect/condition/operand/disposition variants.
+It retains source/scope/address identities, full case atoms and shared origins;
+semantic same-selector templates remain globally mandatory. Selected deployment
+templates are assigned per capability, including zero-edge selections, and must
+cover the complete declared profile case inventory for every authored capability.
+Prerequisites are explicit bounded same-selector/same-occurrence DAGs. No expected
+contract is authored from the manifest obligations being checked.
+
+This is a conditional template expansion implementation. Complete original backend
+case sets and all payload-specific domain/operator/transform/backend applicability
+are not established by the supplied fixture catalog. Authentication, exact native
+qualification and public physical admission remain open. Cross-target prerequisite
+instantiation is unsupported. Template expansion and rule enumeration have separate
+phase-local bounds; no aggregate CPU/allocator guarantee follows. The full132-case
+acceptance plan and historical26/132 remain unchanged.
+
+
+Fresh release workspace evidence passes569 tests in44 groups (core226), including
+nine issuer controls. Independently authored fixture originals and full source
+keys verify false-rule/withheld expansion, shared contracts/all origins, zero-edge
+deployment duties, codec/privacy fragment refusal, exact registration/site/failure/
+prerequisite comparison and isolated aggregate4096/4097 links. Independent small
+retention ledgers and their minus-one refusals pass. Astra independently audits
+all828 prefrozen repository inputs, terminal counts and full retained log hash;
+no remaining findings within the qualified subset. These are compiler component
+controls, not execution of the original132 backend cases or formal Rust refinement.
+
+
+### Original required-case catalog binding
+
+The private Weft catalog reader retains the exact original132-case plan byte
+snapshot under a separately trusted digest and backend/registration association.
+It checks the full12+4x30 ID closure before selecting42 original records for one
+backend. Catalog-bound template issuance requires all42 profile case IDs and the
+exact bounded registered-source hash. Original assertion text/IDs (including
+S10:disclosure), ordered command/source metadata, null evidence/procedures and
+counterexample status remain in the retained records. These are required pending
+cases; the compiler executes no command and grants no native admission.
+
+This removes arbitrary two-case fixture inventories from the catalog-bound path,
+without changing the existing private trusted-case experiment. Complete backend
+kind/applicability/assertion sufficiency, authenticated issuer selection, actual
+procedure/source/current installation qualification and runtime authority remain
+open. Expected hashes/backend association are explicit trusted premises, not an
+authentication mechanism. Test template-to-case mappings are synthetic. Full132
+acceptance and historical26/132 remain unchanged.
+
+The catalog binding checkpoint is merged directly into Weft main at `f7a682e27db5d3530678bea3312a5ea2211d4f28`: 573 workspace tests /44 groups, 230 core, 833 unchanged declared inputs, and an independent Astra ultra receipt audit. Retained evidence: [checkpoint](../../../04-build/evidence/security/weft-case-catalog/checkpoint.json). This component result does not promote any original native acceptance case.
+
+### Explicit deployment duty catalog candidate
+
+The next private compiler boundary introduces `weft.security.deployment-duty-catalog/0.1.0`
+as an explicitly authored qualification interface, replacing the prior fixture's
+single Selected42-case catch-all with42 original duties. Each retains its own kind,
+Host/host or Backend/native owner/site, common qualification-required refusal,
+single full original case record and exact prerequisite templates. Twelve semantic
+verifiers and B12 receipt custody are Host/host; the other29 are Backend/native.
+All four backend homes retain separate template IDs and case/procedure evidence.
+Identical original suffix assertion text justifies shared interfaces, not shared
+physical enforcement. The manual42-row golden mapping is independently checked
+against the code. The candidate has81 same-Selected-occurrence dependency edges,
+no cycles/missing nodes, and maximum dependency depth9.
+
+A stricter private factory first verifies bounded original registration/case
+correspondence, then applies existing charged profile preflight before checking
+all42 exact duty tuples and assignments through the same issuer ledger. Every
+authored capability retains all42, including unchosen and zero-edge capabilities.
+Contract substitution and catch-all weakening refuse even where manifest and
+profile agree and weaker original instance matching succeeds. Strict factory
+provenance survives in the distinct private DeploymentIssued type and candidate
+version; a weaker CatalogIssued cannot stand in for it.
+
+The42 fixed record copies reserve512 text bytes each before construction; actual
+maximum retained authored text is264 bytes for delta-raw.B01. Template counting,
+comparisons and per-capability membership lookups consume visits. A one-capability
+42-template catalog has independently counted169 visits/21504 reserved text;
+exact/minus-one tests isolate that phase. These are copied-text/visit bounds,
+not allocator or aggregate process guarantees. No incoming Selected-ID comparison
+map is allocated before charged validation.
+
+This authors deployment qualification mappings only. Typed field/domain/transform/
+operator/backend semantic applicability, authenticated registry selection,
+procedure assertion adequacy, native implementations and current enforcement
+still remain required. Proposed dependency edges constrain composition and do not
+prove any test sufficient. Original assertions, including S10:disclosure, remain
+unaltered and pending. The strict result does not emit SQL, activate a public
+transport or promote any of132 acceptance cases. The full goal remains active.
+
+The candidate-duty checkpoint is merged directly into Weft main at `60e82559941ff124fa38e248adb49af4f0a77a18`. [Retained evidence](../../../04-build/evidence/security/weft-deployment-catalog/checkpoint.json) records578 workspace tests/44 groups,235 core,837 unchanged declared inputs and an independent Astra ultra source/receipt audit. This does not promote any original acceptance case.
+
+
+#### Typed payload applicability candidate — template0.2
+
+The next Weft private issuer revision dispatches mandatory duties from actual
+borrowed field/key/query/association payloads, preserving source/scope/occurrence
+identities. The subset distinguishes scalar families, carrier nullability, facet
+family presence, protection, key primary absent/false/true, ordered members,
+operator kind/mode, exact descriptor availability and typed output families,
+nullability and facets. Association endpoint/member positions remain separate
+occurrences. The original full payloads remain attached to the owner; source
+token parsing and payload JSON cloning are not used for dispatch. Template0.1
+retains its earlier weaker behavior and rejects payload selectors.
+
+Independent golden source/address/scope expectations cover repeated outputs; each
+applicable selector and origin omission refuses. Additional actual-owner controls
+cover Context/Stored roles, two scans/actions, disclosed/original-authorized
+operators and ordered endpoint/member occurrences. Authentic resolved source-plan
+extraction distinguishes COUNT/SUM and absent-allowed Field output typing. An
+otherwise identical complete direct-original result contract succeeds for a
+required Field and refuses for an absent-allowed Field. This is a result-declaration
+boundary, not a blanket optional-source or owner-context refusal. No aggregate or
+optional-original result admission is established.
+
+These are bounded component applicability checks, not formal Rust/native refinement
+or complete semantic compatibility. Facet numeric values, allowed-value members,
+constant/transform domains/literals/revisions and endpoint direction remain intact
+but not qualified by these selectors. Authenticated complete profile selection,
+physical capability selection, original assertion/procedure adequacy and native
+backend execution remain open. DeploymentIssued continues to denote only the
+strict deployment-catalog gate, not payload/native admission. All132 original
+acceptance cases remain binding; historical required acceptance stays26/132.
+
+The candidate is merged directly into Weft main at
+`c6d8c531b9a467aaabeaf8daf6ae6e6ad3735f72`. The
+[retained checkpoint](../../../04-build/evidence/security/weft-payload-applicability/checkpoint.json)
+records584 workspace tests/44 groups,241 core,840 unchanged input pins and
+independent Astra ultra review. The
+[integration receipt](../../../04-build/evidence/security/weft-payload-applicability/integration.json)
+keeps the Weft source-pin namespace explicit. No original acceptance case is
+promoted.
+
+
+#### Rule domain/literal verification demand candidate — template0.3
+
+The next private Weft template experiment extends typed payload dispatch to the
+actual borrowed RulePayload domains and literals. Field/Context/Constant operands
+and constant0.1.0 output domains produce mandatory role/scalar/nullability/facet
+family duties; constants/transforms produce scalar-wrapper-family and typed
+absence/nonabsence duties. Unknown transform names/revisions and unsupported
+selected wrapper shapes refuse. Identity/Endpoint terms retain the existing
+structural and actual key obligations. Earlier0.1/0.2 template semantics remain
+unchanged and reject rule-only selectors.
+
+Each exact RulePath is framed beneath rule-payload with its specific payload
+address. Both Equal sides, populated false branches and repeated transform output
+values at separate disclosure positions remain distinct verification demands.
+The original source/type admission still rejects duplicate disclosed target Fields
+in one rule; the admitted golden uses distinct target Fields with identical output
+Field/domain/value. A direct repeated-target primitive control tests framing only
+and cannot widen source admission. Original immutable domain/literal values remain
+in owner custody; the visitor neither clones payload JSON nor renormalizes values.
+
+These are duty-extraction checks. A scalar/facet family or absent/nonabsent marker
+is not exact numeric-value equality, physical representability or native semantic
+qualification. Source admission retains responsibility for exact scalar interpretation
+and refinements; future backend verification must discharge those original duties
+against complete native/profile evidence. Existing conditional requirement-matching
+laws do not establish Rust/database refinement. Complete authenticated profile
+selection, native enforcement, assertion/procedure sufficiency and all132 required
+acceptance obligations remain open. Historical acceptance stays26/132.
+
+The template0.3 candidate is merged directly into Weft main at
+`5120c54f76acbd17e2ac0a6a53721fdd16a4d274`. The
+[retained checkpoint](../../../04-build/evidence/security/weft-rule-payload/checkpoint.json)
+records588 workspace tests/44 groups,245 core,842 unchanged input pins and
+independent Astra ultra source/receipt review. The
+[integration receipt](../../../04-build/evidence/security/weft-rule-payload/integration.json)
+preserves the explicit Weft source-pin namespace. All original acceptance
+qualifications remain unchanged.

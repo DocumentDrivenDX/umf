@@ -1,0 +1,20 @@
+{
+  "reviewer": "Astra ultra",
+  "mode": "read-only",
+  "status": "no actionable findings within conditional scope",
+  "proofSha256": "3878382465d5121ecd9ac1e7a83a901c24e84a6a376627e1219b9cde643c18d7",
+  "smtQueriesIndependentlyReplayed": 6,
+  "unsat": 3,
+  "sat": 3,
+  "actualTailVectorsReproduced": 64,
+  "nativeTailReplaysReproduced": 38,
+  "proofPinsVerified": 27,
+  "nativePinsVerified": 21,
+  "integrationFileHashesVerified": 30,
+  "nativeExecutedByReviewer": false,
+  "acceptancePromoted": false,
+  "limitations": [
+    "SQL completeness and privilege facts remain premises",
+    "Coherent capture and protected admission unresolved"
+  ]
+}

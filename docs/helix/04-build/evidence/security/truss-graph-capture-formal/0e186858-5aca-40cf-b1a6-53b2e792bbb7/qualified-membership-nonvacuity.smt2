@@ -1,0 +1,17 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-sort Project 0)
+(declare-sort Staff 0)
+(declare-sort Resource 0)
+(declare-fun active (Staff Project) Bool)
+(declare-fun subject () Staff)
+(declare-fun assignment (Staff Project) Bool)
+(declare-fun ownership (Resource Project) Bool)
+(declare-fun resource () Resource)
+(assert
+ (exists ((project0 Project) (project1 Project) )(let (($x18 (active subject project1)))
+(let (($x19 (assignment subject project1)))
+(let (($x20 (ownership resource project0)))
+(and $x20 $x19 $x18 (= project0 project1))))))
+)
+(check-sat)

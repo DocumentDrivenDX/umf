@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "producerSha256": "28adebdb6b99f1a49acd8a97b042258953949017d4c604b9cea167baa17a8d95",
+  "controls": [
+    {
+      "id": "wrong-root",
+      "exitCode": 1,
+      "stderr": "Exact root producer invocation required\n",
+      "accepted": false
+    },
+    {
+      "id": "unexpected-argument",
+      "exitCode": 1,
+      "stderr": "Exact root producer invocation required\n",
+      "accepted": false
+    }
+  ]
+}

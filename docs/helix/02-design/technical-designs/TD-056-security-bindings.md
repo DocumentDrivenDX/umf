@@ -981,3 +981,524 @@ translating the same assertions for generation; universal safety and expected
 results are unchanged. The 60-group component run passes, and retained-formula
 audit passes 563 formulas across 32 receipts using Z3 4.15.4. This is parser/solver
 agreement under the recorded premises, not generator/native refinement.
+
+
+## Native fixed graph membership on original layout 0.16 — 2026-10-10
+
+`tools/security/truss-native-membership-probe.py` installs the complete, unchanged
+59,119-byte Truss `source-epoch-layout-0.16.owner-export.sql`, SHA256
+`dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f`,
+in a disposable PostgreSQL17.9 fixture. The retained local copy is
+`tests/security/native/truss-layout-source-epoch-0.16.sql`; it must equal the
+original owner export before acquisition. This replaces synthetic *table layout*
+in this experiment, not synthetic model allocation or accepted consumer data.
+The original schema comment remains review-only and unqualified.
+
+The fixed overlay uses native `object` and `edge` tables. Complete `(id,type_id)`
+identities and relationship IDs are mandatory in the hidden membership join.
+One active Staff assignment to any owning Project grants the Resource; a sibling
+Project sharing the same Client and ownerless Resources grant nothing.
+`SESSION_USER` binds the original authenticated actor inside fixed definer
+functions. Ordinary SCRAM actors can read RLS-filtered storage identities and a
+restricted ID/value projection. Column grants deny bag and retained bytes;
+edge reads, mutation and transition to the excluded NOLOGIN table owner deny.
+The excluded owner bypasses its own non-FORCE RLS to read hidden authorization
+facts; no ordinary membership or callable owner-role transition is granted.
+
+This mapping deliberately fixes types1–4, relationships11–15 and JSON property
+IDs101/102/201/301/999. It does not use accepted UMF documents, registered property
+definitions, canonical key buckets or a Weft compiler artifact. Direct fixture
+insertion satisfies native definition-source tuple constraints using the
+`accepted_document` enum, but the document carries an explicit unqualified
+fixture and `not-admitted-synthetic-fixture` validation status. Its content hash
+is actual; these rows are **not** evidence of Truss schema acceptance. Excluded
+installer-inserted overlapping numeric IDs exercise defensive typed identity;
+they are not admitted normal Truss allocation populations. No installation
+marker, issuer, seven native semantic bodies or publication path is qualified.
+
+The first checkpoint [native receipt](../../04-build/evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
+retains110 observations and51 transcripts against the independently authored raw
+membership oracle. All six input pins remain unchanged, including original DDL,
+overlay, runner, oracle and original case inventory. Separate active-assignment,
+ownership-relationship and assignment-relationship guard erasures expose exact
+independent expected rows; each is restored for all actors. Root-type erasure
+exposes other native object types, and restored direct RLS checks retain only
+Resource type3. Reversed endpoint roles fail the actual native endpoint foreign
+key, after proving both endpoint objects exist and the tuple cannot collide with
+`edge_out`. Three invalid invocation controls refuse before Docker acquisition.
+
+All preceding attempts retain start pins, exact executable/DDL/overlay preimages
+and seed SQL. Three development failures and three superseded passing receipts
+are historical. The failed FK attempt did not retain its decisive native stderr;
+only the corrected final control qualifies that observation. This is native
+fixed-policy evidence for US-056-AC2/AC5, not a formal SQL/Rust refinement proof
+or a complete BindingReceipt under CONTRACT-063. Missing/ambiguous Staff
+refusal, authenticated complete source/cut, general disclosure, current-authority
+drain and arbitrary diagnostics remain open. All original132 required cases
+remain binding; historical acceptance stays26/132 and truss.B01 remains not-run.
+
+Next integration must replace synthetic field/key allocation with original
+accepted model/property/key custody, feed the original Weft artifact through
+Truss-owned lowering, and qualify the complete protected path. This overlay is
+an experimental physical witness and cannot become a second policy compiler.
+
+Astra ultra independently audited the final source pins, retained native outputs,
+independent oracle and invocation receipts, finding no remaining blocker in this
+fixed mapping scope. The [read-only audit](../../04-build/evidence/security/truss-native-membership/astra-review.json)
+does not claim an independent native rerun.
+
+
+### Native unique Staff binding and mandatory preflight checkpoint
+
+CONTRACT-062 requires missing/ambiguous authenticated Staff mapping to refuse,
+rather than choosing one witness or treating unknown identity as false. The
+fixed graph overlay now resolves a private exact-type1 Staff binding using
+`SESSION_USER`, a JSON string guard, and native `count(*)`/`min(id)`. It returns
+an ID only for exactly one match, otherwise a uniform42501 principal-binding
+refusal. Both eligibility and the public fixed projection call it before their
+own evaluation. Projection preflight runs before Resource iteration, including
+zero native Resources. The helper has no ordinary EXECUTE grant; its excluded
+NOLOGIN definer owner remains the fixed experiment's private fact reader.
+
+The synthetic fixture adds an authentication-only outsider Staff with no
+Assignment facts; the independently authored oracle's authorized rows stay
+unchanged. Ordinary actor `true` is a separate typing control: Boolean JSON
+`true` must not bind the login, while string JSON `"true"` produces a valid empty
+result. This is a source-qualified fixed property mapping, not registered core
+Field decoding, authentic attribute issuance or accepted model/key allocation.
+
+The new [native receipt](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/native.json)
+retains217 observations at six unchanged input pins. Missing and ambiguous Staff
+bindings refuse evaluated projection/count calls both with Resource rows and
+with no Resources. Complete actor restores, foreign-type matching login, private
+helper denial and typed-login controls pass. Removing unique cardinality admits
+ambiguous Alice; removing only projection preflight converts missing binding
+with zero Resources into successful empty/count-zero. Each guard is restored.
+Three fresh exact-invocation controls pass against this final executable.
+The earlier110/191/206 checkpoints qualify their captured earlier sources only.
+
+PostgreSQL can avoid calling the function for outer `WHERE false` or `LIMIT 0`.
+Those evaluated SQL statements yield no output but do **not** demonstrate
+principal preflight or an admitted protected operation. Arbitrary caller SQL,
+complete source/fact coverage, general authenticated binding, current-authority
+and final-publication closure remain unqualified. Uniform tested error messages
+are not arbitrary-diagnostics noninterference. No full Truss case is promoted.
+
+[Four conditional formal laws](../../04-build/evidence/security/graph-principal-formal/c3f36651-19b6-4c93-8072-6d9b1b3171a7/proof.json)
+retain12 pre-solve formulas with UNSAT safety, SAT population and SAT weakened
+control for each law. The count/min selection law assumes three distinct int64
+Staff IDs and complete exactly typed match/eligibility predicates; separate
+refusal/preflight laws admit arbitrary nonnegative cardinalities. JSON string-tag
+necessity is a conditional decoding law. All12 formulas replay with Z3 4.15.4.
+The explicit model relates to native controls by human source review, not an
+automatic translation or SQL/Rust refinement proof. Native source authentication,
+accepted property/key decoding, completeness and current-cut ordering remain
+premises awaiting backend implementation/evidence. Original132 required cases
+remain binding and historical acceptance remains26/132.
+
+The principal-binding count/preflight formulas are explicit guard-definition
+sanity checks; they do not independently model publication or prove SQL ordering.
+The final cardinality-erasure control retains JSON string typing. Earlier217
+and formal source snapshots remain historical rather than repinned.
+
+The [Astra ultra final read-only review](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/astra-review.json)
+verified all current native/formal source pins and independently replayed12
+formulas, finding no remaining issue in this fixed-fixture scope. It did not
+execute a native rerun or promote acceptance.
+
+
+## Installed role-route refusal and its source-derived laws
+
+Direct effective table privileges and role membership are distinct physical
+observations. In the selected PG16.15 Truss invoker profile, every distinct native
+SET-capable or ADMIN-capable role is forbidden; INHERIT FALSE cannot hide that
+route. A matching expected inventory cannot override this fixed deny rule.
+Mere membership without INHERIT, SET or ADMIN may match a fresh scoped baseline.
+Ordinary self-SET is not a distinct transition and does not alone cause refusal.
+
+The [actual merged component and native evidence](../../04-build/evidence/security/truss-installed-role-paths/integration.json)
+and [source-derived guard laws](../../04-build/evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/proof.json)
+separate the three layers: the normative route prohibition, the exact Python
+predicate/fold/terminal behavior, and native PG16.15 SET/ADMIN effect witnesses.
+The pure guard is extracted from the exact archived owner source, with32 complete
+Boolean/identity vectors checking translation and11 SMT queries checking safety,
+realizable populations and isolated guard erasures. Formula bytes are hashed and
+rechecked before publication, then independently replayable.
+
+Complete faithful immutable native role rows and their current authority are
+premises, not outputs of packet shape validation or the SMT analysis. The finite
+fold abstraction does not prove collection completeness, Python ingress/resource
+bounds, native role graph semantics, atomic installation or temporal freshness.
+Local native socket actors do not qualify production authentication. This adds
+component evidence for US-056-AC5/AC9/AC10; it does not admit a graph backend or
+replace the original caller/owner/authority handoff and seven operation bodies.
+
+
+### Truss SCRAM authentication and session lifetime — 2026-10-10
+
+[Direct-main integration evidence](../../04-build/evidence/security/truss-scram-authentication/integration.json) records Truss main
+`bb5eb75a018e068c281c565ae49e9a50825ee400`. The separately installed combined wheel matches53 source,
+owner-asset and typing files, passes328 tests and212 Python boundary imports.
+The original PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 Unix-socket SCRAM fixture passes82 observations across31 inventories,
+with21 frozen source/preimage pins. Native authentication log entries bind the
+ordinary role and SCRAM method to its backend PID. Wrong credentials and missing
+roles refuse28P01. NOLOGIN changes inventory qualification and refuses new
+sessions28000, but two established authenticated sessions remain usable.
+Restoring LOGIN allows a fresh connection. Thus authentication establishes a
+connection identity; login permission alone cannot revoke current operation
+authority or retire existing sessions. Protected admission must independently
+establish current authority at its coherent cut.
+
+Four failure controls cover receipt/stderr secret redaction, an unwritable receipt
+sink, continued connection cleanup and cluster cleanup after failures. Astra ultra
+feedback was applied and the captured helper bytes execute directly. The final
+read-only review verifies current pins and preserves the qualification boundary.
+Historical Truss development evidence retains its original source hashes.
+
+This supplies component evidence for US-056-AC5/AC9/AC10. It does not prove
+production/TLS authentication, native protected ontology mapping, complete
+collection/current cuts, PA01/PA02 completion, seven semantic operation bodies
+or complete backend acceptance. Historical acceptance remains26/132; every
+original required case remains governed by the existing plan and the goal stays
+active. No source-derived formal theorem gains native/temporal premises merely
+from this fixture's success.
+
+
+### Native elevation routes outside the registered namespace — 2026-10-10
+
+[Verified direct-main integration](../../04-build/evidence/security/truss-definer-routes/integration.json) records Truss
+`71ba19f8373657cca34085250819220efd5ea79c`. The fixed invoker observer now requires a twelfth census
+section enumerating native EXECUTE-accessible SECURITY DEFINER routines across
+all schemas. Schema USAGE is retained independently and cannot filter the census.
+Any nonempty census refuses even against an identical unsafe baseline; legacy
+eleven-section packets refuse. This is a conservative profile-specific rule.
+Protected registered definer chains require a distinct admitted profile; UMF
+logical semantics do not prohibit all definers.
+
+The PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 SCRAM fixture passes97 observations across35 inventories with21 frozen
+inputs. An ordinary session with no direct UPDATE right invokes an external
+PUBLIC-executable definer owned by a distinct nonlogin role. The actual committed
+row UPDATE changes xmin, independently observed, while logical revision remains
+unchanged. Original and matching unsafe baselines refuse. Revoking EXECUTE removes
+the route; revoking only schema USAGE retains and refuses it. Native prepared-call
+revalidation in this fixed fixture returns42501 with unchanged xmin; it does not
+demonstrate a surviving write or prove behavior of every retained statement.
+
+Astra identified and verified fixes for the schema-USAGE filter and replayed
+packet budgets skipping empty final-section columns. Exact80164-unit budget
+passes;80163 and80076 refuse. Native final-section row overflow refuses. The
+separately installed wheel matches53 source/owner/typing files and passes334
+tests; Python boundary checks pass212 imports. Exact source/preimage, test,
+wheel/log/native digests and the read-only Astra review are retained. Owner
+historical attempts preserve earlier pins and two rejected prepared-call
+predictions instead of being repinned to the final producer.
+
+This advances US-056-AC5/AC9/AC10 and Truss PA01/PA02 component evidence.
+It is not complete installed call closure: operator/type/extension routes,
+trigger/default/RLS paths, indirect resolution, protected capture, current
+authority cuts and seven semantic operation bodies remain unqualified. Earlier
+source-derived role proofs retain their historical source scope; no fresh
+whole-program, SQL or temporal refinement proof follows. No original required
+case is promoted; acceptance remains26/132 and the full goal remains active.
+
+
+### Operator-backed hidden definer and source-derived guard laws — 2026-10-10
+
+[Native integration](../../04-build/evidence/security/truss-operator-routes/integration.json) records Truss main
+`f48975262c74317940329c4f70bd193db81b68fa`. A native operator invokes a SECURITY DEFINER
+implementation in a distinct function schema to which the ordinary caller has
+no USAGE. The caller also lacks direct UPDATE, but the operator commits a row
+UPDATE whose changed xmin is independently observed. The merged census retains
+that hidden function and refuses an identical unsafe baseline. Revoking function
+EXECUTE then returns42501 with unchanged xmin; scoped correspondence and operator
+removal restore the baseline. The proposed EXECUTE-ignoring operator bypass was
+not observed. No thirteenth inventory section or new permission semantics is
+introduced: this validates an actual route covered by the existing conservative
+function census.
+
+The fixed PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 SCRAM fixture passes107 observations across38 inventories with21 frozen
+inputs. The unchanged separately installed53-source wheel passes336 tests,
+including original-native operator packet regressions. The read-only Astra review
+verifies the native source/preimage and wheel pins. Library source remains the
+reviewed71ba19f8 implementation; no unchanged owner build is attributed as new
+implementation.
+
+[Source-derived analysis](../../04-build/evidence/security/truss-definer-census-formal/cfa978ae-c2c9-4fef-b244-4495aab10da9/proof.json) recognizes the complete exact
+census SQL subset and extracts the actual final three Python classifier
+statements. Three UNSAT violation queries show the selected hidden executable
+definer cannot be filtered by schema access, a nonempty census cannot match and
+an earlier refusal cannot clear. Three SAT controls populate a safe empty
+profile, the hidden operator witness and a namespace-filter-erasure leak. All six
+SMT byte digests replay independently. Sixty-four Boolean vectors execute the
+extracted actual tail;38 original native inventory tail replays preserve refusal
+when the census is nonempty. The role-route fold is retained, without replacing
+the full classifier with a handwritten policy implementation.
+
+Complete faithful immutable native rows and effective privilege facts are explicit
+analysis premises. This is a recognized-filter and pure-tail proof, not native SQL
+semantics, full Python ingress/admission, authenticated producer, dependency
+closure, temporal-cut or protected-publication refinement. Operator
+support/selectivity/planner, type/extension and trigger/default/RLS paths remain
+required. The actual protected capture/writer protocol and seven semantic bodies
+remain open. This augments US-056-AC5/AC9/AC10 component evidence without
+promoting any original requirement. Full acceptance remains26/132 and the goal
+stays active.
+
+
+### Protected caller capture: post-elevation information loss — 2026-10-10
+
+[Native observability evidence](../../04-build/evidence/security/truss-capture-observability/533c90f6-3dbe-4d7d-ae83-484617149b4a/native.json) passes10
+observations on PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5. In one physical connection and transaction, direct and unregistered
+wrapper paths enter the same privileged function. Their original effective actors
+differ; the nine post-elevation fields are identical: session person, effective
+writer owner, role setting, database, backend PID, xid, session-role OID, writer
+role OID and entry-routine OID. The wrapper explicitly captures its actor in
+PLpgSQL before entering the writer; direct host capture precedes its native call.
+This avoids relying on SQL target-expression evaluation order.
+
+[Formal equal-input analysis](../../04-build/evidence/security/truss-capture-observability-formal/4b3dbd6b-1c44-49f6-8480-0e84fd4c6a69/proof.json) retains two
+UNSAT separation attempts for arbitrary deterministic decisions over that exact
+tuple, including equal extra state. A SAT population shows that adding a distinct
+trusted pre-entry actor can distinguish the paths. This does not authenticate an
+added caller label or implement capture. The formulas do not prove all PostgreSQL
+protocols impossible: unequal history/nonce/state, trusted host original-call
+custody, native frame/stack evidence and additional provenance remain outside
+the equal-input premise. No HMAC/signature primitive is implemented or proved.
+
+PA02's protected realization therefore must name the independently trusted
+pre-elevation provenance or qualified original-call restriction that enforces
+the registered chain. Sealing only these post-elevation fields cannot recover
+the missing actor; same-entry OID/xid/PID binding alone cannot classify these
+paths. One-use custody must remain, but refusing a second invocation is distinct
+from establishing the original caller of a first invocation. The accepted trusted
+embedding host can supply original call facts under Truss ADR-008 only through
+qualified exclusive physical-connection custody and protected carriers. Native
+SQL arguments do not themselves authenticate Python object identity. Preserve
+the existing invoker elevation guard; neither writer-owner substitution nor
+caller-supplied JSON/GUC fields is an implementation shortcut.
+
+Required protocol tests now include this collision witness, independently
+authenticated pre-entry capture, a forged added actor, copied public context,
+first-use submission through a different wrapper, same/different native attempt,
+transaction and connection, and native plus trusted-host one-use custody across
+savepoint rollback. Original PA-N01–PA-N12 and all132 required cases remain
+required; this supplies US-056-AC5/AC9/AC10 design evidence only. The fixture
+uses local trust actors and synthetic routine/role names, no actual Truss registry
+or business effects, and no authenticated subject/production capture qualification.
+PA02 and full backend acceptance remain open at26/132. Earlier cleanup failure
+and preliminary SQL-expression-order run retain their original sources; the
+final receipt alone qualifies the explicit capture order.
+
+
+### Trusted-host protected capture candidate — 2026-10-10
+
+The [native candidate receipt](../../04-build/evidence/security/truss-protected-capture-candidate/90e12409-3a54-466f-8184-2a54c961669d/native.json) retains23 matching observations on
+PostgreSQL16.15, corrected pgserver0.1.4+truss.pg16.15 and pg8000 1.31.5.
+Original source bytes, seven source pins and actual installed routine OIDs,
+owners, settings and complete definitions accompany the receipt. The earlier
+19-observation run and preliminary23 run remain historical; the final run
+adds same-transaction absence checks, original frozen AdmissionCustody execution
+and guaranteed sanitized failure reporting even if the receipt sink fails.
+Two retained subprocess controls exercise secret-bearing exceptions with writable
+and unwritable evidence sinks; both suppress secret text and exception chaining.
+
+This implements an isolated physical candidate for the PA02 prerequisite:
+an INVOKER query captures native person/actor OIDs, database, backend PID and
+xid before elevation. A separately privileged trusted registrar inserts a
+private random 32-byte capability bound to those facts, original attempt and
+exact synthetic payload. The fixed host dispatch invokes an INVOKER gate and
+DEFINER writer; the writer atomically consumes the matching capability before
+inserting the synthetic effect. Ordinary callers cannot read capabilities,
+write effects directly, create routines in the candidate schema, or inherit
+writer/registrar roles. The wrapper gate refuses elevated acting identities.
+The capability is never public context or included in retained evidence.
+
+Actual native negatives refuse forged/copied public context, a different
+connection (even with the private capability), another login route, attempt/input
+substitution, unregistered wrapper invocation and direct private access.
+The exact native positive effect is inspected in its original transaction.
+For this inspection only, the fixture administrator temporarily grants effect
+SELECT, immediately revokes it, and verifies the final prohibition. This is
+an administrative test observation, not an adopted ordinary read surface.
+
+Native same-transaction reuse refuses, but savepoint rollback restores the
+native capability's unused state. The producer independently demonstrates
+successful direct native replay after rollback and verifies its actual effect.
+The existing original Truss AdmissionCustody ticket refuses that resubmission
+and retains one fixed dispatch. Therefore the composed candidate requires
+trusted exclusive host dispatch and private carrier custody; its native table
+alone does not provide rollback-resistant one-use authorization. This is not
+a qualified SQL-only route or protection from a malicious same-credential host.
+A changed transaction also refuses the old capability.
+
+The adjacent acceptance-map.json ties all23 observations to original requirement
+IDs without marking a complete schedule passed. The adjacent astra-review.json
+retains independent review: all three harness findings were fixed and the final
+seven pins, installed definitions and failure controls were independently checked.
+
+This advances US-056-AC5/AC10 physical component evidence and PA-N03/04/05/09
+schedule development, without promoting them to complete acceptance cases.
+Local trust authentication, synthetic registrar inputs and the fixed actor
+profile do not establish production authenticated subject mapping, SET ROLE,
+current owner authority, generation/configuration checks, complete callable
+closure, resource admission or publication. PA01–PA04 and all seven Truss
+semantic bodies remain unfinished; the original132-case goal remains26/132.
+Next integration must replace synthetic registrar facts with the original
+owner authority/artifact and coherent-cut protocol, qualify installed closure
+and protect the carrier throughout the registered adapter. No public API or
+ordinary registry grants are added to Truss.
+
+
+### Native current-authority primitive and lock boundary — 2026-10-10
+
+The [final native receipt](../../04-build/evidence/security/truss-protected-capture-candidate/85d31486-2f88-48e5-b492-ec15b9d730f3/native.json) extends the protected capture candidate to39
+matching observations. Seven original source pins/preimages and six actual
+installed routine identities, owners, settings and complete bodies are retained.
+READ COMMITTED is independently observed and explicitly required by the writer.
+RR/Serializable refusal is currently source-reviewed, not natively exercised.
+The earlier23/33/38 schedules and their preimages remain historical evidence.
+
+A separate non-login authority responsibility owns a private, fixed single-actor
+row with permitted/generation fields. Only the writer can execute its private
+check helper. The helper locks the selected row FOR SHARE, then checks complete
+row presence, permission and exact captured generation before the writer inserts
+its synthetic effect. Ordinary authority SELECT/UPDATE/helper execution and
+revoker direct UPDATE refuse. The registered revoker routine updates the row;
+it is the selected native mutation route in this fixture, not a complete policy
+administration or ontology resolver interface.
+
+Actual revocation after capture refuses without effects. A separately issued
+capability matching the revoked generation independently isolates permission
+false; regrant advances the generation and the earlier capability remains stale.
+A fresh matching generation produces an independently inspected original effect.
+An independently submitted revoker times out with native55P03 while the writer
+retains the authority row lock; authority remains unchanged. After writer rollback,
+the same revoker succeeds and advances the generation. This is one bounded native
+row-lock schedule, not proof of complete writer participation, fair termination,
+deadlock freedom or final publication. PostgreSQL16's documented FOR SHARE
+conflicts and transaction/savepoint release rules govern this candidate:
+https://www.postgresql.org/docs/16/explicit-locking.html.
+
+[Formal guard analysis](../../04-build/evidence/security/truss-capture-authority-formal/19fe84d8-27c7-4bc7-b323-52ad9fe0223d/proof.json) saves eight independently replayable formulas:
+four UNSAT laws and four SAT positive/weakened controls. Positive generation
+integers are unbounded in the model. Exact authority-check and writer routine
+bodies are recognized, but SQL execution/FOUND/atomic exception behavior and
+complete faithful current authority are premises. The held-lock serialization
+law explicitly assumes revoker exclusion; it is not derived PostgreSQL semantics.
+The stale mutant requires captured<current; advancement requires next>current.
+Originally parsed native bytes are frozen, canonical invocation is required,
+and saved formula bytes are rechecked before publication. No SQL/Python/compiler
+refinement, ontology resolution or publication-drain theorem is asserted.
+
+The adjacent native acceptance-map.json links all39 observations to original
+US-056-AC5/AC9/AC10 and PA-N01/03/04/05/07/08/09/11 component schedules without
+claiming those complete schedules passed. The two sanitized failure controls
+remain passing; new UUID receipts use exclusive creation, preserving reruns.
+Astra review findings about independent permission evidence and proof source
+custody/directional controls were applied before final qualification.
+
+This supplies a current-authority physical primitive only. Production subject
+mapping, original ontology/policy/artifact admission, coherent complete source
+cuts, all authority mutation/callable dependencies, resource/family bindings,
+protected carrier lifecycle and final release remain required. Savepoint rollback
+releases the native authority lock and restores native capability reuse; the
+existing host ticket remains burned. This cannot replace durable pending-buffer
+custody or L03 revocation/drain. No Truss public API or supported backend profile
+is promoted. PA01–PA04, seven semantic bodies and the original132 required cases
+remain open at the historical26/132 checkpoint.
+
+
+## Raw ontology read-admission candidate — 2026-10-10
+
+The retained Weft `natural-count-self-join` logical plan now drives the captured Truss PostgreSQL predicate lowerer in a private raw-table experiment. Exact original lowerer and graph-source bytes are frozen with the bridge; no fresh Rust compilation or production owner-artifact admission is asserted. Staff, Projects, resources, assignments and ownership form five private relational tables. The rule requires an active Staff assignment to the same Project that owns the resource. This is a synthetic read-admission receipt, not authorization to mutate resources.
+
+Final native evidence is `truss-ontology-capture-candidate/a91be6ca-a0de-417d-bc51-aec34faaeb41/native.json` under `docs/helix/04-build/evidence/security/`: 76 observations, 11 source pins, eight installed routine bodies and three complete five-table fact cuts. PostgreSQL 16.15, corrected pgserver 0.1.4+truss.pg16.15, pg8000 1.31.5 and Bun 1.4.2 qualify this run. Alice can obtain RA/RAB receipts; inactive, unrelated, ownerless and unknown resources refuse. Ordinary private-fact access and predicate execution refuse. The selected membership revoker receives 55P03 while the authority lock is held, then succeeds after rollback. Only Alice/A's active flag changes. Independent current authority `[[6,true]]` precedes denial of all six resources after membership revocation, isolating ontology denial from stale-generation or permission-false denial. Two sanitized failure-boundary controls pass; earlier run receipts remain historical.
+
+Formal evidence is `truss-ontology-capture-formal/e48c8318-302b-4b23-8fd4-f4d25c00a167/proof.json`: seven replayable formulas (three UNSAT laws, four SAT positive/weakened controls), 14 source pins and three complete finite-population replays. Typed unbounded relational semantics establish the natural-witness join law and refusal without active assignment or ownership. Erasing active status, project equality or the mandatory rule admits counterexamples. Faithful facts, native keys, subject binding and serialized current authority remain premises; exact source coupling is not a compiler, SQL or Rust refinement proof. Exact ordered cuts, unique observations and one actor/Staff mapping prevent vacuous replay.
+
+Astra ultra independently verified final pins, formulas and seven rejected mutation controls; review receipts are adjacent. The acceptance map ties all 76 observations to original US-056 criteria and PA schedules as component evidence only. Historical acceptance remains 26/132. Actual typed graph execution (AC2), Ashlar/Delta, authenticated production subjects and owner artifacts, coherent complete current cuts, installed callable closure, four-family protected admission, seven Truss semantic bodies, field publication and final publication/drain remain open. No supported public backend profile or complete PA02/L03 qualification is promoted. Next integration must use the same owner artifact across actual typed graph storage and raw tables, with production owner admission and final release obligations.
+
+
+## Original-policy graph/raw population parity — 2026-10-10
+
+A separate installer-only spike now executes the same retained Weft `natural-count-self-join` IR through the frozen actual Truss row-predicate and graph-source modules against the exact captured `qualified-property-layout-0.15.owner-export.sql` object/edge tables. Predecessor IR and both lowerer pins must equal the raw candidate's pins before lowering. The current exported layout bytes, including property declaration modules and definition provenance constraints, are retained; synthetic catalog seeds satisfy those constraints without weakening them. These are fixture assertions, not original catalog staging or authenticated owner metadata.
+
+Final evidence `docs/helix/04-build/evidence/security/truss-ontology-graph-parity/9b5634ec-caf8-4624-9c02-00ed637b3a94/native.json` contains 53 passing observations and nine source pins, SHA256 `e957e0d3de95338d5df53743bd9548fe4fd5ca0d17672894b9d49aed501b1f64`. PostgreSQL16.15, corrected pgserver0.1.4+truss.pg16.15, pg8000 1.31.5 and Bun1.4.2 qualify this run. Five complete native projected relation populations match the independently retained raw initial cut, and five match the raw final membership-revocation cut. Alice admits RA/RAB initially and none after her assignment is deactivated; Bob admits RB/RAB both before and after Alice's revocation. Both six-resource corpora include ownerless and unknown resources. A deliberately reused native object ID across Staff/Project verifies qualified type incidence rather than untyped ID equality.
+
+The authored host preflight checks all five source-validity programs (including outer Resource), six unique natural-key/login groups and both native edge-incidence/logical-endpoint correspondences. Eleven malformed-source controls refuse with42501: absent or wrong-domain active properties, logical/native endpoint mismatches, duplicate Staff keys or logins, retired resource/association metadata, absent ownership/resource fields and wrong active metadata. The two endpoint controls independently observe all11 validity/uniqueness components true, Assignment incidence false and Ownership incidence true before refusal. This isolates incidence from both native and logical duplicate-key constraints. The exact installed read-receipt routine is retained. Ordinary callers have no object/edge SELECT; the fixture's PostgreSQL-owner definer returns only synthetic booleans.
+
+Earlier failures are retained, including missing synthetic definition-provenance fields and a corruption initially blocked by native edge uniqueness. Final controls use existing ProjectD to isolate incidence. No new theorem is asserted: the prior typed relational laws apply conditionally, while native correspondence evidence does not prove automatic SQL/Rust/compiler refinement. Natural key properties remain fixture-attested and explicitly checked; canonical key-bucket codecs/namespaces, current coherent cuts, authenticated production subjects/owner artifacts, original staging, production role/callable closure, protected four-family admission, concurrent authority participation and final publication/drain remain required. The adjacent acceptance map links all53 observations to US-056-AC1/AC2/AC5/AC10 as components only. Complete typed-graph AC2 and full backend acceptance remain open at26/132; no public supported profile is promoted.
+
+Astra ultra independently verified all53 observations, nine current/preimage pins, exact frozen lowering, complete initial/final fact parity, all13 installed preflight components and both isolated incidence controls. The adjacent review receipt records no remaining blocker within this installer-only scope.
+
+
+## Composed protected graph read-admission candidate — 2026-10-10
+
+The actual graph predicate and explicit full preflight now run behind the private original-call capture primitive. The original INVOKER entry still requires the actor/captured native tuple; the writer checks its registrar-issued capability, exact original transaction/attempt/resource bytes and READ COMMITTED, then calls its private authority helper. That helper obtains the same authority row FOR SHARE, verifies permission and captured generation, executes all13 authored graph-preflight components separately, and evaluates the original compiled owner predicate before inserting a synthetic read-admission receipt. There are no raw shadow fact tables. Exact captured Truss object/edge layout and frozen lowerer bytes are used; synthetic catalog seeding remains installer-authored, not original catalog admission.
+
+Native evidence `docs/helix/04-build/evidence/security/truss-graph-capture-candidate/8ea0b9dd-a0c3-4ecc-b8cb-0d5fbf26998a/native.json` passes135 unique observations with14 source pins, SHA256 `108096e8eb0bace54a4ce709cd44e6ef1b995a4aeb52abd7241f3be9576de7db`. PostgreSQL16.15, corrected pgserver0.1.4+truss.pg16.15, pg8000 1.31.5 and Bun1.4.2 qualify the run. The captured graph predecessor's IR, bridge, both lowerer modules and layout pins must match before composition. Nine installed protected routine bodies, exact generated SQL and frozen fixture/lowerer code are retained. The private authority role owns the edge table and can read required catalog/object facts; actor and revoker cannot directly read/write graph tables or invoke preflight. No public graph support claim follows from those fixture grants.
+
+Eleven deliberately committed installer corruptions now traverse genuine fresh private capabilities and the original native entry. Every malformed source independently yields preflight false,42501, an unconsumed native capability, zero effects inspected in the actual actor transaction, and restored preflight true. Both endpoint corruptions observe the exact13-component vector isolating Assignment incidence. Authority [[5,true]] is independently observed before these controls. These fault injections deliberately sit outside the admitted mutation closure; they do not prove complete participation or coherent source-cut authority.
+
+The selected membership revoker updates the authority generation before changing the actual graph Assignment edge. An independent revoker receives55P03 while the read-admission writer holds the authority row; all five projected fact populations remain unchanged. After actor rollback the revoker succeeds, only Alice/A's active flag changes, independent authority [[6,true]] is observed, and all six resource admissions refuse. Three complete projected fact cuts are retained. Transaction rollback still restores native capability reuse; the original host custody restriction remains necessary and is independently exercised. This is synthetic read admission, not permission for canonical resource writes or a complete publication protocol.
+
+Formal evidence `truss-graph-capture-formal/c2b4aa2a-f28e-4434-bb0a-ce96071da3a3/proof.json` under the same evidence root saves14 formulas: six UNSAT laws and eight SAT positive/weakened controls, with17 source pins and all three complete population replays. Original typed natural-witness laws are supplemented by an explicit authored conjunction of original capability, current authority, full graph preflight and ontology membership. A positive composed SAT control prevents an always-false conjunction from passing; independently erasing each admission guard yields a counterexample. These are conditional model laws, not automatic SQL/gate extraction, compiler refinement, native snapshot/lock semantics or final publication proofs. Source custody and observed native controls are separate evidence.
+
+Two sanitized failure-boundary controls pass. The adjacent acceptance map links all135 observations to original US-056-AC1/AC2/AC5/AC9/AC10 and PA component schedules without promoting complete cases. Authenticated production subjects/owner artifacts, canonical graph key-bucket and namespace authority, original catalog staging, complete authority/callable closure, coherent source cuts, all four protected admission families, seven Truss semantic bodies, field publication and final release/drain remain required. Full graph AC2/PA02/L03 and the original132-case acceptance plan remain open at26/132. No public Truss backend profile is promoted.
+
+Astra ultra verified all135 observations, fourteen native pins, nine installed bodies and eleven corruption groups, then independently replayed the final fourteen formulas with seventeen source/preimage pins. The always-false composition mutant fails the added positive control. Adjacent review receipts record no remaining landing blocker within the declared experimental scope.
+
+
+## SCRAM-authenticated graph composition and owner-binding audit — 2026-10-10
+
+The composed graph candidate now authenticates fresh ordinary, registrar and revoker sessions with PostgreSQL SCRAM on its owned Unix socket. Four role secrets are generated only in memory and never retained or included in receipt hashes or exception chains. The original bootstrap postgres session remains an explicitly trusted installer; the exact HBA admits local postgres trust, requires SCRAM for other local sessions and rejects both loopback host families. Reload completion, parsed rules, stored SCRAM-verifier presence (booleans only) and unchanged final rule rows are independently observed. This is an authenticated owned fixture, not a production issuer/Staff/owner mapping or general connection-authority profile.
+
+Final native evidence `docs/helix/04-build/evidence/security/truss-graph-capture-candidate/f4186d8d-38ff-461d-9f0c-deefd7b8969f/native.json` passes147 observations with14 current/preimage pins (SHA256 `7cbb71735a60b89f622968eb5426ef6457c826f47914f8dfa0b30b8d1dbb5e4b`). Four wrong-secret attempts and an absent role yield28P01; correctly authenticated sessions independently expose the five expected original native identities, including two distinct connections using the same actor credential. NOLOGIN refuses a fresh actor session with28000 while the existing session still has its original identity. Admission revocation remains an independent current-authority obligation; NOLOGIN alone is not an existing-session revocation mechanism. All135 original graph/protected-capture/authority/corruption controls also pass on these freshly authenticated sessions. SQL, lowerer packet, nine installed protected bodies and complete fact cuts are unchanged from the reviewed135 run. Two sanitized failure controls match the updated producer.
+
+Refreshed formal evidence `truss-graph-capture-formal/0e186858-5aca-40cf-b1a6-53b2e792bbb7/proof.json` under the same evidence root replays14 formulas (six UNSAT/eight SAT),17 source pins and three complete populations, SHA256 `f52b59906718137e426c9b959e0652159a31a872f486b3a7e036cae3e47d5aec`. This rebinds the previously qualified conditional model to the authenticated native run; no SCRAM cryptographic, SQL/compiler or publication theorem is added. Historical135 receipts retain their original source bytes and narrower trust-authentication scope.
+
+The next catalog integration cannot silently rewrite the owner source. The actual frozen Truss declaration collector, executed on the retained original owner document, exposes five keys with unspecified primary roles, zero core relationship declarations and two ontology associations with ordered typed endpoints. Resource's complete required signed64 integer salary declaration is preserved alongside key-only read projections. Current native staging source explicitly requires a Boolean primary selection; its guard is source inspection here, not a performed native refusal. These facts require owner-issued storage key-role choices and relationship bindings with original accepted-binding provenance. Key-only graph projection cannot stand in for complete Record/property catalog staging or field publication.
+
+[Owner-binding audit](../../04-build/evidence/security/truss-owner-binding-audit/9d296d60-1dd6-48cd-bb6e-2b63d7d4778e/audit.json) is located under `docs/helix/04-build/` and passes14 observations with five current/preimage pins, SHA256 `46a649c19af2f370518c27667e45de4177b59e0b954ba6f4a12426809d938f01`. A separately parsed frozen oracle checks the complete post-call document, exact ordered keys, complete Field/reference inventories and full ordered ontology endpoints. Composite-key reversal, integer-width deletion, unknown-extension mutation, omitted Record and omitted Field controls all refuse. The initial eight-observation audit had aliased preservation checks and provides no independent preservation qualification; its receipt remains historical. The twelve-observation correction predates the final completeness controls. No fresh owner validation, original catalog preparation/staging or binding authority is claimed by this audit.
+
+Astra ultra independently verified147 native observations/14 pins, replayed14 formulas/17 pins and verified the final14 audit observations/five pins, including all five mutation/omission controls. Adjacent reviews are clean within their declared scopes. The acceptance map treats authentication as a PA-N01 prerequisite, without claiming SET ROLE coverage, and retains original US-056 component links. Complete owner bindings/authenticated artifact/current-cut/installed-callable and mutation closure, all four families/seven semantic bodies, canonical graph keys and final publication/drain remain required. Complete backend acceptance stays26/132; no supported production profile is promoted.
+
+## Original owner document/native catalog staging — 2026-10-10
+
+The unchanged `natural-count-self-join` owner document now passes genuine original UMF preparation and actual Truss provisional catalog staging on PostgreSQL16.15, pgserver0.1.4+truss.pg16.15, pg8000 1.31.5 and Bun1.4.2. Retained evidence `docs/helix/04-build/evidence/security/truss-owner-catalog-stage/75408a57-00c9-4054-bffc-ab2a918dfb73/native.json` passes31 observations/697 source pins, SHA256 `bec358feb8942d8a5bea0208f368da2bece80dc7c08c87e9a1ae3cdbf7cefa88`. Executed copied source includes the owner bundle, actual Truss preparation/stager/native SQL/layout, and declared Ajv8.20.0 dependency closure. The private bounded stdio adapter drives one installer transaction; this does not qualify the complete installed public runtime or driver.
+
+Independent native projections verify exactly five original Records, all nine owned Fields with full scalar/nullability/cardinality/facets and accepted-document provenance, five original ordered keys as non-primary, and zero relationships/endpoints. Exact archived source retains absent primary markers, the unowned Field and unknown content. Salary retains its required signed64 facet. A native primary substitution and a composite component reversal each refuse the intended message/55000 from an isolated genuinely new-key prestate with an agreeing successful positive; exact state is restored. The head stays unpublished and rollback removes all staged catalog rows. Passing evidence is emitted only after independently attempted cleanup succeeds.
+
+The first retained run failed in the RPC command-result adapter. Historical13/20/21-observation runs do not independently isolate key guard refusal: their existing-key prestate can also refuse55000. The corrected29 run predates complete native type/relationship checks. These remain historical receipts, not the final qualification. Refreshed post-validation collector/literal guard audit `truss-owner-binding-audit/db1509e7-7399-4d62-8322-a1663e40a614/audit.json` passes14 observations/five pins, SHA256 `cb2b47b065313e8295a0d8e4e08428245ba1f00b358c78365b5f68b9d55c36cc`; its scope remains source inspection and post-validation preservation, separate from the new native spike.
+
+This resolves the extra host primary-marker restriction and qualifies complete original catalog projection for the captured installer-only subset. Original ontology associations still require authenticated owner-issued physical relationship bindings with exact source provenance. Synthetic operation artifacts, trusted installer identity, absent binding/default JSON homes and rollback-only provisional revision are explicit premises. Accepted owner/binding/current-cut authority, canonical key buckets, complete mutation/callable closure, protected semantic bodies and final publication/drain remain open. US-056-AC1/AC2/AC10 gain component evidence; no whole criterion or backend profile is promoted. Historical acceptance remains26/132.
+
+Astra ultra independently audited final31 native observations and all697 current/preimage source hashes with no remaining blocker. Review was read-only, with no native execution; the qualification remains provisional installer staging with rollback.
+
+Catalog-stage source preimages are retained as byte-exact `preimages.zip` bundles next to each receipt. The producer checks every entry against the captured bytes before execution; independent hash verification checks all entries against the receipt source inventory. This compact representation replaces duplicated dependency trees without changing original receipts or source bytes. The earlier58932dc5 run precedes only this archive representation change.
+
+## Ontology association storage binding implementation gate — 2026-10-10
+
+`docs/helix/02-design/contracts/security-association-binding.proposal.md` specifies original ontology/core/binding provenance, explicit binary edge roles, ordered target-key correspondence, physical compatibility, complete source coverage and acceptance-linked positive/negative tests. Current Truss accepted-binding vocabulary covers storage keys only. A new relationship interpretation must be registered and qualified before native relationship creation; absence of core direction/multiplicity/lifecycle cannot be repaired by silently rewriting the owner document. The next implementation must consume original authenticated artifacts and compiler-owned logical predicates, retain same-witness incidence/attributes, and prove complete mutation/current-authority/publication closure. The31-observation installer-only catalog result does not close these gates or promote26/132.
+
+## Conditional association storage compatibility — 2026-10-10
+
+Formal evidence `docs/helix/04-build/evidence/security/association-storage-compatibility/d31be4c0-393e-4209-b775-e6563ac54c83/proof.json` saves12 independently replayed formulas (four UNSAT/eight SAT), five current/preimage source pins, Z3 4.15.4, SHA256 `0c94557e3b6e55545565d04022a66bf73312f5b30e01bfd19c7470883814ce80`. Quantification over every nonnegative participation count proves that complete preservation excludes an inferred positive minimum or finite maximum, with explicit unrestricted positive and separate restrictive-bound counterexamples. Exact distinct binary role selection preserves the same-witness key/attribute predicate in either physical orientation; assuming ontology array order is native direction has a valid-population counterexample. This is an abstract conditional model. It does not extract SQL/compiler semantics, prove lifecycle compatibility, authenticate owners/cuts, establish complete facts/keys or qualify publication. The initial8-formula run had a tautological count check and is superseded by the quantified model.
+
+Implementation must preserve native unrestricted storage compatibility or require an explicit semantic restriction before choosing bounds. Current Truss native relationship carrier requires bounds/lifecycle/direction, while the retained ontology asserts none. No existing core source is rewritten, and no new accepted-binding vocabulary or native support is claimed by this proposal. Owner-issued role choices, original accepted binding/archive custody, exact independent native definition correspondence and compiler-owned lowering remain required. US-056-AC2/AC10 gain design/component proof obligations; historical26/132 remains unchanged.
+
+Astra identified native `edge_out` endpoint-pair uniqueness as a separate association-instance preservation gate. The final proposal requires an authored key proving endpoint-tuple uniqueness or refusal of this layout. Three additional formulas establish conditional instance injectivity, a valid distinct-endpoint positive and a parallel same-endpoint/different-key counterexample. The nine-formula predecessor lacks this gate. Semantic count laws assume realizability over all nonnegative counts; arbitrary owner domains/keys must be compared independently, and explicit operational resource refusal is separate from semantic restriction. No infinite storage capacity is promised.
+
+Astra ultra independently replayed final12 formulas (four UNSAT/eight SAT), verified all five current/preimage pins and found no remaining blocker within the proposal scope. These remain conditional laws, not native binding admission, SQL/compiler refinement or acceptance promotion.
+
+## Implemented private association correspondence boundary — 2026-10-10
+
+Truss main `fe8a67051a4ecb3c6a0ff10fdd89ab71f3d9a218` implements `packages/python/src/truss/_security_association_binding.py` as a preliminary source-correspondence boundary. It captures exact bounded original core/ontology/binding bytes and returns frozen tuples/bytes, preserving unknown numeric tokens without imposing Decimal or integer ranges. It requires complete association and role mappings, explicit orientation/unrestricted independent storage choices, exact ordered association/target-key references and an authored association key contained in endpoint Fields. Separate instance IDs and attribute-dependent keys refuse the endpoint-pair edge layout. Higher arity, non-string endpoint profiles, changed source digests/revisions, missing/defaulted metadata and duplicate mappings refuse.
+
+Truss evidence `docs/helix/04-build/evidence/security-association-binding/b332851f-fc2d-4489-b737-536aa90bfe84/tests.json` passes39 tests under Python3.11.17, six current/preimage pins, SHA256 `d81a4d95a527948dda63e3e08fa76817a8e8a762818ab2b5bcb7603c01ca44b8`. Tests retain original fixture bytes, both explicit orientations, composite-order positives and independent reversals, endpoint-key subset positives, parallel-instance loss, duplicate/omitted mappings, Unicode/depth/byte boundaries, unknown fractions and extreme exponents/5000-digit integer tokens. Python module boundaries pass245 imports. Astra ultra verified all six pins,39 names against AST/log and the boundary result; it reviewed the corrected implementation with no remaining blocker. It did not rerun the suite or execute native operations.
+
+This checks source correspondence only. Genuine UMF/ontology owner semantic validation, authenticated original artifact/cut and archive revision/pointer authority, registered relationship interpretation, actual catalog/namespace/key/incidence observations, original Weft lowering and complete protected mutation/publication remain independent required gates. The output dataclass is not an admission capability; no database effects/public exports or installed-wheel/backend qualification follow. The mapping carrier is a private candidate, not a newly accepted native vocabulary. US-056-AC1/AC2/AC10 gain preliminary component evidence, not completed criteria; historical26/132 remains unchanged.

@@ -1,0 +1,963 @@
+{
+  "completeFactCuts": [
+    {
+      "cut": "initial",
+      "relations": {
+        "employee": [
+          [
+            "Alice",
+            "pc_actor"
+          ],
+          [
+            "Bob",
+            "pc_other"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "m2m_employee_project": [
+          [
+            "Alice",
+            "A",
+            true
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "m2m_resource_project": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "cut": "final-membership-revocation",
+      "relations": {
+        "employee": [
+          [
+            "Alice",
+            "pc_actor"
+          ],
+          [
+            "Bob",
+            "pc_other"
+          ]
+        ],
+        "project": [
+          [
+            "A"
+          ],
+          [
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "resource": [
+          [
+            "RA"
+          ],
+          [
+            "RAB"
+          ],
+          [
+            "RB"
+          ],
+          [
+            "RD"
+          ],
+          [
+            "RO"
+          ]
+        ],
+        "m2m_employee_project": [
+          [
+            "Alice",
+            "A",
+            false
+          ],
+          [
+            "Alice",
+            "B",
+            false
+          ],
+          [
+            "Bob",
+            "B",
+            true
+          ]
+        ],
+        "m2m_resource_project": [
+          [
+            "RA",
+            "A"
+          ],
+          [
+            "RAB",
+            "A"
+          ],
+          [
+            "RAB",
+            "B"
+          ],
+          [
+            "RB",
+            "B"
+          ],
+          [
+            "RD",
+            "D"
+          ]
+        ]
+      }
+    }
+  ],
+  "versions": {
+    "postgresql": "16.15",
+    "pgserver": "0.1.4+truss.pg16.15",
+    "pg8000": "1.31.5",
+    "bun": "1.4.2"
+  },
+  "status": "pass",
+  "sourceSha256": {
+    "tools/security/truss-ontology-graph-parity.py": "33b2ba12eac2ec987e0512936a2bb94e5258df2ae9ae471ac3d4f07d19e74d48",
+    "tools/security/truss-ontology-graph-parity.ts": "3b04e180f8c46cc9367ffbf2e06ae4bf3a9f728d558b5cde2a6e977194f38d6f",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql": "cc725df53f0d74e13bb51fda29603f8cafe8c0cee237667778566f81b33f5011",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "docs/helix/04-build/evidence/security/truss-ontology-capture-candidate/a91be6ca-a0de-417d-bc51-aec34faaeb41/native.json": "d9eb022f5288b90bcae3a7a60e4e52b42ccebd0aff0a5e3eed8a271ad3638e18",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171"
+  },
+  "observations": [
+    {
+      "id": "postgresql16.15",
+      "expected": [
+        [
+          "160015"
+        ]
+      ],
+      "observed": [
+        [
+          "160015"
+        ]
+      ]
+    },
+    {
+      "id": "bun1.4.2",
+      "expected": "1.4.2",
+      "observed": "1.4.2"
+    },
+    {
+      "id": "graph-initial-RA",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "graph-initial-RAB",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "graph-initial-RB",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-initial-RD",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-initial-RO",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-initial-UNKNOWN",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-employee",
+      "expected": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-project",
+      "expected": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-resource",
+      "expected": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "observed": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "initial:complete-m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-RA",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-RAB",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-RB",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-RD",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-RO",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-initial-UNKNOWN",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "qualified-native-id-collision",
+      "expected": [
+        [
+          2
+        ]
+      ],
+      "observed": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "missing-active",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "wrong-active-domain",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "wrong-logical-endpoint",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "wrong-native-endpoint",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "duplicate-staff-key",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "duplicate-subject-login",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "retired-resource-type",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "retired-assignment-relation",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "missing-owner-property",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "wrong-active-metadata",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "missing-resource-key",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "restored-preflight",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-RA",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-RAB",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-RB",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-RD",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-RO",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "graph-revoked-UNKNOWN",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-employee",
+      "expected": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "pc_actor"
+        ],
+        [
+          "Bob",
+          "pc_other"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-project",
+      "expected": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-resource",
+      "expected": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "observed": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_employee_project",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          false
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          false
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_resource_project",
+      "expected": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-RA",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-RAB",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-RB",
+      "expected": [
+        [
+          true
+        ]
+      ],
+      "observed": [
+        [
+          true
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-RD",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-RO",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "bob-after-alice-revocation-UNKNOWN",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "no-ordinary-graph-read",
+      "expected": [
+        [
+          false,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false,
+          false
+        ]
+      ]
+    }
+  ],
+  "executedSqlSha256": "6aef495ff37394ec3680078ea586c4054acb66622526c0e03c2641ba13f29704",
+  "loweredPredicateSha256": "9b90ea48f082298b1cf72ea6df4b7cbe283b67f2eb1f0940c451cbc348ccde0f",
+  "scope": "Installer-only actual owner-export graph storage and original normalized IR parity; explicit authored preflight, fixed metadata mapping",
+  "limitations": [
+    "No original catalog staging or authenticated owner artifact/source/cut admission",
+    "Natural key properties are fixture-attested; authored preflight checks incidence correspondence, not canonical key-bucket codec/namespace authority",
+    "Security-definer fixture owner is postgres; no production role/callable closure or protected original admission/publication",
+    "No concurrent authority/revocation schedule or complete backend acceptance",
+    "No automatic compiler/SQL refinement proof"
+  ],
+  "acceptancePromoted": false
+}

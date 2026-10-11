@@ -1,0 +1,35 @@
+{
+  "runId": "47f9578a-9e0b-4d0b-a7c8-4fdc88d9863e",
+  "sourcePins": {
+    "tools/security/truss-native-membership-probe.py": "01cc8fa4151254040beb6b9b56bdac3018a1a750cf0c8eba5766f0ec78296e98",
+    "tests/security/native/truss-layout-source-epoch-0.16.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f",
+    "tests/security/native/truss-graph-membership-overlay.sql": "5c8c29b020a84b99d3a4d8d00987c076897d15cbeedd40b740ec3ad1bb8ae465",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/source-epoch-layout-0.16.owner-export.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f"
+  },
+  "originalCase": {
+    "id": "truss.B01",
+    "backend": "truss",
+    "covers": [
+      "US-056-AC2"
+    ],
+    "name": "read-membership",
+    "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+    "required": true,
+    "layer": "native",
+    "status": "not-run",
+    "command": null,
+    "evidence": null,
+    "testSource": null,
+    "oracleSource": null,
+    "implementationSources": [],
+    "timeoutMs": 60000,
+    "assertionIds": [
+      "truss.B01"
+    ]
+  },
+  "argv": [
+    "tools/security/truss-native-membership-probe.py"
+  ]
+}

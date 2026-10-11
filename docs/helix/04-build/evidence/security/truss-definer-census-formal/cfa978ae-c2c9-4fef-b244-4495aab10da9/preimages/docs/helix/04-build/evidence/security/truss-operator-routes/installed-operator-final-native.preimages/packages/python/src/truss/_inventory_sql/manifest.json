@@ -1,0 +1,22 @@
+{
+  "routine-acl": {
+    "source": "docs/helix/04-build/evidence/design-audit/bootstrap-routine-acl-observation.owner-export.sql",
+    "sha256": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e"
+  },
+  "relation-acl": {
+    "source": "docs/helix/04-build/evidence/design-audit/bootstrap-relation-acl-observation.owner-export.sql",
+    "sha256": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb"
+  },
+  "column-acl": {
+    "source": "docs/helix/04-build/evidence/design-audit/bootstrap-column-acl-observation.owner-export.sql",
+    "sha256": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd"
+  },
+  "namespace-acl": {
+    "source": "docs/helix/04-build/evidence/design-audit/bootstrap-namespace-acl-observation.owner-export.sql",
+    "sha256": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17"
+  },
+  "dependency": {
+    "source": "docs/helix/04-build/evidence/design-audit/bootstrap-dependency-observation.owner-export.sql",
+    "sha256": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74"
+  }
+}

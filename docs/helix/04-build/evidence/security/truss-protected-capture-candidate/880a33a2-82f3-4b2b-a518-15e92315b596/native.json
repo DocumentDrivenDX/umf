@@ -1,0 +1,274 @@
+{
+  "installedRoutines": [
+    [
+      "16407",
+      "protected_capture",
+      "capture",
+      "postgres",
+      false,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.capture()\n RETURNS TABLE(database_oid oid, backend_pid integer, xid xid8, person_oid oid, actor_oid oid)\n LANGUAGE sql\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ SELECT (SELECT oid FROM pg_database WHERE datname=current_database()),pg_backend_pid(),pg_current_xact_id(),\n(SELECT oid FROM pg_roles WHERE rolname=session_user),(SELECT oid FROM pg_roles WHERE rolname=current_user) $function$\n"
+    ],
+    [
+      "16409",
+      "protected_capture",
+      "entry",
+      "postgres",
+      false,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.entry(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ BEGIN\n -- This candidate admits the fixed login only; SET ROLE requires a separate profile.\n IF current_user <> session_user OR current_user <> 'pc_actor' THEN\n  RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501';\n END IF;\n PERFORM protected_capture.write($1,$2,$3);\nEND $function$\n"
+    ],
+    [
+      "16410",
+      "protected_capture",
+      "wrapper",
+      "pc_wrapper",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.wrapper(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ SELECT protected_capture.entry($1,$2,$3) $function$\n"
+    ],
+    [
+      "16408",
+      "protected_capture",
+      "write",
+      "pc_writer",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      "CREATE OR REPLACE FUNCTION protected_capture.write(token bytea, attempt bigint, payload bytea)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$ DECLARE c protected_capture.capability%ROWTYPE;\nBEGIN\n UPDATE protected_capture.capability k SET used=true\n WHERE k.token=$1 AND NOT k.used AND k.attempt=$2 AND k.payload=$3\n AND k.database_oid=(SELECT oid FROM pg_database WHERE datname=current_database())\n AND k.backend_pid=pg_backend_pid() AND k.xid=pg_current_xact_id()\n AND k.person_oid=(SELECT oid FROM pg_roles WHERE rolname=session_user)\n RETURNING k.* INTO c;\n IF NOT FOUND THEN RAISE EXCEPTION 'Protected capture unavailable' USING ERRCODE='42501'; END IF;\n INSERT INTO protected_capture.effect VALUES(c.attempt,c.actor_oid,c.payload);\nEND $function$\n"
+    ]
+  ],
+  "status": "pass",
+  "sourceSha256": {
+    "tools/security/truss-protected-capture-candidate.py": "bf542d35de38d6b0a3f150704829e3979c70f4bc5e64eb7c4c4a0e8c5bf4a73b",
+    "tools/security/truss-protected-capture-candidate.sql": "757a960730d581cd0e025f0c04deff1aa57426264055417e8d8cfc8966a15a48",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_operation_admission.py": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/adr/ADR-008-trusted-embedding-host.md": "0ce6283047c287d6032b67bf2effbcb108a8321bf9523935d92f6ca598d7d335"
+  },
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "expected": [
+        [
+          "160015"
+        ]
+      ],
+      "observed": [
+        [
+          "160015"
+        ]
+      ]
+    },
+    {
+      "id": "ordinary-not-writer-or-registrar-member",
+      "expected": [
+        [
+          false,
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "ordinary-cannot-create-schema",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    },
+    {
+      "id": "native-original-actor",
+      "expected": 16385,
+      "observed": 16385
+    },
+    {
+      "id": "forged-public-context",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "copied-public-context-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-different-login",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-attempt",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-input",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "unregistered-wrapper-even-with-private-capability",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "direct-registry-write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-read",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "refusals-have-zero-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "host-pre-entry-native-context",
+      "expected": [
+        5,
+        7003,
+        "731",
+        16385,
+        16385
+      ],
+      "observed": [
+        5,
+        7003,
+        "731",
+        16385,
+        16385
+      ]
+    },
+    {
+      "id": "actual-original-effect",
+      "expected": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ]
+    },
+    {
+      "id": "native-one-use-in-same-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "host-one-use-survives-savepoint-rollback",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "rollback-removes-effect",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "native-alone-replay-demonstrates-host-requirement",
+      "expected": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ]
+    },
+    {
+      "id": "private-capability-new-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "final-zero-committed-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "restored-no-effect-select",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    }
+  ],
+  "nativeTuple": {
+    "postgresql": "16.15",
+    "pgserver": "0.1.4+truss.pg16.15",
+    "pg8000": "1.31.5"
+  },
+  "scope": "Experimental registrar-issued private capability plus exact trusted-host dispatch and original one-use admission custody",
+  "limitations": [
+    "Synthetic local trust authentication; no production authenticated subject or current owner authority",
+    "Registrar is trusted and independently privileged; random capability is private, never public input or retained receipt content",
+    "Native consumption rolls back: direct replay after savepoint rollback succeeds; only the composed host restriction prevents resubmission",
+    "No SET ROLE profile, general callable closure, full current-cut/publication protocol or Truss semantic bodies"
+  ],
+  "PA02Complete": false,
+  "acceptancePromoted": false
+}
