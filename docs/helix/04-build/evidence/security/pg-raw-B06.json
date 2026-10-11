@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B06",
   "backend": "pg-raw",
-  "runId": "83b96d51-9735-471c-a66a-f41c6c56b4f4",
+  "runId": "a9a97867-7be9-40cd-9310-841be8cc047c",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -19,7 +19,7 @@
     "python": "3.9.6"
   },
   "sourceDigests": {
-    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
   },
@@ -818,7 +818,8 @@
       "assertionId": "pg-raw.B06",
       "expected": {
         "umf_sec_alice": {
-          "protectedIds": [
+          "callerFakePredicate": true,
+          "callerPredicateIds": [
             "RA",
             "RAB"
           ],
@@ -826,16 +827,16 @@
             "RA",
             "RAB"
           ],
-          "callerPredicateIds": [
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [
             "RA",
             "RAB"
           ],
-          "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "publicExecute": false
         },
         "umf_sec_bob": {
-          "protectedIds": [
+          "callerFakePredicate": true,
+          "callerPredicateIds": [
             "RAB",
             "RB"
           ],
@@ -843,26 +844,26 @@
             "RAB",
             "RB"
           ],
-          "callerPredicateIds": [
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [
             "RAB",
             "RB"
           ],
-          "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "publicExecute": false
         },
         "umf_sec_outsider": {
-          "protectedIds": [],
-          "forwardedIds": [],
-          "callerPredicateIds": [],
           "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "callerPredicateIds": [],
+          "forwardedIds": [],
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [],
+          "publicExecute": false
         }
       },
       "observed": {
         "umf_sec_alice": {
-          "protectedIds": [
+          "callerFakePredicate": true,
+          "callerPredicateIds": [
             "RA",
             "RAB"
           ],
@@ -870,16 +871,16 @@
             "RA",
             "RAB"
           ],
-          "callerPredicateIds": [
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [
             "RA",
             "RAB"
           ],
-          "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "publicExecute": false
         },
         "umf_sec_bob": {
-          "protectedIds": [
+          "callerFakePredicate": true,
+          "callerPredicateIds": [
             "RAB",
             "RB"
           ],
@@ -887,21 +888,20 @@
             "RAB",
             "RB"
           ],
-          "callerPredicateIds": [
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [
             "RAB",
             "RB"
           ],
-          "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "publicExecute": false
         },
         "umf_sec_outsider": {
-          "protectedIds": [],
-          "forwardedIds": [],
-          "callerPredicateIds": [],
           "callerFakePredicate": true,
-          "publicExecute": false,
-          "protectedDefinitionChangesDenied": true
+          "callerPredicateIds": [],
+          "forwardedIds": [],
+          "protectedDefinitionChangesDenied": true,
+          "protectedIds": [],
+          "publicExecute": false
         }
       }
     }

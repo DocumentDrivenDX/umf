@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B03",
   "backend": "pg-raw",
-  "runId": "2967091d-49b6-4df1-8ee3-de710b6af731",
+  "runId": "87b336e9-c147-407b-b8a3-f12d5e067541",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -19,7 +19,7 @@
     "python": "3.9.6"
   },
   "sourceDigests": {
-    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
   },
@@ -950,28 +950,33 @@
       "assertionId": "pg-raw.B03",
       "expected": {
         "umf_sec_alice": {
+          "aggregate": {
+            "count": 2,
+            "max": "RAB",
+            "min": "RA",
+            "valueLengthSum": 21
+          },
+          "allHidden": [],
+          "count": 2,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [
+            "RAB"
+          ],
           "lookupRA": [
             "RA",
             "A-only"
           ],
           "lookupRB": null,
-          "count": 2,
-          "aggregate": {
-            "count": 2,
-            "min": "RA",
-            "max": "RAB",
-            "valueLengthSum": 21
-          },
-          "traversal": [
-            [
-              "RA",
-              "A"
-            ],
-            [
-              "RAB",
-              "A"
-            ]
-          ],
+          "missingLookup": null,
           "pages": [
             [
               "RA"
@@ -981,45 +986,46 @@
             ],
             []
           ],
-          "keysetAfterRA": [
-            "RAB"
-          ],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": [
+            [
+              "RA",
+              "A"
+            ],
+            [
+              "RAB",
+              "A"
+            ]
+          ]
         },
         "umf_sec_bob": {
+          "aggregate": {
+            "count": 2,
+            "max": "RB",
+            "min": "RAB",
+            "valueLengthSum": 21
+          },
+          "allHidden": [],
+          "count": 2,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [
+            "RAB",
+            "RB"
+          ],
           "lookupRA": null,
           "lookupRB": [
             "RB",
             "B-only"
           ],
-          "count": 2,
-          "aggregate": {
-            "count": 2,
-            "min": "RAB",
-            "max": "RB",
-            "valueLengthSum": 21
-          },
-          "traversal": [
-            [
-              "RAB",
-              "B"
-            ],
-            [
-              "RB",
-              "B"
-            ]
-          ],
+          "missingLookup": null,
           "pages": [
             [
               "RAB"
@@ -1029,78 +1035,77 @@
             ],
             []
           ],
-          "keysetAfterRA": [
-            "RAB",
-            "RB"
-          ],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": [
+            [
+              "RAB",
+              "B"
+            ],
+            [
+              "RB",
+              "B"
+            ]
+          ]
         },
         "umf_sec_outsider": {
-          "lookupRA": null,
-          "lookupRB": null,
-          "count": 0,
           "aggregate": {
             "count": 0,
-            "min": null,
             "max": null,
+            "min": null,
             "valueLengthSum": 0
           },
-          "traversal": [],
+          "allHidden": [],
+          "count": 0,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [],
+          "lookupRA": null,
+          "lookupRB": null,
+          "missingLookup": null,
           "pages": [
             [],
             [],
             []
           ],
-          "keysetAfterRA": [],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": []
         }
       },
       "observed": {
         "umf_sec_alice": {
+          "aggregate": {
+            "count": 2,
+            "max": "RAB",
+            "min": "RA",
+            "valueLengthSum": 21
+          },
+          "allHidden": [],
+          "count": 2,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [
+            "RAB"
+          ],
           "lookupRA": [
             "RA",
             "A-only"
           ],
           "lookupRB": null,
-          "count": 2,
-          "aggregate": {
-            "count": 2,
-            "min": "RA",
-            "max": "RAB",
-            "valueLengthSum": 21
-          },
-          "traversal": [
-            [
-              "RA",
-              "A"
-            ],
-            [
-              "RAB",
-              "A"
-            ]
-          ],
+          "missingLookup": null,
           "pages": [
             [
               "RA"
@@ -1110,45 +1115,46 @@
             ],
             []
           ],
-          "keysetAfterRA": [
-            "RAB"
-          ],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": [
+            [
+              "RA",
+              "A"
+            ],
+            [
+              "RAB",
+              "A"
+            ]
+          ]
         },
         "umf_sec_bob": {
+          "aggregate": {
+            "count": 2,
+            "max": "RB",
+            "min": "RAB",
+            "valueLengthSum": 21
+          },
+          "allHidden": [],
+          "count": 2,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [
+            "RAB",
+            "RB"
+          ],
           "lookupRA": null,
           "lookupRB": [
             "RB",
             "B-only"
           ],
-          "count": 2,
-          "aggregate": {
-            "count": 2,
-            "min": "RAB",
-            "max": "RB",
-            "valueLengthSum": 21
-          },
-          "traversal": [
-            [
-              "RAB",
-              "B"
-            ],
-            [
-              "RB",
-              "B"
-            ]
-          ],
+          "missingLookup": null,
           "pages": [
             [
               "RAB"
@@ -1158,52 +1164,46 @@
             ],
             []
           ],
-          "keysetAfterRA": [
-            "RAB",
-            "RB"
-          ],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": [
+            [
+              "RAB",
+              "B"
+            ],
+            [
+              "RB",
+              "B"
+            ]
+          ]
         },
         "umf_sec_outsider": {
-          "lookupRA": null,
-          "lookupRB": null,
-          "count": 0,
           "aggregate": {
             "count": 0,
-            "min": null,
             "max": null,
+            "min": null,
             "valueLengthSum": 0
           },
-          "traversal": [],
+          "allHidden": [],
+          "count": 0,
+          "empty": [],
+          "emptyAggregate": {
+            "count": 0,
+            "max": null,
+            "min": null,
+            "valueLengthSum": 0
+          },
+          "emptyCount": 0,
+          "emptyPage": [],
+          "emptyTraversal": [],
+          "keysetAfterRA": [],
+          "lookupRA": null,
+          "lookupRB": null,
+          "missingLookup": null,
           "pages": [
             [],
             [],
             []
           ],
-          "keysetAfterRA": [],
-          "allHidden": [],
-          "empty": [],
-          "missingLookup": null,
-          "emptyCount": 0,
-          "emptyAggregate": {
-            "count": 0,
-            "min": null,
-            "max": null,
-            "valueLengthSum": 0
-          },
-          "emptyTraversal": [],
-          "emptyPage": []
+          "traversal": []
         }
       }
     }
