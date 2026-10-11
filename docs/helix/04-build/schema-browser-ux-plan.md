@@ -203,3 +203,132 @@ separate signals. JSON-only startup excludes YAML and optional native adapters.
 ### Embedding implementation review and release gate
 
 Astra Ultra's final implementation review found no remaining concrete blocker after fixing transactional configure generations and acknowledgements, same-schema revision routes, srcdoc routes without a base element, fixed native grammar closure, and archived YAML initialization. The permanent harness covers missing renderer readiness, custom chrome/focus/theme/height controls, strict CSP, origin-isolated standalone messages and native fixity. Avro dynamic interpretation is intentionally qualified; its original/schema/dependencies remain exact. No browser cross-engine claim is made from Chromium evidence. Release 1.1.0 supersedes the pending npm-only 1.0.1 patch. The producer emits full payload manifests and provenance; CI verifies two clean rebuilds and exact installed-package microsite assets, including the browser base stylesheet. npm authentication is a release dependency, not an implementation approval.
+
+## Consumer follow-up review — 2026-10-10
+
+### Scope and disposition
+
+Review source: the owner's pasted reusable-browser follow-up, based on consumer
+measurements of 1.0.0. Retain that intake unedited. It is useful historical
+evidence, but its open-item list predates the current 1.1.0 implementation.
+Catalog: installed HELIX 0.15.4 `workflows/graph.yml`; review mode. Governing
+scope remains FEAT-009 PACK-08/09/10, CONTRACT-052, CONTRACT-061 and the full host
+embedding amendment above. This continuation authorizes planning only.
+
+| Requested improvement | Current evidence | Disposition |
+| --- | --- | --- |
+| Exact CSP, remove unsafe-eval and base element | README/HOST_CONTRACT; fixed validators; missing-renderer/CSP harness | Implemented; reconcile the two documented policy examples and qualify them as tested policies rather than a universal minimum |
+| Catalog schema, category and schemaFormat contract | catalog.schema.json, catalog.ts, HOST_CONTRACT | Implemented; replay catalog boundaries |
+| Events, origin-checked standalone messages, select after mount | index.ts, types.ts, HOST_CONTRACT | Implemented; use the shipped object-based Promise API, not an additional positional overload |
+| Reliable ready and structured errors | Initialized-catalog handshake, catalog errors and 30-second missing-module timeout | Implemented; document timeout-based failure detection, without promising immediate diagnosis of every blocked script |
+| Standalone catalog URL or entries | catalogUrl query and checked configure protocol | Implemented; retain explicit origin/Window/instance/protocol checks |
+| Height, hide hero/local files, custom categories/status | Mount options and generic example host | Implemented; verify real flex containment and keyboard return |
+| Theme and dark mode | theme/themeVariables, dark tokens and auto handling | Implemented; accessibility across actual surfaces needs fresh measurement |
+| Muted text contrast | Default muted changed from #65736b to #526057 | Reported token corrected; no complete accessibility pass follows from that edit |
+| Code splitting/startup cost | build.ts enables splitting; YAML/native readers load lazily | Implemented mechanism; fresh size and startup measurements remain unqualified |
+| Keyboard focus | focus() and documented heading/DOM focus order | Implemented; perform keyboard inspection beyond the existing focus assertion |
+| Host annotations | Text-only badges/tones/tooltips and setAnnotations | Implemented; presentation must not imply verified permissions or authorization |
+| Reusable table/map components | renderPropertyTable/renderRecordMap with destroy handles | Implemented; these use an explicit component model, not automatic rendering of every native schema |
+| Revision history and created/changed/removed diff | compareDocuments/renderDocumentDiff and entry revisions | Implemented structural comparison; broader graph semantics remain qualified |
+| Release checksums/changelog | Build manifest/provenance and recorded 1.1.0 publication evidence | Already covered; retain immutable release and site parity gates |
+
+Recorded execution evidence is in [schema-browser-ux.md](evidence/schema-browser-ux.md),
+including the 1.1.0 publication section and its scoped Chromium checks. This review
+inspected source and existing evidence; it did not independently verify public
+registry metadata or deployed assets.
+
+### Remaining implementation slices
+
+| Slice | Area | Depends on | Validation gate |
+| --- | --- | --- | --- |
+| FOLLOW-1 | Restore dependencies from the frozen lockfile and replay the installed 1.1.0 host baseline | None | Embedding unit tests and `bun scripts/schema-browser-embedding-browser.ts`; preserve failure/run/browser versions |
+| FOLLOW-2 | Accessibility audit and bounded corrections | FOLLOW-1 | Measure rendered contrast in light/dark/auto, annotations and diff states; keyboard traversal through catalog/map/property views, focus(), host return and teardown; readable status independent of color |
+| FOLLOW-3 | CSP/API documentation reconciliation | FOLLOW-1 | One tested baseline plus explained optional image/download/cross-origin permissions; verify srcdoc and standalone separately; no unsafe-eval/base violations; matching public types/examples |
+| FOLLOW-4 | Startup and bundle measurement | FOLLOW-1 | Record initial and lazy transferred bytes, request closure and mount-to-ready/source-render times for JSON, YAML and native recovery; repeated runs with environment/cache conditions and exact-source checks |
+| FOLLOW-5 | Only if changes are needed, release a new immutable version and update the site pin | FOLLOW-2/3/4 | Existing reproducibility, installed consumer, strict-CSP, asset parity, checksum/changelog and signing gates; qualify actual registry/deployment separately |
+
+### Execution contract and validation plan
+
+Do not reimplement the delivered API or add a framework, general reasoner,
+authorization engine or source collector. Accessibility colors and dark surfaces
+are the highest-value unresolved checks. Performance optimization follows measured
+remaining cost; the consumer's 0.85-second observation is not a portable target.
+Do not weaken validation to improve timings. The existing release contract owns
+publication; this review does not execute publication or deployment.
+
+Runtime token estimate and spending ceiling are unknown: no usage baseline or
+owner budget is supplied. Keep work bounded to the slices above; propose any
+larger optimization separately. No tracker or additional reviewers are required
+by this continuation. Before handwritten implementation, reconcile the existing
+project boundary checks and governing test plan; record their actual commands
+rather than inventing a new boundary policy in this review.
+
+### Continuation evidence
+
+Current review attempts: `bun test tests/domain-packs/schema-browser-embedding.test.ts`
+stopped on missing `ajv/dist/2020`; the browser script stopped on missing
+`playwright`. Bun was 1.4.2. Neither reached behavioral assertions. Prior
+qualification used its recorded toolchain and is not a fresh pass here.
+No implementation, intake rewrite or package change was made in this review.
+Next action is FOLLOW-1, then accessibility and documentation checks.
+
+### Authorized execution continuation — 2026-10-10
+
+The owner subsequently authorized Astra Ultra review, dependency installation,
+checks, accessibility/CSP corrections and startup measurement. FOLLOW-1 through
+FOLLOW-4 are complete for the local 1.1.1 candidate. The earlier planning-only
+and missing-dependency statements above describe the initial review, not this
+execution. FOLLOW-5 remains a separate publication and matching site rollout;
+the installed dependency, lockfile and deployed-site assets remain at 1.1.0.
+
+Astra Ultra reviewed the implementation and final corrections and found no
+remaining concrete blocker in this scope. Its findings led to selected-source
+loading without eager pack companions, readable SVG relationship numbers and
+change states, annotation-aware record heights, distinct parallel relationship
+badges and clearance above the next row. Source panes now participate in keyboard
+navigation. Unloaded pack metadata has explicit navigation rather than silently
+fetching companion documents. The final replay covers a six-record fixture with
+three parallel relationships and table → pack → table → ontology → table navigation.
+
+The README and HOST_CONTRACT now agree on a tested same-origin CSP baseline for
+srcdoc and standalone embedding. It uses no unsafe-eval and permits no base URI;
+optional image/cross-origin permissions are explained separately. Browser download
+events confirm exact source-companion bytes without a blob-fetch permission.
+The accessibility measurement page alone allows axe's inline style probes;
+product policy and performance tests retain the strict documented policy.
+
+Fresh execution evidence, commands, measurements and qualifications are retained
+in [schema-browser-followup-2026-10-10.md](evidence/schema-browser-followup-2026-10-10.md).
+The candidate is 1.1.1 (unreleased), with unchanged public options/catalog shape.
+No registry publication, signing or deployed-site update is claimed.
+
+### Risks, rollbacks and exit criteria
+
+Keep original source strings, exact numeric tokens, unknown metadata, stable IDs
+and rights qualifications. Custom host colors cannot carry a blanket contrast
+guarantee. Annotations remain host assertions. Structural diff cannot establish
+semantic compatibility; the map projection currently includes only relationships
+with one source and one target. Preserve other relationships in the textual diff;
+do not label the graph a complete semantic comparison.
+
+Documentation changes can be reverted independently. Renderer changes require a
+new release; rollback selects the prior immutable package and matching site assets.
+Completion requires fresh baseline results, recorded accessibility/performance
+scope, resolved documentation drift and any required release gates. If measurement
+shows no behavior defect, record that result without manufacturing a code change.
+
+### Owner discussion
+
+2026-10-11 continuation: the owner authorized publication and site rollout, then
+selected 1.1.2 because concurrent main had already published 1.1.1 for a separate
+reproducibility fix. The historical candidate/evidence above remains scoped to
+its tested source. Integrated release custody and fresh checks are recorded in
+[schema-browser-1.1.2-release.md](evidence/schema-browser-1.1.2-release.md).
+FOLLOW-5 completed with public 1.1.2 publication, the exact integrity-locked site
+pin, successful Pages build/deployment and independent live-byte/browser checks.
+
+Accept the requested capabilities within the scoped contract. Do not adopt the
+1.0.0 unsafe-eval allowance or unset-base-uri workaround as the current host
+requirement. Keep the implemented selection signature. Treat permission badges
+as display-only and revision diff as structural. Further startup optimization
+depends on new measurements; complete semantic graph diff needs separate scope.
