@@ -1,0 +1,487 @@
+{
+  "nativeReceiptSha256": "e957e0d3de95338d5df53743bd9548fe4fd5ca0d17672894b9d49aed501b1f64",
+  "originalRequiredCases": 132,
+  "historicalAcceptedCases": 26,
+  "acceptancePromoted": false,
+  "relation": "Actual graph storage and retained raw-cut parity component only; AC2 complete profile remains open",
+  "observations": [
+    {
+      "id": "postgresql16.15",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bun1.4.2",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-RA",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-RAB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-RB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-RD",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-RO",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-initial-UNKNOWN",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "initial:complete-employee",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "initial:complete-project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "initial:complete-resource",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "initial:complete-m2m_employee_project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "initial:complete-m2m_resource_project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-RA",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-RAB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-RB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-RD",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-RO",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-initial-UNKNOWN",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "qualified-native-id-collision",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "missing-active",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-active-domain",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-logical-endpoint:isolated-incidence",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-logical-endpoint",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-native-endpoint:isolated-incidence",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-native-endpoint",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "duplicate-staff-key",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "duplicate-subject-login",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "retired-resource-type",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "retired-assignment-relation",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "missing-owner-property",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "wrong-active-metadata",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "missing-resource-key",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "restored-preflight",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-RA",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-RAB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-RB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-RD",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-RO",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "graph-revoked-UNKNOWN",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-employee",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-resource",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_employee_project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_resource_project",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-RA",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-RAB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-RB",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-RD",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-RO",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "bob-after-alice-revocation-UNKNOWN",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "no-ordinary-graph-read",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "completeCriterionPassed": false
+    },
+    {
+      "id": "one-installed-read-receipt",
+      "requirements": [
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC10"
+      ],
+      "completeCriterionPassed": false
+    }
+  ]
+}
