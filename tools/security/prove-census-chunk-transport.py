@@ -1,12 +1,18 @@
 """Conditional chunk arithmetic/correspondence; not runtime/SQL/authority refinement."""
-import hashlib,json,uuid,zipfile
+import hashlib,json,uuid,zipfile,sys
 from pathlib import Path
 import z3
 truss=Path('/private/tmp/truss-security-main-integration')
+python_profile='--python-profile' in sys.argv
 paths=[Path(__file__),*[truss/p for p in ['packages/pg-runtime/src/security-source-census.ts','packages/pg-runtime/src/native-query.ts','packages/pg-runtime/src/wire.ts','packages/pg-runtime/src/journal.ts','packages/postgresql/native/security-query-source-census.sql']]]
+if python_profile:
+ paths=[Path(__file__),*[truss/p for p in ['packages/python/src/truss/_native_source_census.py','packages/python/src/truss/_native_result_custody.py','packages/python/src/truss/_native_ingress_deadline.py','packages/python/src/truss/_native_outbound.py','packages/postgresql/native/security-query-source-census-pg16.sql']]]
 frozen={str(p):p.read_bytes() for p in paths}
+if python_profile:
+ selected=frozen[str(truss/'packages/python/src/truss/_native_source_census.py')].decode()
+ if 'CHUNK_BYTES=4096' not in selected or 'MAXIMUM_IMAGE=16777216' not in selected:raise RuntimeError('Python profile constants changed')
 total,offset,position,left,right=z3.Ints('total_bytes offset byte_position left_chunk right_chunk')
-width=z3.IntVal(32768);maximum=z3.IntVal(16777216)
+width=z3.IntVal(4096 if python_profile else 32768);maximum=z3.IntVal(16777216)
 end=lambda k:z3.If((k+1)*width<total,(k+1)*width,total)
 valid=[total>0,total<=maximum]
 step=z3.If(width<total-offset,width,total-offset)
@@ -37,8 +43,8 @@ for name,expect,formula in cases:
  queries.append({'id':name,'expected':expect,'result':outcome,'freshContextReplay':again,'smt2':smt,'witness':str(solver.model()) if outcome=='sat' else None})
 pins={p:hashlib.sha256(b).hexdigest() for p,b in frozen.items()}
 if any(Path(p).read_bytes()!=b for p,b in frozen.items()):raise RuntimeError('Proof input changed')
-folder=Path('docs/helix/04-build/evidence/security/census-chunk-transport-formal')/str(uuid.uuid4());folder.mkdir(parents=True)
-(folder/'proof.json').write_text(json.dumps({'status':'conditional-proof-passed','z3Version':z3.get_version_string(),'sourceDigests':pins,'queries':queries,'scope':'Unbounded integer chunk arithmetic within16MiB/32768-byte constants and conditional byte-array correspondence. Faithful per-chunk materialized original observation, the assembler byte-copy relation, guarded completion and connection/SQL custody remain premises. Not an executable TypeScript/Buffer/TextDecoder or native cursor/SQL/journal refinement. No driver/source/issuer authentication, observer semantic completeness/injectivity, heap/CPU bound, current execution/authority cut, concurrent DDL, participating writer, Python16.15 port or graph/backend admission proof. SAT controls show complete shape permits forged bytes and a truthful materialized snapshot can differ from execution source.'},indent=2)+'\n')
+folder=Path('docs/helix/04-build/evidence/security/python-census-chunk-formal' if python_profile else 'docs/helix/04-build/evidence/security/census-chunk-transport-formal')/str(uuid.uuid4());folder.mkdir(parents=True)
+(folder/'proof.json').write_text(json.dumps({'status':'conditional-proof-passed','profile':'python-4096' if python_profile else 'typescript-32768','z3Version':z3.get_version_string(),'sourceDigests':pins,'queries':queries,'scope':('Python profile uses 4096-byte constants; native exact T/D*/C/Z and original Q identity are premises, not proven protocol refinement. ' if python_profile else '')+'Unbounded integer chunk arithmetic within16MiB and the selected chunk width and conditional byte-array correspondence. Faithful per-chunk materialized original observation, the assembler byte-copy relation, guarded completion and connection/SQL custody remain premises. Not an executable TypeScript/Buffer/TextDecoder or native cursor/SQL/journal refinement. No driver/source/issuer authentication, observer semantic completeness/injectivity, heap/CPU bound, current execution/authority cut, concurrent DDL, participating writer, Python16.15 port or graph/backend admission proof. SAT controls show complete shape permits forged bytes and a truthful materialized snapshot can differ from execution source.'},indent=2)+'\n')
 with zipfile.ZipFile(folder/'sources.zip','w',zipfile.ZIP_DEFLATED) as archive:
  for i,(p,b) in enumerate(frozen.items()):archive.writestr(str(i)+'/'+Path(p).name,b)
 print(json.dumps({'status':'conditional-proof-passed','queries':len(queries),'evidence':str(folder)}))
