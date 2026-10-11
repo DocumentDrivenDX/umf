@@ -356,6 +356,48 @@ try:
    refusal('pending-effect-candidate-authored-definition',effect_query,{'code':'55000','message':'stored original relationship definition correspondence'},r=rev)
    c.run('ROLLBACK TO SAVEPOINT authored_effect_fault');c.run('RELEASE SAVEPOINT authored_effect_fault')
    check('pending-effect-candidate-authored-definition-restored',original_state,archive_state())
+  value_query='SELECT * FROM truss.runtime_collect_pending_association_value_candidate(:r::int) ORDER BY family,identity::text'
+  physical_values=c.run(value_query,r=rev)
+  check('pending-value-candidate-verified-identities',actual_effects,[[row[0],row[1]] for row in physical_values])
+  tables={'type':'type_def','property':'prop_def','key':'key_def','relationship':'rel_def','endpoint':'rel_endpoint'}
+  native_rows={family:c.run('SELECT to_jsonb(t) FROM truss.'+table+' t') for family,table in tables.items()}
+  lineage_rows=c.run('SELECT to_jsonb(l) FROM truss.relationship_lineage l')
+  independent_values=[]
+  for family,identity in actual_effects:
+   if family=='type':matches=[row[0] for row in native_rows[family] if str(row[0]['type_id'])==identity[0]]
+   elif family=='property':matches=[row[0] for row in native_rows[family] if str(row[0]['prop_id'])==identity[0]]
+   elif family=='key':matches=[row[0] for row in native_rows[family] if [str(row[0]['type_id']),row[0]['key_id'],str(row[0]['key_num'])]==identity]
+   elif family=='endpoint':matches=[row[0] for row in native_rows[family] if [str(row[0]['rel_type_id']),str(row[0]['source_type']),str(row[0]['target_type'])]==identity]
+   else:
+    definitions=[row[0] for row in native_rows[family] if str(row[0]['rel_type_id'])==identity[0]]
+    lineages=[row[0] for row in lineage_rows if str(row[0]['rel_type_id'])==identity[0]]
+    matches=[{'definition':definition,'lineage':lineages[0] if lineages else None} for definition in definitions]
+   if len(matches)!=1:raise ValueError('Independent full physical value bijection required')
+   independent_values.append([family,identity,matches[0]])
+  check('pending-value-candidate-complete-native-values',independent_values,physical_values)
+  check('pending-value-candidate-native-order',physical_values,c.run('SELECT * FROM truss.runtime_collect_pending_association_value_candidate(:r::int)',r=rev))
+  c.run('SAVEPOINT value_output_configuration');output_state=archive_state()
+  c.run("SET LOCAL bytea_output='escape'")
+  check('pending-value-candidate-bytea-output-invariant',physical_values,c.run(value_query,r=rev))
+  check('pending-value-candidate-caller-output-restored',[['escape']],c.run('SHOW bytea_output'))
+  c.run('ROLLBACK TO SAVEPOINT value_output_configuration');c.run('RELEASE SAVEPOINT value_output_configuration')
+  check('pending-value-candidate-output-configuration-restored',output_state,archive_state())
+
+  check('pending-value-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
+  refusal('ordinary-pending-value-candidate',value_query,{'code':'42501'},acting_role=True,r=rev)
+  c.run('SAVEPOINT value_generation_fault');generation_state=archive_state()
+  effect_definition_query="SELECT pg_get_functiondef('truss.runtime_collect_pending_association_effect_candidate(integer)'::regprocedure)"
+  original_effect_definition=c.run(effect_definition_query)[0][0]
+  emission='RETURN QUERY SELECT value->>'
+  check('pending-value-candidate-generation-fault-single-site',1,original_effect_definition.count(emission))
+  changed_effect_definition=original_effect_definition.replace(emission,"UPDATE truss.row_home_operation SET effect_generation=effect_generation+1 WHERE original_writer_xid=pg_current_xact_id_if_assigned();\n "+emission)
+  c.run(changed_effect_definition)
+  refusal('pending-value-candidate-generation-change',value_query,{'code':'55000','message':'pending association physical value generation changed'},r=rev)
+  c.run('ROLLBACK TO SAVEPOINT value_generation_fault');c.run('RELEASE SAVEPOINT value_generation_fault')
+  check('pending-value-candidate-generation-fault-full-restoration',generation_state,archive_state())
+  check('pending-value-candidate-original-effect-definition-restored',[[original_effect_definition]],c.run(effect_definition_query))
+  check('pending-value-candidate-generation-fault-restored-positive',physical_values,c.run(value_query,r=rev))
+
   check('pending-effect-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   refusal('ordinary-pending-effect-candidate',effect_query,{'code':'42501'},acting_role=True,r=rev)
   for fault,mutation,message in [
@@ -371,6 +413,7 @@ try:
    if fault in ('extra-endpoint','fabricated-lineage'):
     check('pending-effect-candidate-'+fault+'-source-custody-still-positive',allocated,c.run('SELECT mapping_pointer,relationship_id FROM truss.runtime_collect_pending_association_source_candidate(:r::int)',r=rev))
    refusal('pending-effect-candidate-'+fault,effect_query,{'code':'55000','message':message},r=rev)
+   refusal('pending-value-candidate-'+fault,value_query,{'code':'55000','message':message},r=rev)
    c.run('ROLLBACK TO SAVEPOINT pending_effect_fault');c.run('RELEASE SAVEPOINT pending_effect_fault')
    check('pending-effect-candidate-'+fault+'-restored',original_state,archive_state())
   refusal('pending-candidate-complete-inventory-closed','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
