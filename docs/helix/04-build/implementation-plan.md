@@ -11333,3 +11333,50 @@ No scoped blocker remains. The existing strict12-security-module checker also
 passes with exact source archive and raw output. Truss merged six concurrent
 Python-main commits without changing any tested source. Broader source/authenticated
 issuer, view/dependency/concurrent-DDL and full B08 gates remain required.
+
+
+### Two-way eligible query-source correspondence — 2026-10-11
+
+A same-type view drift exposed a gap in the original one-way completeness check:
+every eligible Resource still had one carrier, but an additional carrier for
+ineligible RB survived the application predicate. The ordinary SCRAM Alice
+connection returned RAB and RB through the actual issued guarded fragment.
+Counterexample `evidence/security/query-carrier-eligibility-counterexample/da5a64ac-128a-44b9-bbb5-e08cfa435484`
+retains28 observations, changed native view definition, predecessor source archive
+and producer. It is historical failing behavior, not an accepted profile.
+An initial direct-view diagnostic correctly hit Alice's denied SELECT; failed
+harness provenance is separately retained without a passing-case claim. Ordinary
+view permissions were not broadened to make the diagnostic pass.
+
+Truss `security-source-completeness.ts` now requires both directions for the
+selected application-carrier population: each eligible root has exactly one
+complete carrier, and each selected carrier has a matching eligible root. The
+reverse anti-existence condition uses the same full key relation and type
+selectors as the forward condition. It runs before application filtering/aggregation,
+not as post-fetch filtering. Private authority-fact populations are outside this
+application-carrier requirement. Other view expressions/dependencies still need
+independent native source admission.
+
+Fixed native `evidence/security/query-carrier-eligibility/757801b1-1556-4b80-821c-efc8ab7d0c48`
+passes51 observations and retains12 source preimages, including the actual owner
+inspection executable used to obtain the empty-query handoff. Extra ineligible,
+absent, NULL-key, duplicate-eligible and predicate-filtered-out carrier rows
+retain matching text/int64 domains but refuse both populated and empty routines
+with fixed source-unavailable42501 and no output. Each repair restores RAB and
+empty outputs. Nineteen raw native refusals and exact owned cleanup output are
+retained. The initial predicate artifact is retained; the empty query is freshly
+prepared through the captured inspection executable, not a fabricated handoff.
+
+Chromium153.0.8010.12 matches both issued native programs/return fragments and
+rejects four copied-fragment attempts. Fourteen host tests/58 assertions and the
+existing strict security-module checker pass with raw logs. Conditional formal
+`evidence/security/query-carrier-eligibility-formal/bbab0298-9613-47ba-aec9-89877bbfee77`
+retains eight pre-solve SMT queries/fresh-context replays: four UNSAT/four SAT.
+It proves reverse universal/anti-existence equivalence and conditional exclusion
+of extra/duplicate carriers, with populated and empty positive controls and old
+one-way/empty-application countermodels. Faithful native identities/selectors,
+truthful complete eligible-root RLS/field facts and a stable source/authority cut
+remain premises. It does not prove SQL generation, PostgreSQL refinement,
+NULL/collation conversions, issuer or callable/view-dependency/concurrent-DDL
+closure, graph storage or full B08/production admission. US-056-AC1/AC6/AC7 gain
+component evidence only; the original goal remains active at26/132.
