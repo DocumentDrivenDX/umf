@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "/private/tmp/truss-security-main-integration/tests/security-query-carrier-domains.test.ts": "5466ec0ed9ebcd7e498216ccac373a33b104effbf60ad967bfec748f7f8f21e4",
+    "/private/tmp/truss-security-main-integration/tests/security-graph-source.test.ts": "dade90d9ec040b214900c149403b1fcaf009e82c7475c30f78ac51e40f83f498",
+    "tools/security/query-carrier-domains-browser.ts": "e2fb66097203535e591275ea34a33ea21119f336e1ec0a226eb91226163c6073"
+  },
+  "hostTests": {
+    "command": "bun test tests/security-query-carrier-domains.test.ts tests/security-graph-source.test.ts",
+    "cwd": "/private/tmp/truss-security-main-integration",
+    "tests": 14,
+    "assertions": 58,
+    "failures": 0
+  },
+  "typecheck": {
+    "command": "bun node_modules/typescript/bin/tsc --ignoreConfig --strict --noEmit --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM --skipLibCheck /private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-use.ts",
+    "exitCode": 0,
+    "initialAttempt": {
+      "exitCode": 1,
+      "error": "TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use --ignoreConfig to skip this error."
+    }
+  },
+  "scope": "Targeted portable module closure and host regression; not full Truss runtime or backend acceptance"
+}

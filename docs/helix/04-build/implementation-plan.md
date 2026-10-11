@@ -11295,3 +11295,41 @@ All gate and per-run fingerprinted sources still match current bytes. Exact
 full output is retained at `evidence/security/acceptance-runs/d30ed421-7183-4b9c-8ac9-2723a5b56278/acceptance.json`.
 No additional backend case or support profile is promoted; the active full
 security objective remains open.
+
+
+### Query carrier native-type correspondence — 2026-10-11
+
+US-056-AC6/B08 gains actual Truss issued-query physical preflight: the text/int64
+consumer now checks native column type OIDs before collection/application SQL.
+The carrier descriptor check is a separate fixed42501 phase; it does not rely
+on Boolean short-circuiting to avoid parsing missing-column references.
+Native evidence `evidence/security/query-carrier-domains/62bb09eb-397c-4772-b4d5-ae1bf6f0704b`
+retains25 original observations and11 frozen source pins. A retained original
+inspection-owner predicate handoff is freshly consumed by the issued lowerer,
+then its checked return is installed on PostgreSQL17.9. Alice's exact RAB output
+is restored after each wrong salary type (text/int4/numeric/domain), wrong ID
+type, missing field and missing view control; substitutions return no application
+output and the fixed carrier-unavailable42501. Distinct ordinary actors retain
+native identity and separate original-use permission refusals.
+
+Actual Chromium matches the same native program/checks/return and refuses copied
+programs. Fourteen host tests/58 assertions and strict module-closure typecheck
+pass; the initial CLI TS5112 and corrected invocation are explicitly retained.
+Native cleanup completed before successful receipt publication. View nullability
+remains an independent value-completeness check, not inferred from attnotnull.
+Native current type correspondence does not prove original source authentication,
+complete view dependencies, concurrent DDL exclusion, actual graph execution,
+or complete B08/production admission. Broader acceptance stays26/132 and the
+full security goal remains active.
+
+Final source-current run is
+`evidence/security/query-carrier-domains/0e5d2b6f-fbbd-445c-8cb5-6a40e3dd28c8`.
+The initial62bb09eb capture/review remains historical. The refreshed native
+producer retains nine actual refusal error transcripts and owned removal output;
+raw host and strict compiler logs are retained. Astra independently verified all
+25 vectors,11 exact native current/archive source pins,13 browser pins, installed
+issued-fragment correspondence and raw errors/cleanup/14-test58-assertion logs.
+No scoped blocker remains. The existing strict12-security-module checker also
+passes with exact source archive and raw output. Truss merged six concurrent
+Python-main commits without changing any tested source. Broader source/authenticated
+issuer, view/dependency/concurrent-DDL and full B08 gates remain required.

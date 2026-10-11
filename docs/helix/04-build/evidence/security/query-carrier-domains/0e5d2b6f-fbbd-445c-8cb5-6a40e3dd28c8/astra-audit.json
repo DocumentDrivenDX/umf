@@ -1,0 +1,175 @@
+{
+  "status": "passed",
+  "method": "Read-only source and retained native/browser evidence audit; no native, browser, Bun test or compiler rerun by reviewer",
+  "nativeReceiptSha256": "f1cf422aa10ad1fbb1049bb31679f4af63b0c6195f9cf87e28ab224c6a1a6e02",
+  "captureSha256": "8ed76c9d7fd59c07671789a17187eca8da419b307efcb8afdb2e63c95e678544",
+  "sourcesZipSha256": "49530b42d8adecf1d1558d31cf5255ec098431d3a5192cb8cef1459c63b796d5",
+  "browserReceiptSha256": "ce70402dfd310bc80ecf32e1437e9682272f2a062bc5f2349e0d3bc8b9fe9b36",
+  "verificationReceiptSha256": "f652b246204c6cb4ff4256a414c97feaa9c4ac904d0cbe8154086ab08a78d42b",
+  "sourcePins": 11,
+  "exactArchiveEntryCount": 11,
+  "allArchivedBytesCurrent": true,
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-query-carrier-domains.py": "a25e32e1e51e21639459a47d36cbb7a43cd997fca6d25c58e5ca5bf18ec41407",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "docs/helix/04-build/evidence/security/weft-original-use.json": "a95e091a5d81b0b09c5dced2b0823485d9c5d3ee80f62cc16d4a55554d49dffa",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-use.ts": "232672f54adb502d208fec7f92baa9fb3c92a8c7e74ad812bf2bcf32200e104f",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-carrier-domains.ts": "3cace41bf21db0ee7cbab87ba2f68be66ebe3734299c6d933418485c13e33968",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-source-completeness.ts": "51163293d9622edf2107f6950a3b5b638833245928a11c0e9481a8c0b32aa5c8",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27"
+  },
+  "lowererModuleClosure": [
+    "security-graph-source.ts",
+    "security-predicate.ts",
+    "security-query-carrier-domains.ts",
+    "security-query-use.ts",
+    "security-source-completeness.ts"
+  ],
+  "nativeObservations": 25,
+  "nativeObservationIds": [
+    "umf_sec_alice:original-identity",
+    "umf_sec_bob:original-identity",
+    "umf_sec_outsider:original-identity",
+    "matching-view-domain",
+    "issued-query-original-result",
+    "umf_sec_bob:separate-query-permission-refuses",
+    "umf_sec_outsider:separate-query-permission-refuses",
+    "text:native-descriptor-refuses",
+    "text:issued-query-refuses-before-application",
+    "text:restored-query",
+    "int4:native-descriptor-refuses",
+    "int4:issued-query-refuses-before-application",
+    "int4:restored-query",
+    "numeric:native-descriptor-refuses",
+    "numeric:issued-query-refuses-before-application",
+    "numeric:restored-query",
+    "domain:native-descriptor-refuses",
+    "domain:issued-query-refuses-before-application",
+    "domain:restored-query",
+    "wrong-id:issued-query-fixed-refusal",
+    "wrong-id:restored-query",
+    "missing-salary:issued-query-fixed-refusal",
+    "missing-salary:restored-query",
+    "missing-relation:fixed-refusal",
+    "final-restored-query"
+  ],
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "originalArtifactExactlyMatchesRetainedFoundation": true,
+  "originalRequestDigestsMatchHandoff": true,
+  "independentAliceOriginalResult": [
+    [
+      "RAB"
+    ]
+  ],
+  "installedRoutineExactlyMatchesIssuedCheckedReturn": true,
+  "guardOrder": [
+    "original-use permission",
+    "native carrier descriptors",
+    "source value completeness",
+    "application return"
+  ],
+  "viewColumnNotNullFlags": [
+    false,
+    false
+  ],
+  "browser": {
+    "pins": 13,
+    "allCurrent": true,
+    "producerCopyMatchesCurrent": true,
+    "engine": "153.0.8010.12",
+    "exactProgramAndReturnCorrespondence": true,
+    "copiedProgramRefusals": 2,
+    "externalRequests": 0
+  },
+  "verification": {
+    "retainedTestSourceCopiesMatch": true,
+    "testDeclarations": 14,
+    "exactNamedPassLines": 14,
+    "tests": 14,
+    "assertions": 58,
+    "failures": 0,
+    "files": 2,
+    "strictTypecheckExit": 0,
+    "runs": [
+      {
+        "name": "host-tests",
+        "command": [
+          "bun",
+          "test",
+          "tests/security-query-carrier-domains.test.ts",
+          "tests/security-graph-source.test.ts"
+        ],
+        "cwd": "/private/tmp/truss-security-main-integration",
+        "exitCode": 0,
+        "logSha256": "e6717ac036a69ead3dbe363276a108391d734b030e1f3f5e3025c551299aa620"
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "bun",
+          "node_modules/typescript/bin/tsc",
+          "--ignoreConfig",
+          "--strict",
+          "--noEmit",
+          "--target",
+          "ES2022",
+          "--module",
+          "ESNext",
+          "--moduleResolution",
+          "bundler",
+          "--lib",
+          "ES2022,DOM",
+          "--skipLibCheck",
+          "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-use.ts"
+        ],
+        "cwd": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+        "exitCode": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "rawHostTestAndCompilerLogsRetained": true
+  },
+  "nativeRefusals": {
+    "count": 9,
+    "ids": [
+      "umf_sec_bob:separate-query-permission-refuses",
+      "umf_sec_outsider:separate-query-permission-refuses",
+      "text:issued-query-refuses-before-application",
+      "int4:issued-query-refuses-before-application",
+      "numeric:issued-query-refuses-before-application",
+      "domain:issued-query-refuses-before-application",
+      "wrong-id:issued-query-fixed-refusal",
+      "missing-salary:issued-query-fixed-refusal",
+      "missing-relation:fixed-refusal"
+    ],
+    "exactNativeSqlstateMessageAndEmptyStdoutVerified": true,
+    "allExitCodes": 3
+  },
+  "cleanup": {
+    "containerId": "c4b0a50816cae88ab9f3f8bdf1b27945a45c63cebaa9b6448ff4fa43480cb274",
+    "ownershipRunId": "0e5d2b6f-fbbd-445c-8cb5-6a40e3dd28c8",
+    "exitCode": 0,
+    "stdout": "c4b0a50816cae88ab9f3f8bdf1b27945a45c63cebaa9b6448ff4fa43480cb274\n",
+    "stderr": ""
+  },
+  "changedPinsFromHistorical62bb09eb": [
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-query-carrier-domains.py"
+  ],
+  "nativeProgramAndObservationsUnchangedFromHistorical62bb09eb": true,
+  "blockingFindings": [],
+  "limits": [
+    "The retained helper, Bun module, and runtime source hashes are pre/post custody evidence, not hermetic toolchain or concurrent-source-mutation exclusion.",
+    "Native refusal text is retained decoded subprocess output, not raw network-wire evidence.",
+    "Cleanup audit verifies retained Docker removal exit0/stdout exact container ID and source-level label check; no additional live Docker inspection was performed.",
+    "Browser evidence qualifies actual Chromium lowering and issued-program custody, not database execution.",
+    "Strict compiler success is supported by retained exit0 and exact empty output log; the host toolchain installation is not hermetically pinned.",
+    "No fresh authenticated compiler issuance, complete mapping/view-dependency/current-cut correspondence, concurrent DDL fence, graph execution, or B08/full-backend qualification."
+  ]
+}
