@@ -346,3 +346,27 @@ policy. Additional host-classified policy attributes remain allowed. Backend
 bindings must account for external/native authority attributes and all writers;
 this source analysis cannot establish native custody, complete role inventory,
 clock participation or facts from an authenticated provider.
+
+
+### Identity and endpoint transport dependency closure — 2026-10-11
+
+`securityIdentityTransportDependencies` is an extension-owned pure metadata
+operation over the original interpreted security0.1/core0.8 record/association
+subset. Preserve policy-read dependencies separately. Select subject, rule-target
+and existential-association records, then reach their declared endpoint target
+types to a finite closure. Include each selected record's declared core Key and
+all selected endpoint components. Preserve key component order, endpoint role
+order and exact document/module/element references; source labels and native row
+positions cannot reconstruct identity. Return per-record keyId/keyFields/endpoint
+metadata plus a conservative field union, retaining original policy associations.
+This also covers association resource targets and nested association endpoints.
+Unknown/incomplete original interpretation refuses without source mutation.
+
+The Staff/Project/Resource fixture has eight policy-read fields but ten identity
+transport fields: assignmentId and ownerId are additional instance-key components.
+Salary remains outside this identity/policy-read closure. Keep disclosure, query,
+additional attribute validation and complete trusted fact construction separate;
+this operation neither authenticates a producer nor admits a physical mapping.
+Backend compilers must map the original ordered key/endpoint requirements, not
+invent identities from row ordinal, hash alone or labels. Core Key meaning is
+reused; no new core security admission or storage worldview is introduced.

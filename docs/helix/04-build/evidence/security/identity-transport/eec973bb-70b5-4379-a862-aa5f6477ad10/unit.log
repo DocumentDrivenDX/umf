@@ -1,0 +1,21 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/identity-transport.test.ts:
+(pass) identity transport adds association keys without relabeling policy reads [26.92ms]
+(pass) compound original identity components retain order [8.58ms]
+(pass) endpoint components preserve original role order and qualified target [4.14ms]
+(pass) unused ontology records do not become inferred ownership or capture requirements [4.87ms]
+(pass) literal association predicates still require its key and endpoint transport [3.10ms]
+(pass) unknown original meaning refuses identity transport without mutating source [6.13ms]
+(pass) association resource targets include endpoint target identities without an exists read [3.09ms]
+(pass) endpoint identity selection reaches nested association targets [2.76ms]
+
+tests/security/dependencies.test.ts:
+(pass) typed dependency closure includes endpoint components and exact identity keys [2.51ms]
+(pass) a write binding cannot omit a policy-read field to avoid separate policy mutation authority [282.00ms]
+(pass) incomplete interpretation cannot produce an apparently complete dependency inventory [2.19ms]
+
+ 11 pass
+ 0 fail
+ 24 expect() calls
+Ran 11 tests across 2 files. [1060.00ms]

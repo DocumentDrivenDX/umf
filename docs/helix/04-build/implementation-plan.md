@@ -11592,3 +11592,30 @@ The archive cut is one physical prerequisite for CONTRACT-063 and STP-056 B11/B1
 Astra required explicit formal state qualification: the final released-guard counter retains held-before/held-after and unchanged positive parent identity, but release is stipulated rather than derived from a rollback/stack transition. Saved SMT files have exact receipt digests/readback and fresh-context replay; prior5242b34b retains the pre-review formula/source tuple.
 
 Truss4ac008e7 is pushed directly to main with final source, tests and retained evidence. Astra independently replays all eight final formulas and verifies native200-source/1614-binary/twelve-test/482-import/owned-cleanup evidence and the exact four-failure countervariant. All437 unique registered gate source fingerprints plus gate/plan remain current; retained correspondence is not another full-gate execution. Broader security acceptance remains open.
+
+
+### Shared original identity/endpoint transport closure — 2026-10-11
+
+Added `securityIdentityTransportDependencies` and its metadata type to the pure
+UMF extension API. The original policy-dependency operation retains its existing
+meaning. New closure adds selected instance Keys and declared endpoint transport,
+including association resource targets and nested endpoint types; original key and
+role component orders are preserved. The ten-field original fixture identifies
+assignmentId/ownerId beyond its eight live policy reads. This supplies the next
+backend fact-reconstruction obligation without Python semantic traversal.
+
+Final `evidence/security/identity-transport/3eaa920d-af84-4695-8d18-7d797e16a795`
+passes11 unit controls, library/tools TypeScript checks and six actual Chromium
+exported-bundle checks, with390 current/archived source pins and exact bundle SHA256.
+Initial3a57d327 qualifies the earlier nine-unit/five-browser subset before association
+resource-target closure; eec973bb qualifies11/six/library checks but its supplementary
+tools check exposes Playwright recursive-type inference failure. Final JSON tooling
+boundary removes that inference failure; original library types remain unchanged.
+Source/toolchain/dependency delivery is not hermetically qualified, and no installed
+package/native backend or new formal refinement theorem is claimed.
+
+Backend identity-provider capture, original typed key/endpoint fact construction,
+authenticated original mapping/decoder/source/role/config closure and protected
+policy execution/publication remain required. Existing native packets retain their
+original owner source tuples; this owner-only increment does not promote backend
+bindings. Full goal active at26/132 with106 missing; publish directly to main.
