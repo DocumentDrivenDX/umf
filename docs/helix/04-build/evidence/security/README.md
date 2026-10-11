@@ -1308,3 +1308,49 @@ required. The actual protected capture/writer protocol and seven semantic bodies
 remain open. This augments US-056-AC5/AC9/AC10 component evidence without
 promoting any original requirement. Full acceptance remains26/132 and the goal
 stays active.
+
+
+### Protected caller capture: post-elevation information loss — 2026-10-10
+
+[Native observability evidence](truss-capture-observability/533c90f6-3dbe-4d7d-ae83-484617149b4a/native.json) passes10
+observations on PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5. In one physical connection and transaction, direct and unregistered
+wrapper paths enter the same privileged function. Their original effective actors
+differ; the nine post-elevation fields are identical: session person, effective
+writer owner, role setting, database, backend PID, xid, session-role OID, writer
+role OID and entry-routine OID. The wrapper explicitly captures its actor in
+PLpgSQL before entering the writer; direct host capture precedes its native call.
+This avoids relying on SQL target-expression evaluation order.
+
+[Formal equal-input analysis](truss-capture-observability-formal/4b3dbd6b-1c44-49f6-8480-0e84fd4c6a69/proof.json) retains two
+UNSAT separation attempts for arbitrary deterministic decisions over that exact
+tuple, including equal extra state. A SAT population shows that adding a distinct
+trusted pre-entry actor can distinguish the paths. This does not authenticate an
+added caller label or implement capture. The formulas do not prove all PostgreSQL
+protocols impossible: unequal history/nonce/state, trusted host original-call
+custody, native frame/stack evidence and additional provenance remain outside
+the equal-input premise. No HMAC/signature primitive is implemented or proved.
+
+PA02's protected realization therefore must name the independently trusted
+pre-elevation provenance or qualified original-call restriction that enforces
+the registered chain. Sealing only these post-elevation fields cannot recover
+the missing actor; same-entry OID/xid/PID binding alone cannot classify these
+paths. One-use custody must remain, but refusing a second invocation is distinct
+from establishing the original caller of a first invocation. The accepted trusted
+embedding host can supply original call facts under Truss ADR-008 only through
+qualified exclusive physical-connection custody and protected carriers. Native
+SQL arguments do not themselves authenticate Python object identity. Preserve
+the existing invoker elevation guard; neither writer-owner substitution nor
+caller-supplied JSON/GUC fields is an implementation shortcut.
+
+Required protocol tests now include this collision witness, independently
+authenticated pre-entry capture, a forged added actor, copied public context,
+first-use submission through a different wrapper, same/different native attempt,
+transaction and connection, and native plus trusted-host one-use custody across
+savepoint rollback. Original PA-N01–PA-N12 and all132 required cases remain
+required; this supplies US-056-AC5/AC9/AC10 design evidence only. The fixture
+uses local trust actors and synthetic routine/role names, no actual Truss registry
+or business effects, and no authenticated subject/production capture qualification.
+PA02 and full backend acceptance remain open at26/132. Earlier cleanup failure
+and preliminary SQL-expression-order run retain their original sources; the
+final receipt alone qualifies the explicit capture order.
