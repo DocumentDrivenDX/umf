@@ -1550,3 +1550,17 @@ This is retained new-only parity only. It does not authenticate the prestate pro
 Astra requested a valid legacy-shaped prestate for the installed-archive mismatch: the final94-observation run changes only the profile and removes the0.2-only `bindings` member, leaving every other native catalog component unchanged. Its intended55000 demonstrates refusal of otherwise silently omitted archive state. The earlier02038994 packet retained that member and remains weaker historical evidence.
 
 Astra ultra independently verified final94/700 and32/697 receipts/pins, corrected legacy shape, exact mismatch errors and restoration. No remaining blocker for retained-prestate parity scope. Review was read-only and did not execute native probes.
+
+## Original full native inventory and key-default correspondence — 2026-10-10
+
+Executing `runtime_collect_new_catalog_inventory` on the unchanged owner-validated natural-count cohort exposed a real staging/verification disagreement: `runtime_stage_new_key` already interpreted omitted `primary` as false, while the inventory compared stored false against SQL NULL. The inventory now applies the same explicit false default. It preserves authored true and false; no primary key is inferred from a key name. The original failed collector execution is retained at `truss-binding-catalog-stage/e50fdd37-6b9b-4a51-89df-33f452f632f1/failure.json`.
+
+`truss-binding-catalog-stage/ea488fcf-d9c1-4417-b9d2-7a39153af847/native.json`: 99 matching observations/700 current/preimage pins; SHA256 `4c3a5d6efeddd78dcc8e9349e7988758a35d77f0e6ece582572dcf78260bccca`.
+
+`truss-owner-catalog-stage/a54de9b1-c3e0-4959-a215-e8a6bc34c531/native.json`: 33 matching observations/697 current/preimage pins; SHA256 `802b9c97d036f53b3acfa8a344b4be4205586e917a86375db47718065fbe6b79`.
+
+The actual binding-aware full inventory now returns5 original Records,9 owned Fields and5 keys; the actual count collector returns5/9/5/0/0/0. It invokes complete core declaration/definition/source and retained-prestate checks. An agreeing positive precedes isolated native substitution of one nonprimary key to primary; the collector refuses with55000 `stored original ordered Key definition correspondence`. Full key_def rows now participate in native before/after refusal and savepoint rollback snapshots, so restoration is directly checked. The final99-observation receipt supersedes951e83ac, whose snapshots omitted key rows. The absent-archive path independently invokes the full count collector and retained verifier, passing33 observations. Versions, captured source custody, cleanup and installer limitations remain as recorded above.
+
+This does not prove present-binding current-cohort authority: the collector still interprets authored core definitions only; byte archive presence does not register ontology relationship semantics. The ingress report basis still refuses present bindings pending registered binding effect interpretation. Authenticated owner/issuer/current-cut/report custody, native relationship/key/incidence interpretation, complete protected mutation/callable closure and final publication remain open. US-056-AC1/AC2/AC10 gain component evidence only; historical acceptance remains26/132.
+
+Astra ultra independently verified final99/700 and33/697 receipts, hashes and current/preimage pins; the isolated exactly-one-key false-to-true fault, intended refusal and full key restoration; actual inventory/counts in both profiles. It found no blocker within authored-core correspondence scope. Review did not execute native probes.

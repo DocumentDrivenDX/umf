@@ -101,6 +101,7 @@ try:
  expected_keys=sorted([[record['id'],key['id'],key.get('primary') is True,[ref['element'] for ref in key['fields']],'accepted_document','domain'] for record in records for key in record['keys']],key=lambda r:(r[0],r[1]))
  check('complete-original-ordered-key-projection',expected_keys,observed_keys)
  c.run('SELECT truss.runtime_verify_new_catalog_prestate(:r::int)',r=packet['staged']['provisionalRevision']);check('absent-archive-retained-parity',True,True)
+ check('absent-archive-full-native-counts',[['5','9','5','0','0','0']],c.run('SELECT * FROM truss.runtime_collect_new_catalog_counts(:r::int)',r=packet['staged']['provisionalRevision']))
  check('unpublished-head',prior_head,c.run('SELECT rev FROM truss.schema_head'))
  def snapshot():return c.run("SELECT (SELECT jsonb_agg(to_jsonb(t) ORDER BY type_id) FROM truss.type_def t),(SELECT jsonb_agg(to_jsonb(p) ORDER BY prop_id) FROM truss.prop_def p),(SELECT jsonb_agg(to_jsonb(k) ORDER BY type_id,key_id) FROM truss.key_def k),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o)")
  state=snapshot();revision=packet['staged']['provisionalRevision']
