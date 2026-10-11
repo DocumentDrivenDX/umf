@@ -51,10 +51,13 @@ adoption remains outside this story.
 
 ## Executable Proof
 
-Primary command: `bun test --timeout 600000 tests/actions-reference`.
-A host harness must start an isolated PostgreSQL 17.9 container, run `store.sql`,
-verify its actual server version and clean up after all sessions complete.
-The handler process uses a separately fingerprinted, network-disabled runtime.
+Primary command: `bun run test:actions`, with a running Docker daemon.
+Setup pulls PostgreSQL 17.9 and the public digest-pinned handler runtime before
+testing. The test harness starts isolated PostgreSQL containers, runs `store.sql`,
+verifies the actual server version and cleans up after all sessions complete.
+The handler process uses a separately fingerprinted, network-disabled runtime;
+invocation still uses `--pull=never`. Containerized test runners require
+`docker run --init` to reap terminated child processes.
 Full core/action regression, schema audits and real Chromium remain separate gates.
 
 ## Data and Setup

@@ -17,8 +17,14 @@ descriptor fields and unknown options; an optional WASM worker imports source
 bundles and emits edited source with a recompilation check.
 Edition 2024 source operations and broader conformance remain unsupported.
 
-Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun test`,
-and `bun run build`. Run browser checks with `bun run test:browser` after installing
+Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun run test`,
+and `bun run build`. `bun run test` builds the browser library, PostgreSQL parser,
+and adapter test bundles before running the complete test suite. Native command
+tests require a running Docker daemon; setup pulls PostgreSQL 17.9 and the public,
+digest-pinned handler image. Handler execution itself still forbids image pulls.
+Run `bun run test:actions` for the PostgreSQL reference command tests. When running
+the test runner inside Docker, use `docker run --init` so terminated child processes
+are reaped. Run browser checks with `bun run test:browser` after installing
 Playwright Chromium, or set `UMF_CHROMIUM_PATH` to an installed Chromium executable.
 
 See [project documentation](docs/helix/README.md) for the activity structure
