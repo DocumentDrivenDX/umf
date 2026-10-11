@@ -87,10 +87,13 @@ with tempfile.TemporaryDirectory(prefix='association-owner-') as directory:
  import io,unittest
  test_log=io.StringIO();test_result=unittest.TextTestRunner(stream=test_log,verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(helpers['BindingTests']))
  (out/'association-tests.log').write_text(test_log.getvalue())
- check('captured-association-tests',43,test_result.testsRun);check('captured-association-tests-pass',True,test_result.wasSuccessful())
+ check('captured-association-tests',50,test_result.testsRun);check('captured-association-tests-pass',True,test_result.wasSuccessful())
  for index,association in enumerate(basis_result.associations):
+  check(f'original-mapping-pointer-{index}',f'/mappings/{index}',association.source_pointer)
+  check(f'original-mapping-fragment-{index}',helpers['wire'](helpers['inputs']()['mappings'][index]).hex(),association.definition_bytes.hex())
   check(f'explicit-storage-pointer-{index}',f'/mappings/{index}/storage',association.storage.source_pointer)
   check(f'explicit-storage-values-{index}',['0','*','0','*',True,'independent',False,None],[association.storage.source_min,association.storage.source_max,association.storage.target_min,association.storage.target_max,association.storage.directed,association.storage.lifecycle,association.storage.composition,association.storage.inverse])
+ check('original-extraction-profile','truss-original-association-json-candidate/0.1.0',basis_result.extraction_profile)
  check('same-original-core',sha(core),sha(basis_result.core_bytes));check('same-original-ontology',sha(ontology),sha(basis_result.ontology_bytes));check('complete-two-associations',2,len(basis_result.associations));check('basis-not-authority','original_source_correspondence_only',basis_result.scope)
  (out/'binding.json').write_bytes(binding)
 unchanged();assert sha(binary.read_bytes())==binary_hash

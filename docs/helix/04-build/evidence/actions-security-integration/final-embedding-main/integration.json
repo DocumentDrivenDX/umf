@@ -1,6 +1,6 @@
 {
   "profile": "umf.actions.final-embedding-main/1",
-  "integratedMain": "0a6c86ff55ec469e76d895062098389845c21d64",
+  "integratedMain": "5b4a4f31770206adbb042d5c6c37d78fa0fccdb9",
   "browserProducerCommit": "b2a5b4cd062b23a030ec058c345f6953f3f1e91a",
   "frozenActionQualification": "2dfa0e144fab9eef443a1364a7fde511e04a64b5",
   "coreSchemaNativeActionDeltaAfter49": [],
@@ -15,5 +15,8 @@
   "releasePublicationPending": false,
   "actualMainDeploymentPending": true,
   "exactInstalledRuntimeApiDeclarationsPassed": true,
-  "signedPagesVerified": 16
+  "signedPagesVerified": 16,
+  "firstFinalCiFailure": "Synthetic merge added newer security proposal evidence to the manifest input set; producer/package/browser gates passed",
+  "htmlChangedByContractEvidenceRefresh": false,
+  "existing16SignaturesValidAfterRefresh": true
 }

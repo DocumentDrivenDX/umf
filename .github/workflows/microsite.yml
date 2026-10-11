@@ -146,6 +146,8 @@ jobs:
         run: bun scripts/schema-browser-embedding-browser.ts
       - name: Qualify artifact collection browser
         run: bun scripts/artifact-collections-browser.ts
+      - name: Build action guides from the actual checkout
+        run: bun run build:docs
       - name: Check action guide generation and examples
         run: |
           bun run test:docs:build
