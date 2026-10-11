@@ -100,6 +100,7 @@ try:
  observed_keys=c.run("SELECT t.element,k.key_id,k.is_primary,array_agg(p.element ORDER BY u.ordinality),k.definition_source_kind,k.definition_document_id FROM truss.key_def k JOIN truss.type_def t ON t.type_id=k.type_id CROSS JOIN LATERAL unnest(k.prop_ids) WITH ORDINALITY u(id,ordinality) JOIN truss.prop_def p ON p.prop_id=u.id GROUP BY t.element,k.key_id,k.is_primary,k.definition_source_kind,k.definition_document_id ORDER BY t.element,k.key_id")
  expected_keys=sorted([[record['id'],key['id'],key.get('primary') is True,[ref['element'] for ref in key['fields']],'accepted_document','domain'] for record in records for key in record['keys']],key=lambda r:(r[0],r[1]))
  check('complete-original-ordered-key-projection',expected_keys,observed_keys)
+ c.run('SELECT truss.runtime_verify_new_catalog_prestate(:r::int)',r=packet['staged']['provisionalRevision']);check('absent-archive-retained-parity',True,True)
  check('unpublished-head',prior_head,c.run('SELECT rev FROM truss.schema_head'))
  def snapshot():return c.run("SELECT (SELECT jsonb_agg(to_jsonb(t) ORDER BY type_id) FROM truss.type_def t),(SELECT jsonb_agg(to_jsonb(p) ORDER BY prop_id) FROM truss.prop_def p),(SELECT jsonb_agg(to_jsonb(k) ORDER BY type_id,key_id) FROM truss.key_def k),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o)")
  state=snapshot();revision=packet['staged']['provisionalRevision']
