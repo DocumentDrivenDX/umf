@@ -1,0 +1,54 @@
+{
+  "profile": "umf.actions.documentation-final-review/1",
+  "reviewedAtUtc": "2026-10-10T06:58:10.468276+00:00",
+  "qualifiedExecutionSource": "1fa21f6ea1d7a3e1009746da99f1a61d444cd489",
+  "buildExamplesBrowserExitCode": 0,
+  "diagramCount": 8,
+  "responsiveVariants": 16,
+  "guidePages": 10,
+  "browserChecks": 20,
+  "rootEntryChecks": 10,
+  "browserScreenshotCount": 100,
+  "buildRefusalControls": 7,
+  "rendererDriftRefused": true,
+  "primaryManualInspection": [
+    "1440-receipts-and-queries-figure-1.png",
+    "390-receipts-and-queries-figure-1.png",
+    "390-execution-figure-1.png",
+    "390-formal-analysis-figure-1.png",
+    "1440-zoom200-receipts-and-queries-figure-1.png",
+    "390-zoom200-index-viewport.png",
+    "390-declarations-figure-2.png",
+    "390-execution-figure-2.png"
+  ],
+  "astraUltraReview": {
+    "pass": true,
+    "remainingFindings": 0,
+    "scope": "Ten guides, eight diagrams, normal desktop/mobile and sampled 200% layouts; final corrected V4/V5/V7 approved"
+  },
+  "scope": "Final documentation packaging verification after the separately frozen execution qualification. Actual primary merge, deployment and release are separate delivery observations.",
+  "workflowManifestRefresh": {
+    "changedGuideOutputs": [
+      "manifest.json"
+    ],
+    "allReviewedHtmlAndAssetsUnchanged": true,
+    "buildChecksPassed": true,
+    "scope": "Workflow runtime handoff changed only manifest input hashes; reviewed browser and visual page bytes remain exact"
+  },
+  "latestMainIntegration": {
+    "revision": "d2ef29e267eafcb6bae28efd3c7974754c1d0b23",
+    "checkedAtUtc": "2026-10-10T20:20:30.085664+00:00",
+    "buildExamplesBrowserExitCode": 0,
+    "freshNativeActions": 119,
+    "freshNativeActionsFailed": 0,
+    "inputHashesVerified": 1319,
+    "scope": "Fresh final website gates after bounded reviewed integration; earlier execution certificate source and visual design review remain unchanged."
+  },
+  "concurrentUiIntegration": {
+    "mainRevision": "5cc29553b18766d852011de9c1790c4e8d93e34e",
+    "buildCheckExitCode": 0,
+    "browserExitCode": 0,
+    "validSignatureClaims": 15,
+    "scope": "Final responsive browser rerun after independently reviewed UI-only merge; diagrams unchanged."
+  }
+}

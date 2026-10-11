@@ -23,12 +23,15 @@ class StableCutInventoryAdmission:
  """Trusted host pins an independently collected, qualified inventory by value.
  A caller-provided expected snapshot cannot establish native qualification.
  Provider and operation must belong to the same externally guarded stable cut.
+ Buffered rows are rechecked before release; endpoint equality cannot rule out
+ intermediate ABA or qualify an uncoordinated writer.
  """
  def __init__(self,expected):self.__expected=canonical(expected)
  def read(self,read_current,operation):
   try:
    if canonical(read_current())!=self.__expected:return {'status':'refused','rows':[]}
    rows=json.loads(canonical(operation()))
+   if canonical(read_current())!=self.__expected:return {'status':'refused','rows':[]}
    return {'status':'admitted','rows':rows}
   except Exception:
    # Missing inventory/data or an unknown provider outcome publishes no partial

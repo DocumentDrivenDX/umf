@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "table_name": "taxi_zones",
+  "description": "TLC zone lookup CSV field profile.",
+  "columns": [
+    {
+      "name": "LocationID",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Zone identifier."
+    },
+    {
+      "name": "Borough",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Borough"
+    },
+    {
+      "name": "Zone",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Zone"
+    },
+    {
+      "name": "service_zone",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "service_zone"
+    }
+  ],
+  "primary_key": [
+    "LocationID"
+  ]
+}

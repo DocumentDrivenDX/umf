@@ -1,0 +1,245 @@
+{
+  "status": "passed",
+  "solver": "4.15.4",
+  "checks": [
+    {
+      "id": "complete-interpretation-has-positive-model",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "123a726c0fbb604283e04cb28cc1485a0fb70f55d650480efc0a8527b5fb508a",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 1],\n is_reported_assertion = [OriginalOccurrence!val!0 -> True,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "complete-interpretation-forbids-missing-assertion",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "8325e812ba9760f4f7202cf28d0a252a7f1897b66ca02dbf860ca1137edf7ffa",
+      "model": null
+    },
+    {
+      "id": "complete-interpretation-forbids-invented-assertion",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "84248641b702c06e87d19e5ffedda5abd8eeafc5a516ff4c09f20e98c7ec1ea0",
+      "model": null
+    },
+    {
+      "id": "exact-coverage-selection-forbid-foreign-reported-value",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "d99ebaad0ed3ee990b3c68955b1ae4b8917ec9a9cfac14379748ae841dfb136c",
+      "model": null
+    },
+    {
+      "id": "omit-source-coverage-admits-missing-assertion",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "ecee145e5fed10a2e2432b50c3d1e2013d3198f42b988ef81039cf6bb2826866",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> False],\n owner_classification = [else -> 0],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "omit-semantic-correspondence-admits-wrong-metadata",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a572f6e34489a3ac6567b27008261b128654f3e950f064a95e4b39d3e0cef658",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 2],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "omit-semantic-correspondence-admits-invented-assertion",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b9d136d013889641a8d2b7e0755b3a775b26eb31c5c892143fec34a117b08adf",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> False],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 1],\n is_reported_assertion = [OriginalOccurrence!val!0 -> True,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "omit-unavailable-refusal-admits-opaque-assertion-omission",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "7057c51717d478899af60900a8b89ae24f5a19b762c91bf806a8c4d2713117b0",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 0],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "omit-report-selection-admits-report-omission",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b22937c473e1eba72abafabfb6e7680c204c1f3a715a12f7be9e571c7f7cd747",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 1],\n is_reported_assertion = [else -> False]]"
+    },
+    {
+      "id": "partial-sound-interpretation-forbids-invented-assertion",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "36747bc423a0d751eac76c035f4a7ce61bfb18e1cb361f9f88127b0124d746e7",
+      "model": null
+    },
+    {
+      "id": "partial-sound-interpretation-does-not-prove-completeness",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "3b4c3adb1ab13bc8e6f85bdfe7ea8f1723160266170b864f1926ec2e91b58ee9",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 0],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "complete-structural-coverage-does-not-prove-meaning",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "276c51820e81ec6c93f7427f921455287f0693d3c7e4744aa37f3dda3147a527",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 2],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "absence-carrier-does-not-invent-an-assertion",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "4e6c09a5b204f2d58f6deb92281f0315fe170396d3fa26662d0c35e993bc2750",
+      "model": null
+    },
+    {
+      "id": "equal-source-index-counts-admit-exchanged-occurrences",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "d83ccd21343d8fe192ca81601706d947265d9bfe9a4ec616c7916dcca010bfb8",
+      "model": "[substituted_occurrence = OriginalOccurrence!val!1,\n occurrence = OriginalOccurrence!val!0,\n is_original_value = [else ->\n                      Var(0) == OriginalOccurrence!val!0],\n is_reported_assertion = [OriginalOccurrence!val!0 -> False,\n                          OriginalOccurrence!val!1 -> False,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))],\n is_semantic_assertion = [else ->\n                          Var(0) == OriginalOccurrence!val!0],\n is_indexed_value = [else ->\n                     Not(Var(0) == OriginalOccurrence!val!0)],\n owner_classification = [OriginalOccurrence!val!0 -> 3,\n                         else -> 2]]"
+    },
+    {
+      "id": "logical-completeness-does-not-prove-authority-or-enforcement",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "cc5910b2af3af0f3b2eb42ca9d8d63337d4d934805767e2dabf477c64f655c4f",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n installed_enforcement = False,\n authenticated_registered_meaning = False,\n is_original_value = [else -> True],\n is_semantic_assertion = [else -> True],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 1],\n is_reported_assertion = [OriginalOccurrence!val!0 -> True,\n                          else ->\n                          Not(Or(Not(is_indexed_value(Var(0))),\n                                 Not(owner_classification(Var(0)) ==\n                                     1)))]]"
+    },
+    {
+      "id": "pointer-only-join-admits-cross-document-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "bfef738535407b5d00c243cb178213712c3335a89da6b2fe2c3057caf13529f9",
+      "model": "[substituted_occurrence = OriginalOccurrence!val!1,\n occurrence = OriginalOccurrence!val!0,\n original_source_bytes = [OriginalOccurrence!val!0 ->\n                          OriginalSourceBytes!val!0,\n                          else -> OriginalSourceBytes!val!1],\n document_id = [OriginalOccurrence!val!0 -> \"doc-a\",\n                else -> \"doc-b\"],\n decoded_pointer = [else -> \"/modules/0/elements/0/kind\"]]"
+    },
+    {
+      "id": "document-pointer-join-admits-source-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "09d0e0278b109162161c429a090cbbceff41af2ffff0dbf684e4e96c73f98868",
+      "model": "[substituted_occurrence = OriginalOccurrence!val!1,\n occurrence = OriginalOccurrence!val!0,\n original_source_bytes = [OriginalOccurrence!val!0 ->\n                          OriginalSourceBytes!val!0,\n                          else -> OriginalSourceBytes!val!1],\n document_id = [else -> \"doc-a\"],\n decoded_pointer = [else -> \"/modules/0/elements/0/kind\"]]"
+    },
+    {
+      "id": "complete-original-tuple-forbids-occurrence-substitution",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "16e2dc30cd5f9251b536724e329468c397c9ac7f60a6b743fe49733bab7f23d1",
+      "model": null
+    },
+    {
+      "id": "complete-rule-inventory-has-positive-model",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "4f7792b59f4d67078892f66a7bd8d2d5263ee5702fbb2a4b00e28ccf366583f0",
+      "model": "[rule_a = SemanticRuleIdentity!val!0,\n occurrence = OriginalOccurrence!val!0,\n is_original_value = [else -> True],\n is_reported_assertion = [else -> True],\n reported_semantic_rule = [else -> True],\n is_indexed_value = [else -> True],\n is_semantic_assertion = [else -> True],\n owner_classification = [else -> 1],\n original_semantic_rule = [else -> True],\n inventoried_semantic_rule = [else -> True]]"
+    },
+    {
+      "id": "complete-rule-inventory-reports-two-rules-at-one-position",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "022f0e8772556f39ebc3e942f8461d02f0d5558f875b2ec8793bf115b2557f86",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n rule_b = SemanticRuleIdentity!val!1,\n rule_a = SemanticRuleIdentity!val!0,\n is_original_value = [else -> True],\n is_reported_assertion = [else -> True],\n reported_semantic_rule = [else -> True],\n is_indexed_value = [else -> True],\n is_semantic_assertion = [else -> True],\n owner_classification = [else -> 1],\n original_semantic_rule = [else -> True],\n inventoried_semantic_rule = [else -> True]]"
+    },
+    {
+      "id": "complete-rule-inventory-forbids-missing-rule",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "9399bece49812b5811487e12ba3dec5414f6e7b547c4077cf2b6617b34a0a88b",
+      "model": null
+    },
+    {
+      "id": "complete-rule-inventory-forbids-invented-rule",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "5e62573849136733b2f3bb6dcf76015c242ddf0a26b2b35b06ca803c4cd456af",
+      "model": null
+    },
+    {
+      "id": "position-completeness-admits-one-of-two-rules-omitted",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "1221a09f73e88bc49342edb195d9d098f700d659ed9e1683cda3983d2d222b73",
+      "model": "[occurrence = OriginalOccurrence!val!0,\n rule_b = SemanticRuleIdentity!val!1,\n rule_a = SemanticRuleIdentity!val!0,\n is_reported_assertion = [else -> True],\n is_semantic_assertion = [else -> True],\n reported_semantic_rule = [else ->\n                           Not(Var(1) ==\n                               SemanticRuleIdentity!val!1)],\n is_indexed_value = [else -> True],\n owner_classification = [else -> 1],\n inventoried_semantic_rule = [else ->\n                              Not(Var(1) ==\n                                  SemanticRuleIdentity!val!1)],\n is_original_value = [else -> True],\n original_semantic_rule = [else -> True]]"
+    },
+    {
+      "id": "omit-rule-meaning-admits-one-of-two-rules-omitted",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "937cc31eb1da7583d349f8487e736474a2d9499231edec2a977e445d94da075d",
+      "model": "[rule_b = SemanticRuleIdentity!val!1,\n rule_a = SemanticRuleIdentity!val!0,\n occurrence = OriginalOccurrence!val!0,\n is_reported_assertion = [else -> True],\n reported_semantic_rule = [else ->\n                           Not(Var(1) ==\n                               SemanticRuleIdentity!val!1)],\n is_indexed_value = [else -> True],\n is_semantic_assertion = [else -> True],\n owner_classification = [else -> 1],\n original_semantic_rule = [else -> True],\n inventoried_semantic_rule = [else ->\n                              Not(Var(1) ==\n                                  SemanticRuleIdentity!val!1)],\n is_original_value = [else -> True]]"
+    }
+  ],
+  "sourcePreimages": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-original-occurrence-closure.py",
+      "archive": "0/prove-original-occurrence-closure.py",
+      "sha256": "a694c6300c43285e81c28a0eb3a50da4947432fc72136e6dfb1dd40927571962"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/postgresql/src/acceptance-json.ts",
+      "archive": "1/acceptance-json.ts",
+      "sha256": "e7f4623c4581ec9a0d5ad7da3cb186afab6d0f9a5d19a52c77f666088a96ee33"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-original-occurrence-inventory.ts",
+      "archive": "2/catalog-original-occurrence-inventory.ts",
+      "sha256": "cc3a70ece0ced515635f00d4623a2e8bf2901eb49168e6ac171e67e137eaf359"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-core-assertion-identities.ts",
+      "archive": "3/catalog-core-assertion-identities.ts",
+      "sha256": "5d0f2d7fb097f3853473c845f81439d7b74791b477b51e47a92add23f9fa6fab"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-assertion-observations.ts",
+      "archive": "4/catalog-assertion-observations.ts",
+      "sha256": "51385ea9c3aad2ff51e1049740425c375f00bddd211799da4df8248390202bd5"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/tests/catalog-core-assertion-identities.test.ts",
+      "archive": "5/catalog-core-assertion-identities.test.ts",
+      "sha256": "86044c1315cd834242fa00d9d2ae80771e59ec5af60f6a4532a96f16df37cfce"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/docs/helix/04-build/acceptance-runtime-handoff.md",
+      "archive": "6/acceptance-runtime-handoff.md",
+      "sha256": "90b33597bde6c1ec7632d2a7995bc9ce56d4567103099363f91f9ea3e45aecd9"
+    }
+  ],
+  "premises": [
+    "Exact original value inventory and selected occurrence identity; lexer correspondence is not proven here",
+    "Resolved classifications agree with original registered owner meaning; actual owner implementation/registration is not proven here",
+    "Position report selection exactly follows classifications; full rule reporting additionally requires exact rule-family interpretation and selection",
+    "Original document/source-byte/pointer tuple is injective; no SHA collision-freedom theorem",
+    "Local solver installation and fresh SMT replay; not hermetic"
+  ],
+  "scope": "Quantified occurrence-position and distinct rule-family logical closure and omission/substitution counterexamples, not JavaScript/JSON parser refinement, complete semantic profile, database enforcement or native report admission",
+  "acceptancePromoted": false,
+  "currentImplementation": "complete:false and interpretationQualified:false; sourceCoverageComplete is structural only"
+}

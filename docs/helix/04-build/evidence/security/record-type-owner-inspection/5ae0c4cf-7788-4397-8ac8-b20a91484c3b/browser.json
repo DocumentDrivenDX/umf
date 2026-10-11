@@ -1,0 +1,245 @@
+{
+  "browserVersion": "153.0.8010.12",
+  "rows": [
+    {
+      "id": "exact-owner-context",
+      "passed": true
+    },
+    {
+      "id": "qualified-record-target",
+      "passed": true
+    },
+    {
+      "id": "appended-occurrence-retained",
+      "passed": true
+    },
+    {
+      "id": "receipt-transition-retained",
+      "passed": true
+    },
+    {
+      "id": "opaque-original-content-retained",
+      "passed": true
+    },
+    {
+      "id": "consistency-without-issuer-or-enforcement",
+      "passed": true
+    },
+    {
+      "id": "recursive-record-membership-terminates",
+      "passed": true
+    },
+    {
+      "id": "bare-links-stay-unverified",
+      "passed": true
+    },
+    {
+      "id": "missing-receipt-does-not-promote-role",
+      "passed": true
+    },
+    {
+      "id": "same-name-other-qualified-owner",
+      "passed": true
+    },
+    {
+      "id": "whole-current-context-stale",
+      "passed": true
+    },
+    {
+      "id": "opaque-current-change-stale",
+      "passed": true
+    },
+    {
+      "id": "same-target-role-change-stale",
+      "passed": true
+    },
+    {
+      "id": "same-population-order-change-stale",
+      "passed": true
+    },
+    {
+      "id": "current-object-key-order-harmless",
+      "passed": true
+    },
+    {
+      "id": "receipt-object-key-order-harmless",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-source-opaque",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-target-opaque",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-target-role",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-target-module",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-reference-module",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-reference-role",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-reference-path",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-record-path",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-field-author-identity",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-field-author-kind",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-field-author-context",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-record-author-context",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-missing-kind-author",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-invented-authentication",
+      "passed": true
+    },
+    {
+      "id": "receipt-substitution-invented-native-path",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-receipt-1.0.0",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-receipt-5.0.0",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-receipt-7.0.0",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-receipt-future",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-source-0.1.0",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-source-0.6.0",
+      "passed": true
+    },
+    {
+      "id": "unadmitted-source-0.8.0",
+      "passed": true
+    },
+    {
+      "id": "invalid-identity-null",
+      "passed": true
+    },
+    {
+      "id": "invalid-identity-[]",
+      "passed": true
+    },
+    {
+      "id": "invalid-identity-{}",
+      "passed": true
+    },
+    {
+      "id": "invalid-identity-{\"module\":\"m\",\"element\":\"v\",\"extra\":true}",
+      "passed": true
+    },
+    {
+      "id": "missing-qualified-owner",
+      "passed": true
+    },
+    {
+      "id": "receipt-getter-refused",
+      "passed": true
+    },
+    {
+      "id": "receipt-getter-not-invoked",
+      "passed": true
+    },
+    {
+      "id": "input-copy-isolation",
+      "passed": true
+    },
+    {
+      "id": "output-copy-isolation",
+      "passed": true
+    },
+    {
+      "id": "real-kind-transitions-and-renewed-context",
+      "passed": true
+    },
+    {
+      "id": "individually-valid-pre-Record-Field-author-stale",
+      "passed": true
+    },
+    {
+      "id": "individually-valid-foreign-context-Record-author-stale",
+      "passed": true
+    },
+    {
+      "id": "closed-result-positive",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-issuer-authority",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-enforcement",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-consistency",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-operation-version",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-extra-authority",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-bare-link-type-promotion",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-wrong-link-role",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-wrong-target-kind",
+      "passed": true
+    },
+    {
+      "id": "closed-result-refuses-missing-target-kind",
+      "passed": true
+    }
+  ]
+}

@@ -971,8 +971,8 @@
   ],
   "sha256": {
     "fixtures/validation/key-parquet-projection-corpus.json": "8e814387d737f0085747ebed675de660f707cb5ad11c3001ff2698ef453621ff",
-    "/home/erik/Projects/umf/scripts/core-ideals/key-parquet-projection-native.py": "178f2f87a4c80c65910b8cb7d2ad730d1222d735442fad1a766d2920d44060c9",
-    "scripts/core-ideals/key-parquet-projection-oracle.ts": "f2b7153b1ffc219c5ac4dcc229b64fb753e0c83a82c57ee6253f4ba9ed24d0df",
+    "scripts/core-ideals/key-parquet-projection-native.py": "178f2f87a4c80c65910b8cb7d2ad730d1222d735442fad1a766d2920d44060c9",
+    "scripts/core-ideals/key-parquet-projection-oracle.ts": "8b7a7fd866c6db193d4378ae1ce826dcce3de3d5435b02d948ec39df9121dadf",
     "scripts/core-ideals/key-parquet-projection-cases.ts": "881ca0cfff36b56d34e71efe6db92eefa2c6987961536876c03a0223986779c5",
     "src/core-ideals/key-parquet-projection.ts": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c",
     "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
@@ -1002,5 +1002,10 @@
     "fixtures/parquet/keys/projected-decimal-int32.parquet": "410a168759b40517c7631406ae669800c3bb9c24d13649b28b169f853b1f809c",
     "fixtures/parquet/keys/projected-decimal-bytes.parquet": "cfdcd862d3a8af0abba3a8b78d8b589f01e6c209c7d872b94994835cba3743ba",
     "fixtures/parquet/keys/projected-decimal-fixed.parquet": "2a9fb3721dca25ddce07bbf471ccba51ed028aea93df41edf0b7c041da707eb4"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/key-parquet-projection-native.py": [
+      "/work/scripts/core-ideals/key-parquet-projection-native.py"
+    ]
   }
 }

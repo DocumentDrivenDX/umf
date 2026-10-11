@@ -1,0 +1,817 @@
+{
+  "version": "1.0",
+  "table_name": "daily_monthly",
+  "description": ".dly monthly record field projection. Preserve all 31 slots, including nonexistent calendar days marked missing; no daily-row normalization.",
+  "columns": [
+    {
+      "name": "ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Station code.",
+      "domain_type": "ghcn_station"
+    },
+    {
+      "name": "YEAR",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Source year."
+    },
+    {
+      "name": "MONTH",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Source month."
+    },
+    {
+      "name": "ELEMENT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Element code; additional codes stay open.",
+      "domain_type": "ghcn_element"
+    },
+    {
+      "name": "VALUE1",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE2",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE3",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE4",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE5",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE6",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE7",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE8",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE9",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE10",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE11",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE12",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE13",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE14",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG14",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG14",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG14",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE15",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG15",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG15",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG15",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE16",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG16",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG16",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG16",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE17",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG17",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG17",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG17",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE18",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG18",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG18",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG18",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE19",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG19",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG19",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG19",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE20",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG20",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG20",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG20",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE21",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG21",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG21",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG21",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE22",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG22",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG22",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG22",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE23",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG23",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG23",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG23",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE24",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG24",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG24",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG24",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE25",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG25",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG25",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG25",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE26",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG26",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG26",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG26",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE27",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG27",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG27",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG27",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE28",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG28",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG28",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG28",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE29",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG29",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG29",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG29",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE30",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG30",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG30",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG30",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "VALUE31",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Raw integer; -9999 is missing. Units depend on ELEMENT.",
+      "domain_type": "ghcn_value"
+    },
+    {
+      "name": "MFLAG31",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "QFLAG31",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    },
+    {
+      "name": "SFLAG31",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "One-character source flag; blank retained."
+    }
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "ID",
+        "references_table": "stations",
+        "references_column": "ID"
+      }
+    ]
+  }
+}

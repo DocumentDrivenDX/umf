@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 176, in <module>
+    content=(F/p).read_bytes();assert hashlib.sha1(b'blob '+str(len(content)).encode()+b'\0'+content).hexdigest()==oid and v['inheritedFixtureInputs'][p]==sha(F/p),('Inherited baseline fixture changed',p)
+AssertionError: ('Inherited baseline fixture changed', 'fixtures/actions/README.md')

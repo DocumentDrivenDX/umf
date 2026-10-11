@@ -1,0 +1,2159 @@
+{
+  "profile": "umf.actions.integrated-acceptance-certificate/1",
+  "status": "certified for the stated bounded acceptance profile",
+  "certified": true,
+  "certifiedAtUtc": "2026-10-10T00:16:54.078666+00:00",
+  "scope": {
+    "core": "0.8.0",
+    "extension": {
+      "id": "umf.actions",
+      "version": "0.1.0"
+    },
+    "contracts": [
+      "CONTRACT-900",
+      "CONTRACT-901"
+    ],
+    "stories": [
+      "US-078",
+      "US-056"
+    ],
+    "configuration": "Exact captured core inputs and fixed owned PostgreSQL reference store; tested scalar and independent directed set relationship subsets",
+    "excluded": [
+      "Production/downstream adoption",
+      "Unbounded or universal correctness",
+      "Arbitrary handlers, administrator-added triggers or ordinary outside writers",
+      "External business effects, workflows or cross-store transactions",
+      "Unqualified native layouts and future profile meanings"
+    ]
+  },
+  "source": {
+    "revision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+    "capturedCoreInputCount": 7662,
+    "nativeActionInputCount": 1190,
+    "completeCoreInputInventory": "fixtures/validation/core-check-refresh/native-browser.json",
+    "nativeActionInputInventory": "fixtures/actions/reference-foundation.json"
+  },
+  "historicalCertificate": {
+    "path": "docs/helix/04-build/evidence/actions-certification.json",
+    "sha256": "807a379eae15cf49998890c3ac02f16837192dfde46f1730d438fd1dda7c18da",
+    "unchanged": true
+  },
+  "audit": {
+    "profile": "umf.actions.integrated-qualification-audit/1",
+    "pass": true,
+    "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+    "sourceInputs": 7662,
+    "nativeActionInputs": 1190,
+    "nativeBrowserCommands": 174,
+    "auxiliaryCommands": 6,
+    "distinctTests": 2399,
+    "distinctFiles": 445,
+    "assertions": 136786,
+    "failures": 0,
+    "browserCases": 44,
+    "nativeTests": 119,
+    "criteria": 21,
+    "nativeRefinementHistories": 216,
+    "nativeRefinementTransitions": 648,
+    "actualImplementationMutantHashesVerified": 5,
+    "qualifierBufferedStreamIndependentlyVerified": false,
+    "nativeRawExecutionEvidence": [
+      "fixtures/validation/core-check-refresh/regression-4.log"
+    ],
+    "supplementalMetadataExecution": {
+      "command": [
+        "bun",
+        "/private/tmp/umf-integrated-handler-metadata-probe-5c0b99e5.ts"
+      ],
+      "exitCode": 0,
+      "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+      "log": "/private/tmp/umf-integrated-handler-metadata-probe-5c0b99e5.log",
+      "logSha256": "e9b8c90e1f8bbd1b668de221e7dd291597bf90df60be452d71a53172d34267bf",
+      "scriptSha256": "e89275308ffecf9d2714db905f37cd7de2eaef8f89c209d1ad340bbd22b57785"
+    },
+    "scope": "Exact recorded bounded action/reference profile and integrated core prerequisites; no universal completeness or production/downstream adoption claim",
+    "finalizationTooling": {
+      "current": {
+        "profile": "umf.actions.core08-finalization-runtime/1",
+        "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "sameConfig": true,
+        "parentLayersPreserved": true,
+        "addedLayers": [
+          "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+          "sha256:4771ae7c48f6ebf1badf8f2e28d76e3b4732b6f571656aaee082716c4b8876ae"
+        ],
+        "files": {
+          "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+          "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+          "seal.py": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9"
+        },
+        "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+      },
+      "historicalVariants": [
+        {
+          "profile": "umf.actions.core08-finalization-runtime/1",
+          "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "sameConfig": true,
+          "parentLayersPreserved": true,
+          "addedLayers": [
+            "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+            "sha256:1f876902bf9a7c1c21dd8d7afbba13ae4b1a8aaa1ebc13bea85c3f913545e150"
+          ],
+          "files": {
+            "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+            "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+            "seal.py": "a27e9d967f3901dbf905675d547fcf486bcd9f2c67f351b41398654dfae5bf43"
+          },
+          "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+        }
+      ],
+      "failedAttempts": [
+        {
+          "execution": {
+            "stage": "publish",
+            "ownedContainer": "umf-integrated-qualification-5c0b99e5-publish",
+            "command": [
+              "docker",
+              "run",
+              "--network",
+              "umf-integrated-qualification-5c0b99e5",
+              "-v",
+              "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+              "-v",
+              "/var/run/docker.sock:/var/run/docker.sock",
+              "-e",
+              "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+              "-e",
+              "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+              "--name",
+              "umf-integrated-qualification-5c0b99e5-publish",
+              "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+              "publish"
+            ],
+            "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "exitCode": 1,
+            "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+            "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+            "logSha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d",
+            "generatedReports": {
+              "fixtures/validation/core-check-refresh/publication.json": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb"
+            }
+          },
+          "runtime": {
+            "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "command": [
+              "publish"
+            ],
+            "entrypoint": [
+              "/opt/venv/bin/python",
+              "/opt/replay.py"
+            ],
+            "pins": {
+              "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+              "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+              "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+            },
+            "mounts": [
+              {
+                "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+                "destination": "/work",
+                "rw": true
+              },
+              {
+                "source": "/var/run/docker.sock",
+                "destination": "/var/run/docker.sock",
+                "rw": true
+              }
+            ],
+            "networks": [
+              "umf-integrated-qualification-5c0b99e5"
+            ]
+          },
+          "relocation": {
+            "rawStageLog": {
+              "originalPath": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+              "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publish.log",
+              "sha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d"
+            },
+            "fixtures/validation/core-check-refresh/publication.json": {
+              "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publication.json",
+              "sha256": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb",
+              "meaning": "Observed pre-existing bytes during failed stage; not successful fresh output."
+            },
+            "container-semantic-inputs.json": {
+              "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.json",
+              "sha256": "1d3bd2663d97a309a7cedcffe01d4e32d039d03eec5cef54a88acfd4f0de9300"
+            },
+            "container-semantic-inputs.log": {
+              "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.log",
+              "sha256": "da7ed521674c2c5ee8c0793c9b2f6ab38f0eb9c1c429fbfc56a9c4866824e4b1"
+            }
+          }
+        }
+      ],
+      "supersededStages": [
+        {
+          "reason": "Seal tooling amended to bind actual browser bundle; successful original stage retained without substitution",
+          "execution": {
+            "stage": "seal",
+            "ownedContainer": "umf-integrated-qualification-5c0b99e5-seal",
+            "command": [
+              "docker",
+              "run",
+              "--network",
+              "umf-integrated-qualification-5c0b99e5",
+              "-v",
+              "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+              "-v",
+              "/var/run/docker.sock:/var/run/docker.sock",
+              "-e",
+              "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+              "-e",
+              "UMF_REPLAY_IMAGE_ID=sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+              "--name",
+              "umf-integrated-qualification-5c0b99e5-seal",
+              "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+              "seal"
+            ],
+            "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "exitCode": 0,
+            "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+            "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-seal.log",
+            "logSha256": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+            "generatedReports": {
+              "fixtures/validation/core-check-refresh/final-seal.json": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+            }
+          },
+          "runtime": {
+            "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "command": [
+              "seal"
+            ],
+            "entrypoint": [
+              "/opt/venv/bin/python",
+              "/opt/replay.py"
+            ],
+            "pins": {
+              "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+              "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+              "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+            },
+            "mounts": [
+              {
+                "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+                "destination": "/work",
+                "rw": true
+              },
+              {
+                "source": "/var/run/docker.sock",
+                "destination": "/var/run/docker.sock",
+                "rw": true
+              }
+            ],
+            "networks": [
+              "umf-integrated-qualification-5c0b99e5"
+            ]
+          },
+          "retainedLog": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/seal.log",
+          "retainedReports": {
+            "fixtures/validation/core-check-refresh/final-seal.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/final-seal.json",
+              "sha256": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+            }
+          },
+          "retainedClosure": {
+            "fixtures/validation/core-check-refresh/native-browser.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/native-browser.json",
+              "sha256": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249"
+            },
+            "fixtures/validation/core-check-refresh/auxiliary.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/auxiliary.json",
+              "sha256": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce"
+            },
+            "fixtures/validation/core-check-refresh/regression.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/regression.json",
+              "sha256": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08"
+            },
+            "fixtures/validation/core-check-refresh/publication.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/publication.json",
+              "sha256": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318"
+            },
+            "fixtures/validation/core-check-refresh/gates.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/gates.json",
+              "sha256": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9"
+            },
+            "fixtures/validation/core-check-refresh/container-runtime.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-runtime.json",
+              "sha256": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6"
+            },
+            "fixtures/validation/core-check-refresh/container-gates.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.json",
+              "sha256": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99"
+            },
+            "fixtures/validation/core-check-refresh/container-integrity.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.json",
+              "sha256": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2"
+            },
+            "fixtures/validation/core-check-refresh/container-affected.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.json",
+              "sha256": "8a447e2e0160539ad76839383c9dd401572a9d4ad7ffe36677194965edbae627"
+            },
+            "fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.json",
+              "sha256": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571"
+            },
+            "fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.json",
+              "sha256": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5"
+            },
+            "fixtures/validation/core-check-refresh/container-publication.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.json",
+              "sha256": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d"
+            },
+            "fixtures/validation/core-check-refresh/container-gates.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.log",
+              "sha256": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a"
+            },
+            "fixtures/validation/core-check-refresh/container-integrity.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.log",
+              "sha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+            },
+            "fixtures/validation/core-check-refresh/container-affected.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.log",
+              "sha256": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652"
+            },
+            "fixtures/validation/core-schema-properties-browser.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-browser.json",
+              "sha256": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33"
+            },
+            "fixtures/validation/core-schema-properties-oracle.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle.json",
+              "sha256": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f"
+            },
+            "fixtures/validation/core-schema-properties-oracle-inputs.json": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle-inputs.json",
+              "sha256": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf"
+            },
+            "fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.log",
+              "sha256": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6"
+            },
+            "fixtures/validation/core-check-refresh/container-publication.log": {
+              "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.log",
+              "sha256": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14"
+            }
+          }
+        }
+      ]
+    },
+    "governingInputs": {
+      "docs/helix/01-frame/user-stories/US-078-declarative-actions.md": "f42699b622d9ef048b3f0c0fc194e48cc082301164a6372bef4a7193b670ed20",
+      "docs/helix/01-frame/user-stories/US-056-transactional-actions.md": "48f4f8a0489ffcb5c45421542efdfd691f263a164fc346beead0235cb144bf8e",
+      "docs/helix/02-design/technical-designs/TD-078-declarative-actions.md": "3d14041439e89c6b4284949d6d62a99a51f8c7129b81227a84d446cff81eec7e",
+      "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md": "f5d29b291da2c7c1c1f44e4c0eb29d477a9ce1b0e5970ced71610add08a5a65e",
+      "docs/helix/03-test/test-plans/STP-078-declarative-actions.md": "57b53d3804c03a413559d6f151272e002f0acad7641baa87a9b075693e44639c",
+      "docs/helix/03-test/test-plans/STP-056-transactional-actions.md": "bb57ec70a1e1672ac72dfefdb507b696b823591ee10f8f161f4a82a0540ed9b0",
+      "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md": "3cab2c74d47f52773f0d81bc1961f9a654ec4eb9aa24d90a683b21f0d7f215b9",
+      "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md": "a9e6438d27f6fc8aa08a8bb55e8bcc8d1934c8f82fcfca0ec25d096cb5a3fb5c"
+    },
+    "acceptanceLedgerSha256": "be15a7cc6b975e0a09494372d8701a221e7b1236d8f32e70d69e54a5b346e060",
+    "criteriaWitnessLineage": [
+      {
+        "criterion": "US-056-AC1",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:81",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/preview.test.ts:10",
+            "sha256": "3d490c450e34a39765aa6aef425a4713f88f7dea1de9f36a7e6be82ac79e92ae"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:13",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          }
+        ],
+        "historicalCriterion": "US-056-AC1"
+      },
+      {
+        "criterion": "US-056-AC2",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:21",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:81",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:11",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/fresh-admission.test.ts:8",
+            "sha256": "f728ab8d9eb225988aaa50d58e28e3f2560be84773f2e5c1377b6b125130b1f9"
+          },
+          {
+            "location": "tests/actions-reference/native-refinement.test.ts:44",
+            "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+          }
+        ],
+        "historicalCriterion": "US-056-AC2"
+      },
+      {
+        "criterion": "US-056-AC3",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:21",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:33",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/lookup-horizon.test.ts:11",
+            "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+          }
+        ],
+        "historicalCriterion": "US-056-AC3"
+      },
+      {
+        "criterion": "US-056-AC4",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/attempts.test.ts:91",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:21",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:11",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:33",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:47",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/lookup-horizon.test.ts:11",
+            "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+          },
+          {
+            "location": "tests/actions-reference/lookup-horizon.test.ts:13",
+            "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+          },
+          {
+            "location": "tests/actions-reference/native-refinement.test.ts:44",
+            "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+          },
+          {
+            "location": "tests/actions-reference/outcomes.test.ts:9",
+            "sha256": "6173099535af78a4c9dc19f57721fc26b4af397cbb64ab8080c6e08a939cada6"
+          }
+        ],
+        "historicalCriterion": "US-056-AC4"
+      },
+      {
+        "criterion": "US-056-AC5",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/native-refinement.test.ts:44",
+            "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+          },
+          {
+            "location": "tests/actions-reference/reader-revocation.test.ts:12",
+            "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:46",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          }
+        ],
+        "historicalCriterion": "US-056-AC5"
+      },
+      {
+        "criterion": "US-056-AC6",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/evolution.test.ts:34",
+            "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+          },
+          {
+            "location": "tests/actions-reference/handler-executor.test.ts:85",
+            "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+          },
+          {
+            "location": "tests/actions-reference/handler-executor.test.ts:97",
+            "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+          },
+          {
+            "location": "tests/actions-reference/native-refinement.test.ts:44",
+            "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+          }
+        ],
+        "historicalCriterion": "US-056-AC6"
+      },
+      {
+        "criterion": "US-056-AC7",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/handler-executor.test.ts:85",
+            "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+          },
+          {
+            "location": "tests/actions-reference/handler-executor.test.ts:97",
+            "sha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:23",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:30",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:34",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:9",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          }
+        ],
+        "historicalCriterion": "US-056-AC7"
+      },
+      {
+        "criterion": "US-056-AC8",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:21",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:81",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:47",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/invariant-mutants.test.ts:114",
+            "sha256": "fa9920c93161ba06eff400e0c41e6bd6eee245ef1fa8446684361e8d67f694ae"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:54",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          },
+          {
+            "location": "tests/actions-reference/state.test.ts:10",
+            "sha256": "10c40aac8851d74c93c0bdeb2276f5fcec10e64f1214af93f8b73bebe11e80a3"
+          }
+        ],
+        "historicalCriterion": "US-056-AC8"
+      },
+      {
+        "criterion": "US-056-AC9",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/attempts.test.ts:28",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:42",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:63",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:23",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          },
+          {
+            "location": "tests/actions-reference/launch-owner.test.ts:9",
+            "sha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803"
+          },
+          {
+            "location": "tests/actions-reference/process-recovery.test.ts:10",
+            "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:24",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:18",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:46",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          }
+        ],
+        "historicalCriterion": "US-056-AC9"
+      },
+      {
+        "criterion": "US-056-AC10",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/attempts.test.ts:36",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/composite-key.test.ts:21",
+            "sha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74"
+          },
+          {
+            "location": "tests/actions-reference/lookup-horizon.test.ts:13",
+            "sha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228"
+          },
+          {
+            "location": "tests/actions-reference/process-recovery.test.ts:10",
+            "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:29",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:38",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          },
+          {
+            "location": "tests/actions-reference/recovery.test.ts:55",
+            "sha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:16",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          }
+        ],
+        "historicalCriterion": "US-056-AC10"
+      },
+      {
+        "criterion": "US-056-AC11",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/attempts.test.ts:107",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:114",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:121",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:17",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:28",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:36",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:42",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:48",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:57",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:63",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:69",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:76",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:85",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:91",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/attempts.test.ts:97",
+            "sha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2"
+          },
+          {
+            "location": "tests/actions-reference/audit.test.ts:10",
+            "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+          },
+          {
+            "location": "tests/actions-reference/audit.test.ts:22",
+            "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+          },
+          {
+            "location": "tests/actions-reference/audit.test.ts:44",
+            "sha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea"
+          },
+          {
+            "location": "tests/actions-reference/executor.test.ts:11",
+            "sha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1"
+          },
+          {
+            "location": "tests/actions-reference/native-refinement.test.ts:44",
+            "sha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a"
+          },
+          {
+            "location": "tests/actions-reference/process-recovery.test.ts:10",
+            "sha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791"
+          },
+          {
+            "location": "tests/actions-reference/reader-revocation.test.ts:12",
+            "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:47",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          }
+        ],
+        "historicalCriterion": "US-056-AC11"
+      },
+      {
+        "criterion": "US-056-AC12",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions-reference/evolution.test.ts:13",
+            "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+          },
+          {
+            "location": "tests/actions-reference/evolution.test.ts:34",
+            "sha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83"
+          },
+          {
+            "location": "tests/actions-reference/invariant-mutants.test.ts:114",
+            "sha256": "fa9920c93161ba06eff400e0c41e6bd6eee245ef1fa8446684361e8d67f694ae"
+          },
+          {
+            "location": "tests/actions-reference/projection.test.ts:17",
+            "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+          },
+          {
+            "location": "tests/actions-reference/projection.test.ts:36",
+            "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+          },
+          {
+            "location": "tests/actions-reference/projection.test.ts:48",
+            "sha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c"
+          },
+          {
+            "location": "tests/actions-reference/reader-revocation.test.ts:12",
+            "sha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:13",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:20",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:24",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          },
+          {
+            "location": "tests/actions-reference/receipts.test.ts:28",
+            "sha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:16",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:31",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:39",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:47",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          },
+          {
+            "location": "tests/actions-reference/restore.test.ts:54",
+            "sha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348"
+          }
+        ],
+        "historicalCriterion": "US-056-AC12"
+      },
+      {
+        "criterion": "US-078-AC1",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:15",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          }
+        ],
+        "historicalCriterion": "US-055-AC1"
+      },
+      {
+        "criterion": "US-078-AC2",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:23",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          }
+        ],
+        "historicalCriterion": "US-055-AC2"
+      },
+      {
+        "criterion": "US-078-AC3",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:29",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          }
+        ],
+        "historicalCriterion": "US-055-AC3"
+      },
+      {
+        "criterion": "US-078-AC4",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:37",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/contracts.test.ts:54",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/contracts.test.ts:65",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          }
+        ],
+        "historicalCriterion": "US-055-AC4"
+      },
+      {
+        "criterion": "US-078-AC5",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/assessment.test.ts:11",
+            "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+          },
+          {
+            "location": "tests/actions/assessment.test.ts:18",
+            "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+          },
+          {
+            "location": "tests/actions/assessment.test.ts:23",
+            "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+          },
+          {
+            "location": "tests/actions/assessment.test.ts:28",
+            "sha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728"
+          },
+          {
+            "location": "tests/actions/contracts.test.ts:65",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/contracts.test.ts:71",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/reports.test.ts:14",
+            "sha256": "4a16043bd893f46f535367d7dd2d5f7cb8062fae5b39b75d9fe430fdfadb384e"
+          }
+        ],
+        "historicalCriterion": "US-055-AC5"
+      },
+      {
+        "criterion": "US-078-AC6",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:65",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          },
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          },
+          {
+            "location": "tests/actions/preservation.test.ts:11",
+            "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+          },
+          {
+            "location": "tests/actions/preservation.test.ts:17",
+            "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+          }
+        ],
+        "historicalCriterion": "US-055-AC6"
+      },
+      {
+        "criterion": "US-078-AC7",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/contracts.test.ts:46",
+            "sha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162"
+          }
+        ],
+        "historicalCriterion": "US-055-AC7"
+      },
+      {
+        "criterion": "US-078-AC8",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          },
+          {
+            "location": "tests/actions/preservation.test.ts:22",
+            "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+          },
+          {
+            "location": "tests/actions/preservation.test.ts:30",
+            "sha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100"
+          }
+        ],
+        "historicalCriterion": "US-055-AC8"
+      },
+      {
+        "criterion": "US-078-AC9",
+        "status": "current cited tests executed/pass for stated bounded scope",
+        "witnesses": [
+          {
+            "location": "tests/actions/corpus.test.ts:5",
+            "sha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293"
+          }
+        ],
+        "historicalCriterion": "US-055-AC9"
+      }
+    ],
+    "implementationRecords": {
+      "nativeCompositeKey": {
+        "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "bun": "1.4.2",
+        "components": 2,
+        "family": "string",
+        "swappedIdentitiesDistinct": true,
+        "commits": 2,
+        "restartedReplay": "exact",
+        "scope": "One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"
+      },
+      "nativeUnsupportedRelationships": {
+        "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "bun": "1.4.2",
+        "declarations": [
+          "owned",
+          "association-record"
+        ],
+        "validMetadata": true,
+        "independentLayoutControl": "admitted",
+        "allInputsTyped": "admitted",
+        "prepare": "refused",
+        "preview": "unsupported/PARAMETER",
+        "invoke": "unsupported/PARAMETER",
+        "businessAccesses": 0,
+        "transactionalWrites": 0,
+        "allActionTablesGuarded": 20,
+        "allActionRowsUnchanged": true,
+        "scope": "Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"
+      },
+      "nativeRefinement": {
+        "profile": "umf.actions.finite-idempotent-set/1",
+        "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "alphabet": [
+          "invoke-A",
+          "invoke-B",
+          "lookup-A",
+          "revoke",
+          "grant",
+          "retire"
+        ],
+        "depth": 3,
+        "traces": 216,
+        "transitions": 648,
+        "mismatches": 0,
+        "scope": "One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"
+      },
+      "nativeMutation": {
+        "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "killed": 3,
+        "total": 3,
+        "witnesses": [
+          {
+            "id": "skip-replay",
+            "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+            "mutantSha256": "6c745a46fbaf20bb4efb9e516f3a8e5d44399587fcef04aaeb9ff4172a3df67d",
+            "trace": [
+              "invoke-A",
+              "invoke-A"
+            ],
+            "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"
+          },
+          {
+            "id": "ignore-role-membership",
+            "sourceSha256": "78265b7610012a9ea028ec117d6ff67608ef5bd4558eb12dabf56724eefd2865",
+            "mutantSha256": "9d9fcd5f213e9b2797c55a8bf07ebad7a0b1764f8ea91ed3fc154c30e46b9a15",
+            "trace": [
+              "invoke-A",
+              "revoke",
+              "invoke-A"
+            ],
+            "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 revoke \u2192 invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"
+          },
+          {
+            "id": "omit-terminal-audit",
+            "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+            "mutantSha256": "e80b4a2b64ca1f21736aa52d118bc4c041670d26e4b1b00a00a3c571979d3147",
+            "trace": [
+              "invoke-A"
+            ],
+            "reason": "Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"
+          }
+        ]
+      },
+      "nativeInvariantMutation": {
+        "bun": "1.4.2",
+        "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "killed": 2,
+        "total": 2,
+        "witnesses": [
+          {
+            "id": "per-key-canonical-identity",
+            "sourceSha256": "a4f5b334780f9945b26108fc7b5ac12132398961d2b6b745ba4764a4bdda3c30",
+            "mutantSha256": "1fa33c5a3edf594a89907d77267aaa04c3a6f1fe7cb1eac87c8849147991106c",
+            "baseline": "passed",
+            "boundary": "alias canonical identity",
+            "expected": [
+              "entity:2",
+              "entity:2"
+            ],
+            "actual": [
+              "key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]",
+              "key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"
+            ]
+          },
+          {
+            "id": "skip-missing-projection-prefix",
+            "sourceSha256": "d97bb62fe3b872fb2b40d84b15bd52457ffda3011b42f9cb79cf75e902503ccd",
+            "mutantSha256": "6c95edb557b90afcb6929094fd714e1a0bb4e949479a96455815d5550186a3d8",
+            "baseline": "passed",
+            "boundary": "projection missing-prefix visibility",
+            "expected": {
+              "delivery": {
+                "status": "delivered",
+                "prefix": "0"
+              },
+              "prefix": "0",
+              "content": {
+                "profile": {
+                  "id": "umf.actions.native-graph",
+                  "version": "1"
+                },
+                "entities": [
+                  {
+                    "id": "5",
+                    "record": {
+                      "element": "order",
+                      "module": "sales"
+                    },
+                    "fields": {
+                      "[\"sales\",\"id\"]": {
+                        "string": "one"
+                      },
+                      "[\"sales\",\"status\"]": {
+                        "string": "pending"
+                      }
+                    },
+                    "version": "original-version"
+                  },
+                  {
+                    "id": "6",
+                    "record": {
+                      "element": "order",
+                      "module": "sales"
+                    },
+                    "fields": {
+                      "[\"sales\",\"id\"]": {
+                        "string": "two"
+                      },
+                      "[\"sales\",\"status\"]": {
+                        "string": "pending"
+                      }
+                    },
+                    "version": "original-version"
+                  }
+                ],
+                "links": []
+              },
+              "queued": [
+                "2"
+              ],
+              "readStatus": "pending"
+            },
+            "actual": {
+              "delivery": {
+                "status": "delivered",
+                "prefix": "2"
+              },
+              "prefix": "2",
+              "content": {
+                "profile": {
+                  "id": "umf.actions.native-graph",
+                  "version": "1"
+                },
+                "entities": [
+                  {
+                    "id": "5",
+                    "record": {
+                      "element": "order",
+                      "module": "sales"
+                    },
+                    "fields": {
+                      "[\"sales\",\"id\"]": {
+                        "string": "one"
+                      },
+                      "[\"sales\",\"status\"]": {
+                        "string": "pending"
+                      }
+                    },
+                    "version": "original-version"
+                  },
+                  {
+                    "id": "6",
+                    "record": {
+                      "element": "order",
+                      "module": "sales"
+                    },
+                    "fields": {
+                      "[\"sales\",\"id\"]": {
+                        "string": "two"
+                      },
+                      "[\"sales\",\"status\"]": {
+                        "string": "approved"
+                      }
+                    },
+                    "version": "b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"
+                  }
+                ],
+                "links": []
+              },
+              "queued": [
+                "2"
+              ],
+              "readStatus": "visible"
+            }
+          }
+        ],
+        "scope": "One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"
+      }
+    }
+  },
+  "executionObservation": {
+    "profile": "umf.actions.integrated-execution-observation/2",
+    "sourceRevision": "5c0b99e5fb34274b9cd6c6a99d404b6da2d89602",
+    "runtimeImage": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "runs": [
+      {
+        "stage": "native",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-native",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-native",
+          "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "native"
+        ],
+        "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-native.log",
+        "logSha256": "f7d60c5f272deb3b996b0af891aeea247975cf89a45fad35f2d5b72447ae6a19",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/native-browser.json": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249"
+        }
+      },
+      {
+        "stage": "auxiliary",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-auxiliary",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-auxiliary",
+          "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "auxiliary"
+        ],
+        "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-auxiliary.log",
+        "logSha256": "d1bece63cea07f13f250215a682d3279268a0b7500a48ce22ce8f85569abe8fd",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/auxiliary.json": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce",
+          "fixtures/extension-package-audit.json": "329bfe34582ad9a160b73dc1075fd3b8981a01be6083feb1f680b38688c950ec",
+          "fixtures/json-schema-audit.json": "985dda92f86ea2df5a83ef7644e48a75cc1077dce417e8abe5a0918f2f46c995"
+        }
+      },
+      {
+        "stage": "regression",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-regression",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-regression",
+          "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "regression"
+        ],
+        "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-regression.log",
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/regression.json": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08"
+        }
+      },
+      {
+        "stage": "publish",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-publish",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-publish",
+          "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "publish"
+        ],
+        "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+        "logSha256": "40c4b18bc11e6c658df23be5c1b970911b82274a64ae2e5d7783d36da0a2dcd4",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/publication.json": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318"
+        }
+      },
+      {
+        "stage": "gates",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-gates",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-gates",
+          "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "gates"
+        ],
+        "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-gates.log",
+        "logSha256": "03ba9ec8ea472e6f7ae4fff92b1893c71621adcabc965db03122b45c5edaabd6",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/container-gates.json": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99",
+          "fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2"
+        }
+      },
+      {
+        "stage": "seal",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-seal",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-seal",
+          "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+          "seal"
+        ],
+        "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-seal.log",
+        "logSha256": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+        "generatedReports": {
+          "fixtures/validation/core-check-refresh/final-seal.json": "d2fa372791d912d8ec8937e03110b29e0209ea1c79493c07d5ea2253a54f8420"
+        }
+      },
+      {
+        "stage": "actions",
+        "ownedContainer": "umf-integrated-qualification-5c0b99e5-actions",
+        "command": [
+          "docker",
+          "run",
+          "--network",
+          "umf-integrated-qualification-5c0b99e5",
+          "-v",
+          "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "-e",
+          "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+          "-e",
+          "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "--name",
+          "umf-integrated-qualification-5c0b99e5-actions",
+          "--entrypoint",
+          "bun",
+          "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "scripts/actions-reference/qualify-foundation.ts"
+        ],
+        "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "exitCode": 0,
+        "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+        "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-actions-native.log",
+        "logSha256": "63a5c9109a05eafad730de70289f05ba00e644dbefc9dd2fd6fdf8abe26aabfb",
+        "generatedReports": {
+          "fixtures/actions/reference-foundation.json": "a301a204cb9fee2d606598d615e6eea6db9967a94e6881f953ae6ebd2a846e94"
+        }
+      }
+    ],
+    "failedAttempts": [
+      {
+        "execution": {
+          "stage": "publish",
+          "ownedContainer": "umf-integrated-qualification-5c0b99e5-publish",
+          "command": [
+            "docker",
+            "run",
+            "--network",
+            "umf-integrated-qualification-5c0b99e5",
+            "-v",
+            "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock",
+            "-e",
+            "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+            "-e",
+            "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "--name",
+            "umf-integrated-qualification-5c0b99e5-publish",
+            "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "publish"
+          ],
+          "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "exitCode": 1,
+          "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+          "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+          "logSha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d",
+          "generatedReports": {
+            "fixtures/validation/core-check-refresh/publication.json": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb"
+          }
+        },
+        "runtime": {
+          "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+          "command": [
+            "publish"
+          ],
+          "entrypoint": [
+            "/opt/venv/bin/python",
+            "/opt/replay.py"
+          ],
+          "pins": {
+            "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+            "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+            "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+          },
+          "mounts": [
+            {
+              "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+              "destination": "/work",
+              "rw": true
+            },
+            {
+              "source": "/var/run/docker.sock",
+              "destination": "/var/run/docker.sock",
+              "rw": true
+            }
+          ],
+          "networks": [
+            "umf-integrated-qualification-5c0b99e5"
+          ]
+        },
+        "relocation": {
+          "rawStageLog": {
+            "originalPath": "/private/tmp/umf-integrated-qualification-5c0b99e5-publish.log",
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publish.log",
+            "sha256": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d"
+          },
+          "fixtures/validation/core-check-refresh/publication.json": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/publication.json",
+            "sha256": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb",
+            "meaning": "Observed pre-existing bytes during failed stage; not successful fresh output."
+          },
+          "container-semantic-inputs.json": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.json",
+            "sha256": "1d3bd2663d97a309a7cedcffe01d4e32d039d03eec5cef54a88acfd4f0de9300"
+          },
+          "container-semantic-inputs.log": {
+            "retainedPath": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.log",
+            "sha256": "da7ed521674c2c5ee8c0793c9b2f6ab38f0eb9c1c429fbfc56a9c4866824e4b1"
+          }
+        }
+      }
+    ],
+    "finalizationRuntime": {
+      "profile": "umf.actions.core08-finalization-runtime/1",
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "sameConfig": true,
+      "parentLayersPreserved": true,
+      "addedLayers": [
+        "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+        "sha256:4771ae7c48f6ebf1badf8f2e28d76e3b4732b6f571656aaee082716c4b8876ae"
+      ],
+      "files": {
+        "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+        "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+        "seal.py": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9"
+      },
+      "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+    },
+    "supersededStages": [
+      {
+        "reason": "Seal tooling amended to bind actual browser bundle; successful original stage retained without substitution",
+        "execution": {
+          "stage": "seal",
+          "ownedContainer": "umf-integrated-qualification-5c0b99e5-seal",
+          "command": [
+            "docker",
+            "run",
+            "--network",
+            "umf-integrated-qualification-5c0b99e5",
+            "-v",
+            "/private/tmp/umf-integrated-qualification-5c0b99e5:/work",
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock",
+            "-e",
+            "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5c0b99e5",
+            "-e",
+            "UMF_REPLAY_IMAGE_ID=sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "--name",
+            "umf-integrated-qualification-5c0b99e5-seal",
+            "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "seal"
+          ],
+          "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "exitCode": 0,
+          "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+          "log": "/private/tmp/umf-integrated-qualification-5c0b99e5-seal.log",
+          "logSha256": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+          "generatedReports": {
+            "fixtures/validation/core-check-refresh/final-seal.json": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+          }
+        },
+        "runtime": {
+          "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+          "command": [
+            "seal"
+          ],
+          "entrypoint": [
+            "/opt/venv/bin/python",
+            "/opt/replay.py"
+          ],
+          "pins": {
+            "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+            "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+            "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+          },
+          "mounts": [
+            {
+              "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+              "destination": "/work",
+              "rw": true
+            },
+            {
+              "source": "/var/run/docker.sock",
+              "destination": "/var/run/docker.sock",
+              "rw": true
+            }
+          ],
+          "networks": [
+            "umf-integrated-qualification-5c0b99e5"
+          ]
+        },
+        "retainedLog": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/seal.log",
+        "retainedReports": {
+          "fixtures/validation/core-check-refresh/final-seal.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/final-seal.json",
+            "sha256": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020"
+          }
+        },
+        "retainedClosure": {
+          "fixtures/validation/core-check-refresh/native-browser.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/native-browser.json",
+            "sha256": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249"
+          },
+          "fixtures/validation/core-check-refresh/auxiliary.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/auxiliary.json",
+            "sha256": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce"
+          },
+          "fixtures/validation/core-check-refresh/regression.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/regression.json",
+            "sha256": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08"
+          },
+          "fixtures/validation/core-check-refresh/publication.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/publication.json",
+            "sha256": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318"
+          },
+          "fixtures/validation/core-check-refresh/gates.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/gates.json",
+            "sha256": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9"
+          },
+          "fixtures/validation/core-check-refresh/container-runtime.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-runtime.json",
+            "sha256": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6"
+          },
+          "fixtures/validation/core-check-refresh/container-gates.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.json",
+            "sha256": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99"
+          },
+          "fixtures/validation/core-check-refresh/container-integrity.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.json",
+            "sha256": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2"
+          },
+          "fixtures/validation/core-check-refresh/container-affected.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.json",
+            "sha256": "8a447e2e0160539ad76839383c9dd401572a9d4ad7ffe36677194965edbae627"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.json",
+            "sha256": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.json",
+            "sha256": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5"
+          },
+          "fixtures/validation/core-check-refresh/container-publication.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.json",
+            "sha256": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d"
+          },
+          "fixtures/validation/core-check-refresh/container-gates.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.log",
+            "sha256": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a"
+          },
+          "fixtures/validation/core-check-refresh/container-integrity.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.log",
+            "sha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+          },
+          "fixtures/validation/core-check-refresh/container-affected.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.log",
+            "sha256": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652"
+          },
+          "fixtures/validation/core-schema-properties-browser.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-browser.json",
+            "sha256": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33"
+          },
+          "fixtures/validation/core-schema-properties-oracle.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle.json",
+            "sha256": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f"
+          },
+          "fixtures/validation/core-schema-properties-oracle-inputs.json": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle-inputs.json",
+            "sha256": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.log",
+            "sha256": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6"
+          },
+          "fixtures/validation/core-check-refresh/container-publication.log": {
+            "path": "/private/tmp/umf-integrated-qualification-5c0b99e5/fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.log",
+            "sha256": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14"
+          }
+        }
+      }
+    ],
+    "priorFinalizationRuntime": {
+      "profile": "umf.actions.core08-finalization-runtime/1",
+      "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+      "parentImageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "sameConfig": true,
+      "parentLayersPreserved": true,
+      "addedLayers": [
+        "sha256:de5ae619da74ec59d3f97e10bf75efe4ea6556ff14e393c13068b6c74bdb4cf1",
+        "sha256:1f876902bf9a7c1c21dd8d7afbba13ae4b1a8aaa1ebc13bea85c3f913545e150"
+      ],
+      "files": {
+        "Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+        "replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+        "seal.py": "a27e9d967f3901dbf905675d547fcf486bcd9f2c67f351b41398654dfae5bf43"
+      },
+      "scope": "Only external replay/seal tooling replaced; runtime/dependencies and captured implementation inputs unchanged."
+    }
+  },
+  "runtimeObservation": {
+    "native": {
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "command": [
+        "native"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "auxiliary": {
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "command": [
+        "auxiliary"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "regression": {
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "command": [
+        "regression"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "publish": {
+      "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+      "command": [
+        "publish"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "gates": {
+      "imageId": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+      "command": [
+        "gates"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_REPLAY_IMAGE_ID": "sha256:0fb6c23754f94db124c256b5db04c6c7cbfdc3b56f90f357a8643573bc9e86cf",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "seal": {
+      "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+      "command": [
+        "seal"
+      ],
+      "entrypoint": [
+        "/opt/venv/bin/python",
+        "/opt/replay.py"
+      ],
+      "pins": {
+        "UMF_REPLAY_IMAGE_ID": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    },
+    "actions": {
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "command": [
+        "scripts/actions-reference/qualify-foundation.ts"
+      ],
+      "entrypoint": [
+        "bun"
+      ],
+      "pins": {
+        "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-5c0b99e5",
+        "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+      },
+      "mounts": [
+        {
+          "source": "/private/tmp/umf-integrated-qualification-5c0b99e5",
+          "destination": "/work",
+          "rw": true
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "rw": true
+        }
+      ],
+      "networks": [
+        "umf-integrated-qualification-5c0b99e5"
+      ]
+    }
+  },
+  "evidenceArtifacts": {
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-certification-publish.py": "f1e7e50cc805a99bcb4ed53decc2e983888bcd821c2d7fd66aa5919fe7290358",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/core-browser-bundle.js": "30b2a4a3812ac77b25afa955d4eb62b85edc6a5ddfbba18d24170b2b9f9f156e",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-audit.json": "51caebf7d47a8b770aaf9c5cfa7ed9a942aac5d28731a3f6c508c572e4ecee22",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-audit.py": "15d4cb81065b3573e7e9b7dc2be10a550901ac2ed4d4289c482a56b46ed2c4bb",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-runner.py": "c9512eb0a78da5d672c911389f61edcd4715099439f5443035febca45e3f4c89",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-execution-observation.json": "a19f9828955eb87a2eded8d796a8bd60efb2eaa12f1d8592cd939f6e3d49b0be",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-runtime-observation.json": "693343ab877bba11eedd628bb5506ef1c10ab9b65d7b44973b0ec9abd175a5ed",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-browser-execution.json": "865c5576f549f8787b269dafdd6d49a743ed5cf4b6218ada2dc96359195fcff2",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-handler-metadata-execution.json": "01fd299664bd7d5315444e38ef82fc807650103dc0763b5611ef369b5857ab31",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-handler-metadata-probe-5c0b99e5.ts": "e89275308ffecf9d2714db905f37cd7de2eaef8f89c209d1ad340bbd22b57785",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-native.log": "f7d60c5f272deb3b996b0af891aeea247975cf89a45fad35f2d5b72447ae6a19",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-auxiliary.log": "d1bece63cea07f13f250215a682d3279268a0b7500a48ce22ce8f85569abe8fd",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-regression.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-publish.log": "40c4b18bc11e6c658df23be5c1b970911b82274a64ae2e5d7783d36da0a2dcd4",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-gates.log": "03ba9ec8ea472e6f7ae4fff92b1893c71621adcabc965db03122b45c5edaabd6",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-seal.log": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-actions-native.log": "63a5c9109a05eafad730de70289f05ba00e644dbefc9dd2fd6fdf8abe26aabfb",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-qualification-5c0b99e5-actions-browser.log": "be3fd3e9f8bc2947eb9796af23dda761fc8aa97fd3577d1eecaefc4423688856",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-integrated-handler-metadata-probe-5c0b99e5.log": "e9b8c90e1f8bbd1b668de221e7dd291597bf90df60be452d71a53172d34267bf",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization/Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization/runtime.json": "a53e3a580d4a63e439fa290f979a43bc62be67d19bb6ca095cbe00bc46fde359",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization/replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization/seal.py": "0534d837eb6939e6df8b8c209fa7639cf0dfb00e1031bb6f472c989dd74fd2f9",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization-original/Dockerfile": "22e49c252870fbc47b42e19c9119b2ea1d00438f3bf08516b8fb1a69c1d1e185",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization-original/runtime.json": "272e67e594a42b503b831e96701527166ffd48e140cb7d36a6eaa2e081087edc",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization-original/replay.py": "6f889e9b7b35c1adf4333137e5d0fee5149454e0dc435c8a9713cee3d79eed11",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/umf-core08-finalization-original/seal.py": "a27e9d967f3901dbf905675d547fcf486bcd9f2c67f351b41398654dfae5bf43",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/resume.py": "cce50a5caac5cbbbda61a0db6f093a3f14ec853c7fc096d839d9ca928de40e61",
+    "docs/helix/04-build/evidence/actions-integrated-qualification/amend-baseline-seal.py": "6be49078c905bf64cefee6533ee0b292738e17d06fa3f6cf2ef52b86e5dac202",
+    "fixtures/actions/browser.json": "39b64db62eeab27abe1f58885b164bad25cf4fd6f45657cf18c6abefd0d7fdf3",
+    "fixtures/actions/reference-foundation.json": "a301a204cb9fee2d606598d615e6eea6db9967a94e6881f953ae6ebd2a846e94",
+    "fixtures/binding/sqlserver/browser.json": "fe6476033e3eeec6f487083d1a613084688e329634e643a928942c2cb3dfd2ed",
+    "fixtures/projections/ddd-graphql/browser.json": "fa964fb93aa098421de00ee1c2eb625628be83c76e9900f0c01fd55a3afcc200",
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": "d39b41c89abedefd475876635624c4d55809d552823dea05f70b1707cfe7b883",
+    "fixtures/validation/avro-facets-acceptance-evidence.json": "611639f064f99bc01119214c428aeb3fefb624af868676f75022c30cb208f7ea",
+    "fixtures/validation/avro-nullability-acceptance-evidence.json": "88f4c640f19d3cfc066fe1cbbe3a58742613d4d4f9094506e2700863d36a0e88",
+    "fixtures/validation/cardinality-avro-browser.json": "504fa559bc0b4158170d57422e1d6777f7f519f02829641e5e8f66036a41d12a",
+    "fixtures/validation/cardinality-avro-classification-browser.json": "04d03aa3d00787be98b5c0e410ed133af1015900a5c662b1a7cadceb5630edd1",
+    "fixtures/validation/cardinality-avro-profile-browser.json": "431f093481d578ccf2f69fb4dfd2abbab791fe9c1160edc630a8ac548f4f6f5c",
+    "fixtures/validation/cardinality-avro-projection-browser.json": "3b8014276a8c7997be662a885826cbd3a14355169dae9405744a03446ac5184a",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "d401cfe50eef36a5c570e1512cce84c22f65191084854c296d8f2d79f84302d5",
+    "fixtures/validation/cardinality-field-operations-browser.json": "4f4e3d14fc3ba1704626ea9df86aadc876ecf47e47b628722ee1fe8dadedaa12",
+    "fixtures/validation/cardinality-parquet-browser.json": "5519510d13cb9725e7a640df125e03aa16a4e3ee0c34bbb3c490c78e60c9d717",
+    "fixtures/validation/cardinality-parquet-carrier-browser.json": "6dff03968483797908f0b728d0e8d817efdf435fcd1e26a3715f80644f022e0b",
+    "fixtures/validation/cardinality-parquet-classification-browser.json": "cbf5263dfd06c59ed4e5939027aa9e0f5fb3c166ceedd7ebb6a5b85284ead5dc",
+    "fixtures/validation/cardinality-parquet-profile-browser.json": "910af35bc628369679dab8affe0e8345d3bf98cb1535a721dd56cbd53cff4724",
+    "fixtures/validation/cardinality-parquet-projection-browser.json": "bd07fc6588627b70f285bdf288e35278528505e41e66637ca1818d6d6f81b71b",
+    "fixtures/validation/cardinality-postgresql-browser.json": "e8214736dc17b2c92ed7217ffa38222fdd4d8a39ecdae3854a6dcc17159f956a",
+    "fixtures/validation/cardinality-postgresql-catalog-browser.json": "076985fb2b15992468701994c1fa822d9a9698f702e05370f8816998fe2e6a12",
+    "fixtures/validation/cardinality-postgresql-projection-browser.json": "db56e6c670f721ff250c058e8e662d37af1d0d60e7a3a469fea436115eaf747b",
+    "fixtures/validation/cardinality-selection-browser.json": "1a16698e497740e62d477083acf040d7ebf41480b48fd22b2a81fbee20c3bf7e",
+    "fixtures/validation/cardinality-sqlserver-browser.json": "7e4694da6b28ec19f85af6f27e295b1cf9d1dfed418f1adeecf5a4df7036edd3",
+    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "42877c03a7e9b2d0e2690fa52741b68a0c7fb3f2cd9982f17ffb95e55d49283a",
+    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "023655309d3f860ab8a7e3e423f1122147aa885a22987c1be56473e120573d7d",
+    "fixtures/validation/cardinality-tablespec-browser.json": "ea3bee2d03267b00400826d5177e281de7c68ba86c0d7dfa9c99a5249a5346a0",
+    "fixtures/validation/core-cardinality-browser.json": "71ec3372fad71d6935cf0d33f51d10361570915529e709663ca773e708209571",
+    "fixtures/validation/core-cardinality-operations-browser.json": "fc6440d5208057d03bda2e9fdb1ac57605f95263025d1ad8700ef419e3f4b75e",
+    "fixtures/validation/core-check-refresh/002.log": "e4ed43bec9c734aab8dea621fccb8f27ed4b10d3b7494cf8d639c038f37a370b",
+    "fixtures/validation/core-check-refresh/003.log": "c66996e5204641fe7493d9a200848745ea3d1a9ed703980119e03fa353ac3fc2",
+    "fixtures/validation/core-check-refresh/045.log": "f12307adb260d7010bb86178cb6410d013afe8e9ccd8796471c55e0da8c5a983",
+    "fixtures/validation/core-check-refresh/066.log": "0f67ee3bcdcf5f70ae05baa08a52781ad3da543a8458aee0a75596c4f3db0e4e",
+    "fixtures/validation/core-check-refresh/078.log": "7fcc2b4630bd20060eb7b7933374bc97f9818150c3883e9ccd1385509e301549",
+    "fixtures/validation/core-check-refresh/auxiliary-1.log": "36cb41f58051e57ef8366c5787bcc3424e460a431d05b8ceebcf843ca8208e74",
+    "fixtures/validation/core-check-refresh/auxiliary-6.log": "e4ed43bec9c734aab8dea621fccb8f27ed4b10d3b7494cf8d639c038f37a370b",
+    "fixtures/validation/core-check-refresh/auxiliary.json": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce",
+    "fixtures/validation/core-check-refresh/container-affected-attempt-1.log": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652",
+    "fixtures/validation/core-check-refresh/container-affected.json": "53f31a2973a207f21b407717536c44a75c09de282c863f7a41141672faec74e5",
+    "fixtures/validation/core-check-refresh/container-affected.log": "029a126cef5760850e50f9d32e4b6b91d03f6289f3d16086dfd001ba0665eb89",
+    "fixtures/validation/core-check-refresh/container-gates-attempt-1.log": "2e16fa3371453374be9794b34427db8d96747209c7ec6c61e91daf63c7ad90b3",
+    "fixtures/validation/core-check-refresh/container-gates.json": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99",
+    "fixtures/validation/core-check-refresh/container-gates.log": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a",
+    "fixtures/validation/core-check-refresh/container-install-attempt-2.log": "96f841bb0137a5425f2346dffa49140f72ce62e86692b0ef2d13eaea14a99f89",
+    "fixtures/validation/core-check-refresh/container-install.json": "571169a902f35be8396718e1037ffa64cfb089d04a709d3590157e9b058db8d1",
+    "fixtures/validation/core-check-refresh/container-install.log": "3baded3d88d4d553aa6e1e1df37bc25b8cfbb449f10d25199302676b1feccad4",
+    "fixtures/validation/core-check-refresh/container-integrity-attempt-1.log": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa",
+    "fixtures/validation/core-check-refresh/container-protobuf-attempt-2.log": "4aabf523ba48c490d5bd11c9f4960a156aaadbd291cbf8f053c56fdc429c480e",
+    "fixtures/validation/core-check-refresh/container-publication-attempt-2.log": "d3016d3636f21ada1d148a16d5f6382df3dff5bd8d7ff91ccdfd93e3f0e7f2b2",
+    "fixtures/validation/core-check-refresh/container-publication.json": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d",
+    "fixtures/validation/core-check-refresh/container-publication.log": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14",
+    "fixtures/validation/core-check-refresh/container-runtime.json": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6",
+    "fixtures/validation/core-check-refresh/container-schema-properties-inputs-attempt-2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-check-refresh/container-schema-properties-oracle-attempt-2.log": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6",
+    "fixtures/validation/core-check-refresh/container-semantic-inputs-attempt-1.log": "da7ed521674c2c5ee8c0793c9b2f6ab38f0eb9c1c429fbfc56a9c4866824e4b1",
+    "fixtures/validation/core-check-refresh/final-seal.json": "d2fa372791d912d8ec8937e03110b29e0209ea1c79493c07d5ea2253a54f8420",
+    "fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.json": "1d3bd2663d97a309a7cedcffe01d4e32d039d03eec5cef54a88acfd4f0de9300",
+    "fixtures/validation/core-check-refresh/finalization-failed/container-semantic-inputs.log": "da7ed521674c2c5ee8c0793c9b2f6ab38f0eb9c1c429fbfc56a9c4866824e4b1",
+    "fixtures/validation/core-check-refresh/finalization-failed/execution-observation.json": "b163e8bb2ecbe79288a09a244aa0d1b8b5b40d83ca9b704fd576b04ad9726659",
+    "fixtures/validation/core-check-refresh/finalization-failed/publication.json": "3b9c3e98fba77f1b84419d1c10f1422f61914704a706bb7790d7d585fd8f55fb",
+    "fixtures/validation/core-check-refresh/finalization-failed/publish.log": "2729292291892096b2db233d275c8a1610c1939bd5ea4e48ed7fe9078b08a67d",
+    "fixtures/validation/core-check-refresh/finalization-failed/runtime-observation.json": "913c29b27a5e476f7d2649a07bd2fe264481cb135d848e5634a5d2d7c5df6fd9",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/auxiliary.json": "b713ed42ce15a3fe8072bb7e283c81bdfed1311613ea35a46f179f3e64b8edce",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.json": "8a447e2e0160539ad76839383c9dd401572a9d4ad7ffe36677194965edbae627",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-affected.log": "475ac088f1d502b0f4e62ae29a6103a2911e767f070e72b36655ed90a43c7652",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.json": "ca2eea3cad63793057a59ae470d15cb61d2fbaeac1cde6d3de07a97cd119ca99",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-gates.log": "a84513eb29252bc24684e24e8640affc2653480801244b0d6b3644eb3cb9167a",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.json": "25afa8410257b0720c742d69d2fbea122bf76340ce17b8f0609fdbe056fc4bc2",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-integrity.log": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.json": "a3d635ef53c7e36a6de471739aa367b95296b006e40b581833db60344341163d",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-publication.log": "a3931b47c34d4cbca16393fabae2dc3ecdc1f0a27484814c292f23b096580c14",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-runtime.json": "ecfe0f8a5ae5c8e75246644211b987e4b2ac5850827dffbb630ec6bff28df8b6",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.json": "9122e268d26daadae164d5d979d287df9c3fb564ef3f42f1517b83f329c7a571",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-inputs.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.json": "654f6a3462f1c194da15f4c419c3ddba1e05c96c0f33ddd5e6f4d25b3cf38ef5",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/container-schema-properties-oracle.log": "9033110e576d33a4d1c5cf18d9620ac38a879db645f3e31b57937d97044c23c6",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/gates.json": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/native-browser.json": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/publication.json": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-check-refresh/regression.json": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-browser.json": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle-inputs.json": "598ed34bb77ed589809c04b3beed93013105f1c501e0bd7dd691f25f3e2977cf",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/closure/fixtures/validation/core-schema-properties-oracle.json": "14615cde85e8a7ce63a7b80e17e6f21442af80b3a614a3b67501fb18b960ab7f",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/execution-observation.json": "ecd40717e010784704a995c74e31e79e9b2d0620818836a2dbc653d8784ef90f",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/final-seal.json": "f70c37a37f076858640cb74e9d8b466a683b0054c8cdd14702255149f1c8b020",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/runtime-observation.json": "9eceaead7543a7320e95839cb29246a14c683e95b48243a41cc6b182e22735dc",
+    "fixtures/validation/core-check-refresh/finalization-superseded/seal-bundle-binding/seal.log": "5e87837b6a077f82067c63e34186c8915d45fcf87632c150a8afed1032302453",
+    "fixtures/validation/core-check-refresh/gates.json": "284f2090ebbee6668b5e9d5f67d9943b7346704ccf19642546a1b6b431c8ccc9",
+    "fixtures/validation/core-check-refresh/native-browser.json": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249",
+    "fixtures/validation/core-check-refresh/publication.json": "a040e92230c01d02ad104f4cb56f47006fe6b385f2efc2adcafc9f58859b0318",
+    "fixtures/validation/core-check-refresh/regression-1.log": "75a0ae9f0b957b14251b7c713271e478605c887f56cb0b172b56a28824a4a9e1",
+    "fixtures/validation/core-check-refresh/regression-2.log": "d02279185cb27167ddefc01803eca8bdb1bc1ac574df155c52e40cdf01df6b11",
+    "fixtures/validation/core-check-refresh/regression-3.log": "8f6058708f6cf91cdb7976a1e83d1b0895a2589e2babcb34bf86e26646cf74d3",
+    "fixtures/validation/core-check-refresh/regression-4.log": "354b823c0f7776ac7e42ef049199de2db35f362256bc12acf6db2b59b0bd1e51",
+    "fixtures/validation/core-check-refresh/regression.json": "f8ef38ea27b5b0625bba0542c99e31017600c88a101a5267459c3c6dc04feb08",
+    "fixtures/validation/core-check-refresh/relationship-source-hashes.json": "982b8199600f9dcbc96d8535aa9105b89fc77712e261b1cb547c6e8a7c6dfcf5",
+    "fixtures/validation/core-facet-candidate-browser.json": "a69652a068b9a6af03e6b0c6157237ad63ab785dc50db93ec3d6fe0bb1364212",
+    "fixtures/validation/core-facet-operations-browser.json": "f707581375a622ace3bcff051446703769391a8ec7cdd6c63771e59b9ad0ba1d",
+    "fixtures/validation/core-key-candidate-browser.json": "2e2058cf39e7122aca761838b08bcfd327fb8cb2ff3770b86a73c1b403f52f4c",
+    "fixtures/validation/core-key-public-browser.json": "b13a9714ce08db18f5e07f7bbb4c68ae95b828eda6b18db03517e7e48ddbcc0a",
+    "fixtures/validation/core-key-transition-browser.json": "67bb4ad265ce5a5d189c6e5945afd7c7f581cea3da1a5c39f8e68490a68ed380",
+    "fixtures/validation/core-key-tuple-browser.json": "0763e780c3cc5fd96fca69b97e220aacb6a49d671db7f6a99ebe0e6b4897043e",
+    "fixtures/validation/core-relationship-candidate-browser.json": "2f99a7a692b3385011cec6f950c3225dfa920be70e95c82f85fe4cef6a5d0726",
+    "fixtures/validation/core-relationship-operations-browser.json": "7365eb13dd633d73d0f25074cc6c138f859fcf5b0d5e39dc18aa0bad57cbbd28",
+    "fixtures/validation/core-relationship-public-browser.json": "64efc6acebfdfa607c1ba9998c544ab7d110b9ed7004fa8386f7c74e3a148edd",
+    "fixtures/validation/core-relationship-transition-browser.json": "de80f006e68d14c2020c9cc0b4f9caad2e1eee1a47a0d8c81337f1b76a217711",
+    "fixtures/validation/core-schema-properties-browser.json": "895889776eb9de0742775e8b04a0f68460f0df90a997b8194e7585ccaae4da33",
+    "fixtures/validation/facet-core-acceptance-evidence.json": "a49922fa8705c215f0ac15c35bfa303f3532e03a4e686b4e818dada543296d68",
+    "fixtures/validation/facets-avro-browser.json": "83e595c1515ca56d38778c18f7fb90e3000d3566d85410bc01a0597bb792105b",
+    "fixtures/validation/facets-avro-classification-browser.json": "b45c53ab25c7f7954d20bac0e583e9830d5abe01d9189c7bdb5827ef3e9ed979",
+    "fixtures/validation/facets-avro-composition.json": "35285d7504045971d4f5dc79b6e427648959b6ce0ec11e9ee08e7e34ff23c8a2",
+    "fixtures/validation/facets-avro-discovery.json": "7daf009ac9c7629f57e645ab8c3a1e15003837e6f8ee2fab82112c4385305aa9",
+    "fixtures/validation/facets-avro-exact-input-browser.json": "492717f20b7b541f3568bfffacb3eb95f36bb6b119adbfe909a221705ab95ce7",
+    "fixtures/validation/facets-avro-native.json": "f06e234010193e8cbfa7e1ffea9ab9270b26064ea719181e238e9cac3917a6de",
+    "fixtures/validation/facets-avro-projection-browser.json": "c9ae64dc2c94294b998a9e9ffa3479ef5dec869e60e154a7579ed3f454827dda",
+    "fixtures/validation/facets-avro-projection-native.json": "14012dbd0b33e8dc65c057ce2e761a59d00ed1ae45a626d46a85108de7ab8d81",
+    "fixtures/validation/facets-avro-selection-browser.json": "609623c6cfac4e96500670f42daad4f4c3adbbdffc4e51c38a11154167ba97e7",
+    "fixtures/validation/facets-avro-selection-oracle.json": "77ad5b24924d84918558ee0d3f6daaa7f038f3063f6483e5422570d8743be59d",
+    "fixtures/validation/facets-avro-type-browser.json": "cd65bbac14257c20db70554de654d590d3b66dd0a4ec41c4e12569c9b1cc9eae",
+    "fixtures/validation/facets-parquet-browser.json": "e1309649bfa96fc3734bce32289ebcd54b51902f5946a393d36391894d5a3912",
+    "fixtures/validation/facets-parquet-carrier-browser.json": "c1c59f715f7ed78a64b351b2bde9809550b77794d28eacefee0713664f2d4ce0",
+    "fixtures/validation/facets-parquet-classification-browser.json": "5826728fdec54b7f9877d43cbcbc7508665f52d58f60fb76e26879764b20e33c",
+    "fixtures/validation/facets-parquet-discovery.json": "93b8549985c85ebb9a08586bfd331c7aef0f6aabdc39f6363aac8a53f680f1f2",
+    "fixtures/validation/facets-parquet-native.json": "1c3886af6c34ddde2c2b8ae799cd1b3d3804b4ebcfdea447f04c8e4d0ad61a29",
+    "fixtures/validation/facets-parquet-projection-browser.json": "81dd6ab164c7ad1638e29a1352c8f419df4984aeb2049dae35233d0fc5a5125a",
+    "fixtures/validation/facets-parquet-type-browser.json": "1686ba585c416930c9feebf4e0b451d68dbc758d9b8ed447de2cabde7b8cf1e3",
+    "fixtures/validation/facets-postgresql-browser.json": "60cd468bd1113ef38adb354fe7ccd77786f52554d5142d6f636452e20f1f910e",
+    "fixtures/validation/facets-postgresql-catalog-browser.json": "4a340e5f0f7af3307639b32dd97a5a2968bcefe0aa2325a0d14f262dac5e5883",
+    "fixtures/validation/facets-postgresql-classification-browser.json": "2a69c67f1b98dc4533c22ce1871f6d528b936ef33e054bcb9535b8cf4a8b5a35",
+    "fixtures/validation/facets-postgresql-discovery-browser.json": "074e2298bd1cfb55b1f8b0a8d639da8c7e16b684786979f69f514a544af40ca2",
+    "fixtures/validation/facets-postgresql-predicate-browser.json": "16eca62449c4c411c8effc6bec0d3da64d97e3cd4dcb4bb7263d34925e7e8ae7",
+    "fixtures/validation/facets-postgresql-projection-browser.json": "2ef6ac77cc241fb69abf5727bd6d514a14df373b98672504209ccfe3d3cc55d1",
+    "fixtures/validation/facets-postgresql-resolved-browser.json": "ed9fe55f5f204bc3897a1d3c6d2ab1968401a6744b5cb48749357f49a995f058",
+    "fixtures/validation/facets-sqlserver-browser.json": "612797056d42e9178def557480f3cf19944328d0478bdf7490c7d09da3df1b92",
+    "fixtures/validation/facets-sqlserver-classification-browser.json": "df1bc4d0ba1fd988861e904b0b97ec26453bf7aac753785eb04f8025b955b5a0",
+    "fixtures/validation/facets-sqlserver-composition-browser.json": "c523fec6ded4cc2ff071deb41b6be4973a5e71399f9e5aa18806eec2d73c524f",
+    "fixtures/validation/facets-sqlserver-constraints-browser.json": "3f5422f1bd94c53d6bdb6528e3bbbf36290c908142f523e4e2dbca6d81269c28",
+    "fixtures/validation/facets-sqlserver-discovery-browser.json": "8d2dff6cb7ab032977285d604e6feeb05ccb16fe9f614f3c16cf5d1d8b37f26e",
+    "fixtures/validation/facets-sqlserver-predicate-browser.json": "e7e447fc8428fa9094e32e2ae450d10708b6f11d463408f40881de44473c559d",
+    "fixtures/validation/facets-sqlserver-projection-browser.json": "56175c180017984f1004175d4da79dbf2945091c461da97f2b0eae28c73121c3",
+    "fixtures/validation/facets-tablespec-browser.json": "f1e77a4ed3244a4c30cfe4e4e49a59cc59cb34268ed28b1968de93f66f4ac99f",
+    "fixtures/validation/facets-tablespec-classification-browser.json": "c59d1da32a1b29857832177585fc2f6686f3bc9119c0820210dfc35d77c5ab57",
+    "fixtures/validation/facets-tablespec-projection-browser.json": "05bba56c421b1a79f21338d467814adaaa7ac5187ef54b8d77e67a4064c7b346",
+    "fixtures/validation/facets-tablespec-suite-browser.json": "cd7a9cd1d5abaed5effe4b79af62ed1fc6d31b1a84fcc22c682d38b79ee59443",
+    "fixtures/validation/facets-worktree-revalidation.json": "6f98de0688a193825070234e8270ac6980337fd8038de1188c953235a443fbd8",
+    "fixtures/validation/field-core-acceptance-evidence.json": "a5d9e72d340b68bee707e37c71edecd4fca6db7fbe8bf7587cf9c3e530c66f64",
+    "fixtures/validation/field-gate-refresh-evidence.json": "0e56d7588a58e9363316ab47bd984758f7375eaab32f516c3879e5ca1cfe44c1",
+    "fixtures/validation/field-postgresql-acceptance-evidence.json": "cfe3504ac46eaa4720e7643633abdde916502bc85bfc184f65155a2f4ece48b0",
+    "fixtures/validation/field-tablespec-acceptance-evidence.json": "5adef3bc60b02598cf086802950084886dca195200f86ffa3d99b19530fc4039",
+    "fixtures/validation/key-avro-browser.json": "d90d8021f62f4149dfb11bf024c060ff11888bf94ff43db1f3b4b0b2407d66c6",
+    "fixtures/validation/key-avro-projection-browser.json": "90e9a819bed1b0f52edde1b245a5bceeb1e1ee15f843d8ac4cc5be202fa36206",
+    "fixtures/validation/key-gate-refresh-evidence.json": "8e2072bf354251c2099d5768bc7ba133a80fc19f464672b2e4cc11ae40823852",
+    "fixtures/validation/key-parquet-browser.json": "49b65a61b7835ec7ca6b6c473775861f532f2970771869444a02bf61b5c5a623",
+    "fixtures/validation/key-parquet-projection-browser.json": "d5439dc924cab8345f6b34961fef05a7ddc71bd1cf2ff22006e5bb83a59d1698",
+    "fixtures/validation/key-postgresql-browser.json": "4b9f8c94a3e6ccc8acb21ae022fa2f0e8edaca5d27f90a181427f82395f7b56c",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "82d35a09db5c891ba03cdca512a7f9d4a374fe85bace39bb40c063583ae28f91",
+    "fixtures/validation/key-sqlserver-browser.json": "0fc9bf6266fdd45465de8ea7834e20c7c9504cef4ba955761bd52665e50f95e8",
+    "fixtures/validation/key-sqlserver-encoding-browser.json": "5b6d8cc87082c827cf30bc5350147607a203c18c46ede74a5bf9c5f7aea233f3",
+    "fixtures/validation/key-sqlserver-projection-browser.json": "71b9617d705d4cc54263e528b84bc9e7ceae4af8aca3c59de43663ded790e860",
+    "fixtures/validation/key-tablespec-classification-browser.json": "3752156794694c793c802e8abcca7b82edade2ca3f214c2dba0ae734654318f5",
+    "fixtures/validation/nullability-avro-browser.json": "e7c9033c86e44a1a83747206f0cea245c5a2de975f1596351fed1e0f3f780619",
+    "fixtures/validation/nullability-avro-projection-browser.json": "9ad7502ff1d3a13a1318bce0ff9a18d945f0ef7dc6e4a75f3c4a261638fc0b08",
+    "fixtures/validation/nullability-avro-projection-native.json": "93d4d4bf9e7c5f9fc0c1c13f056813f57e8a37675f895ff60d490a073aaac278",
+    "fixtures/validation/nullability-core-acceptance-evidence.json": "eec1c26f8318dc9b46dd066ca4de756d90da238dc629232e22751259beb8f829",
+    "fixtures/validation/nullability-parquet-browser.json": "1210a2cd9f4dc730c6d5af8dce88a9fb0e7096efd2af0a385e47e8b5252fe9b2",
+    "fixtures/validation/nullability-parquet-projection-browser.json": "08033e76b77cd7238f200fc40d416df468767b37b490ea9c5d2e95181e42e558",
+    "fixtures/validation/nullability-postgresql-browser.json": "dfca32937d5c2660ccdce83ac5f9a20da68872110ba51b82d980dd25d16a4669",
+    "fixtures/validation/nullability-postgresql-projection-browser.json": "0d5a211e7992c3baa8ed86b3ecf0b22e1de7a91ab3fd83ac260a64c4120d2cbf",
+    "fixtures/validation/nullability-sqlserver-browser.json": "aa577e845e525fd4f9e5f9486927dd2fda529f4a64cd25533a5c914381e01100",
+    "fixtures/validation/nullability-sqlserver-native.json": "1b104439bf3aaca638aaa74c49fc9860587ca2f42ebf026e3c0b62f007f78977",
+    "fixtures/validation/nullability-sqlserver-projection-browser.json": "0660ca1a424862acb5a827b9ddb895632a7fb3d545cb409d718d7160d4a86f6d",
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": "604b8344a489c119726b7f5d9b2705202259be24a0c536958bfc8d6553e5aac9",
+    "fixtures/validation/parquet-facets-acceptance-evidence.json": "ce605f7c0ead549191be67bc9d8d35367b34cdd7ff7247df8df765e089e342ec",
+    "fixtures/validation/parquet-nullability-acceptance-evidence.json": "53880aeef06384ee90fb3483826480c809b09fd64aa7782eeca3b433ac279046",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "d085cd3aecfd1eb24226d27488c2bc8c82bae19c566f5bd1a06c72f27546ec6d",
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": "ce096d04c4fc8472628e16f2cc41f34667ed0fa2a334ad096cc02e142ceb9809",
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "de582e9ab20aa94d92802abe91b35754bb0f93d05b01f483a1b7cb856b93df4a",
+    "fixtures/validation/relationship-avro-browser.json": "f8f60297e8f2d304444104fcd32d0d92a6773c2f3a0eadc6a033a6a2489c3ab7",
+    "fixtures/validation/relationship-avro-carrier-browser.json": "be25017635264e24c30407e493ebfd8982f08c1090ebfb66d8ad5e6416f35d06",
+    "fixtures/validation/relationship-avro-projection-browser.json": "2b45a7ed740991d4c2bd9378a01de39c80bc4aa5449f99923ce46aef04bb2cea",
+    "fixtures/validation/relationship-conformance-browser.json": "615336c0c3ffd8e730541bcda34720cfc09a9c995206608b7793fd7adead62d0",
+    "fixtures/validation/relationship-extras/browser.json": "71359bb50d3a6bded40acf5ac50572af20111213dca7a1ce48620faa7de26712",
+    "fixtures/validation/relationship-gate-refresh.json": "758d9b302254969e23198fbcb7d5372e7c80725706cbd62e3fedb7ef42c24b44",
+    "fixtures/validation/relationship-parquet-browser.json": "c6f35e4d6194cbee4f63d6ae0624fcddd6761bad78a34d3ffb0057ec4af0df43",
+    "fixtures/validation/relationship-parquet-native.json": "fcb7b5af9a76f72f87d790fdb69d9dad9b566670956e6445661bc3633bf31473",
+    "fixtures/validation/relationship-sqlserver-browser.json": "80b8093979ddf715f21dbc168d8b750caf746dfb683deaa9ced88cd1c2a3178c",
+    "fixtures/validation/relationship-sqlserver-native.json": "ca336c9d2fffeb31644928a56395f1de2d46e2465f2d81c6401a1897533c8e42",
+    "fixtures/validation/relationship-tablespec-classification-browser.json": "160a1d8c5df30571ec6147c7d8e726b1767fa2e5f41e52a53b4e042145c86a45",
+    "fixtures/validation/relationship-tablespec-projection-browser.json": "c66c331cd5957ba6c001d32917deefdcb409fe2dd325b9b7727c84d631687bcd",
+    "fixtures/validation/remaining-field-bindings-acceptance-evidence.json": "c356f47c14ea1175d848ee785a9f86269faa3975cd9a242377587d5e6cff3aab",
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": "0fe35af358e0e516926b1d9a4eda644cb2cc4003a28c1374339b957f2ad5218c",
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": "38ba97d9d5d25dbbe90cc615f25bb65155687adf6118024bec4d2689ec0a746d",
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "2754b0cce2413bb7342036e062529562492ab01a3f2d130319535f85d106d5d0",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "44df9bf5075df4f9a43deddbd00bf71626e9f76510538171f5f4712f67656b3c",
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": "752479720a967cbccb298d491a7db5213a0d3a37a890bde6a7c11c63b5a7fc0c",
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "70e1adbee9b36ef4b31f19da4f31b2f46408c1896f24dd83a34246efab9319c7",
+    "docs/helix/03-test/acceptance-criteria-ledger.json": "be15a7cc6b975e0a09494372d8701a221e7b1236d8f32e70d69e54a5b346e060"
+  },
+  "requiredPendingCertificationGates": [],
+  "delivery": {
+    "merge": "pending",
+    "actualWebsiteDeploymentVerification": "pending",
+    "release": "pending",
+    "readerUsabilitySessions": "two beginner sessions remain follow-up; executable demonstrations are mandatory and passed"
+  }
+}

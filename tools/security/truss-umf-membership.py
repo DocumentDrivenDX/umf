@@ -1,0 +1,18 @@
+"""Retain private UMF membership host evidence; native rows and subset bytes are synthetic."""
+import hashlib,json,os,pathlib,subprocess,uuid,zipfile
+umf=pathlib.Path(__file__).resolve().parents[2];truss=pathlib.Path('/private/tmp/truss-security-main-integration')
+owners={'TRUSS_UMF_PRODUCER':'/private/tmp/truss-umf-runtime-LmpSsH','TRUSS_UMF_DECLARATION_PRODUCER':'/private/tmp/truss-umf-runtime-vKoRzl','TRUSS_UMF_FIELD_ASSERTION_PRODUCER':'/private/tmp/truss-umf-runtime-xZQtaP'}
+paths={pathlib.Path(__file__).resolve(),truss/'scripts/check-catalog-umf-membership.ts'}
+for directory,pattern in [('packages/umf-bun/src','*.ts'),('packages/postgresql/src','*.ts'),('docs/helix/02-design/contracts','*.json'),('docs/helix/02-design/contracts/bindings','*.d.ts')]:paths.update((truss/directory).rglob(pattern))
+paths.add(truss/'docs/helix/03-test/report-wire-untrusted.fixture.json')
+for directory in owners.values():paths.update(pathlib.Path(directory)/name for name in ['producer.js','producer-manifest.json'])
+preimages={str(p):p.read_bytes() for p in sorted(paths)};sha=lambda b:hashlib.sha256(b).hexdigest()
+env={**os.environ,**owners};run_command=['bun','scripts/check-catalog-umf-membership.ts'];run=subprocess.run(run_command,cwd=truss,env=env,text=True,capture_output=True,timeout=60);assert run.returncode==0,(run.stdout,run.stderr)
+result=json.loads(run.stdout);assert result['status']=='pass' and result['checks']==36 and result['supportSemanticsQualified'] is False
+command=['bun',str(umf/'node_modules/typescript/bin/tsc'),'--ignoreConfig','--noEmit','--strict','--skipLibCheck','--target','ES2022','--module','ESNext','--moduleResolution','bundler','--types','bun,node','--typeRoots',str(umf/'node_modules/@types'),'packages/umf-bun/src/catalog-umf-membership-candidate.ts','packages/umf-bun/src/catalog-report-correspondence.ts','scripts/check-catalog-umf-membership.ts'];check=subprocess.run(command,cwd=truss,env=env,text=True,capture_output=True,timeout=60);assert check.returncode==0,(check.stdout,check.stderr)
+for p,b in preimages.items():assert pathlib.Path(p).read_bytes()==b,p
+out=umf/'docs/helix/04-build/evidence/security/truss-umf-membership'/str(uuid.uuid4());out.mkdir(parents=True)
+with zipfile.ZipFile(out/'preimages.zip','w',zipfile.ZIP_DEFLATED) as z:
+ for p,b in preimages.items():z.writestr(p.lstrip('/'),b)
+receipt={'status':'pass','scope':'original_owner_preparation_and_declared_subset_host_correspondence_only','result':result,'sourceSha256':{p:sha(b) for p,b in preimages.items()},'preimagesSha256':sha((out/'preimages.zip').read_bytes()),'ownerDirectories':owners,'hostExecution':{'command':run_command,'stdout':run.stdout,'stderr':run.stderr,'exitCode':run.returncode},'strictTypecheck':{'command':command,'stdout':check.stdout,'stderr':check.stderr,'exitCode':check.returncode},'acceptedReportQualified':False,'nativeExecutionQualified':False,'acceptancePromoted':False,'limitations':['Selected subset artifacts and native report rows are synthetic; original owner preparation executes pinned record/declaration/field bundles.','Per-document selections are declared correspondence, not registered semantic support interpretation.','Transition SHA is a selector for the already owner-verified immutable preparation, not an independent semantic/loss proof.','Limits cover decoded artifact bytes per occurrence only; identities, grouping JSON, transition serialization, allocation/CPU/deadline remain unqualified.','Local Bun, TypeScript, ambient typings and Ajv runtime are observed dependencies, not hermetic toolchain evidence.']}
+(out/'host.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({'receipt':str(out/'host.json'),'sourcePins':len(preimages),'checks':result['checks']}))

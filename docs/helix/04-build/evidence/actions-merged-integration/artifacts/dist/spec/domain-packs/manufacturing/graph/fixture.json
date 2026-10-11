@@ -1,0 +1,785 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:manufacturing",
+    "revision": "1.0.0",
+    "sha256": "563409c10c5ec1f169b2f1e1f0631e1091e8806486ffedfebfea0da11d1917e2"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "manufacturing",
+    "version": "1.0.0",
+    "sha256": "0de0757f33542e35c3e7c08e26b1766e016ef436490b759e5934c5117caf3388"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_alarms",
+          "template_components",
+          "template_facilities",
+          "template_inspections",
+          "template_machines",
+          "template_maintenance_events",
+          "template_material_lots",
+          "template_observations",
+          "template_production_runs",
+          "template_work_orders"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_alarms": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "3638368477700159044ea962d12061e4f62549b06a6bd273a7f09855e9f24d92"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/alarms.csv",
+      "revision": "1.0.0"
+    },
+    "template_components": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "dc547d7cfc047b73722e2bf37c376975c3b4fe32d1e1e79451edc3e3bbd56229"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/components.csv",
+      "revision": "1.0.0"
+    },
+    "template_facilities": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a2b865af80ad6b08decdef2e78659e4f5b141fb6905bbbb5b023ffc7cfbf4fcc"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/facilities.csv",
+      "revision": "1.0.0"
+    },
+    "template_inspections": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "545d8356023b75c7861d8a6c9787a3b9866cb808293c9381563437648aeb936d"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/inspections.csv",
+      "revision": "1.0.0"
+    },
+    "template_machines": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d176eae15cf5dec06928e9f674ce9c7bc9afb92792e4afa83ef761e05d9a1523"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/machines.csv",
+      "revision": "1.0.0"
+    },
+    "template_maintenance_events": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d80beeba83a5d163dcbac43b156ab464aa205853f56872ca636c6c70a2defa84"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/maintenance_events.csv",
+      "revision": "1.0.0"
+    },
+    "template_material_lots": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "296c5cffab69660576ae92234e3dc1da5fca267ce5232b09cb239a224cbb77fd"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/material_lots.csv",
+      "revision": "1.0.0"
+    },
+    "template_observations": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "04dc93d7aac9043dc4370ae3ae783fe5e54f3a004d30d2fdd2422f98cfe39c98"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/observations.csv",
+      "revision": "1.0.0"
+    },
+    "template_production_runs": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8740748f40b2c17e98285bd3f825a2b7403909f7723c163d730a3a685c3062fa"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/production_runs.csv",
+      "revision": "1.0.0"
+    },
+    "template_work_orders": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "cee7f9f3e27261c1c76eb3d17f08739691b95cc59fc1a3b78e1e99b5b3202f29"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/work_orders.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "facilities",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "machines",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "components",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "work_orders",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "material_lots",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "production_runs",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "observations",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "alarms",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "inspections",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "maintenance_events",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_alarms": {
+        "algorithm": "sha256",
+        "value": "3638368477700159044ea962d12061e4f62549b06a6bd273a7f09855e9f24d92"
+      },
+      "template_components": {
+        "algorithm": "sha256",
+        "value": "dc547d7cfc047b73722e2bf37c376975c3b4fe32d1e1e79451edc3e3bbd56229"
+      },
+      "template_facilities": {
+        "algorithm": "sha256",
+        "value": "a2b865af80ad6b08decdef2e78659e4f5b141fb6905bbbb5b023ffc7cfbf4fcc"
+      },
+      "template_inspections": {
+        "algorithm": "sha256",
+        "value": "545d8356023b75c7861d8a6c9787a3b9866cb808293c9381563437648aeb936d"
+      },
+      "template_machines": {
+        "algorithm": "sha256",
+        "value": "d176eae15cf5dec06928e9f674ce9c7bc9afb92792e4afa83ef761e05d9a1523"
+      },
+      "template_maintenance_events": {
+        "algorithm": "sha256",
+        "value": "d80beeba83a5d163dcbac43b156ab464aa205853f56872ca636c6c70a2defa84"
+      },
+      "template_material_lots": {
+        "algorithm": "sha256",
+        "value": "296c5cffab69660576ae92234e3dc1da5fca267ce5232b09cb239a224cbb77fd"
+      },
+      "template_observations": {
+        "algorithm": "sha256",
+        "value": "04dc93d7aac9043dc4370ae3ae783fe5e54f3a004d30d2fdd2422f98cfe39c98"
+      },
+      "template_production_runs": {
+        "algorithm": "sha256",
+        "value": "8740748f40b2c17e98285bd3f825a2b7403909f7723c163d730a3a685c3062fa"
+      },
+      "template_work_orders": {
+        "algorithm": "sha256",
+        "value": "cee7f9f3e27261c1c76eb3d17f08739691b95cc59fc1a3b78e1e99b5b3202f29"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "563409c10c5ec1f169b2f1e1f0631e1091e8806486ffedfebfea0da11d1917e2",
+      "umf/alarms.json": "4b379937b0d2bc88705c272f72544dc07e68044d960189450a8e1a0ba42866eb",
+      "umf/components.json": "2712b4af3c210e8d2d26814b54484ec9f70e88c182ba3196de64903a2193d7f4",
+      "umf/facilities.json": "6e57e4bf896a75947d92d6a0bf56b38b108a37baa6cbeaa12485880ecfac3c45",
+      "umf/inspections.json": "d1958c53d69e794264d965f851cd710a45340372b773a2370eba8fe6fa5c20e3",
+      "umf/machines.json": "86789f07aa86ce420777cf5ef0d01dc2034660c19d5c8cb3c4081e8c1ecf2876",
+      "umf/maintenance_events.json": "18e9c612d4b64a93d07186a5623f862eea114fcccfe5093d39b1a29c4e91507d",
+      "umf/material_lots.json": "547fdbd3578954a8c89aafa13f5a015a45ed5dbcf820b140916473ae6c8d1eb0",
+      "umf/observations.json": "587e3c1e22603d342c265938e9cf258d28e93b46f9b63e2c8e54c370b3e7666e",
+      "umf/production_runs.json": "65b7cd6234ad3bf32eac251c9b337bd6e586a56a2fe50a0dbdd3669ab9a2c2a3",
+      "umf/work_orders.json": "fb87e6e80fe93af6f06e1162aee7c1961f9f4c010b6ffeb0bbf2bcc375c060fd"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "manufacturing",
+      "sha256": "0de0757f33542e35c3e7c08e26b1766e016ef436490b759e5934c5117caf3388",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "bff041fe8393e8ee7ae608b71189e124af3dd105fc418fc89bd9e2058d4a4dad",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"facilities\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "facilities"
+      },
+      "values": {
+        "facilities.id": "[42,0,\"F1\"]",
+        "facilities.name": "Synthetic plant"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "machines"
+      },
+      "values": {
+        "machines.id": "[42,0,\"M1\"]",
+        "machines.facility_id": "[42,0,\"F1\"]",
+        "machines.name": "Press"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "components"
+      },
+      "values": {
+        "components.id": "[42,0,\"C1\"]",
+        "components.machine_id": "[42,0,\"M1\"]",
+        "components.parent_id": null,
+        "components.name": "Drive"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "components"
+      },
+      "values": {
+        "components.id": "[42,0,\"C2\"]",
+        "components.machine_id": "[42,0,\"M1\"]",
+        "components.parent_id": "[42,0,\"C1\"]",
+        "components.name": "Bearing"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders\",[\"[42,0,\\\"W1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "work_orders"
+      },
+      "values": {
+        "work_orders.id": "[42,0,\"W1\"]",
+        "work_orders.machine_id": "[42,0,\"M1\"]",
+        "work_orders.status": "complete"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"material_lots\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "material_lots"
+      },
+      "values": {
+        "material_lots.id": "[42,0,\"L1\"]",
+        "material_lots.material": "steel"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "production_runs"
+      },
+      "values": {
+        "production_runs.id": "[42,0,\"R1\"]",
+        "production_runs.work_order_id": "[42,0,\"W1\"]",
+        "production_runs.lot_id": "[42,0,\"L1\"]",
+        "production_runs.started_at": "2026-01-01T10:00Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "production_runs"
+      },
+      "values": {
+        "production_runs.id": "[42,0,\"R2\"]",
+        "production_runs.work_order_id": "[42,0,\"W1\"]",
+        "production_runs.lot_id": "[42,0,\"L1\"]",
+        "production_runs.started_at": "2026-01-01T12:00Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "observations"
+      },
+      "values": {
+        "observations.id": "[42,0,\"O1\"]",
+        "observations.component_id": "[42,0,\"C2\"]",
+        "observations.value": "2E+1",
+        "observations.unit": "Cel",
+        "observations.observed_at": "2026-01-01T10:01Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "observations"
+      },
+      "values": {
+        "observations.id": "[42,0,\"O2\"]",
+        "observations.component_id": "[42,0,\"C2\"]",
+        "observations.value": "68",
+        "observations.unit": "degF",
+        "observations.observed_at": "2026-01-01T10:02Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O3\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "observations"
+      },
+      "values": {
+        "observations.id": "[42,0,\"O3\"]",
+        "observations.component_id": "[42,0,\"C2\"]",
+        "observations.value": "9E+1",
+        "observations.unit": "Cel",
+        "observations.observed_at": "2026-01-01T10:03Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "alarms"
+      },
+      "values": {
+        "alarms.id": "[42,0,\"A1\"]",
+        "alarms.observation_id": "[42,0,\"O2\"]",
+        "alarms.condition": "unit-change"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "alarms"
+      },
+      "values": {
+        "alarms.id": "[42,0,\"A2\"]",
+        "alarms.observation_id": "[42,0,\"O3\"]",
+        "alarms.condition": "high-temperature"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"inspections\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "inspections"
+      },
+      "values": {
+        "inspections.id": "[42,0,\"I1\"]",
+        "inspections.run_id": "[42,0,\"R1\"]",
+        "inspections.method": "visual",
+        "inspections.result": "pass"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events\",[\"[42,0,\\\"ME1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "element": "maintenance_events"
+      },
+      "values": {
+        "maintenance_events.id": "[42,0,\"ME1\"]",
+        "maintenance_events.component_id": "[42,0,\"C2\"]",
+        "maintenance_events.work_order_id": "[42,0,\"W1\"]",
+        "maintenance_events.action": "replace",
+        "maintenance_events.alarm_id": "[42,0,\"A2\"]",
+        "maintenance_events.occurred_at": "2026-01-01T11:00Z",
+        "maintenance_events.resumed_run_id": "[42,0,\"R2\"]"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines.facility_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"machines\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"facilities\\\",[\\\"[42,0,\\\\\\\"F1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "machines.facility_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"facilities\",[\"[42,0,\\\"F1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components.machine_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"machines\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "components.machine_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines\",[\"[42,0,\\\"M1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components.machine_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"machines\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "components.machine_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines\",[\"[42,0,\\\"M1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components.parent_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "components.parent_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders.machine_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"work_orders\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"machines\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "work_orders.machine_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders\",[\"[42,0,\\\"W1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"machines\",[\"[42,0,\\\"M1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs.work_order_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"work_orders\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "production_runs.work_order_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders\",[\"[42,0,\\\"W1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs.lot_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"material_lots\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "production_runs.lot_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"material_lots\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs.work_order_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"work_orders\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "production_runs.work_order_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders\",[\"[42,0,\\\"W1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs.lot_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"material_lots\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "production_runs.lot_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"material_lots\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations.component_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"observations\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "observations.component_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations.component_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"observations\\\",[\\\"[42,0,\\\\\\\"O2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "observations.component_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations.component_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"observations\\\",[\\\"[42,0,\\\\\\\"O3\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "observations.component_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O3\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms.observation_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"alarms\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"observations\\\",[\\\"[42,0,\\\\\\\"O2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "alarms.observation_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms.observation_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"alarms\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"observations\\\",[\\\"[42,0,\\\\\\\"O3\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "alarms.observation_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"observations\",[\"[42,0,\\\"O3\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"inspections.run_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"inspections\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "inspections.run_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"inspections\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events.component_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"maintenance_events\\\",[\\\"[42,0,\\\\\\\"ME1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"components\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "maintenance_events.component_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events\",[\"[42,0,\\\"ME1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"components\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events.work_order_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"maintenance_events\\\",[\\\"[42,0,\\\\\\\"ME1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"work_orders\\\",[\\\"[42,0,\\\\\\\"W1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "maintenance_events.work_order_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events\",[\"[42,0,\\\"ME1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"work_orders\",[\"[42,0,\\\"W1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events.alarm_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"maintenance_events\\\",[\\\"[42,0,\\\\\\\"ME1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"alarms\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "maintenance_events.alarm_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events\",[\"[42,0,\\\"ME1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"alarms\",[\"[42,0,\\\"A2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events.resumed_run_id\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"maintenance_events\\\",[\\\"[42,0,\\\\\\\"ME1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:manufacturing\\\",\\\"domain\\\",\\\"production_runs\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:manufacturing",
+        "module": "domain",
+        "id": "maintenance_events.resumed_run_id"
+      },
+      "source": "[\"urn:umf:domain:manufacturing\",\"domain\",\"maintenance_events\",[\"[42,0,\\\"ME1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:manufacturing\",\"domain\",\"production_runs\",[\"[42,0,\\\"R2\\\"]\"]]"
+    }
+  ]
+}

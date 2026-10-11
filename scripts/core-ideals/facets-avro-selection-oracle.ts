@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {importAvroSchema,getAvroNode,readDocument,writeDocument} from '../../src';
@@ -15,7 +16,7 @@ for(const row of (await Bun.file(fixture).json()).cases){
  const source=importAvroSchema(row.schema,{id:row.id,dependencies:row.dependencies});
  for(const format of ['json','yaml'] as const){
   const restored=readDocument(writeDocument(source,format),format);
-  for(const root of roots)assert.deepEqual(getAvroNode(restored,'',root.dependencyId),root.root);
+  for(const root of roots)assertJsonDataEqual(getAvroNode(restored,'',root.dependencyId),root.root);
   schemaRecoveries++;
  }
 }

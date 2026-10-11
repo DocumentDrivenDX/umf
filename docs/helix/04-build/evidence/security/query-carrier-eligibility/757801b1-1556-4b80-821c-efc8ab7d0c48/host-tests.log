@@ -1,0 +1,24 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security-graph-source.test.ts:
+(pass) opaque edges explicitly omit association record and property fields [0.47ms]
+(pass) source issuance survives caller mutation and refuses copied source [0.12ms]
+(pass) metadata accessors never execute [0.02ms]
+(pass) custom collection iterators never execute [0.04ms]
+(pass) native metadata identifiers retain exact domain limits [0.07ms]
+(pass) unsupported domains, conflicting aliases and hidden metadata refuse [0.18ms]
+(pass) sparse or excessive candidate fields refuse [0.12ms]
+(pass) array proxy cannot grow captured length or invoke a length getter [0.08ms]
+(pass) endpoint keys refuse unissued sources and malformed exact namespace metadata [0.18ms]
+(pass) endpoint validity checks original typed object existence and live record metadata [0.04ms]
+(pass) endpoint key metadata is captured without accessor execution [0.02ms]
+
+tests/security-query-carrier-domains.test.ts:
+(pass) native query domains retain exact text/int64 descriptors [0.20ms]
+(pass) incomplete, duplicate and unsupported native field domains refuse [0.10ms]
+(pass) native relation and column identity is escaped rather than interpreted [0.02ms]
+
+ 14 pass
+ 0 fail
+ 58 expect() calls
+Ran 14 tests across 2 files. [163.00ms]

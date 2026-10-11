@@ -1,0 +1,78 @@
+{
+  "version": "1.0",
+  "table_name": "source_snapshots",
+  "description": "Public-company intelligence source_snapshots; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "company_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "source_snapshots.company_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "kind",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.kind; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "reference",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.reference; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "upstream_url",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.upstream_url; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "sha256",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.sha256; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "retrieved_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.retrieved_at; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "coverage",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source_snapshots.coverage; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "upstream_source_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "source_snapshots.upstream_source_id; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "company_id",
+        "references_table": "companies",
+        "references_column": "id"
+      },
+      {
+        "column": "upstream_source_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

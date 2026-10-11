@@ -1,0 +1,22 @@
+# Astra scoped review — final native query carrier domains
+
+No remaining scoped blocker. Reviewed final evidence `0e5d2b6f-fbbd-445c-8cb5-6a40e3dd28c8`, the updated evidence producer, unchanged Truss descriptor guard and issued-query integration, browser correspondence producer, and targeted test/compiler records. This was an independent read-only audit of sources and retained execution evidence; no native, browser, test, or compiler run was repeated by the reviewer.
+
+All 11 current source pins exactly match the duplicate-free 11-entry ZIP and capture index. The five-module Truss closure, retained original owner artifact, native fixture, oracle, and case plan are unchanged from predecessor `62bb09eb`; only the native producer pin changed. All 25 observation vectors, the complete lowered program, and the installed routine/view/column inventory also exactly match that predecessor. Concurrent Truss changes outside these captured files are not qualified by this checkpoint.
+
+The descriptor guard checks live user columns with exact native text/int64 type OIDs, including refusal of a domain over int64. The checked fragment retains separate statements in this order: original-use permission, native carrier descriptors, logical value completeness, application return. The installed routine exactly matches the issued checked return. The positive view retains `attnotnull=false` on both columns; logical nullability remains the existing value-completeness requirement. Complete mapping/view dependencies and concurrent DDL exclusion are not established.
+
+Independent retained-evidence checks passed:
+
+- 25 unique observations with independently enumerated, type-sensitive expected values. Alice's original/restored result is `[["RAB"]]`, also derived from the retained oracle's salary-333 facts and allowed IDs. Bob and outsider refuse the separate permission. Text/int4/numeric/domain salary, wrong ID type, missing salary, and missing view controls produce their expected refusals and restored positives.
+- Nine raw refusal records exactly correspond to those refusal observations. Each has integer exit code 3, empty stdout, and the exact expected SQLSTATE 42501 message with the native PL/pgSQL `RAISE` context. Two messages concern original-use permission; seven concern the carrier guard. These are decoded subprocess outputs, not raw network-wire evidence.
+- Cleanup records integer exit code 0, empty stderr, the matching run UUID, and stdout containing exactly the retained 64-character container ID. Source review confirms the producer verifies the owned run label before removing that ID and publishes evidence only after successful removal. The reviewer did not issue an additional live Docker inspection.
+- Chromium 153.0.8010.12 evidence has all 13 current source pins and an exact retained producer copy. The producer compares the complete issued program/checks/return to native evidence, refuses both copied programs with a substituted guard, and records zero external requests. This qualifies browser lowering and issuance custody, not browser database execution.
+- The host log hash matches `verification.json`. Its 14 unique pass lines exactly match the two retained/current test sources; anchored totals are 14 pass, 0 fail, 58 assertions, and 2 files. The strict portable-closure typecheck records exit 0 and an exact empty output log. The earlier TS5112 command-line setup failure remains identified separately.
+
+Native receipt SHA-256: `f1cf422aa10ad1fbb1049bb31679f4af63b0c6195f9cf87e28ab224c6a1a6e02`.
+Source ZIP SHA-256: `49530b42d8adecf1d1558d31cf5255ec098431d3a5192cb8cef1459c63b796d5`.
+Browser receipt SHA-256: `ce70402dfd310bc80ecf32e1437e9682272f2a062bc5f2349e0d3bc8b9fe9b36`.
+Verification receipt SHA-256: `f652b246204c6cb4ff4256a414c97feaa9c4ac904d0cbe8154086ab08a78d42b`.
+
+The added raw refusal, removal, and host/compiler logs resolve the predecessor's corresponding auditability limitations. Predecessor `62bb09eb` is retained historical evidence at the older producer pin. Remaining limits are unchanged: source pre/post hashing is not hermetic runtime custody or an intermediate-mutation exclusion; no fresh authenticated compiler issuer, complete view/source correspondence, current authority cut, concurrent DDL fence, graph execution, or B08/full-backend admission is claimed. No original acceptance case is promoted. Detailed checks are retained in `astra-audit.json`.

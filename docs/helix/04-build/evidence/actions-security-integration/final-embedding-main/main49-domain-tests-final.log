@@ -1,0 +1,156 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/domain-packs/supreme-court-mirror.test.ts:
+(pass) Supreme Court authored HTML regression preserves counsel, rejected filings and PDF associations [768.18ms]
+
+tests/domain-packs/schema-browser-site-parity.test.ts:
+(pass) released assets stay identical and refuse asset, version and workspace drift [293.22ms]
+
+tests/domain-packs/schema.test.ts:
+(pass) canonical pack schema is reproducible and registered without executable generators [24.22ms]
+(pass) external, published synthetic and mixed source metadata remain distinct [16.11ms]
+
+tests/domain-packs/preservation.test.ts:
+(pass) preservation declarations retain annotations and refuse unsupported claims [2.55ms]
+
+tests/domain-packs/loader-publication.test.ts:
+(pass) verified bridge retains exact originals and source contexts @covers US-060-AC11 @covers US-060-AC12 [448.13ms]
+(pass) enforced content pins are separate from documentary hashes @covers US-060-AC9 @covers US-060-AC12 [38.03ms]
+(pass) bridge refuses aggregate context copies before allocation @covers US-060-AC12 [227.52ms]
+
+tests/domain-packs/download.test.ts:
+(pass) all nine targets retain exact source and produce complete fields [140.15ms]
+(pass) unknown types and contextual nullability block rather than drop columns [29.88ms]
+(pass) SQL identifier quoting and source preservation [40.51ms]
+(pass) core optional members use explicit absence mapping and binary carriers [7.23ms]
+(pass) Protobuf schema parses with a native source parser [1808.31ms]
+(pass) native recovery retains JSON Schema resource bundle [86.08ms]
+(pass) human schema exports default to YAML and JSON remains selectable [49.64ms]
+
+tests/domain-packs/catalog.test.ts:
+(pass) @covers US-063-AC1 commerce has typed inventory, independent checks and graph schema closure [284.19ms]
+(pass) @covers US-064-AC1 supply-chain has typed inventory, independent checks and graph schema closure [258.48ms]
+(pass) @covers US-065-AC1 cybersecurity has typed inventory, independent checks and graph schema closure [307.94ms]
+(pass) @covers US-066-AC1 manufacturing has typed inventory, independent checks and graph schema closure [251.29ms]
+(pass) @covers US-067-AC1 payments has typed inventory, independent checks and graph schema closure [331.63ms]
+(pass) @covers US-068-AC1 education has typed inventory, independent checks and graph schema closure [430.45ms]
+(pass) @covers US-069-AC1 transit has typed inventory, independent checks and graph schema closure [311.27ms]
+(pass) @covers US-070-AC1 real-estate has typed inventory, independent checks and graph schema closure [337.19ms]
+(pass) @covers US-071-AC1 energy has typed inventory, independent checks and graph schema closure [194.83ms]
+(pass) @covers US-072-AC1 hr has typed inventory, independent checks and graph schema closure [188.36ms]
+(pass) @covers US-073-AC1 martech has typed inventory, independent checks and graph schema closure [277.75ms]
+(pass) @covers US-074-AC1 construction has typed inventory, independent checks and graph schema closure [444.12ms]
+(pass) @covers US-075-AC1 ecology has typed inventory, independent checks and graph schema closure [810.92ms]
+(pass) @covers US-076-AC1 archaeology has typed inventory, independent checks and graph schema closure [415.87ms]
+(pass) all sixteen packs declare graph schemas without replacing baseline source rows [161.27ms]
+(pass) @covers US-060-AC3 @covers US-060-AC7 invalid target, profile, inclusion and source identities refuse admission [2.50ms]
+(pass) JSON and YAML profile admission agree and malformed present profiles refuse [10.79ms]
+(pass) @covers US-076-AC9 @covers US-076-AC10 @covers US-076-AC11 archaeology asset and evidence schemas retain specialist lineage and exact asset revisions [0.61ms]
+
+tests/domain-packs/artifacts.test.ts:
+(pass) collections preserve unknown annotations and permit shared sources [8.26ms]
+(pass) structural and semantic refusal is explicit [6.32ms]
+(pass) empty collections require an explicit valid inventory [0.17ms]
+(pass) document-driven packs expose explicit original collections [7.59ms]
+
+tests/domain-packs/ontology-layout.test.ts:
+(pass) parallel declarations remain separately inspectable with a stable midpoint in either direction [0.09ms]
+(pass) self relationship badge stays outside its record [0.01ms]
+
+tests/domain-packs/graph-candidate-provenance.test.ts:
+(pass) retained graph candidates preserve original provenance and explicit inventory coverage [527.33ms]
+
+tests/domain-packs/presentation.test.ts:
+(pass) human labels do not replace exact identifiers or source meaning [21.67ms]
+(pass) exact huge number lexemes render without numeric conversion; annotated objects stay structured [0.05ms]
+(pass) search accepts displayed labels and exact technical IDs [0.08ms]
+
+tests/domain-packs/public-datasets.test.ts:
+(pass) public packs resolve schemas, domains and source bindings without fabricated fallback [374.15ms]
+(pass) public source semantics avoid invented identities, times and missing-value conversions [1.95ms]
+(pass) every public pack exports and checks exact local schemas while row references remain opaque [3174.37ms]
+
+tests/domain-packs/medical.test.ts:
+(pass) medical pack shares canonical structure, pins original bytes and retains external reference-only rights [402.34ms]
+(pass) explicit local source export preserves pins, refuses tampering and uncleared rights [2504.55ms]
+
+tests/domain-packs/schema-browser-package.test.ts:
+(pass) caller catalog stays inert and assets resolve independently of host routing [0.26ms]
+(pass) explicit catalogs and hosted HTTP assets are required [0.06ms]
+
+tests/domain-packs/public-company.test.ts:
+(pass) @covers US-078-AC3 exact facts preserve large tokens, duplicate context, unknowns and absent/null/zero [1.52ms]
+(pass) @covers US-078-AC3 submission arrays preserve unknown columns and reject malformed identities/lengths [1.12ms]
+(pass) @covers US-078-AC1 inventory has exact native recovery, key closure and valid ontology [306.32ms]
+(pass) @covers US-078-AC2 screen independently selects metadata items and excludes earnings-only controls [10.42ms]
+(pass) @covers US-078-AC7 lineage separates selected universe, source observations and authored hypotheses [0.49ms]
+(pass) @covers US-078-AC4 rebuild is byte-identical from pinned offline inputs [603.04ms]
+(pass) @covers US-078-AC6 export preserves sources and refuses corruption/uncleared rights [5047.26ms]
+
+tests/domain-packs/medical-family.test.ts:
+(pass) medical composition preserves five independent fixed profiles and ontology/table closure [121.28ms]
+(pass) complete medical export recovers all original sources and preflights member failures [14132.82ms]
+
+tests/domain-packs/medical-subpacks.test.ts:
+(pass) carrier projections retain distinct native workflows, exact amounts and source namespaces [30.23ms]
+(pass) epidemiology preserves observed aggregates and separates fabricated suppression from zero [2.70ms]
+(pass) DICOM metadata retains private sequences, binary references and unknown content [2.85ms]
+(pass) terminology exact release lookup preserves unknowns and never declares absent codes invalid [0.34ms]
+(pass) medical subpacks pin every local source, validate native schemas and regenerate exactly [1207.99ms]
+(pass) shared source export recovers imaging bytes and refuses rights and checksum changes [1539.24ms]
+
+tests/domain-packs/export.test.ts:
+(pass) local pack export checks snapshots without fetching external dataset references [1970.13ms]
+(pass) schema artifact traversal refuses instead of reading outside the source pack [298.74ms]
+
+tests/domain-packs/loader-runner.test.ts:
+(pass) revisions, metadata observations and replay @covers US-060-AC9 @covers US-060-AC11 [382.89ms]
+(pass) failure, empty success, retry, concurrency and commit interruption @covers US-060-AC10 [64.32ms]
+(pass) rights, URL, media and budget refusal @covers US-060-AC12 [8.76ms]
+(pass) A B A revisions, shared objects, removal and observation context @covers US-060-AC9 [175.58ms]
+(pass) post-commit cleanup and external inventory replay refusal @covers US-060-AC10 @covers US-060-AC11 [210.48ms]
+(pass) native loopback TLS streams, transient retries and timeouts @covers US-060-AC12 [1079.10ms]
+(pass) aggregate bytes across retries and response refusal @covers US-060-AC12 [15.64ms]
+(pass) real process interruption before and after publication commit @covers US-060-AC10 [512.38ms]
+(pass) committed metadata and manifest tampering refuse replay @covers US-060-AC11 [289.37ms]
+(pass) exhausted run budget starts no later requests @covers US-060-AC12 [5.32ms]
+(pass) SEC profile policy and exact JSON originals @covers US-060-AC12 [159.69ms]
+
+tests/domain-packs/ontology-browser.test.ts:
+(pass) ontology inspection separates records and fields without changing relationship meaning [19.62ms]
+(pass) catalog owns each ontology once and retains legacy deep-link aliases [11.41ms]
+
+tests/domain-packs/public-company-loader.test.ts:
+(pass) @covers US-078-AC6 @covers US-078-AC7 shared companion exports exact closure and replays selected retained bytes without network [1112.46ms]
+
+tests/domain-packs/loader-export.test.ts:
+(pass) trusted export snapshots bytes and clean CLI installs @covers US-060-AC12 [619.98ms]
+(pass) updated malicious checksum, missing closure and path collisions refuse @covers US-060-AC12 [270.65ms]
+(pass) SEC exported CLI uses operator agent and replays without environment @covers US-060-AC12 [617.22ms]
+(pass) large artifacts refuse before unbounded export allocation @covers US-060-AC12 [14.39ms]
+(pass) special files and oversized check destinations refuse promptly @covers US-060-AC12 [192.23ms]
+(pass) source annotations reuse only verified canonical companion bytes @covers US-060-AC12 [126.75ms]
+
+tests/domain-packs/loader.test.ts:
+(pass) loader metadata retains annotations and refuses unsupported versions @covers US-060-AC8 [0.38ms]
+
+tests/domain-packs/legal.test.ts:
+(pass) mixed legal corpus pins originals and keeps real evidence separate from fabricated operations [323.09ms]
+(pass) legal metadata export succeeds and complete source redistribution refuses unknown rights [1700.58ms]
+
+tests/domain-packs/legal-appellate.test.ts:
+(pass) appellate originals, schema recovery and all row references retain provenance [613.12ms]
+(pass) fixed replay checks independent expected receipts, recovery and missing coverage [0.93ms]
+(pass) counsel has party/page/as-of evidence and absent differs from unattempted [17.35ms]
+(pass) complete export preserves original bytes and refuses tampering or uncleared rights [2479.58ms]
+
+tests/domain-packs/schema-browser-embedding.test.ts:
+(pass) exact JSON parser retains numeric lexemes and rejects duplicates/depth [1.16ms]
+(pass) catalog sources, identities, aliases and revisions have explicit boundaries [1.46ms]
+(pass) structural diff retains unknown values, stable identities and numeric tokens [0.26ms]
+(pass) fixed browser validators agree with canonical pack validators on unusual keys and failures [868.28ms]
+
+ 98 pass
+ 0 fail
+ 26463 expect() calls
+Ran 98 tests across 26 files. [67.44s]

@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
@@ -108,7 +109,7 @@ try{
  for(const c of getPostgresqlColumnMetadata(model).filter(c=>c.relation.name==='scalars')){
   const r=classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:JSON.stringify(supplement),mode:'strict',profile:'stored-value'});
   assert.equal(r.status,'classified');assert.equal(r.mapping.cardinality,'one');assert.equal(r.residuals.length,0);
-  assert.deepEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource:captureSource,supplement:JSON.stringify(supplement)});
+  assertJsonDataEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource:captureSource,supplement:JSON.stringify(supplement)});
   classifications.push({column:c.element.name,cardinality:r.mapping.cardinality,outcome:r.mapping.outcome});
  }
  assert.equal(classifications.length,18);

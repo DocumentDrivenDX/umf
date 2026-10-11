@@ -1,0 +1,44 @@
+{
+  "profile": "umf.actions.combined-main-completed-reports/1",
+  "main": "cd4cc93769925d11b8480a0c2be4f009a4c737ac",
+  "historicalCertificatesUnchanged": true,
+  "recordedInputsVerified": true,
+  "nativePathMapping": {
+    "/work/": "repository root"
+  },
+  "reports": {
+    "reports/reference-foundation.json": "5870f0a1c9d7eab714907246ab41ff7d3b396ef5a670a4765a6dcf26aca4c75b",
+    "reports/browser.json": "f783da9b01d0c779765150fd827e929116b91a92a803c03233a67192ae6d8539",
+    "reports/json-schema-audit.json": "07833a3c9be2f82201770725209aae1ac1edc64a8721989fe72239b0ed227c68",
+    "reports/extension-package-audit.json": "5486301b23030d436b60f9edaa02a0f13aad642253911110ece46ca90ff25550",
+    "reports/core-field-browser.json": "e07305c7f5b1c9caa94bacea4f5f81d6b07aeedc4d383d08a2e6a94018ad0274",
+    "reports/core-nullability-browser.json": "3fc4dc1861639ef7d9e28f92c5afb423c8e26db7102e520cb7b896450cba6765",
+    "reports/core-cardinality-operations-browser.json": "d9a0ada53e37f0e0922cf44f023f921ce71b6d58372796a78a58949ca86c5604",
+    "reports/core-facet-operations-browser.json": "c0f688d86c3e5244ba5ae1879c76735770fac18394ec7ef2ba91b9e57ef8d676",
+    "reports/core-facet-schema-properties-browser.json": "7c58a58b5654adfa1e4e7182e06e10d42477f7081d207f71b8e9fbcc3990da90",
+    "reports/core-key-public-browser.json": "71228926f3df3e3d5941b3c464c94bedb87c2670c0817f6bc54a23c31257f6ea",
+    "reports/core-relationship-operations-browser.json": "01e296d4c3b9f92dba0c101ace68da6be79c8c93abd0f7141872fdd842fddf1c",
+    "reports/facets-tablespec-projection-native.json": "5515a63d36a5c40b995dc5b34e632673160d3cf650c41fb731e25ee4c85d4445",
+    "reports/facets-tablespec-projection-browser.json": "a12aff2f84b6413b8da351754af0757a5fae9d34876f4afc90c6b17e885f8959",
+    "reports/facets-postgresql-projection-native.json": "7b201c0b5e3853eb0f4061babb83296858d812a1a0486f84c870dcbf4189ab24",
+    "reports/facets-postgresql-projection-browser.json": "8582c32bc5227e9bc58485c48e17afb8b01054401de18f7fe28c6a322d1400a5",
+    "reports/facets-postgresql-composition.json": "891aae4ff6c40bd5b7ab7f392aa5dae830ea4a07518fc42b666cea6875e2eb67",
+    "reports/facets-avro-projection-native.json": "c0a95c044e1358547924232df2445f8d91bcf556e938c4cce911e9c0af66720f",
+    "reports/facets-avro-projection-browser.json": "0187f5b2a4ae95e9ae14d563f647fd8d888e43eac8beb6249b19356f8182cec4",
+    "reports/facets-avro-composition.json": "928dbbe585124d279adb7932ce8882a2100b5bd4ddbf0908a2b4e9c918aa0ba0",
+    "reports/facets-parquet-projection-native.json": "12449c09260d64b5c54e056144eb18e8e077d959abf61dd153eb13bebcacebe5",
+    "reports/facets-parquet-projection-browser.json": "ee49b2011339684037570cd4a957a73d751d613940ffdeb2ab9917950349d7df",
+    "reports/facets-parquet-composition.json": "77d45c2d9270556c53295644e7cead2e1b639245ed41d55f43590447d25c20e4",
+    "reports/facets-sqlserver-projection-native.json": "79892850a9d84e4f8bfd20be58756685d1c10bb4bcb7a6e4b930782f507a49e0",
+    "reports/facets-sqlserver-projection-browser.json": "885da28a2d3dce54713dde40d7b561fb47c9827432753751fc4e1ef713306af0",
+    "reports/facets-sqlserver-composition.json": "1c4b1182a62b8fcabd99a9340630ccafd90b7419cda91090bffb5106ba9911a8"
+  },
+  "pending": [
+    "full portable regression and failure resolution",
+    "documentation refresh",
+    "CI",
+    "merge",
+    "live deployment",
+    "release"
+  ]
+}

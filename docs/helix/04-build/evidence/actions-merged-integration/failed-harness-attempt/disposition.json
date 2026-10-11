@@ -1,0 +1,21 @@
+{
+  "status": "failed harness postcheck; no qualification claimed",
+  "sourceRevision": "1fa21f6ea1d7a3e1009746da99f1a61d444cd489",
+  "reason": "root .venv symlink was not excluded by directory-only ignore; exact isolated environment path is now independently checked",
+  "closedStages": [
+    [
+      "install",
+      0
+    ],
+    [
+      "python-runtime",
+      0
+    ]
+  ],
+  "sha256": {
+    "coordinator.py": "e591370956d7eaf91b9b91bfc79cec01c4082436bc3c18414bb5dc09635f889d",
+    "observation.json": "cd322a3d053e755c45bf6fc840f5e7f83647b2eeef74078fc09f416a7f6e42cc",
+    "python-runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "install.log": "259b5da705512890f2ac5521c73b6344ec6cd8c7e0e2770ff9cc4c8ff2937f2a"
+  }
+}

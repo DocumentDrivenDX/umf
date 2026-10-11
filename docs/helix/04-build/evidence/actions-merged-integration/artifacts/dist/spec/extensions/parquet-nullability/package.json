@@ -1,0 +1,88 @@
+{
+  "id": "umf.parquet.nullability",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Retained physical presence context for Parquet leaf availability; original bytes and Arrow metadata remain authoritative",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:parquet:nullability-binding:1.0.0",
+    "title": "Retained Parquet physical availability scope",
+    "type": "object",
+    "required": [
+      "origin",
+      "binding",
+      "scope",
+      "carrier",
+      "interpretation",
+      "nativePath",
+      "contextIndex",
+      "repetitionLevel"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.parquet.nullability",
+          "version": "1.0.0"
+        }
+      },
+      "scope": {
+        "enum": [
+          "row-leaf-value",
+          "repeated-element-value",
+          "write-input",
+          "unresolved"
+        ]
+      },
+      "carrier": {
+        "enum": [
+          "definition-level",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "contextIndex": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      },
+      "repetitionLevel": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-041; core 0.3.0 operation requires explicit Field kind. Row context includes optional ancestors; repeated-element context assumes the selected repeated entry exists. No scalar cardinality or input validation is implied.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "Parquet",
+      "version": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/nullability-parquet.test.ts",
+      "fixtures/validation/nullability-parquet-native.json"
+    ]
+  }
+}

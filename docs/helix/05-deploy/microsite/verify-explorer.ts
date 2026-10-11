@@ -91,7 +91,7 @@ try{
   await page.getByRole('heading',{name:'ecology ontology',exact:true}).waitFor();
   if(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('schema')!=='schema:ecology@1.0.0:ontology')throw Error('Legacy ontology URL lost pack context');
   await page.getByRole('navigation',{name:'Breadcrumb'}).getByRole('link',{name:'Ecology · 1.0.0'}).waitFor();
-  await page.getByRole('img',{name:'Record relationship neighborhood'}).waitFor();
+  await page.getByRole('group',{name:'Full record relationship map'}).waitFor();
   await page.getByRole('button',{name:'Show full model',exact:true}).click();
   if(await page.locator('.ontology-map svg rect').count()!==19)throw Error('Ecology map lost records');
   await page.locator('.ontology-map svg a[aria-label="Inspect record Sampling events"]').click();

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:key-tuple-operation:1.0.0",
+  "title": "Candidate key tuple encoding receipt",
+  "type": "object",
+  "required": [
+    "operation",
+    "version",
+    "profile",
+    "source",
+    "identity",
+    "values",
+    "keyPath",
+    "bytesHex"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "const": "encode-core-key-tuple"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "profile": {
+      "const": "umf-key-tuple-v1"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.6.0"
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "values": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "keyPath": {
+      "type": "string",
+      "pattern": "^/modules/[0-9]+/elements/[0-9]+/keys/[0-9]+$"
+    },
+    "bytesHex": {
+      "type": "string",
+      "pattern": "^554d464b31([0-9a-f]{2})+$",
+      "maxLength": 8000000
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": [
+        "module",
+        "element",
+        "key"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "boolean"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "boolean": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "integerToken"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "integerToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "decimalToken"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "decimalToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "string"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "string": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "binaryHex"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "binaryHex": {
+              "type": "string",
+              "pattern": "^([0-9a-fA-F]{2})*$"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "description": "Structural receipt validation is insufficient: verification recomputes exact tuple bytes from retained candidate source/values and checks current document context. This establishes neither authorship nor native enforcement."
+}

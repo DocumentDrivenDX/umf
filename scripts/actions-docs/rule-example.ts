@@ -1,0 +1,14 @@
+import {Registry,readDocument,registerActions,inspectActions,compileActionRule,evaluateActionRule,actionFieldValueKey} from '../../src/index';
+import fixture from '../../fixtures/actions/tutorial-postcondition.json';
+const document=readDocument(JSON.stringify(fixture),'json');
+const inspection=inspectActions(document,registerActions(new Registry()));
+if(!inspection.validation.valid||!inspection.validation.complete)throw Error('Tutorial declaration not interpreted');
+const action=inspection.actions[0]!.action,rule=action.postconditions[0]!.rule;
+const compiled=compileActionRule(document,action,rule,'post');
+const inputs={order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'order-1'}]}};
+const frame=(status:string)=>({frames:{'order-read':{exists:true,values:{[actionFieldValueKey({module:'sales',element:'status'})]:{string:status}}}},links:[]});
+const pre=frame('pending');
+const satisfied=evaluateActionRule(document,action,rule,'post',{inputs,pre,post:frame('approved')});
+const unsatisfied=evaluateActionRule(document,action,rule,'post',{inputs,pre,post:frame('pending')});
+if(!satisfied||unsatisfied)throw Error('Postcondition example mismatch');
+console.log(JSON.stringify({compiledType:compiled.type,satisfied,unsatisfied,businessWrites:0,stateSource:'explicitly supplied illustrative state; not authenticated store state'},null,2));

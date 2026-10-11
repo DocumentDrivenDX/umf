@@ -1,0 +1,555 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:facets-parquet-projection:1.0.0",
+  "title": "Authored scalar facets to explicit Parquet carriers",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-facets-parquet"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.5.0"
+    },
+    "author": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+        },
+        {
+          "$ref": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recordName",
+        "fieldName",
+        "nullable",
+        "carrier",
+        "mode",
+        "encoding",
+        "profile",
+        "obligation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fieldName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "fieldId": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "carrier": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "nativeType"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "primitive"
+                },
+                "nativeType": {
+                  "enum": [
+                    "boolean",
+                    "int32",
+                    "int64",
+                    "float32",
+                    "float64",
+                    "binary",
+                    "string",
+                    "date",
+                    "time-millis",
+                    "time-micros",
+                    "timestamp-millis-utc",
+                    "timestamp-micros-utc"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "bits",
+                "signed"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "integer"
+                },
+                "bits": {
+                  "enum": [
+                    8,
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "signed": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "bytes"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "fixed"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "carrier",
+                "precision",
+                "scale"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "decimal"
+                },
+                "carrier": {
+                  "enum": [
+                    "int32",
+                    "int64",
+                    "bytes",
+                    "fixed"
+                  ]
+                },
+                "precision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scale": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "carrier": {
+                        "const": "fixed"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "bytes"
+                    ],
+                    "properties": {
+                      "bytes": true
+                    }
+                  },
+                  "else": {
+                    "properties": {
+                      "bytes": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "encoding": {
+          "enum": [
+            "native-type",
+            "metadata-only",
+            "carrier-only"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "declared-schema",
+            "pyarrow-21"
+          ]
+        },
+        "obligation": {
+          "enum": [
+            "value-domain",
+            "exact-input"
+          ]
+        }
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.facets.parquet",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017 / PyArrow 21.0.0",
+        "subset": "Single authored scalar Field with an explicit native carrier and optionality; empty schema files, not row conversion; native declaration and target reader limits remain separate"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativeIndex",
+        "facets",
+        "encoding",
+        "profile",
+        "outcome"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeIndex": {
+          "const": 1
+        },
+        "facets": {
+          "type": "object",
+          "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+          "properties": {
+            "length": {
+              "type": "object",
+              "required": [
+                "max",
+                "unit"
+              ],
+              "properties": {
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "enum": [
+                    "unicode-scalar",
+                    "byte"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991,
+              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+            },
+            "integerWidth": {
+              "type": "object",
+              "required": [
+                "bits",
+                "signed"
+              ],
+              "properties": {
+                "bits": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "signed": {
+                  "type": "boolean"
+                }
+              },
+              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
+              "additionalProperties": false
+            }
+          },
+          "dependentRequired": {
+            "precision": [
+              "scale"
+            ],
+            "scale": [
+              "precision"
+            ]
+          },
+          "additionalProperties": false
+        },
+        "encoding": {
+          "enum": [
+            "native-type",
+            "metadata-only",
+            "carrier-only"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "declared-schema",
+            "pyarrow-21"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown",
+            "not-expressible"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "approximated",
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          },
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

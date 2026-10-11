@@ -1,17 +1,17 @@
 {
   "status": "component-passed-counterexample-reproduced",
   "sourceDigests": {
-    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-mask-query.py": "7e6ffc3b97b5bf9055725bc99191c17dd6a46507d73c1abaedb514ccd1007610",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-mask-query.py": "877e1a8cec91b845363e24ba1e10beb3e6a5750786cba3be070e153dd3b3bacd",
     "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
-    "docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee"
   },
   "engine": {
     "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
     "number": "170009"
   },
-  "runId": "c826b180-d675-48f8-a05f-2498b7e4da22",
+  "runId": "0857ad7e-3228-4859-a86a-bcd9fb4d3724",
   "observations": [
     {
       "id": "umf_sec_alice:native-identity",
@@ -386,13 +386,144 @@
     },
     {
       "id": "Alice:prepared-same-native-session",
-      "expected": "461",
-      "observed": "461"
+      "expected": "451",
+      "observed": "451"
     },
     {
       "id": "Alice:prepared-restored-original-plan",
       "expected": 433,
       "observed": 433
+    },
+    {
+      "id": "umf_sec_alice:public-original-filter",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-original-sort",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-original-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-original-join",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-original-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_bob:public-original-filter",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-original-sort",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-original-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-original-join",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-original-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_outsider:public-original-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-original-sort",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-original-group",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-original-join",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-original-aggregate",
+      "expected": 0,
+      "observed": 0
     },
     {
       "id": "ungranted-Bob:weak-before",
@@ -404,6 +535,137 @@
         "RAB",
         "RB"
       ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-changed-filter",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-changed-sort",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-changed-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-changed-join",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-changed-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-changed-filter",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-changed-sort",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-changed-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-changed-join",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-changed-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-changed-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-changed-sort",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-changed-group",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-changed-join",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-changed-aggregate",
+      "expected": 0,
+      "observed": 0
     },
     {
       "id": "ungranted-Bob:weak-hidden-value-inference",
@@ -436,6 +698,137 @@
           "restricted"
         ]
       ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-restored-filter",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-restored-sort",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-restored-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-restored-join",
+      "expected": [
+        "RA",
+        "RAB"
+      ],
+      "observed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "id": "umf_sec_alice:public-hidden-value-restored-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-restored-filter",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-restored-sort",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-restored-group",
+      "expected": [
+        [
+          "restricted",
+          2
+        ]
+      ],
+      "observed": [
+        [
+          "restricted",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-restored-join",
+      "expected": [
+        "RAB",
+        "RB"
+      ],
+      "observed": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "id": "umf_sec_bob:public-hidden-value-restored-aggregate",
+      "expected": 20,
+      "observed": 20
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-restored-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-restored-sort",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-restored-group",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-restored-join",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:public-hidden-value-restored-aggregate",
+      "expected": 0,
+      "observed": 0
     },
     {
       "id": "ungranted-Bob:restored-hidden-value-control",

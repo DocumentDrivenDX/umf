@@ -1,13 +1,13 @@
 {
   "scope": "Pinned WASM syntax/AST parity and ideal recovery; native execution evidence recorded separately",
   "fingerprints": {
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
-    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39",
+    "dist/postgresql/runtime.js": "b13ccde163fb2d139518d06338626e7110dfbe12493c546b5ac7c78a1ec2cd17",
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
-    "fixtures/validation/cardinality-postgresql-projection-native.json": "eb21962dd26f7bd6e030e50f2d7efe1e748ddc5551b8c63208e326c3427896d4",
+    "fixtures/validation/cardinality-postgresql-projection-native.json": "b237ba75d4b54edddbd619db338b044b240d319af050a107c98de55773acae91",
     "scripts/core-ideals/cardinality-postgresql-projection-browser.ts": "9d8ed680338b44c1f9f5751f79612dcdb5acdae449022f1a8ee21a6bb823845d"
   },
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 48,
     "blocked": 22,

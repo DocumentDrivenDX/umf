@@ -1,0 +1,1002 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:real-estate",
+    "revision": "1.0.0",
+    "sha256": "a6a5f3c09709e584abe24def1c47c07786b49068f94169af8311e2e24c065320"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "real-estate",
+    "version": "1.0.0",
+    "sha256": "ce89d38ba5764ff5cbb76193c5e016c48ef6a1883c625d04d9b12daffc7549a4"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_agents",
+          "template_buildings",
+          "template_leases",
+          "template_listing_agents",
+          "template_listing_events",
+          "template_listings",
+          "template_maintenance_requests",
+          "template_media",
+          "template_offices",
+          "template_parcels",
+          "template_parties",
+          "template_properties",
+          "template_transactions",
+          "template_units",
+          "template_valuations"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_agents": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "fc1633218ecd0f3380fb4717068168b98b8e5633ac16daa04bfbf69edcc20f72"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/agents.csv",
+      "revision": "1.0.0"
+    },
+    "template_buildings": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "89760632f37f58759a7d14ee6d24dbd118ac1bc93ad9cbac5d456089b095954e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/buildings.csv",
+      "revision": "1.0.0"
+    },
+    "template_leases": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "57749b3c873ebd1b43e813be4bf657c69bffec90aa9b2f778da054bd3f5fc0e6"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/leases.csv",
+      "revision": "1.0.0"
+    },
+    "template_listing_agents": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "63acbf86137c4981d86ce61fa3070cd20d64b115d5bfbef4e596957d229a1759"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/listing_agents.csv",
+      "revision": "1.0.0"
+    },
+    "template_listing_events": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ee698dce6c242c7a9bec29e42c247a227364f3acc264f0592f0dc314c11dc903"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/listing_events.csv",
+      "revision": "1.0.0"
+    },
+    "template_listings": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1219973beb8ebda5cf1fc08cf74b685155fa55a6f67311df963e25f4035ea268"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/listings.csv",
+      "revision": "1.0.0"
+    },
+    "template_maintenance_requests": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "fba4c9ff45a30e0b637df84942f223e8d8a28f54f8be6ebdd47fdf9e29554ce8"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/maintenance_requests.csv",
+      "revision": "1.0.0"
+    },
+    "template_media": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "928b971c4532df6e6bfc27fefe302da5c329390cc026f7860b9e0ef2685a22b8"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/media.csv",
+      "revision": "1.0.0"
+    },
+    "template_offices": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c602f17e805437923641e394b0446f40b091b26db89721bf11b35eb885968307"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/offices.csv",
+      "revision": "1.0.0"
+    },
+    "template_parcels": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8620a4236b98f779880a62065b131f66ff6085fc07145135809d65d264f19668"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/parcels.csv",
+      "revision": "1.0.0"
+    },
+    "template_parties": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "144889c701552bc9720a050b6a3c82af490e2311abf4ef1655ce01dff6ad36eb"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/parties.csv",
+      "revision": "1.0.0"
+    },
+    "template_properties": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "05080afb07f8b6d3ee66210b63630a8c8992968a4fad6610008151e96dac2a33"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/properties.csv",
+      "revision": "1.0.0"
+    },
+    "template_transactions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a66c4bae2d9a695f95e79940f93c8bec3cf1061e2cb3ad38fdd566f75f72ed4f"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/transactions.csv",
+      "revision": "1.0.0"
+    },
+    "template_units": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1b098fad3fc69749a026e2e173da8b516e3c344395875b3865aec944eb07e7ce"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/units.csv",
+      "revision": "1.0.0"
+    },
+    "template_valuations": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4c05996762f6b92e6ff3bea96009f680c10f5663368760562eae84d3a39129a3"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/valuations.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "parties",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "parcels",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "properties",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "buildings",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "units",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "listings",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "listing_events",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "transactions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "leases",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "offices",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "agents",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "listing_agents",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "media",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "maintenance_requests",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "valuations",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_agents": {
+        "algorithm": "sha256",
+        "value": "fc1633218ecd0f3380fb4717068168b98b8e5633ac16daa04bfbf69edcc20f72"
+      },
+      "template_buildings": {
+        "algorithm": "sha256",
+        "value": "89760632f37f58759a7d14ee6d24dbd118ac1bc93ad9cbac5d456089b095954e"
+      },
+      "template_leases": {
+        "algorithm": "sha256",
+        "value": "57749b3c873ebd1b43e813be4bf657c69bffec90aa9b2f778da054bd3f5fc0e6"
+      },
+      "template_listing_agents": {
+        "algorithm": "sha256",
+        "value": "63acbf86137c4981d86ce61fa3070cd20d64b115d5bfbef4e596957d229a1759"
+      },
+      "template_listing_events": {
+        "algorithm": "sha256",
+        "value": "ee698dce6c242c7a9bec29e42c247a227364f3acc264f0592f0dc314c11dc903"
+      },
+      "template_listings": {
+        "algorithm": "sha256",
+        "value": "1219973beb8ebda5cf1fc08cf74b685155fa55a6f67311df963e25f4035ea268"
+      },
+      "template_maintenance_requests": {
+        "algorithm": "sha256",
+        "value": "fba4c9ff45a30e0b637df84942f223e8d8a28f54f8be6ebdd47fdf9e29554ce8"
+      },
+      "template_media": {
+        "algorithm": "sha256",
+        "value": "928b971c4532df6e6bfc27fefe302da5c329390cc026f7860b9e0ef2685a22b8"
+      },
+      "template_offices": {
+        "algorithm": "sha256",
+        "value": "c602f17e805437923641e394b0446f40b091b26db89721bf11b35eb885968307"
+      },
+      "template_parcels": {
+        "algorithm": "sha256",
+        "value": "8620a4236b98f779880a62065b131f66ff6085fc07145135809d65d264f19668"
+      },
+      "template_parties": {
+        "algorithm": "sha256",
+        "value": "144889c701552bc9720a050b6a3c82af490e2311abf4ef1655ce01dff6ad36eb"
+      },
+      "template_properties": {
+        "algorithm": "sha256",
+        "value": "05080afb07f8b6d3ee66210b63630a8c8992968a4fad6610008151e96dac2a33"
+      },
+      "template_transactions": {
+        "algorithm": "sha256",
+        "value": "a66c4bae2d9a695f95e79940f93c8bec3cf1061e2cb3ad38fdd566f75f72ed4f"
+      },
+      "template_units": {
+        "algorithm": "sha256",
+        "value": "1b098fad3fc69749a026e2e173da8b516e3c344395875b3865aec944eb07e7ce"
+      },
+      "template_valuations": {
+        "algorithm": "sha256",
+        "value": "4c05996762f6b92e6ff3bea96009f680c10f5663368760562eae84d3a39129a3"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "a6a5f3c09709e584abe24def1c47c07786b49068f94169af8311e2e24c065320",
+      "umf/agents.json": "a58389e7c2db336b102ff4975d1aac5ab77c81970b2e142106267536b111dad8",
+      "umf/buildings.json": "65ef0b19ccac3951d5eeca0456c2c524559e0e7898fe2477813a0eb39962088f",
+      "umf/leases.json": "4a1ae80c80a3734b75591617e10af381ee83178ec50f6a564dfd11e173f71bf4",
+      "umf/listing_agents.json": "8a74711359cd5d3eb8eeff0db9cd6d228a1867e43749b033726e9a2247869ab6",
+      "umf/listing_events.json": "d0dcdf1103d5c15f895d3e5739cd3bc0a68d3c603df7d85480d4a47256bb5d0b",
+      "umf/listings.json": "848a50c82148d6a5a85d7198c89c2e8e62d59dc46daf2dbc0cb3ebd0307d613f",
+      "umf/maintenance_requests.json": "abd408d24b6414c7c603006620500c0ec69656dacf46a787397417ad15cf8263",
+      "umf/media.json": "4d76008ebb2556b59d756293751f1967df87fce0598d130c4812d592a6776407",
+      "umf/offices.json": "4a2d515217618daedbb9fbe3a033c0724760fbab6be75dfe0c278b248476008a",
+      "umf/parcels.json": "996b1fe952527e815022c348ab590e1ef8c37bf0de930dc3b6f304b7acf82a95",
+      "umf/parties.json": "425bfecb19034e1c9a5d90f0f7dc9787ad07fdc679aae1c83a97a13a63539af0",
+      "umf/properties.json": "b85e4ea48582d699c8a81459c7eccaa80d4284b511d2d6e8cad3f138243edc8d",
+      "umf/transactions.json": "19139d97a96e0c61d2e8feb304df96632b01bb49ea704c15fc2294cd7b8e34f7",
+      "umf/units.json": "384e70fd2844379760586580c262e41048b0fbf714f21109af1c085d38c973a3",
+      "umf/valuations.json": "5064f8100a55fde26216c0a8b3405f47bb79537638364bb2da21e150b245bd39"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "real-estate",
+      "sha256": "ce89d38ba5764ff5cbb76193c5e016c48ef6a1883c625d04d9b12daffc7549a4",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "9306088747dae14c9f51eecba225c00a353bd88064354a5e157ad6237bc78f69",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"parties\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "parties"
+      },
+      "values": {
+        "parties.id": "[42,0,\"P1\"]",
+        "parties.name": "Synthetic owner"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"parcels\",[\"[42,0,\\\"PA1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "parcels"
+      },
+      "values": {
+        "parcels.id": "[42,0,\"PA1\"]",
+        "parcels.native_code": "PARCEL1",
+        "parcels.geometry_crs": "local-grid"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "properties"
+      },
+      "values": {
+        "properties.id": "[42,0,\"PR1\"]",
+        "properties.parcel_id": "[42,0,\"PA1\"]",
+        "properties.address": "Synthetic address"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"buildings\",[\"[42,0,\\\"B1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "buildings"
+      },
+      "values": {
+        "buildings.id": "[42,0,\"B1\"]",
+        "buildings.property_id": "[42,0,\"PR1\"]",
+        "buildings.floor_area": "1E+2",
+        "buildings.area_unit": "m2"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"units\",[\"[42,0,\\\"U1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "units"
+      },
+      "values": {
+        "units.id": "[42,0,\"U1\"]",
+        "units.building_id": "[42,0,\"B1\"]",
+        "units.unit_label": "A"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listings"
+      },
+      "values": {
+        "listings.id": "[42,0,\"L1\"]",
+        "listings.property_id": "[42,0,\"PR1\"]",
+        "listings.status": "withdrawn",
+        "listings.valid_from": "2026-01-01",
+        "listings.valid_to": "2026-01-15",
+        "listings.asking_price": "1E+5",
+        "listings.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listings"
+      },
+      "values": {
+        "listings.id": "[42,0,\"L2\"]",
+        "listings.property_id": "[42,0,\"PR1\"]",
+        "listings.status": "sold",
+        "listings.valid_from": "2026-01-16",
+        "listings.valid_to": "2026-02-02",
+        "listings.asking_price": "1E+5",
+        "listings.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listing_events"
+      },
+      "values": {
+        "listing_events.id": "[42,0,\"E1\"]",
+        "listing_events.listing_id": "[42,0,\"L1\"]",
+        "listing_events.event_time": "2026-01-15",
+        "listing_events.status": "withdrawn",
+        "listing_events.previous_price": null,
+        "listing_events.price": null
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events\",[\"[42,0,\\\"E2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listing_events"
+      },
+      "values": {
+        "listing_events.id": "[42,0,\"E2\"]",
+        "listing_events.listing_id": "[42,0,\"L1\"]",
+        "listing_events.event_time": "2026-01-05",
+        "listing_events.status": "price-change",
+        "listing_events.previous_price": "1E+5",
+        "listing_events.price": "9.5E+4"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"transactions\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "transactions"
+      },
+      "values": {
+        "transactions.id": "[42,0,\"T1\"]",
+        "transactions.listing_id": "[42,0,\"L2\"]",
+        "transactions.amount": "1E+5",
+        "transactions.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"leases\",[\"[42,0,\\\"LE1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "leases"
+      },
+      "values": {
+        "leases.id": "[42,0,\"LE1\"]",
+        "leases.unit_id": "[42,0,\"U1\"]",
+        "leases.party_id": "[42,0,\"P1\"]",
+        "leases.starts": "2026-01-01",
+        "leases.ends": "2026-12-31"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"offices\",[\"[42,0,\\\"OF1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "offices"
+      },
+      "values": {
+        "offices.id": "[42,0,\"OF1\"]",
+        "offices.name": "Synthetic brokerage"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents\",[\"[42,0,\\\"AG1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "agents"
+      },
+      "values": {
+        "agents.id": "[42,0,\"AG1\"]",
+        "agents.party_id": "[42,0,\"P1\"]",
+        "agents.office_id": "[42,0,\"OF1\"]",
+        "agents.native_member_id": "MEMBER1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listing_agents"
+      },
+      "values": {
+        "listing_agents.id": "[42,0,\"LA1\"]",
+        "listing_agents.listing_id": "[42,0,\"L1\"]",
+        "listing_agents.agent_id": "[42,0,\"AG1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "listing_agents"
+      },
+      "values": {
+        "listing_agents.id": "[42,0,\"LA2\"]",
+        "listing_agents.listing_id": "[42,0,\"L2\"]",
+        "listing_agents.agent_id": "[42,0,\"AG1\"]"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"media\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "media"
+      },
+      "values": {
+        "media.id": "[42,0,\"M1\"]",
+        "media.property_id": "[42,0,\"PR1\"]",
+        "media.reference": "https://example.invalid/property-photo",
+        "media.availability": "external"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"maintenance_requests\",[\"[42,0,\\\"MR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "maintenance_requests"
+      },
+      "values": {
+        "maintenance_requests.id": "[42,0,\"MR1\"]",
+        "maintenance_requests.unit_id": "[42,0,\"U1\"]",
+        "maintenance_requests.party_id": "[42,0,\"P1\"]",
+        "maintenance_requests.status": "open"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"valuations\",[\"[42,0,\\\"V1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "element": "valuations"
+      },
+      "values": {
+        "valuations.id": "[42,0,\"V1\"]",
+        "valuations.property_id": "[42,0,\"PR1\"]",
+        "valuations.amount": "1.1E+5",
+        "valuations.currency": "USD",
+        "valuations.basis": "synthetic-assessment"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties.parcel_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"parcels\\\",[\\\"[42,0,\\\\\\\"PA1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "properties.parcel_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"parcels\",[\"[42,0,\\\"PA1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"buildings.property_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"buildings\\\",[\\\"[42,0,\\\\\\\"B1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "buildings.property_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"buildings\",[\"[42,0,\\\"B1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"units.building_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"buildings\\\",[\\\"[42,0,\\\\\\\"B1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "units.building_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"units\",[\"[42,0,\\\"U1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"buildings\",[\"[42,0,\\\"B1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings.property_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listings.property_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings.property_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listings.property_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events.listing_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_events\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_events.listing_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events.listing_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_events\\\",[\\\"[42,0,\\\\\\\"E2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_events.listing_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_events\",[\"[42,0,\\\"E2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"transactions.listing_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"transactions\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "transactions.listing_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"transactions\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"leases.unit_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"leases\\\",[\\\"[42,0,\\\\\\\"LE1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "leases.unit_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"leases\",[\"[42,0,\\\"LE1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"units\",[\"[42,0,\\\"U1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"leases.party_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"leases\\\",[\\\"[42,0,\\\\\\\"LE1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"parties\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "leases.party_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"leases\",[\"[42,0,\\\"LE1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"parties\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents.party_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"agents\\\",[\\\"[42,0,\\\\\\\"AG1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"parties\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "agents.party_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents\",[\"[42,0,\\\"AG1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"parties\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents.office_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"agents\\\",[\\\"[42,0,\\\\\\\"AG1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"offices\\\",[\\\"[42,0,\\\\\\\"OF1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "agents.office_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents\",[\"[42,0,\\\"AG1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"offices\",[\"[42,0,\\\"OF1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents.listing_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_agents\\\",[\\\"[42,0,\\\\\\\"LA1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_agents.listing_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents.agent_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_agents\\\",[\\\"[42,0,\\\\\\\"LA1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"agents\\\",[\\\"[42,0,\\\\\\\"AG1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_agents.agent_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents\",[\"[42,0,\\\"AG1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents.listing_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_agents\\\",[\\\"[42,0,\\\\\\\"LA2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listings\\\",[\\\"[42,0,\\\\\\\"L2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_agents.listing_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"listings\",[\"[42,0,\\\"L2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents.agent_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"listing_agents\\\",[\\\"[42,0,\\\\\\\"LA2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"agents\\\",[\\\"[42,0,\\\\\\\"AG1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "listing_agents.agent_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"listing_agents\",[\"[42,0,\\\"LA2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"agents\",[\"[42,0,\\\"AG1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"media.property_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"media\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "media.property_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"media\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"maintenance_requests.unit_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"maintenance_requests\\\",[\\\"[42,0,\\\\\\\"MR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "maintenance_requests.unit_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"maintenance_requests\",[\"[42,0,\\\"MR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"units\",[\"[42,0,\\\"U1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"maintenance_requests.party_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"maintenance_requests\\\",[\\\"[42,0,\\\\\\\"MR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"parties\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "maintenance_requests.party_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"maintenance_requests\",[\"[42,0,\\\"MR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"parties\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:real-estate\",\"domain\",\"valuations.property_id\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"valuations\\\",[\\\"[42,0,\\\\\\\"V1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:real-estate\\\",\\\"domain\\\",\\\"properties\\\",[\\\"[42,0,\\\\\\\"PR1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:real-estate",
+        "module": "domain",
+        "id": "valuations.property_id"
+      },
+      "source": "[\"urn:umf:domain:real-estate\",\"domain\",\"valuations\",[\"[42,0,\\\"V1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:real-estate\",\"domain\",\"properties\",[\"[42,0,\\\"PR1\\\"]\"]]"
+    }
+  ]
+}

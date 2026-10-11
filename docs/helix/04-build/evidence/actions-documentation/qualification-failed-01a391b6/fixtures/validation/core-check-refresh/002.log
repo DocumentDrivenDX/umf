@@ -1,0 +1,19 @@
+$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts
+{
+  "packages": 63,
+  "passed": 62,
+  "failures": [
+    {
+      "path": "spec/extensions/domain-pack/package.json",
+      "id": "umf.domain-pack",
+      "version": "1.0.0",
+      "native": null,
+      "evidenceCount": 1,
+      "passed": false,
+      "failures": [
+        "Embedded and standalone payload schemas differ"
+      ]
+    }
+  ]
+}
+error: script "test:schemas" exited with code 1

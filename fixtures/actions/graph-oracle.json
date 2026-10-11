@@ -1,0 +1,17 @@
+{
+  "profile": "graph-counts-bounded-1",
+  "scope": "Mocked SQL degree/set/deletion algorithm only; two native vertices, one created vertex, one self/cross relationship, exact min=1/max=1 both roles. Excludes native SQL, fields, identity admission, transactions and full profile refinement.",
+  "bun": "1.4.2",
+  "command": "bun scripts/actions-reference/graph-oracle.mjs",
+  "checked": 32768,
+  "accepted": 202,
+  "mismatchCount": 0,
+  "sha256": {
+    "scripts/actions-reference/graph-oracle.mjs": "77bdb91cdff35ff2408d6f83e151954c35876eb15a1a0ba8972583e4e9af0b68",
+    "scripts/actions-reference/graph.ts": "d3534a7e1db02ceb2b80215c230f434f666efa50be71d2035037c18371baaf1e",
+    "scripts/actions-reference/creation-relationships.ts": "350bb9bb2c3ce95c7f8a1993578bb1999e572d37ce8e710adcd39f0bf2c4b906",
+    "scripts/actions-reference/codec.ts": "e3d46d4a48cefbed427b61f394d89ce7dee32f056d07685ed1256efdff974720",
+    "src/extensions/actions/known-model.ts": "368dc9a9bb5079d062ea1ae90d5bf5d23437901b960d1347d804521b88323d84",
+    "fixtures/actions/approve.json": "fecab4a981c7c58db9a99e8467ef50b06d6dcf75c4903902a9f9edd9b0bd2f48"
+  }
+}

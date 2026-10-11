@@ -1,0 +1,5908 @@
+{
+  "umf": "0.8.0",
+  "id": "urn:umf:domain:medical-carrier",
+  "title": "medical-carrier ontology",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "domain",
+      "namespace": "urn:umf:domain:medical-carrier:",
+      "elements": [
+        {
+          "id": "resources",
+          "kind": "record",
+          "name": "resources",
+          "title": "resources",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "resources.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "resources.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "resources.resource_type"
+            },
+            {
+              "module": "domain",
+              "element": "resources.native_id"
+            },
+            {
+              "module": "domain",
+              "element": "resources.resource_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "resources.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "resources.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "resources.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source id",
+          "extensions": {}
+        },
+        {
+          "id": "resources.resource_type",
+          "name": "resource_type",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource type",
+          "extensions": {}
+        },
+        {
+          "id": "resources.native_id",
+          "name": "native_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native id",
+          "extensions": {}
+        },
+        {
+          "id": "resources.resource_json",
+          "name": "resource_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource json",
+          "extensions": {}
+        },
+        {
+          "id": "coverage",
+          "kind": "record",
+          "name": "coverage",
+          "title": "coverage",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "coverage.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.status"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.beneficiary_json"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.subscriber_json"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.payors_json"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.classes_json"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.period_start"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.period_end"
+            },
+            {
+              "module": "domain",
+              "element": "coverage.benefits_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "coverage.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "coverage.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.beneficiary_json",
+          "name": "beneficiary_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "beneficiary json",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.subscriber_json",
+          "name": "subscriber_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "subscriber json",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.payors_json",
+          "name": "payors_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "payors json",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.classes_json",
+          "name": "classes_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "classes json",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.period_start",
+          "name": "period_start",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "period start",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.period_end",
+          "name": "period_end",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "period end",
+          "extensions": {}
+        },
+        {
+          "id": "coverage.benefits_json",
+          "name": "benefits_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "benefits json",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility",
+          "kind": "record",
+          "name": "eligibility",
+          "title": "eligibility",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "eligibility.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.status"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.patient_reference"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.direction"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.purpose_json"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.created"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.serviced_json"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.request_json"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.outcome"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.insurance_json"
+            },
+            {
+              "module": "domain",
+              "element": "eligibility.items_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "eligibility.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.patient_reference",
+          "name": "patient_reference",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "patient reference",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.direction",
+          "name": "direction",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "direction",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.purpose_json",
+          "name": "purpose_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "purpose json",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.created",
+          "name": "created",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "created",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.serviced_json",
+          "name": "serviced_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "serviced json",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.request_json",
+          "name": "request_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "request json",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.outcome",
+          "name": "outcome",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "outcome",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.insurance_json",
+          "name": "insurance_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "insurance json",
+          "extensions": {}
+        },
+        {
+          "id": "eligibility.items_json",
+          "name": "items_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "items json",
+          "extensions": {}
+        },
+        {
+          "id": "claims",
+          "kind": "record",
+          "name": "claims",
+          "title": "claims",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "claims.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "claims.status"
+            },
+            {
+              "module": "domain",
+              "element": "claims.patient_reference"
+            },
+            {
+              "module": "domain",
+              "element": "claims.resource_type"
+            },
+            {
+              "module": "domain",
+              "element": "claims.use"
+            },
+            {
+              "module": "domain",
+              "element": "claims.type_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.created"
+            },
+            {
+              "module": "domain",
+              "element": "claims.outcome"
+            },
+            {
+              "module": "domain",
+              "element": "claims.request_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.insurance_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.diagnoses_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.procedures_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.related_json"
+            },
+            {
+              "module": "domain",
+              "element": "claims.totals_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "claims.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "claims.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "claims.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "claims.patient_reference",
+          "name": "patient_reference",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "patient reference",
+          "extensions": {}
+        },
+        {
+          "id": "claims.resource_type",
+          "name": "resource_type",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource type",
+          "extensions": {}
+        },
+        {
+          "id": "claims.use",
+          "name": "use",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "use",
+          "extensions": {}
+        },
+        {
+          "id": "claims.type_json",
+          "name": "type_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "type json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.created",
+          "name": "created",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "created",
+          "extensions": {}
+        },
+        {
+          "id": "claims.outcome",
+          "name": "outcome",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "outcome",
+          "extensions": {}
+        },
+        {
+          "id": "claims.request_json",
+          "name": "request_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "request json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.insurance_json",
+          "name": "insurance_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "insurance json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.diagnoses_json",
+          "name": "diagnoses_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "diagnoses json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.procedures_json",
+          "name": "procedures_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "procedures json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.related_json",
+          "name": "related_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "related json",
+          "extensions": {}
+        },
+        {
+          "id": "claims.totals_json",
+          "name": "totals_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "totals json",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines",
+          "kind": "record",
+          "name": "claim_lines",
+          "title": "claim_lines",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "claim_lines.line_key"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.parent_line_key"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.sequence"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.product_json"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.modifiers_json"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.service_json"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.quantity"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.unit_price"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.net_amount"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.net_currency"
+            },
+            {
+              "module": "domain",
+              "element": "claim_lines.line_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "claim_lines.line_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.line_key",
+          "name": "line_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "line key",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.parent_line_key",
+          "name": "parent_line_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "parent line key",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native path",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.sequence",
+          "name": "sequence",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "sequence",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.product_json",
+          "name": "product_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "product json",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.modifiers_json",
+          "name": "modifiers_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "modifiers json",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.service_json",
+          "name": "service_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "service json",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.quantity",
+          "name": "quantity",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "quantity",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.unit_price",
+          "name": "unit_price",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "unit price",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.net_amount",
+          "name": "net_amount",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "net amount",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.net_currency",
+          "name": "net_currency",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "net currency",
+          "extensions": {}
+        },
+        {
+          "id": "claim_lines.line_json",
+          "name": "line_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "line json",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications",
+          "kind": "record",
+          "name": "adjudications",
+          "title": "adjudications",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "adjudications.adjudication_key"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.line_key"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.category_json"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.reason_json"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.amount"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.currency"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.value"
+            },
+            {
+              "module": "domain",
+              "element": "adjudications.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "adjudications.adjudication_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.adjudication_key",
+          "name": "adjudication_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "adjudication key",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.line_key",
+          "name": "line_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "line key",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.category_json",
+          "name": "category_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "category json",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.reason_json",
+          "name": "reason_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "reason json",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.amount",
+          "name": "amount",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "amount",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.currency",
+          "name": "currency",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "currency",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.value",
+          "name": "value",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "value",
+          "extensions": {}
+        },
+        {
+          "id": "adjudications.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        },
+        {
+          "id": "payments",
+          "kind": "record",
+          "name": "payments",
+          "title": "payments",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "payments.payment_key"
+            },
+            {
+              "module": "domain",
+              "element": "payments.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "payments.date"
+            },
+            {
+              "module": "domain",
+              "element": "payments.amount"
+            },
+            {
+              "module": "domain",
+              "element": "payments.currency"
+            },
+            {
+              "module": "domain",
+              "element": "payments.allocations_json"
+            },
+            {
+              "module": "domain",
+              "element": "payments.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "payments.payment_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "payments.payment_key",
+          "name": "payment_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "payment key",
+          "extensions": {}
+        },
+        {
+          "id": "payments.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "payments.date",
+          "name": "date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "date",
+          "extensions": {}
+        },
+        {
+          "id": "payments.amount",
+          "name": "amount",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "amount",
+          "extensions": {}
+        },
+        {
+          "id": "payments.currency",
+          "name": "currency",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "currency",
+          "extensions": {}
+        },
+        {
+          "id": "payments.allocations_json",
+          "name": "allocations_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "allocations json",
+          "extensions": {}
+        },
+        {
+          "id": "payments.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        },
+        {
+          "id": "plans",
+          "kind": "record",
+          "name": "plans",
+          "title": "plans",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "plans.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "plans.status"
+            },
+            {
+              "module": "domain",
+              "element": "plans.name"
+            },
+            {
+              "module": "domain",
+              "element": "plans.period_json"
+            },
+            {
+              "module": "domain",
+              "element": "plans.owner_json"
+            },
+            {
+              "module": "domain",
+              "element": "plans.coverage_json"
+            },
+            {
+              "module": "domain",
+              "element": "plans.plans_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "plans.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "plans.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "plans.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "plans.name",
+          "name": "name",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "name",
+          "extensions": {}
+        },
+        {
+          "id": "plans.period_json",
+          "name": "period_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "period json",
+          "extensions": {}
+        },
+        {
+          "id": "plans.owner_json",
+          "name": "owner_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "owner json",
+          "extensions": {}
+        },
+        {
+          "id": "plans.coverage_json",
+          "name": "coverage_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "coverage json",
+          "extensions": {}
+        },
+        {
+          "id": "plans.plans_json",
+          "name": "plans_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "plans json",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments",
+          "kind": "record",
+          "name": "enrollments",
+          "title": "enrollments",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "enrollments.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.direction"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.status"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.created"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.candidate_json"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.coverage_json"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.request_json"
+            },
+            {
+              "module": "domain",
+              "element": "enrollments.outcome"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "enrollments.resource_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.direction",
+          "name": "direction",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "direction",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.created",
+          "name": "created",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "created",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.candidate_json",
+          "name": "candidate_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "candidate json",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.coverage_json",
+          "name": "coverage_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "coverage json",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.request_json",
+          "name": "request_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "request json",
+          "extensions": {}
+        },
+        {
+          "id": "enrollments.outcome",
+          "name": "outcome",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "outcome",
+          "extensions": {}
+        },
+        {
+          "id": "resource_references",
+          "kind": "record",
+          "name": "resource_references",
+          "title": "resource_references",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "resource_references.reference_key"
+            },
+            {
+              "module": "domain",
+              "element": "resource_references.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "resource_references.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "resource_references.native_reference"
+            },
+            {
+              "module": "domain",
+              "element": "resource_references.target_key"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "resource_references.reference_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "resource_references.reference_key",
+          "name": "reference_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "reference key",
+          "extensions": {}
+        },
+        {
+          "id": "resource_references.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "resource_references.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native path",
+          "extensions": {}
+        },
+        {
+          "id": "resource_references.native_reference",
+          "name": "native_reference",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native reference",
+          "extensions": {}
+        },
+        {
+          "id": "resource_references.target_key",
+          "name": "target_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "target key",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values",
+          "kind": "record",
+          "name": "coded_values",
+          "title": "coded_values",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "coded_values.coding_key"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.resource_key"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.system"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.release"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.code"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.display"
+            },
+            {
+              "module": "domain",
+              "element": "coded_values.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "coded_values.coding_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.coding_key",
+          "name": "coding_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "coding key",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.resource_key",
+          "name": "resource_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "resource key",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native path",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.system",
+          "name": "system",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "system",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.release",
+          "name": "release",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "release",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.code",
+          "name": "code",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "code",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.display",
+          "name": "display",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "display",
+          "extensions": {}
+        },
+        {
+          "id": "coded_values.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events",
+          "kind": "record",
+          "name": "workflow_events",
+          "title": "workflow_events",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "workflow_events.event_key"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.event_type"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.subject_key"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.claim_key"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.prior_event_key"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.date"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.status"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.amount"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.currency"
+            },
+            {
+              "module": "domain",
+              "element": "workflow_events.details_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "workflow_events.event_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.event_key",
+          "name": "event_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "event key",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.event_type",
+          "name": "event_type",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "event type",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.subject_key",
+          "name": "subject_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "subject key",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.claim_key",
+          "name": "claim_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "claim key",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.prior_event_key",
+          "name": "prior_event_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "prior event key",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.date",
+          "name": "date",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "date",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.status",
+          "name": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "status",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.amount",
+          "name": "amount",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "amount",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.currency",
+          "name": "currency",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "currency",
+          "extensions": {}
+        },
+        {
+          "id": "workflow_events.details_json",
+          "name": "details_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "details json",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries",
+          "kind": "record",
+          "name": "cms_beneficiaries",
+          "title": "cms_beneficiaries",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.DESYNPUF_ID"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_BIRTH_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_DEATH_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_SEX_IDENT_CD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_RACE_CD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_ESRD_IND"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_STATE_CODE"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_COUNTY_CD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_HI_CVRAGE_TOT_MONS"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_SMI_CVRAGE_TOT_MONS"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENE_HMO_CVRAGE_TOT_MONS"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.PLAN_CVRG_MOS_NUM"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_ALZHDMTA"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_CHF"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_CHRNKIDN"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_CNCR"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_COPD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_DEPRESSN"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_DIABETES"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_ISCHMCHT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_OSTEOPRS"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_RA_OA"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.SP_STRKETIA"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.MEDREIMB_IP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENRES_IP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.PPPYMT_IP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.MEDREIMB_OP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENRES_OP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.PPPYMT_OP"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.MEDREIMB_CAR"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.BENRES_CAR"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.PPPYMT_CAR"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.native_record_number"
+            },
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries.native_csv_record"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "cms_beneficiaries.DESYNPUF_ID"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.DESYNPUF_ID",
+          "name": "DESYNPUF_ID",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "DESYNPUF ID",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_BIRTH_DT",
+          "name": "BENE_BIRTH_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE BIRTH DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_DEATH_DT",
+          "name": "BENE_DEATH_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE DEATH DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_SEX_IDENT_CD",
+          "name": "BENE_SEX_IDENT_CD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE SEX IDENT CD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_RACE_CD",
+          "name": "BENE_RACE_CD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE RACE CD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_ESRD_IND",
+          "name": "BENE_ESRD_IND",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE ESRD IND",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_STATE_CODE",
+          "name": "SP_STATE_CODE",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP STATE CODE",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_COUNTY_CD",
+          "name": "BENE_COUNTY_CD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE COUNTY CD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_HI_CVRAGE_TOT_MONS",
+          "name": "BENE_HI_CVRAGE_TOT_MONS",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE HI CVRAGE TOT MONS",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_SMI_CVRAGE_TOT_MONS",
+          "name": "BENE_SMI_CVRAGE_TOT_MONS",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE SMI CVRAGE TOT MONS",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENE_HMO_CVRAGE_TOT_MONS",
+          "name": "BENE_HMO_CVRAGE_TOT_MONS",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENE HMO CVRAGE TOT MONS",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.PLAN_CVRG_MOS_NUM",
+          "name": "PLAN_CVRG_MOS_NUM",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PLAN CVRG MOS NUM",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_ALZHDMTA",
+          "name": "SP_ALZHDMTA",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP ALZHDMTA",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_CHF",
+          "name": "SP_CHF",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP CHF",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_CHRNKIDN",
+          "name": "SP_CHRNKIDN",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP CHRNKIDN",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_CNCR",
+          "name": "SP_CNCR",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP CNCR",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_COPD",
+          "name": "SP_COPD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP COPD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_DEPRESSN",
+          "name": "SP_DEPRESSN",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP DEPRESSN",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_DIABETES",
+          "name": "SP_DIABETES",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP DIABETES",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_ISCHMCHT",
+          "name": "SP_ISCHMCHT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP ISCHMCHT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_OSTEOPRS",
+          "name": "SP_OSTEOPRS",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP OSTEOPRS",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_RA_OA",
+          "name": "SP_RA_OA",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP RA OA",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.SP_STRKETIA",
+          "name": "SP_STRKETIA",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SP STRKETIA",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.MEDREIMB_IP",
+          "name": "MEDREIMB_IP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "MEDREIMB IP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENRES_IP",
+          "name": "BENRES_IP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENRES IP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.PPPYMT_IP",
+          "name": "PPPYMT_IP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PPPYMT IP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.MEDREIMB_OP",
+          "name": "MEDREIMB_OP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "MEDREIMB OP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENRES_OP",
+          "name": "BENRES_OP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENRES OP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.PPPYMT_OP",
+          "name": "PPPYMT_OP",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PPPYMT OP",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.MEDREIMB_CAR",
+          "name": "MEDREIMB_CAR",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "MEDREIMB CAR",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.BENRES_CAR",
+          "name": "BENRES_CAR",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "BENRES CAR",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.PPPYMT_CAR",
+          "name": "PPPYMT_CAR",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PPPYMT CAR",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.native_record_number",
+          "name": "native_record_number",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native record number",
+          "extensions": {}
+        },
+        {
+          "id": "cms_beneficiaries.native_csv_record",
+          "name": "native_csv_record",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native csv record",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims",
+          "kind": "record",
+          "name": "cms_inpatient_claims",
+          "title": "cms_inpatient_claims",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.DESYNPUF_ID"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_ID"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.SEGMENT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_FROM_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_THRU_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.PRVDR_NUM"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_PMT_AMT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.NCH_PRMRY_PYR_CLM_PD_AMT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.AT_PHYSN_NPI"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.OP_PHYSN_NPI"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.OT_PHYSN_NPI"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_ADMSN_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ADMTNG_ICD9_DGNS_CD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_PASS_THRU_PER_DIEM_AMT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.NCH_BENE_IP_DDCTBL_AMT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.NCH_BENE_PTA_COINSRNC_LBLTY_AM"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.NCH_BENE_BLOOD_DDCTBL_LBLTY_AM"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_UTLZTN_DAY_CNT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.NCH_BENE_DSCHRG_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.CLM_DRG_CD"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_DGNS_CD_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.ICD9_PRCDR_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_14"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_15"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_16"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_17"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_18"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_19"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_20"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_21"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_22"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_23"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_24"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_25"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_26"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_27"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_28"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_29"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_30"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_31"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_32"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_33"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_34"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_35"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_36"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_37"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_38"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_39"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_40"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_41"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_42"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_43"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_44"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.HCPCS_CD_45"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.native_record_number"
+            },
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims.native_csv_record"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "cms_inpatient_claims.CLM_ID"
+                },
+                {
+                  "module": "domain",
+                  "element": "cms_inpatient_claims.SEGMENT"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.DESYNPUF_ID",
+          "name": "DESYNPUF_ID",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "DESYNPUF ID",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_ID",
+          "name": "CLM_ID",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM ID",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.SEGMENT",
+          "name": "SEGMENT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "SEGMENT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_FROM_DT",
+          "name": "CLM_FROM_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM FROM DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_THRU_DT",
+          "name": "CLM_THRU_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM THRU DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.PRVDR_NUM",
+          "name": "PRVDR_NUM",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRVDR NUM",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_PMT_AMT",
+          "name": "CLM_PMT_AMT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM PMT AMT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.NCH_PRMRY_PYR_CLM_PD_AMT",
+          "name": "NCH_PRMRY_PYR_CLM_PD_AMT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "NCH PRMRY PYR CLM PD AMT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.AT_PHYSN_NPI",
+          "name": "AT_PHYSN_NPI",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "AT PHYSN NPI",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.OP_PHYSN_NPI",
+          "name": "OP_PHYSN_NPI",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "OP PHYSN NPI",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.OT_PHYSN_NPI",
+          "name": "OT_PHYSN_NPI",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "OT PHYSN NPI",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_ADMSN_DT",
+          "name": "CLM_ADMSN_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM ADMSN DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ADMTNG_ICD9_DGNS_CD",
+          "name": "ADMTNG_ICD9_DGNS_CD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ADMTNG ICD9 DGNS CD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_PASS_THRU_PER_DIEM_AMT",
+          "name": "CLM_PASS_THRU_PER_DIEM_AMT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM PASS THRU PER DIEM AMT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.NCH_BENE_IP_DDCTBL_AMT",
+          "name": "NCH_BENE_IP_DDCTBL_AMT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "NCH BENE IP DDCTBL AMT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.NCH_BENE_PTA_COINSRNC_LBLTY_AM",
+          "name": "NCH_BENE_PTA_COINSRNC_LBLTY_AM",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "NCH BENE PTA COINSRNC LBLTY AM",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.NCH_BENE_BLOOD_DDCTBL_LBLTY_AM",
+          "name": "NCH_BENE_BLOOD_DDCTBL_LBLTY_AM",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "NCH BENE BLOOD DDCTBL LBLTY AM",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_UTLZTN_DAY_CNT",
+          "name": "CLM_UTLZTN_DAY_CNT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM UTLZTN DAY CNT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.NCH_BENE_DSCHRG_DT",
+          "name": "NCH_BENE_DSCHRG_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "NCH BENE DSCHRG DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.CLM_DRG_CD",
+          "name": "CLM_DRG_CD",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM DRG CD",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_1",
+          "name": "ICD9_DGNS_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_2",
+          "name": "ICD9_DGNS_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_3",
+          "name": "ICD9_DGNS_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_4",
+          "name": "ICD9_DGNS_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_5",
+          "name": "ICD9_DGNS_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_6",
+          "name": "ICD9_DGNS_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_7",
+          "name": "ICD9_DGNS_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_8",
+          "name": "ICD9_DGNS_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_9",
+          "name": "ICD9_DGNS_CD_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_DGNS_CD_10",
+          "name": "ICD9_DGNS_CD_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_1",
+          "name": "ICD9_PRCDR_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_2",
+          "name": "ICD9_PRCDR_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_3",
+          "name": "ICD9_PRCDR_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_4",
+          "name": "ICD9_PRCDR_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_5",
+          "name": "ICD9_PRCDR_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.ICD9_PRCDR_CD_6",
+          "name": "ICD9_PRCDR_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 PRCDR CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_1",
+          "name": "HCPCS_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_2",
+          "name": "HCPCS_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_3",
+          "name": "HCPCS_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_4",
+          "name": "HCPCS_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_5",
+          "name": "HCPCS_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_6",
+          "name": "HCPCS_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_7",
+          "name": "HCPCS_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_8",
+          "name": "HCPCS_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_9",
+          "name": "HCPCS_CD_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_10",
+          "name": "HCPCS_CD_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_11",
+          "name": "HCPCS_CD_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_12",
+          "name": "HCPCS_CD_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_13",
+          "name": "HCPCS_CD_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_14",
+          "name": "HCPCS_CD_14",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 14",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_15",
+          "name": "HCPCS_CD_15",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 15",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_16",
+          "name": "HCPCS_CD_16",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 16",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_17",
+          "name": "HCPCS_CD_17",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 17",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_18",
+          "name": "HCPCS_CD_18",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 18",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_19",
+          "name": "HCPCS_CD_19",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 19",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_20",
+          "name": "HCPCS_CD_20",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 20",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_21",
+          "name": "HCPCS_CD_21",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 21",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_22",
+          "name": "HCPCS_CD_22",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 22",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_23",
+          "name": "HCPCS_CD_23",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 23",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_24",
+          "name": "HCPCS_CD_24",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 24",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_25",
+          "name": "HCPCS_CD_25",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 25",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_26",
+          "name": "HCPCS_CD_26",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 26",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_27",
+          "name": "HCPCS_CD_27",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 27",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_28",
+          "name": "HCPCS_CD_28",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 28",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_29",
+          "name": "HCPCS_CD_29",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 29",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_30",
+          "name": "HCPCS_CD_30",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 30",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_31",
+          "name": "HCPCS_CD_31",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 31",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_32",
+          "name": "HCPCS_CD_32",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 32",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_33",
+          "name": "HCPCS_CD_33",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 33",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_34",
+          "name": "HCPCS_CD_34",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 34",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_35",
+          "name": "HCPCS_CD_35",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 35",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_36",
+          "name": "HCPCS_CD_36",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 36",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_37",
+          "name": "HCPCS_CD_37",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 37",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_38",
+          "name": "HCPCS_CD_38",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 38",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_39",
+          "name": "HCPCS_CD_39",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 39",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_40",
+          "name": "HCPCS_CD_40",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 40",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_41",
+          "name": "HCPCS_CD_41",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 41",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_42",
+          "name": "HCPCS_CD_42",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 42",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_43",
+          "name": "HCPCS_CD_43",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 43",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_44",
+          "name": "HCPCS_CD_44",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 44",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.HCPCS_CD_45",
+          "name": "HCPCS_CD_45",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 45",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.native_record_number",
+          "name": "native_record_number",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native record number",
+          "extensions": {}
+        },
+        {
+          "id": "cms_inpatient_claims.native_csv_record",
+          "name": "native_csv_record",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native csv record",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims",
+          "kind": "record",
+          "name": "cms_carrier_claims",
+          "title": "cms_carrier_claims",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+          "members": [
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.DESYNPUF_ID"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.CLM_ID"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.CLM_FROM_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.CLM_THRU_DT"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.ICD9_DGNS_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.PRF_PHYSN_NPI_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.TAX_NUM_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.HCPCS_CD_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_NCH_PMT_AMT_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_COINSRNC_AMT_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_PRCSG_IND_CD_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_1"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_2"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_3"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_4"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_5"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_6"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_7"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_8"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_9"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_10"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_11"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_12"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.LINE_ICD9_DGNS_CD_13"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.native_record_number"
+            },
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims.native_csv_record"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "cms_carrier_claims.CLM_ID"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.DESYNPUF_ID",
+          "name": "DESYNPUF_ID",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "DESYNPUF ID",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.CLM_ID",
+          "name": "CLM_ID",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM ID",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.CLM_FROM_DT",
+          "name": "CLM_FROM_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM FROM DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.CLM_THRU_DT",
+          "name": "CLM_THRU_DT",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "CLM THRU DT",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_1",
+          "name": "ICD9_DGNS_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_2",
+          "name": "ICD9_DGNS_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_3",
+          "name": "ICD9_DGNS_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_4",
+          "name": "ICD9_DGNS_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_5",
+          "name": "ICD9_DGNS_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_6",
+          "name": "ICD9_DGNS_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_7",
+          "name": "ICD9_DGNS_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.ICD9_DGNS_CD_8",
+          "name": "ICD9_DGNS_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "ICD9 DGNS CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_1",
+          "name": "PRF_PHYSN_NPI_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_2",
+          "name": "PRF_PHYSN_NPI_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_3",
+          "name": "PRF_PHYSN_NPI_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_4",
+          "name": "PRF_PHYSN_NPI_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_5",
+          "name": "PRF_PHYSN_NPI_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_6",
+          "name": "PRF_PHYSN_NPI_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_7",
+          "name": "PRF_PHYSN_NPI_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_8",
+          "name": "PRF_PHYSN_NPI_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_9",
+          "name": "PRF_PHYSN_NPI_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_10",
+          "name": "PRF_PHYSN_NPI_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_11",
+          "name": "PRF_PHYSN_NPI_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_12",
+          "name": "PRF_PHYSN_NPI_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.PRF_PHYSN_NPI_13",
+          "name": "PRF_PHYSN_NPI_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "PRF PHYSN NPI 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_1",
+          "name": "TAX_NUM_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_2",
+          "name": "TAX_NUM_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_3",
+          "name": "TAX_NUM_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_4",
+          "name": "TAX_NUM_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_5",
+          "name": "TAX_NUM_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_6",
+          "name": "TAX_NUM_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_7",
+          "name": "TAX_NUM_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_8",
+          "name": "TAX_NUM_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_9",
+          "name": "TAX_NUM_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_10",
+          "name": "TAX_NUM_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_11",
+          "name": "TAX_NUM_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_12",
+          "name": "TAX_NUM_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.TAX_NUM_13",
+          "name": "TAX_NUM_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "TAX NUM 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_1",
+          "name": "HCPCS_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_2",
+          "name": "HCPCS_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_3",
+          "name": "HCPCS_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_4",
+          "name": "HCPCS_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_5",
+          "name": "HCPCS_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_6",
+          "name": "HCPCS_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_7",
+          "name": "HCPCS_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_8",
+          "name": "HCPCS_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_9",
+          "name": "HCPCS_CD_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_10",
+          "name": "HCPCS_CD_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_11",
+          "name": "HCPCS_CD_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_12",
+          "name": "HCPCS_CD_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.HCPCS_CD_13",
+          "name": "HCPCS_CD_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "HCPCS CD 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_1",
+          "name": "LINE_NCH_PMT_AMT_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_2",
+          "name": "LINE_NCH_PMT_AMT_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_3",
+          "name": "LINE_NCH_PMT_AMT_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_4",
+          "name": "LINE_NCH_PMT_AMT_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_5",
+          "name": "LINE_NCH_PMT_AMT_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_6",
+          "name": "LINE_NCH_PMT_AMT_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_7",
+          "name": "LINE_NCH_PMT_AMT_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_8",
+          "name": "LINE_NCH_PMT_AMT_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_9",
+          "name": "LINE_NCH_PMT_AMT_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_10",
+          "name": "LINE_NCH_PMT_AMT_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_11",
+          "name": "LINE_NCH_PMT_AMT_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_12",
+          "name": "LINE_NCH_PMT_AMT_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_NCH_PMT_AMT_13",
+          "name": "LINE_NCH_PMT_AMT_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE NCH PMT AMT 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_1",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_2",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_3",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_4",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_5",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_6",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_7",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_8",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_9",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_10",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_11",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_12",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PTB_DDCTBL_AMT_13",
+          "name": "LINE_BENE_PTB_DDCTBL_AMT_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PTB DDCTBL AMT 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_1",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_2",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_3",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_4",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_5",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_6",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_7",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_8",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_9",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_10",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_11",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_12",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_BENE_PRMRY_PYR_PD_AMT_13",
+          "name": "LINE_BENE_PRMRY_PYR_PD_AMT_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE BENE PRMRY PYR PD AMT 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_1",
+          "name": "LINE_COINSRNC_AMT_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_2",
+          "name": "LINE_COINSRNC_AMT_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_3",
+          "name": "LINE_COINSRNC_AMT_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_4",
+          "name": "LINE_COINSRNC_AMT_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_5",
+          "name": "LINE_COINSRNC_AMT_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_6",
+          "name": "LINE_COINSRNC_AMT_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_7",
+          "name": "LINE_COINSRNC_AMT_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_8",
+          "name": "LINE_COINSRNC_AMT_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_9",
+          "name": "LINE_COINSRNC_AMT_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_10",
+          "name": "LINE_COINSRNC_AMT_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_11",
+          "name": "LINE_COINSRNC_AMT_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_12",
+          "name": "LINE_COINSRNC_AMT_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_COINSRNC_AMT_13",
+          "name": "LINE_COINSRNC_AMT_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE COINSRNC AMT 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_1",
+          "name": "LINE_ALOWD_CHRG_AMT_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_2",
+          "name": "LINE_ALOWD_CHRG_AMT_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_3",
+          "name": "LINE_ALOWD_CHRG_AMT_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_4",
+          "name": "LINE_ALOWD_CHRG_AMT_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_5",
+          "name": "LINE_ALOWD_CHRG_AMT_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_6",
+          "name": "LINE_ALOWD_CHRG_AMT_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_7",
+          "name": "LINE_ALOWD_CHRG_AMT_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_8",
+          "name": "LINE_ALOWD_CHRG_AMT_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_9",
+          "name": "LINE_ALOWD_CHRG_AMT_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_10",
+          "name": "LINE_ALOWD_CHRG_AMT_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_11",
+          "name": "LINE_ALOWD_CHRG_AMT_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_12",
+          "name": "LINE_ALOWD_CHRG_AMT_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ALOWD_CHRG_AMT_13",
+          "name": "LINE_ALOWD_CHRG_AMT_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ALOWD CHRG AMT 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_1",
+          "name": "LINE_PRCSG_IND_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_2",
+          "name": "LINE_PRCSG_IND_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_3",
+          "name": "LINE_PRCSG_IND_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_4",
+          "name": "LINE_PRCSG_IND_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_5",
+          "name": "LINE_PRCSG_IND_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_6",
+          "name": "LINE_PRCSG_IND_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_7",
+          "name": "LINE_PRCSG_IND_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_8",
+          "name": "LINE_PRCSG_IND_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_9",
+          "name": "LINE_PRCSG_IND_CD_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_10",
+          "name": "LINE_PRCSG_IND_CD_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_11",
+          "name": "LINE_PRCSG_IND_CD_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_12",
+          "name": "LINE_PRCSG_IND_CD_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_PRCSG_IND_CD_13",
+          "name": "LINE_PRCSG_IND_CD_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE PRCSG IND CD 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_1",
+          "name": "LINE_ICD9_DGNS_CD_1",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 1",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_2",
+          "name": "LINE_ICD9_DGNS_CD_2",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 2",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_3",
+          "name": "LINE_ICD9_DGNS_CD_3",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 3",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_4",
+          "name": "LINE_ICD9_DGNS_CD_4",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 4",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_5",
+          "name": "LINE_ICD9_DGNS_CD_5",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 5",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_6",
+          "name": "LINE_ICD9_DGNS_CD_6",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 6",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_7",
+          "name": "LINE_ICD9_DGNS_CD_7",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 7",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_8",
+          "name": "LINE_ICD9_DGNS_CD_8",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 8",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_9",
+          "name": "LINE_ICD9_DGNS_CD_9",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 9",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_10",
+          "name": "LINE_ICD9_DGNS_CD_10",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 10",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_11",
+          "name": "LINE_ICD9_DGNS_CD_11",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 11",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_12",
+          "name": "LINE_ICD9_DGNS_CD_12",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 12",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.LINE_ICD9_DGNS_CD_13",
+          "name": "LINE_ICD9_DGNS_CD_13",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "LINE ICD9 DGNS CD 13",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.native_record_number",
+          "name": "native_record_number",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native record number",
+          "extensions": {}
+        },
+        {
+          "id": "cms_carrier_claims.native_csv_record",
+          "name": "native_csv_record",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native csv record",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "coverage.resource_key",
+          "name": "coverage.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "coverage"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "eligibility.resource_key",
+          "name": "eligibility.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "eligibility"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "claims.resource_key",
+          "name": "claims.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "claims"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "claim_lines.resource_key",
+          "name": "claim_lines.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "claim_lines"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "claim_lines.parent_line_key",
+          "name": "claim_lines.parent_line_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "claim_lines"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "claim_lines",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "adjudications.resource_key",
+          "name": "adjudications.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "adjudications"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "adjudications.line_key",
+          "name": "adjudications.line_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "adjudications"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "claim_lines",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "payments.resource_key",
+          "name": "payments.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "payments"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "plans.resource_key",
+          "name": "plans.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "plans"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "enrollments.resource_key",
+          "name": "enrollments.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "enrollments"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "resource_references.resource_key",
+          "name": "resource_references.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "resource_references"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "resource_references.target_key",
+          "name": "resource_references.target_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "resource_references"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "coded_values.resource_key",
+          "name": "coded_values.resource_key",
+          "source": [
+            {
+              "module": "domain",
+              "element": "coded_values"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "resources",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "cms_inpatient_claims.DESYNPUF_ID",
+          "name": "cms_inpatient_claims.DESYNPUF_ID",
+          "source": [
+            {
+              "module": "domain",
+              "element": "cms_inpatient_claims"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "cms_carrier_claims.DESYNPUF_ID",
+          "name": "cms_carrier_claims.DESYNPUF_ID",
+          "source": [
+            {
+              "module": "domain",
+              "element": "cms_carrier_claims"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "cms_beneficiaries",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

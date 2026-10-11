@@ -1,5 +1,7 @@
 # UMF project documentation
 
+**Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
+
 ## Domain-pack planning
 
 The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
@@ -33,6 +35,28 @@ three targets is not delivered. The owner's follow-up selects
 [UMF-native TableSpec as the first integration goal](00-discover/vision-input.md#owner-clarification-tablespec-becomes-umf-native-first),
 after a defined UMF finalization gate. Existing US-050 prerequisites must be
 reconciled when that gate is framed.
+
+## Declarative action requirements and design
+
+Owner-directed action planning (2026-10-08) is captured in
+[FEAT-900](01-frame/features/FEAT-900-declarative-actions.md),
+[US-900](01-frame/user-stories/US-900-declarative-actions.md),
+[CONTRACT-900](02-design/contracts/CONTRACT-900-declarative-actions.md),
+[SD-900](02-design/solution-designs/SD-900-declarative-actions.md),
+[TD-900](02-design/technical-designs/TD-900-declarative-actions.md) and
+[STP-900](03-test/test-plans/STP-900-declarative-actions.md).
+[CONTRACT-901](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
+the proposed first executable consumer profile and protocol. These draft artifacts
+define a local core 0.8.0 `umf.actions` extension for authored declarations and
+executor capability comparison. An experimental portable implementation and bounded
+rule/selector interpretation now have [scoped passing evidence](04-build/evidence/actions-certification.md).
+The transactional reference consumer is allocated in
+[US-901](01-frame/user-stories/US-901-transactional-actions.md),
+[TD-901](02-design/technical-designs/TD-901-transactional-actions.md) and
+[STP-901](03-test/test-plans/STP-901-transactional-actions.md). Its historical certificate records completed bounded execution and qualification
+at captured sources. Current integrated qualification and release acceptance
+remain open. Execution remains
+consumer-owned; DDD operation metadata and native Delta log actions are separate.
 
 ## Shared schema properties
 
@@ -1153,6 +1177,17 @@ validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
 
+Action design investigation (2026-10-08): [provenance](00-discover/actions-requirement-provenance.md),
+[decision experiments](02-design/actions-investigation.md),
+[prior art/access](02-design/actions-prior-art-decisions.md),
+[executed evidence and gate status](04-build/evidence/actions-plan-execution.md).
+
+[Executed formal action analysis](04-build/evidence/actions-formal-analysis.md)
+records semantic counterexamples, corrected design, bounded TLC safety/progress
+and independent native-history conformance. This pointer describes the earlier
+design milestone; the later action certificate records completed bounded
+implementation qualification at its captured source. See the action guide and
+documentation delivery record above for the current integration status.
 Portable tabular domain packs are governed by
 [CONTRACT-052](02-design/contracts/CONTRACT-052-domain-packs.md). UMF owns pack
 metadata, table schemas and schema export tooling; TableSpec owns executable

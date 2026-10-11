@@ -77,6 +77,27 @@ datasource mappings, and policy/capability metadata as Palantir preservation
 candidates. This is an inventory to validate against the chosen native interface,
 not a researched completeness claim or a list of mandatory core primitives.
 
+## Proposed declarative action boundary
+
+[FR-51/FEAT-900](../01-frame/features/FEAT-900-declarative-actions.md) introduces
+a proposed independently versioned `umf.actions` extension. The feature-level
+[SD-900](solution-designs/SD-900-declarative-actions.md) separates declaration
+validation/inspection and profile comparison from consumer-owned execution.
+[CONTRACT-900](contracts/CONTRACT-900-declarative-actions.md) owns exact action
+semantics; [TD-900](technical-designs/TD-900-declarative-actions.md) describes the
+bounded library slice. [CONTRACT-901](contracts/CONTRACT-901-transactional-action-profile.md)
+adds a proposed bounded executable consumer profile, revision/protocol and
+handler-access/audit requirements. These are design proposals, not delivered architecture.
+
+Core Record/Field/Key and relationship assertions retain their own meaning.
+Initial action references are document-local and require no US-050 implementation.
+DDD operations become associated only through an explicit action binding.
+Constraints and handler names are inert data: UMF supplies neither a general
+rule evaluator nor a transaction engine. An executor capability match is a
+self-declared claim over a retained exact document, not authorization or proof
+of atomicity, replay or receipt freshness. Those need independent, versioned
+consumer witnesses before any execution support claim.
+
 ## Level 2: Container Diagram
 
 The implementation provides a browser-compatible library and host-side tooling

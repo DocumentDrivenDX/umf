@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:inspection:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "action": {
+            "$ref": "urn:umf:actions:0.1.0#/$defs/action"
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "path": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "kind": {
+                  "enum": [
+                    "value",
+                    "key",
+                    "condition",
+                    "effect",
+                    "authorization",
+                    "attribution",
+                    "atomicity",
+                    "idempotency",
+                    "result",
+                    "handler",
+                    "frame",
+                    "selector",
+                    "output",
+                    "failure",
+                    "binding",
+                    "unknown",
+                    "model"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "checked",
+                    "unchecked"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "path",
+                "kind",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "module",
+          "path",
+          "action",
+          "obligations"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "validation",
+    "actions"
+  ],
+  "additionalProperties": false
+}

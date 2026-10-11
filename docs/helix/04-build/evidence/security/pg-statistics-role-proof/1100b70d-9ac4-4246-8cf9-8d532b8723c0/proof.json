@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "z3Version": "4.15.4",
+  "queries": [
+    {
+      "name": "closed selected family excludes reachable execution",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Routine 0)\n(declare-sort Role 0)\n(declare-fun execute (Role Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun bridge () Role)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun owner (Role Routine) Bool)\n(assert\n (let (($x15 (execute bridge snapshot_getter)))\n(let (($x14 (or (usable bridge) (settable bridge))))\n(let (($x11 (selected snapshot_getter)))\n(let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(and $x10 $x11 $x14 $x15)))))))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "name": "closed selected family excludes reachable routine ownership",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Routine 0)\n(declare-sort Role 0)\n(declare-fun owner (Role Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun ordinary_actor () Role)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun execute (Role Routine) Bool)\n(assert\n (let (($x48 (owner ordinary_actor snapshot_getter)))\n(let (($x47 (or (usable ordinary_actor) (settable ordinary_actor))))\n(let (($x11 (selected snapshot_getter)))\n(let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(and $x10 $x11 $x47 $x48)))))))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "name": "closed selected family excludes reachable grant restoration",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Routine 0)\n(declare-sort Role 0)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun bridge () Role)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun owner (Role Routine) Bool)\n(declare-fun execute (Role Routine) Bool)\n(assert\n (let (($x33 (grant bridge snapshot_getter)))\n(let (($x34 (or (usable bridge) (settable bridge))))\n(let (($x11 (selected snapshot_getter)))\n(let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(and $x10 $x11 $x34 $x33)))))))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "name": "original actor execute alone misses SET-only bridge",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Routine 0)\n(declare-sort Role 0)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun owner (Role Routine) Bool)\n(declare-fun execute (Role Routine) Bool)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun bridge () Role)\n(declare-fun ordinary_actor () Role)\n(assert\n (let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(let (($x15 (execute bridge snapshot_getter)))\n(let (($x35 (settable bridge)))\n(let (($x16 (not (usable bridge))))\n(let (($x50 (not (execute ordinary_actor snapshot_getter))))\n(let (($x11 (selected snapshot_getter)))\n(and (and (distinct ordinary_actor bridge) true) $x11 $x50 $x16 $x35 $x15 (not $x10))))))))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[snapshot_getter = Routine!val!0,\n ordinary_actor = Role!val!0,\n bridge = Role!val!1,\n settable = [else -> True],\n usable = [else -> False],\n owner = [else -> True],\n selected = [else -> True],\n execute = [(Role!val!1, Routine!val!0) -> True,\n            else -> False]]"
+    },
+    {
+      "name": "execute-only check misses original owner restoration",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Routine 0)\n(declare-sort Role 0)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun owner (Role Routine) Bool)\n(declare-fun execute (Role Routine) Bool)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun ordinary_actor () Role)\n(assert\n (let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(let (($x16 (grant ordinary_actor snapshot_getter)))\n(let (($x12 (owner ordinary_actor snapshot_getter)))\n(let (($x50 (not (execute ordinary_actor snapshot_getter))))\n(let (($x11 (usable ordinary_actor)))\n(let (($x17 (selected snapshot_getter)))\n(and $x17 $x11 $x50 $x12 $x16 (not $x10))))))))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[snapshot_getter = Routine!val!0,\n ordinary_actor = Role!val!0,\n settable = [else -> True],\n usable = [else -> True],\n owner = [else -> True],\n selected = [else -> True],\n execute = [(Role!val!1, Routine!val!1) -> True,\n            else -> False],\n grant = [else -> True]]"
+    },
+    {
+      "name": "populated selected family can be closed",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort Role 0)\n(declare-sort Routine 0)\n(declare-fun bridge () Role)\n(declare-fun ordinary_actor () Role)\n(declare-fun settable (Role) Bool)\n(declare-fun usable (Role) Bool)\n(declare-fun selected (Routine) Bool)\n(declare-fun snapshot_getter () Routine)\n(declare-fun grant (Role Routine) Bool)\n(declare-fun owner (Role Routine) Bool)\n(declare-fun execute (Role Routine) Bool)\n(assert\n (let (($x38 (settable bridge)))\n(let (($x11 (usable ordinary_actor)))\n(let (($x17 (selected snapshot_getter)))\n(let (($x30 (exists ((r Role) (f Routine) )(let (($x28 (selected f)))\n(and $x28 (or (usable r) (settable r)) (or (execute r f) (owner r f) (grant r f)))))\n))\n(let (($x10 (not $x30)))\n(and $x10 $x17 $x11 $x38 (and (distinct ordinary_actor bridge) true))))))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[snapshot_getter = Routine!val!0,\n ordinary_actor = Role!val!0,\n bridge = Role!val!1,\n settable = [else -> True],\n usable = [else -> True],\n grant = [else -> False],\n selected = [else -> True],\n execute = [else -> False],\n owner = [else -> False]]"
+    }
+  ],
+  "sourcePreimages": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-pg-statistics-role-closure.py",
+      "archive": "0-prove-pg-statistics-role-closure.py",
+      "sha256": "5c59716beb1a94744afe81f0bfc7f0ab0539d76d8ef0ad9f324fed4a4998bcf9"
+    },
+    {
+      "path": "tools/security/pg-private-diagnostics.py",
+      "archive": "1-pg-private-diagnostics.py",
+      "sha256": "4952e8714fe2bc92c4265d8091042e479e5716dae1c8de63a584337b4e35e2c0"
+    },
+    {
+      "path": "tests/security/native/pg-raw-membership.py",
+      "archive": "2-pg-raw-membership.py",
+      "sha256": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab"
+    },
+    {
+      "path": "tests/security/native/pg-raw-membership.sql",
+      "archive": "3-pg-raw-membership.sql",
+      "sha256": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
+    }
+  ],
+  "scope": "First-order selected-family/reachable-role risk exclusion algebra",
+  "premises": [
+    "Selected routine and complete native usable/SET role predicates are faithful and current",
+    "Native EXECUTE, ownership and grant-option predicates are correct",
+    "Restoration/execution authority is conservatively represented by the three risk flags",
+    "Fixed fixture native controls independently demonstrate relevant populations; not a theorem connecting this model to SQL"
+  ],
+  "excluded": [
+    "PostgreSQL privilege algorithm refinement",
+    "Owner routine source or wrappers/casts/operators closure",
+    "Complete diagnostics noninterference",
+    "Concurrent DDL/role/assignment coordination",
+    "Compiler lowering or public backend admission"
+  ],
+  "acceptancePromoted": false
+}

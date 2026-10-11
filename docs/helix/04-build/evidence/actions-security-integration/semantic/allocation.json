@@ -1,0 +1,222 @@
+{
+  "scope": "All 17 original strict admission tests remain inherited baseline executions; eight fresh merged semantic checks discharge behavior without manufacturing current native evidence admission. Results and exact merged source must be bound separately.",
+  "originalSelectedTests": [
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "testName": "all five binding contracts enforce policy and recover ideal/native representations",
+      "fileSha256": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e"
+    },
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "testName": "group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable",
+      "fileSha256": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e"
+    },
+    {
+      "path": "tests/core-ideals/nullability-conformance.test.ts",
+      "testName": "five Nullability bindings preserve ideals, native payloads and explicit loss policy",
+      "fileSha256": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2"
+    },
+    {
+      "path": "tests/core-ideals/cardinality-conformance.test.ts",
+      "testName": "five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes",
+      "fileSha256": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e"
+    },
+    {
+      "path": "tests/core-ideals/relationship-conformance.test.ts",
+      "testName": "authored shape corpus preserves unknown content, keyed association and migration rollback",
+      "fileSha256": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30"
+    }
+  ],
+  "harnessPath": ".cache/actions-merged-semantics/behavior.test.ts",
+  "harnessSha256": "e927f60e2b2ed26bc5dd27ecf58b34ec2fa294c0afb0d5ddedbcf42febcdf8ea",
+  "extractedAssertions": [
+    {
+      "source": "tests/core-ideals/facets-conformance.test.ts",
+      "sourceSha256": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
+      "exactBodySha256": "14db4e920beb8670f2b3ca074d5db6acf942266cb81510da0f7f509980a6eff9"
+    },
+    {
+      "source": "scripts/core-ideals/key-conformance.ts",
+      "sourceSha256": "b9195431d28b63c6df101ccd90db53a71f5835894f4d12e6ae03c2bd078e56ab",
+      "exactBodySha256": "d887c36fcd0f40f5d486e326d694d800700d3f2d3d777695e7f5319770265422"
+    }
+  ],
+  "relationshipHelperSha256": "968f18629617e97661bf5ce8ce6ec9f4ab781e4834fbb639bfe0a2ea1b7842f6",
+  "commands": [
+    [
+      "bun",
+      "test",
+      "tests/core-ideals/field-conformance.test.ts",
+      "--test-name-pattern",
+      "^all five binding contracts enforce policy and recover ideal/native representations$"
+    ],
+    [
+      "bun",
+      "test",
+      "tests/core-ideals/field-conformance.test.ts",
+      "--test-name-pattern",
+      "^group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable$"
+    ],
+    [
+      "bun",
+      "test",
+      "tests/core-ideals/nullability-conformance.test.ts",
+      "--test-name-pattern",
+      "^five Nullability bindings preserve ideals, native payloads and explicit loss policy$"
+    ],
+    [
+      "bun",
+      "test",
+      "tests/core-ideals/cardinality-conformance.test.ts",
+      "--test-name-pattern",
+      "^five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes$"
+    ],
+    [
+      "bun",
+      "test",
+      "tests/core-ideals/relationship-conformance.test.ts",
+      "--test-name-pattern",
+      "^authored shape corpus preserves unknown content, keyed association and migration rollback$"
+    ],
+    [
+      "bun",
+      "test",
+      "/work/.cache/actions-merged-semantics/behavior.test.ts"
+    ]
+  ],
+  "allOriginal17": [
+    {
+      "path": "tests/core-ideals/cardinality-conformance.test.ts",
+      "testName": "five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes",
+      "fileSha256": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh selected original test"
+    },
+    {
+      "path": "tests/core-ideals/cardinality-conformance.test.ts",
+      "testName": "Cardinality evidence gate rejects stale, missing, unsafe and failed proof",
+      "fileSha256": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/facets-conformance.test.ts",
+      "testName": "all five facet bindings preserve authored ideals, native refinements and explicit losses",
+      "fileSha256": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh facet harness behavioral assertions; admission baseline only"
+    },
+    {
+      "path": "tests/core-ideals/facets-evidence.test.ts",
+      "testName": "facet evidence requires all five accepted bindings without granting ideal admission",
+      "fileSha256": "535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/facets-evidence.test.ts",
+      "testName": "facet evidence refuses missing, stale, failed, unsafe and incompatible proofs",
+      "fileSha256": "535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/facets-evidence.test.ts",
+      "testName": "facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries",
+      "fileSha256": "535a7f0056857012fa5b484ebc42ad2cefe95e13802a059afc8a0d834f35af66",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "testName": "all five binding contracts enforce policy and recover ideal/native representations",
+      "fileSha256": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh selected original test"
+    },
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "testName": "current native/browser evidence fingerprints pass; changed inputs and missing evidence fail",
+      "fileSha256": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "testName": "group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable",
+      "fileSha256": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh selected original test"
+    },
+    {
+      "path": "tests/core-ideals/key-conformance.test.ts",
+      "testName": "Key ideal admission and five-system delivery retain both recovery directions without native equivalence",
+      "fileSha256": "5bebfaa83af7f6f02bf843b3fe02c28a24c24bce6f3065b576994aa58fffc46f",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh Key harness behavioral assertions; admission baseline only"
+    },
+    {
+      "path": "tests/core-ideals/key-evidence.test.ts",
+      "testName": "Key evidence requires complete current five-system qualifications without granting admission",
+      "fileSha256": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/key-evidence.test.ts",
+      "testName": "Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs",
+      "fileSha256": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/nullability-conformance.test.ts",
+      "testName": "five Nullability bindings preserve ideals, native payloads and explicit loss policy",
+      "fileSha256": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh selected original test"
+    },
+    {
+      "path": "tests/core-ideals/nullability-conformance.test.ts",
+      "testName": "Nullability gate requires current core and five native/browser evidence records",
+      "fileSha256": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    },
+    {
+      "path": "tests/core-ideals/relationship-conformance.test.ts",
+      "testName": "authored shape corpus preserves unknown content, keyed association and migration rollback",
+      "fileSha256": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh selected original test"
+    },
+    {
+      "path": "tests/core-ideals/relationship-conformance.test.ts",
+      "testName": "ideal admission and qualified five-system delivery require current executable proofs",
+      "fileSha256": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "fresh relationship binding replay; admission flags baseline only"
+    },
+    {
+      "path": "tests/core-ideals/relationship-conformance.test.ts",
+      "testName": "missing, failed, stale, tampered and version-mismatched proofs refuse admission",
+      "fileSha256": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30",
+      "baselineDestination": "unchanged 5be strict admission command and retained raw gate log",
+      "freshDestination": "baseline only: evidence/admission assertions"
+    }
+  ],
+  "freshExecutionRequirements": {
+    "filteredCommands": {
+      "selectedPassesPerCommand": 1,
+      "selectedFailures": 0,
+      "selectedSkips": 0,
+      "otherOriginalTests": "Explicitly unselected by exact-name filter; their baseline results remain inherited and are not fresh failures or passes."
+    },
+    "harness": {
+      "passes": 3,
+      "failures": 0,
+      "skips": 0
+    },
+    "distinctCounting": "Eight fresh semantic tests reported separately from disjoint behavior regression; nested relationship replay is duplicate execution, not extra unique tests."
+  }
+}

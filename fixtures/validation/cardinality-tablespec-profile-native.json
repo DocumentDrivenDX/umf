@@ -5,7 +5,7 @@
     "pydantic": "2.11.10",
     "jsonschema": "4.25.1",
     "spark": "4.0.1",
-    "java": "21.0.2"
+    "java": "21.0.12.1"
   },
   "declarations": [
     {
@@ -1931,10 +1931,15 @@
   "sha256": {
     "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
     "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
     "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
     "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.py": [
+      "/work/scripts/core-ideals/cardinality-tablespec-profile-oracle.py"
+    ]
   }
 }

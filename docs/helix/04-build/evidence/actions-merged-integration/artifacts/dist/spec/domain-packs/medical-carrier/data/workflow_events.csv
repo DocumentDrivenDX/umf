@@ -1,0 +1,5 @@
+event_key,event_type,subject_key,claim_key,prior_event_key,date,status,amount,currency,details_json
+supplement::coordination/1,coordination-of-benefits,supplement::Patient/member,supplement::Claim/paid-denied,\N,2026-01-03,primary-processed,\N,\N,"{""coverages"": [{""order"": 1, ""reference"": ""Coverage/active""}, {""order"": 2, ""reference"": ""Coverage/external-secondary""}], ""secondary_status"": ""unresolved""}"
+supplement::appeal/1,appeal,supplement::Patient/member,supplement::Claim/paid-denied,\N,2026-01-05,submitted,\N,\N,"{""line_sequence"": 2, ""reason"": ""fabricated disputed denial""}"
+supplement::appeal/2,appeal,supplement::Patient/member,supplement::Claim/paid-denied,supplement::appeal/1,2026-01-06,upheld,\N,\N,"{""line_sequence"": 2}"
+supplement::adjustment/1,adjustment,supplement::Patient/member,supplement::Claim/paid-denied,\N,2026-01-07,recorded,-5.00,USD,"{""category"": ""fabricated payment adjustment"", ""original_amount"": ""80.00"", ""adjusted_amount"": ""75.00""}"

@@ -1,0 +1,1165 @@
+{
+  "status": "counterexample-reproduced",
+  "runId": "da5a64ac-128a-44b9-bbb5-e08cfa435484",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-query-carrier-eligibility-counterexample.py": "05018eb447a7d206579fa60340d8ff837352562367311dcccdeaa3e97b961e69",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "docs/helix/04-build/evidence/security/weft-original-use.json": "a95e091a5d81b0b09c5dced2b0823485d9c5d3ee80f62cc16d4a55554d49dffa",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-use.ts": "232672f54adb502d208fec7f92baa9fb3c92a8c7e74ad812bf2bcf32200e104f",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-carrier-domains.ts": "3cace41bf21db0ee7cbab87ba2f68be66ebe3734299c6d933418485c13e33968",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-source-completeness.ts": "51163293d9622edf2107f6950a3b5b638833245928a11c0e9481a8c0b32aa5c8",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27"
+  },
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "observations": [
+    {
+      "id": "umf_sec_alice:original-identity",
+      "expected": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice"
+      },
+      "observed": {
+        "original": "umf_sec_alice",
+        "effective": "umf_sec_alice"
+      }
+    },
+    {
+      "id": "umf_sec_bob:original-identity",
+      "expected": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob"
+      },
+      "observed": {
+        "original": "umf_sec_bob",
+        "effective": "umf_sec_bob"
+      }
+    },
+    {
+      "id": "umf_sec_outsider:original-identity",
+      "expected": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider"
+      },
+      "observed": {
+        "original": "umf_sec_outsider",
+        "effective": "umf_sec_outsider"
+      }
+    },
+    {
+      "id": "matching-view-domain",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "issued-query-original-result",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:separate-query-permission-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_outsider:separate-query-permission-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "text:native-descriptor-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "text:issued-query-refuses-before-application",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "text:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "int4:native-descriptor-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "int4:issued-query-refuses-before-application",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "int4:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "numeric:native-descriptor-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "numeric:issued-query-refuses-before-application",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "numeric:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "domain:native-descriptor-refuses",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "domain:issued-query-refuses-before-application",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "domain:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "wrong-id:issued-query-fixed-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-id:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "missing-salary:issued-query-fixed-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-salary:restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "missing-relation:fixed-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "final-restored-query",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    },
+    {
+      "id": "extra-ineligible-row:types-still-match",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "extra-ineligible-row:actual-ordinary-leak",
+      "expected": [
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ]
+      ]
+    },
+    {
+      "id": "extra-ineligible-row:restored-result",
+      "expected": [
+        [
+          "RAB"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB"
+        ]
+      ]
+    }
+  ],
+  "nativeRefusals": [
+    {
+      "id": "umf_sec_bob:separate-query-permission-refuses",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original query use unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original query use unavailable"
+    },
+    {
+      "id": "umf_sec_outsider:separate-query-permission-refuses",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original query use unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original query use unavailable"
+    },
+    {
+      "id": "text:issued-query-refuses-before-application",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "int4:issued-query-refuses-before-application",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "numeric:issued-query-refuses-before-application",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "domain:issued-query-refuses-before-application",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "wrong-id:issued-query-fixed-refusal",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "missing-salary:issued-query-fixed-refusal",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    },
+    {
+      "id": "missing-relation:fixed-refusal",
+      "query": "SELECT security_raw.domain_guarded();",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "ERROR:  42501: Original carrier unavailable\nCONTEXT:  PL/pgSQL function security_raw.domain_guarded() line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3897\n",
+      "expectedSqlstate": "42501",
+      "expectedMessage": "Original carrier unavailable"
+    }
+  ],
+  "alteredViewDefinition": " SELECT r.id,\n    ((p.bag ->> 'salary'::text))::bigint AS salary\n   FROM (security_raw.resource r\n     JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)))\nUNION ALL\n SELECT 'RB'::text AS id,\n    (333)::bigint AS salary;",
+  "originalArtifact": {
+    "id": "predicate",
+    "request": {
+      "version": "weft.security.mapping-input/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{},\"name\":\"Staff\"},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"staffId\"},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{},\"name\":\"Project\"},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"projectId\"},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{},\"name\":\"Resource\"},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"resourceId\"},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"salary\",\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}]}],\"extensions\":{},\"name\":\"Ownership\"},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerId\"},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerResource\"},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerProject\"},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"}]}],\"extensions\":{},\"name\":\"Assignment\"},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentId\"},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentStaff\"},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentProject\"},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"active\"}]}]}",
+          "pin": {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "umfVersion": "0.8.0",
+            "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+          },
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"project-access\",\"revision\":\"policy-original-use-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"o\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"as\":\"a\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"project\"}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"value\":{\"boolean\":true}}}]}}]}}},{\"id\":\"salary-original\",\"effect\":\"permit\",\"actions\":[\"querySalary\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"eq\",\"left\":{\"kind\":\"subject\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"value\":{\"string\":\"Alice\"}}},\"disclosure\":[]},{\"id\":\"unrelated-broad\",\"effect\":\"permit\",\"actions\":[\"unrelatedOriginal\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[]}]}",
+      "ontologyJson": "{\"version\":\"0.1.0\",\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\",\"queryUse\":{\"predicate\":\"original-authorized\",\"order\":\"original-authorized\",\"group\":\"original-authorized\",\"join\":\"original-authorized\",\"aggregate\":\"original-authorized\"}}]}],\"associations\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"context\":[],\"actions\":[\"read\",\"update\",\"querySalary\",\"unrelatedOriginal\"]}",
+      "queryProfileJson": "{\"version\":\"weft.security.query-profile/0.1.0\",\"id\":\"original-use-inspection\",\"revision\":\"1\",\"action\":\"read\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a\"}],\"policySha256\":\"3894e01728f967f4f914917c0df82ff16302f494c8b0415a8bec35a7cfbd3747\",\"ontologySha256\":\"ebb98c2c30d3075855e9a2a035626238ba12e6cb1dd85652df41fd887ec98578\",\"binding\":{\"backendId\":\"fixture\",\"backendVersion\":\"unqualified\",\"targetProfile\":\"inspection-only\",\"sha256\":\"7192b9de045240e13ff94b512e6a5668b3fb81db1d2be851694c4729eb656c11\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"bindings\":[{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"order\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"group\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"join\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"aggregate\",\"originalAction\":\"querySalary\"}]}",
+      "bindingJson": "{\"version\":\"truss.security.raw-query-home/0.2.0\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"types\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"employee\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"project\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"resource\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_resource_project\"},\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"column\":\"active\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_employee_project\"},\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"home\":{\"schema\":\"security_raw\",\"table\":\"original_salary_source\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\",\"family\":\"string\",\"protected\":false},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\",\"family\":\"integer\",\"protected\":true}]}}",
+      "backendId": "fixture",
+      "backendVersion": "unqualified",
+      "targetProfile": "inspection-only",
+      "sql": "SELECT r.resourceId FROM Resource r WHERE r.salary=333",
+      "parameters": {},
+      "readProfile": null
+    },
+    "handoff": {
+      "applicationPlan": {
+        "aggregate": false,
+        "filters": [
+          {
+            "left": {
+              "identity": {
+                "documentId": "domain",
+                "element": "salary",
+                "module": "m",
+                "revision": "schema-natural-1"
+              },
+              "scan": "s0",
+              "span": {
+                "end": 50,
+                "start": 42
+              },
+              "type": {
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "family": "integer",
+                "nullable": false
+              }
+            },
+            "op": "equal",
+            "right": {
+              "kind": "literal",
+              "span": {
+                "end": 54,
+                "start": 51
+              },
+              "type": {
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "family": "integer",
+                "nullable": false
+              },
+              "value": "333"
+            }
+          }
+        ],
+        "groups": [],
+        "irVersion": "weft-ir/0.2.0",
+        "joins": [],
+        "limit": null,
+        "modulePins": [
+          {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+            "umfVersion": "0.8.0"
+          }
+        ],
+        "order": [],
+        "outputs": [
+          {
+            "expression": {
+              "identity": {
+                "documentId": "domain",
+                "element": "resourceId",
+                "module": "m",
+                "revision": "schema-natural-1"
+              },
+              "op": "field",
+              "scan": "s0"
+            },
+            "name": "resourceId"
+          }
+        ],
+        "pageKey": null,
+        "readProfile": null,
+        "requiredCapabilities": [
+          "equal",
+          "filter",
+          "project",
+          "scan",
+          "type.integer",
+          "type.string"
+        ],
+        "source": {
+          "occurrence": "s0",
+          "pin": {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+            "umfVersion": "0.8.0"
+          },
+          "record": {
+            "documentId": "domain",
+            "element": "Resource",
+            "module": "m",
+            "revision": "schema-natural-1"
+          }
+        },
+        "typeGraph": [
+          {
+            "availability": "required",
+            "identity": {
+              "documentId": "domain",
+              "element": "resourceId",
+              "module": "m",
+              "revision": "schema-natural-1"
+            },
+            "kind": "scalar",
+            "type": {
+              "facets": {},
+              "family": "string",
+              "nullable": false
+            }
+          }
+        ]
+      },
+      "binding": {
+        "backendId": "fixture",
+        "backendVersion": "unqualified",
+        "sha256": "7192b9de045240e13ff94b512e6a5668b3fb81db1d2be851694c4729eb656c11",
+        "targetProfile": "inspection-only"
+      },
+      "modelPins": [
+        {
+          "documentId": "domain",
+          "revision": "schema-natural-1",
+          "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "ontologySha256": "ebb98c2c30d3075855e9a2a035626238ba12e6cb1dd85652df41fd887ec98578",
+      "policySha256": "3894e01728f967f4f914917c0df82ff16302f494c8b0415a8bec35a7cfbd3747",
+      "profile": {
+        "id": "original-use-inspection",
+        "revision": "1",
+        "sha256": "f98848f8804be7b356993fd71dff3977b182d2fbf9edcf2fee812bde01f9c54e"
+      },
+      "scans": [
+        {
+          "actions": [
+            {
+              "action": "querySalary",
+              "associations": [],
+              "context": [],
+              "fields": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "keys": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "ruleIds": [
+                "salary-original"
+              ]
+            },
+            {
+              "action": "read",
+              "associations": [
+                {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                },
+                {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              ],
+              "context": [],
+              "fields": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "active",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "keys": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "ruleIds": [
+                "membership",
+                "reader"
+              ]
+            }
+          ],
+          "projectionFields": [
+            {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            }
+          ],
+          "queryFields": [
+            {
+              "documentId": "domain",
+              "elementId": "salary",
+              "moduleId": "m"
+            }
+          ],
+          "scan": "s0",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        }
+      ],
+      "securityLogicalPlan": {
+        "rules": [
+          {
+            "actions": [
+              "read"
+            ],
+            "condition": {
+              "literal": true
+            },
+            "disclosure": [
+              [
+                {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                },
+                "withheld"
+              ]
+            ],
+            "effect": "permit",
+            "id": "reader",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          },
+          {
+            "actions": [
+              "read"
+            ],
+            "condition": {
+              "exists": {
+                "association": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                },
+                "condition": {
+                  "and": [
+                    {
+                      "equal": [
+                        {
+                          "endpoint": {
+                            "association": {
+                              "documentId": "domain",
+                              "elementId": "Ownership",
+                              "moduleId": "m"
+                            },
+                            "binding": {
+                              "variable": 0
+                            },
+                            "keyId": "pk",
+                            "role": "resource",
+                            "target": {
+                              "documentId": "domain",
+                              "elementId": "Resource",
+                              "moduleId": "m"
+                            }
+                          }
+                        },
+                        {
+                          "identity": {
+                            "binding": "resource",
+                            "keyId": "pk",
+                            "target": {
+                              "documentId": "domain",
+                              "elementId": "Resource",
+                              "moduleId": "m"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "exists": {
+                        "association": {
+                          "documentId": "domain",
+                          "elementId": "Assignment",
+                          "moduleId": "m"
+                        },
+                        "condition": {
+                          "and": [
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Assignment",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "keyId": "pk",
+                                    "role": "staff",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Staff",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "identity": {
+                                    "binding": "subject",
+                                    "keyId": "pk",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Staff",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Assignment",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "keyId": "pk",
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Project",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Ownership",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 0
+                                    },
+                                    "keyId": "pk",
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Project",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "equal": [
+                                {
+                                  "field": {
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "domain": {
+                                      "allowedValues": null,
+                                      "cardinality": "one",
+                                      "facets": {},
+                                      "nullability": "required",
+                                      "scalarType": "boolean"
+                                    },
+                                    "field": {
+                                      "documentId": "domain",
+                                      "elementId": "active",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "constant": {
+                                    "domain": {
+                                      "allowedValues": null,
+                                      "cardinality": "one",
+                                      "facets": {},
+                                      "nullability": "required",
+                                      "scalarType": "boolean"
+                                    },
+                                    "field": {
+                                      "documentId": "domain",
+                                      "elementId": "active",
+                                      "moduleId": "m"
+                                    },
+                                    "literal": {
+                                      "boolean": true
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "slot": 1
+                      }
+                    }
+                  ]
+                },
+                "slot": 0
+              }
+            },
+            "disclosure": [],
+            "effect": "require",
+            "id": "membership",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          },
+          {
+            "actions": [
+              "querySalary"
+            ],
+            "condition": {
+              "equal": [
+                {
+                  "field": {
+                    "binding": "subject",
+                    "domain": {
+                      "allowedValues": null,
+                      "cardinality": "one",
+                      "facets": {},
+                      "nullability": "required",
+                      "scalarType": "string"
+                    },
+                    "field": {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  }
+                },
+                {
+                  "constant": {
+                    "domain": {
+                      "allowedValues": null,
+                      "cardinality": "one",
+                      "facets": {},
+                      "nullability": "required",
+                      "scalarType": "string"
+                    },
+                    "field": {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    },
+                    "literal": {
+                      "string": "Alice"
+                    }
+                  }
+                }
+              ]
+            },
+            "disclosure": [],
+            "effect": "permit",
+            "id": "salary-original",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          },
+          {
+            "actions": [
+              "unrelatedOriginal"
+            ],
+            "condition": {
+              "literal": true
+            },
+            "disclosure": [],
+            "effect": "permit",
+            "id": "unrelated-broad",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          }
+        ],
+        "version": "weft.security.logical-ir/0.1.0"
+      },
+      "sqlSha256": "41965a6694f5d88703d352a0a556c6afa28c0b52bb74a5f6d53c128931e0ae52",
+      "uses": [
+        {
+          "field": {
+            "documentId": "domain",
+            "elementId": "salary",
+            "moduleId": "m"
+          },
+          "operator": "predicate",
+          "originalAction": "querySalary",
+          "scan": "s0",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        }
+      ],
+      "version": "weft.security.mapping-handoff/0.2.0"
+    }
+  },
+  "program": {
+    "profileSha256": "f98848f8804be7b356993fd71dff3977b182d2fbf9edcf2fee812bde01f9c54e",
+    "sql": "SELECT \"s0\".\"id\" AS \"output_0\" FROM \"security_raw\".\"original_salary_source\" AS \"s0\" WHERE (\"s0\".\"salary\" OPERATOR(pg_catalog.=) '333'::pg_catalog.int8)",
+    "carrierReady": "(SELECT pg_catalog.count(*) FROM pg_catalog.pg_attribute AS a WHERE a.attrelid OPERATOR(pg_catalog.=) pg_catalog.to_regclass(E'\"security_raw\".\"original_salary_source\"'::pg_catalog.text) AND a.attnum OPERATOR(pg_catalog.>) 0 AND NOT a.attisdropped AND ((a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'id'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.text'::pg_catalog.text::pg_catalog.regtype) OR (a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'salary'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.int8'::pg_catalog.text::pg_catalog.regtype))) OPERATOR(pg_catalog.=) 2::pg_catalog.int8",
+    "collectionReady": "NOT EXISTS(SELECT 1 FROM \"security_raw\".\"resource\" AS \"collection_root\" WHERE (TRUE) AND ((SELECT pg_catalog.count(*) FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL OR \"original_row\".\"salary\" IS NULL))))",
+    "admission": [
+      "((((((SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text) OPERATOR(pg_catalog.=) E'Alice'::pg_catalog.text))) IS TRUE))"
+    ],
+    "originalActions": [
+      "querySalary"
+    ],
+    "outputColumns": [
+      "output_0"
+    ],
+    "checks": "IF (((((((SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text) OPERATOR(pg_catalog.=) E'Alice'::pg_catalog.text))) IS TRUE))) IS NOT TRUE THEN RAISE EXCEPTION 'Original query use unavailable' USING ERRCODE='42501'; END IF; IF ((SELECT pg_catalog.count(*) FROM pg_catalog.pg_attribute AS a WHERE a.attrelid OPERATOR(pg_catalog.=) pg_catalog.to_regclass(E'\"security_raw\".\"original_salary_source\"'::pg_catalog.text) AND a.attnum OPERATOR(pg_catalog.>) 0 AND NOT a.attisdropped AND ((a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'id'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.text'::pg_catalog.text::pg_catalog.regtype) OR (a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'salary'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.int8'::pg_catalog.text::pg_catalog.regtype))) OPERATOR(pg_catalog.=) 2::pg_catalog.int8) IS NOT TRUE THEN RAISE EXCEPTION 'Original carrier unavailable' USING ERRCODE='42501'; END IF; IF (NOT EXISTS(SELECT 1 FROM \"security_raw\".\"resource\" AS \"collection_root\" WHERE (TRUE) AND ((SELECT pg_catalog.count(*) FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL OR \"original_row\".\"salary\" IS NULL))))) IS NOT TRUE THEN RAISE EXCEPTION 'Original source unavailable' USING ERRCODE='42501'; END IF; ",
+    "checkedReturn": "IF (((((((SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text) OPERATOR(pg_catalog.=) E'Alice'::pg_catalog.text))) IS TRUE))) IS NOT TRUE THEN RAISE EXCEPTION 'Original query use unavailable' USING ERRCODE='42501'; END IF; IF ((SELECT pg_catalog.count(*) FROM pg_catalog.pg_attribute AS a WHERE a.attrelid OPERATOR(pg_catalog.=) pg_catalog.to_regclass(E'\"security_raw\".\"original_salary_source\"'::pg_catalog.text) AND a.attnum OPERATOR(pg_catalog.>) 0 AND NOT a.attisdropped AND ((a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'id'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.text'::pg_catalog.text::pg_catalog.regtype) OR (a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'salary'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.int8'::pg_catalog.text::pg_catalog.regtype))) OPERATOR(pg_catalog.=) 2::pg_catalog.int8) IS NOT TRUE THEN RAISE EXCEPTION 'Original carrier unavailable' USING ERRCODE='42501'; END IF; IF (NOT EXISTS(SELECT 1 FROM \"security_raw\".\"resource\" AS \"collection_root\" WHERE (TRUE) AND ((SELECT pg_catalog.count(*) FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL OR \"original_row\".\"salary\" IS NULL))))) IS NOT TRUE THEN RAISE EXCEPTION 'Original source unavailable' USING ERRCODE='42501'; END IF;  RETURN (SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(q.\"output_0\"::pg_catalog.text)),'[]'::pg_catalog.jsonb) FROM (SELECT \"s0\".\"id\" AS \"output_0\" FROM \"security_raw\".\"original_salary_source\" AS \"s0\" WHERE (\"s0\".\"salary\" OPERATOR(pg_catalog.=) '333'::pg_catalog.int8)) q); "
+  },
+  "nativeInventory": {
+    "view": " SELECT r.id,\n    ((p.bag ->> 'salary'::text))::bigint AS salary\n   FROM (security_raw.resource r\n     JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));",
+    "routine": "CREATE OR REPLACE FUNCTION security_raw.domain_guarded()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$ BEGIN IF (((((((SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text) OPERATOR(pg_catalog.=) E'Alice'::pg_catalog.text))) IS TRUE))) IS NOT TRUE THEN RAISE EXCEPTION 'Original query use unavailable' USING ERRCODE='42501'; END IF; IF ((SELECT pg_catalog.count(*) FROM pg_catalog.pg_attribute AS a WHERE a.attrelid OPERATOR(pg_catalog.=) pg_catalog.to_regclass(E'\"security_raw\".\"original_salary_source\"'::pg_catalog.text) AND a.attnum OPERATOR(pg_catalog.>) 0 AND NOT a.attisdropped AND ((a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'id'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.text'::pg_catalog.text::pg_catalog.regtype) OR (a.attname::pg_catalog.text OPERATOR(pg_catalog.=) E'salary'::pg_catalog.text AND a.atttypid OPERATOR(pg_catalog.=) E'pg_catalog.int8'::pg_catalog.text::pg_catalog.regtype))) OPERATOR(pg_catalog.=) 2::pg_catalog.int8) IS NOT TRUE THEN RAISE EXCEPTION 'Original carrier unavailable' USING ERRCODE='42501'; END IF; IF (NOT EXISTS(SELECT 1 FROM \"security_raw\".\"resource\" AS \"collection_root\" WHERE (TRUE) AND ((SELECT pg_catalog.count(*) FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\") OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM \"security_raw\".\"original_salary_source\" AS \"original_row\" WHERE (TRUE) AND \"original_row\".\"id\" OPERATOR(pg_catalog.=) \"collection_root\".\"id\" AND (\"original_row\".\"id\" IS NULL OR \"original_row\".\"salary\" IS NULL))))) IS NOT TRUE THEN RAISE EXCEPTION 'Original source unavailable' USING ERRCODE='42501'; END IF;  RETURN (SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(q.\"output_0\"::pg_catalog.text)),'[]'::pg_catalog.jsonb) FROM (SELECT \"s0\".\"id\" AS \"output_0\" FROM \"security_raw\".\"original_salary_source\" AS \"s0\" WHERE (\"s0\".\"salary\" OPERATOR(pg_catalog.=) '333'::pg_catalog.int8)) q);  END $function$\n",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "notNull": false
+      },
+      {
+        "name": "salary",
+        "type": "bigint",
+        "notNull": false
+      }
+    ]
+  },
+  "scope": "Ordinary Alice receives ineligible RB from a same-domain UNION view despite one-way source completeness. This is a retained negative control, not accepted behavior. Actual issued Truss query fragment from retained original-owner artifact on an isolated PostgreSQL17.9 fixture. Native descriptor preflight rejects text/int4/numeric/domain substitutions, wrong/missing field and missing view before collection/application query. Excluded installer changes/restores the view; ordinary Alice retains authored RAB result. No freshly authenticated compiler issuer, complete view dependency correspondence, concurrent DDL fence, graph execution or B08/full backend admission.",
+  "cleanup": {
+    "containerId": "616a2cb69dc5e776a965d8ac4d67c3d24e73e13cb15e1cd3fcbfc84007a3071d",
+    "ownershipRunId": "da5a64ac-128a-44b9-bbb5-e08cfa435484",
+    "exitCode": 0,
+    "stdout": "616a2cb69dc5e776a965d8ac4d67c3d24e73e13cb15e1cd3fcbfc84007a3071d\n",
+    "stderr": ""
+  }
+}

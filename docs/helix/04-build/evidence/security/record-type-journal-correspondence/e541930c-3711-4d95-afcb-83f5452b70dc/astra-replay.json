@@ -1,0 +1,624 @@
+{
+  "status": "passed",
+  "method": "Independent fresh-context saved-SMT replay and exact source/ZIP audit; producer not executed",
+  "receiptSha256": "60870036f88ad9e94b3d7ce6ce649100a9c5679e875cb4f138a19b6ddc84da71",
+  "sourcePins": 524,
+  "exactZipEntrySet": true,
+  "currentSourcesMatch": true,
+  "archiveSha256": "2112c3e0bf31fd8c9c35fdec88ce763a29b6a0355aecf2abd525124326dc403e",
+  "solver": "4.15.4",
+  "formulaCount": 76,
+  "unsat": 37,
+  "sat": 39,
+  "observations": [
+    {
+      "id": "two-type-populated-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "6f36af5cc0a7c060e7c409da68096cfb2a89a8dedd534c33cd10efe6a6c82566",
+      "freshContext": true,
+      "model": "[event_exact_type_link_still_valid_in_current = K(Int, True),\n event_complete_sources = Store(Store(Store(K(Int, 5), 3, 7),\n                                      4,\n                                      8),\n                                2,\n                                6),\n event_complete_targets = Store(Store(Store(Store(K(Int, 6),\n                                        3,\n                                        8),\n                                        0,\n                                        5),\n                                      4,\n                                      9),\n                                2,\n                                7),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = Store(Store(K(Int, False), 4, True),\n                       2,\n                       True),\n native_enforcement = False,\n base_complete_model = 5,\n event_count = 5,\n authenticated_issuer = False,\n current_complete_model = 9]"
+    },
+    {
+      "id": "kind-only-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "5527459e7f76ef24a166faa459545b6c2e1e3d5b677a6d987f237b3fa3771b38",
+      "freshContext": true,
+      "model": "[event_complete_sources = K(Int, 0),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n event_complete_targets = K(Int, 0),\n native_enforcement = False,\n base_complete_model = 0,\n event_count = 2,\n authenticated_issuer = False,\n current_complete_model = 0]"
+    },
+    {
+      "id": "bounded-chain-reaches-every-active-prefix",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "c38c42d51cbb6e3c51457a20a8ae84fbba4259afcde88d64edd5cc7c193360ab",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "gap-0-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "9595538838324c6c6223debcc949f295c18a5c531446007eb4ac76c459699245",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-0-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "cf3f1edcbdb8e74ace27395caebbe3857c20df5f93b05ab703b2156290380955",
+      "freshContext": true,
+      "model": "[base_complete_model = 1,\n event_complete_sources = K(Int, 0),\n event_count = 1,\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n authenticated_issuer = False,\n event_complete_targets = K(Int, 0),\n current_complete_model = 0]"
+    },
+    {
+      "id": "gap-1-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "70ca744b0bd5da40d274687dbc73e1cbc3b456afba47fde69f71af3209e51c0d",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-1-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "b6d5e6895744cc3dc8149d87110e37ecfb59974edcb5a19af1059c673d377d9c",
+      "freshContext": true,
+      "model": "[event_complete_targets = K(Int, 33),\n event_count = 2,\n event_complete_sources = K(Int, 32),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 32,\n authenticated_issuer = False,\n current_complete_model = 33]"
+    },
+    {
+      "id": "gap-2-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "16987251e2e90e0e8f787d56aab9820439382fc0072b0cd41db51d43c6a92e4f",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-2-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "0ab74d4358961d83853d88a88e73eeb15ebdfd804f5ab057e881d1c098ae9da4",
+      "freshContext": true,
+      "model": "[event_complete_targets = Store(K(Int, 34), 0, 32),\n event_recomputed_with_owner = K(Int, True),\n event_count = 3,\n event_is_type = K(Int, False),\n event_complete_sources = Store(K(Int, 32), 2, 33),\n native_enforcement = False,\n base_complete_model = 32,\n authenticated_issuer = False,\n current_complete_model = 34]"
+    },
+    {
+      "id": "gap-3-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "a3748613e23497c2ef76af82e547b244d3bc997c32df376f394ea6cadcc872e1",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-3-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "645ecd14d40666dcc9821b92eb513677be9e88dad0cb978cc20904c3d75cc896",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(K(Int, 32),\n                                        9,\n                                        35),\n                                        3,\n                                        36),\n                                      2,\n                                      33),\n                                5,\n                                34),\n event_is_type = K(Int, False),\n event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(K(Int, 33),\n                                        0,\n                                        32),\n                                        4,\n                                        34),\n                                      8,\n                                      35),\n                                2,\n                                37),\n event_count = 4,\n native_enforcement = False,\n base_complete_model = 32,\n authenticated_issuer = False,\n current_complete_model = 33]"
+    },
+    {
+      "id": "gap-4-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "b008ccb12bed772de68822d62e985ba190f45097a821c07cee3c34ef0b3605f3",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-4-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "750bf3373124b56d7ddfc51dd2f3dcaad68b01256b734daa2270a3d2938d37cc",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(K(Int, 32),\n                                        3,\n                                        34),\n                                      4,\n                                      35),\n                                2,\n                                33),\n event_count = 5,\n event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(K(Int, 33),\n                                        3,\n                                        36),\n                                      0,\n                                      32),\n                                2,\n                                34),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 32,\n authenticated_issuer = False,\n current_complete_model = 33]"
+    },
+    {
+      "id": "gap-5-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "bc3e4eab8377a0fbb3f73c043e6d7ebd1f65a137e051fca9e2723db93867a260",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-5-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "f196906d142da01285fd01a1cb9f3be17f0a2718f87dd3a49c51287f828f80d3",
+      "freshContext": true,
+      "model": "[event_complete_targets = Store(Store(Store(Store(K(Int, 33),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                      4,\n                                      37),\n                                2,\n                                34),\n event_recomputed_with_owner = K(Int, True),\n event_count = 6,\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(K(Int, 32),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      2,\n                                      33),\n                                5,\n                                36),\n native_enforcement = False,\n base_complete_model = 32,\n authenticated_issuer = False,\n current_complete_model = 33]"
+    },
+    {
+      "id": "gap-6-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "76ee324f2a30a02bba0b58252c722f02395d014b96e86292119beaeec70ec08b",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-6-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "8842831f7b096498adac5a11b26c994497038a1f7b3f6b312dad4b5c06ce0344",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(K(Int,\n                                        33),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                5,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_complete_sources = Store(Store(Store(Store(Store(K(Int,\n                                        37),\n                                        1,\n                                        32),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      2,\n                                      33),\n                                5,\n                                36),\n event_count = 7,\n native_enforcement = False,\n base_complete_model = 37,\n authenticated_issuer = False,\n current_complete_model = 33]"
+    },
+    {
+      "id": "gap-7-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "ad63ba803129f7ee49fc59281ccbb380eb0d4bd4ecc07bfc60da39d8cd6ae070",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-7-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ddf3aa17e4e2c3a683d40e10c10f32b97715f67ba43d0a4fd08f9434bdf578b6",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(K(Int,\n                                        37),\n                                        1,\n                                        32),\n                                        7,\n                                        38),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      2,\n                                      33),\n                                5,\n                                36),\n event_count = 8,\n event_complete_targets = Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                5,\n                                37),\n event_is_type = K(Int, False),\n event_recomputed_with_owner = K(Int, True),\n native_enforcement = False,\n base_complete_model = 37,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-8-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "59aefdab14545df722d73960356fa0500ba5d2cb5ccaae43b5a2fc69a3fc0824",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-8-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "a7a28edb7f7faa142731bddf1b0fa0ed57d7289df1db594723d31ceb88816541",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_count = 9,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        40),\n                                        1,\n                                        33),\n                                        5,\n                                        37),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      2,\n                                      33),\n                                6,\n                                37),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 40]"
+    },
+    {
+      "id": "gap-9-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "a9aa66f8f3e5208cccddf9c9f1cba421a503579dd167b8657bcdd5b903e08855",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-9-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d034eada91efd1949ea623ab4e70a45076830651502f5a7eba4ee04c5486bef1",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        5,\n                                        37),\n                                        8,\n                                        41),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        9,\n                                        40),\n                                      2,\n                                      33),\n                                6,\n                                37),\n event_count = 10,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-10-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "74a48cde01ed0c00b72ebb6fdd9a75f1638fd56312f46acdc87954ad396593f1",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-10-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "3078c0130d0de31364f9fb424bcd77d0f85a8d04cdec1b0de0a1f8e02113d42d",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        10,\n                                        41),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        9,\n                                        40),\n                                      2,\n                                      33),\n                                6,\n                                37),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        9,\n                                        42),\n                                        5,\n                                        37),\n                                        8,\n                                        40),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_count = 11,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-11-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "02ab4c6d8972cad3d1db89693b6c0dedc9d41870e837d92810a8a903b6a19198",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-11-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "fdc17855c7b7c272bee520416c845871e14d15fbbd7e96813f46032b01cb35a9",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        9,\n                                        41),\n                                        14,\n                                        42),\n                                        10,\n                                        44),\n                                        5,\n                                        37),\n                                        8,\n                                        40),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_count = 12,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        10,\n                                        41),\n                                        15,\n                                        42),\n                                        11,\n                                        43),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        9,\n                                        40),\n                                      2,\n                                      33),\n                                6,\n                                37),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-12-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "43fa6b14bdaddcbee3ddf00e14c39e83a6cd2033bf25e5e5ff3315f3a772fbe3",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-12-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "bb647c29690777ea939c1df517a40ad1f6f0e42e08dfa710bbf649d87b0535bf",
+      "freshContext": true,
+      "model": "[event_count = 13,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        10,\n                                        41),\n                                        12,\n                                        43),\n                                        11,\n                                        42),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        9,\n                                        40),\n                                      2,\n                                      33),\n                                6,\n                                37),\n event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        9,\n                                        41),\n                                        10,\n                                        42),\n                                        11,\n                                        44),\n                                        5,\n                                        37),\n                                        8,\n                                        40),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-13-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "29ffa8d1eb92bfda14d6ef9554db222108585f31473ed2250e647eea13643e8f",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-13-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "2fffbdb4f76ca61d9785ad6a4dddc4713243cf2856c7bf54a72a8cc5b98fe121",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        9,\n                                        41),\n                                        10,\n                                        42),\n                                        11,\n                                        43),\n                                        12,\n                                        45),\n                                        5,\n                                        37),\n                                        8,\n                                        40),\n                                        3,\n                                        35),\n                                        0,\n                                        32),\n                                        4,\n                                        36),\n                                      2,\n                                      34),\n                                6,\n                                38),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        10,\n                                        41),\n                                        12,\n                                        43),\n                                        11,\n                                        42),\n                                        13,\n                                        44),\n                                        5,\n                                        36),\n                                        8,\n                                        39),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        9,\n                                        40),\n                                      2,\n                                      33),\n                                6,\n                                37),\n event_recomputed_with_owner = K(Int, True),\n event_count = 14,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-14-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "1db448833e917303df6df51772a8e7e1558b8679d798291cd086387506118bf9",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-14-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "4e517e6999f907dacc0dc24b00afb04ea1d430481fb780774a371c92aa398b87",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        46),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_count = 15,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-15-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "6de5fd9012a1ff391b1fbb39c4695f6f0c47ea0fc31a649c17dd922ef22ab2d3",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-15-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "b31a2c86c13a12313f5684f093a20218b03b49b049a9578fb9e0f75df23ae949",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        15,\n                                        46),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_recomputed_with_owner = K(Int, True),\n event_count = 16,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        47),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-16-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "294a84b4e161195a2b41b3ae36fed67c136bbb7d2009761f0c64c2c9d6d8c9cd",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-16-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ac05299bb0c1675d79c331d7a9d00f076d71a1fb91fce362a91ec46fe5e01d21",
+      "freshContext": true,
+      "model": "[event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        15,\n                                        48),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        15,\n                                        46),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_count = 17,\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-17-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "252a56ebf0881998c0721124ee5ad4ca8e0bd3ee20a50c27a7b60cc9d53c9feb",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-17-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "49393fde7b50c02d4b0b576f0fac7a5c94944105ba33bd6c4c61756ee3b19489",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        15,\n                                        46),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        49),\n                                        15,\n                                        47),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_recomputed_with_owner = K(Int, True),\n event_count = 18,\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-18-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "fb0501e5b72635a0a4c89160372c37557a5a997a8c75016b64b9a0931c1c4c98",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-18-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "f1093e62e8314649d96206dec76a8b5da5360224fae27d49ecc0289812022901",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_count = 19,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        51),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        15,\n                                        47),\n                                        20,\n                                        49),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        50),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        49),\n                                        15,\n                                        46),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-19-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "1c98881aa98050ba557160e434301a22a637990a8d70d75e56c459d3b40920b2",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-19-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e9c4a92cb611ec8326862f5ca25f554777414c738a155251871425af4bedb99f",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_count = 20,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        51),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        15,\n                                        47),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        15,\n                                        46),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-20-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "6ccfb2588b06f189e77009355bf54d5a1e72f63927d112dddda2420ec1bcd669",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-20-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d3d766957775464b5ae1ca5d32b8eb857c0185055e2d7ae680c3c53cfea60012",
+      "freshContext": true,
+      "model": "[event_count = 21,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        39),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        52),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        15,\n                                        47),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        38),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-21-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "ea1f43d0716d26285bcbb0b4598868def042a3edd106c40aeef56559317cae36",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-21-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "3374cbbc444a38f9b452a0c0f54322d983fec63c605ec8d323dca54f14a8f01f",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        ...),\n                                        1,\n                                        32),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_count = 22,\n event_is_type = K(Int, False),\n event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(K(Int,\n                                        ...),\n                                        1,\n                                        33),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        51),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        15,\n                                        47),\n                                        20,\n                                        53),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-22-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "53882dea9ecb8873c0c6844ec6314d5cb6e1aedcb8fddc82dd5d9c4411f9da1c",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-22-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "eeb99f4dcffd8fa5b7e8535198976c264cd2733ba7ad4cb2c8ffe47df26825f2",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        6,\n                                        38),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        51),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        21,\n                                        54),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_count = 23,\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        6,\n                                        37),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        22,\n                                        53),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-23-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "b6e3e25f418fe350041aabfde12aa2f64fcae27cb1d13b3504be33567e7016c3",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-23-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "413f9c652f90e8d9da272b1a803fe794a33bdf37a6e957f2ca57b0beea0d7657",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        14,\n                                        45),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        22,\n                                        53),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_recomputed_with_owner = K(Int, True),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        14,\n                                        46),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        51),\n                                        22,\n                                        55),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_is_type = K(Int, False),\n event_count = 24,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-24-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "e28b57cea55ae6d970b57d3ac435ec92829f6b7bb2407362c31b4f3702e184ae",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-24-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "eb4a4fe209ce3b129964760b1ba4370c66821550fe5ce8a71355c6dc69ab9f0b",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        11,\n                                        42),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        22,\n                                        53),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        24,\n                                        55),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        11,\n                                        43),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        51),\n                                        22,\n                                        54),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        23,\n                                        56),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n event_recomputed_with_owner = K(Int, True),\n event_count = 25,\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-25-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "aff17f5f0f3058a9ee8d65272abb9bb93c1d2ae35c8d4f9f11a96394b9ac8bab",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-25-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "51812a39f1c9089535514b653406511b9e9da5c8ca957e5b58d6e9d56297ae7f",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, True),\n event_count = 26,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        8,\n                                        39),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        19,\n                                        50),\n                                        22,\n                                        53),\n                                        12,\n                                        43),\n                                        2,\n                                        33),\n                                        13,\n                                        44),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        24,\n                                        55),\n                                        25,\n                                        56),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                      9,\n                                      40),\n                                10,\n                                41),\n event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        8,\n                                        40),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        19,\n                                        51),\n                                        22,\n                                        54),\n                                        0,\n                                        32),\n                                        12,\n                                        44),\n                                        2,\n                                        34),\n                                        13,\n                                        45),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        23,\n                                        55),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        24,\n                                        57),\n                                        9,\n                                        41),\n                                        3,\n                                        35),\n                                      4,\n                                      36),\n                                10,\n                                42),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-26-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "2259b99e128b088f608afbab727375c578f632a501803e299d2f7e0e97d137e5",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-26-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e42daedae8b1d44b46ada0d8dab02ed35970b6793be57635b39ec96b2b66c51c",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        12,\n                                        43),\n                                        13,\n                                        44),\n                                        26,\n                                        57),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        12,\n                                        44),\n                                        13,\n                                        45),\n                                        23,\n                                        55),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        58),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_count = 27,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-27-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "e5aeb18380574872bc513b3737b7a6afb45b15d400dd535fef41513a67b76aeb",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-27-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e54c7c0ab3fd1c9cd5c7e42a03b7e40d8fb27f1f6ead5cb9e5373992173a2300",
+      "freshContext": true,
+      "model": "[event_count = 28,\n event_is_type = K(Int, False),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        13,\n                                        45),\n                                        26,\n                                        59),\n                                        23,\n                                        55),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        57),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        13,\n                                        44),\n                                        26,\n                                        57),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-28-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "9acb19b1c05c52a99e5ac65e09ffa73a0f75eabaf08983c985dc425331b8826d",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-28-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "0048360ddea0e258d735a10732a450614420b89352c3c74dbca6a0c503ff925a",
+      "freshContext": true,
+      "model": "[event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        26,\n                                        58),\n                                        23,\n                                        55),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        57),\n                                        27,\n                                        60),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        26,\n                                        57),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        28,\n                                        59),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_count = 29,\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-29-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "e5836a6708bb98af50f98983a1b51103f1f1c0756cfd813f27b12cbef2c82d1a",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-29-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d7103c0810b55fa4fc4909042c0ad6fdc05ec329dec176355da72646d62d9fad",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_count = 30,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        28,\n                                        59),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        29,\n                                        60),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        23,\n                                        55),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        57),\n                                        27,\n                                        59),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        28,\n                                        61),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-30-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "ad07f44bfe10564d40eb05f974d5f14100ba65498668d269c257d574c60b22ab",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-30-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "8954671d7e537e06fe6133d3e2857aeb17fc0a61dddeaedf77ed53c558e00b69",
+      "freshContext": true,
+      "model": "[event_count = 31,\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        30,\n                                        61),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        28,\n                                        59),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        29,\n                                        60),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        15,\n                                        47),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        57),\n                                        27,\n                                        59),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        28,\n                                        60),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        29,\n                                        62),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "gap-31-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "91c24f6fae98bf1cb97912c4f0abf2f5ac47c5565c2617035697c8275f8b1e82",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-gap-31-permits",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "4d532c32f502512aa1026164c43b46c4ea8caa53eaf007efe943195507416065",
+      "freshContext": true,
+      "model": "[event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        30,\n                                        61),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        28,\n                                        59),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        29,\n                                        60),\n                                        31,\n                                        62),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        20,\n                                        52),\n                                        5,\n                                        37),\n                                        25,\n                                        57),\n                                        27,\n                                        59),\n                                        3,\n                                        35),\n                                        4,\n                                        36),\n                                        30,\n                                        63),\n                                        1,\n                                        33),\n                                        14,\n                                        46),\n                                        17,\n                                        49),\n                                        18,\n                                        50),\n                                        28,\n                                        60),\n                                        0,\n                                        32),\n                                        2,\n                                        34),\n                                        16,\n                                        48),\n                                        21,\n                                        53),\n                                        29,\n                                        61),\n                                        24,\n                                        56),\n                                      9,\n                                      41),\n                                6,\n                                38),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n base_complete_model = 38,\n event_count = 32,\n authenticated_issuer = False,\n current_complete_model = 39]"
+    },
+    {
+      "id": "unrecomputed-event-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "db8ff765a57264562feefa8edb5c50f6b334318f9011792a195b01d70e7af534",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-owner-allows-unrecomputed-event",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "d3951627a338fd8f50852fdf56f0103eb960b63ff9de3d52c7265eb93f19d236",
+      "freshContext": true,
+      "model": "[event_recomputed_with_owner = K(Int, False),\n event_is_type = K(Int, False),\n event_count = 1,\n event_complete_targets = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        23,\n                                        54),\n                                        15,\n                                        46),\n                                        20,\n                                        51),\n                                        5,\n                                        36),\n                                        25,\n                                        56),\n                                        27,\n                                        58),\n                                        3,\n                                        34),\n                                        4,\n                                        35),\n                                        1,\n                                        32),\n                                        14,\n                                        45),\n                                        17,\n                                        48),\n                                        18,\n                                        49),\n                                        28,\n                                        59),\n                                        2,\n                                        33),\n                                        16,\n                                        47),\n                                        21,\n                                        52),\n                                        29,\n                                        60),\n                                        24,\n                                        55),\n                                      9,\n                                      40),\n                                6,\n                                37),\n event_complete_sources = Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(Store(...,\n                                        ...,\n                                        ...),\n                                        23,\n                                        53),\n                                        15,\n                                        45),\n                                        20,\n                                        50),\n                                        5,\n                                        35),\n                                        25,\n                                        55),\n                                        27,\n                                        57),\n                                        3,\n                                        33),\n                                        4,\n                                        34),\n                                        30,\n                                        60),\n                                        14,\n                                        44),\n                                        17,\n                                        47),\n                                        18,\n                                        48),\n                                        28,\n                                        58),\n                                        2,\n                                        32),\n                                        16,\n                                        46),\n                                        21,\n                                        51),\n                                        29,\n                                        59),\n                                        24,\n                                        54),\n                                      9,\n                                      39),\n                                6,\n                                36),\n native_enforcement = False,\n base_complete_model = 37,\n authenticated_issuer = False,\n current_complete_model = 38]"
+    },
+    {
+      "id": "changed-complete-current-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "476c8befeb2f50528764ffab4f4cded7f73cd5f8154861c5e32c8a659fee728d",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-final-allows-unrelated-current",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "a33ec6610fcc7d216623801583ac54c627ba82d4b847d4ea635fc53d115d3a56",
+      "freshContext": true,
+      "model": "[current_complete_model = 1,\n event_complete_targets = K(Int, 0),\n event_count = 1,\n event_recomputed_with_owner = K(Int, True),\n event_is_type = K(Int, False),\n native_enforcement = False,\n event_complete_sources = K(Int, 0),\n base_complete_model = 0,\n authenticated_issuer = False]"
+    },
+    {
+      "id": "later-invalid-type-kind-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "2759ff0d54914aeb64db607e23ac91e6fe1413141f52c4c8ee96660507beb902",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-retention-allows-later-invalid-type",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "5489a98cc8c89c166ad8ca1bf77bbb6e72d0c1c2d64289b5a10fdc2676df2dcc",
+      "freshContext": true,
+      "model": "[event_exact_type_link_still_valid_in_current = K(Int,\n                                        False),\n event_complete_sources = Store(K(Int, 2), 0, 3),\n event_complete_targets = Store(K(Int, 4), 0, 2),\n event_recomputed_with_owner = K(Int, True),\n event_is_type = Store(K(Int, False), 0, True),\n native_enforcement = False,\n base_complete_model = 3,\n event_count = 2,\n authenticated_issuer = False,\n current_complete_model = 4]"
+    },
+    {
+      "id": "consistent-journal-does-not-authenticate-issuer",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ea026b3b380d81e17d69f2ae519fe0bd710e8b17b01b134cc83d91f333a6f667",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_count = 1,\n event_recomputed_with_owner = K(Int, True),\n native_enforcement = False,\n event_complete_sources = K(Int, 0),\n base_complete_model = 0,\n authenticated_issuer = False,\n event_complete_targets = K(Int, 0),\n current_complete_model = 0]"
+    },
+    {
+      "id": "protected-admission-needs-independent-authority",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "e41693a841f8d702b338916773c67371e587dbd1331d34e6e5b70edb35f3e094",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "id": "erase-authority-gate-allows-promotion",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "affe74d5e3734ff00657f9de6d34c59bb98db4cd9cce80254ac90735adee0aed",
+      "freshContext": true,
+      "model": "[event_is_type = K(Int, False),\n event_count = 1,\n event_recomputed_with_owner = K(Int, True),\n native_enforcement = False,\n event_complete_sources = K(Int, 0),\n base_complete_model = 0,\n protected_admission = True,\n authenticated_issuer = False,\n event_complete_targets = K(Int, 0),\n current_complete_model = 0]"
+    }
+  ],
+  "acceptancePromoted": false
+}

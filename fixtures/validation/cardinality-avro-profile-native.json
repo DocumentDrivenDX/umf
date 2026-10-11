@@ -414,8 +414,8 @@
       "hex": "0604c3a9020665cc8104000600",
       "value": {
         "value": {
-          "é": 1,
-          "é": 2,
+          "\u00e9": 1,
+          "e\u0301": 2,
           "": 3
         }
       },
@@ -428,8 +428,8 @@
       "hex": "0604c3a9020665cc8104000600",
       "value": {
         "value": {
-          "é": 1,
-          "é": 2,
+          "\u00e9": 1,
+          "e\u0301": 2,
           "": 3
         }
       },
@@ -443,8 +443,8 @@
       "hex": "0604c3a9020665cc8104000600",
       "value": {
         "value": {
-          "é": 1,
-          "é": 2,
+          "\u00e9": 1,
+          "e\u0301": 2,
           "": 3
         }
       },
@@ -457,8 +457,8 @@
       "hex": "0604c3a9020665cc8104000600",
       "value": {
         "value": {
-          "é": 1,
-          "é": 2,
+          "\u00e9": 1,
+          "e\u0301": 2,
           "": 3
         }
       },
@@ -1511,6 +1511,11 @@
   ],
   "sha256": {
     "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
-    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001"
+    "scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/cardinality-avro-native.py": [
+      "/work/scripts/core-ideals/cardinality-avro-native.py"
+    ]
   }
 }

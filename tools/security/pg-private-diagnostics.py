@@ -6,7 +6,7 @@ os.environ['UMF_SECURITY_CASE_ID']='pg-raw.B01'
 os.environ['UMF_SECURITY_RUN_ID']=str(uuid.uuid4())
 # Reuse only reviewed fixture setup/connection helpers, not model-provided code.
 root=Path.cwd().resolve();self_path=Path(__file__).resolve()
-if root!=Path('/Users/erik/.codex/worktrees/1598/umf') or self_path!=root/'tools/security/pg-private-diagnostics.py':raise RuntimeError('Unknown exact diagnostic probe invocation')
+if root not in [Path('/Users/erik/.codex/worktrees/1598/umf'),Path('/Users/erik/.codex/worktrees/security-main-integration/umf')] or self_path!=root/'tools/security/pg-private-diagnostics.py':raise RuntimeError('Unknown exact diagnostic probe invocation')
 plan_path='docs/helix/03-test/security/cases.json';plan_bytes=(root/plan_path).read_bytes()
 selected=next(c for c in json.loads(plan_bytes)['cases'] if c['id']=='pg-raw.B01')
 closure=[selected['testSource'],selected['oracleSource'],*selected['implementationSources']]
@@ -105,6 +105,93 @@ try:
   rows=value("SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.resource;",actor)
   if not denied or rows!=context['oracle']['actors'][actor]['ids']:raise AssertionError('Insert counter restriction failed')
   observations.append({'actor':actor,'stage':'insert-counter-restricted','diagnosticDenied':denied,'authorizedResourceIds':rows})
+ # Close the selected installed pg_stat_get_* routine family by exact native
+ # signature inventory, rather than adding one deny per discovered getter.
+ stats_family=value("SELECT json_agg(json_build_object('oid',p.oid::text,'name',p.proname,'arguments',pg_get_function_identity_arguments(p.oid),'publicExecute',EXISTS(SELECT 1 FROM aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE')) ORDER BY p.oid) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f';")
+ if not any(r['publicExecute'] for r in stats_family):raise AssertionError('Family control lacks initially public routines')
+ if not stats_family or len({r['oid'] for r in stats_family})!=len(stats_family):raise AssertionError('Complete installed statistics routine family required')
+ for actor in context['oracle']['actors']:require(sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;',actor))
+ require(sql("""DO $deny$ DECLARE r record; BEGIN
+ FOR r IN SELECT n.nspname,p.proname,pg_get_function_identity_arguments(p.oid) args FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f'
+ LOOP EXECUTE format('REVOKE EXECUTE ON FUNCTION %I.%I(%s) FROM PUBLIC',r.nspname,r.proname,r.args); END LOOP;
+ END $deny$;"""))
+ for actor in context['oracle']['actors']:
+  reachable=value("SELECT coalesce(json_agg(p.oid::text ORDER BY p.oid),'[]'::json) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f' AND has_function_privilege('"+actor+"',p.oid,'EXECUTE');")
+  if reachable:raise AssertionError('Ordinary statistics routine privilege remains')
+  for query in [inserted_query,"SELECT pg_catalog.pg_stat_get_snapshot_timestamp();"]:
+   denied=sql(query,actor)
+   if denied.returncode==0 or denied.stdout.strip() or 'permission denied' not in denied.stderr:raise AssertionError('Selected statistics getter did not refuse')
+  rows=value("SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.resource;",actor)
+  if rows!=context['oracle']['actors'][actor]['ids']:raise AssertionError('Family restriction damaged authorized reads')
+  observations.append({'authorizedResourceIds':rows,'actor':actor,'stage':'installed-statistics-getter-family-restricted','installedSignatureCount':len(stats_family),'remainingEffectiveExecute':reachable,'testedGetterDenials':2})
+ observations.append({'stage':'installed-statistics-getter-family-inventory','routines':stats_family,'completeForSelectedNameFamilyOnly':True})
+ # PUBLIC revocation is insufficient for direct grants and adopted roles.
+ # Enumerate every role usable or settable by each original ordinary actor.
+ def family_role_reachability(actor):
+  return value("SELECT coalesce(json_agg(json_build_object('role',r.rolname,'roleOid',r.oid::text,'routineOid',p.oid::text,'routine',p.proname,'arguments',pg_get_function_identity_arguments(p.oid),'callable',has_function_privilege(r.oid,p.oid,'EXECUTE'),'owner',r.oid=p.proowner,'grantOption',has_function_privilege(r.oid,p.oid,'EXECUTE WITH GRANT OPTION')) ORDER BY r.oid,p.oid),'[]'::json) FROM pg_roles r CROSS JOIN pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f' AND (pg_has_role('"+actor+"',r.oid,'USAGE') OR pg_has_role('"+actor+"',r.oid,'SET') OR pg_has_role('"+actor+"',r.oid,'MEMBER WITH ADMIN OPTION')) AND (has_function_privilege(r.oid,p.oid,'EXECUTE') OR r.oid=p.proowner OR has_function_privilege(r.oid,p.oid,'EXECUTE WITH GRANT OPTION'));")
+ for actor in context['oracle']['actors']:
+  if family_role_reachability(actor):raise AssertionError('Unexpected baseline reachable-role statistics privilege')
+ require(sql('GRANT EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() TO umf_sec_alice;'))
+ direct=family_role_reachability('umf_sec_alice')
+ if not any(r['role']=='umf_sec_alice' and r['routine']=='pg_stat_get_snapshot_timestamp' for r in direct):raise AssertionError('Direct grant drift not detected')
+ require(sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;','umf_sec_alice'))
+ observations.append({'stage':'statistics-family-direct-grant-counterexample','actor':'umf_sec_alice','reachable':direct,'nativeCallSucceeded':True})
+ require(sql('REVOKE EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() FROM umf_sec_alice; CREATE ROLE umf_sec_statistics_bridge NOLOGIN NOSUPERUSER NOBYPASSRLS; GRANT EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() TO umf_sec_statistics_bridge; GRANT umf_sec_statistics_bridge TO umf_sec_bob WITH INHERIT TRUE, SET TRUE;'))
+ inherited=family_role_reachability('umf_sec_bob')
+ if not inherited or not value("SELECT to_json(has_function_privilege('umf_sec_bob','pg_catalog.pg_stat_get_snapshot_timestamp()','EXECUTE'));"):raise AssertionError('Inherited grant drift not detected')
+ require(sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;','umf_sec_bob'))
+ observations.append({'stage':'statistics-family-inherited-grant-counterexample','actor':'umf_sec_bob','reachable':inherited,'nativeCallSucceeded':True})
+ require(sql('REVOKE umf_sec_statistics_bridge FROM umf_sec_bob CASCADE; GRANT umf_sec_statistics_bridge TO umf_sec_bob WITH INHERIT FALSE, SET TRUE;'))
+ if value("SELECT to_json(has_function_privilege('umf_sec_bob','pg_catalog.pg_stat_get_snapshot_timestamp()','EXECUTE'));"):raise AssertionError('SET-only control accidentally inherits EXECUTE')
+ adopted=family_role_reachability('umf_sec_bob')
+ if not any(r['role']=='umf_sec_statistics_bridge' for r in adopted):raise AssertionError('SET-only reachability omitted')
+ identity=require(sql('SET ROLE umf_sec_statistics_bridge; SELECT SESSION_USER,CURRENT_USER; SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;','umf_sec_bob'))
+ if not identity.startswith('umf_sec_bob|umf_sec_statistics_bridge\n'):raise AssertionError('Actual adopted-role control identity mismatch')
+ observations.append({'stage':'statistics-family-set-only-counterexample','actor':'umf_sec_bob','effectiveOriginalExecute':False,'reachable':adopted,'actualSessionIdentity':identity.splitlines()[0],'nativeCallSucceeded':True})
+ # ADMIN-only membership can widen a future SET path without initial
+ # USAGE, SET or original actor EXECUTE. Include that authority explicitly.
+ require(sql('REVOKE umf_sec_statistics_bridge FROM umf_sec_bob CASCADE; GRANT umf_sec_statistics_bridge TO umf_sec_bob WITH ADMIN TRUE, INHERIT FALSE, SET FALSE;'))
+ admin_flags=value("SELECT json_build_object('usage',pg_has_role('umf_sec_bob','umf_sec_statistics_bridge','USAGE'),'set',pg_has_role('umf_sec_bob','umf_sec_statistics_bridge','SET'),'admin',pg_has_role('umf_sec_bob','umf_sec_statistics_bridge','MEMBER WITH ADMIN OPTION'),'execute',has_function_privilege('umf_sec_bob','pg_catalog.pg_stat_get_snapshot_timestamp()','EXECUTE')); ")
+ if admin_flags!={'usage':False,'set':False,'admin':True,'execute':False}:raise AssertionError('ADMIN-only native control flags differ')
+ admin_reachable=family_role_reachability('umf_sec_bob')
+ if not any(r['role']=='umf_sec_statistics_bridge' for r in admin_reachable):raise AssertionError('ADMIN-only widening authority omitted')
+ initial_set=sql('SET ROLE umf_sec_statistics_bridge;','umf_sec_bob')
+ if initial_set.returncode==0 or initial_set.stdout.strip() or 'permission denied' not in initial_set.stderr:raise AssertionError('ADMIN-only role is already settable')
+ widened=require(sql('GRANT umf_sec_statistics_bridge TO umf_sec_bob WITH INHERIT FALSE, SET TRUE; SET ROLE umf_sec_statistics_bridge; SELECT SESSION_USER,CURRENT_USER; SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;','umf_sec_bob'))
+ if not widened.startswith('umf_sec_bob|umf_sec_statistics_bridge\n'):raise AssertionError('Ordinary ADMIN did not widen and adopt exact role')
+ observations.append({'stage':'statistics-family-admin-only-widening-counterexample','actor':'umf_sec_bob','initialNativeFlags':admin_flags,'initialSetRefused':True,'reachableAuthority':admin_reachable,'widenedNativeSession':widened.splitlines()[0],'nativeWideningAndGetterSucceeded':True})
+ # Revoke selected function privileges from exact reachable native roles. An
+ # implicit owner/bypass privilege would remain and must cause refusal below.
+ for actor in context['oracle']['actors']:
+  reachable_roles=value("SELECT coalesce(json_agg(rolname ORDER BY oid),'[]'::json) FROM pg_roles WHERE pg_has_role('"+actor+"',oid,'USAGE') OR pg_has_role('"+actor+"',oid,'SET') OR pg_has_role('"+actor+"',oid,'MEMBER WITH ADMIN OPTION');")
+  for role in reachable_roles:
+   statements=value("SELECT coalesce(json_agg(format('REVOKE EXECUTE ON FUNCTION %I.%I(%s) FROM %I',n.nspname,p.proname,pg_get_function_identity_arguments(p.oid),'"+role+"') ORDER BY p.oid),'[]'::json) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='pg_catalog' AND left(p.proname,12)='pg_stat_get_' AND p.prokind='f';")
+   require(sql(';'.join(statements)+';'))
+  remaining=family_role_reachability(actor)
+  if remaining:raise AssertionError('Selected role closure remains callable')
+  refused=sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp();',actor)
+  if refused.returncode==0 or refused.stdout.strip() or 'permission denied' not in refused.stderr:raise AssertionError('Closed ordinary family call did not refuse')
+  rows=value("SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.resource;",actor)
+  if rows!=context['oracle']['actors'][actor]['ids']:raise AssertionError('Role-family restriction changed authorized rows')
+  observations.append({'stage':'statistics-family-reachable-role-restricted','actor':actor,'reachableRoles':reachable_roles,'remainingCallableFamily':remaining,'authorizedResourceIds':rows})
+ adopted_denied=sql('SET ROLE umf_sec_statistics_bridge; SELECT pg_catalog.pg_stat_get_snapshot_timestamp();','umf_sec_bob')
+ if adopted_denied.returncode==0 or adopted_denied.stdout.strip() or 'permission denied' not in adopted_denied.stderr:raise AssertionError('Adopted role bypass remains after restriction')
+ observations.append({'stage':'statistics-family-adopted-role-refuses-after-restriction','actor':'umf_sec_bob','refused':True})
+ require(sql('REVOKE umf_sec_statistics_bridge FROM umf_sec_bob CASCADE;'))
+ # Excluded installer transfers a selected getter to the ordinary actor only
+ # as a negative control. Ownership must refuse even after EXECUTE removal.
+ require(sql('ALTER FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() OWNER TO umf_sec_bob; REVOKE EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() FROM umf_sec_bob;'))
+ ownership=family_role_reachability('umf_sec_bob')
+ if not any(r['role']=='umf_sec_bob' and r['owner'] for r in ownership):raise AssertionError('Routine ownership restoration capability omitted')
+ if value("SELECT to_json(has_function_privilege('umf_sec_bob','pg_catalog.pg_stat_get_snapshot_timestamp()','EXECUTE')); "):raise AssertionError('Owner negative control must lack current EXECUTE')
+ denied_owner=sql('SELECT pg_catalog.pg_stat_get_snapshot_timestamp();','umf_sec_bob')
+ if denied_owner.returncode==0 or denied_owner.stdout.strip() or 'permission denied' not in denied_owner.stderr:raise AssertionError('Owner no-EXECUTE negative did not refuse')
+ require(sql('GRANT EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() TO umf_sec_bob; SELECT pg_catalog.pg_stat_get_snapshot_timestamp() IS NULL;','umf_sec_bob'))
+ observations.append({'stage':'statistics-family-owner-can-restore-grant','actor':'umf_sec_bob','initialExecute':False,'reachableAuthority':ownership,'nativeSelfGrantAndCallSucceeded':True,'excludedInstallerOwnershipDrift':True})
+ require(sql('ALTER FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() OWNER TO postgres; REVOKE EXECUTE ON FUNCTION pg_catalog.pg_stat_get_snapshot_timestamp() FROM umf_sec_bob;'))
+ for actor in context['oracle']['actors']:
+  if family_role_reachability(actor):raise AssertionError('Original restricted family authority not restored')
+ observations.append({'stage':'statistics-family-owner-drift-restored','allOrdinaryAuthorityPathsEmpty':True})
  # Separate deny-first candidate, not a replacement qualification for the
  # existing direct-RLS profile. All modifications stay in this owned database.
  require(sql("SET ROLE umf_sec_guardian; CREATE FUNCTION security_raw.diagnostic_closed_resources() RETURNS json LANGUAGE SQL STABLE SECURITY DEFINER SET search_path=pg_catalog AS $closed$ SELECT coalesce(json_agg(json_build_array(id,value) ORDER BY id),'[]'::json) FROM security_raw.resource $closed$; REVOKE ALL ON FUNCTION security_raw.diagnostic_closed_resources() FROM PUBLIC; GRANT EXECUTE ON FUNCTION security_raw.diagnostic_closed_resources() TO umf_sec_alice,umf_sec_bob,umf_sec_outsider; RESET ROLE;"))
@@ -317,7 +404,7 @@ try:
  observations.append({'stage':'private-principal-independent-routine-metadata','expected':expected_routine,'observed':routine})
 
  if any(hashlib.sha256((root/p).read_bytes()).hexdigest()!=h for p,h in sources.items()):raise RuntimeError('Probe source changed')
- receipt={'status':'counterexample-reproduced','sourceDigests':sources,'executedHelperPrefixSha256':executed_helper_digest,'frozenHelperInputs':closure,'fixtureSqlExecutedFromCapturedBytes':True,'engine':version,'runId':run_id,'observations':observations,'restrictedPrototypeOnly':True,'assessorDiagnosticEstimates':{'baseline':baseline_live_estimate,'afterUnrelatedFact':assessor_live_estimate},'violates':'US-056-AC8 private authorization facts do not leak through diagnostics','scope':'PostgreSQL 17.9 ordinary SCRAM connections with default catalog privileges. A private Assignment change leaves authorized data unchanged but changes visible pg_class.reltuples. Direct-table-only catalog restriction remains bypassable through public views/functions. The three-family restriction remains bypassable through the cumulative insert-counter getter; revoking that additional function preserves authorized reads. A separate deny-first routine candidate preserves authorized rows and refuses six known direct/catalog/statistics/size/EXPLAIN surfaces. Caller-enabled planner/parse/rewrite diagnostics expose private relation plans and private-population-dependent estimates even in the deny-first candidate. Routine-local off settings preserve authorized rows and exact tested diagnostic traces across two private worlds; individual weakening restores disclosure, with scoped caller settings restored. Neither scoped restrictions nor that candidate establish complete diagnostic closure. Not a passing B10 receipt or complete backend qualification.'}
+ receipt={'status':'counterexample-reproduced','sourceDigests':sources,'executedHelperPrefixSha256':executed_helper_digest,'frozenHelperInputs':closure,'fixtureSqlExecutedFromCapturedBytes':True,'engine':version,'runId':run_id,'observations':observations,'restrictedPrototypeOnly':True,'installedStatisticsGetterFamily':stats_family,'assessorDiagnosticEstimates':{'baseline':baseline_live_estimate,'afterUnrelatedFact':assessor_live_estimate},'violates':'US-056-AC8 private authorization facts do not leak through diagnostics','scope':'PostgreSQL 17.9 ordinary SCRAM connections with default catalog privileges. A private Assignment change leaves authorized data unchanged but changes visible pg_class.reltuples. Direct-table-only catalog restriction remains bypassable through public views/functions. The three-family restriction remains bypassable through the cumulative insert-counter getter; revoking that additional function preserves authorized reads. A separate deny-first routine candidate preserves authorized rows and refuses six known direct/catalog/statistics/size/EXPLAIN surfaces. Caller-enabled planner/parse/rewrite diagnostics expose private relation plans and private-population-dependent estimates even in the deny-first candidate. Routine-local off settings preserve authorized rows and exact tested diagnostic traces across two private worlds; individual weakening restores disclosure, with scoped caller settings restored. The installed pg_stat_get_* function family is now revoked by complete native signatures with zero effective ordinary EXECUTE, and getter calls refuse. Direct, inherited, SET-only and ADMIN-only widening native grants reproduce bypasses of PUBLIC-only denial. Reachable-role family revocation and census close those tested grant paths at the selected cut. Routine ownership remains detectable even without current EXECUTE, and an ordinary-owner self-grant reproduces restoration; the excluded installer restores original ownership. This closes only that selected name family; neither scoped restrictions nor that candidate establish complete diagnostic closure. Not a passing B10 receipt or complete backend qualification.'}
 finally:
  container=context.get('container')
  if container is None and context.get('creation_attempted'):

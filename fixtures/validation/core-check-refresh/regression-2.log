@@ -1,0 +1,67 @@
+bun test v1.4.2 (744846f84)
+
+tests/rdfxml/feasibility.test.ts:
+(pass) SPIKE-006: finalization rejects truncated XML without returning a partial graph [17.03ms]
+(pass) SPIKE-006: all pinned W3C sources and outcomes remain reproducible [184.10ms]
+(pass) SPIKE-006: native evidence retains XML-literal discrepancies instead of claiming conformance [6.23ms]
+
+tests/shacl/numeric.test.ts:
+(pass) US-028 exact numeric bounds, property comparisons and datatype boundaries [21745.70ms]
+(pass) US-028 mixed float/decimal promotion follows the declared numeric profile [96.67ms]
+
+tests/shacl/engine.test.ts:
+(pass) US-028 engine: all official Core booleans, qualified reports and retained inputs [24265.77ms]
+(pass) US-028 engine rejects recursive and unsupported processing without losing sources [694.09ms]
+(pass) US-028 engine cannot silently stop after fifty repeated shape checks [138.66ms]
+(pass) US-028 explicit blank-node policy controls shared graph identity [227.65ms]
+(pass) US-028 native integer-rounding false pass is corrected with exact source retained [151.13ms]
+
+tests/shacl/lists.test.ts:
+(pass) US-028 malformed Core constraint lists never produce a conformance result [5746.29ms]
+(pass) US-028 empty, named, shared and duplicate-triple lists retain RDF set semantics [390.73ms]
+
+tests/shacl/strings.test.ts:
+(pass) US-028 string constraints preserve lexical values and Unicode semantics [21320.90ms]
+(pass) US-028 malformed string parameters block without source loss [543.97ms]
+
+tests/jsonld/flatten.test.ts:
+(pass) US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle [9425.84ms]
+(pass) US-026-AC8: precision, lists, graph merging, remote compaction, duplicates and copied edits [2032.24ms]
+(pass) US-026-AC8: explicit options, null context, unknown preservation and isolated contexts [273.46ms]
+
+tests/jsonld/rdf-terms.test.ts:
+(pass) US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries [2.84ms]
+(pass) US-026-AC15: BCP47 syntax handles private, grandfathered and duplicate subtags [0.19ms]
+
+tests/jsonld/unicode-iri.test.ts:
+(pass) US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing [2264.99ms]
+(pass) US-026-AC16: independent parser limitations and escaped term evidence remain explicit [16.43ms]
+
+tests/jsonld/from-rdf.test.ts:
+(pass) US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences [9144.59ms]
+(pass) US-026-AC12: exact literals, graph inventory, loss policies, compound literals and edits [2580.81ms]
+(pass) US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms [74.48ms]
+
+tests/jsonld/numeric-rdf.test.ts:
+(pass) US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding [262.98ms]
+(pass) US-026-AC17: independent native numeric outcomes are qualified rather than coerced into agreement [9.19ms]
+(pass) US-026-AC17: numeric lexical forms retain their intended RDF datatypes [1160.87ms]
+
+tests/jsonld/legacy.test.ts:
+(pass) US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode [1540.48ms]
+(pass) US-026-AC6: checked-in patch and installed sources match fresh-install evidence [95.19ms]
+
+tests/rdf/rdf.test.ts:
+(pass) US-025-AC1/3: complete official syntax corpus, native graph evidence and candidate round trips [6836.28ms]
+(pass) US-025-AC2: blank scope, lexical numbers, duplicates, unknown encoding and atomic edits [88.19ms]
+(pass) US-025-AC2: invalid Unicode cannot silently change during UTF-8 export [24.84ms]
+
+tests/rdf/trig.test.ts:
+(pass) US-025-AC6: full official TriG corpus, expected graphs and candidate exports [36452.73ms]
+(pass) US-025-AC6: empty graph identity survives edits and guarded IRI renames [213.64ms]
+(pass) US-025-AC6: graph declarations include empty anonymous graphs and reject loss [99.95ms]
+
+ 35 pass
+ 0 fail
+ 9637 expect() calls
+Ran 35 tests across 13 files. [152.61s]

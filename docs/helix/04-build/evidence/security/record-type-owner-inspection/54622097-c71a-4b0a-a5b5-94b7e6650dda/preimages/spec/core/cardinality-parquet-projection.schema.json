@@ -1,0 +1,458 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:cardinality-parquet-projection:1.0.0",
+  "title": "Authored Cardinality to an explicit Parquet schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-cardinality-parquet"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recordName",
+        "fieldName",
+        "nativeType",
+        "availability",
+        "requireExactValues",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fieldName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeType": {
+          "$ref": "#/$defs/nativeType"
+        },
+        "availability": {
+          "enum": [
+            "definition-level",
+            "unresolved"
+          ]
+        },
+        "requireExactValues": {
+          "type": "boolean"
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        }
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.cardinality.parquet",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Explicit nested native carriers for authored shape and item/value Fields; empty schema file, no row conversion, key uniqueness enforcement or implicit record lowering"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "cardinality",
+        "outcome",
+        "items"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cardinality": {
+          "enum": [
+            "one",
+            "array",
+            "map",
+            "unspecified"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "idealPath",
+              "nativeIndex"
+            ],
+            "properties": {
+              "idealPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeIndex": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "approximated",
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nativeType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "nullable",
+            "nativeType"
+          ],
+          "properties": {
+            "kind": {
+              "const": "scalar"
+            },
+            "nullable": {
+              "type": "boolean"
+            },
+            "fieldId": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "nativeType": {
+              "enum": [
+                "boolean",
+                "int32",
+                "int64",
+                "float32",
+                "float64",
+                "binary",
+                "string",
+                "date",
+                "time-millis",
+                "time-micros",
+                "timestamp-millis-utc",
+                "timestamp-micros-utc"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "nullable",
+            "item"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "nullable": {
+              "type": "boolean"
+            },
+            "fieldId": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "item": {
+              "$ref": "#/$defs/nativeType"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "nullable",
+            "keyType",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "map"
+            },
+            "nullable": {
+              "type": "boolean"
+            },
+            "fieldId": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "keyType": {
+              "enum": [
+                "boolean",
+                "int32",
+                "int64",
+                "float32",
+                "float64",
+                "binary",
+                "string",
+                "date",
+                "time-millis",
+                "time-micros",
+                "timestamp-millis-utc",
+                "timestamp-micros-utc"
+              ]
+            },
+            "value": {
+              "$ref": "#/$defs/nativeType"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "nullable",
+            "fields"
+          ],
+          "properties": {
+            "kind": {
+              "const": "record"
+            },
+            "nullable": {
+              "type": "boolean"
+            },
+            "fieldId": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "fields": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1000,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "type": {
+                    "$ref": "#/$defs/nativeType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

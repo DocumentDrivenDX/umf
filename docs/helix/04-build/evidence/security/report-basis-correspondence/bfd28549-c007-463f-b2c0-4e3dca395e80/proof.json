@@ -1,0 +1,144 @@
+{
+  "status": "pass",
+  "z3Version": "4.15.4",
+  "sourceSha256": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-report-basis-correspondence.py": "669bf4c2988e6d189b38342d0db50ec3c4c1fc97f1f27edd8f7924a68c6cddbf",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-binding-publication-order.py": "beb575b649a44755ce91689d378bbe4f43132d9d8c6e1d08e4aea6cb49e39753",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/security-association-binding.proposal.md": "c8c88b6323735b012f06b095a8afb98bfd3fea3dcaa9e02866e9c58214dae964",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-pending-association-stage.sql": "5b7342dddb7fc92564f08f5e77dc0eeb90df31298de88a171dc700b45e966f87",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-generation-observer.sql": "9d1f354e746e1df856c2c1fb4c3b5493c8ae0b4725210920a86dbb95ad54522c",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-input-custody.sql": "b48222a7eafabfa854568422d9ffd7e76c355563e144fe2c620c216b1af5d230",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/truss-binding-catalog-stage.py": "31c4e8d0c0ff82793c14010e1cf94d83edea9877e9e9c0b39f8235c126de4653"
+  },
+  "observations": [
+    {
+      "id": "complete-selected-cut-has-execution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "3757daf729525a5cb757fe372e0488e6c25d4248cd5f7bc31c8beb9634cbbde6",
+      "model": "[complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "complete-cut-forbids-source-substitution",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "cc26d0bb42f7676529dc9808c3fa329ab957c056381675c26f3afa15ce4efe3b",
+      "model": null
+    },
+    {
+      "id": "complete-cut-forbids-arbitrary-value-substitution",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "0354ecdc6c56d2e46845f2ebed077b68aa31d7d55c3a5ddee7bfc093f43ffe31",
+      "model": null
+    },
+    {
+      "id": "complete-cut-forbids-coordinate-drift",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "6c1522a444dbcc8580f342ce3a22149eef940f813d5cb0f4de748e910c1c7b98",
+      "model": null
+    },
+    {
+      "id": "generation-only-admits-coherent-source-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "958db30f53a638ab0c0b2dab44d29ef609f13c5e955ab8c4c6fa6d500b19a84c",
+      "model": "[binding_before = OriginalBytes!val!2,\n binding_after = OriginalBytes!val!3,\n input_before = OriginalBytes!val!0,\n input_after = OriginalBytes!val!1,\n generation_after = 0,\n generation_before = 0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0)]"
+    },
+    {
+      "id": "identity-only-admits-full-value-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "92cdfe8275d6c98dfa8f6530aa8c2eb7ee8add9da357ecff9173c429fc146585",
+      "model": "[image_before = K(MetadataIdentity, FullNativeValue!val!0),\n image_after = K(MetadataIdentity, FullNativeValue!val!1),\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False)]"
+    },
+    {
+      "id": "omit-input-comparison-admits-input-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "7d1dea2ee679309e00176194134f7514ea18c6341926a83ea69ca7c050865c01",
+      "model": "[input_before = OriginalBytes!val!0,\n input_after = OriginalBytes!val!1,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "omit-binding-comparison-admits-binding-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "4dc9b8e5c2bac730ea12e267f5217553ae918cb1fbcca4bb615ea5fe3ab6452f",
+      "model": "[binding_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!1,\n complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "omit-document-comparison-admits-document-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "71b8f806e418c41018b3922adb2c83a7778146d0e6ea81e84a05a21471d7f000",
+      "model": "[documents_before = OriginalBytes!val!0,\n documents_after = OriginalBytes!val!1,\n complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0]"
+    },
+    {
+      "id": "omit-full-operation-comparison-admits-unmodeled-operation-change",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "d6e64c45d3ee9057bd57781b2f3780ff985c1039ba53358998244eb1846780bc",
+      "model": "[complete_operation_after = OriginalBytes!val!1,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "omit-generation-comparison-admits-generation-change",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "9bac7457bfbd3ba5c607bbad202a1f8321e6cea0c45bca3c7b0faa185f3f1ff8",
+      "model": "[generation_after = 1,\n generation_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n revision_after = 0,\n revision_before = 0,\n complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "exact-encoded-recheck-forbids-drift-under-codec-premise",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "8c6dbe4bd45a83204ec2c7f65812d85ad1f0cc290e2a1bde065743aadc4ca28e",
+      "model": null
+    },
+    {
+      "id": "encoded-equality-without-codec-premise-admits-collision",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "58a30404793716a77ff3c163136de45b4a7b5cdea9aaadcbb757124860a434fc",
+      "model": "[documents_before = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!4,\n binding_after = OriginalBytes!val!5,\n input_before = OriginalBytes!val!2,\n documents_after = OriginalBytes!val!1,\n input_after = OriginalBytes!val!3,\n encoded_basis_after = OriginalBytes!val!0,\n encoded_basis_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "selected-correspondence-does-not-prove-authority",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a99a1bba8641dbb459f882d969732c1749d7a63d0bcfa4ece39efc0b05ba6b75",
+      "model": "[complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_after = OriginalBytes!val!0,\n input_before = OriginalBytes!val!0,\n registered_semantic_profile = False,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n authenticated_original_owner = False,\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    },
+    {
+      "id": "endpoint-equality-admits-intermediate-aba",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a9db9c892f68b9e86f9ab448b4db66d012183a0c797be4043358e19249e863de",
+      "model": "[intermediate_input = OriginalBytes!val!0,\n input_after = OriginalBytes!val!1,\n complete_operation_after = OriginalBytes!val!0,\n complete_operation_before = OriginalBytes!val!0,\n generation_after = 0,\n generation_before = 0,\n revision_after = 0,\n revision_before = 0,\n input_before = OriginalBytes!val!1,\n binding_after = OriginalBytes!val!0,\n binding_before = OriginalBytes!val!0,\n identities_after = K(MetadataIdentity, False),\n identities_before = K(MetadataIdentity, False),\n writer_after = 0,\n writer_before = 0,\n image_after = K(MetadataIdentity, FullNativeValue!val!0),\n image_before = K(MetadataIdentity, FullNativeValue!val!0),\n ordinal_after = 0,\n ordinal_before = 0,\n documents_after = OriginalBytes!val!0,\n documents_before = OriginalBytes!val!0]"
+    }
+  ],
+  "scope": "Conditional exact selected source/full-value and operation-coordinate correspondence over unbounded uninterpreted byte carriers and metadata identity/value arrays",
+  "limitations": [
+    "Guard-to-SQL correspondence is inspected and separately tested, not formally refined",
+    "Exact native serialization correspondence/injectivity is an explicit premise; no real JSON codec theorem",
+    "Complete physical database inventory, data constraints, authenticated authority and registered semantics are not derived",
+    "Endpoint equality admits intervening ABA; immutable custody and complete monotone effect observer closure remain external obligations",
+    "No concurrency, liveness, aggregate resource, report persistence, promotion or publication theorem"
+  ],
+  "acceptancePromoted": false
+}

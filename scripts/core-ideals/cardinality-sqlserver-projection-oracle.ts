@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {sqlserverCardinalityProjectionCases} from './cardinality-sqlserver-projection-cases';
@@ -32,7 +33,7 @@ try{
   vectors.forEach(([value],i)=>{query+=`DECLARE @e${i} int=0; BEGIN TRY EXEC(${literal('INSERT INTO '+table+' VALUES('+value+');')}); END TRY BEGIN CATCH SET @e${i}=ERROR_NUMBER(); END CATCH; `;});
   query+='SELECT '+vectors.map((_,i)=>`@e${i} AS e${i}`).join(',')+' FOR JSON PATH,WITHOUT_ARRAY_WRAPPER;';
   const actual=await json(query);vectors.forEach(([,expected],i)=>assert.equal(actual['e'+i],expected,table+' '+i));
-  assert.deepEqual(recoverCardinalityFromSqlServer(result,result.nativeSql!),c.author.target);idealRecoveries++;
+  assertJsonDataEqual(recoverCardinalityFromSqlServer(result,result.nativeSql!),c.author.target);idealRecoveries++;
   rows.push({...c,result,probes:vectors.map(([value,error])=>({value,error}))});
  }
  const narrowing=await json('SET NOCOUNT ON; SELECT CASE WHEN CAST(CAST(1.0000000000000002 AS float(53)) AS real)=CAST(1 AS real) AND CAST(1.0000000000000002 AS float(53))<>CAST(1 AS float(53)) THEN 1 ELSE 0 END AS narrowed FOR JSON PATH,WITHOUT_ARRAY_WRAPPER;');

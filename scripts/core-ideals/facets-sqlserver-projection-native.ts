@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 /** Independent native execution of authored facet projection output. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
@@ -25,7 +26,7 @@ try{
  for(const [index,c] of emitted.entries()){
   if(index%40===0)console.log(JSON.stringify({ddl:index,total:emitted.length}));
   await sql('umf_facets',c.result.nativeSql!);
-  assert.deepEqual(recoverFacetsFromSqlServer(c.result,c.result.nativeSql!),c.author.target);
+  assertJsonDataEqual(recoverFacetsFromSqlServer(c.result,c.result.nativeSql!),c.author.target);
  }
  const pick=(name:string,encoding='checked')=>emitted.find(c=>c.name===name&&c.request.encoding===encoding&&c.request.mode==='report')!;
  const probes:{id:string;statement:string;error:number;expected:string|null}[]=[];

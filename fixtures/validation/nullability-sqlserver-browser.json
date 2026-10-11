@@ -1,6 +1,6 @@
 {
   "scope": "Browser scoped SQL Server availability classification and native source recovery through JSON/YAML; native behavior runs separately; authored projection remains unfinished",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "nativeCasesRetained": 24,
     "catalogTreeRecoveries": 2,
@@ -13,8 +13,8 @@
   },
   "externalRequests": [],
   "fingerprints": {
-    "fixtures/validation/nullability-sqlserver-native.json": "23f98a44685c910950046db0e5729752d65000e51206b1f372a1a16a68ff059b",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
+    "fixtures/validation/nullability-sqlserver-native.json": "800e20a8b154ed770607205923a0eb4f6fe126aa774f038cbe191cec51036228",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39",
     "scripts/core-ideals/nullability-sqlserver-browser.ts": "0bd6f08756b8e06bb601d8b5e695b3e93dd2171ce2bd35ee4c0c7cb8c68c007d",
     "scripts/core-ideals/nullability-sqlserver-cases.ts": "2ae939311ac05eb064c84a2b6107677ca9f415c00a6e2d3db3d36d7b8c92c37a",
     "src/core-ideals/nullability-sqlserver.ts": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1",

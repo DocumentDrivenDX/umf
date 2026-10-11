@@ -1,0 +1,10 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/parquet/schema.test.ts:
+(pass) US-019-AC7: physical schema trees and levels match native columns [727.61ms]
+(pass) US-019-AC7: inconsistent topology/links block; literal dots remain path components [164.47ms]
+
+ 2 pass
+ 0 fail
+ 274 expect() calls
+Ran 2 tests across 1 file. [3.73s]

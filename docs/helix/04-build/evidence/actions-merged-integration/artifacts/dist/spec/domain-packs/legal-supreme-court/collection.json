@@ -1,0 +1,42 @@
+{
+  "id": "legal-supreme-court-source-mirror",
+  "version": "1.0.0",
+  "classification": "source-only-consumer-collection; not a catalog/schema pack",
+  "rights": "local-use; PDF redistribution unassessed",
+  "coverage": {
+    "scope": "2024_and_2026_granted_noted_lists_only",
+    "all_cases_complete": false,
+    "expected_cases": 104,
+    "successful_dockets": 104,
+    "failed_dockets": [],
+    "unattempted_dockets": 0,
+    "discovered_pdf_urls": 7775,
+    "pdf_acquisition": "separate_shared_companion_receipts",
+    "excluded_populations": [
+      "ungranted_petitions",
+      "applications_not_in_lists",
+      "other_cases_not_in_lists",
+      "sealed_or_unposted_documents"
+    ],
+    "acquired_pdf_urls": 300,
+    "pending_pdf_urls": 7475,
+    "unattempted_pdf_urls": 7475,
+    "pdf_bytes": 167363721,
+    "successful_pdf_batches": [
+      "0001",
+      "0002",
+      "0003",
+      "0004",
+      "0005",
+      "0153"
+    ],
+    "failed_pdf_batches": [],
+    "pdf_coverage_note": "Only successful current publications counted; no all-PDF completeness claim.",
+    "proceedings": 4466,
+    "counsel_sections": 305
+  },
+  "case_inventory_sha256": "39fecc69bee2c23400ec55bfcdee5c4f854709fe519f291d22bd0565420cdf53",
+  "docket_projection_sha256": "ddec9a9565b8ad99a73756ba26adeae3072de9964890884bc2cb2e53248769d4",
+  "pdf_inventory_sha256": "ea82fd73a72c581ca1ec8c2779e55f7839834c3fc512ce11e7464a8473b93d7c",
+  "portable_archive": "/tmp/supreme-court-mirror-1.0.0.zip"
+}

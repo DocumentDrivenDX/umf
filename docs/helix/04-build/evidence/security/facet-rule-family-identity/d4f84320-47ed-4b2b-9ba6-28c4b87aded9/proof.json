@@ -1,0 +1,160 @@
+{
+  "status": "passed",
+  "solver": "4.15.4",
+  "checks": [
+    {
+      "id": "two-decimal-duties-same-position-and-parameters",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "fcbeb550a86f5026a9736f5d7ce30cf00bd718150f42e26107f2f8f4feea74fa",
+      "model": "[fixed_scale = RuleFamily!val!1,\n precision = RuleFamily!val!0,\n other_parameters = JointJsonParameters!val!0,\n parameters = JointJsonParameters!val!0]"
+    },
+    {
+      "id": "full-tuple-forbids-family-collapse",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b97522f8b03b7191f4430be0ae1e317a40a7c17f481711dbef52b04cb52d00cb",
+      "model": null
+    },
+    {
+      "id": "position-only-collapses-two-decimal-duties",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "39d21178bf317acfd04e3440bd43fa2da903f8e8e2bec66d09b2874cf3d0a4b9",
+      "model": "[fixed_scale = RuleFamily!val!1,\n precision = RuleFamily!val!0,\n other_parameters = JointJsonParameters!val!0,\n parameters = JointJsonParameters!val!0]"
+    },
+    {
+      "id": "parameter-only-collapses-two-decimal-duties",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "ae520905ea3d1cb502f505810eb14a51ab03285bdb18567cb770f2cfed3dad21",
+      "model": "[fixed_scale = RuleFamily!val!1,\n precision = RuleFamily!val!0,\n other_parameters = JointJsonParameters!val!0,\n parameters = JointJsonParameters!val!0]"
+    },
+    {
+      "id": "tuple-correspondence-does-not-prove-authority-or-enforcement",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b516f80e45230c4180cc25ae1690d6dd9545ce5f3375937e596197d895ed09b1",
+      "model": "[fixed_scale = RuleFamily!val!1,\n precision = RuleFamily!val!0,\n authenticated_owner = False,\n installed_enforcement = False]"
+    },
+    {
+      "id": "erase-candidate-profile-allows-collision",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b4327a753a218b118d2751ca2f02e90bb995796bc8066473530879d0c6083a56",
+      "model": "[profile = CandidateProfile!val!0,\n other_profile = CandidateProfile!val!1]"
+    },
+    {
+      "id": "full-tuple-forbids-candidate-profile-collision",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "f9d2f939a81e83ca0dd4796fd785b3cd5c50753990e9b147f5d82054ac5a9a59",
+      "model": null
+    },
+    {
+      "id": "erase-semantic-owner-allows-collision",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b3640552f280018340e9604737657dabe627cabd04ff7fc4b196b165e626c4e8",
+      "model": "[owner = SemanticOwnerProfile!val!0,\n other_owner = SemanticOwnerProfile!val!1]"
+    },
+    {
+      "id": "full-tuple-forbids-semantic-owner-collision",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "aa8d7bca34447bee7ce94c98f478d138f2a2113246f4d2dd6786819cc47076e8",
+      "model": null
+    },
+    {
+      "id": "erase-original-occurrence-allows-collision",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "9a7fe1027cdb033fcd951b25a7ac17b6d558940a07c7d35c581c39b47239d830",
+      "model": "[occurrence = ExactOriginalOccurrence!val!0,\n other_occurrence = ExactOriginalOccurrence!val!1]"
+    },
+    {
+      "id": "full-tuple-forbids-original-occurrence-collision",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "5ab02d80644064b43165c7ee7582d8d83ac1ba6df8fbb594f3fe2df29c56b229",
+      "model": null
+    }
+  ],
+  "sourcePreimages": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-facet-rule-family-identity.py",
+      "archive": "0/prove-facet-rule-family-identity.py",
+      "sha256": "e12bdc86b30309e82116600ebc7766a7c73308a79c15a29bb8ccdf4adce8b8a8"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-facet-rule-families.ts",
+      "archive": "1/catalog-facet-rule-families.ts",
+      "sha256": "fae5993d3158b95255331278d2a92166a5ec8250ddaa4ec92c33babb9c4ea6fb"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-core-assertion-identities.ts",
+      "archive": "2/catalog-core-assertion-identities.ts",
+      "sha256": "183bb88538ef2e0e92c7f4584f5bde204a4839bc3ecdd054af27c4e365794fbc"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-assertion-observations.ts",
+      "archive": "3/catalog-assertion-observations.ts",
+      "sha256": "51385ea9c3aad2ff51e1049740425c375f00bddd211799da4df8248390202bd5"
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/tests/catalog-field-shape-correspondence.test.ts",
+      "archive": "4/catalog-field-shape-correspondence.test.ts",
+      "sha256": "726ed7e19a928993b502c7c21f09f4185da23e6538d20dc0a0f3adb6d7e295cd"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-LmpSsH/producer.js",
+      "archive": "5/producer.js",
+      "sha256": "81e99f9a812ad3f61647f0c1d69c8e5640853f876127b7ee25a85efecaf00b68"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-LmpSsH/producer.ts",
+      "archive": "6/producer.ts",
+      "sha256": "8213180d555aefc0524dca62a4cffb78e6f98a758d1cccdbd451345ae8707e53"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-LmpSsH/producer-manifest.json",
+      "archive": "7/producer-manifest.json",
+      "sha256": "03c17074d3ee6cf1e53f42ecfdd6cd07285f83b03deca8aae4688b8861d0fa85"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-xZQtaP/producer.js",
+      "archive": "8/producer.js",
+      "sha256": "860e70082df1706132fe6389e5274bb45c70783ddc547f4c4950c1a94fea5f67"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-xZQtaP/producer.ts",
+      "archive": "9/producer.ts",
+      "sha256": "7901b12dbb87c0a1c2c53e882785662fb2e04246571f2f0a6263543fda404eab"
+    },
+    {
+      "path": "/private/tmp/truss-umf-runtime-xZQtaP/producer-manifest.json",
+      "archive": "10/producer-manifest.json",
+      "sha256": "276b8e346561ed5c14720ee511fc8052e94df53ad9abdcdc1dc4ec5ff698e5ef"
+    }
+  ],
+  "premises": [
+    "Faithful tuple constructor and exact original occurrence carrier are mathematical premises, not proved JSON serialization, SHA injectivity or cross-process identity",
+    "Original owner facet interpretation and the local two-family decimal mapping are assumed; the concrete host witness is independent scoped evidence",
+    "No complete family inventory, registered semantic profile, issuer authentication, JavaScript/compiler/SQL refinement or native enforcement is established",
+    "Coordinate-erasure countermodels expose missing identity information only; parameters do not identify duties",
+    "Local Z3 installation and fresh-context replay; not hermetic"
+  ],
+  "scope": "Conditional private facet family tuple identity with distinct decimal duties at a shared occurrence and equal joint parameters",
+  "acceptancePromoted": false
+}

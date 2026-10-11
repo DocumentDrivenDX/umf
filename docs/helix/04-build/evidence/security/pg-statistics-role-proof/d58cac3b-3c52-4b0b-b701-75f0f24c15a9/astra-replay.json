@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "proofDirectory": "d58cac3b-3c52-4b0b-b701-75f0f24c15a9",
+  "proofSha256": "67dadd4702345e1411628538bce990a020b7369e591e97d110a1ac051835e53c",
+  "sourcePins": 4,
+  "currentAndPreimageBytesMatch": true,
+  "solverVersion": "4.15.4",
+  "queries": [
+    {
+      "name": "closed selected family excludes reachable execution",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smtSha256": "583300b012ac454b37d295626e87491d71e05bf4c4874f20135f13e928af4040",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "name": "closed selected family excludes reachable routine ownership",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smtSha256": "5f63fceaa95f134b10177466505794d15e3b3c462208c1fe025555d2c076e385",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "name": "closed selected family excludes reachable grant restoration",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smtSha256": "d4e861cfd63f52d7afc1d23f45055a239deaa320d06b535d5c5624705d4af63d",
+      "freshContext": true,
+      "model": null
+    },
+    {
+      "name": "original actor execute alone misses SET-only bridge",
+      "expected": "sat",
+      "actual": "sat",
+      "smtSha256": "84434febfa00eb0c7de4d364d961f246b2d63431756d94252b311bc66e422821",
+      "freshContext": true,
+      "model": "[ordinary_actor = Role!val!0,\n bridge = Role!val!1,\n snapshot_getter = Routine!val!0,\n settable = [else -> True],\n execute = [(Role!val!0, Routine!val!0) -> False,\n            (Role!val!1, Routine!val!0) -> True,\n            else -> Var(0) == Role!val!1],\n selected = [Routine!val!0 -> True,\n             else -> Var(0) == Routine!val!0],\n admin = [else -> False],\n owner = [else -> False],\n usable = [else -> False],\n grant = [else -> False]]"
+    },
+    {
+      "name": "execute-only check misses original owner restoration",
+      "expected": "sat",
+      "actual": "sat",
+      "smtSha256": "7fadf7d4820daa29c2b06766522472a492057aa714ae2c03f0ed1c7b2f589011",
+      "freshContext": true,
+      "model": "[ordinary_actor = Role!val!0,\n snapshot_getter = Routine!val!0,\n selected = [else -> True],\n owner = [else -> True],\n grant = [else -> True],\n usable = [else -> True],\n execute = [else -> False]]"
+    },
+    {
+      "name": "USAGE and SET alone miss ADMIN-only widening authority",
+      "expected": "sat",
+      "actual": "sat",
+      "smtSha256": "466c68f2283588734b43b29424ce43753249a8702a425c55a09c11ac7947e478",
+      "freshContext": true,
+      "model": "[ordinary_actor = Role!val!0,\n bridge = Role!val!1,\n snapshot_getter = Routine!val!0,\n settable = [else -> False],\n execute = [(Role!val!1, Routine!val!0) -> True,\n            (Role!val!0, Routine!val!0) -> False,\n            else -> Var(0) == Role!val!1],\n selected = [Routine!val!0 -> True,\n             else -> Var(0) == Routine!val!0],\n admin = [else -> True],\n owner = [else -> False],\n usable = [else -> False],\n grant = [else -> False]]"
+    },
+    {
+      "name": "populated selected family can be closed",
+      "expected": "sat",
+      "actual": "sat",
+      "smtSha256": "cdd15d03a112aea60ddc3c8c5bf2bb66d94d26cec0b7d5c82da063b96c5ddc88",
+      "freshContext": true,
+      "model": "[ordinary_actor = Role!val!0,\n snapshot_getter = Routine!val!0,\n bridge = Role!val!1,\n settable = [else -> True],\n execute = [else -> False],\n selected = [else -> True],\n admin = [else -> True],\n grant = [else -> False],\n usable = [else -> True],\n owner = [else -> False]]"
+    }
+  ],
+  "counts": {
+    "unsat": 3,
+    "sat": 4
+  },
+  "scope": "First-order selected-family/reachable-role risk-definition algebra only. Three direct no-risk consequences; isolated selected-getter/bridge-only execution SET and ADMIN populations with all ownership/grant flags false; execute-only owner-restoration population; selected/reachable nonempty closed population. No PostgreSQL privilege/SQL/cut/refinement/noninterference theorem.",
+  "nativeExecution": false,
+  "acceptancePromoted": false
+}

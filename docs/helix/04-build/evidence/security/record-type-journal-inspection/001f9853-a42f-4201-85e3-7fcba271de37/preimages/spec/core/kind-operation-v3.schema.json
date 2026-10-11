@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:kind-operation:3.0.0",
+  "title": "Core kind lookup and explicit author declaration results (Cardinality envelope)",
+  "$defs": {
+    "kind": {
+      "enum": [
+        "field",
+        "record",
+        "group"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "lookup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "inspect-core-kind"
+        },
+        "version": {
+          "const": "3.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "path": {
+          "type": "string"
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "kind"
+              ],
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "kind": {
+                  "$ref": "#/$defs/kind"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "unspecified"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "value"
+              ],
+              "properties": {
+                "state": {
+                  "const": "unknown"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "not": {
+                    "$ref": "#/$defs/kind"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "declare-core-kind"
+        },
+        "version": {
+          "const": "3.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "origin",
+            "idealPath",
+            "kind",
+            "binding",
+            "basis",
+            "nativePath"
+          ],
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "idealPath": {
+              "type": "string"
+            },
+            "kind": {
+              "$ref": "#/$defs/kind"
+            },
+            "binding": {
+              "const": {
+                "id": "umf.core.kind.authoring",
+                "version": "3.0.0"
+              }
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            },
+            "nativePath": {
+              "type": "null"
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/lookup"
+    },
+    {
+      "$ref": "#/$defs/declaration"
+    }
+  ]
+}

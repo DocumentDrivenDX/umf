@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "table_name": "analysis_runs",
+  "description": "Public-company intelligence analysis_runs; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "analysis_runs.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "method",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "analysis_runs.method; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "version",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "analysis_runs.version; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "model_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "analysis_runs.model_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "prompt_version",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "analysis_runs.prompt_version; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "source_revision",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "analysis_runs.source_revision; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "analyzed_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "analysis_runs.analyzed_at; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ]
+}

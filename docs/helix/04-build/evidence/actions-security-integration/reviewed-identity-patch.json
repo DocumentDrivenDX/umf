@@ -1,0 +1,373 @@
+{
+  "profile": "umf.actions.reviewed-identity-patch/1",
+  "root": "/Users/erik/.codex/worktrees/actions-requirements-design/umf",
+  "main": "cd4cc93769925d11b8480a0c2be4f009a4c737ac",
+  "mapping": {
+    "FEAT-008": "FEAT-900",
+    "SD-008": "SD-900",
+    "US-056": "US-901",
+    "TD-056": "TD-901",
+    "STP-056": "STP-901",
+    "CONTRACT-062": "CONTRACT-064"
+  },
+  "entries": [
+    {
+      "path": "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+      "target": "docs/helix/01-frame/features/FEAT-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "07830df0a54223b5eded6f1fbf7baf194d1b16c4195b943f1eb5a74f2996d84e",
+      "afterSha256": "25c8329517c39064d8c304a66af5fcf3456c026d90bae7e96a43b26a783eb3a9"
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+      "target": "docs/helix/02-design/solution-designs/SD-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "cab8fbe9e0979984850ba9ac7833f655fe7e8d74aa2c0c926756cbd18ba36ff0",
+      "afterSha256": "e4c6de9a756e7da636190c205d88a135b408d1a65a21eb9c50bc662ef6afec5b"
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+      "target": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "f8db2348e86c9f9c13c600ef24acf733af64c41ce47402dd95b6189dfe2fb8a6",
+      "afterSha256": "53cc954b05e70ee974be24c6234e18080e0657e296f3443e62dbed991227de6b"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md",
+      "target": "docs/helix/02-design/technical-designs/TD-901-transactional-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "f5d29b291da2c7c1c1f44e4c0eb29d477a9ce1b0e5970ced71610add08a5a65e",
+      "afterSha256": "080c33d70406be04f38402185b32eb02787329cabddf80b312673cdce7eb67d7"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-056-transactional-actions.md",
+      "target": "docs/helix/03-test/test-plans/STP-901-transactional-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "bb57ec70a1e1672ac72dfefdb507b696b823591ee10f8f161f4a82a0540ed9b0",
+      "afterSha256": "d037dac6c2c7a41cf4be8182a9f862040549453f1a1ee8ee4b56ba58f56d321c"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md",
+      "target": "docs/helix/02-design/contracts/CONTRACT-064-delta-ddl.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "aa418acf0c3f3be453aee43fe5c87efa1ffefc71df1e8135f2111ac71503c86c",
+      "afterSha256": "061fd1a8b7d09efe3bf59b28fc7145079daf8fdb67eb5ba6c8894793d585ea37"
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
+      "target": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "93372a2d2438b5eb5478a5c58f73b7f2d94aeb40d49f8ca7b647bcd9b1fc9d5e",
+      "afterSha256": "65671c7c0a125480ac168d6990406086c34904d1cf5b0f08051765b6941dccb6"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md",
+      "target": "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "704364916ce2d37400511125794e594e77e90030630c9b9b1db53a2814cdd7c2",
+      "afterSha256": "6ca7318ce95786de4dbd3949406878cf63bb6c834e885cf0c06e9eb5e58fb98f"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "target": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "fcb6456a7ae6b88d40a450d741d8701e39ee038e3b8e524906f02398759b39dd",
+      "afterSha256": "3a688ccd14ffa4491e2b2584f2dad8ecb766a489617aa9551706d0f1d60ac21e"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-900-declarative-actions.md",
+      "target": "docs/helix/02-design/technical-designs/TD-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "500e9fc47be1f90eb1c1127b6a9593c36a07fc962b87e5977e20f7135a74da6e",
+      "afterSha256": "02e1d0d473cb46cbdb6671efb779ab8ae9a430780de522a190712cff96266689"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-900-declarative-actions.md",
+      "target": "docs/helix/03-test/test-plans/STP-900-declarative-actions.md",
+      "kind": "governed identity/reference only",
+      "beforeSha256": "2eab18d83b2c187749fe5b52b24e08ca17a0852719940e9ae763b90bbcdd1fc4",
+      "afterSha256": "542634a7253f9d2a69f278c5bf87f1826d73b967fb6aef7184b4c24fd39e6022"
+    },
+    {
+      "path": "tests/actions-reference/restore.test.ts",
+      "target": "tests/actions-reference/restore.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "d98b934291f127205b9e63ff0ca74a1406ac376cae644af5e621e213e4d3c348",
+      "afterSha256": "e9218eccf5ef276f0806c5565d2296ccdea3f4d3225d6433fe32c4b44322fb9d"
+    },
+    {
+      "path": "tests/actions-reference/receipts.test.ts",
+      "target": "tests/actions-reference/receipts.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "4619253ad9dffceabc85ddc2eb1f877323983b280061f8e5c497e0d70746c713",
+      "afterSha256": "bb6ab8bc173125e5aee818ca79a78c7c2c2f6c5196af28ad4e73d124268601fe"
+    },
+    {
+      "path": "tests/actions-reference/preview.test.ts",
+      "target": "tests/actions-reference/preview.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "3d490c450e34a39765aa6aef425a4713f88f7dea1de9f36a7e6be82ac79e92ae",
+      "afterSha256": "e827f2ff17350dce29b30fde7d0a91c47603ddc35bafc86bc8ecd81c0c055bf3"
+    },
+    {
+      "path": "tests/actions-reference/fresh-admission.test.ts",
+      "target": "tests/actions-reference/fresh-admission.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "f728ab8d9eb225988aaa50d58e28e3f2560be84773f2e5c1377b6b125130b1f9",
+      "afterSha256": "253b90bf04c35b8bce6d4c2dac381b676703645b2dd65010a3f0a4e85be11b34"
+    },
+    {
+      "path": "tests/actions-reference/handler-executor.test.ts",
+      "target": "tests/actions-reference/handler-executor.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "a7cc96574dacc6e61e1bb0f1a2031f7ec5d6a6a8131dfdb2db3bae415bef4940",
+      "afterSha256": "2ddce54c0c7ca203689fdb97b0c9f7626aa64250f1f3bd151ec56f8e2a0a4ce3"
+    },
+    {
+      "path": "tests/actions-reference/projection.test.ts",
+      "target": "tests/actions-reference/projection.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "79b3a1a687127189eadce68d2d95f3faa6a608b0ace7712ceba3a1c57ab96e7c",
+      "afterSha256": "636c2f3f08eb7fb39728c5ed6f4d4673cfcda51b59b3e501a8d0e660aafbb786"
+    },
+    {
+      "path": "tests/actions-reference/lookup-horizon.test.ts",
+      "target": "tests/actions-reference/lookup-horizon.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "505ba22c36f6ab860d76f7943f3182c68d84a8a2f3e7f633b8875193c6170228",
+      "afterSha256": "c5c7ba8c964223f78b91746cdab61534698c0f114499401fb261990b54714463"
+    },
+    {
+      "path": "tests/actions-reference/process-recovery.test.ts",
+      "target": "tests/actions-reference/process-recovery.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "52efd652728d40461b6c17b95207086a49aee5bb94c05cc2e2d08fcfdcf17791",
+      "afterSha256": "ee9e6d28cc511153384912c1222a78bbb94572eaa912bb30a6b9dd1284d257d5"
+    },
+    {
+      "path": "tests/actions-reference/native-refinement.test.ts",
+      "target": "tests/actions-reference/native-refinement.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "7850fb290b16843377d7fb8c92133c2a08a016cfbb27a981e798825d5599937a",
+      "afterSha256": "60cc9493653c1df94371b0c94bcf9adfba053e235ce96e48c20b42cf6f677024"
+    },
+    {
+      "path": "tests/actions-reference/composite-key.test.ts",
+      "target": "tests/actions-reference/composite-key.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "a9aaae537786423f8238469979c9ba461bf1e1b28c86e405c04fb2e369fbfc74",
+      "afterSha256": "91dadd53005250086eea5f851b6b7c9a08ca937da8e6d0c0cc5494b6a283a8f5"
+    },
+    {
+      "path": "tests/actions-reference/evolution.test.ts",
+      "target": "tests/actions-reference/evolution.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "d48babc7886c69978931efedf95ee6af969d8686b15e70e3fe1ebab1b503fa83",
+      "afterSha256": "b464b3602bb9ec87ac257fc20ae0e4d20c724a4c418f8eb248544818fb434a45"
+    },
+    {
+      "path": "tests/actions-reference/store.test.ts",
+      "target": "tests/actions-reference/store.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "7078b47179d42ad2bb6a4192083d3071abece4274dad2589ee162fe7410ab800",
+      "afterSha256": "3ce5a628053825c9b3e14f2072c1f083727a7d9e73f010b0be82ffde36ce8af5"
+    },
+    {
+      "path": "tests/actions-reference/state.test.ts",
+      "target": "tests/actions-reference/state.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "10c40aac8851d74c93c0bdeb2276f5fcec10e64f1214af93f8b73bebe11e80a3",
+      "afterSha256": "ced496d567bd3510fd75099229aedfa03fd68a98ba14e916a5e7da030e3d092b"
+    },
+    {
+      "path": "tests/actions-reference/outcomes.test.ts",
+      "target": "tests/actions-reference/outcomes.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "6173099535af78a4c9dc19f57721fc26b4af397cbb64ab8080c6e08a939cada6",
+      "afterSha256": "f9674b75f1770c4080fc80221136a2c5c50b7e48fae58bed043b898b8856e2bb"
+    },
+    {
+      "path": "tests/actions-reference/launch-owner.test.ts",
+      "target": "tests/actions-reference/launch-owner.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "89491fba59d737740c1948fc80926f0818f0bd7cdf2d46062cb6983c24db1803",
+      "afterSha256": "4670859c1e2e396264f271f7c5acbaa96aa7a955ebb9597e410447dc35d05808"
+    },
+    {
+      "path": "tests/actions-reference/recovery.test.ts",
+      "target": "tests/actions-reference/recovery.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "041e42ed8283726a041c9bb396c7e1e5ef8ac0f4454bc612168cb97ea6197536",
+      "afterSha256": "c1a0a54d88cd15b1798ea7639c58e17ec5aec14732c2058ae8de1197fa5a917a"
+    },
+    {
+      "path": "tests/actions-reference/invariant-mutants.test.ts",
+      "target": "tests/actions-reference/invariant-mutants.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "fa9920c93161ba06eff400e0c41e6bd6eee245ef1fa8446684361e8d67f694ae",
+      "afterSha256": "72528ed040ef0d2fc6f51bdff035789fdf63bdfb3901ccf63175a0cad23e0287"
+    },
+    {
+      "path": "tests/actions-reference/attempts.test.ts",
+      "target": "tests/actions-reference/attempts.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "b209c868109411c0f2dc8cf9c8c961ab1232f0ac5d18beffe6abacc6dd13a9e2",
+      "afterSha256": "456b02cf120b403640c3bc64bb66abac8bf91c130a3a1649168099e0ebcd37e9"
+    },
+    {
+      "path": "tests/actions-reference/audit.test.ts",
+      "target": "tests/actions-reference/audit.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "40861fc4bd9ed3a83e46cb65e47cd0c2a5eed441d7c675ce81850983ef64c0ea",
+      "afterSha256": "2cc3cb64e09a74443b0637f06145be700cce013b9a28b85795b653173a25c9ef"
+    },
+    {
+      "path": "tests/actions-reference/admission.test.ts",
+      "target": "tests/actions-reference/admission.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "934ca6fd04da5c07d6259448b09fe7831bb715c78c5af8474858e3a0667b9574",
+      "afterSha256": "56f75ac642d95c759573e90912993d3b8494143cc5080fc00e9249da10e61b95"
+    },
+    {
+      "path": "tests/actions-reference/reader-revocation.test.ts",
+      "target": "tests/actions-reference/reader-revocation.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "e0ea8c3727a19cc282575b78f0f2a5bc314e3a69da940375aca19376e990709b",
+      "afterSha256": "f49b4ee62273b4695ac33f0b977521d63056dcee7a73c940b3ab31787153d358"
+    },
+    {
+      "path": "tests/actions-reference/executor.test.ts",
+      "target": "tests/actions-reference/executor.test.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "01143c5f05be0d7536e22e6b5efabf2da13c0dc801c09b703884a81c860f8ea1",
+      "afterSha256": "ea624a543795db9a75df87ab64c7c22ad8d5386941a97a6f37b3711ea7923912"
+    },
+    {
+      "path": "scripts/actions-reference/qualify-foundation.ts",
+      "target": "scripts/actions-reference/qualify-foundation.ts",
+      "kind": "action citation/governing input path only",
+      "beforeSha256": "86e4bc3118f5f9c3e54b66d81ac0797ab87c78c1613008f04a3f02a89f808f26",
+      "afterSha256": "4562af35550c06d43c253ee5d563b106ab8ed5bca6e80249d14ca54bb8890051"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-050-delta-ddl.md",
+      "target": "docs/helix/02-design/contracts/CONTRACT-050-delta-ddl.md",
+      "kind": "Delta redirect target only",
+      "beforeSha256": "d8b6a3902c2fb0b0596f82b70d18a39f0bf7017a4f6a086f69590e93b2aefa22",
+      "afterSha256": "21c4d06829b2ae0de507216676b6e4f81109e45c108cd6ea71c99be6aaed41e9"
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+      "target": "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "07830df0a54223b5eded6f1fbf7baf194d1b16c4195b943f1eb5a74f2996d84e",
+      "afterSha256": "0f65e3c08df734f18611469c4f1a5240a9e987a9c887c5bd088fc5a7c06616bc"
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+      "target": "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "cab8fbe9e0979984850ba9ac7833f655fe7e8d74aa2c0c926756cbd18ba36ff0",
+      "afterSha256": "54f41296af164f22f58390c41425d858cbadca6a4120acdffb6de47506903688"
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+      "target": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "f8db2348e86c9f9c13c600ef24acf733af64c41ce47402dd95b6189dfe2fb8a6",
+      "afterSha256": "282133987745547f98b163ac1aaf717b45363be7a8659e672b8062a279f04e91"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md",
+      "target": "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "f5d29b291da2c7c1c1f44e4c0eb29d477a9ce1b0e5970ced71610add08a5a65e",
+      "afterSha256": "4585f1bd5324a03a1c0f6a65e72612b11bfce3072a8a4263322926ca7410db5f"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-056-transactional-actions.md",
+      "target": "docs/helix/03-test/test-plans/STP-056-transactional-actions.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "bb57ec70a1e1672ac72dfefdb507b696b823591ee10f8f161f4a82a0540ed9b0",
+      "afterSha256": "fbc66b29259318c891696c3755a2b900fbaf2d40da889e9b23769ab324929ed5"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md",
+      "target": "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md",
+      "kind": "explicit ungoverned historical-path redirect",
+      "beforeSha256": "aa418acf0c3f3be453aee43fe5c87efa1ffefc71df1e8135f2111ac71503c86c",
+      "afterSha256": "18caf377a34c00c2931411576ac66703cb9af1b10a3d2373a88be9e40f0e9da1"
+    },
+    {
+      "path": "docs/helix/README.md",
+      "target": "docs/helix/README.md",
+      "kind": "explicit action entry-point links only",
+      "beforeSha256": "d5bf716d09ef5d57986f2e0bb8f9a466a1ceaebb41a0f26d77e9e21358a3c4e5",
+      "afterSha256": "eb91b3f45be8e74a9812cf79af56ee9598bc5ce4eede5490fd8781228ecc1501"
+    },
+    {
+      "path": "README.md",
+      "target": "README.md",
+      "kind": "one explicit Delta contract link",
+      "beforeSha256": "64f628a163802031320dee07c3a0d12d998a28738ce9582a53dc09f1dc389339",
+      "afterSha256": "0b1ef12b1ee07540cadc6865cd5f4345ab0810af314f7aee973877889564041b"
+    },
+    {
+      "path": "docs/helix/04-build/actions-documentation-plan.md",
+      "target": "docs/helix/04-build/actions-documentation-plan.md",
+      "kind": "five exact action-owned ddx.links identifiers only",
+      "beforeSha256": "4f81476d8c799858a03b64075e1bb543c61b7e0b2de721dc2befe07a4732a3c3",
+      "afterSha256": "6249e1ca1acffe4f86ee8b33976704feb2b6e5215d4db3de4959905cad676a02"
+    },
+    {
+      "path": "scripts/actions-reference/store.sql",
+      "target": "scripts/actions-reference/store.sql",
+      "kind": "one governing-ID SQL comment; no SQL statement change",
+      "beforeSha256": "da9c6a8a2525e358807d52939629dffc9452e55f4884ee23e11083a39d599098",
+      "afterSha256": "982cf22f43e1756f5745674d84ec8e72a17e0f9cbcf523937217d280790b6434"
+    },
+    {
+      "path": "docs/helix/01-frame/prd.md",
+      "target": "docs/helix/01-frame/prd.md",
+      "kind": "one action-owned requirement reference; requirement unchanged",
+      "beforeSha256": "1d02758c9b419eeab96ec1a11f1b1ad2df91cdd45577925ec57156f9014f4fa6",
+      "afterSha256": "cc1db24082ccc49f15f0d415742722434c97aa1e5bd32db11e517d12d65600dc"
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "target": "docs/helix/02-design/architecture.md",
+      "kind": "two explicit action-owned architecture links",
+      "beforeSha256": "7d43c3ce417e4e13c5999e531e4662d5d4fc9add8170e6cd21be57cd19981c19",
+      "afterSha256": "b84730ad7bb5bb706c0000cd3da9bd1979159a00edc0e62df3e255446f8fd551"
+    },
+    {
+      "path": "docs/helix/04-build/actions-release-integration-plan.md",
+      "target": "docs/helix/04-build/actions-release-integration-plan.md",
+      "kind": "two exact action-owned ddx.links",
+      "beforeSha256": "d902c8f9c4a0c8d9123fb45c3776e01c6a71587d03c897c5b7ea355aaa5e2025",
+      "afterSha256": "513aa08b3b76959ed2c80d1f5043d1958d9c11d4468f86c8609f5c013c4d50c7"
+    },
+    {
+      "path": "docs/helix/04-build/implementation-plan.md",
+      "target": "docs/helix/04-build/implementation-plan.md",
+      "kind": "explicit current identity note, retaining dated handoff unchanged; Delta-specific links only",
+      "beforeSha256": "31c8fd392786a6b731c97cb183371820cf641c099dbc02ddf7cf5b9e2c9f825c",
+      "afterSha256": "d5826308bef1b75e7464e9cadc103a56ed43fafefcec4c6f37402aa351a57d0c"
+    }
+  ],
+  "excluded": [
+    "All security-owned artifacts and tests",
+    "All historical certificates/proof files",
+    "Unrelated governed artifacts",
+    "All requirements text other than identity tokens",
+    "All executable behavior other than unchanged governing-document path inputs"
+  ],
+  "redirectSources": [
+    "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+    "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+    "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+    "docs/helix/02-design/technical-designs/TD-056-transactional-actions.md",
+    "docs/helix/03-test/test-plans/STP-056-transactional-actions.md",
+    "docs/helix/02-design/contracts/CONTRACT-062-delta-ddl.md"
+  ]
+}

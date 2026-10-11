@@ -205,6 +205,46 @@ this native profile provenance. B08 qualification must retain both successful
 exact bindings and tampered/unrelated-action refusal controls.
 
 
+### Original-value source correspondence
+
+For original-authorized query use, native admission MUST establish that every
+selected field value has the interpretation specified by its qualified logical
+field and physical binding at the operation's data/authority cut. Exact native
+column domains and two-way key/population correspondence are necessary but do
+not establish value correspondence. A same-key source expression may fabricate
+or suppress a predicate match while preserving both checks.
+
+The installed-source inventory MUST bind the selected relation/view definition,
+field expressions and transitive relations, functions, operators and casts on
+which that interpretation depends, with their actual authority and relevant
+configuration. Source definition or dependency changes MUST invalidate admission
+before application SQL, including empty-result queries. Definition hashes alone
+do not authenticate the installer or establish complete dependencies. A source
+replacement carrying the same keys, column types and non-NULL values MUST NOT
+inherit qualification solely from those descriptors. Whole native callable/DDL
+closure and the held source/authority cut remain separately required.
+
+Native inventory references MUST preserve the actual engine-local identity
+alongside any display name. For PostgreSQL OID aliases such as regproc, a rendered
+routine name or ordinary catalog JSON does not uniquely identify an overloaded
+routine. Exact numeric OID references MUST remain bound to the same database,
+installation and qualified cut; they are not portable logical identities or
+installer credentials. Matching names cannot conceal changed aggregate,
+operator, conversion, type-support or language-transform references.
+The complete source census and its expected snapshot MUST remain in the trusted
+administrative/provider boundary. Opaque routine bodies and configuration values
+may contain sensitive source or facts; excluding native password columns does not
+make the inventory an ordinary-user disclosure surface. Provider authority,
+snapshot provenance and observer privilege closure require separate qualification.
+
+A qualified data update under the same faithful binding is a new data cut, not
+necessarily source-definition drift. Its query result MUST match the independent
+oracle at that cut. The consumer MUST distinguish authorized data changes from
+changes to the interpretation or authority of the source. This obligation applies
+to flat relational columns and graph property/edge carriers equally; native
+view-definition inspection alone does not qualify arbitrary graph storage.
+
+
 ## Private-fact diagnostic closure
 
 Private-fact protection MUST include derived diagnostic counts/estimates, not
@@ -245,3 +285,15 @@ The host-only Truss createPgConnectionSource MAY select originalResponseTimeoutM
 ### Shared raw PostgreSQL runtime evidence sources
 
 Raw PostgreSQL cases MAY reuse the host-only Truss PostgreSQL protocol adapter without implying graph storage qualification. Their EvidenceCase MUST pin each executed adapter module and the selected managed pg JavaScript dependency closure, retain actual driver resolution, and independently observe the native raw layout, roles and results. The reviewed gate permits raw-case source bindings under the exact Truss pg-runtime package and the task-managed /private/tmp/ashlar-truss-runtime/node_modules source tree in addition to the UMF workspace. This is a source inventory allowance, not authority to read credentials, adopt foreign installations or claim authentication from matching hashes. Alternate native pg drivers or changed package/source inventories require separate qualification. B16's authored profile uses exact total resource populations and a fixed stable authority/data cut; graph, Delta, streaming and revocation cases remain independently required.
+
+## Source publication and first-snapshot ordering — 2026-10-11
+
+A qualified source/authority cut MUST exclude relevant writer publication/commit through final disclosure, including writes already applied but uncommitted when reader admission begins. Conflict with a future DDL statement or an observed catalog ShareLock is insufficient. The admitted writer protocol must cover every participating source, grant/membership, policy, mapping and authorization-fact producer, acquire its barrier before a relevant change and retain it through commit/abort. The reader must drain already participating writers before establishing the observation used for execution, and retain its barrier through the operation's final protected release. Unknown writer coverage refuses positive admission.
+
+The observation MUST use a fresh snapshot after that barrier is established. Adopting a repeatable-read transaction with an earlier snapshot is insufficient even if all relevant locks are subsequently held. A lock-acquiring SELECT may itself establish an earlier snapshot while waiting; ordering must be qualified at the original native producer, not asserted by caller booleans or inferred from an empty operation-local call ledger. A fresh post-barrier READ COMMITTED statement is a feasibility option only when the complete relevant source/data/authority state is protected for the operation. It is not general permission to weaken transaction semantics. Exact database/installation/generation, barrier ownership/key mapping, participating producers, native transaction lifetime, cancellation/deadline, final release and recovery remain binding obligations. Hash equality, two reads from the same inherited snapshot and matching endpoint images do not substitute.
+
+Truss PostgreSQL16.15 administrative spike obtains43 catalog ShareLocks for the40-section census, blocks seven later DDL writes and permits ordinary facts DML. Nevertheless, an earlier routine replacement in an active uncommitted writer has no retained pg_proc RowExclusiveLock: after the reader acquires every catalog lock before its first census, that writer commits. The reader's repeatable-read census remains333 while native routine execution returns444 with all43 locks still held. This is actual native evidence against catalog-lock-only admission, not an admitted profile. A cooperative transaction advisory barrier separately drains an observed waiting reader after writer commit, gives a fresh READ COMMITTED source/execution555, blocks new participating writers and permits them after release. A writer that omits the barrier can bypass it; complete participation is a required premise, not established by the prototype.
+
+The conditional ordering proof has six queries (two UNSAT/four SAT): complete commit-time exclusion plus a fresh snapshot prevents modeled source drift; independent protected fact publication is also needed for authority. Old snapshots, pending catalog writers, early release and independent authority changes retain SAT witnesses. This models one source and one fact transition, not arbitrary ABA, concrete PostgreSQL/driver/lock refinement or issuer authentication. No new backend test is admitted and the132-case acceptance scope is unchanged.
+
+Database-local advisory participation does not establish closure for PostgreSQL shared catalogs: a second database can acquire the same key and change shared role membership while the original reader holds its barrier. The actual writer domain must cover all relevant database and cluster scopes, not merely key equality. The final native spike exercises this shared-role bypass. Original callable/plan/invalidation correspondence also remains required: an immediate repeated call after666 DDL returned555 in historical f8005795, whereas a fresh census followed by different query text returned666. The different sequences do not identify a cache mechanism or prove every current call follows the current catalog source. A qualified compiler/executor must supply its actual callable/compiled-plan correspondence rather than infer it from hashes or these finite probes.

@@ -32,7 +32,7 @@ test_snapshot=root/'regression-inputs.json'
 test_snapshot.write_text(json.dumps(test_inputs,indent=2)+'\n')
 
 print('Starting regression for',len(command)-2,'files',flush=True)
-env=dict(os.environ,UMF_CHROMIUM_PATH='/home/erik/.local/bin/chromium',JAVA_HOME='/home/erik/.local/share/mise/installs/java/openjdk-21.0.2')
+env=dict(os.environ)
 log=root/'regression.log'
 with log.open('w') as out:run=subprocess.run(command,stdout=out,stderr=subprocess.STDOUT,env=env)
 text=log.read_text()

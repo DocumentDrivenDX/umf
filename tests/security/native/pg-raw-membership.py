@@ -48,11 +48,28 @@ def sql(source,user='postgres',password=None):
  secret=credentials[user] if password is None else password
  return command(['docker','exec','-i',container,'sh','-c','IFS= read -r PGPASSWORD || exit 1; export PGPASSWORD; exec psql -h 127.0.0.1 -X -q -A -t -v ON_ERROR_STOP=1 -d postgres -U "$1"','auth',user],input=secret+'\n'+source)
 def value(source,user='postgres'):return json.loads(require(sql(source,user)))
+def exact_json_equal(expected,observed):
+ # Python equates bool/int and int/float; native evidence must retain carriers.
+ if type(expected) is not type(observed):return False
+ if isinstance(expected,dict):
+  return expected.keys()==observed.keys() and all(exact_json_equal(expected[k],observed[k]) for k in expected)
+ if isinstance(expected,list):
+  return len(expected)==len(observed) and all(exact_json_equal(a,b) for a,b in zip(expected,observed))
+ return expected==observed
+
+def validate_observations(items):
+ ids=set()
+ for item in items:
+  identity=item['assertionId']
+  if not isinstance(identity,str) or not identity or identity in ids:raise AssertionError('Duplicate or invalid assertion identity')
+  ids.add(identity)
+  if not exact_json_equal(item['expected'],item['observed']):raise AssertionError(item)
+
 def check(suffix,expected,observed):
- # JSON objects have unordered keys; arrays and exact scalar/byte tokens retain
- # their order/value. Native JSONB can reorder object members on read.
- observations.append({'assertionId':CASE+':'+suffix,'expected':json.loads(json.dumps(expected,sort_keys=True)),'observed':json.loads(json.dumps(observed,sort_keys=True))})
- if expected!=observed:raise AssertionError(observations[-1])
+ # Snapshot at assertion time; later mutations cannot rewrite native evidence.
+ snapshot=json.loads(json.dumps({'assertionId':CASE+':'+suffix,'expected':expected,'observed':observed},sort_keys=True,allow_nan=False))
+ if not exact_json_equal(snapshot['expected'],snapshot['observed']):raise AssertionError(snapshot)
+ observations.append(snapshot)
 def interrupted(signum,frame):raise SystemExit('Native runner interrupted')
 for sig in [signal.SIGTERM,signal.SIGINT]:signal.signal(sig,interrupted)
 receipt=None
@@ -461,6 +478,9 @@ GRANT umf_sec_pool_low TO umf_sec_alice,umf_sec_bob,umf_sec_outsider WITH INHERI
   observations[-1]={'assertionId':CASE,'expected':json.loads(json.dumps(oracle['pool'],sort_keys=True)),'observed':json.loads(json.dumps(pool_controls,sort_keys=True))}
  if CASE=='pg-raw.B07':
   observations[-1]={'assertionId':CASE,'expected':json.loads(json.dumps(oracle['disclosure'],sort_keys=True)),'observed':json.loads(json.dumps(disclosures,sort_keys=True))}
+ # Freeze the final case assertion too, then validate every assertion before publication.
+ observations=json.loads(json.dumps(observations,sort_keys=True,allow_nan=False))
+ validate_observations(observations)
  runtime_versions={'postgresql':version,'python':sys.version.split()[0]}
  if CASE=='pg-raw.B05':runtime_versions.update(pool_result['versions'])
  if CASE=='pg-raw.B07':runtime_versions.update(bun=require(command(['bun','--version'])),core='0.8.0',security='0.1.0',disclosure='umf.security.disclosure/0.1.0')

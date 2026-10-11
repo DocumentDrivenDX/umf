@@ -149,13 +149,29 @@ try:
    except subprocess.TimeoutExpired:
     transport.kill();transport.wait(timeout=5)
   transport.stdout.close();transport.stderr.close()
+ # Independently authored disclosure-only outputs must not depend on hidden salary.
+ public_modes={
+  'filter':"SELECT coalesce(json_agg(id ORDER BY id),'[]'::json) FROM security_raw.salary_public WHERE salary_display='restricted';",
+  'sort':"SELECT coalesce(json_agg(id ORDER BY salary_display,id),'[]'::json) FROM security_raw.salary_public;",
+  'group':"SELECT coalesce(json_agg(json_build_array(salary_display,n) ORDER BY salary_display),'[]'::json) FROM (SELECT salary_display,count(*) n FROM security_raw.salary_public GROUP BY salary_display) s;",
+  'join':"SELECT coalesce(json_agg(p.id ORDER BY p.id),'[]'::json) FROM security_raw.salary_public p JOIN (VALUES('restricted'::text)) v(display) ON p.salary_display=v.display;",
+  'aggregate':"SELECT to_json(coalesce(sum(length(salary_display)),0)) FROM security_raw.salary_public;"
+ }
+ def public_invariant(cut):
+  for actor,auth in context['oracle']['actors'].items():
+   ids=auth['ids']
+   expected={'filter':ids,'sort':ids,'group':[['restricted',len(ids)]] if ids else [],'join':ids,'aggregate':len('restricted')*len(ids)}
+   for mode,query in public_modes.items():check(actor+':public-'+cut+'-'+mode,expected[mode],value(query,actor))
+ public_invariant('original')
  weak_before=value("SELECT json_agg(id ORDER BY id) FROM security_raw.salary_weak;",'umf_sec_bob')
  check('ungranted-Bob:weak-before',['RAB','RB'],weak_before)
  # Excluded assessor changes a hidden value without changing permitted publication.
  require(sql("UPDATE security_raw.resource_private_carrier SET bag=jsonb_set(bag,'{salary}','100'::jsonb) WHERE resource_id='RB';"))
+ public_invariant('hidden-value-changed')
  check('ungranted-Bob:weak-hidden-value-inference',['RAB'],value("SELECT json_agg(id ORDER BY id) FROM security_raw.salary_weak;",'umf_sec_bob'))
  check('ungranted-Bob:public-stays-identical',[['RAB','restricted'],['RB','restricted']],value("SELECT json_agg(json_build_array(id,salary_display) ORDER BY id) FROM security_raw.salary_public;",'umf_sec_bob'))
  require(sql("UPDATE security_raw.resource_private_carrier SET bag=jsonb_set(bag,'{salary}','200'::jsonb) WHERE resource_id='RB';"))
+ public_invariant('hidden-value-restored')
  check('ungranted-Bob:restored-hidden-value-control',weak_before,value("SELECT json_agg(id ORDER BY id) FROM security_raw.salary_weak;",'umf_sec_bob'))
  inventory=value("SELECT json_agg(json_build_object('name',c.relname,'owner',pg_get_userbyid(c.relowner),'acl',c.relacl::text,'options',c.reloptions,'definition',pg_get_viewdef(c.oid)) ORDER BY c.relname) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='security_raw' AND c.relname IN('salary_public','salary_query','salary_weak');")
  if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h for p,h in sources.items()):raise RuntimeError('Probe source changed')
@@ -171,5 +187,12 @@ finally:
   if require(command(['docker','inspect','--format','{{index .Config.Labels "umf.security.run"}}',container]))!=run_id:raise RuntimeError('Fixture ownership differs')
   require(command(['docker','rm','-f',container]))
 if receipt is None:raise RuntimeError('Missing component evidence')
+import zipfile
+retained=Path('docs/helix/04-build/evidence/security/pg-mask-query-invariance')/run_id
+retained.mkdir(parents=True,exist_ok=False)
+(retained/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+with zipfile.ZipFile(retained/'sources.zip','w',zipfile.ZIP_DEFLATED) as archive:
+ for path,data in frozen.items():archive.writestr(path,data)
+(retained/'capture.json').write_text(json.dumps({'sourceDigests':sources,'receiptSha256':hashlib.sha256((retained/'receipt.json').read_bytes()).hexdigest(),'cleanup':'Owned container removal returned success before receipt publication','scope':'Frozen declared source closure; runtime dependencies are not hermetically captured; not full B08 qualification'},indent=2)+'\n')
 Path('docs/helix/04-build/evidence/security/pg-mask-query.json').write_text(json.dumps(receipt,indent=2)+'\n')
 print(json.dumps({'status':receipt['status'],'observations':len(observations),'scope':receipt['scope']}))

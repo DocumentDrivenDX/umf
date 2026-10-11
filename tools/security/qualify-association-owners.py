@@ -1,5 +1,5 @@
 """Actual source interpretation/correspondence spike; no issuer/native authority."""
-import copy,hashlib,json,os,runpy,shutil,subprocess,sys,tempfile,uuid,zipfile
+import base64,copy,hashlib,json,os,runpy,shutil,subprocess,sys,tempfile,uuid,zipfile
 from pathlib import Path
 ROOT=Path.cwd(); W=Path('/private/tmp/weft-security-main-integration'); T=Path('/private/tmp/truss-security-main-integration')
 TOOL=Path('/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin'); OWNER=Path('/private/tmp/truss-umf-runtime-LmpSsH')
@@ -83,17 +83,23 @@ with tempfile.TemporaryDirectory(prefix='association-owner-') as directory:
  (python_root/'truss/_security_association_binding.py').write_bytes(files[str(T/'packages/python/src/truss/_security_association_binding.py')])
  test=frozen/'test.py';test.write_bytes(files[str(T/'packages/python/tests/test_security_association_binding.py')]);(frozen/'fixtures').mkdir()
  for name in ['security-association-core.json','security-association-ontology.json']:(frozen/'fixtures'/name).write_bytes(files[str(T/'packages/python/tests/fixtures'/name)])
- sys.path.insert(0,str(python_root));helpers=runpy.run_path(str(test));binding=helpers['wire'](helpers['inputs']());basis_result=helpers['prepare_association_binding'](core,ontology,binding)
+ sys.path.insert(0,str(python_root));helpers=runpy.run_path(str(test))
+ binding_value=helpers['inputs']();binding_value['profile']='truss-binary-association-candidate/0.2.0';binding_value['ontologyArtifact']={'identity':'original-ontology','bytesBase64':base64.b64encode(ontology).decode('ascii'),'sha256':sha(ontology)}
+ binding=helpers['wire'](binding_value)
+ from truss._security_association_binding import prepare_archived_association_binding
+ basis_result=prepare_archived_association_binding(core,binding)
  import io,unittest
- test_log=io.StringIO();test_result=unittest.TextTestRunner(stream=test_log,verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(helpers['BindingTests']))
+ test_log=io.StringIO();test_result=unittest.TextTestRunner(stream=test_log,verbosity=2).run(unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromTestCase(helpers[name]) for name in ('BindingTests','ArchivedBindingTests')))
  (out/'association-tests.log').write_text(test_log.getvalue())
- check('captured-association-tests',50,test_result.testsRun);check('captured-association-tests-pass',True,test_result.wasSuccessful())
+ check('captured-association-tests',62,test_result.testsRun);check('captured-association-tests-pass',True,test_result.wasSuccessful())
  for index,association in enumerate(basis_result.associations):
   check(f'original-mapping-pointer-{index}',f'/mappings/{index}',association.source_pointer)
   check(f'original-mapping-fragment-{index}',helpers['wire'](helpers['inputs']()['mappings'][index]).hex(),association.definition_bytes.hex())
   check(f'explicit-storage-pointer-{index}',f'/mappings/{index}/storage',association.storage.source_pointer)
   check(f'explicit-storage-values-{index}',['0','*','0','*',True,'independent',False,None],[association.storage.source_min,association.storage.source_max,association.storage.target_min,association.storage.target_max,association.storage.directed,association.storage.lifecycle,association.storage.composition,association.storage.inverse])
  check('original-extraction-profile','truss-original-association-json-candidate/0.1.0',basis_result.extraction_profile)
+ check('archived-original-ontology-recovery',ontology.hex(),basis_result.ontology_bytes.hex())
+ check('dependency-complete-binding-profile','truss-binary-association-candidate/0.2.0',json.loads(basis_result.binding_bytes)['profile'])
  check('same-original-core',sha(core),sha(basis_result.core_bytes));check('same-original-ontology',sha(ontology),sha(basis_result.ontology_bytes));check('complete-two-associations',2,len(basis_result.associations));check('basis-not-authority','original_source_correspondence_only',basis_result.scope)
  (out/'binding.json').write_bytes(binding)
 unchanged();assert sha(binary.read_bytes())==binary_hash

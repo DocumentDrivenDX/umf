@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:owl:declarations:0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "owl-declarations-1"
+    },
+    "complete": {
+      "const": false
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "blankNodeScope": {
+      "type": "string"
+    },
+    "declarations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "iri"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "kind": {
+            "enum": [
+              "class",
+              "datatype",
+              "objectProperty",
+              "dataProperty",
+              "annotationProperty",
+              "namedIndividual"
+            ]
+          },
+          "quadIndexes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "required": [
+          "node",
+          "kind",
+          "quadIndexes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "anonymousTypeAssertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "blank"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "kind": {
+            "enum": [
+              "class",
+              "datatype",
+              "objectProperty",
+              "dataProperty",
+              "annotationProperty",
+              "namedIndividual"
+            ]
+          },
+          "quadIndexes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "required": [
+          "node",
+          "kind",
+          "quadIndexes"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "complete",
+    "source",
+    "blankNodeScope",
+    "declarations",
+    "anonymousTypeAssertions"
+  ],
+  "additionalProperties": false
+}

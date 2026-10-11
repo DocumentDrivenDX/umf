@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B04",
   "backend": "pg-raw",
-  "runId": "8bc5baf5-e94d-4d81-9d8f-68f09716a5fe",
+  "runId": "5cc7a038-ee42-41bc-ac55-89190c10dc3e",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -19,7 +19,7 @@
     "python": "3.9.6"
   },
   "sourceDigests": {
-    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
   },
@@ -1170,6 +1170,7 @@
               "multiple-owners"
             ]
           ],
+          "privateProbesDenied": true,
           "publicOnlyRows": [
             [
               "RA",
@@ -1180,7 +1181,6 @@
               "multiple-owners"
             ]
           ],
-          "privateProbesDenied": true,
           "serverFileProbesDenied": true
         },
         "umf_sec_bob": {
@@ -1194,6 +1194,7 @@
               "B-only"
             ]
           ],
+          "privateProbesDenied": true,
           "publicOnlyRows": [
             [
               "RAB",
@@ -1204,13 +1205,12 @@
               "B-only"
             ]
           ],
-          "privateProbesDenied": true,
           "serverFileProbesDenied": true
         },
         "umf_sec_outsider": {
           "copyRows": [],
-          "publicOnlyRows": [],
           "privateProbesDenied": true,
+          "publicOnlyRows": [],
           "serverFileProbesDenied": true
         }
       },
@@ -1226,6 +1226,7 @@
               "multiple-owners"
             ]
           ],
+          "privateProbesDenied": true,
           "publicOnlyRows": [
             [
               "RA",
@@ -1236,7 +1237,6 @@
               "multiple-owners"
             ]
           ],
-          "privateProbesDenied": true,
           "serverFileProbesDenied": true
         },
         "umf_sec_bob": {
@@ -1250,6 +1250,7 @@
               "B-only"
             ]
           ],
+          "privateProbesDenied": true,
           "publicOnlyRows": [
             [
               "RAB",
@@ -1260,13 +1261,12 @@
               "B-only"
             ]
           ],
-          "privateProbesDenied": true,
           "serverFileProbesDenied": true
         },
         "umf_sec_outsider": {
           "copyRows": [],
-          "publicOnlyRows": [],
           "privateProbesDenied": true,
+          "publicOnlyRows": [],
           "serverFileProbesDenied": true
         }
       }

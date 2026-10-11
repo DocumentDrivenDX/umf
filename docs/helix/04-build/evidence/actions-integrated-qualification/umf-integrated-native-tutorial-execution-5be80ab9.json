@@ -1,0 +1,53 @@
+{
+  "profile": "umf.actions.native-tutorial-execution/1",
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "exitCode": 0,
+  "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "umf-integrated-qualification-5be80ab9",
+    "-v",
+    "/private/tmp/umf-integrated-qualification-5be80ab9:/work",
+    "-v",
+    "/var/run/docker.sock:/var/run/docker.sock",
+    "-e",
+    "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-5be80ab9",
+    "--entrypoint",
+    "bun",
+    "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
+    "run",
+    "docs:example:native"
+  ],
+  "log": "/private/tmp/umf-integrated-qualification-5be80ab9-native-tutorial.log",
+  "logSha256": "c976b15361c144f84596fb3cbd9de6a18ac7e80eadd97ee4db3724c150e9ce5e",
+  "capturedInputCount": 7915,
+  "capturedInputInventorySha256": "f8fc287f369abfe86e9c14fb503403f07cf4a118caa4d1673b63c41c485d95be",
+  "capturedSourceMatchesAfterExecution": true,
+  "result": {
+    "postgres": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "bun": "1.4.2",
+    "ownedContainer": "umf-actions-reference-a362d8e1-63c0-4687-ac16-e16ac1a5c095",
+    "committed": true,
+    "replayMatches": true,
+    "freshNoOp": true,
+    "terminalOutcomes": 4,
+    "outboxFacts": 2,
+    "postconditionCandidateDiscarded": true,
+    "databaseFailureRolledBack": true,
+    "rollbackPreservedNativeState": true,
+    "durableRejectionReplayed": true,
+    "reorderedDeliveryPendingUntilGapClosed": true,
+    "visibleProjectionMatchesNativeRows": true,
+    "revokedReplayDenied": true,
+    "cleanup": "finally: close store and remove owned container"
+  },
+  "cleanup": {
+    "checkedAtUtc": "2026-10-10T04:51:54.853568+00:00",
+    "exactContainer": "umf-actions-reference-a362d8e1-63c0-4687-ac16-e16ac1a5c095",
+    "dockerPsAllMatches": [],
+    "exitCode": 0
+  }
+}

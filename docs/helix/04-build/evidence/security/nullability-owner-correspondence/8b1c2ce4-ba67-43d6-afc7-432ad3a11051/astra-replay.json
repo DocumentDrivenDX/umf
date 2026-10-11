@@ -1,0 +1,130 @@
+{
+  "host": {
+    "sourcePins": 703,
+    "receiptSha256": "2a13f848a0be8c02f8a9dde6a227ec6ef1e85f928cf48aca07c88e4ac71f4ff1",
+    "zipSha256": "50fb8e4c54f38385c7b70782cc0f1d08e4ba34ef9e5566125b8959844598b784",
+    "exitCodes": [
+      0,
+      0
+    ],
+    "rawSummary": "plicable Record nullability remain distinct observations [3.22ms]\n\n 76 pass\n 0 fail\n 578 expect() calls\nRan 76 tests across 6 files. [1391.00ms]\n",
+    "hostLogSha256": "7867614658867b510505e77774efcb2f0b844109680fa5535172c9a3748c2810",
+    "typecheckEmpty": true
+  },
+  "formal": {
+    "sourcePins": 10,
+    "receiptSha256": "810f6077577365948d0e04107685bfec1cbc1e2a3218094eaf6617bfcfe6f385",
+    "zipSha256": "0d07aaf225d0f68c85a82ee9ee1cd51824cd0dd10107880aad7f68b30e6cee3f",
+    "solver": "4.15.4",
+    "observations": [
+      {
+        "id": "required-positive",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "156f1b0acb0aa32b3f86671e54e84d8d1f49141640366c56bf3fbee4f4caf35f",
+        "freshContext": true
+      },
+      {
+        "id": "absent-allowed-omission-positive",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "f7b1a01d802a603bbd04e939ade1a0c85f8b8cb35fb64395b9e06cac38c2cb6f",
+        "freshContext": true
+      },
+      {
+        "id": "unspecified-known-does-not-imply-complete",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "6d8c4455463e41f38973a64e6078c395f7e5bb0744ed3569cb4195320de41205",
+        "freshContext": true
+      },
+      {
+        "id": "missing-field-member-positive",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "71bb4794af54b223a32903ee7579af078b3b09ba6e5c8a113992a8b1b91ac891",
+        "freshContext": true
+      },
+      {
+        "id": "inapplicable-record-member-positive",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "52c76871e346ddebbfaa177ae20d29362a386f5bf4bfb5afa887440e6f384382",
+        "freshContext": true
+      },
+      {
+        "id": "future-preserved-unknown-positive",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "bf214dbacc0e6f28206bcaebc1b2c23f076b506b36004ecbfe4e1fb52b5315dd",
+        "freshContext": true
+      },
+      {
+        "id": "full-guard-forbids-false-missing-required",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "494322f6db603ecef5f22edb28738fc6c3899d48674673cdb0eb9067cbee914a",
+        "freshContext": true
+      },
+      {
+        "id": "full-guard-forbids-changed-known-value",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "8b216be31ad2b86c2587149cc627c8785396de7ec09fc9258655cb39eed23c3e",
+        "freshContext": true
+      },
+      {
+        "id": "full-guard-forbids-future-known-invention",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "d7a5f029c06a7589640695a313a34c78cf31d24799375eb6ff4cd927285a6867",
+        "freshContext": true
+      },
+      {
+        "id": "full-guard-forbids-absent-known-invention",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "4846323e254f5d554e075d92643942d886953169cfdf19a2cf4dcd6942e44588",
+        "freshContext": true
+      },
+      {
+        "id": "full-guard-forbids-context-substitution",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "c921c701059aa56625ec54874b37ff1ea0f38c031652e50d06a5506414a36d16",
+        "freshContext": true
+      },
+      {
+        "id": "full-known-guard-preserves-presence-behavior",
+        "expected": "unsat",
+        "observed": "unsat",
+        "formulaSha256": "f0e55822dc24219fe5e480cb32bec0f8431b3ec7014527b672af1cb73f190f76",
+        "freshContext": true
+      },
+      {
+        "id": "post-filter-guard-admits-required-omission",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "aaed98d982fd22b641cba717c1dca4c6321878020b843934e4abc1af82eb7d85",
+        "freshContext": true
+      },
+      {
+        "id": "value-only-guard-admits-context-substitution",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "8ad96e5e6f8c9eef3a496b4069108e3c1e6a70cc4232942a8f42d7df3ffe5e39",
+        "freshContext": true
+      },
+      {
+        "id": "meaning-correspondence-does-not-prove-authority-or-enforcement",
+        "expected": "sat",
+        "observed": "sat",
+        "formulaSha256": "0897196e1ab1208b7221ae0d694f18c455097df660371401d907c88620684c0e",
+        "freshContext": true
+      }
+    ]
+  },
+  "remainingFindings": [],
+  "nativeExecution": false,
+  "acceptanceCasesPromoted": []
+}

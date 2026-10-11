@@ -1,0 +1,140 @@
+{
+  "id": "umf.tablespec.keys",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "TableSpec key observations and authored declaration projection with explicit residuals",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:tablespec:key-binding:1.0.0",
+    "title": "TableSpec native key observations; not authored identity",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "profile",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.tablespec.keys",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference"
+        }
+      },
+      "profile": {
+        "const": "declared-metadata"
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nativePath",
+            "kind",
+            "state",
+            "interpretation",
+            "columns",
+            "resolvedFields",
+            "enforcement",
+            "authorIntent",
+            "basis"
+          ],
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "enum": [
+                "primary",
+                "alternate"
+              ]
+            },
+            "state": {
+              "enum": [
+                "absent",
+                "empty",
+                "declared",
+                "invalid"
+              ]
+            },
+            "interpretation": {
+              "enum": [
+                "declared",
+                "unknown",
+                "unsupported"
+              ]
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "resolvedFields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "enforcement": {
+              "const": "unknown"
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-044; native declarations and explicit authored projection with retained recovery. Qualified TableSpec binding acceptance is recorded separately; Key ideal admission and native equivalence are not claimed.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "TableSpec",
+      "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference"
+    },
+    "evidence": [
+      "tests/core-ideals/key-tablespec.test.ts",
+      "tests/core-ideals/key-tablespec-projection.test.ts",
+      "spec/core/key-tablespec-projection.schema.json",
+      "fixtures/validation/key-tablespec-discovery-native.json",
+      "fixtures/validation/key-tablespec-projection-native.json"
+    ]
+  }
+}

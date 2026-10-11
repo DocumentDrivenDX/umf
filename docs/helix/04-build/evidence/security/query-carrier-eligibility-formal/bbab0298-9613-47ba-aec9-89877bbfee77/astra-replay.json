@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "method": "Independent replay of every retained pre-solve SMT string in a separate fresh Z3 context; no producer/native execution",
+  "proofSha256": "3805b7736173144d1942b0a99d002f9f6674a3c0af5603e69eef57f01880e1c2",
+  "sourcesZipSha256": "fb9faf16f908857163a2b156c266390455fdc7322e9199ce259a8c76d574db24",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-query-carrier-eligibility.py": "4f1545770ce7a26c166073fedb626e81768c35daa3e58cc8e5b43ede75fa1c21",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-source-completeness.ts": "2bb00adddc3f2a29be2ce5701d4be59cbbf586b890a5bb01a4c616a39b47db07",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/src/security-query-use.ts": "232672f54adb502d208fec7f92baa9fb3c92a8c7e74ad812bf2bcf32200e104f",
+    "tools/security/pg-query-carrier-eligibility.py": "8bfbc9fa844dc281ec41327ed613f51b481aa32d8e1793064696498dae736dba"
+  },
+  "sourcePins": 4,
+  "allArchivedAndCurrentBytesMatch": true,
+  "z3Version": "4.15.4",
+  "queries": [
+    {
+      "id": "reverse-universal-equals-anti-existence",
+      "smtSha256": "1f623e9d089354ed306412c4464a75b15bed37f3b9ff473438ba3e4f2efacb8b",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat"
+    },
+    {
+      "id": "admission-excludes-selected-ineligible-carrier",
+      "smtSha256": "af380c857dd41427e245be27f3da7dc52de5a140299a948b54638cb26514625f",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat"
+    },
+    {
+      "id": "empty-root-population-cannot-admit-a-carrier",
+      "smtSha256": "8d2490a03865a444c0fc14ed510f29b20a83ef925751cf87d6f582c946dbefec",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat"
+    },
+    {
+      "id": "duplicate-eligible-carriers-refuse",
+      "smtSha256": "2226cb14bad4bf30013283f06304fc23adebfca1cfd4525cbf53e469c5191210",
+      "expected": "unsat",
+      "independentFreshContextResult": "unsat"
+    },
+    {
+      "id": "one-way-completeness-admits-extra-ineligible-carrier",
+      "smtSha256": "f6a8ea7edc7e679964a37a8d9b0e58f7c54b13e17ef79615eb2b3ef36c7aec4f",
+      "expected": "sat",
+      "independentFreshContextResult": "sat"
+    },
+    {
+      "id": "empty-application-does-not-establish-source-admission",
+      "smtSha256": "b8b0334b62a7edc2eadb7bcba3d6a2c5f36d43f070070948a6378ed67aa5bb53",
+      "expected": "sat",
+      "independentFreshContextResult": "sat"
+    },
+    {
+      "id": "populated-exact-source-admits",
+      "smtSha256": "134984c5ff559dceca912ca7c64e0d54fbba4640318d0a4b011876bb5dee623c",
+      "expected": "sat",
+      "independentFreshContextResult": "sat"
+    },
+    {
+      "id": "empty-source-and-root-populations-admit",
+      "smtSha256": "8316479f4f15303eaa0e31ce3c2cda31c383f490ff699fe007a9bef7c3ae225c",
+      "expected": "sat",
+      "independentFreshContextResult": "sat"
+    }
+  ],
+  "counts": {
+    "unsat": 4,
+    "sat": 4
+  },
+  "blockingFindings": [],
+  "scope": "Conditional population algebra: arbitrary Root/Carrier domains and selected, eligible, valid, matches predicates. Matching truth, source/selector/domain identity, RLS eligibility and one stable cut remain premises; no SQL/NULL/collation/key/authenticity/concurrency refinement."
+}

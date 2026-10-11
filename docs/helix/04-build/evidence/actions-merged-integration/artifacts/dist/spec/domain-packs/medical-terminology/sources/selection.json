@@ -1,0 +1,11 @@
+{
+  "upstream_url": "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10CM/2026/icd10cm-Code%20Descriptions-2026.zip",
+  "upstream_sha256": "a852eb91b3344ae38476e63816976ee1eeb94dcced7151118324f060e8499f88",
+  "member": "icd10cm-order-2026.txt",
+  "selection": "First 12 complete lines, including non-billable category records; native line bytes unchanged.",
+  "system": "http://hl7.org/fhir/sid/icd-10-cm",
+  "release": "FY2026-2025-10-01",
+  "effective_start": "2025-10-01",
+  "effective_end": "2026-03-31",
+  "qualification": "Historical October 2025 release, not the April 2026 amendment or current FY2027 code set."
+}

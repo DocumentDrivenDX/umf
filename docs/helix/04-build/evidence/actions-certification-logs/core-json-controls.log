@@ -1,0 +1,12 @@
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/json-data-assert.test.ts:
+(pass) qualification compares complete JSON meaning across portable object prototypes [2.08ms]
+(pass) qualification equality does not normalize hostile or non-JSON meaning [0.13ms]
+(pass) native binary recovery compares every byte without entering the JSON envelope [0.17ms]
+(pass) actual Avro JSON/YAML tree recovery preserves exact unknown native number tokens [28.30ms]
+
+ 4 pass
+ 0 fail
+ 13 expect() calls
+Ran 4 tests across 1 file. [2.91s]

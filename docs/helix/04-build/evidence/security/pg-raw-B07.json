@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B07",
   "backend": "pg-raw",
-  "runId": "1b208b69-cf9c-403f-9410-e8ce65a5a053",
+  "runId": "113928bd-3671-460a-8e1b-08d8e742ae95",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -23,7 +23,7 @@
     "disclosure": "umf.security.disclosure/0.1.0"
   },
   "sourceDigests": {
-    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",
     "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
     "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
     "tests/security/native/pg-raw-disclosure.ts": "5fd809da76f359b83b06237ee4a85bebc357ed261cce3d6bdcfba58552870aa5",
@@ -267,12 +267,12 @@
     "src/extensions/security/dependencies.ts": "b41a355a09017f5b4332b13b66d12c0868d9096e1b85ddad726bf1dc2130369e",
     "src/extensions/security/disclosure.ts": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec",
     "src/extensions/security/evaluate.ts": "243bfc2cdbb0cc8b930974c1c9b3cbda18313eae90a8ce5f0afb154b653790fc",
-    "src/extensions/security/logic.ts": "66cd7c1c754698322422fd97f1a8ddd2babfa6095a96ea52a1485b86b457adf8",
+    "src/extensions/security/logic.ts": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300",
     "src/extensions/security/policy.ts": "111ff9253f8cba446a9d40cc6321050e2d4a7399c074e32cff288a5a343d253c",
     "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
     "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
     "src/extensions/security/write.ts": "d920957f75ae26b0a5a4c57ecc8a5c82902de85f7dc9ebf9f7745ee420fbf722",
-    "src/index.ts": "675dc3578d3c229de8e05acb0c1b2d299f43865b1d4e00cba89d559fafd8693b",
+    "src/index.ts": "43dcc0468d22c382d5a59fe9e65aadab197da27356031054dc8277c8803a8ab0",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "14955a4e5fd41dc0a6ab5e13ceac37bf4264ff6e35e35af462da3ee918c8eb5c",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -280,9 +280,9 @@
     "src/model/facets.ts": "3ec3b7fa1a08b01212ec87a2911659e252c2e74c091df75b07a7d9d9988bc77b",
     "src/model/field-kind.ts": "8f5cb0167eed98df0181fd0b9dd687b08a4d9024f980705b8612f12f3692c4d9",
     "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
-    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
     "src/model/key-transition.ts": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172",
-    "src/model/key-tuple.ts": "a59ca480ffa394d30228660bbecf485c736a62111d97a99f01ff8598174bb1e2",
+    "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
     "src/model/keys.ts": "48205321c0c9bb4b3cc826a00972c3dc90ad5a2cabf292ddf68d1ff8979c61b6",
     "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
     "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
@@ -291,10 +291,10 @@
     "src/model/relationship-selection.ts": "05911be90bcc544e41764fbd1188207bf5c1d60e693dd3816cb99d2aca6ec18f",
     "src/model/relationship-transition.ts": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36",
     "src/model/relationships.ts": "7ec61bd01dc678a6d21d8bfda60c6391bcd1585257e5dd204e5e8ac0aaa2f1bc",
-    "src/model/schema-literals.ts": "6c28d92fe726fdf6ead0d29c78bd87fa9396667cb23d61ce2758b9f4707228b1",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
     "src/model/schema-properties-transition-schema.ts": "620628fb3f7e92e5bcd422f3210bd89c8f1e42be326b4e446d6b83febdf51597",
     "src/model/schema-properties-transition.ts": "e8e4a567c2073c5cd07b66d13b970ec21c2cfc6e1725601cafbc8308967a4e56",
-    "src/model/schema-properties.ts": "0d5e1a3ada65d5eddf08720714d2f396fad1376340882e9863c78aa0680461f7",
+    "src/model/schema-properties.ts": "1bb9c41b8a904b09d679e6231a2af7b3c425e9d4d93e97a0700d296eed4773e2",
     "src/model/selection-schemas.ts": "1c0142a7e5a92ad804590e6aae6ab5d5c9e4be97f2e56baa51a36cab79f7dfd5",
     "src/model/selection.ts": "101d15bea9c048316aa557b82d6a8edab31573cd976bf30f1e50ceba11b65dda",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
@@ -337,10 +337,10 @@
     "src/validation/catalog-integers.ts": "123154d1bd113d31bb4d0fe6521bbeb04a24c4852c20d4e3e74777822531686c",
     "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
-    "src/validation/keys.ts": "78d90a75119d16c87c890c3f84e0bab4db2a3e811d103984a735d0904d03a71a",
-    "src/validation/relationships.ts": "6e2d48d4978361cf78b9535958f3f6ac85008c3707b051021255e6bf36d5aba3",
-    "src/validation/schema-properties.ts": "c09523e523969cbda7eac3bad6a9678c5c25ac093095dd653c8b1c04dfd1daab",
-    "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0"
+    "src/validation/keys.ts": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb",
+    "src/validation/relationships.ts": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8",
+    "src/validation/schema-properties.ts": "db5e4a0cbb2de5fc1dd5b5720c03ec36470739deb0b81522036f5171614588bd",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681"
   },
   "observations": [
     {

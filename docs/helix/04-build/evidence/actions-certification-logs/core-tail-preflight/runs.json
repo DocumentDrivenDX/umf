@@ -1,0 +1,308 @@
+[
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/avro-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/141.log",
+    "logSha256": "8622f47a5e0b5552af4e6e3149ac337a5dfd7c2e05d3e2cfa1483a6a1b803d11"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/avro-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/142.log",
+    "logSha256": "1fd9a34142e585e16228e682b719d82543bbdab7c2c8fc0efe6010baf7710e7b"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/postgresql-target-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/143.log",
+    "logSha256": "060dd27984e26619472299d909ea2f7510cd17b6a442fa76830c37d318ca5f4e"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/postgresql-target-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/144.log",
+    "logSha256": "30761a8b77b75e657ad23333a115e2e4500ecd3c455efbf56dd87ccad548ffbe"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/postgresql-partitioned-key-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/145.log",
+    "logSha256": "18069dedb7b1af107c5b8191c7c2fbed95b996663b36ab77dda6766ab5bcda55"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/graphql-target-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/146.log",
+    "logSha256": "a5df34fd7042fd5df35341f616dfdd6cbaf59d3579905264e2acff3101f8b753"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/relationship/graphql-target-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/147.log",
+    "logSha256": "398bc7b8c1cc0483bcbd3c9ac2750474f6a7d69234392e29a151cd60d2ea2e5a"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/postgresql-indexes-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/148.log",
+    "logSha256": "9c7b029b66d5dd195c0acabba32adb191ad889bbc4c8d4d711734b86e004ab52"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/postgresql-indexes-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/149.log",
+    "logSha256": "b48f37c77bf2ae4041ed2decb1bbf9891fb7832ce1fd52df61b92ddae1be8760"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-indexes-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/150.log",
+    "logSha256": "5fc7e20e1554c35bdc246425a6960c397dc7753d8d0155d6b9b88e4fbdf37e2b"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-indexes-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/151.log",
+    "logSha256": "9a6027d7b1a5e3cdc4f50ef5869e30d0d56f67a99e584a544ebf0ef1c4de8910"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-tables-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/152.log",
+    "logSha256": "ed4c42b2a05e4b09e5437f6772fed190347da09e2a402e9d8f32e3e658743a9c"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-tables-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/153.log",
+    "logSha256": "cfad2c1a62ba5a7ad4eb66f9e120a17edf610636ee63c51fafb0fd2ab1c8b7a7"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-tables-indexes-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/154.log",
+    "logSha256": "87e654425567a19721758ecfe40b1423e0db3822443d8a8c4edebf52978024bd"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-tables-indexes-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/155.log",
+    "logSha256": "ac26e894154a793643e46c93833e2715a3d4b2eec85354d622c93bd410bba041"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/delta-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/156.log",
+    "logSha256": "42f41521558790b2c7ec639721e72624b3635d81e13b8e315224b9f057ab077e"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/delta-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/157.log",
+    "logSha256": "12a1696f1cde5412129bbfec06a2011154eefc1b04b31692a0aa37f60b0f3bcc"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/iceberg-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/158.log",
+    "logSha256": "efa1667b44b4865c36de5d22a933fa9d1b9b860da4f884ced3020ab43c9dd55d"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/iceberg-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/159.log",
+    "logSha256": "0f2cd1dc958df21de3e0db890d6b2fccd2577afe02436a2ded1d35c45872e911"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/160.log",
+    "logSha256": "560f6f6f89b1bc781d08b4dd6809d5798b5196b223d0af726ddb60195b3cf4e9"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/161.log",
+    "logSha256": "789d1ca49f2c06a2a8f4cf00071ded10c21a4f64bdc0389b4754184963f4a3fd"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/multi-target-delta-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/162.log",
+    "logSha256": "72d544bca47d06e32e87619fea4c097d146106d9c264cba2279557ff62e6aa2b"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/multi-target-delta-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/163.log",
+    "logSha256": "728810d137b401a5a5efa6261d1ded674c04b04dfaef29ab8861c5de59d5f366"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/164.log",
+    "logSha256": "fe2be181098b6a66e87f7f2136dd7d7fd855f504991e8ad71962e574ceea1d42"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/165.log",
+    "logSha256": "ddda5f710e389143d749fe1c52cc3913a1a5372bf91aab565149dc689b3c10b2"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-indexes-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/166.log",
+    "logSha256": "d83ab5409a45a806d09b79d777a457315c575d17eedb018a5c01953335490580"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-tables-indexes-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/167.log",
+    "logSha256": "3bd357f90033691346dda6147e0d14022407da5e1eecca71c3bef50c586ddab4"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-graphql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/168.log",
+    "logSha256": "c360276590ed3ceab98ad48baf368efb841e5e21b8ab8e8a451a31f7532c0a3d"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-graphql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/169.log",
+    "logSha256": "9642643f609d127cbac0da704d4a60621bb875ae4dac18b1aa3962d66e8aff47"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/170.log",
+    "logSha256": "a1e83792ae7ed6f0667e0a917ac1f67ace51414afa3af170e0506aab6958a46d"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/projections/ddd-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/171.log",
+    "logSha256": "90a81e09a09a05a6df98180a7f18188375a2b5a3575cbdb0ba1ac0737f868cc6"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/172.log",
+    "logSha256": "1650cf001c9279a9381e81ab6111a2185e56842e8f7e25d1318c2f3a5b67adaf"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/binding/sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/173.log",
+    "logSha256": "8f0189eae4b20dd6385f748907f3c6753de1ec9f607e2f660b943226244d3668"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/relationship-conformance-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": "fixtures/validation/core-tail-preflight/174.log",
+    "logSha256": "7b63380ee19e7efa4a25801f952feb02cdaa4a814e967ef3499e4fd92959bf5e"
+  }
+]

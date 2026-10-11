@@ -51,8 +51,13 @@ relationship and binding acceptance”; those results qualify their recorded
 source, versions and subsets. The core 0.8.0 API simplification and current-only
 Key tuple correction have later scoped evidence in
 [schema-property execution evidence](evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
-Fresh repository regression and native qualification remain incomplete for that
-revision; earlier green acceptance must not be presented as current acceptance.
+The later [action certificate](evidence/actions-certification.md) records completed
+core regression and bounded native qualification at its captured revision. The
+current integration changes those inputs and needs fresh evidence; earlier green
+acceptance must not be presented as acceptance of changed source. The
+[documentation build plan](actions-documentation-plan.md) and
+[delivery record](evidence/actions-documentation-execution.md) govern the new
+learning path and website build.
 
 | Next work | Governing input | Completion boundary |
 | --- | --- | --- |
@@ -62,6 +67,59 @@ revision; earlier green acceptance must not be presented as current acceptance.
 
 These are preparation and verification obligations. They do not select a new
 finalization subset or waive the remaining product requirements.
+
+### Action formal-analysis execution (2026-10-08)
+
+Astra-reviewed bounded plan executed: independent Z3 command relations, actual
+phased TLC safety/progress checks and native-history sequentialization. Semantic
+counterexamples changed association observability, transactional cross-Key alias
+resolution and executor-owned invariant dependency boundaries. See
+[findings/results/limits](evidence/actions-formal-analysis.md). These are design
+and synthetic executor observations, not public-library or production acceptance.
+
+### Declarative action design iteration 2 (2026-10-08)
+
+Owner-directed improvement adds CONTRACT-057 for bounded rule/key selectors,
+revision/invocation/lookup, controlled handler access, concurrency/auth timing,
+validation-only preview and audit/receipt epochs. CONTRACT-056 now distinguishes
+role authorization from general policy bindings. ACT-09–13 and EX-01–EX-05 are
+allocated; no new runtime or public-library acceptance is claimed.
+
+Implement complete normative fixtures and the declaration library first; optional
+static rule checking follows with its own versioned evidence. Consumer executor
+code requires a separate story/design for isolation, native invariant scope,
+policy coupling and durable reconciliation. Current core qualification remains
+an independent gate. Earlier bounded experiments remain evidence only for their
+original synthetic subset; they do not prove the expanded contract.
+
+### Declarative action design handoff (2026-10-08)
+
+Current action identities are FEAT-900, SD-900, US/TD/STP-900 for declarations and US/TD/STP-901 for the transactional consumer, governed by CONTRACT-900/901. The dated handoff below retains its former branch-local IDs; source-specific qualification keeps those historical identities. Security artifacts now own the overlapping IDs on main.
+
+Owner scope now includes implementation and complete bounded qualification in the
+isolated worktree. FR-51, FEAT-008,
+US-078, CONTRACT-056, SD-008, TD-078 and STP-078 define a local-document extension
+contract. US-056, TD-056 and STP-056 allocate the requested reference-consumer
+implementation and EX-01–05 qualification; production release and downstream
+adoption remain separate.
+Current TableSpec finalization/offline-composition priorities are not displaced.
+
+| Gate | Governing artifact | Required outcome |
+| --- | --- | --- |
+| Requirements/interface review | FEAT-008, US-078, CONTRACT-056 | Review local-only references, explicit-key recipes, contract read/write frames, postconditions, handler/profile boundaries and independent DDD binding. |
+| Library implementation readiness | TD-078, STP-078, current core evidence | Resolve current core qualification gaps; create exercising tests for all nine ACs before acceptance; preserve whole-document registry behavior. |
+| Declaration library acceptance | TD-078, STP-078 | Package/schema audits, scoped regression, typechecks, public build and Bun/Chromium proof with exact versions/fingerprints and limits. |
+| Consumer executor qualification | CONTRACT-057, TD-056, STP-056 | Real store evidence for authorization, state checks, atomic failure, replay races, native side effects and freshness receipts; no mock-derived support claim. |
+
+Scoped public-library tests and actual Chromium now pass;
+[historical certification](evidence/actions-certification.md) records completed
+qualification for its exact sources and bounded reference consumer. Fresh
+integrated qualification is tracked separately in the documentation delivery record. The bounded design investigation
+has executed portable, real-store and protocol experiments; see
+[evidence](evidence/actions-plan-execution.md) for separate gate status. Core admission, native equivalence,
+Python action-semantic support, Palantir import/export and cross-document action
+references remain separate. The other consumer proposal sections are not adopted
+by this action handoff.
 
 ### Format separation follow-on
 
@@ -5453,7 +5511,7 @@ evidence is recorded in [python-consumers.md](evidence/python-consumers.md).
 
 Owner direction assigns all pack metadata, tabular schemas and schema tooling to
 UMF, with generation, CSV output, ingestion and data testing in TableSpec.
-CONTRACT-052 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
+CONTRACT-056 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
 provenance and explicit execution boundaries. The legal source pack lives under
 `spec/domain-packs/legal/`; generated consumer snapshots preserve compatibility.
 
@@ -5483,7 +5541,7 @@ specific redistribution clearance. Scoped evidence:
 
 ### Mixed legal corpus (2026-10-08)
 
-Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-052.
+Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-056.
 Retain the eight generated firm-operation tables; add one sourced case, seven
 original public PDFs and 383 per-page extraction records. Court filings,
 deposition designations and corporate exhibits remain separately qualified.
@@ -5495,12 +5553,12 @@ Scoped checks and limitations are recorded in
 
 ### Medical carrier and terminology expansion — pending (2026-10-08)
 
-Authority: FR-45 and CONTRACT-052. This is a dependency sequence for the expanded
+Authority: FR-51 and CONTRACT-056. This is a dependency sequence for the expanded
 requirement, not execution evidence or an implementation-ready schema design.
 The clinical 1.0.0 checks remain scoped to their existing corpus.
 
 1. Inventory exact CMS synthetic RIF, DE-SynPUF, Blue Button and official FHIR
-   candidate files against every carrier area in CONTRACT-052. Record versions,
+   candidate files against every carrier area in CONTRACT-056. Record versions,
    coverage gaps, download/access requirements and embedded terminology rights.
    Select the smallest useful enrollment/claim source subset; keep historical
    ICD-9 claims separate. Exit: source/rights manifest and explicit gap matrix.
@@ -5532,7 +5590,7 @@ coverage matrix and the separate consumer gates pass.
 
 ### Epidemiology and imaging subpacks — pending (2026-10-08)
 
-Authority: FR-45 and CONTRACT-052. Keep these independent of carrier delivery,
+Authority: FR-51 and CONTRACT-056. Keep these independent of carrier delivery,
 while sharing the versioned terminology/source-binding work above.
 
 - Epidemiology: select a bounded CDC WONDER export and pin query, release,
@@ -5552,11 +5610,11 @@ Frame linked stories/designs/tests for each subpack before implementation.
 Cross-subpack tests must reject fabricated patient links and population-to-patient
 promotion. Record source coverage and rights gaps without inventing source facts.
 
-### Medical subpack implementation — US-055 (2026-10-08)
+### Medical subpack implementation — US-078 (2026-10-08)
 
-US-055 / TD-055 / STP-055 implement a bounded first delivery of the carrier,
+US-078 / TD-078 / STP-078 implement a bounded first delivery of the carrier,
 epidemiology, imaging and terminology requirements above. Four independent
-1.0.0 packs use CONTRACT-052 and the unchanged shared source exporter and TableSpec
+1.0.0 packs use CONTRACT-056 and the unchanged shared source exporter and TableSpec
 local ingestion/archive paths. Browser-compatible projections retain original
 text and exact native fragments; the host builder produces deterministic source
 manifests, native TableSpec schemas and CSV rows without fetching.
@@ -5575,18 +5633,18 @@ CMS/TCIA source qualification, full dictionaries/maps, richer native-conformance
 profiles and Truss/Ashlar engine adoption still require separate execution evidence.
 ## Full domain catalog first release
 
-Astra ultra reviewed SD-026 and CONTRACT-053. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
+Astra ultra reviewed SD-026 and CONTRACT-057. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
 
 ### Domain catalog first release
 
 The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and graph
-companions are implemented under SD-026/CONTRACT-053. See
+companions are implemented under SD-026/CONTRACT-057. See
 [evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
 review corrections, executable results and remaining qualification boundaries.
 
 ### Public dataset schema packs (2026-10-08)
 
-FR-45 and CONTRACT-052 govern the owner's selected NYC TLC, MovieLens,
+FR-51 and CONTRACT-056 govern the owner's selected NYC TLC, MovieLens,
 NOAA GHCN Daily and GTFS Schedule profiles. Generate 16 authored TableSpec
 schemas and four external-source manifests with distinct documentation pins.
 Preserve native missing/time/code semantics and explicit unresolved row inputs.
@@ -5602,7 +5660,7 @@ new TableSpec generator is claimed.
 
 ### Ontology-aware schema explorer (2026-10-08)
 
-Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-053 graph-schema
+Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-057 graph-schema
 inspection: split Tables/Ontology navigation, display record-owned properties
 and keys, separate incoming/outgoing relationships, and provide clickable
 record neighborhoods/full-model maps. Reuse stable module/element identity.
@@ -5647,7 +5705,7 @@ before publication. Rollback restores the prior viewer and rebuilds bundles.
 
 ### Integrated medical family and public samples
 
-Owner direction completes the sample integration under US-055/TD-055/STP-055:
+Owner direction completes the sample integration under US-078/TD-078/STP-078:
 qualify bounded public CMS CSV and TCIA DICOM sources, retain exact native meaning
 and originals, add all subpack fixed profiles/ontology companions, link the
 Medical family in the explorer and expose allowed original/row downloads.
@@ -5691,7 +5749,7 @@ production scheduler/email remain separately owned consumer work.
 ### Ashlar-driven Delta DDL generation — 2026-10-08
 
 Owner direction places the reusable Delta DDL generator in UMF.
-[CONTRACT-050](../02-design/contracts/CONTRACT-050-delta-ddl.md) defines
+[CONTRACT-064](../02-design/contracts/CONTRACT-064-delta-ddl.md) defines
 `umf.delta.definition` 0.1.0 alongside existing exact `umf.delta` schemas.
 The pure TypeScript API generates proposed managed CREATE statements with
 explicit nullability, clustering/partitioning and five selected table properties.
@@ -5710,7 +5768,7 @@ layout before replacing installation input.
 
 ### Delta DDL decimal iteration — 2026-10-08
 
-CONTRACT-050 now covers canonical decimal(p,s) declarations with precision 1–38
+CONTRACT-062 now covers canonical decimal(p,s) declarations with precision 1–38
 and scale 0–precision. The emitter preserves both authored integers without
 rounding/defaulting; unsupported bounds, noncanonical spellings and SQL-like
 content refuse. Exact original schema recovery remains required.
@@ -5726,7 +5784,7 @@ dialects remain subsequent explicit work, not claimed support.
 
 ### Delta DDL recursive type iteration — 2026-10-08
 
-Owner direction grows the reusable generator in UMF. CONTRACT-050 now permits
+Owner direction grows the reusable generator in UMF. CONTRACT-062 now permits
 recursive STRUCT/ARRAY/MAP and explicit TIMESTAMP_NTZ without changing the
 preserved schema envelope or definition vocabulary shape. Ordered struct fields,
 quoted names, decimal parameters and nullability remain explicit. Non-null array
@@ -5748,7 +5806,7 @@ core-to-physical projection remain separate work.
 
 ### Delta DDL column-description iteration — 2026-10-08
 
-Reusable generation remains UMF-owned. CONTRACT-050 now interprets only the
+Reusable generation remains UMF-owned. CONTRACT-062 now interprets only the
 Delta field metadata key `comment`, at top-level and nested STRUCT fields.
 Empty/Unicode descriptions and apostrophes/backslashes retain exact source
 schema and emit escaped Databricks literals. Other metadata, nonstring comments,
@@ -5767,7 +5825,7 @@ separate increments.
 ### Delta DDL complete-bundle iteration — 2026-10-08
 
 Reusable multi-table generation now belongs to UMF through
-`generateDeltaDDLBundle`, governed by CONTRACT-050. The browser-compatible API
+`generateDeltaDDLBundle`, governed by CONTRACT-062. The browser-compatible API
 retains caller order, exact per-table schemas, copied physical definitions and
 source document IDs. It requires explicit catalog/schema/table names and refuses
 empty bundles, duplicate document IDs, case-insensitive qualified-name collisions
@@ -10693,3 +10751,844 @@ The native harness now pins that refreshed owner receipt. Fresh original-candida
 US-056-AC1/AC2/AC10 gain component evidence only; acceptance remains26/132. Registered association interpretation/provenance, complete canonical key/incidence and protected mutation closure, authenticated original issuer/current-cut/report custody, final publication and other backend implementations remain required. Astra ultra independently verified the owner receipt's292 current/preimage pins,36 observations and50 captured test names/results with no blocking findings; review did not execute tests or native probes.
 
 Astra ultra also verified both final native receipts:702 current/preimage pins each,121/129 unique matching observations, unchanged31 native SQL inputs, intended correspondence/privilege/complete-inventory refusals and completed cleanup. No blockers for this scoped landing; review was read-only.
+
+## Pending binding provenance and report ordering — 2026-10-10
+
+The native source observer and exact original mapping extraction expose an ordering obligation, not a reason to weaken `accepted_binding`. CONTRACT-001 roots that category in an immutable accepted report; current report preparation instead requires complete native inventory. Requiring an already accepted report before every binding-derived native definition, while requiring those definitions before producing that same report, creates a strict dependency cycle. The current implementation refuses present-binding report preparation and complete inventory; it does not implement this proposed protocol.
+
+Select an explicit operation-local pending binding source state for the next layout/producer spike. A pending relationship is a real native definition with reserved native identity, endpoints and association property owner, but its source kind is an internal candidate `operation_binding`, never `accepted_binding` or `accepted_document`. Its provenance retains the actual writer/ordinal, unpublished revision, full original binding/input bytes and exact mapping pointer/fragment, with independent original association/target Record dependencies. It may be constructed only after registered vocabulary/owner interpretation and original authenticated operation admission. This state is not a new shared UMF semantic kind, ontology assertion or published catalog-view source category. Its native columns/checks, registered decoder and migration are unadopted layout work; the existing source union must not be silently reinterpreted.
+
+The protected transaction sequence is: (1) archive original input/documents/binding and stage the exact pending physical association effects; (2) independently enumerate complete native definitions/endpoints/keys/property homes and all original dependencies at one generation; (3) produce and retain the complete immutable report describing those observed effects, original sources and registered interpretations; (4) resolve the actual report's acceptedInput.binding against the complete original archive, promote only matching pending source tuples to `accepted_binding`, and retain the same definition identities/endpoints/property homes; (5) freshly verify the complete final physical inventory, provenance closure and report correspondence at the resulting generation; (6) atomically publish the head and finalized operation. No ordinary catalog/read/mutation path may observe or execute a pending definition; neither publication nor transaction finalization may retain pending sources. Errors roll back the whole acceptance. A constructible preparation, returned mapping, report bytes or matching count cannot bypass these gates.
+
+Report insertion and source promotion are real effects and may advance the operation generation. Final recheck must therefore acquire its own current cut after both; it cannot reuse the pre-report inventory cut. The immutable report describes semantic physical effects and exact original sources, not a claim that its own insertion or later source promotion did not occur. Final comparison must explicitly account for the sole permitted provenance promotion, verify every other definition/effect remains exact, and independently verify the report/input/binding bytes and registered profile. A hash/count-only comparison, normalized omission of unknown effects or fabricated zero inventory is forbidden. Any further catalog, authority or relevant data mutation invalidates the final cut until a complete fresh recheck; the host and native publication owner must enforce the same original operation/generation and required wait/drain protocol.
+
+Implementation exits, in order: issue the exact pending native source tuple/layout through the owner-controlled schema/exporter and a closed language-neutral contract; implement registered original-source association interpretation and independently qualified native definition staging; implement a complete pending-aware physical inventory and report producer; implement immutable report correspondence and exact source promotion; qualify fresh final inventory/authority publication and ordinary-role closure. Every exit retains source/definition/cut evidence. This proposal selects the ordering, not owner registration, layout adoption or a functioning backend.
+
+US-056-AC1/AC2/AC10 tests must cover the full positive transaction and exact native binding source/history projection, plus: stage accepted provenance before report; fabricated document provenance; omit/extra pending mapping or dependency; change key/role/attribute/home/endpoint under equal counts; substitute report/input/binding/profile; promote another writer/ordinal/revision; mutate after recheck; keep a pending source at head publication or commit; ordinary reads/writes of pending definitions; failure at each phase with complete rollback and source/history preservation. Original caller/issuer/current-cut and complete writer/privilege/cleanup/drain evidence remain required. Conditional solver results cannot close these native cases or promote the26/132 acceptance total.
+
+## Conditional binding publication ordering proof — 2026-10-10
+
+`tools/security/prove-binding-publication-order.py` retains14 original SMT-LIB formulas and independently parses/replays every formula with Z3 4.15.4. `binding-publication-order/fb3ebd52-120f-40e3-9d3c-7b47c1cf73e6/proof.json` passes8 UNSAT safety/incompatibility checks and6 SAT feasibility/weakened controls, with8 current source/preimage pins; SHA256 `619ddae6df8bf6faf7557c85bdfebadbde67774ce997d4786cf13e5627b24477`.
+
+The incompatible strict order stage→inventory→report→stage is UNSAT; this is an excluded proposed ordering, not a claim that current code runs cyclically. The selected pending-source sequence has a SAT execution. Conditional publication excludes report/promotion/recheck order violations, reuse of the earlier report-generation cut, a later effect at publication and remaining pending binding sources. Full quantified native physical identity/value parity forbids extra, omitted or substituted effects; a weakened equal-identity inventory admits a changed value. Independent weakened generation, pending-source and ordering gates admit bad schedules. Original byte custody alone is compatible with absent authority/registration. The initial12-checkac7a9204 predecessor omitted the explicit pending-source law and used a weaker substitution premise; it remains historical with preimages, not current final qualification.
+
+The model has fixed selected event families over unbounded integer order/generation and abstract full physical values. Original owner/issuer authentication, registered semantics, exact original/report-source correspondence, complete closure, monotone native generation correspondence and full physical inventory equality are explicit premises. It is not a native SQL refinement, concurrency/liveness theorem, formal JSON decoder proof or implemented report/promotion/finalizer. A native report insertion and provenance promotion may both advance generation; final publication must bind a fresh post-promotion cut. All unknown effects/profiles remain refusals. Native installation must independently verify the proposed internal source category/checks and exact permitted source promotion before any accepted-view admission.
+
+This ordering is a backend compilation/acceptance obligation for both relational and graph mappings. The proposed internal `operation_binding` source tuple is a Truss layout candidate; it does not add a shared UMF semantic kind or impose Truss columns on Ashlar or other implementations. Their own pending effect/provenance mechanism must prove the same original-source, complete-effect, report, final-cut and publication requirements under their qualified physical controls. AC1/AC2/AC10 remain open; historical acceptance remains26/132.
+
+### Exact head transition and post-head finalization obligation
+
+The existing `runtime_observe_catalog_generation` observes the actual `schema_head` row update: it increments effect_generation and resets phase/readiness/sealed/application state. The proposed protected finalizer must retain this observer. The pre-head recheck only authorizes the exact original head transition; it does not authorize commit. Under the same original exclusive head/caller/operation custody, write exactly the selected old-head→new-revision transition, independently observe the actual generation increment and reset state, then run a distinct complete post-head verifier. That verifier checks the exact new head, immutable report/input/binding, fully promoted definition/source inventory, journal/feed/non-row effects, complete authority and zero pending sources, and establishes readiness/sealing/application evidence at the actual resulting generation. Commit/public disclosure requires that generation to remain current. A further relevant effect invalidates it; arbitrary late mutations receive no exemption.
+
+For the formal selected single-head-row event, the head generation is the pre-head generation plus one. This correspondence is a declared native refinement obligation, not a universal assumption about a larger finalizer transaction: every additional observed journal/feed/catalog event must be completed and included before the post-head cut, with exact registered inventory/generation correspondence. The current `runtime_collect_new_core_catalog_inventory` rejects a head that has reached the candidate revision, so it cannot serve as this post-head verifier. The new finalization verifier and complete commit barrier must be implemented and qualified separately; the existing unconditional fail-closed barrier remains installed until that full replacement is ready. A phase flag or a report hash cannot substitute for it. Add native tests for the head-trigger reset, pre-head evidence reuse, an extra post-head effect, wrong old/new head, incomplete post-head journal/feed closure and failure after head update with full rollback.
+
+## Reviewed final head-aware publication proof — 2026-10-10
+
+Astra review identified two defects in the initial protocol qualification: the actual head observer increments generation and clears readiness, and the feasible SAT witness allowed an empty physical inventory. The final design requires a distinct post-head finalizer/verifier and preserves the unconditional current commit refusal until a complete replacement is qualified. The final model requires a present definition in its feasible execution, models the selected actual head event and post-head/commit generation cuts, and uses named guards so every weakened control erases exactly its intended guard while retaining the others.
+
+Final `binding-publication-order/903fcd60-6635-4cda-8651-6879dac95dd2/proof.json` passes18 retained/replayed formulas:11 UNSAT and7 SAT, with10 current/preimage pins including the actual native catalog-generation observer and commit barrier. SHA256 `4183dd15fc92d980acedcab6d307684c01e5e0f5f41c01153af74dd59208a5e5`. Added laws reject a post-head check preceding the head event, reuse of pre-head readiness and an effect after post-head verification; the corresponding omitted commit-cut guard admits a later effect. The prior12/14-check receipts remain historical and cannot establish the corrected head-aware protocol. Existing registered/authority/source/full-parity/closure and native event-generation correspondence premises remain explicit. No native pending layout, report producer, promotion, post-head verifier, complete finalizer or backend acceptance is claimed;26/132 remains unchanged.
+
+Astra ultra independently replayed all18 final formulas (11 UNSAT/7 SAT), verified10 current source/preimage pins and exact formula hashes, and confirmed the head-generation and populated/isolation findings are resolved. No remaining blocker for this qualified design/formal checkpoint; native refinement and implemented publication remain open.
+
+## Native pending relationship-source tuple candidate — 2026-10-10
+
+The fresh-layout adjunct `catalog-pending-binding-source-v0.1.proposal.sql` implements the selected internal `operation_binding` shape on generic `rel_def`, with no per-ontology tables/indexes. Five columns retain native writer xid8, operation ordinal bigint, binding revision int, C-collated original mapping pointer and exact mapping bytea. Native composite FK requires the referenced original operation row; the binding FK requires the original archive revision. The pending branch requires every field and association property owner, the same positive binding/creation revision, a nonnegative ordinal,1–4096 pointer bytes and1–1048576 mapping bytes. Accepted-document and accepted-binding branches preserve their prior predicates and require all pending columns NULL. The existing source-home legacy ordinal/FK interpretation is not replaced by this adjunct.
+
+`tools/security/capture-pending-binding-layout.ts` uses the actual UMF PostgreSQL owner importer, retains the full native-source model, saves/reloads it and exports the SQL used by the native test. Native source, saved model and owner-export SHA256 are respectively `5242d6cc5c77ac0f88184e74fc7af5369254a4aa9f1c057292b048e641c23d76`, `667cb771d1a56c0b464527e88f26d590d59008b3e7a75d6ee5ded3d7f5157cff` and `183abbb3884210ca18c967351ea3352399468970fde9f5a447234ac8a4f9ee45`. The retained capture receipt pins five owner entry sources and Bun1.4.2; it is original-source/saved-export correspondence, not complete dependency/toolchain custody or portable semantic extraction. Preserve its raw native extension/unknown content. This is not adopted installation or populated conversion SQL.
+
+`tools/security/truss-binding-catalog-stage.py --pending-layout` installs the exact owner-exported adjunct in isolated PostgreSQL16.15. Excluded installer tests insert a structurally complete pending row using actual operation/type IDs and the original fragment from the qualified source-extraction receipt; they independently read native column types/C collation, exact tuple bytes and the generation observer increment. Named23514 CHECK controls reject each missing field/property owner, NULL/unknown/premature source kind, mixed document/binding tuples, empty/oversized pointer/fragment, nonpositive revision and negative ordinal. Named23503 FK controls separately reject absent operation ordinal/writer and original archive. Each previously valid accepted-source branch independently rejects each single added pending field. A separate excluded installer document fixture makes the legacy since_rev/doc_ord FK valid at revision zero, isolating positive pending archive revision versus a different valid creation revision; the exact source-completeness CHECK rejects it. All injections and attempted rows roll back to complete document/key/relationship/endpoint/archive/operation snapshots; the archive immutability guard is ALWAYS before its missing-archive probe and after restoration.
+
+The archive FK refuses plain truncate with0A000 before the immutability trigger; a separate cascading attempt reaches that trigger and receives its intended55000 with zero effects. Ordinary SET LOCAL ROLE cannot read/insert pending rows (42501); this is not authenticated login or complete callable/privilege closure. Complete binding inventory remains0A000 and the schema-qualified existing deferred commit barrier remains55000 `complete runtime finalizer is not installed`. That unconditional barrier is not a pending-specific finalizer proof. Original accepted-branch positive fixtures prove shape preservation only, not accepted report provenance.
+
+Final occupied-prestate `truss-binding-catalog-stage/15e512a9-2eab-4cd7-9951-09772ce37125/native.json` passes214 observations/711 current-preimage pins, SHA256 `784a2506fb4c1847eec206fb6e380cfbcf08799f465660dfb6c3e44146c3186a`. Fresh pending layout `dfcb2f45-8e57-48f3-bc8e-2c3791c668a0/native.json` passes206/711, SHA256 `2f9db9808d3d9b4aa492d382943d430ed7a5c0f012d28989f1631ad76bb807b7`. Unchanged original layout `2b0fd119-80c6-44a0-a527-510b53d104f2/native.json` passes121/702, SHA256 `c582c9f06dcfba6bd8be0237cbbe958fb9a0312c245ab8104210cf197378d6e7`. Exact source ZIPs, observations and required cleanup are retained. Development failures7bd1f91a (new FK refuses truncate before trigger) and9bcdbfaa (unqualified constraint name resolves nowhere) are retained failures, not passes; ba237cd9/1ff1b251/95ef117c/f4382068 predecessors lack final native readback or isolated controls and remain historical with captured preimages.
+
+FK/shape evidence proves referenced row existence and completeness, not that the operation is the authenticated current writer/cut, its kind/phase is admitted, the archive writer/input agrees, or the pointer/fragment represents registered semantics. Existing admitted helpers do not stage or interpret this pending source. The source observer's authored-core inventory cannot be reused unchanged once a binding-derived relationship is staged; the registered pending-aware inventory/source verifier must independently account for it without fabricating an authored relationship or weakening completeness. Whole pending artifact/operation aggregate resource budgets, full lifecycle/history/promotion, protected ordinary API, native key/incidence/attribute closure and post-head publication remain required. US-056-AC1/AC2/AC10 gain component evidence only;26/132 remains unchanged.
+
+Astra ultra independently verified214/711,206/711 and121/702 matching observations/current-preimage pins, exact ZIPs, original accepted predicates, NULL-safe pending separation, isolated revision equality, full restoration and required cleanup. Both requested control refinements are resolved; no blocker for tuple/FK shape only. Review was read-only and did not execute native probes.
+
+## Original-source private association staging candidate — 2026-10-11
+
+The private PostgreSQL16.15 candidate stages two original binary associations as generic pending rel_def/rel_endpoint metadata, deriving Record owners, ordered fields/keys, role orientation, all storage values and exact mapping fragments from the archived original input. It retains association properties without fabricating authored lineage. Whole-source validation runs once before the ordered exact-byte batch extraction; 4096 mappings pass and 4097 or a later non-object refuse atomically. Original ontology parsing keeps unknown huge numeric content as JSON/original bytes. Typed role/key guards and complete entity/association reference inventories reject aliases, duplicates and malformed unused dependencies.
+
+Final merged-main native receipts under `truss-binding-catalog-stage/`: `0c0f6dba-26cc-4117-8132-9afae1196a41/native.json`: 316 passing observations/713 captured source pins, SHA256 `cda618d1108c041604f9839d08a6d6028b13b229f6c32bf97b1ea73018fc238f`; `7b354d91-ad12-417c-97e6-01ba815e3f40/native.json`: 324 passing observations/713 captured source pins, SHA256 `ab7ef2da6640a685baa0ee18f6e5f42b50c558ec46db548c358624baf35b6ac6`. Fresh and occupied runs retain source ZIPs, exact native readback, eight-component restoration snapshots including lineage, ordinary-role denial and required cleanup. Paired source controls restore the exact operation guard before probing and are excluded installer mutations, not newly owner-issued meanings. Development failures365880f5 (pending-trigger ALTER refusal) and04eec4d9 (native escaped-NUL parser mismatch) remain retained failures; earlier passing receipts are captured predecessor evidence.
+
+This is an unregistered installer candidate, not an adopted layout or protected producer. Native field arrays are limited to256; ontology escaped NUL receives explicit0A000 unsupported-parser refusal while original bytes remain intact. Complete binding inventory still refuses0A000; repeated staging refuses55000; the unchanged unconditional commit barrier refuses55000. Accepted association lineage/history, registered semantic authority, authenticated callable closure, data key/incidence/attribute enforcement, shared aggregate resource accounting, complete reports/promotion and post-head finalization remain open. No whole private0.2/native equivalence or native refinement proof is claimed. US-056-AC1/AC2/AC10 receive component evidence only; acceptance remains26/132.
+
+## Post-stage original source custody candidate — 2026-10-11
+
+`runtime_collect_pending_association_source_candidate` observes pending source custody after actual staging without invoking the authored-only relationship inventory. It requires the current admitted operation, held head exclusion, an existing unpublished revision, exact original input/archive writer/vocabulary/artifact/digest correspondence, original document carrier correspondence and native document integrity. One whole-source mapping batch establishes a complete one-to-one pointer/fragment cohort; every matching pending row retains the current writer/ordinal/revision and exact bytes. Returned mapping digests and the observed generation are component observations, not durable readiness or finalization certificates. Missing/duplicate pointers, byte substitution, an independently valid extra pending row, changed original document metadata and another revision refuse with zero observer effects; ordinary invocation is denied. Eight-component restoration includes lineage.
+
+Final PostgreSQL16.15 receipts under `truss-binding-catalog-stage/`: `428d4fae-c838-4ebd-904b-d12448d47564/native.json` passes338 observations/713 source pins, SHA256 `8fb832c6258f4be67eba63cb5a8e313d35dab56a6b90b04e0f91be587b9d9e45`; `fb8dd6bc-3dab-4ec4-9439-5ec9d4911c04/native.json` passes346 observations/713 source pins, SHA256 `cd136ccd8f79f35ceca8809cd85c1fdd2ba813ddbe5637f82d331a71b798141d`. Source ZIPs, native executions and required cleanup are retained. Predecessors7baac25f/95bfe724 (334/342 observations) lack the independent extra-row control. Predecessor3d7bab6d (331 observations) preceded the original document carrier recheck and is historical only. The observer does not validate relationship storage/endpoints/property/key semantics, original operation issuer/cut, accepted lineage, full core/effect inventory, native data constraints or publication. Full binding inventory and commit barriers remain closed. US-056-AC1/AC2/AC10 receive custody component evidence;26/132 acceptance remains unchanged. Next compose registered source/semantic interpretation and pending-aware complete effect verification; this observer must never substitute for those gates.
+
+## Original pending metadata effect verification candidate — 2026-10-11
+
+The native source resolver now derives original association metadata without insertion; the allocator consumes that result and retains original source provenance. The private effect collector composes the independent exact source cohort with the original Record/Field/Key and authored-core correspondence checks, then compares each full native relationship row against the source-derived row, excluding only the allocated ID and separately verified pending source members. Accepted-source columns, retirement, namespace, owner, name and all storage fields must match; each relation has exactly one correctly oriented endpoint and no fabricated lineage. Existing pre-stage core inventory remains pending-refusing; its new internal core-only mode is not a registered complete effect inventory. Ordinary effect invocation is denied. Full registered inventory still refuses0A000 and finalization55000.
+
+Final retained PostgreSQL16.15 evidence: `truss-binding-catalog-stage/460762fd-b4d0-462e-9be1-545ebc09a813/native.json`: 371 passing observations/717 source pins, SHA256 `69dc7d64afe943b2e818e7047a2f9dd9c04ae91a684c8e7466f3fede62b43308`; `truss-binding-catalog-stage/18458931-eb83-48d4-a847-c1502f96056a/native.json`: 379 passing observations/717 source pins, SHA256 `6c73d00a899ffc8c66376b4091c138b94063ac8b72bf4d76df8ab80c53259d3b`; `truss-owner-catalog-stage/748beedb-0438-4d55-a1ab-deb7c2873ebe/native.json`: 34 passing observations/702 source pins, SHA256 `324a7fc2f22fb93ccc9c561d584219f0164594838ff7b81bbbd20f63a3a5df87`. The absent-binding regression has5 Records/9 Fields/5 Keys and0 relationships/endpoints; it does not supply positive authored-relationship coverage. Candidate controls independently mutate storage, association owner/name, orientation, endpoint absence, an extra valid endpoint, a valid fabricated lineage row and original core field metadata. The latter two structural injections preserve source-custody success while effect verification refuses. Ten-component restoration includes actual types/properties and lineage. Original late mapping/type/inventory/custody controls remain.
+
+The combined verified inventory is assembled in deterministic order and source-inspected code checks16384 rows/1MiB before emitting it. Exact combined row/byte threshold execution is still required; the current cohort does not prove those boundaries. CPU/deadline/allocation/shared operation budgets remain open. Both harnesses use a single-handle pgserver subclass with private mutex/socket directories and unchanged installed startup/cleanup methods. Three captured pgserver implementation files are observed runtime-source premises, not a hermetic frozen-module/toolchain proof. Failed predecessor091fa928 completed362 observations but failed current-source pins after concurrent edits; cleanup was interrupted waiting on the shared pgserver mutex, then its exclusively owned postmaster, temporary/socket directories and execution copy were cleaned separately. Failure and exact preimages remain failures, not promoted evidence.
+
+Astra ultra independently audited final observations/current pins/exact ZIPs/cleanup and resolved extra-endpoint, fabricated-lineage and property-restoration coverage gaps. This is private new metadata-effect correspondence, not registered ontology/policy authority, admitted lineage/history, native key/incidence/attribute data enforcement, complete report/promotion/post-head verification or installed ordinary closure. Positive authored-relationship and composite ordered-key controls, exact combined boundaries and full backend execution remain open. US-056-AC1/AC2/AC10 receive component evidence only; acceptance remains26/132.
+
+## Authored relationship and pending association coexistence — 2026-10-11
+
+The original captured UMF preparation path validates an explicit installer source fixture adding the authored `WorksWith` relationship (Staff→Project). Only the binding core digest is updated; original mapping fragments remain unchanged. Native staging preserves the authored definition, endpoint and exact lineage at ID 1, allocates pending associations from actual prestate at IDs 2/3, and includes all three relationships in the private combined metadata inventory. An independently altered authored definition receives 55000 and ten-component restoration retains types/properties/lineage. Later shape-only fixtures now allocate an unused native ID rather than assuming 1. This is actual UMF validation/native staging of a synthetic authored coexistence fixture; Weft is not rerun and no newly owner-issued ontology handoff or authority is asserted.
+
+Retained PostgreSQL 16.15 evidence under `truss-binding-catalog-stage/`: `0dabc8f0-1ac1-49f2-82b5-0ad39b2fef23/native.json`: 375 passing observations/717 captured source pins, SHA256 `7b041c8bedc23246d42b6cf1590f16601b15f3d1e0436f384ec24767c65fd2f1`; `79ad184b-24b6-4128-973f-68cf599363bd/native.json`: 383 passing observations/717 captured source pins, SHA256 `46a359e8ec179d0f25c87d08aace4a3e03625eb5249a8d0bc47a246f0aee1cef`; `e8dc8cbd-321e-4c20-b5ff-1e5928942b27/native.json`: 371 passing observations/717 captured source pins, SHA256 `0cd4fd9b9171a5108aa523e88427dbe09bc893ad324077f72912c33950186fd2`. The first two cover fresh and occupied authored coexistence; the third is the original fresh regression. All required cleanup completed. Astra ultra independently audits observations, current source pins and exact preimage ZIPs. Concurrent Truss main commit d80b50b3 changes Python issuance outside these captured source premises; these receipts do not qualify that new path.
+
+Failed predecessor 1c989862 used stale candidate IDs; f5163a91 collided with authored ID 1 in the later raw shape fixture. Both remain failed evidence. Parallel occupied run 3ea8a698 failed native startup because macOS shared-memory IDs were exhausted; the sequential occupied retry passed. No unrelated database processes were altered. The fixture adds positive authored relationship coverage, not composite ordered-key or exact combined inventory threshold execution. Registered policy/ontology authority, accepted association lineage/history, protected callable closure, native data constraints, complete reports/promotion/post-head finalization and broader backend suites remain open. US-056-AC1/AC2/AC10 receive component evidence only; acceptance remains 26/132.
+
+## Ordered composite endpoint correspondence — 2026-10-11
+
+The native harness now supplies an explicit composite-key source fixture: Staff.pk is [staffId, staffTenant], Assignment.pk is [assignmentStaff, assignmentStaffTenant, assignmentProject], and the classified ontology fields, Staff endpoint and mapping have matching two-component sequences. Both new fields remain required single string values. Actual captured UMF preparation validates the modified core before native staging; the ontology and mapping are synthetic installer inputs, not a newly Weft-issued handoff or registered owner meaning. Exact serialized mapping fragments are retained and checked against native readback.
+
+Reversing only associationFields refuses 55000 original endpoint correspondence; reversing only targetFields refuses 55000 original ordered target-key correspondence. Each control then erases precisely one native resolver comparison to bidirectional containment and succeeds through actual staging with both expected allocated IDs and exact native source fragments. Savepoint rollback restores all ten state components and the exact resolver function definition; the identical reversed input refuses again under restored code. These are concrete native order-loss counterexamples for this two-component cohort, not a general logical/compiler/SQL refinement proof.
+
+Retained PostgreSQL 16.15 final evidence under `truss-binding-catalog-stage/`: `fab4bfbb-dbd3-45bc-82bb-f04c1b196de4/native.json`: 399 passing observations/717 source pins, SHA256 `b5e0738954e7633ba2baad0c3d63578b49cd33c6893e60aea0e022d2e2f59cbf`; `c6c608b8-8804-4ea8-a874-b79c9e135ef9/native.json`: 407 passing observations/717 source pins, SHA256 `c212ca3f07e32f8604d3713e5ec0397d0354edfa37faefbae853dbf87d014acf`; `fb84da8e-bf04-4d71-837c-e0c4232a51c4/native.json`: 371 passing observations/717 source pins, SHA256 `a61353d511a5e0a5ed1f04b2d28e0e112682d507b138c89ef78eff56f77b005a`; `c4f29e34-338a-4a73-a286-d930cce8390b/native.json`: 395 passing observations/717 source pins, SHA256 `8398bfa8697a4cfbc1b16858f42080a0e1507fc0726eeb8b7d452c2ddc4778dc`. Respectively: fresh authored+composite, occupied authored+composite, original single-field regression, and composite without authored relationships. All required cleanup completed. Astra ultra reviews the source and independently audits final observations/current pins/exact ZIPs. Earlier 69eb4ff4 passed 385 before adding mutants and is predecessor evidence. Failed 96a44502 timed out during initial layout installation before semantic controls; failed 391e9e22 encountered missing parentheses in the excluded JSON containment mutant. Both are retained failures, and production SQL was unchanged.
+
+This closes the positive composite ordered-key and separate reversal coverage gap identified by Astra. Native key encoding, per-field incidence constraints, shared resource budgets/exact combined inventory thresholds, authenticated subject/owner admission, registered complete inventory and accepted association lineage/history, protected callable closure, data enforcement and complete report/promotion/post-head finalization remain required. US-056-AC1/AC2/AC10 gain component evidence only; overall acceptance remains 26/132. The native candidate remains unregistered and the complete commit barrier stays closed.
+
+## Value-bearing native metadata image — 2026-10-11
+
+The private PostgreSQL `runtime_collect_pending_association_value_candidate` composes the original source/semantic effect verifier with a full physical value for every verified new type, property, key, relationship and endpoint identity. Relationship values include the entire definition and authored lineage row, with null lineage for pending associations. Full native rows retain pending original fragments and provenance; this is a five-family new metadata image, not a complete physical database or accepted report. Exact image identity bijection and an unchanged original operation generation are required before return. The output is explicitly ordered under C collation. Function-local `bytea_output=hex` removes the caller-setting dependency and automatically restores the caller configuration; it is not a general canonical cross-version report encoder. Original document/input/binding byte custody remains separately required.
+
+Independent direct native readback reconstructs all value rows, including lineage. Positive readonly generation, native row order, caller escape-output invariance and caller-setting restoration pass. The eight existing storage/owner/name/orientation/missing-endpoint/extra-endpoint/fabricated-lineage/core-field corruptions also refuse through the value collector with zero effects. An excluded installer effect-observer mutation changes exactly one emission site to increment the current operation generation; the value collector reaches its specific 55000 generation-changed refusal, full ten-component state and exact function restoration pass, and the restored positive image matches again. This isolates the generation branch and does not establish concurrent writer or complete observer closure.
+
+Final retained PostgreSQL 16.15 evidence under UMF `truss-binding-catalog-stage/`: `e3f53aa5-823f-4284-9d6f-1736481d4068/native.json`: 430 passing observations/717 source pins, SHA256 `266899a98b16866bf114ce3d91f4840ce7190329b33671d60fa03163c0a1bce7`; `b702b3f2-b8ad-4883-bb51-4bdecdb29e63/native.json`: 438 passing observations/717 source pins, SHA256 `c77ffdd34fb04a25281820cdc6c36cd52323499a322deb5b353046013565b8a6`; `9e6039d1-2c9c-4460-91cc-de46343fbfc4/native.json`: 402 passing observations/717 source pins, SHA256 `a912f09dd35ae9f5c7297887250caa4f6f928d3f43e31a614b66434b63cadb84`; `e4ad6de0-006b-42ab-9fc8-a802f7f89963/native.json`: 426 passing observations/717 source pins, SHA256 `cae2d5b7ee83d1d1f955e72ab88f2af548d92d2be04d7ce7bfbd04e2339df306`. Respectively: fresh authored+composite, occupied authored+composite, original single-field/no-authored regression, and composite-only/no-authored regression. Required cleanup completes in all four. Astra ultra reviews source and independently audits observations/current pins/exact preimage ZIPs. Predecessor e9506a23/3a34c08a (420/428) predate explicit order/GUC correction; de80e268 (424) predates the generation-change control. They retain captured passing evidence only, not final-current-source qualification.
+
+Code checks 16384 rows/1MiB of serialized image before return. These bound returned image size after aggregation/serialization, not heap/CPU/deadline; exact threshold execution and enclosing shared resource accounting remain open. This implements a value-bearing metadata observation prerequisite for future report correspondence, not registered ontology/policy authority, authenticated owner/issuer/current-cut, accepted lineage promotion/history, protected callable closure, native business-key/incidence/attribute data enforcement, complete report persistence, source promotion or post-head finalization. Registered complete inventory remains 0A000 and the unchanged commit barrier 55000. US-056-AC1/AC2/AC10 receive component evidence only; acceptance remains 26/132.
+
+
+## Original-source report basis candidate — 2026-10-11
+
+The private PostgreSQL 16.15 report-basis composer retains exact original operation input and binding bytes, full document rows and the verified five-family native metadata image, alongside actual writer/ordinal/generation/revision coordinates. The explicit profile is `truss-pending-association-report-basis-candidate/0.1.0`; `acceptedReportQualified` is false. A second complete value/source observation compares the full operation, binding, documents, image and generation before return. The private rechecker requires exact byte equality with a freshly collected basis. Both invoker routines have fixed search paths and PUBLIC execution revoked.
+
+Retained final evidence under `truss-binding-catalog-stage/`: fresh authored+composite `414ab7ba-fe6f-4c81-b136-2a1314357ca2/native.json`:478 observations/717 captured source pins, SHA256 `9397a4c956aad0f909b53166ead60455707bfbf214eadd06ad96ae8dab804335`; occupied counterpart `c1c09818-788b-46fd-b4b2-433fb7a78dea/native.json`:486/717, SHA256 `3babec09e262143b40df83fda5c1003ad69fcc9b993c62cd8af7ddbf787e14f8`; original single-field regression `a3ec9ea0-b48d-4e77-9969-e8aed6671963/native.json`:450/717, SHA256 `93887690800e75581e7f6112b6bed98fd2a62a5466f75a7c8d4df40a0245ec7a`; composite-only regression `1119762c-d289-40f6-9792-46c06d5a51f5/native.json`:474/717, SHA256 `401fea9424cedb4da22d13e007c82551ce9840ba8969b1d5c7aa0210380c5277`. Exact packets/profile/digests are retained in each `report-basis.json`; exact source ZIPs, type-sensitive observations, source preimage matches and required cleanup pass. These execute the captured sources; concurrent Truss main Python reserved-control/retirement changes 8cbcc8c4/7a21a1b2 are not newly qualified by these receipts.
+
+Controls cover fresh correspondence, byte substitution, empty/null arguments, generation changes, ordinary invocation denial, and exact restoration. An isolated internal value-collector mutation advances generation after its own final check; the composer reaches its specific generation refusal. A coherent original input/binding change preserves mapping fragments, native values and generation inside collection; the full-operation comparison refuses. A separate ABA fixture produces a valid new basis at the same coordinates while the old bytes refuse; rollback restores the original positive. These are excluded installer mutations, not authenticated owner issuance, real concurrency or complete observer closure. Astra ultra independently audits source, exact packets, observations, pins/ZIPs and cleanup; its retained review is in the occupied final directory.
+
+The 8MiB output cap is checked after serialization; emitted exact output thresholds, allocation/CPU/deadline and shared operation budgets remain unqualified. Rechecker arguments exactly8MiB reach correspondence refusal55000, while8MiB+1 receives bounded-argument22023; these execute argument preflight only. Predecessors eceac6ea/58bbd9ab (463/471) lack final exact packet retention and generation/argument controls. Failed7dc07272 is retained: native void returns an empty string through pg8000, and the initial host expectation was corrected. Neither predecessor nor failure substitutes for final evidence.
+
+US-056-AC1/AC2/AC10 gain component evidence only; acceptance remains26/132. The candidate is unregistered and the layout unadopted. Complete accepted-report encoding/persistence, registered ontology/policy authority, authenticated owner/current cut, native data key/incidence/attribute enforcement, accepted lineage/history, source promotion, protected callable closure and post-head finalization remain required. Complete binding inventory remains0A000; the unconditional commit barrier remains55000. No formal SQL refinement or whole-backend security completion is claimed.
+
+
+## Selected report-basis formal correspondence — 2026-10-11
+
+`tools/security/prove-report-basis-correspondence.py` analyzes exact selected input/binding/document carriers, complete operation rows, writer/ordinal/revision/generation coordinates, identity sets and full native values over unbounded uninterpreted carriers and metadata arrays. Final `report-basis-correspondence/195e439a-d2eb-4374-a123-8868fe55559f/proof.json` retains18 checks, independently parsed/replayed in fresh Z3 contexts, and7 source preimages; SHA256 `0afb9117e16ebccb40aeaf37932e639e30524652e1020dd1bb414c177437834c`. Astra ultra independently replays all18 original formulas (5UNSAT/13SAT), verifies their hashes and all7 current/preimage pins, and resolves its model adequacy findings; its review is retained with the final proof. Exact selected equality excludes source/value/coordinate drift conditionally. SAT controls show generation-only equality can hide coherent source substitution, identity equality can hide full-value substitution, and weakened source/full-operation comparisons admit their corresponding drift. The full-operation guard explicitly includes input/generation/writer/ordinal equality plus remaining opaque members, so input and generation omission controls also remove the redundant full-operation guard. Value equality is quantified only over selected identities; every value-drift witness must be selected. The positive execution has nonempty selected metadata and valid operation coordinates. Exact encoded equality excludes drift only under an explicit codec-correspondence premise for the packet projection only; full-operation equality is a separate composer check and is not encoded in the packet. A SAT control retains exact abstract packet equality while remaining operation members differ. Without codec correspondence, an abstract encoding collision remains satisfiable. This does not prove the PostgreSQL JSON codec or SQL refinement.
+
+Endpoint comparison alone admits an intervening changed-and-restored source. A strict generation increment for every relevant change plus a monotone tail makes an equal-generation changed-event witness UNSAT; removing monotone closure admits a hidden reset. Required implementation obligations are therefore complete event observation, protected generation writes, immutable original byte custody, and a held exclusion that covers the selected state. The existing private ALWAYS guards/observers and native mutation controls are component evidence; full installed observer/privilege closure and concurrent execution remain open. A report-basis byte comparison must never be accepted as owner authentication, registered semantic authority, a readiness token or a substitute for post-head verification.
+
+Predecessors bfd28549 (15 checks) and38eb64f0 (17 checks) retain captured formulas only. Astra identified that their value witness could be outside selected metadata and that their codec premise overclaimed full-operation coverage. The final model fixes both and uses selected-membership parity, explicit operation-field redundancy and exact packet-projection scope; predecessors are not qualified selected-basis proofs. The final analysis is conditional logic over the listed carriers, not arbitrary database execution, complete physical inventory, resources, persistence/promotion or publication. US-056-AC1/AC2/AC10 receive formal prerequisite evidence only; acceptance stays26/132. Before opening report publication, require a codec correspondence argument with collision/loss controls, complete protected observer closure, original registered authority and the distinct post-head/final-commit checks. The next implementation remains full original report composition and retained report correspondence; existing inventory/commit refusal gates stay closed until their complete requirements pass.
+
+
+## Original host/native pending report-basis integration — 2026-10-11
+
+The private `catalog-pending-report-basis.ts` helper connects original UMF preparation to the pending native report-basis candidate. Before collection/use it requires the recognized preparation and exact native admitted input bytes. It retains the native hex string unchanged in a frozen handle, with original connection/preparation/revision/bytes in a private WeakMap. Native exact current-basis correspondence is rechecked before returning the handle and again on use. The helper does not parse/reserialize native documents or values, register a profile, encode an accepted report or grant readiness. The caller-owned trusted driver/transaction remains a premise; connection object identity is not authenticated database actor identity.
+
+The existing captured Bun installer bridge now stays alive after original core staging; after actual Python/native pending staging it executes collection and recheck on the same connection, original preparation and actual revision. Native readback equals the returned exact host bytes. Copied handles, changed connection objects, unrecognized preparation copies and a distinct recognized preparation with identical original bytes refuse. Primitive revision admission precedes coercion/SQL; numeric, boxed-string and throwing coercion-hook inputs each refuse with zero SQL calls. The same host handle rejects a real native generation change with55000, then passes after savepoint rollback; later independent full-state/generation/image observations confirm restoration. Nine hostile driver-result shape controls separately reject missing/duplicate/null rows, extra columns, uppercase/odd/nonhex/empty hex and a hex result exceeding16MiB. Each starts with the actual native original-input check; substituted driver results test shape admission only, not a malicious-driver authority boundary. All native stale-source/generation/value/order/corruption controls still execute.
+
+Final PostgreSQL16.15 receipts under `truss-binding-catalog-stage/`: fresh authored+composite `fba89f21-7726-4437-a670-4b639df1e526/native.json`:485 observations/718 source pins, SHA256 `de5a55c598a3d2bee22a97b0729661bc3a8ac104178d7db8464f2308d01d190a`; occupied `4d16170c-76e8-41ac-994e-ccc46f447efd/native.json`:493/718, SHA256 `f48004882ac8d1f61d40adbc28520d05da86031dfa06052166cf7a426bb50c57`; original single-field `a52d6673-2855-40f7-a3f6-69f12818e6da/native.json`:457/718, SHA256 `b9e342a06fcb5c5b586b039aa7b5aa00465074d67a32629a15a5fdf7f363e463`; composite-only `eeafdfeb-71ee-4941-9d74-8c348ab21930/native.json`:481/718, SHA256 `fb91197359cda76ce6642a16878f47d5acf38b229be251fa77c9f1ee6dca3c05`. Exact packet files, native query outcomes, exact ZIPs/current source pins and required cleanup pass. Predecessor7b2a40bd (482/718) predates the malformed-result controls and simple hex scan and remains captured predecessor evidence. The intermediate483/491/455/479 receipts7b6036a0/5b2fdd64/84abe8ff/f92758c2 predate the primitive revision fix and final host stale/recognized-preparation controls. Astra found that coercion could admit a mutable revision object; final code requires a primitive string before regex/BigInt and resolves that finding. Intermediate typecheck5b2 also qualifies its captured helper preimage only. The occupied directory retains strict TypeScript `typecheck.json` and Astra ultra review. The initial typecheck omitted explicit Node/Bun ambient configuration and failed on unresolved names; the declared isolated strict check passes final corrected helper source. Ambient dependencies/compiler are observed local premises, not a hermetic toolchain.
+
+The fixture exercises packets under the bridge's existing1MiB response line limit; it does not qualify transporting an8MiB packet or aggregate resource accounting. Native SQL, layout adoption and refusal gates are unchanged. Full original report composition must still combine registered owner/semantic/profile/execution evidence, complete source/value correspondence and report-field producers before persistence and provenance promotion; full installed observer/privilege closure, business-key/incidence/attribute data enforcement and distinct post-head/commit verification remain required. US-056-AC1/AC2/AC10 gain integration prerequisite evidence only; acceptance remains26/132. The goal remains full backend acceptance, not private report-basis completion.
+
+
+## Full-operation report-basis custody checkpoint — 2026-10-11
+
+The private PostgreSQL16.15 candidate profile `truss-pending-association-report-basis-candidate/0.2.0` now retains `originalOperation:to_jsonb(op)`, the entire captured operation row, after the existing full-row/source/value/generation coherent-cut comparisons. Original input/binding bytes and the five-family metadata image remain separately retained. Local bytea hex formatting covers all operation byte fields. This closes the prior packet omission of remaining operation context, definition, prestate and effect-obligation members; it does not turn a mutable snapshot into a durable readiness token. The Bun helper preserves native packet bytes without numeric decoding.
+
+Final native receipts under `truss-binding-catalog-stage/`: fresh authored+composite `5c4e608a-2bdd-4a71-936f-a6d61aa06d74/native.json` passes500 observations; occupied `d7a98ee2-8294-4500-ae6e-b6bbc8861794/native.json` passes508; original single-field `6746e79d-f8d9-4bdf-b650-1d39f567262e/native.json` passes472; composite-only `52d62ea6-72aa-4b4a-8bab-fc5bf4000412/native.json` passes496. Each retains718 matching current source pins/exact ZIP preimages, type-sensitive observations, exact packet digests and completed cleanup. An excluded installer mutation changes only effect-obligation bytes, producing a valid new basis and55000 refusal of the old basis; rollback restores the complete state/guard and original positive. Actual host/native generation9007199254740993 is retained exactly across opaque bytes, direct native collection and rollback. The earlier497-observation d8fcef3f receipt predates this host large-generation control and remains a predecessor.
+
+Formal receipt `report-basis-correspondence/e08c5c93-adbd-441c-8419-18bb8decf3b1/proof.json` retains19 checks (6UNSAT/13SAT),7 source preimages and SHA256 `f1ce1d0865c36a22ef26393086ce8d53cb0f9c4fe68f08da51e79a78e6395ad3`. Full-operation encoded correspondence excludes remaining-operation drift under the explicit codec premise; a separate operation-erased SAT control admits it. Astra ultra independently replays every formula in a fresh Z3 context and audits all four native receipts, pins, packets, query sequences and cleanup. The combined review is retained in the occupied d7a98ee2 directory, SHA256 `f6cd30cdc2a5eeb830c55464e7478840ea9af2f9b9756bd674a771f5c70f8e07`.
+
+US-056-AC1/AC2/AC10 gain prerequisite evidence only; acceptance remains26/132. Codec injectivity is an explicit model premise, not proven PostgreSQL JSON refinement. Installed observer/privilege closure, authenticated original authority, registered semantic admission, native data enforcement, complete accepted-report composition/persistence, source promotion and distinct post-head/final-commit checks remain open. Endpoint equality does not exclude intermediate ABA without the stated monotone observer/immutable-custody premises. The1MiB host response ceiling and post-serialization8MiB native cap do not establish full output/resource bounds. The layout remains unadopted and candidate unregistered; acceptedReportQualified staysfalse, complete inventory refusal0A000 and commit refusal55000 remain closed. This checkpoint lands directly on main under the user's standing authorization.
+
+
+## Complete report dependency audit — 2026-10-11
+
+The source-pinned static audit `tools/security/audit-truss-report-coverage.py` inspects all17 required fields of Truss's pinned0.1 report schema and the literal existing producer comparisons. Receipt `report-field-coverage/d66b0c9d-6283-4a2b-b55d-5695ad120458/coverage.json` retains exact source preimages. The interfaceVersion literal is already enforced by the pinned complete wire schema. Ten fields have existing component comparisons, reportProfile has registered-byte correspondence, and originalExecution has a captured execution candidate. None of these classifications proves complete semantic admission. The four absent semantic producers are umf, rebinds, assertions and pending_indexes; present binding and declared transforms also remain excluded from the current report-preparation route. This corrects the earlier loose description of interfaceVersion as an unproduced report field: its wire literal is checked, while full field inventory closure is still missing.
+
+| Required field group | Current evidence | Remaining obligation |
+| --- | --- | --- |
+| interfaceVersion | Pinned schema literal | Preserve exact profile selection across persistence/retrieval. |
+| rev, acceptedInput, documents, diagnostics, documentInterpretations, counts, provisional, losses, transformRegistrations, extensions | Ten source/native producer comparisons on the admitted new-only component route | Extend to registered binding and transform effects under one original source/value cut; retain complete inventories and post-head verification. |
+| reportProfile | Registered original artifact bytes | Qualify profile interpretation and installed authority. |
+| originalExecution | Issued epoch/context candidate | Qualify original capture/mapping/epoch authority and bind pending full-operation bytes to the same execution. |
+| umf | Source-version and generic support byte basis only | Original interpretation owner must issue its actual supported-subset evidence; never rename generic storage-support bytes as supportedSubset. |
+| rebinds | Wire shape only | Complete native persisted rebind effects and original transform receipts, including qualified zero-effect proof. |
+| assertions | Wire shape plus explicitly incomplete identity subset | Every source assertion, interpretation/support classification and actual enforced/unenforced outcome, with complete native inventory and no dropped unknowns. |
+| pending_indexes | Wire shape only | Complete original declared job identities at acceptance cut, including qualified empty inventory; later readiness cannot rewrite this snapshot. |
+
+For umf, distinguish original source version from any reversible target version and scope interpretation capabilities to exact owner/profile/version/subset evidence. Storage-support registration does not establish UMF interpretation support. Unknown retained extensions remain outside the interpreted subset and must survive the report as opaque original artifacts. Missing owner evidence is unavailable; neither an empty subset nor a hand-authored support manifest proves absence or implementation behavior. No profile/type/wire version is changed by this dependency audit.
+
+
+## Original document-to-subset membership candidate — 2026-10-11
+
+Truss's private `catalog-umf-membership-candidate.ts` now checks every declared subset selection against its recognized original UMF preparation before grouping report entries. Each selection must match the ordered document ID, exact source digest/version, interpretation profile and already owner-verified transition selector. Direct0.8 sources have no transition selector; source0.7 remains the reported source version with its original transition SHA. No target-version substitution or silent omission is admitted. Grouping uses the complete `(version, interpretationProfile, supportedSubset)` value, including artifact identity/bytes/digest, in first original occurrence order. All document memberships remain separately retained even when report entries deduplicate. Distinct subset selections for documents sharing one version stay distinct; no version-only support inference occurs.
+
+Owned data descriptors and dense array slots are captured without invoking selection getters or custom iterators. Subset artifacts retain exact canonical base64 bytes and verified SHA, including a valid empty artifact; empty bytes do not establish an empty semantic subset. The1MiB per decoded artifact and4MiB cumulative decoded occurrence limits include repeated selections. These are decoded-byte limits, not total identity/grouping/transition-serialization allocation, CPU or deadline bounds. Private WeakMap issuance ties the frozen candidate to the exact preparation. `verifyWithUmfMembershipCandidate` compares the entire report umf array alongside the existing ten producer fields, refuses copied candidate custody before parsing/native reads, and explicitly returns supportSemanticsQualifiedfalse with declared-membership-only scope.
+
+Final host receipt `truss-umf-membership/1dcbfa25-545d-4bd2-bb2f-828dc90b1a05/host.json` retains36 passing checks,690 source pins/exact ZIP preimages, pinned original record/declaration/field bundle execution and a passing strict standalone TypeScript check. Controls cover mixed original versions, complete repeated-version membership, distinct subset and identity-only grouping, omission/reordering, source/profile/transition mismatch, copied preparation/candidate, descriptor/sparse-array refusal, byte substitution, empty artifact/digest and exact/over decoded resource limits. Full field comparison includes positive11-field correspondence and missing/duplicated/reordered/substituted umf refusals. The native report rows and selected subset bytes are synthetic; there is no fresh native execution or registered subset-interpretation proof. Astra ultra reviews this component and its scoped evidence.
+
+This is the correspondence construction prerequisite for REPORT-UMF-OWNER, not its semantic-support positive. It executes original UMF preparation but cannot determine whether arbitrary selected bytes describe implemented support, whether required terms are supported or whether an opaque term is retained-only. Original registered support procedure, feature/required-term inventory, source-target preservation/support/loss qualification and independently admitted subset evidence remain mandatory before report publication. The new helper is private and not exported as accepted-report authority. All four report semantic producers remain unqualified; acceptance remains26/132. Full assertion/rebind/index inventories, installed/native authority and existing inventory/commit refusal gates are unchanged.
+
+The final36-check receipt also rejects a candidate from a distinct genuinely recognized preparation of the same original bytes with the specific custody refusal and zero native calls. The33-check987530a2 receipt remains a captured predecessor without that control. The wire comparison covers the grouped umf projection; per-document assignments remain in the separately retained candidate and cannot be reconstructed from report.umf alone. No complete support membership or semantic authority is inferred from that wire array.
+
+Astra final scoped review is retained alongside final1dcbfa25/host.json as astra-review.md, SHA256af3d288f3bcadff34f801d03c7873659702b442f0cabed9348ee5720193c5ac2; all three findings are resolved and690 current pins/exact ZIP bytes independently match. Truss implementation0b58c16d is integrated with concurrent Python main0aee312d by non-force mergef561f9a8. This host receipt does not qualify the concurrent Python paths.
+
+
+## Native joined report candidate correspondence — 2026-10-11
+
+Truss's private `verifyWithExecutionProfileAndUmfMembershipCandidates` composes registered report-byte correspondence, the existing ten source/native producer fields, original execution candidate and declared UMF membership under one recognized preparation/report basis. Both candidate custody checks run before wire decoding, profile resolution or native I/O. The exact retained report bytes supply both field comparisons, followed by the original native epoch/execution recheck. The explicit result scope is thirteen_original_report_candidate_fields_only with supportSemanticsQualifiedfalse. This joins component evidence; it does not grant complete report interpretation, support or installed authority.
+
+The final PostgreSQL17.9 run `truss-umf-membership-native/55d3e583-bb2b-4dfd-81bc-ca406106f550/native.json` passes195 distinct assertions, retains764 current selected source pins/exact ZIP preimages and completed exact-created-container cleanup; receipt SHA256d3478f3ef68d1fd90390755ab7ba6f72f1bf1364839cb3f3ff68031da53d479c. The isolated container binds127.0.0.1:15437; existing OrbStack containers/15434 remain outside this run. Native cohort output retains the exact47902-byte joined wire and SHA, thirteen-field membership vector, original document/subset mapping and actual cut830/0/11. Its original UMF0.7 source contains actual Record/Field/Key/relationship declarations and is prepared by the pinned original owner; source version remains0.7 with the original verified transition selector. Actual native metadata staging, document/count observations, context4/issued epoch capture and origin mapping execute. Selected subset/profile fixtures and installation authority remain explicitly unqualified.
+
+Joined controls reject copied execution/membership, a distinct genuinely recognized preparation's membership, subset identity substitution, changed originalExecution and registered reportProfile, and stale native generation. A savepoint-local no-op prop_def UPDATE is injected through the original connection only after the initial native observation check succeeds. The test records reaching the final epoch collector, requires its55000 refusal, rolls back and restores exact original positive wire correspondence. This exercises the final recheck separately from the initial-cut refusal; it is an excluded installer interleaving, not a real concurrent writer or observer-closure proof. Existing native cohort/capsule, guard, rollback and unconditional failed-commit controls also execute. Strict selected-source TypeScript checking passes in retained typecheck.json; local Bun/compiler/ambient/Ajv/Python/image inputs remain observed environment premises, not hermetic execution closure.
+
+Predecessor0fdee788 passed190 assertions with186 distinct legacy labels and lacks joined execution/profile substitutions;216cc72a and7f204370 pass192 but lack the final interleaving control, with the former predating protected runner readiness/execution cleanup. They remain captured historical receipts, not final current-source qualification. The final runner captures source/setup before creating its own container and covers readiness/execution cleanup using only its exact created ID. Astra ultra independently reviews the source and final retained evidence; no reviewer native rerun is claimed.
+
+REPORT-FULL-COMPOSITION/REPORT-UMF-OWNER receive prerequisite evidence only; US-056-AC1/AC2/AC10 remain open and acceptance stays26/132. The report's grouped umf array cannot reconstruct per-document assignments; the mapping remains separately retained. Registered semantic support/required-feature interpretation, original installed issuer/capture authority, complete rebind/assertion/pending-index producers, registered present-binding/transform effects, complete persistence, protected observer/callable closure, post-head verification and final commit remain required. No public acceptance or report readiness is enabled, and the inventory/commit refusal gates remain closed.
+
+Astra final review is retained with55d3e583/native.json as astra-review.md, SHA256d401343b6c535b9b2bafb3a697bbe1cd993a28a7d53d7440f64906c74d974f2a. Independent review matches all195 unique assertions,764 current/preimage pins, exact wire/field vector/cut and exact-created-container cleanup; final-recheck coverage feedback is resolved. No semantic/native acceptance case is promoted.
+
+
+## Original source value occurrence index — 2026-10-11
+
+REPORT-ASSERTION-CLOSURE now has a private structural prerequisite in Truss's `acceptance-json.ts`: `indexSourceJsonOccurrences` records every JSON value in preorder with its decoded RFC6901 pointer, kind and half-open original UTF-8 byte span. Containers retain their full lexical spans; numeric values retain exact lexemes including unsafe integers, negative zero and arbitrary exponents. Original member spelling remains in the retained container bytes; member names are not separate value occurrences. The frozen issued handle grants copied value bytes through WeakMap custody; copied handles refuse. Only intrinsic Uint8Array carriers are admitted, without invoking caller length, species or tag callbacks. Shared-memory copying does not claim an atomic snapshot against concurrent mutation.
+
+The existing byte/depth/node/member/work limits remain conjunctive; indexing additionally charges twice each materialized pointer's UTF-16 length against the work ceiling, so preflight admission alone does not promise index admission. The structural invariant is that each grammar value entry records exactly one position, and each container close finalizes its matching open position. This is a design argument tested on selected inputs, not a mechanically checked parser refinement proof or semantic completeness proof.
+
+Truss retains exact source preimages and final host/browser receipts under `docs/helix/04-build/evidence/source-occurrence-index/`. Coverage includes original lexical spans, Unicode/escaped keys, source and returned-copy mutation, copied handles, malformed grammar/Unicode/duplicate names, numeric-wire separation, container/byte/depth/pointer-work limits, species callback aliasing and non-byte carrier narrowing. Strict selected-source typing passes. Actual Chromium153 executes the browser build with no Bun/process/Buffer globals and zero external requests. Local tool installations remain environment premises; the receipt does not establish hermetic execution or native backend enforcement.
+
+US-056-AC1/AC2/AC10 receive prerequisite evidence only. A complete structural value index does not classify assertion/nonassertive/absence/unavailable meaning, authenticate an owner/profile, establish a complete semantic assertion inventory or enforce a policy. Those classifications must be supplied by original registered semantic owners over this occurrence basis; unknown meaning remains explicit. Acceptance remains26/132. Earlier native receipts remain evidence for their captured source preimages, not current-source replay after this scanner change.
+
+
+Final checkpoint: Truss main commit `0b31d248` retains31 passing tests/113 assertions, Chromium153.0.8010.12 observations, strict selected-source typing, four exact source preimages and Astra ultra's scoped source review. Both review blockers (species-based aliasing and non-byte typed-array narrowing) are resolved and independently rechecked. Evidence: [Truss source-index receipts](https://github.com/DocumentDrivenDX/truss/tree/0b31d248/docs/helix/04-build/evidence/source-occurrence-index). The reviewer did not rerun the final browser suite or native backend tests. Root's fresh host/browser checks passed after the fixes. Concurrent Truss native row-image attribution main52dedb60 was preserved before the direct non-force push; it is outside this receipt's qualification.
+
+
+## Original occurrence-to-assertion reconciliation — 2026-10-11
+
+The private Truss `collectCatalogOriginalOccurrenceInventory` now executes the existing original UMF assertion owner collectors and indexes every value from each retained original document artifact. Every inspected core assertion must join an actual original pointer under the same document and exact artifact custody. Full lexical value spans, original source version and SHA remain visible. Existing core assertions retain their qualified module owner/evidence and enforcement none; all unmatched values receive unavailable interpretation rather than guessed metadata or absence. Root/document occurrence owners identify carrier custody only; they do not classify ontology meaning. Core absence observations stay separate and do not create authored values. Complete structural coverage is explicit, while complete and interpretationQualified remain false.
+
+The actual pinned Record/declaration/Field producers execute in55 passing tests/318 assertions across four suites, with strict selected-source typing. Evidence under Truss `docs/helix/04-build/evidence/original-occurrence-inventory/` captures698 exact selected source/schema/fixture/declaration/producer preimages and before/after hashes. An independently traversed authored model checks every pointer; seven explicitly authored pointer/rule pairs check exact assertion membership. Copied/crossed genuine preparation/collection/inventory handles refuse; returned-byte mutation cannot affect custody. Mixed original0.7 and0.8 sources preserve original lexical1.2300e+2 and document-qualified repeated pointers despite the0.7 reversible target0.8. The admitted original UMF parser refuses unsafe integer9007199254740993 before issuance; standalone scanner preservation of that token does not broaden this semantic profile. These tests do not execute a native backend or qualify aggregate document-times-entry join work/heap accounting. Compiler/Ajv/local dependency installations remain nonhermetic premises.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain an original-source coverage and identity-join prerequisite. Registered complete assertion-family interpretation must still classify every remaining occurrence, including opaque content; unavailable rows prevent semantic completeness. Independently admitted engine/database enforcement, seventeen-field report admission, installer authority, complete persistence and commit barriers remain required. Acceptance remains26/132; no public capability or final gate is enabled.
+
+
+Astra ultra's final retained audit verifies all698 current source/preimage hashes and ZIP inventory,55 distinct tests/318 assertions and strict typecheck0. Receipt SHA2563ac539d1acca993b1b998b88027ceff3c12c5282dc11d2df4c26391f781969d7; ZIP8763b59e10429b888c2c13a0b076c957627d94862878f96aa589cca8057fa6b7. Requested exact membership/crossed custody/schema-input controls are resolved. Reviewer did not rerun tests or native execution. Final review is retained with the Truss receipts; the direct-main checkpoint preserves concurrent Python main6b189b2d, outside this qualification.
+
+
+## Formal occurrence and rule-family closure — 2026-10-11
+
+Assertion-report completeness requires two distinct inventories. The first covers every original document value by exact original document/source-byte/pointer identity. The second covers every semantic rule identity interpreted at each value; one position may carry multiple rules. A position classified assertion establishes neither complete rule membership nor enforcement. The registered inventory owner must supply exact versioned rule membership for every resolved position, including explicit nonassertive metadata and absence of declarations at an authored carrier. Absence classification does not mean the original value is absent. Unavailable interpretation prevents completeness, and original owner/registration admission remains separate from logical truth and native enforcement.
+
+`tools/security/prove-original-occurrence-closure.py` retains24 quantified logical queries with fresh-context replay:8 UNSAT laws and16 SAT positives/counterexamples. Exact coverage, resolved truthful interpretation and exact report selection exclude omitted/invented assertion-bearing positions. Additional coherent position-to-rule bridges and exact per-rule interpretation/selection exclude omitted/invented rule identities. A populated two-rule positive proves consistency; a position-complete counterexample omits one of two rules. Missing source coverage, false metadata classification, unavailable interpretation, omitted report selection and pointer/document/source-coordinate erasures each have populated countermodels. Equal-size complete source and covered supports can exchange their sole occurrence, showing why counts are insufficient.
+
+Final current-source receipt `original-occurrence-closure/86655c50-8e60-40b3-8507-1deb54585d0a/proof.json`, SHA2564d584733581d74f661d81bfb5d01bc385e1d19d7681bab4fbb8acf7d2b97dca7, captures seven source preimages. Z34.15.4 checks and independently parses all saved SMT queries. Exact lexer correspondence, truthful registered semantic-owner interpretation, tuple injectivity over original byte carriers, report selection and tool installation remain explicit premises. No SHA collision-freedom, parser/owner refinement, actual semantic completeness, native enforcement/authentication or report admission follows. Earlier2f807755 lacks the exact-support and family model;7e892936 lacks coherent family/position bridges;ef1d3f64 has the corrected model but predates the final implementation row-state pins. They remain historical snapshots, not final current-source qualification.
+
+The Truss bridge now explicitly exposes per-value interpretationState partial/unavailable and assertionMembershipCompletefalse, including positions with existing core assertions. This prevents treating an inspected subset at a classified position as a complete rule inventory. Fresh host receipt `original-occurrence-inventory/1ee4340c-75cc-4410-b564-21451d68372a/receipt.json` retains55 passing tests/334 assertions, strict selected-source typing and698 exact source/schema/fixture/declaration/producer pins. The runner creates unique receipt directories; the earlier318-assertion source snapshot remains intact. Aggregate resource accounting and actual backend execution are outside these host checks.
+
+REPORT-ASSERTION-CLOSURE/US-056-AC1/AC2/AC10 gain formal design and explicit runtime scope evidence only. The next semantic owner must admit and enumerate complete rule-family identities under original source/profile custody before complete reports can be composed. Registered support/native authority, complete rebind/pending-index inventories, protected data enforcement, persistence/promotion and post-head/commit gates remain open. Acceptance stays26/132; no public admission or refusal gate changes.
+
+
+Astra final combined review independently replays all24 formulas (8 UNSAT/16 SAT) and verifies final seven formal pins plus698 host pins/exact archives. Host receipt SHA25695ce434758f02bcf59790af03fe318dad5ac906526297aeca9e5c2006b15ef6c; host ZIP03bd56bb59d29da083ce224e2c120e8ae430f12cb55eb6e339765a90f67a54a8. Reviews are retained beside both final receipts. Reviewer does not claim host/native test reruns. concurrent Python packaging c1810d83 is preserved outside this qualification.
+
+
+## Original-byte custody hardening — 2026-10-11
+
+Truss now uses one bounded intrinsic byte-copy helper before JSON inspection, report/input handoffs, canonical encoding and asserted-origin/context preparation. Caller properties, iterators and typed-array species cannot substitute validated bytes or retained archive/native-codec bytes. Wire/profile routes require actual ordinary ArrayBuffer storage; genuine cross-realm arrays and exact byte windows remain supported. Structural shared-storage copying is not an atomic concurrent snapshot. Trusted pristine runtime intrinsics remain a premise.
+
+Truss evidence `docs/helix/04-build/evidence/original-byte-custody/bbd42936-2f55-4f30-a491-b5444b540357/receipt.json` retains 775 exact source/schema/fixture/producer preimages, before/after hashes and ZIP. All 101 host tests/560 assertions and strict selected-source typing pass. Chromium 153.0.8010.12 passes 22 portable custody/scanner/codec/origin-context checks with no external requests or host globals. PostgreSQL 17.9 passes four temporary native canonical-codec oracle cases, including zero caller callbacks; the exact owned fixture container is removed. Native collector role/authority, complete semantic interpretation, accepted report production and backend security admission are outside this checkpoint. Earlier source-pinned receipts remain historical when their captured sources differ.
+
+This closes a byte-correspondence prerequisite for REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10; it does not establish semantic rule-family completeness or enforcement. Acceptance remains 26/132. Complete registered rule-family inventories, native authority and protected-data enforcement, persistence/promotion and final commit gates remain open.
+
+
+Astra's final evidence audit found the prior bbd42936 receipt omitted the directly read `acceptance-outer-json-expected.proposal.json` corpus. That receipt remains a historical incomplete input capture. The corrected runner actually reran all checks into fresh Truss receipt `original-byte-custody/9033893c-1015-4800-aa4e-c913bd03a540/receipt.json`, capturing 777 inputs (including the omitted corpus and concurrent main's additional schema). All 101 tests/560 assertions, strict typing, 22 Chromium checks and four PostgreSQL codec cases pass again; exact fixture cleanup succeeds. No acceptance promotion follows.
+
+
+## Original declaration meaning correspondence — 2026-10-11
+
+The Truss core inventory now checks every original Key/Relationship declaration against the full pinned owner's retained declaration meaning before issuing its source identity. Equal counts and authored IDs are insufficient: ordered key fields, endpoints, primary/direction/lifecycle/multiplicity, optional-member presence and all opaque qualifiers must correspond. Object-key presentation order is immaterial; array order is preserved. The owner collection and original preparation must still have genuine private issuance custody.
+
+A separate private declarationMeanings projection retains the exact issued assertion entry, declaration producer ProfilePin, full frozen original meaning, known/partial owner state and whole-owner uninterpreted paths. These are correspondence observations, with interpretationQualified false; unknown qualifiers are not declared supported and known owner state is not complete assertion-family interpretation. Accepted report schemas and the source identity profile are unchanged. Nondeclaration Field projections, distinct complete rule-family identity and original owner/issuer qualification remain required. This is one concrete refinement of the truthful-interpretation premise in the existing conditional logical closure model, not a proof of the owner/compiler or native SQL implementation.
+
+Final Truss host receipt `original-occurrence-inventory/6d1aa141-2f0f-4646-8474-e7c02a68473d/receipt.json` retains 702 exact selected inputs and archive preimages: 72 tests/504 assertions across five suites, including report preparation, and strict selected-source typing pass. Controlled fixture owners traverse the real loader and collection path: eleven same-ID/count content or false-missing substitutions refuse; object-key reordering passes and exact retained partial meanings remain visible. Fixture-owned manifests do not prove trusted issuer authority. Earlier fc3cbe03 and 77d5677f receipts retain intermediate source/test scopes; 33522bfd omitted the added report-preparation fixture and is an incomplete input capture. The final runner captures that fixture and actually reruns all checks. This host run contains no fresh browser or native execution. REPORT-ASSERTION-CLOSURE/US-056-AC1/AC2/AC10 gain declaration correspondence evidence only; acceptance remains 26/132 and complete backend/report/publication gates remain open.
+
+Original observation pointers now must match their requested module/element/operation. A missing result may classify absence only when the original final member is absent; an authored declaration or absent parent refuses. The earlier 89d7bbf1 receipt predates these omission controls. This binds source position and presence, while independent known Field meaning projections remain open.
+
+
+## Original nullability semantics and conditional proof — 2026-10-11
+
+Truss now checks original 0.7 nullability owner context and meaning before filtering owner states. The exact requested identity/source/path, inspect-core-nullability operation, version 5.0.0 and loaded Field profile must correspond. Known required/absent-allowed/unspecified, future unknown values, missing Field members and inapplicable Record members remain distinct. A known authored rule cannot be suppressed as missing, unknown or inapplicable; an absent member cannot invent a known rule. Future meaning tokens must retain their exact value. A private fieldMeanings projection retains the exact frozen owner meaning, owner ProfilePin and issued source assertion; interpretationQualified remains false. Other Field families and independent occurrence-versus-rule-family identity remain required.
+
+Final Truss `original-occurrence-inventory/89401c89-121f-42a8-a9e4-623e68851b08/receipt.json` captures 703 selected inputs: 76 tests/578 assertions and strict selected-source typing pass. Tests execute actual pinned original producers, reversible 0.7→0.8 transition and Record checker. Required omission fails; absent-allowed omission succeeds completely; unspecified and missing availability stay incomplete with RECORD_AVAILABILITY_UNKNOWN. Twelve controlled loaded fixture-owner substitutions refuse, including altered state/value/operation/version/identity/path, future-value replacement and invented known meaning. Fixture manifests establish diagnostic custody only. Earlier 97e5d2d1/46a9ea5c host snapshots precede final controls; 0eb03345 retains the initially failed test typing log. This checkpoint has no native/browser execution.
+
+`tools/security/prove-nullability-owner-correspondence.py` retains 15 fresh-context Z3 4.15.4 queries (6 UNSAT, 9 SAT) in `nullability-owner-correspondence/8b1c2ce4-ba67-43d6-afc7-432ad3a11051/proof.json`, with ten exact source/producer/test preimages. Under the finite original nullability and exact context/meaning guard, false omission, known-value substitution, future/absent known invention and context substitution are excluded; presence-only Record validity/completeness agrees. Populated positives cover each state. Countermodels show that post-filter checks can suppress required rules, value-only checks can mix contexts, known unspecified meaning does not imply complete availability, and correspondence does not imply authenticated issuer or installed enforcement. Source admission, context tuple injectivity, expected owner meaning and the abstract omission equations are explicit premises. This is not JavaScript/owner/compiler/SQL refinement, complete value/facet/default/key/relationship semantics, or a backend enforcement theorem. Earlier 1e03a065/cf1f54c7 proof snapshots remain historical.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain source-level nullability correspondence and conditional logical evidence. Original absence remains distinct from SQL NULL; backend binding and protected write/read-path enforcement still require independent implementation and evidence. Acceptance remains 26/132; complete semantic owner/family inventories, report authority/persistence and final publication/commit gates remain open.
+
+
+## Original Field shape and facet projection correspondence — 2026-10-11
+
+The Truss pre-filter guard now covers all four selected original 0.7 Field owner operations: kind 6.0.0, nullability 5.0.0, cardinality 4.0.0 and facets 3.0.0. Exact original context, requested identity, operation/version/path and expected state/value must correspond before any known/partial entry or missing classification is emitted. Kind field/record/group, unspecified and unknown remain distinct. Cardinality one/array/map/unspecified, missing/inapplicable/unknown remain distinct; itemType member presence, qualified reference and all opaque qualifiers must match. Object-key order is immaterial; array order remains significant.
+
+Facet comparison preserves the entire original payload, separately checks the interpreted length/integer-width/precision/scale groups, and compares unknown-path evidence with the independently retained original document validator's UNKNOWN_FACET/UNKNOWN_FACET_UNIT warnings. For this pinned original 0.7 profile, the document validator appends the same facet validator's diagnostics in order. An owner cannot erase unknown paths, relabel partial as known, invent an interpreted group, suppress an authored facet carrier or change its value. Empty authored facets retain an empty interpreted map; a generic core.facets carrier entry does not establish a complete inventory of semantic duties. fieldMeanings now retains all four exact known/partial projections and their owner ProfilePin/issued entry with interpretationQualified false.
+
+Final Truss host receipt `original-occurrence-inventory/a5c3813e-26c4-4365-98fa-437ff5e4981b/receipt.json` retains 704 exact selected inputs: 83 tests/734 assertions across seven suites and strict selected-source typing pass. Actual pinned producers and reversible 0.7→0.8 Record checks cover one/array/map shape, referenced item type, Unicode-scalar string length, binary byte length, signed integer width and decimal precision/scale without rounding. Missing/unspecified cardinality remains incomplete. Twenty shape and eighteen facet substitutions through controlled loaded fixture owners refuse; object-key reorder positives preserve full meaning. Unknown role/container/unit/qualifier content remains visible without semantic support or issuer claims. Earlier e09e403b is the pre-final additional-controls snapshot. This is host evidence, with no fresh browser or native backend enforcement execution.
+
+`tools/security/prove-field-projection-correspondence.py` saves 18 fresh-context Z3 4.15.4 queries (8 UNSAT, 10 SAT) and ten exact source/test/producer preimages in `field-projection-correspondence/32d0a06d-e2f5-4121-b227-6bf2ecedb64a/proof.json`. Under exact state/context/cardinality/item-presence/item-value/raw/interpreted/unknown-path guards, omission and substitution are excluded. Populated guard-removal countermodels show loss of an admitted array item reference or qualifier, raw opaque members, interpreted bounds or partial evidence, and state-filter-only omission. A model also shows correspondence without authenticated owner or installed enforcement. JSON semantic carrier fidelity, original source/context admission and expected producer interpretation/validation-path projections are premises; this is not a concrete JSON comparator, owner/compiler/JavaScript/SQL refinement or complete family inventory proof. c71e058f is an earlier test snapshot; 3ecf8b83 lacked the corrected known-array population constraint on the item-value substitution countermodel. Prior nullability/occurrence source-pinned proofs remain historical when their captured sources differ; their abstract conditional laws do not qualify this implementation by themselves.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain selected Field interpretation correspondence prerequisites. Registered distinct rule-family interpretation (including scalar type, membership and extension semantics), issuer/native authority, complete accepted-report persistence/publication and protected data enforcement remain open. Acceptance remains 26/132.
+
+
+## Original facet rule-family identity candidate — 2026-10-11
+
+Truss now derives private candidate duties from the already-compared original 0.7 Field facet projection. Length and integer-width each supply one duty; decimal precision and fixed-scale/no-rounding supply two distinct duties at the same original pointer with the same joint precision/scale parameters. Identity includes candidate profile, actual semantic-owner profile, exact original occurrence and family. Empty or unknown-unit interpretation invents no duty. Original opaque qualifiers/unknown paths remain attached. In-process issuance refuses cloned/cross-preparation candidates. Coverage, interpretation qualification and enforcement remain false/none; this is not a registered report or backend admission profile.
+
+Final host `original-occurrence-inventory/9e3c6886-8650-4fe1-8b33-72dfbe69f119/receipt.json` retains 705 selected inputs, 85 tests/788 assertions and strict selected-source typing exit0. Actual pinned Record behavior distinguishes precision5/scale2: 999.99 passes, 1000.00 fails precision, and 12.345 fails fixed scale. Candidate tests distinguish the two identities despite equal parameters, preserve opaque content, refuse cloned/crossed custody and keep deterministic repeated identities. 7c8ad4f9 retains the initial readonly test-expectation typing failure; 042ea0b4 predates the extra decimal boundary. Concurrent Python main56ac0b9e is preserved. No browser/native execution or acceptance promotion occurred.
+
+`tools/security/prove-facet-rule-family-identity.py` retains 11 fresh-context Z3 4.15.4 queries (4 UNSAT, 7 SAT) and 11 exact preimages in `facet-rule-family-identity/0e31ad9f-258f-4a63-916c-d882410f8cb4/proof.json`. The faithful tuple constructor excludes collisions when family, candidate profile, semantic owner or original occurrence differ. Explicit erased-key countermodels show collisions when those coordinates are absent; parameter-only identity also collapses the two decimal duties. A populated two-duty witness is consistent, while valid identity permits absent authority/enforcement. Faithful tuple/original occurrence representation and the owner/mapping semantics are premises. This is not a JSON serialization, SHA, JavaScript/owner/compiler/SQL refinement, complete family inventory, authenticated issuer or native enforcement theorem. 04042204 precedes explicit erased-key controls; d4f84320 precedes final test preimages. An initial SMT declaration-name collision failed replay before a complete proof receipt; corrected fresh runs replay every formula.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain a concrete partial multi-family inventory prerequisite. Complete registered family interpretation (scalar type, membership, extensions and remaining declarations), report authority/persistence/publication, final commit gates and protected data enforcement remain open. Acceptance remains 26/132; the full goal is active.
+
+
+## Original scalar family inspection evidence — 2026-10-11
+
+Internal `src/model/scalar-type.ts` and `spec/core/scalar-type-inspection.schema.json` implement original 0.7 value-family label inspection version0.1.0. The nine independently asserted labels are boolean/integer/decimal/float/string/binary/date/time/timestamp. Explicit Field labels classify as known, future labels retain exact unknown content, missing Field labels stay missing, and non-Field/unspecified roles stay inapplicable with any source-admitted authored label retained separately. The source schema rejects scalar labels on explicit groups and array/map Fields. Separately qualified item Field scalar meaning never becomes the container's scalar meaning. This operation copies the validated original source/identity, retains opaque content and exact pointer, and reports provenance unverified. It has no public barrel export, registered report owner, native-domain mapping or enforcement installation yet.
+
+Final `scalar-owner-inspection/7791d432-4456-4e25-b64b-9a22626dfeb1/receipt.json` retains 514 current source/config/package preimages, bundle and log hashes: one host corpus test/49 assertions, strict selected typing exit0, Chromium153.0.8010.12 with48 unique passing cases. Controls include all nine independently authored families, future/absent/unspecified-role distinctions, module-qualified duplicate element names, source/result copy isolation, container/item independence, invalid source/identity/version and getter refusal without invoking the callback. Independent closed-result schema controls refuse future-known, recognized-unknown, missing-with-label, invented provenance/version and extra enforcement fields. Schema validity alone does not prove source/path/meaning correspondence; the producer computes that relationship. 9b558ce0 precedes closed-result controls; 56452a8d precedes independent family/config capture. Initial group/array scalar positives failed against existing source constraints; final cases deliberately verify refusal and qualified item inspection instead.
+
+`tools/security/prove-scalar-family-correspondence.py` retains15 fresh-context Z3 4.15.4 queries (7 UNSAT/8 SAT) and516 source/host-receipt preimages in `scalar-family-correspondence/5bf719bb-32e3-4792-8ba1-a36a9f5167ba/proof.json`. Given original source admission and exact state/context/finite label-class guard, known duty suppression, future-known invention, absence invention, non-Field duty inference and crossed context are excluded. Populated positives cover known/future/missing/non-Field; controls isolate label-only role filtering while preserving value/context, known-label substitution when only its equality guard is erased, and crossed identity when only context is erased. dee14792 is historical before those isolated controls. Container conflict exclusion follows its explicit source-admission premise. The future class does not distinguish arbitrary future payloads; actual payload fidelity is assumed and host/browser-tested, not proved by this finite model. Classification equations and exact carrier/admission are premises, not concrete JavaScript/schema/compiler/SQL refinement, native domains or authenticated authority. Correct classification still permits absent authority and enforcement.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain the missing scalar owner prerequisite. Next integrate a freshly pinned owner bundle into Truss with exact original source/context/value comparison; do not falsely describe this new function as available in historical c45 producer bundles. Complete scalar/native domain interpretation, member/reference/extension family inventories, report authority/persistence/final gates and protected data execution remain open. Acceptance remains26/132; full goal active.
+
+
+## Truss scalar owner/report integration evidence — 2026-10-11
+
+Truss loads a separate scalar-types owner from exact UMF94d0a99e4d1e9eb39278f38d6cd6bcba51e46db8. Historical c45 Record/declaration/Field preparation remains independently pinned. Optional scalar observations have their own actual bundle/revision ProfilePin; original0.8 produces explicit unsupported-version unavailable observations. The core source-identity profile is0.4.0 and declares the added scalar operation/owner. Before any classification filtering, every observed original0.7 scalar result must match its full source, exact requested identity/pointer, operation/version, expected state/value and unverified provenance, with no extra members. Known Field labels supply core.scalarType entries and retained owner meanings; missing is absence, unknown/inapplicable stays deferred. Original-byte inventory joins only actual entries to exact lexical spans. All membership/completeness/enforcement qualifications remain false/none.
+
+The private composed report now forwards an optional scalar owner, and ordered coverage verifies the independent scalar profile and exact original evidence at each expected call. Coverage counts the configured producer calls; an available result is not complete semantic-duty coverage. Original0.8 with this scalar owner is incomplete/unavailable. A synthetic-native-row host test verifies composed scalar observations/entries and four additional element calls; it is not a PostgreSQL installation/count/admission proof.
+
+Final Truss host `original-occurrence-inventory/2823413d-34e7-4b87-a79a-347561732e5f/receipt.json` retains712 current selected inputs, actual scalar producer bundle/entry/manifest and builder, repository package/lock bytes, and explicit absence of tsconfig.json/bunfig.toml. Eight suites pass90 tests/981 assertions with strict typing exit0. Nine independently authored family labels preserve exact original scalar byte slices, opaque content, source artifact reference and actual independent owner pin. Twenty controlled loaded substitutions refuse before filtering, including future/absent/inapplicable replacement, altered identity/path/source/operation/version/provenance and extra enforcement fields. Reordered meaning keys remain valid. Loaded fixture manifests establish custody only, not authenticated issuer authority. Earlier c3086c72 predates unsupported0.8/report-composition controls; 06ad77f8 retains the readonly test-typing failure; a80a67a4 predates composed report forwarding. The initial runner attempted to read absent configuration files; final evidence records and rechecks absence instead. Concurrent Truss main8576be6b Python inspection changes are preserved. This host checkpoint supplies no native/browser qualification or acceptance promotion; the later native scalar composition checkpoint below records separate actual PostgreSQL evidence. Prior UMF Chromium evidence qualifies the actual owner operation separately.
+
+`tools/security/prove-scalar-owner-result-correspondence.py` retains23 fresh-context Z3 4.15.4 checks (11 UNSAT/12 SAT) and714 exact source/host-receipt preimages in `scalar-owner-result-correspondence/bb4f53a9-17e7-4b4b-8752-2b4d775e4e0f/proof.json`. The guarded result preserves finite known-family class, full future/authored-future text, exact context, original-source carrier and closed result shape. Isolated guard-erasure controls retain the other guards and show future payload replacement, opaque source loss, crossed context, non-Field duty invention, known-label substitution and extra result fields. Known families use distinct finite classes; the separate faithful text carrier applies only to future labels, avoiding an unrealizable known-class change with equal faithful text. Original source admission/classifier equations and faithful text/source carrier representations remain premises. This is not concrete JavaScript/JSON comparator/schema/compiler/native refinement or an issuer/enforcement theorem. f35b330a preceded the distinct evidence namespace; b5c05df6 preceded the raw-carrier correction; d029e9ec preceded final composed-report source capture. Prior finite scalar laws remain conditional historical evidence, not proof of this concrete integration.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain scalar original-source/report prerequisites. Complete member/reference/extension and remaining declaration family inventories, native scalar domains, authenticated source/callable/cut authority, accepted persistence/publication/final commit gates and protected data enforcement remain open. Acceptance remains26/132; full goal active. Next resolve original record-member/reference semantic owner inventory without interpreting arbitrary extension/native meanings as generic constraints.
+
+
+## Actual native scalar report composition — 2026-10-11
+
+Final Truss `scalar-native-cohort/cdb1c711-7889-400b-ba83-f8a8a090176b/receipt.json` captures793 exact source preimages and actual PostgreSQL17.9 private cohort/report execution. All199 native observations pass, including four additional scalar checks: both original string-family duties, the independent scalar owner revision/bundle, all four ordered element observations (29 configured owner calls), and original source artifact custody with enforcement none/interpretation unqualified. Existing atomic staging/refusal, original cut, observer and stale/interleaved source/report checks replay with the optional scalar owner forwarded through all five report composition sites. The fixture image/port/database/container are retained, and the exact fresh named/labeled container is removed with cleanup exit0. This proves selected native report/observer composition, not installed scalar data enforcement, complete policy-family inventory, issuer authentication or accepted final publication/commit authority.
+
+The native runner requires all four executed producer directories to equal the host-captured bundle paths/hashes, retains their exact three bundle artifacts, checks all four scalar observations and the actual scalar ProfilePin, and verifies host source/configuration absence before and after execution. Creation uses a cidfile, unique name and owner label. Bounded cleanup recovers that exact name/label even when creation returns no usable result; it removes only the recovered owned ID and retains failure/uncertain cleanup evidence. Earlier1a88354c/69fa04ae lacked final executable-bundle/cleanup-recovery hardening; fe6ff2cb predates case-insensitive OrbStack absence diagnostics.
+
+`scalar-native-cleanup-control/02a6c6cf-d232-48a2-b759-da7886f71811/receipt.json` captures795 inputs and an actual Docker creation under a controlled CLI shim that loses the success result and returns nonzero before the runner assigns its container ID. The runner correctly fails, recovers/removes the exact owned fixture with exit0, and an independent real CLI inspect returns no-such-object. The retained shim/creation/log/failure bytes distinguish this control from a native security success or proof of all daemon timeout races. The initial4f566ee7 control had successful cleanup but incorrectly treated OrbStack's lowercase absence diagnostic as uncertainty; the final control records inspection output and checks that diagnostic case-insensitively. No unrelated containers are addressed.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain actual PostgreSQL scalar metadata/report correspondence evidence. Host90/981/strict0 and conditional23-query11UNSAT/12SAT evidence remain separately scoped. Acceptance remains26/132; native scalar domains/data enforcement, authenticated original owner/cut authority, complete registered semantic families, accepted persistence/publication/finalizer and wider Ashlar/backend cases remain open.
+
+Concurrent Truss main5e9eb10d (Python physical post-state verification and its separate SQL component) is also preserved. All712 host,793 native and795 cleanup-control preimages still match after that fast-forward; the new unused Python SQL component is outside this executed cohort's captured inputs. No rerun or qualification of that separate component is inferred.
+
+
+## Original Record membership owner — 2026-10-11
+
+Internal `src/model/record-members.ts` and closed `spec/core/record-members-inspection.schema.json` inspect original0.7 membership with operation version0.1.0. Existing UMF membership validation supplies target resolution, explicit Field role and single Record ownership checks. An explicit Record with absent members is missing; an authored empty list is known and retained as an explicit declaration. Ordered qualified references retain every opaque qualifier. UNKNOWN_KEY_QUALIFIER paths under the exact members pointer produce partial meaning. Non-Record roles remain inapplicable; invalid authored membership is rejected by original document admission before inspection. Exact copied source, requested identity, pointer and unverified provenance accompany every result. This is an internal semantic owner, without public export, native enforcement or authenticated author/issuer authority.
+
+Host/browser `record-members-owner-inspection/178e4ea1-7ebc-4132-ab77-a334b052834b/receipt.json` retains516 exact source/config/package preimages, one Bun test/38 assertions, strict selected typing exit0 and37 unique Chromium153.0.8010.12 cases. The corpus distinguishes missing/empty/ordered/qualified membership and partial unknown qualifiers, cross-module same-name resolution, original/result copy isolation and non-Record roles. Missing/non-Field/duplicate/multiply owned targets, malformed identity/version, getter access and inconsistent closed-result states refuse. Closed-result schema checks shape only; the operation supplies concrete source/path/meaning correspondence. Local runtime/dependencies remain explicit non-hermetic premises.
+
+`tools/security/prove-record-members-owner-correspondence.py` retains22 fresh-context Z3 4.15.4 queries (10UNSAT/12SAT) with518 exact preimages in `record-members-owner-correspondence/1f21215f-e253-4ea6-9548-f5e02092b242/proof.json`. Conditional state/context/faithful ordered opaque-list/source/closed-result/exact unknown-path guards exclude declaration suppression, absent or non-Record invention, partial-as-known substitution, crossed identity, opaque loss and changed unknown paths. Erased-guard controls admit the corresponding failure. Partial-as-known requires erasing both state and exact-path guards to remain schema-valid; state-only erasure still refuses because closed known results require empty unknown paths. Known/partial/missing/non-Record witnesses are populated, and valid correspondence permits absent issuer authority/enforcement. Original source admission, state equations and faithful list/source carriers are premises; this does not prove concrete JSON/JavaScript/schema refinement, target resolution/single ownership, exact empty-list encoding or native enforcement.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain an upstream membership inspection prerequisite. Next pin and compose this owner in Truss, compare its complete result before state filtering, retain empty declarations and each member occurrence without replacing logical membership by dataset containment or relationship incidence. Record-type reference and arbitrary extension interpretation remain separate owners. No accepted backend case is promoted; acceptance remains26/132 and the full goal remains active.
+
+Astra review added an authored reversed-order member control and duplicate qualified identity with distinct opaque qualifiers, avoiding sorted-input and schema-only duplicate blind spots. A separate faithful ordered unknown-path carrier and isolated erased-path guard also extend the conditional model. Host a174fe04 and formal48fcedb5 remain historical before these feedback changes; their original bytes are preserved.
+
+Final formal1f21215f includes the known-empty/partial-nonempty result-schema relationship. Formal5ad9453d is historical: its state-only partial-as-known counterexample retained nonempty paths and could not satisfy that concrete schema relationship. Astra identified this precision defect; corrected22-query evidence distinguishes schema refusal from the explicit two-guard erasure counterexample.
+
+
+## Truss original membership report composition — 2026-10-11
+
+Truss builds/loads a separate record-members owner from exact UMF5ddc656273e1965efa0187f3090d165d45225dcd. Historical c45 Record/declaration/Field and94d0a99e scalar owners remain independently pinned. Optional membership observations have their own actual bundle/revision profile and configured ordered coverage. Every original0.7 result is compared in full before filtering: copied original source, exact requested identity/pointer, operation/version, role/presence/ordered references/opaque qualifiers/exact unknown paths and unverified provenance. Original0.8 is explicitly unavailable. Source-identity profile0.5.0 retains one declaration duty even for an empty list, plus each actual ordered member occurrence. Entries join exact original byte spans; membershipMeanings retain actual owner pins and frozen unknown-path arrays. Completeness/enforcement/interpretation qualification remain false/none.
+
+Preparation now retains missing membership explicitly as missing, preserving inspectable absence instead of requiring an array at declaration collection. Derived fields[] is a correspondence projection with that separate status, not an empty membership assertion. TypeScript default home selection and new-cohort staging refuse any missing membership before native I/O. A genuine empty declaration remains eligible for the private new-cohort component. The existing Python packaged bridge still uses older declaration collection that refuses missing membership; Python staging has not adopted the new marker/guard or been rebuilt/qualified by this checkpoint. Any bridge adoption must implement the same explicit original-membership guard before native staging; do not combine this source change with that older packaged qualification.
+
+Final Truss host `original-occurrence-inventory/ae5c7e87-96b6-4f88-af81-9240d82edde0/receipt.json` retains716 current selected inputs, all five actual bundle/entry/manifest preimages and package/configuration premises. Nine suites pass96 tests/1081 assertions with strict typing exit0. Six new tests cover reverse ordered qualified references, opaque qualifiers, exact declaration/member byte spans, actual independent owner pin, absence/empty/non-Record distinctions, original0.8 unavailable coverage, synthetic-native-row private composition and cloned/cross-preparation custody. Twenty-two controlled loaded result substitutions refuse before filtering; a meaning-key-order positive remains valid. Missing membership refuses home selection/staging with zero connection calls. Astra found a mutable derived unknown-path array; final retention freezes it and mutation/isolation assertions pass. Host0ea56e3b retains the initial missing-members preparation/typing failures; ca3f6302 retained96/1076 host passes but an entry typing failure; bfa0e9b8 predates the immutability fix. These predecessor bytes remain historical evidence.
+
+Final Truss `record-members-native-cohort/88bcc8b6-591e-47a1-953f-53cf0c0989b6/receipt.json` captures798 current preimages and205 actual PostgreSQL17.9 observations, preserving the prior195 staging/cut/observer/refusal checks and four scalar checks. Four membership observations verify both declaration/member duties, the independent owner pin, every configured element call and retained original source/unqualified status. All five report composition sites forward the owner. The populated two-Record witness retains17 core entries and33 configured owner calls. Two additional actual empty-Record checks use a separate original source preparation, original native prestate/input admission and transaction; one native type and zero properties stage, while the original empty membership declaration remains a duty. The transaction rolls back and the exact newly created named/labeled fixture is removed with cleanup exit0. Runner execution binds all five bundle directories to host captures and rechecks source/configuration absence. Native167f4df9 is pre-immutability/empty witness;70f8fe4a retains an empty-witness SAVEPOINT-outside-transaction failure with completed cleanup. Final witness uses its own BEGIN/admission/rollback. Actual component custody remains administrative/unqualified, not ordinary-person security or accepted publication.
+
+The upstream22-query membership proof in UMF `record-members-owner-correspondence/1f21215f-e253-4ea6-9548-f5e02092b242` remains conditional owner evidence (10UNSAT/12SAT), with source admission and faithful carrier/classifier/schema premises. Its source pins do not qualify this new Truss mapping or native enforcement; the new host/native observations provide separate concrete evidence. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain membership original-source/report prerequisites only. Record-type reference/extension/native family interpretation, authenticated owner/cut/callable authority, accepted persistence/publication/finalizer and protected data enforcement remain open. Acceptance remains26/132; full goal active.
+
+Concurrent Truss main586f1b75 Python revision-obligation work is preserved. Its newly added unused catalog-completion/revision-obligation.sql is outside this cohort's executed snapshot; none of its qualification is inferred here. Existing captured host/native input bytes are rechecked after fast-forward.
+
+A later concurrent Truss8d4d21d0 Python original-declaration index producer is preserved by a non-force merge. All716 host/798 native captured inputs remain current/exact after merge; the new unused catalog-report/absent-binding-index-declarations.sql and Python components are outside the executed snapshot and receive no qualification here. Astra's final host/native audits report no remaining scoped blocker.
+
+
+## Original core reference links and separate type authority — 2026-10-11
+
+CONTRACT-040 requires verified Field/Record kind declarations and the explicit record-type authoring receipt before a role establishes an authored type assertion. A bare imported record-type string does not supply that receipt. CONTRACT-001 separately admits direct core references with exact qualified target existence, including repeated links and arbitrary roles. These meanings cannot be collapsed into a generic value-type constraint.
+
+Internal `src/model/reference-links.ts` and closed `spec/core/reference-links-inspection.schema.json` inspect original0.7 direct core links with operation version0.1.0. Missing references and an explicit empty list remain distinct. Each original occurrence retains its index/pointer, full role/reference/opaque qualifier content, exact resolved target identity/path and source-admitted kind presence/value. UNKNOWN_CORE_FIELD paths under that reference are retained. All links carry typeAssertion unverified, with copied original source/requested identity and unverified provenance. Source validation refuses unresolved/duplicate identities. Only direct links are projected; cyclic/self/mutual references terminate without recursive expansion. No public export, authored type authority, complete semantic-family inventory or native enforcement is supplied.
+
+Final host/browser `reference-links-owner-inspection/4f0e1468-1158-4af0-ab99-d7a48349d57a/receipt.json` retains518 current source/config/package preimages, one Bun test/43 assertions, strict selected typing exit0 and42 unique Chromium153.0.8010.12 cases. Independently expected ordered target/index/path projections use nonlexical roles and distinct unsorted cross-module targets with a repeated link, catching role or target sorting. Controls cover same-name cross-module targets, unknown/absent target kind, opaque qualifier paths/copy isolation, direct self/mutual cycles, repeated occurrence identity, missing/empty distinction and exact qualified owner context. A scalar Field plus raw record-type link and a record-type role targeting a Field remain plain unverified links; no authored type constraint is invented. Getter/malformed identity/version/unresolved/duplicate target refusal and closed-result type-authority/provenance/extra-field controls pass. Schema shape does not itself prove source/target correspondence; the operation computes it.
+
+`tools/security/prove-reference-links-owner-correspondence.py` retains30 fresh-context Z3 4.15.4 queries (12UNSAT/18SAT) and520 exact source/host-receipt preimages in `reference-links-owner-correspondence/7607301d-cce6-44c9-aacd-6f315ece81a3/proof.json`. Conditional presence/ordered opaque-link list/context/selected original occurrence/qualified target/path/kind/unknown-path/source guards exclude substitution. Erased-guard controls retain the other coordinates. Two distinct links reversed at equal length and identical population isolate order from omission; identical repeated links separately show why original occurrence index remains required. Missing, explicit empty and populated witnesses are consistent. A separate required downstream verified-receipt gate excludes admitted type without verified receipt, while bare record-type role plus Record target admits a model with no receipt and no type authority. Erasing that receipt gate allows erroneous downstream promotion. That gate is an obligation sanity check, not implemented receipt ingestion.
+
+Admitted source/unique resolved targets, faithful ordered list/source/path/kind carriers and their JSON correspondence remain premises. The selected occurrence is arbitrary within a populated list; closed_result is an abstract shape coordinate, with the actual unverified typeAssertion literal checked separately in host/schema/browser evidence. This is not concrete JavaScript/schema/JSON pointer/compiler refinement, authenticated author/issuer, recursive graph traversal, verified type receipt integration or native enforcement. Host a7c02290 retains the initial future-kind/member-role fixture conflict and typing failure. Host63e46fdc/d922f010 and proofs b7cbdf54/c1b29b32/28a0351a are historical before final distinct-target/order controls and final proof capture; original evidence bytes are preserved.
+
+REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain a generic core-link inventory prerequisite with an explicit type-authority boundary. Next Truss integration must pin this owner, compare complete results before filtering, retain every original link occurrence/empty declaration, and keep unverified links separate from authored record-type assertion duties. Original verified authoring-receipt ingestion, arbitrary extension/native families, accepted report authority/persistence/publication/finalizer and protected data enforcement remain open. Acceptance remains26/132; the full goal is active.
+
+
+## Truss generic reference-link consumer/native checkpoint — 2026-10-11
+
+Truss main0e996206 integrates the exact UMF9545 original0.7 link owner separately from existing c45 preparation/Field/declaration,94d0a99e scalar and5ddc656 membership producers. Core source identity profile0.6.0 compares the entire result before filtering, retaining generic link declarations/individual occurrences separately from constraint entries. Original byte joins preserve role, order, repeated occurrence, qualified target, opaque qualifiers and missing/explicit-empty distinctions. Loaded-owner controls reject context/meaning/authority substitutions and harmful sorting with recomputed occurrence metadata; request identities freeze before loaded invocation. Final host22b44ef2 retains720 pins,102 tests/1200 assertions and strict typing exit0. Astra's findings are fixed and scoped host audit is retained in Truss.
+
+Truss `reference-links-native-cohort/acf8e27d-014a-4810-94c7-d2492cfabc87` retains807 exact inputs and210 actual PostgreSQL17.9 exercising checks: every prior205 check plus four generic-link correspondence checks and one original-source compatibility refusal. Actual RecordA links retain target order B,A,B with a repeated occurrence/opaque qualifier; RecordB has an explicit empty list. All six report composition sites forward the actual independent owner. The populated witness has37 configured calls and17 unchanged constraint entries. Exact original byte joins carry unverified type/provenance, not type authority. The owned loopback fixture is removed with cleanup0; execution binds all six original bundles to host preimages and captures native/harness/check-inventory bytes.
+
+Historical f986ecda reveals KEY_EQUALITY on a business-key Field bearing raw record-type references under the pinned c45 preparation profile. The source-valid Record witness preserves that limit; a permanent negative requires INVALID_DOCUMENT/KEY_EQUALITY at the exact original key component path before admission. This compatibility refusal does not reinterpret generic links or satisfy verified type receipt ingress.09451b81 is historical209-check success before that negative. Native component correspondence is separate from conditional owner proof7607301d (30 queries12UNSAT/18SAT); faithful representation/source admission remain its premises, not consumer/runtime/native proof. No complete inventory, authenticated issuer, ordinary security enforcement or accepted publication/finalizer is claimed. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain prerequisites; acceptance26/132 and full goal remain open.
+
+
+## Exact-current record-type receipt consistency owner — 2026-10-11
+
+Internal `src/model/record-type-inspection.ts` composes the existing CONTRACT-040 `verifyCoreRecordTypeDeclaration` rather than interpreting bare roles. Operation `inspect-core-record-type-receipt`0.1.0 accepts original0.7/v6 only. It recomputes the Field and Record kind declarations and authored type transition, requires the full unchanged current model to equal the receipt target, then binds the requested qualified Field, exact appended link index/path and qualified Record identity/path. The closed result retains copied original current source, entire receipt and direct link. receiptConsistency is verified; issuerAuthority remains unverified and enforcement remains none. The generic link's typeAssertion stays unverified. This supplies authoring receipt consistency, not authenticated authorship, native equivalence or durable backend ingress. One exact-current receipt is admitted; earlier receipts after unrelated/later model edits require a separately admitted reconciliation protocol, which is not supplied here.
+
+Final host/browser `record-type-owner-inspection/5ae0c4cf-7788-4397-8ac8-b20a91484c3b/receipt.json` retains520 exact inputs, one Bun test/61 assertions, strict typing exit0 and60 Chromium153.0.8010.12 cases. Controls include recursive membership without expansion, same-named qualified Records/Fields, existing opaque references, exact appended occurrence, current/receipt opaque/source/path/role/order substitution, closed result authority/enforcement/type/kind refusals and copy/getter isolation. A real missing-kind source is authored Field then Record, followed by the required renewed Field receipt. Individually valid old Field and foreign-context Record receipts refuse CORE_KIND_STALE, distinguishing inconsistent valid contexts from malformed receipts. The schema requires record-type role and a present Record target kind; structural validity alone cannot prove full receipt/current correspondence. Historical54622097 precedes the stronger schema/real author-chain controls.10b23185 preserves a strict-schema compile failure fixed by the explicit reference object type.
+
+Final `record-type-owner-correspondence/9e58486d-986d-403d-be52-ebcd640bfff6/proof.json` retains522 inputs and46 Z3 4.15.4 checks (21UNSAT/25SAT) with fresh-context replay. Complete model representation is the pair of selected ordered Field references and a faithful remaining-context coordinate containing every other JSON value. Guards cover existing owner recomputation/both kind receipts, exact current-target pair, requested qualified owner, copied current pair/receipt, authored reference/paths/target/index and output status. A stale whole context with unchanged selected link refuses. Guard-erasure models are logical predicate-packet controls; closed_envelope_structure excludes separately modeled literal constants, so they are not independent bypasses of the concrete closed schema. A consistent recomputable receipt without authenticated issuer is satisfiable; protected type admission needs a separate authority gate. The erased authority gate permits erroneous promotion.
+
+Source admission/unique identity/path resolution, faithful carriers/decomposition and existing verifier algorithms remain premises. The proof does not verify JavaScript, JSON/schema canonicalization, authenticated authorship, receipt-chain reconciliation, durable Truss/Ashlar ingress or native enforcement. Historical proofs6b829628/541fba9d predate the explicit remaining-context split;1098c889 precedes precise structural/value guard wording. Their countermodels are not final faithful/concrete schema evidence. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain an exact-current receipt consistency prerequisite only. Next independently pin this owner in the consumer and preserve original receipt bytes/current-document correspondence without granting issuer authority or silently inventing missing type duties. Complete semantic/native family inventory, authenticated current callable/cut authority, accepted persistence/publication/finalizer and protected data enforcement remain open; acceptance stays26/132 and the full goal remains active.
+
+
+## Explicit multi-Field type receipt journal checkpoint — 2026-10-11
+
+Internal src/model/record-type-journal.ts and closed spec/core/record-type-journal.schema.json implement the requirements above without changing the existing exact-current owner or public exports. Full copied base/current/event source-target correspondence is checked with existing kind/type verifiers, then every authored type is resolved against the final model. Actual missing-kind transitions appear separately in the journal. Pre-base imported roles acquire no entries; idempotent kind events remain explicit. Full result receipts and current link projections stay separate from issuer authentication and native enforcement.
+
+Final host/browser record-type-journal-inspection/52ff1fd0-52f9-490d-b4a7-15f4614c05c9 retains522 inputs, one Bun test/48 assertions, strict typing exit0 and47 Chromium153.0.8010.12 cases. Controls cover two typed Fields, actual missing-kind transitions, same-named Records in distinct modules, opaque link/order preservation, valid32-event capacity, omitted/reordered/duplicate/crossed independently valid events, full final-context substitution, final Field/Record kind invalidation, idempotent events, imported bare roles, copied data/getter refusal and closed-schema authority/inspection-event rejection. Astra's schema branch finding is fixed by a required declare-core-kind operation constraint; a genuine inspection result fails shape validation. Historical eb0bbfbd is36 cases before review controls;001f9853 has47 before the actual Record-name collision. An initial direct test failed because a missing-kind Record fixture already contained members, which require a Record kind; that console failure is terminal provenance, not a retained full failed-run receipt. The corrected fixture authors kind before relying on it.
+
+Final record-type-journal-correspondence/e541930c-3711-4d95-afcb-83f5452b70dc retains524 selected inputs and76 Z34.15.4 checks (37UNSAT/39SAT), each independently fresh-context replayed. The explicit32-prefix recurrence proves bounded verified transition reachability, all32 continuity guards, full final-model equality and final type retention under admitted faithful complete-model carriers, owner-verifier and final link-resolution premises. Erased guards have SAT witnesses; the populated positive has two actual type changes and the later-invalidation counterexample has an earlier type and a distinct later kind transition. This is bounded reconciliation algebra, not unbounded induction or proof of JavaScript, JSON canonicalization, schemas, issuer protocols or backend enforcement. Historical a248467a/8a4c9f2b/16fd7a22 precede final witness/collision strengthening and remain scoped historical files.
+
+Truss main104aa0fc separately qualifies exact-current receipt sidecar/native report composition: final6c27a9dc retains813 inputs/216 PostgreSQL17.9 checks andcleanup0 after Astra review. It does not adopt this new journal. The next consumer integration must pin this operation independently, retain the original whole journal bytes/base/current correspondence and every type event's original source occurrence, and preserve the authority boundary. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 gain reconciliation prerequisites only. Acceptance remains26/132; complete semantic/native family inventory, authenticated issuer/current callable/cut authority, accepted persistence/finalizer/publication and protected data enforcement remain open.
+
+
+## Truss multi-Field journal consumer/native checkpoint — 2026-10-11
+
+Truss mainaba57561 independently pins UMF e71613d9 journal inspection beside all historical owners. Private original-byte requests retain closed version0.1 whole journal artifacts (base and explicit ordered events), with current taken from the original prepared document. Complete owner results are compared before use; frozen type entries bind original event indices/pointers and exact qualified current reference bytes. Individual raw event slices are not separately stored; their original bytes remain in the whole retained artifact. Ninth optional private report argument enforces exact-preparation issuance before SQL. No core.recordType constraint entries, issuer authority, accepted/public admission or enforcement are added.
+
+Final Truss host original-occurrence-inventory/84531857 retains732 exact inputs/eight bundle-entry-manifest triples and115 tests/1418 assertions/12files with strict typing exit0. Controls include mixed kind/type indices[1,3], cross-module same-name Records, opaque preservation, stale exact-current receipt refusal, kind-only pre-base bare roles, wrong/duplicate/lossy/gapped/crossed journals, complete loaded-output substitutions including an added type, immutable argument/copy isolation and cloned/crossed/falsy custody refusal before SQL. The private ledger preserves4MiB checked accounting; exact/+1/invalid-count controls are ledger primitive evidence only. A large actual owner-valid journal reaches an earlier scanner work refusal; no whole-pipeline population reaching only4MiB or shared operation heap/text/CPU admission is established. Historical typed host failures a0042f5c/12b58cef retain logs but not full failed-input snapshots;3f005572 predates final controls.
+
+Final type-journals-native-cohort/00ff5a21 retains819 exact inputs and222 exercising PostgreSQL17.9 checks: all prior216 plus six named journal checks exactly once. Actual original staging yields three Records/two properties, exact schema_doc source text, whole request/journal bytes, independent owner profile and original event indices1/3/current reference bytes. Copied/crossed/falsy sidecars refuse before SQL; rollback removes catalog/property/document effects and retained journal consistency cannot authorize an ended report cut. Exact owned loopback fixture cleanup exits0. Astra independently verifies host/native pins, archives, outcomes and authority scope.54be2d9d is historical pre-final predicate/mixed-index evidence. An inherited exact-receipt non-promotion check used the wrong nested ruleName path; the final receipt/journal checks use the actual top-level field and injected-type negatives. Concurrent Truss6106084d/251a55e0 row-touch work is preserved; its new unused observe.sql/Python components are outside this executed snapshot. Every732/819 retained preimage remains exact after merge.
+
+Upstream owner host52ff1fd0 and conditional proofe541930c remain separate evidence with faithful model/owner/final-retention premises; they do not prove this consumer mapping or backend enforcement. REPORT-ASSERTION-CLOSURE and US-056-AC1/AC2/AC10 receive journal ingress/native correspondence prerequisites only. Acceptance remains26/132 and the goal remains active. Next complete semantic/native family inventory and original type duty allocation while separately retaining authenticated issuer/current callable/cut authority, accepted persistence/publication/finalizer and protected data enforcement obligations.
+
+## PostgreSQL private statistics-family restriction — 2026-10-11
+
+US-056-AC8 / pg-raw.B10 retains a reproduced private-fact diagnostic failure. The next native restriction experiment must inventory every installed `pg_catalog` function with the exact `pg_stat_get_` prefix and preserve full native overload signatures. Revoke PUBLIC EXECUTE by that inventory before any broader deny-all prototype. Require genuine ordinary SCRAM calls to succeed before restriction, refuse selected getters afterwards, report zero effective ordinary EXECUTE across the entire selected installed family and preserve the independent authorized-resource oracle. This is a selected name-family restriction, not complete diagnostic closure, compiler lowering or production cluster authorization.
+
+`tools/security/pg-private-diagnostics.py` now runs that experiment within its exclusively owned PostgreSQL 17.9 fixture. Final `security/pg-statistics-family/2e5508d1-a79b-4a8e-95da-caf97016401d` captures five exact source preimages and the executed receipt: 101 observations, 110 installed function signatures, 108 initially PUBLIC executable, successful pre-restriction getter calls, zero post-restriction effective ordinary EXECUTE, denied snapshot/insert getters and unchanged authorized rows for three native ordinary actors. The installed function family is checked by literal prefix equality, not SQL LIKE wildcard interpretation. The after-run archive matches the probe's frozen pre-run input hashes; dependencies/runtime are not hermetic. The earlier added experiment ran after a broader deny-all rule and is retained explicitly as intermediate evidence without independent family-restriction qualification.
+
+Existing private catalog/view/size/planner diagnostics and all wider authority/current-cut obligations remain distinct. B10 stays counterexample-found; acceptance remains 26/132. Do not apply these database-wide PUBLIC revocations to a production cluster under this fixture authorization. Ordinary native callable/inventory closure and a selected protected profile are required before actual backend activation.
+
+At the selected family-entry cut, two getters had already been restricted by prior controls; 108 of the 110 installed ordinary-function signatures therefore still had PUBLIC EXECUTE. The new step executes two selected getter negative controls, not all 110 functions. Complete effective privilege enumeration covers every selected signature for the three named ordinary roles; other routine names, operators/casts/wrappers, explicit grants/memberships and later fixture mutations require their own scope and evidence.
+
+## PostgreSQL statistics-family role and owner closure — 2026-10-11
+
+The selected statistics function-family restriction must refuse reachable grants as well as PUBLIC grants. Enumerate native roles that each original ordinary actor can use through inheritance or adopt with SET ROLE; inspect EXECUTE, grant options and native routine ownership for every selected function. A zero current EXECUTE check alone cannot establish authority closure: an owner may restore its own privilege. Restriction cannot silently admit a remaining owner/grant-restoration path. Native positive bypass controls must exercise direct, inherited and SET-only grants plus ownership restoration, and negative controls must preserve the independent resource oracle.
+
+`tools/security/pg-private-diagnostics.py` implements the census and fixture restriction. Direct Alice grants, inherited Bob grants and Bob SET-only membership each restore an actual getter call after PUBLIC revocation. SET-only Bob has no original-role EXECUTE yet adopts the non-login bridge and calls the getter. The fixture revokes selected privileges from exact usable/settable roles, rechecks effective authority and proves both ordinary and adopted calls refuse while authorized resource IDs remain unchanged. An excluded installer transfers one getter to Bob and removes EXECUTE; the census still reports native ownership/grant authority. Bob then restores EXECUTE and calls it. Original native ownership is restored and the census returns empty for all three ordinary actors.
+
+This is fixed PostgreSQL 17.9 source-native family/role correspondence, not a complete callable or diagnostic inventory, concurrent authority-change protocol, compiler binding or B10 qualification. An earlier intermediate EXECUTE-only census is retained without ownership-restoration closure qualification. Broader backend acceptance remains26/132.
+
+Final native `security/pg-statistics-role-closure/25fed768-69d3-4d40-a031-055bc97208e8` retains five exact source preimages and110 observations. Complete selected risk census is scoped to native roles usable or settable by each of the three original actors and the installed110-function family. It includes routine ownership and EXECUTE WITH GRANT OPTION as authority to restore privileges; zero current EXECUTE alone is insufficient. Source/dynamic runtime and cleanup are producer-path attested, not hermetic or independently authenticated backend admission.
+
+`tools/security/prove-pg-statistics-role-closure.py` retains six Z34.15.4 first-order queries (three UNSAT / three SAT), exact pre-analysis source capture, unchanged-input checks and fresh-context replay in `security/pg-statistics-role-proof/1100b70d-9ac4-4246-8cf9-8d532b8723c0/proof.json`. Under faithful complete selected routine/reachable-role/privilege predicates, a closed risk relation excludes execution, ownership and grant restoration. Populated countermodels show original-role execution checks miss a SET-only bridge and execution-only checks miss ownership restoration. A populated closed family is satisfiable. This is conditional exclusion algebra, not SQL privilege-algorithm refinement or a complete diagnostic noninterference theorem. Wider callable/dependency inventory, authenticated current authority and ordinary backend activation remain open.
+
+Astra identified ADMIN-only membership widening outside the earlier USAGE/SET predicate. The final census adds native MEMBER WITH ADMIN OPTION. A genuine Bob profile starts with ADMIN=true, USAGE=false, SET=false and EXECUTE=false; SET ROLE refuses, but Bob can self-grant SET=true, adopt the exact bridge and invoke the getter. The corrected role restriction includes that native administration authority. Retirement of this self-derived grant requires CASCADE; the failed non-cascading fixture-restoration attempt and source are retained explicitly without a passing receipt. The corrected full native run retains111 observations. Arbitrary multi-step membership/DDL transitions and full concurrent writer participation remain unqualified.
+
+Final conditional formal `security/pg-statistics-role-proof/d58cac3b-3c52-4b0b-b701-75f0f24c15a9/proof.json` contains seven queries (three UNSAT/four SAT), adding ADMIN-option reachability. The SET-only and ADMIN-only countermodels isolate one selected getter and one executing bridge with no ownership/grant-restoration flags. Prior1100b70d/25fed768 are historical captured versions. The three exclusion theorems follow directly from the declared no-risk relation under complete native predicate premises, not a necessity or SQL-refinement theorem. Whole acceptance stays26/132.
+
+Astra independently audited final native `security/pg-statistics-role-closure/ba4279bf-0b34-495c-b124-a029aae84504` (five source/archive pins,111 observations,24 trace hashes) and formald58cac3b (four source pins,seven fresh-context replays). No scoped landing blocker remained. Both ADMIN-only widening and formal countermodel isolation findings are resolved. Scope excludes arbitrary multistep changes, concurrency and complete B10 admission.
+
+
+### Protected disclosure query invariance — 2026-10-11
+
+The US-056-AC6 / pg-raw.B08 component now exercises permitted queries over the
+published constant disclosure, rather than only refusal of queries over an
+omitted raw salary column. For each original Alice/Bob/outsider connection,
+independently authored filter, sort with identity tie-break, group, join and
+aggregate vectors are checked at the original hidden-value cut, after an
+excluded assessor changes Bob's hidden salary from200 to100, and after exact
+restoration. All45 new observations match; the outsider's empty population is
+included. The deliberately weakened pre-mask salary predicate changes Bob's
+visible identity selection under the same hidden-value change, demonstrating an
+actual native negative control. All102 observations pass on PostgreSQL17.9.
+
+Run `python3 tools/security/pg-mask-query.py`. Immutable evidence is
+`evidence/security/pg-mask-query-invariance/0857ad7e-3228-4859-a86a-bcd9fb4d3724`:
+receipt, declared-source archive and digests, capture metadata, and the refreshed
+conditional two-resource constant-mask algebra (five operators,15 SMT queries).
+The owned container removal returned success before receipt publication.
+The formal model assumes shared stable eligibility and constant disclosure;
+it does not prove installed SQL, arbitrary transforms, NULL/error/timing behavior,
+or compiler correctness. The native run is a fixed synthetic relational fixture,
+not an admitted policy compiler or complete query-lineage implementation.
+B08 remains open; no backend case or public profile is promoted. The full goal
+remains active and broad acceptance remains26/132.
+
+Astra ultra verified all five exact archive/current source pins, the complete
+102-label inventory and type-sensitive authored vectors, installed view bodies
+and ACLs, and the weakened-view mutation/restoration sequence. Its formal feedback
+is implemented: SMT is captured before solving and independently replayed in a
+fresh solver context inside the producer. Astra separately replayed all15 clean
+queries (five UNSAT/ten SAT). Adjacent audit/review/replay receipts retain this
+scoped review; no landing blocker remains. The broader acceptance run is separate
+from this review and does not inherit its verdict.
+
+Full fresh gate `bun docs/helix/02-design/spikes/security/acceptance.ts` finished
+with26/132 accepted executions and exit1. All26 registered runners passed;
+106 required backend cases lack executable bindings. Ten additional errors
+report unallocated US-055-AC1 through AC10, so the gate reports116 errors
+and28 allocated criteria. This allocation gap must be reconciled against the
+governing requirements, not removed to make the gate green. Exact full output
+is retained at `evidence/security/acceptance-runs/b48167fa-f6a5-44f1-a704-0c3fd70f08f8/acceptance.json`.
+The full objective remains active; component success is not backend admission.
+
+
+### Security criterion allocation and per-case accounting — 2026-10-11
+
+The full gate's ten unallocated US-055 errors were stale identity references.
+The governing semantics story/test plan are US-079/STP-079; cases and exercising
+source citations already use that identity. US-055 names unrelated stories.
+The gate now requires the unchanged28 security criteria: US-079-AC1..10,
+US-056-AC1..10 and US-057-AC1..8. Unknown/unrelated criterion references fail and
+are excluded from the allocation count. No required behavior or backend case
+is removed, and the original132-case plan remains intact.
+
+Run `python3 tools/security/check-acceptance-allocation.py`. The producer freezes
+seven sources, including the gate/helper, actual case plan and three governing
+story texts. It extracts original bold acceptance IDs and requires exact actual
+plan equality. Five isolated nonexecuting plan controls verify complete mapping,
+a missing semantic criterion, the retired identity, an unrelated criterion and
+an unknown criterion. Their full gates still fail without exercising runners.
+Astra identified that allocation errors preceded the prior final-validation
+baseline, allowing an invalid executing case to receive accepted=true despite
+global failure. An actual-gate synthetic metadata counterexample is retained
+under historical29fab1a3 without treating it as semantic/backend evidence.
+
+The corrected per-case error baseline is taken before duplicate/allocation
+checks. Three original executing metadata fixtures reach final receipt admission:
+unknown criterion accepted=false, a later independently valid case accepted=true,
+and a duplicate case accepted=false. The valid case is not poisoned by earlier
+errors. All eight allocation/accounting controls pass; final source-current
+archive and exact vectors are in
+`evidence/security/acceptance-allocation/4258223f-fdb4-4d19-94f2-8aeb60007581`.
+The four existing actual-gate receipt controls (valid, malformed, omitted
+assertion, changed source) also pass. These are gate-metadata regressions,
+not original semantic or native backend exercising cases. The earlier4c409d30
+and29fab1a3 captures are historical versions; final evidence must match4258223f.
+
+Astra ultra independently verified all seven final source/ZIP pins, the28
+governing criteria, unchanged132 required cases, exact eight control outcomes
+and original fresh executing receipts. The per-case accounting finding is
+resolved; adjacent review/audit records identify no scoped landing blocker.
+This verdict covers allocation/accounting only, not backend behavior.
+
+Final source-current full gate completed with26/132 accepted original executions,
+28 allocated governing criteria, exit1 and106 missing executable bindings.
+All26 registered runners passed; the ten stale identity errors are gone.
+All gate and per-run fingerprinted sources still match current bytes. Exact
+full output is retained at `evidence/security/acceptance-runs/d30ed421-7183-4b9c-8ac9-2723a5b56278/acceptance.json`.
+No additional backend case or support profile is promoted; the active full
+security objective remains open.
+
+
+### Query carrier native-type correspondence — 2026-10-11
+
+US-056-AC6/B08 gains actual Truss issued-query physical preflight: the text/int64
+consumer now checks native column type OIDs before collection/application SQL.
+The carrier descriptor check is a separate fixed42501 phase; it does not rely
+on Boolean short-circuiting to avoid parsing missing-column references.
+Native evidence `evidence/security/query-carrier-domains/62bb09eb-397c-4772-b4d5-ae1bf6f0704b`
+retains25 original observations and11 frozen source pins. A retained original
+inspection-owner predicate handoff is freshly consumed by the issued lowerer,
+then its checked return is installed on PostgreSQL17.9. Alice's exact RAB output
+is restored after each wrong salary type (text/int4/numeric/domain), wrong ID
+type, missing field and missing view control; substitutions return no application
+output and the fixed carrier-unavailable42501. Distinct ordinary actors retain
+native identity and separate original-use permission refusals.
+
+Actual Chromium matches the same native program/checks/return and refuses copied
+programs. Fourteen host tests/58 assertions and strict module-closure typecheck
+pass; the initial CLI TS5112 and corrected invocation are explicitly retained.
+Native cleanup completed before successful receipt publication. View nullability
+remains an independent value-completeness check, not inferred from attnotnull.
+Native current type correspondence does not prove original source authentication,
+complete view dependencies, concurrent DDL exclusion, actual graph execution,
+or complete B08/production admission. Broader acceptance stays26/132 and the
+full security goal remains active.
+
+Final source-current run is
+`evidence/security/query-carrier-domains/0e5d2b6f-fbbd-445c-8cb5-6a40e3dd28c8`.
+The initial62bb09eb capture/review remains historical. The refreshed native
+producer retains nine actual refusal error transcripts and owned removal output;
+raw host and strict compiler logs are retained. Astra independently verified all
+25 vectors,11 exact native current/archive source pins,13 browser pins, installed
+issued-fragment correspondence and raw errors/cleanup/14-test58-assertion logs.
+No scoped blocker remains. The existing strict12-security-module checker also
+passes with exact source archive and raw output. Truss merged six concurrent
+Python-main commits without changing any tested source. Broader source/authenticated
+issuer, view/dependency/concurrent-DDL and full B08 gates remain required.
+
+
+### Two-way eligible query-source correspondence — 2026-10-11
+
+A same-type view drift exposed a gap in the original one-way completeness check:
+every eligible Resource still had one carrier, but an additional carrier for
+ineligible RB survived the application predicate. The ordinary SCRAM Alice
+connection returned RAB and RB through the actual issued guarded fragment.
+Counterexample `evidence/security/query-carrier-eligibility-counterexample/da5a64ac-128a-44b9-bbb5-e08cfa435484`
+retains28 observations, changed native view definition, predecessor source archive
+and producer. It is historical failing behavior, not an accepted profile.
+An initial direct-view diagnostic correctly hit Alice's denied SELECT; failed
+harness provenance is separately retained without a passing-case claim. Ordinary
+view permissions were not broadened to make the diagnostic pass.
+
+Truss `security-source-completeness.ts` now requires both directions for the
+selected application-carrier population: each eligible root has exactly one
+complete carrier, and each selected carrier has a matching eligible root. The
+reverse anti-existence condition uses the same full key relation and type
+selectors as the forward condition. It runs before application filtering/aggregation,
+not as post-fetch filtering. Private authority-fact populations are outside this
+application-carrier requirement. Other view expressions/dependencies still need
+independent native source admission.
+
+Fixed native `evidence/security/query-carrier-eligibility/757801b1-1556-4b80-821c-efc8ab7d0c48`
+passes51 observations and retains12 source preimages, including the actual owner
+inspection executable used to obtain the empty-query handoff. Extra ineligible,
+absent, NULL-key, duplicate-eligible and predicate-filtered-out carrier rows
+retain matching text/int64 domains but refuse both populated and empty routines
+with fixed source-unavailable42501 and no output. Each repair restores RAB and
+empty outputs. Nineteen raw native refusals and exact owned cleanup output are
+retained. The initial predicate artifact is retained; the empty query is freshly
+prepared through the captured inspection executable, not a fabricated handoff.
+
+Chromium153.0.8010.12 matches both issued native programs/return fragments and
+rejects four copied-fragment attempts. Fourteen host tests/58 assertions and the
+existing strict security-module checker pass with raw logs. Conditional formal
+`evidence/security/query-carrier-eligibility-formal/bbab0298-9613-47ba-aec9-89877bbfee77`
+retains eight pre-solve SMT queries/fresh-context replays: four UNSAT/four SAT.
+It proves reverse universal/anti-existence equivalence and conditional exclusion
+of extra/duplicate carriers, with populated and empty positive controls and old
+one-way/empty-application countermodels. Faithful native identities/selectors,
+truthful complete eligible-root RLS/field facts and a stable source/authority cut
+remain premises. It does not prove SQL generation, PostgreSQL refinement,
+NULL/collation conversions, issuer or callable/view-dependency/concurrent-DDL
+closure, graph storage or full B08/production admission. US-056-AC1/AC6/AC7 gain
+component evidence only; the original goal remains active at26/132.
+
+
+### Same-key original-value correspondence counterexample — 2026-10-11
+
+Native `evidence/security/query-carrier-value-correspondence-counterexample/882e3c1d-7aec-46c9-b037-fdc0158eae42`
+retains59 observations,12 exact source preimages, the actual issued populated and
+fresh owner-derived empty-query fragments,19 existing raw refusal controls and
+owned cleanup transcript. Two source-view mutations preserve eligible identities,
+exact-one multiplicity, non-NULL text/int8 domains and both native preflight checks
+in the actual guardian routine. Constant333 fabricates RA alongside original RAB;
+constant444 suppresses the original RAB predicate result. Actual ordinary Alice
+calls return successfully; restoration returns exactly RAB. This is an excluded
+installer source mutation counterexample to sufficiency of the existing checks,
+not evidence that Alice can change the source or a new backend admission pass.
+
+The first harness directly evaluated collectionReady as an administrator and
+observedfalse because that role sees a different root RLS population. The failed
+producer/diagnostic is retained under
+`evidence/security/query-carrier-value-counterexample-failed-attempt/`; the final
+run uses successful actual issued routine execution to witness both guard passes.
+Failed-run cleanup has only finally-block completion provenance, not a separate
+raw cleanup receipt. The successful run retains exact owned removal output.
+
+CONTRACT-063 now makes faithful value interpretation and complete installed
+source/dependency correspondence explicit. STP-056 allocates fabricated/suppressed
+matches, empty queries, dependency/authority drift, final-release interleavings
+and legitimate new-data-cut positive controls to existing B08/B09/B11 across all four
+backends. Next implement current installed-source authority and meaning admission;
+matching domains/populations or an unauthenticated definition hash cannot replace
+that obligation. Full acceptance remains26/132; no protected profile is promoted.
+
+
+### Native source-census and buffered-release correspondence — 2026-10-11
+
+Truss `packages/postgresql/native/security-query-source-census.sql` is a private
+PostgreSQL17.9 observation source. It inventories40 selected catalogs/sections
+across the database, including full routine bodies, views/rewrite trees, columns,
+policies, triggers, type/operator/cast/collation/aggregate mappings, roles,
+membership, parameter privileges, event triggers and procedural transforms.
+It captures routine-body changes even when pg_depend lacks the call edge.
+The added mappings follow PostgreSQL17's
+[aggregate catalog](https://www.postgresql.org/docs/17/catalog-pg-aggregate.html),
+[parameter privileges](https://www.postgresql.org/docs/17/catalog-pg-parameter-acl.html),
+[event catalog](https://www.postgresql.org/docs/17/catalog-pg-event-trigger.html) and
+[language transforms](https://www.postgresql.org/docs/17/catalog-pg-transform.html).
+These source images are private administrative evidence; opaque body/configuration
+content is not safe for ordinary disclosure merely because password columns are
+excluded.
+It excludes table data, private statistics and credential columns; foreign routes
+refuse. Native8192 rows/section,100000 total rows and16MiB serialized limits refuse
+rather than emit a complete prefix. They do not establish heap/CPU/aggregate-work
+bounds or complete installation authority.
+
+Existing `tools/security/pg-inventory.py` now compares the pinned source again
+after materializing a private result buffer and before returning rows. Final native
+`evidence/security/query-source-census/b4e127c5-bb11-4ae0-a42a-73c32aabff72`
+passes204 observations at14 frozen/current source inputs, retaining the complete
+compressed10,439,605-byte native image (40 sections/14,352 rows), changed native
+sections, actual issued predicate/owner-derived empty fragments,19 raw native
+refusals and successful owned cleanup. View substitution, cross-schema string-body
+changes, routine/namespace ACL and routine settings, RLS policy, aggregate initial
+state, parameter privilege and event-enabled changes refuse both applications with
+zero application calls. The aggregate initial value changes the independent native
+probe3→103 with unchanged pg_proc. A sequential excluded-installer change after an
+actual RAB buffer is read causes final refusal. A faithful data update yields the
+new RA/RAB oracle without source-definition drift; restoration recovers RAB.
+Actual pg_attribute8192/+1 controls and a17-million-character routine-definition
+serialization overflow refuse/recover as scoped native resource observations.
+
+Native OID aliases carry numeric references alongside original display spelling.
+The native schema independently enumerates28 selected regproc columns and their
+projections. Two overloads have distinct16583/16585 OIDs but identical regproc
+spelling; changing an aggregate reference between them leaves ordinary catalog
+JSON identical. The numeric projection detects the changed pg_aggregate reference.
+The alternative signature is an excluded corruption fixture and is never executed
+as a valid aggregate. This closes a demonstrated identity loss; it does not prove
+injectivity of the entire census or authenticate installation/caller/source custody.
+
+Host `query-source-guard-host/58798e74-0f0d-4209-97ff-6ce3371c0399` retains18
+synthetic controls and two exact preimages, including post-read unknown/failure,
+nonfinite final inventory observations, buffer/snapshot copy isolation and an explicit admitted interior
+ABA counterexample. Conditional formal
+`query-source-census-formal/4b4b8aff-89f8-488a-b21a-2f2b4a90a7b5` retains six
+pre-solve/fresh-context queries (three UNSAT/three SAT) and four current preimages.
+Truthful/injective complete observation, an independently qualified expected source
+and interior held-cut coordination remain premises. It does not prove native SQL,
+catalog/MVCC freshness, JSON/collation refinement, host driver/buffering behavior,
+external executable/files/runtime GUC or dynamic data-driven source resolution,
+writer participation, graph mappings or full backend admission. Native16MiB and
+host16,000,000 encoded-character budgets are distinct.
+
+The129/139/165-observation receipts and earlier formal receipts remain historical
+predecessors. The first ACL-restoration attempt retained only failed producer and
+diagnostic/finally-completion provenance; explicit ACL initialization fixed the
+NULL-versus-default native representation difference. Two later124-observation
+NULL transport harness failures retain raw observations, source archives and actual
+cleanup. Their source-image files contain JSON null, not the full baseline; adjacent
+scope notes make the unretained baseline explicit. Final transport uses explicit
+JSON null; future failed-image publication is marked not-retained.
+
+Fresh full gate `acceptance-runs/5bd59413-4a95-467b-8bd4-81668b73ea08` executes
+and accepts all26 registered cases at current fingerprints/28 allocated criteria.
+It exits1 because106 required cases have no executable binding. US-056-AC6/AC7/AC9
+and existing B08/B09/B11 gain source-observer prerequisites only. No case is added
+or promoted, and no public/native installed profile or Python/Truss graph runtime
+is activated. Next compose authenticated original installed-source/provider custody,
+current runtime configuration and complete dependency interpretation with the held
+source/authority/final-release cut in the protected runtime. The full goal remains
+active at26/132.
+
+The private census transport is not yet composed through the protected Truss runtime. This run retained a 10,439,605-byte source image; the current native-query response profile admits 1,048,576-byte frames and 4,194,304 total bytes, while installed-admission inventory permits at most 4,194,304 text units. A future runtime binding must qualify complete transport and accounting or a source-qualified compact native witness. Trimming, prefix acceptance and fallback are not admissible substitutes. These distinct profiles have not been widened by this spike.
+
+
+### Original-response census transport slice — 2026-10-11 (execution pending)
+
+CONTRACT-063 original-value/native-inventory correspondence and STP-056 B08/B09/B11 govern this prerequisite (US-056-AC6/AC7/AC9). Preserve the complete PostgreSQL17.9 source image through the existing private original-response gate, without increasing its per-query frame/total ceilings. A dedicated read-only repeatable-read transaction materializes one census into a private cursor; sequential bounded FETCH responses reconstruct native UTF-8 bytes. Verify descriptors, contiguous ordinals, fixed chunk width, total byte count, exact command counts, transaction completion and end-of-cursor before returning any image. Refusal/overflow/truncation returns no accepted prefix.
+
+The native validation must retain original frame journals, source preimages, reconstruction evidence, independently authored changed-source/refusal controls, Unicode/chunk boundaries and transaction/cursor cleanup. Host adversarial controls must reject lost/duplicated/reordered/altered/truncated chunks and malformed native descriptors/completions. Conditional logic must distinguish byte-complete transport from authentic observer/source meaning and held-cut enforcement. This private raw17.9 transport adjunct does not replace the ADR-003 Python16.15 delivery priority, widen existing limits, authenticate source/caller, prove an MVCC authority cut, or promote backend acceptance. Compose into the existing protected Python port only after its independent resource/custody profile is qualified.
+
+
+The original-response census slice now has Truss native evidence `security-source-census-transport/d8eba9ba-b469-48bc-9ed4-f0adea11127a`:59 exercising observations,71 frozen inputs, exact qualifying bundle/source map/build graph, all executed test/fixture closure, original frame journals, private complete images and verified owned cleanup. The11,250,105-byte baseline reconstructs across344chunks/28responses without widening the existing1MiB frame/4MiB response profile. Five completed images preserve faithful data updates and exact source restoration while a same-descriptor body change produces a different image. Foreign-route/overflow NULLs refuse; caller transaction/work/cursor survives refusal; injected journal failure after the complete native COMMIT discards the stream and returns no image. Host47 tests/116 assertions and strict private runtime/native-tool typing pass. Raw source/config evidence stays administrative.
+
+The private receiver adds distinct16MiB image/40MiB wire/40query limits; no whole heap/CPU/elapsed-time budget follows. A host-exclusive supplied client and truthful source-pinned original observation remain premises. Repeatable-read materialization qualifies this observation only, not execution/current authority or coordinated writers. Synthetic complete substituted frames can pass shape checks, which is retained as a countercontrol. There is no public export, authenticated provider/issuer, protected Python16.15 port or graph-profile admission.
+
+Final conditional formal packet `census-chunk-transport-formal/e71a02c8-0850-4669-92a8-c051e36350a7` retains eight Z34.15.4 queries (five UNSAT/three SAT), six exact inputs, pre-solve SMT and fresh contexts. Separate faithful native-chunk and assembler-copy premises imply byte correspondence; integer arithmetic establishes disjoint/complete chunk coverage and bounded advancement. SAT witnesses retain forged complete bytes, a captured source differing from current execution and missing terminal. This is not TypeScript/UTF-8/native cursor/SQL/journal refinement, authentication, heap/work bounds or held-cut proof. Earlier model iterations dad93fc8/acf0fc82 remain historical.
+
+Truss native failed attempts remain immutable: da49212c final-server readiness; f1b8f0d7 earlier52 observations with explicit build/test/cleanup-wrapper qualification note; d02c584a52 observations with current-pin failure after review fixes. Only the final source-frozen run qualifies its stated component. Astra feedback drove freeze-before-build, complete executed test/fixture archive, independently verified owned absence, preserved caller work/cursor and late final-journal refusal. This supplies B08/B09/B11 prerequisites for US-056-AC6/AC7/AC9/AC10; it adds no accepted backend case. Next port through original protected Python issuer/resource/provider custody and held source/authority cut, preserving the full132-case goal.
+
+
+Fresh full gate `acceptance-runs/00fc2a47-04de-4285-bc81-3ef785e786f9` executes all26 registered cases successfully and correctly exits1 for106 missing executable bindings among132 required cases/28 allocated criteria. Raw stdout/stderr, execution timestamps/status and the exact latest receipt are retained; current registered native/formal receipts are refreshed. The complete objective remains active. The transport's40MiB cumulative wire check runs after each bounded original response; it qualifies returned captures, not a before-forwarding aggregate ingress or whole-operation budget. No protected Python port/current-cut or observer authority is inferred from it.
+
+### Original Python Unix-socket census prerequisite — 2026-10-11
+
+Truss final native packet `python-source-census/158f4a96-b643-479f-a107-3b6bf9e1d3ce` retains130 observations,124 exact frozen source inputs,1614 installed binary/library hashes and twelve synthetic host tests. Exact captured Python modules execute in a fresh worker against installed PostgreSQL16.15 pgserver binaries with TCP disabled; pg8000 1.31.5 original AF_UNIX transport and native-operation/result/deadline/outbound custody capture six complete images and two complete NULL refusals. The10,939,897-byte baseline spans2671 original4096-byte chunks; retained original Q and all T/D*/C/Z frames reconstruct it. Native data changes leave source stable, routine body changes differ, restoration matches, foreign/oversized inventories refuse, and lost local publication cannot replay. Post-detach retained original image/request/frames match exactly. Owned fixture stop0/status3/socket absence qualifies teardown. Astra reviews source freezing and raw reconstruction. Administrative raw captures remain private evidence, not authorized user disclosure.
+
+Final [conditional formal packet](evidence/security/python-census-chunk-formal/81074bec-8953-4372-98a5-70bf877363c6/proof.json) retains eight Z34.15.4 queries (five UNSAT/three SAT), exact4096/16MiB constant checks, six source inputs and fresh-context replay. Separate truthful native chunks and actual assembler-copy premises establish conditional byte correspondence; arithmetic establishes partition and bounded advancement. Exact protocol, original-call provenance, UTF8/native SQL/custody refinement, full semantic observation and source/provider/issuer authentication remain unproved. SAT controls demonstrate that forged shape-complete bytes and truthful but stale captured source do not establish current execution authority. The nonrewinding1GiB bookkeeping ceiling is not whole allocator/heap/CPU assurance.
+
+CONTRACT-063/STP-056 B08/B09/B11 and US-056-AC6/AC7/AC9/AC10 receive prerequisites only. No accepted backend case is added. Protected provider/issuer composition, complete cooperative operation handback, held source/authority cut and actual graph/backend enforcement remain required for the unchanged132-case goal. Historical earlier native and formal packets remain immutable and separately scoped.
+
+Fresh full gate `acceptance-runs/f1e59950-1f2b-43b0-bd2a-606fc9bbe5dc` executes all26 registered cases successfully and correctly exits1 for106 missing executable bindings among132 required cases/28 criteria. Native/raw receipts and original per-case stdout/stderr/timing/run IDs are retained. No new census prerequisite is counted as backend enforcement. The goal remains active.
+
+### Catalog source-cut feasibility and publication constraints — 2026-10-11
+
+Truss final administrative native `python-catalog-cut/03c0a9ed-455a-49f4-b8ff-6356ea14c8ee` retains exact frozen worker/SQL/module preimages, native installed PostgreSQL16.15 binary/library digests, private source images, actual lock rows, type-sensitive expected/observed checks and owned Unix fixture teardown. It is materialized administrative pg8000 output, not the protected bounded NativeCall receiver. Catalog ShareLocks block seven future routine/role-default/membership/owner/column/policy/foreign-route writes (55P03), but do not drain an already applied uncommitted catalog change. All43 locks can be acquired before the first census while an active pending writer has no retained pg_proc RowExclusiveLock; that writer commits, the repeatable-read image stays333 and actual routine execution returns444. A preexisting snapshot also remains stale after lock acquisition. Ordinary data writes are not protected by catalog locks.
+
+A participating transaction advisory barrier separately retains an independently observed pending reader ShareLock, drains it after writer commit, allows a fresh post-barrier READ COMMITTED source and execution555, blocks a new participating writer, and permits it after reader release. A nonparticipating administrative writer bypasses it. A second database takes the same key, commits shared-role membership, changes the first database's census and changes native pg_has_role false to true while the first reader still holds its barrier. Complete participation and actual cross-database/shared-catalog scope are missing obligations, not proven by the prototype. The fixed probe key is not an admitted installation/generation key.
+
+Final [conditional ordering packet](evidence/security/catalog-cut-ordering-formal/2e805ec4-991f-4c9f-a3d1-4d83c2b59d35/proof.json) retains six Z34.15.4 queries (two UNSAT/four SAT), frozen inputs and fresh-context replay. It models one source commit and one independent fact publication. Fresh post-barrier snapshots plus complete commit-time exclusion imply modeled current correspondence; old snapshots, pending catalog commits, early release and source-only protection of independent authority retain counterexamples. Faithful observation/current execution, native barrier ownership, complete writer coverage and release remain premises. This is not arbitrary multiple-transition/ABA, SQL/driver/cached-call refinement, authenticated provider/issuer or complete operation handback proof.
+
+CONTRACT-063, TD-056 and TD-057 now explicitly require pending-writer drain, commit/abort-lifetime participation, post-barrier snapshot freshness, all relevant source/data/authority scopes, actual callable/plan correspondence and hold through final protected disclosure. STP-056 B09/B11/B12 and US-056-AC7/AC9/AC10 plus lifecycle revocation/drain cases must exercise these controls before positive qualification. No backend case is promoted. Existing full gate f1e59950 still has26/132 accepted executions and106 missing bindings; the contract source pin changed and a fresh full gate is required. The full objective stays active. Next implement the original held-cut producer with native transaction-lifetime writer participation and fresh observation, retaining explicit refusal for unknown producer/snapshot/cross-database coverage.
+
+Final fresh full gate `acceptance-runs/128142e3-af16-42d7-9b5b-de03a9cb1253` executes all26 registered cases successfully;106 missing bindings among132 required/28 criteria still make exit1. All973 per-case source references match after the CONTRACT-063 update. No prototype or counterexample is promoted to backend enforcement. Prior f1e59950 is historical for the earlier contract version. The full goal remains active.
+
+### Finite-history cut analysis and native ABA — 2026-10-11
+
+The current native Truss packet `python-catalog-cut/8faf405c-05eb-47a0-b2a2-e7353f70f0c7` repeats the catalog/pending-commit/cross-database controls and adds a two-commit routine ABA. Complete READ COMMITTED source images before and after are byte-identical; the intermediate source differs and actual routine execution returns777 before restoration returns666. Comparing endpoint source hashes cannot establish that an intervening call used the admitted source. An ordinary application-data update also leaves source census bytes identical; that fixture table is not an actual authorization provider, and this observation does not qualify authority-provider semantics.
+
+The merged current packet retains58 expected/observed native checks,129 frozen inputs,1614 installed binary/library digests,14 source images,12 synthetic host tests and469 import checks. Owned PostgreSQL16.15 Unix fixture teardown passes stop0/status3/socket absence. Concurrent main installation-metadata and native-edge work is preserved; its semantics are not qualified by these source pins. Earlier e6355fa6/d9a139ef packets retain the premerge source closure and naming history.
+
+[Finite-history formal evidence](evidence/security/catalog-cut-history-formal/a3f69385-9520-43ec-8c54-3dc11a460862/proof.json) retains13 Z34.15.4 queries, four UNSAT/nine SAT, exact pre-solve SMT, fresh-context replay and four archived current inputs. A truthful fresh base plus the arbitrary closed transition step gives an induction over every finite number of source/authority events. A separate step extends the interval through final disclosure. Complete commit exclusion, native state/transition coverage, original generation authenticity and execution/disclosure using that state remain premises. This is an abstract induction, not native refinement or backend admission. Coupled state-at-time ABA and generation-check/use race counterexamples show why endpoint equality or an earlier generation check cannot replace the held interval. Early release, missing source/authority protection, stale base and untracked changes remain SAT controls.
+
+Astra's initial review identified uncoupled ABA/generation values and a missing explicit final-disclosure event. Both findings were implemented before the final13-query execution. Earlier11-query and premerge-input packets remain immutable. CONTRACT-063/TD-056/TD-057 and STP-056 B11/B12 plus US-056-AC9/AC10 and US-057-AC2 receive analysis prerequisites only. No new backend runner binding or criterion completion follows. The existing full gate128142e3 remains source-current across all973 registered references:26 accepted/132 required,106 missing. The full objective stays active; original authenticated held-cut/writer producers, actual callable correspondence and final protected operation handback remain the next implementation obligations.
+
+### Original epoch producer prerequisite — 2026-10-11
+
+Truss implements a private SECURITY INVOKER fresh source-epoch projection and bounded original Python response custody. PostgreSQL16.15 native READ COMMITTED/read-write and original-invoker checks, pending issuer drain, participating writer exclusion, actual xid/database/backend/actor correspondence and independent installed-definition/ACL readback pass. Three original captures retain exact Q/T/D/C/Z, including lost local reply and65536-byte profile/1048576-byte evidence. Truss packet0db20a3f-49d5-47a9-bd0c-d98c6b99c567 retains83 checks,133 source pins,1614 binary pins, nine host tests and479 import checks; owned Unix fixture cleanup passes stop0/status3/socket absence. Astra requested and independently reviewed full original ingress retention after the earlier completion-only journal gap.
+
+Native lifetime countercontrols show autocommit and rollback past acquisition release the lock; parent xid can remain unchanged after rollback. Same-transaction issuance can change the epoch under the same xid. Returned identities are historical observations, not continued lock ownership or authenticated authority. Original host acquisition/savepoint custody and same-writer exclusion must hold through protected use/disclosure. Synthetic administrative installation/profile/evidence do not qualify the authenticated provider, all-writer source/authority/data cut, callable correspondence, protected business execution or final handback. Admission remains closed. This supplies CONTRACT-063/STP-056 B11/B12/L03 and US-056-AC9/AC10 prerequisites only; no132-case binding changes. Full security acceptance remains26/132 with106 missing bindings; the goal stays active.
+
+Final post-merge Truss repeatc3437a72-66c9-4d43-a9d5-5f8750e667df passes the same83 observations and133 identical selected source pins after concurrent main numeric/forest changes were preserved. Evidence remains component-only; no backend acceptance promotion.
+
+### Original acquisition lifetime integration — 2026-10-11
+
+[Acquisition-lifetime analysis](evidence/security/epoch-acquisition-lifetime-formal/073f51ce-6c8e-43d6-b03d-33633bba8175/proof.json) retains16 Z34.15.4 formulas and fresh-context replay. A truthful acquired base and arbitrary closed event step preserve `valid => held && actual_epoch == captured_epoch` for every finite ordered history. Seven UNSAT laws and nine SAT positive/counterexample controls distinguish rollback across acquisition, rollback after acquisition, savepoint release/reparenting, transaction end, same-writer issuance and participating external issuance. Same parent xid or recreated savepoint depth cannot prove surviving custody. Exact native ancestry/event classification, invalidation before protected use, faithful state transitions, all-writer participation and actual use of the guard remain premises; no native/Python refinement or backend acceptance follows.
+
+Next implementation must retain original acquisition under actual native transaction generation and savepoint ancestry, propagate scope on RELEASE, invalidate on rollback across the acquired scope or transaction end/uncertain completion, and prevent same-writer source change during admitted use. Original successful control completion must drive transitions under the shared boundary guard. A fresh response tuple or a detached historical observation cannot create that capability. Do not reopen business admission until current authenticated provider/source/authority custody and final disclosure exclusion compose with this lifecycle. STP-056 B11/B12/L03 enumerate native acceptance schedules; the full26/132 gate remains open.
+
+Final native Truss135d5e87-3de8-4cf8-b9c1-344d5e2b9608 passes91 observations with original T/D/C/Z custody,133 source pins,1614 binary pins and clean owned teardown. Added release-child/rollback-parent/recreated-child and rollback-later/release-later/outer-rollback schedules exercise physical scope behavior. The formal same-depth control is only a state illustration, not a derived stack history. Existing Python `_Savepoint` identity survives rollback-to: guard validity must follow retained original lifecycle events and acquisition ancestry; object identity alone is insufficient. Uncertain completion/custody loss closes admission without claiming physical lock release; the native held state is unconstrained in that formal event. Earlier ebb22905/dcdeac47 retain preimages before native-worker/uncertainty updates. This model specifies the intended transition relation; its declared base/exclusion/invalidation laws do not prove native implementation.
+
+Astra independently replayed all16 current formulas, audited91 native observations/133 exact source pins and reconstructed all three complete responses, with no scoped blocker. Retained review/replay qualify the proof scope. Source-only audit confirms the unchanged full gate plan,973 per-case references and two gate-source references still match current bytes; this is not a new full acceptance execution.
+
+### Implemented original acquisition lifecycle prerequisite — 2026-10-11
+
+Truss now retains original fresh epoch acquisition lineage before publication and updates it from original NativeTransactions completions. RELEASE reparents, rollback across acquisition irreversibly closes, later rollback preserves, unknown/end completion invalidates and any unqualified ordinary call invalidates before native invocation. The instantaneous `live()` observation refuses during an original native call, on copied/replaced custody or original generation loss. It is not a reusable held-cut/use capability; the authenticated subject/current-authority, complete installed source/authority/data cut and atomic protected dispatcher/final disclosure remain required.
+
+Final native 162755fe-d1c2-4cf8-a18a-240dde1c0c33 passes302 observations,137 source pins,1614 installed PostgreSQL16.15 pins,16 host tests,28 existing transaction/boundary native regressions and482 imports; seven complete original responses reconstruct, and owned Unix cleanup passes. Native pauses after actual rollback response but before host settlement show why a pending record flag cannot establish liveness. Lost control reply deliberately produces incomplete/raised/T and quarantine, closing lifecycle state while the physical lock may remain held. Unqualified self-issuance/failed query close before native effects; copied/root/pending-session controls refuse. Capacity evidence covers the full-ledger guard/unchanged root, not an otherwise-valid distinct second acquisition. Main concurrent catalog/installer delivery work is preserved.
+
+[Refreshed lifetime blueprint](evidence/security/epoch-acquisition-lifetime-formal/0e3dbcb5-32ec-417b-a062-db5e81aec841/proof.json) retains16 conditional laws (seven UNSAT/nine SAT), nine current implementation/test/harness pins and fresh-context replay. Logical admitted validity is reportable guard state, not an internal pending-record flag during native settlement. These formulas specify a relation, not native/Python refinement or atomic guard use. Next integrate the original lineage into the catalog/installer protected dispatcher with pre-elevation subject/current-authority and installed-source cut through final disclosure. No backend case promotion;26/132 accepted,106 missing.
+
+Final evidence freezes observations before later callbacks and recursively checks types/equality and ID uniqueness. Earlier c393cc38 and related reports had mutated vectors after successful initial checks; retained independent findings qualify those as historical evidence gaps. A seventh capture starts live before known original connection closure and then refuses despite stale transaction/generation flags, with independent writer success confirming release. This does not prove all remote failure detection or protected guard use.
+
+Retained Astra review/replay independently verifies all16 formal results and nine current source/archive pins, plus the302-check native component and complete original responses. No scoped blocker remains; the declared native event/guard-use premises are not discharged by this model.
+
+### Exact native observation custody — 2026-10-11
+
+The raw PostgreSQL membership runner now compares JSON scalar carriers recursively with exact Python types, retains detached assertion-time snapshots and validates every final observation (including the primary case assertion) with unique assertion identities before publishing a receipt. Python boolean/integer and integer/float equality no longer passes the runner assertion. The outer acceptance gate already distinguishes the serialized values; this correction makes the original native assertion and published evidence agree.
+
+[Retained component evidence](evidence/security/pgraw-observation-custody/a57b8451-b29f-45a3-98f9-3e8cb0594b1a/host-tests.json) includes six executed original-function host controls, current source snapshots and the runner preimage. Controls cover nested scalar mismatch, input mutation after assertion, corrupted final observations, duplicate assertion IDs, object versus array ordering and nonfinite JSON refusal. Astra independently passed the six controls and found no scoped blockers; its review is retained in the same packet. This supports CONTRACT-063 and US-056-AC10 evidence integrity, without authenticating a source issuer or qualifying pg-raw.B12. B12 remains required/not-run; no acceptance case is added or removed.
+
+[Fresh full-gate replay](evidence/security/pgraw-observation-custody/a57b8451-b29f-45a3-98f9-3e8cb0594b1a/execution.json) accepts all26 implemented cases, including ten changed-runner cases and1081 native observations. The132-case gate exits1 with exactly106 missing required bindings; all28 criteria remain allocated. This is progress in evidence integrity, not complete backend acceptance.
+
+### Catalog release archive stability and freshness — 2026-10-11
+
+Truss main6e5f9227 supplies original configuration/archive release-policy selection. The security integration now adds an actual native archive SHARE NOWAIT cut before counting and selected-row FOR SHARE NOWAIT, with READ COMMITTED/read-write required before configuration collection. Row locks alone permit matching-row phantoms; repeatable-read snapshots can miss a duplicate committed before acquisition. Twelve final PostgreSQL16.15 tests (Truss packetc870eec9) pass, retaining200 source pins,1614 native binary/file pins,482 import checks and owned stop0/status3/socket absence. The omitted-table-lock variantcc13998c reproduces four expected failures and no unrelated errors. Positive native controls include competing table/row writers, old RR/SERIALIZABLE one-versus-two snapshots, exact isolation refusal, rollback/RELEASE ancestry and transaction-end release.
+
+[Conditional archive-cut analysis](evidence/security/catalog-release-archive-cut-formal/04cc4ef2-340e-4480-b798-95a9ce350526/proof.json) retains two UNSAT laws and six SAT positive/unsafe controls, with fresh-context replay. Arbitrary nonnegative match counts qualify the admission algebra under fresh-observation and external-write-exclusion premises. Same-writer changes and rollback can break continued uniqueness; parent xid establishes no lifetime. This is not native or host refinement, authenticated issuer/caller, all-source/current-authority stability or final-disclosure proof.
+
+The archive cut is one physical prerequisite for CONTRACT-063 and STP-056 B11/B12/L03 (US-056-AC9/AC10). Actual protected coordinator composition, same-writer exclusion, upstream source/configuration locks, archive scan/accounting budgets and complete report producers remain open. No case binding or admission status changes; the full goal remains26 accepted/132 required with106 missing bindings.
+
+Astra required explicit formal state qualification: the final released-guard counter retains held-before/held-after and unchanged positive parent identity, but release is stipulated rather than derived from a rollback/stack transition. Saved SMT files have exact receipt digests/readback and fresh-context replay; prior5242b34b retains the pre-review formula/source tuple.
+
+Truss4ac008e7 is pushed directly to main with final source, tests and retained evidence. Astra independently replays all eight final formulas and verifies native200-source/1614-binary/twelve-test/482-import/owned-cleanup evidence and the exact four-failure countervariant. All437 unique registered gate source fingerprints plus gate/plan remain current; retained correspondence is not another full-gate execution. Broader security acceptance remains open.

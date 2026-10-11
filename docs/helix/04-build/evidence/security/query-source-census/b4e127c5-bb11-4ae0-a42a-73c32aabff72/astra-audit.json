@@ -1,0 +1,205 @@
+{
+  "status": "passed",
+  "method": "Read-only source, original native catalog schema/image, receipt/raw-diagnostic and exact source-preimage audit; no native/producer execution by reviewer",
+  "nativeReceiptSha256": "b51386c8e0cce58ac30d161aa25c3dea1840b0c6b5e23ab7202696cb2d985b5a",
+  "nativeSourcesZipSha256": "313d59abf9f74e8a71b052a96c6c1f5ba4b6976382764b60905abfb7889f0ca1",
+  "nativePins": 14,
+  "nativeObservations": 204,
+  "nativeObservationIdsDistinct": true,
+  "nativeValuesTypeSensitive": true,
+  "rawRefusals": 19,
+  "allNativeHostFormalSourcePinsCurrentAndExactZip": true,
+  "sourceImage": {
+    "path": "native-source-image.json.gz",
+    "sha256": "9df1c6ce6783d8d2c7ee4d026c49dcd74693ddc84f8ebb195252cbf31caf4241",
+    "uncompressedBytes": 10439605,
+    "sections": 40,
+    "rowCount": "14352"
+  },
+  "compressedImageSha256": "fe389d32151416189c329810239c4aa3f0c099412ca810e9f7871ef86980f324",
+  "sections": 40,
+  "rows": 14352,
+  "nativeRegprocSchema": [
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggcombinefn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggdeserialfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggfinalfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggfnoid"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggmfinalfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggminvtransfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggmtransfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggserialfn"
+    },
+    {
+      "catalog": "pg_aggregate",
+      "column": "aggtransfn"
+    },
+    {
+      "catalog": "pg_am",
+      "column": "amhandler"
+    },
+    {
+      "catalog": "pg_amproc",
+      "column": "amproc"
+    },
+    {
+      "catalog": "pg_conversion",
+      "column": "conproc"
+    },
+    {
+      "catalog": "pg_operator",
+      "column": "oprcode"
+    },
+    {
+      "catalog": "pg_operator",
+      "column": "oprjoin"
+    },
+    {
+      "catalog": "pg_operator",
+      "column": "oprrest"
+    },
+    {
+      "catalog": "pg_proc",
+      "column": "prosupport"
+    },
+    {
+      "catalog": "pg_range",
+      "column": "rngcanonical"
+    },
+    {
+      "catalog": "pg_range",
+      "column": "rngsubdiff"
+    },
+    {
+      "catalog": "pg_transform",
+      "column": "trffromsql"
+    },
+    {
+      "catalog": "pg_transform",
+      "column": "trftosql"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typanalyze"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typinput"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typmodin"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typmodout"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typoutput"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typreceive"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typsend"
+    },
+    {
+      "catalog": "pg_type",
+      "column": "typsubscript"
+    }
+  ],
+  "all28SelectedRegprocColumnsNumericProjectionChecked": true,
+  "noOtherRegAliasTypedColumnsFoundInSelectedCatalogSchema": true,
+  "transformPopulation": 0,
+  "aggregateIdentityCounterexample": {
+    "originalOid": "16583",
+    "alternativeOid": "16585",
+    "originalSpelling": "security_external.aggregate_step",
+    "alternativeSpelling": "security_external.aggregate_step",
+    "originalCatalogJson": "{\"aggkind\": \"n\", \"aggfnoid\": \"security_external.sum_probe\", \"aggsortop\": \"0\", \"aggfinalfn\": \"-\", \"agginitval\": \"0\", \"aggtransfn\": \"security_external.aggregate_step\", \"aggmfinalfn\": \"-\", \"aggminitval\": null, \"aggmtransfn\": \"-\", \"aggserialfn\": \"-\", \"aggcombinefn\": \"-\", \"aggtranstype\": \"20\", \"aggdeserialfn\": \"-\", \"aggfinalextra\": false, \"aggmtranstype\": \"0\", \"aggtransspace\": 0, \"aggfinalmodify\": \"r\", \"aggmfinalextra\": false, \"aggminvtransfn\": \"-\", \"aggmtransspace\": 0, \"aggmfinalmodify\": \"r\", \"aggnumdirectargs\": 0}",
+    "changedCatalogJson": "{\"aggkind\": \"n\", \"aggfnoid\": \"security_external.sum_probe\", \"aggsortop\": \"0\", \"aggfinalfn\": \"-\", \"agginitval\": \"0\", \"aggtransfn\": \"security_external.aggregate_step\", \"aggmfinalfn\": \"-\", \"aggminitval\": null, \"aggmtransfn\": \"-\", \"aggserialfn\": \"-\", \"aggcombinefn\": \"-\", \"aggtranstype\": \"20\", \"aggdeserialfn\": \"-\", \"aggfinalextra\": false, \"aggmtranstype\": \"0\", \"aggtransspace\": 0, \"aggfinalmodify\": \"r\", \"aggmfinalextra\": false, \"aggminvtransfn\": \"-\", \"aggmtransspace\": 0, \"aggmfinalmodify\": \"r\", \"aggnumdirectargs\": 0}"
+  },
+  "aggregateInitialStateOnlyChange": {
+    "before": 0,
+    "after": 100,
+    "nativeBefore": 3,
+    "nativeAfter": 103
+  },
+  "capacityControls": {
+    "sectionExact": 8192,
+    "sectionOneOver": 8193,
+    "serializedOversizeSourceCharacters": 17000000,
+    "exact16MiBBoundaryQualified": false,
+    "aggregate100000RowBoundaryQualified": false,
+    "heapCPUAllocationQualified": false
+  },
+  "cleanup": {
+    "containerId": "a5787bfda1daaa734851e2a66aa4f2d1ea61d99e42119130e615017cb356cbeb",
+    "ownershipRunId": "b4e127c5-bb11-4ae0-a42a-73c32aabff72",
+    "exitCode": 0,
+    "stdout": "a5787bfda1daaa734851e2a66aa4f2d1ea61d99e42119130e615017cb356cbeb\n",
+    "stderr": ""
+  },
+  "host": {
+    "receiptSha256": "f0f9b6bddee20fcecb42cc152c7ae37f58eb37ff26a653f2556a87b4b7ae3187",
+    "pins": 2,
+    "controls": 18,
+    "ABAExplicit": true
+  },
+  "formal": {
+    "proofSha256": "e2e25e94b273a719b2f7ab65678f1702558880c3c6c0e61d0ccdc48882c5b7a3",
+    "pins": 4,
+    "queries": 6,
+    "replay": "astra-replay.json"
+  },
+  "limits": [
+    "All28 selected regproc column projections are source/schema checked; pg_transform has no populated row witness in this fixture.",
+    "The invalid alternate aggregate signature is excluded-installer corruption and is never executed.",
+    "New census refusals are host result/trace controls;19 prior native refusals retain decoded raw streams.",
+    "8192/8193 pg_attribute and a17Msource oversize are native controls; exact16MiB/100000 aggregate limits and CPU/heap are not qualified.",
+    "Native pre/post checks are separate sessions and sequential interleavings, not implemented held-cut coordination.",
+    "Selected catalogs with explicit OIDs are not a theorem of semantic image injectivity, full metadata/environment completeness, source authentication or external code custody.",
+    "Formal faithfulness and held cut are premises; ABA remains possible without coordination.",
+    "No backend/registered-case acceptance promotion; original26/132 scope remains open."
+  ],
+  "blockingFindings": [],
+  "historicalFailedNullImageNotes": [
+    {
+      "run": "62db9d0e-418a-4668-a78e-f92aa4562009",
+      "noteSha256": "7c811c6e5a475ad613362cb7f4fbbac9ecf21624ed801839eb65e27e56eea35d",
+      "compressedPayloadIsNull": true,
+      "baselineQualified": false
+    },
+    {
+      "run": "48b9f2c7-059e-4ffc-af91-8471d2db15ef",
+      "noteSha256": "7c811c6e5a475ad613362cb7f4fbbac9ecf21624ed801839eb65e27e56eea35d",
+      "compressedPayloadIsNull": true,
+      "baselineQualified": false
+    }
+  ]
+}

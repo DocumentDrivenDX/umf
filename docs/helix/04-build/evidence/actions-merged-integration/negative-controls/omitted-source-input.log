@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 16, in <module>
+    actualpaths={p for p in subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z','--','.'],cwd=F).decode().split('\0') if p and source_path(p)};gitpaths={p for p in subprocess.check_output(['git','ls-tree','-r','--name-only',revision],cwd=F,text=True).splitlines() if source_path(p)};assert actualpaths==gitpaths==set(v['sourceInputs'])
+AssertionError

@@ -1,0 +1,125 @@
+{
+  "receipt": "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/04-build/evidence/security/scalar-family-correspondence/5bf719bb-32e3-4792-8ba1-a36a9f5167ba/proof.json",
+  "receiptSha256": "b065123a3c0723eb0b441eaee6b05197d86a3da08c0b71cac2f8f7f6d0874d87",
+  "zipSha256": "2638a797440e084cd9919cca9527427c49f8a0a52f97582318e7c36749887f3a",
+  "sourcePinCount": 516,
+  "exactZipEntries": true,
+  "currentPins": true,
+  "solver": "4.15.4",
+  "counts": {
+    "unsat": 7,
+    "sat": 8
+  },
+  "observations": [
+    {
+      "id": "known-field-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ec577585959f7fca658342be3f63b0985338789d6c53a112404cb9d623ef6543",
+      "freshContext": true
+    },
+    {
+      "id": "future-field-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "c5359468e5912e9308ae290f8f471eebc8623096ce3b0a8359ff4a3e8ed907dc",
+      "freshContext": true
+    },
+    {
+      "id": "missing-field-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "72002f1281eebf4fec7bcc66d5f1d15c559ede1b085e0a4dde3a939b3a2d9050",
+      "freshContext": true
+    },
+    {
+      "id": "non-field-authored-label-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "2eee66e2911a89fd4049f8a7ffd68f39a7d20dd2e46df08fbdbc61b37983fbd8",
+      "freshContext": true
+    },
+    {
+      "id": "known-field-cannot-be-suppressed",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "d75e957473e6a9eb7ec0c48748265eac720ae4e04f7b206675a9cd7cfdd06c77",
+      "freshContext": true
+    },
+    {
+      "id": "future-field-cannot-be-known",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "1c2d5d3888365731a799f3e65511bad19533b0555b6bf848d30c157c77207030",
+      "freshContext": true
+    },
+    {
+      "id": "absent-field-cannot-invent-label",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "4daa0de231c584e36f47a39cc33b59bd585329a96d3b42b3e77410e1cfa80abd",
+      "freshContext": true
+    },
+    {
+      "id": "non-field-cannot-infer-field-duty",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "6b341b29c87db636d55e100f1818a2c72b918d6069a8c06d52d2fc27b3072444",
+      "freshContext": true
+    },
+    {
+      "id": "context-cannot-be-substituted",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "979d8213d67a55e2f69fbc2c49f5537e0a6686553558e98177b380918cab915f",
+      "freshContext": true
+    },
+    {
+      "id": "container-cannot-inherit-item-scalar",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "a6a436fc77e85ebc1daccdedd00e3c7ad39bafb2d740b5db9b484dc6a89ecf20",
+      "freshContext": true
+    },
+    {
+      "id": "drop-context-guard-admits-crossed-identity",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "8c7620b4ee7a0ace72ad7219597c01d98aa26bc40a9bd5a5a29f9070771b5ab4",
+      "freshContext": true
+    },
+    {
+      "id": "label-only-filter-invents-duty-for-unspecified-role",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "ba4c2449c131652d81ea172aeeeb0c1e1920f05dc614196e1c3dd65a0dfa6d6d",
+      "freshContext": true,
+      "replayedModel": "[source_context = 0,\n owner_context = 0,\n source_label = 1,\n owner_state = 0,\n explicit_field = False,\n observed_label = 1,\n container = False,\n explicit_group_or_record = False]"
+    },
+    {
+      "id": "full-guard-forbids-known-label-substitution",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtSha256": "b41f5ea8dbc11c0b61e5aaa24586e8074d801a5098bfec59ce8e9f5d2f48b4d1",
+      "freshContext": true
+    },
+    {
+      "id": "drop-value-guard-admits-known-label-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "e9bf09ccbece969921c4340995c16b0dd4f4dfe7c829470f501ec87f0329a7d9",
+      "freshContext": true,
+      "replayedModel": "[source_context = 0,\n owner_context = 0,\n source_label = 1,\n observed_label = 2,\n explicit_field = True,\n owner_state = 0,\n container = False,\n explicit_group_or_record = False]"
+    },
+    {
+      "id": "classification-does-not-prove-authority-or-native-domain",
+      "expected": "sat",
+      "observed": "sat",
+      "smtSha256": "df1081816d01950797340d44a2d61e583e9af24b2f31caef25edaf9f49c47946",
+      "freshContext": true
+    }
+  ],
+  "remainingFindings": [],
+  "nativeExecution": false,
+  "acceptanceCasesPromoted": []
+}

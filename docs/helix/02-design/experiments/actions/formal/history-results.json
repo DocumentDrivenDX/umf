@@ -1,0 +1,290 @@
+{
+  "scope": "Sequential command/replay/state conformance for original PG synthetic profile. Projection/delivery and crashes not checked by this oracle; no general implementation refinement proof.",
+  "results": [
+    {
+      "id": "H01",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H02",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H03",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H04",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H05",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H06",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ],
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H07",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "H08",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H09",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H10",
+      "pass": true,
+      "linearizations": [
+        [
+          "a",
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "H11",
+      "pass": true,
+      "linearizations": [
+        [
+          "a",
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H12",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H13",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H14",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H15",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H16",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H17",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H18",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "H19",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "H20",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "H21",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "id": "H22",
+      "pass": true,
+      "linearizations": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    }
+  ],
+  "mutants": [
+    {
+      "id": "H06",
+      "variant": "revision-namespace",
+      "pass": false,
+      "reason": "No legal sequentialization of returned/client payloads",
+      "step": {
+        "kind": "invoke",
+        "request": "b"
+      }
+    },
+    {
+      "id": "H08",
+      "variant": "stale-auth",
+      "pass": false,
+      "reason": "No legal sequentialization of returned/client payloads",
+      "step": {
+        "kind": "invoke",
+        "request": "a"
+      }
+    },
+    {
+      "id": "H09",
+      "variant": "missing-rollback",
+      "pass": false,
+      "reason": "No legal sequentialization of returned/client payloads",
+      "step": {
+        "kind": "invoke",
+        "request": "a",
+        "fault": "after-stock"
+      }
+    },
+    {
+      "id": "H15",
+      "variant": "frame-bypass",
+      "pass": false,
+      "reason": "No legal sequentialization of returned/client payloads",
+      "step": {
+        "kind": "invoke",
+        "request": "a",
+        "fault": "outside-frame"
+      }
+    }
+  ],
+  "sources": {
+    "history_oracle.py": "45ed0bf015ace0e4dad20301c6b8bccacb2fb17a483d2c928f133bc15637814b",
+    "native-results.json": "01e20614b7f710a2aa1495944d01ee961b20ee9f365f2bf1205ffd7ea7a810db",
+    "histories.json": "b54be45efb4d2f172f1d06942ee3a4915fc7de3d57d0033c978ec9f03f57feb2"
+  }
+}

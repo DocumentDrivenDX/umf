@@ -1,0 +1,116 @@
+{
+  "id": "umf.parquet.relationships",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Physical schema observations without relationship inference",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:parquet:relationship-binding:1.0.0",
+    "title": "Parquet schema observations without authored identity",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.parquet.relationships",
+          "version": "1.0.0",
+          "nativeVersion": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Physical schema observations with original file bytes; no target existence, graph identity, reverse multiplicity or collection uniqueness, authored identity inference, page validation or native equivalence"
+        }
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nativePath",
+            "index",
+            "path",
+            "kind",
+            "definitionLevel",
+            "repetitionLevel",
+            "nativeField",
+            "enforcement",
+            "authorIntent",
+            "provenance",
+            "scope"
+          ],
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "kind": {
+              "enum": [
+                "physical-leaf",
+                "physical-group"
+              ]
+            },
+            "definitionLevel": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "repetitionLevel": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "nativeField": {},
+            "enforcement": {
+              "const": "not-expressible"
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "provenance": {
+              "const": "inferred"
+            },
+            "scope": {
+              "const": "file-schema"
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-041 and TD-045. Retains native bytes, physical schema and embedded Arrow metadata; no graph identity, target existence or reverse multiplicity enforcement.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Parquet / PyArrow",
+      "version": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Physical schema observations with original file bytes; no target existence, graph identity, reverse multiplicity or collection uniqueness, authored identity inference, page validation or native equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/relationship-parquet.test.ts",
+      "fixtures/validation/relationship-parquet-native.json",
+      "fixtures/validation/relationship-parquet-browser.json"
+    ]
+  }
+}

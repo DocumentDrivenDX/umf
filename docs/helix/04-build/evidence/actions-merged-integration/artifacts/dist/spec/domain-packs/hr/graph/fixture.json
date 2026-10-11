@@ -1,0 +1,634 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:hr",
+    "revision": "1.0.0",
+    "sha256": "02b64614da2f5e933f8bd16bb85564ebda23118327340c6dc8b188cb2107c7b9"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "hr",
+    "version": "1.0.0",
+    "sha256": "8ff57cfa779e917860e650f60a1394a3689020adb49448c9acf21ed9eeaf1f22"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_applications",
+          "template_candidates",
+          "template_employment_relationships",
+          "template_interviews",
+          "template_offers",
+          "template_organizational_units",
+          "template_organizations",
+          "template_positions",
+          "template_reporting_relationships"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_applications": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "18f87bec6b249a4e2986fa9d8f20ac70d49c746e091aad8c78624f1b9790a46b"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/applications.csv",
+      "revision": "1.0.0"
+    },
+    "template_candidates": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "6ffabb73866ea5559ffd9251f0f42282dc7f9bcc3d2f922034dffa3b2a554ae2"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/candidates.csv",
+      "revision": "1.0.0"
+    },
+    "template_employment_relationships": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8de34e14d9d8cf11e0b0556d866d359c62bfe3b3583e5f1160ee4917d964199c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/employment_relationships.csv",
+      "revision": "1.0.0"
+    },
+    "template_interviews": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1787ea97deac75fee46d11f53defc6c7e68688f2b282ca1e635168d76568d8c8"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/interviews.csv",
+      "revision": "1.0.0"
+    },
+    "template_offers": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8a794bbd9fed2b39bb6daa0dceeab8d505de9da6c78900283093dc4bc828a586"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/offers.csv",
+      "revision": "1.0.0"
+    },
+    "template_organizational_units": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e559070b0fd26a93a099f216c290a69b2d367a03e726aaf99f8c0f289449c1d5"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/organizational_units.csv",
+      "revision": "1.0.0"
+    },
+    "template_organizations": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "cbf5b21b6324cf4baa72b0b7c6a8d0ad63f92fcc2e4c77f79a19c1184bc7020a"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/organizations.csv",
+      "revision": "1.0.0"
+    },
+    "template_positions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e48964afcef9d7494b13ea53b7f43a6b9db171565228c9be5de895cf511348e9"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/positions.csv",
+      "revision": "1.0.0"
+    },
+    "template_reporting_relationships": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "87e16d8d085bb05e709ab98ae839abc621c54ee08fb8ad34e4af1f61c8b6efea"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/reporting_relationships.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "organizations",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "organizational_units",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "positions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "candidates",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "applications",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "interviews",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "offers",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "employment_relationships",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "reporting_relationships",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_applications": {
+        "algorithm": "sha256",
+        "value": "18f87bec6b249a4e2986fa9d8f20ac70d49c746e091aad8c78624f1b9790a46b"
+      },
+      "template_candidates": {
+        "algorithm": "sha256",
+        "value": "6ffabb73866ea5559ffd9251f0f42282dc7f9bcc3d2f922034dffa3b2a554ae2"
+      },
+      "template_employment_relationships": {
+        "algorithm": "sha256",
+        "value": "8de34e14d9d8cf11e0b0556d866d359c62bfe3b3583e5f1160ee4917d964199c"
+      },
+      "template_interviews": {
+        "algorithm": "sha256",
+        "value": "1787ea97deac75fee46d11f53defc6c7e68688f2b282ca1e635168d76568d8c8"
+      },
+      "template_offers": {
+        "algorithm": "sha256",
+        "value": "8a794bbd9fed2b39bb6daa0dceeab8d505de9da6c78900283093dc4bc828a586"
+      },
+      "template_organizational_units": {
+        "algorithm": "sha256",
+        "value": "e559070b0fd26a93a099f216c290a69b2d367a03e726aaf99f8c0f289449c1d5"
+      },
+      "template_organizations": {
+        "algorithm": "sha256",
+        "value": "cbf5b21b6324cf4baa72b0b7c6a8d0ad63f92fcc2e4c77f79a19c1184bc7020a"
+      },
+      "template_positions": {
+        "algorithm": "sha256",
+        "value": "e48964afcef9d7494b13ea53b7f43a6b9db171565228c9be5de895cf511348e9"
+      },
+      "template_reporting_relationships": {
+        "algorithm": "sha256",
+        "value": "87e16d8d085bb05e709ab98ae839abc621c54ee08fb8ad34e4af1f61c8b6efea"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "02b64614da2f5e933f8bd16bb85564ebda23118327340c6dc8b188cb2107c7b9",
+      "umf/applications.json": "ce76f4494b3081508dfb9002dd208c55b5bca772e3d1fe6181746bb3f29fa1d4",
+      "umf/candidates.json": "a2e5d0f1447a91ab0ae0c4402dd66cf3502cc33d9973f1f0110cd522e7b6a0f5",
+      "umf/employment_relationships.json": "7152b9a582d357a9cefd8c8931611bf890db8fe08930c616a941ff36fa13c49a",
+      "umf/interviews.json": "be7c568974312a85d0371151a204c2003df0fe20b6fb8060bc825b021de52b8e",
+      "umf/offers.json": "fd547101b0e0b98af670f72b86cdb24f1f12328f083ae85fe68ead828682bf84",
+      "umf/organizational_units.json": "c037e8d66f0c30b316f5ea842c8482f97708cb7382cc3a64e40a422bedebc609",
+      "umf/organizations.json": "ea41a76283cbe532bb114edd7bd408160fe979a4524837d6adbfd56ea0cc656d",
+      "umf/positions.json": "1d8a6bcc7cea3ef3f7170a9b7f72671a3caebb560eb81e43e1226e709df5f4cd",
+      "umf/reporting_relationships.json": "6ca9219ba758316e2301c7043a94f68240a0d6dcab99b11344079b46e8719d4f"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "hr",
+      "sha256": "8ff57cfa779e917860e650f60a1394a3689020adb49448c9acf21ed9eeaf1f22",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "fe6c88bab275e44366ce2a4102ecaae841461b8b39e0ee1b394f7602044e27a1",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"organizations\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "organizations"
+      },
+      "values": {
+        "organizations.id": "[42,0,\"O1\"]",
+        "organizations.name": "Synthetic employer"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"organizational_units\",[\"[42,0,\\\"U1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "organizational_units"
+      },
+      "values": {
+        "organizational_units.id": "[42,0,\"U1\"]",
+        "organizational_units.organization_id": "[42,0,\"O1\"]",
+        "organizational_units.name": "Research"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "positions"
+      },
+      "values": {
+        "positions.id": "[42,0,\"P1\"]",
+        "positions.unit_id": "[42,0,\"U1\"]",
+        "positions.title": "Analyst"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "positions"
+      },
+      "values": {
+        "positions.id": "[42,0,\"P2\"]",
+        "positions.unit_id": "[42,0,\"U1\"]",
+        "positions.title": "Engineer"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"candidates\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "candidates"
+      },
+      "values": {
+        "candidates.id": "[42,0,\"C1\"]",
+        "candidates.name": "Synthetic candidate"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "applications"
+      },
+      "values": {
+        "applications.id": "[42,0,\"A1\"]",
+        "applications.candidate_id": "[42,0,\"C1\"]",
+        "applications.position_id": "[42,0,\"P1\"]",
+        "applications.status": "accepted"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "applications"
+      },
+      "values": {
+        "applications.id": "[42,0,\"A2\"]",
+        "applications.candidate_id": "[42,0,\"C1\"]",
+        "applications.position_id": "[42,0,\"P2\"]",
+        "applications.status": "declined"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"interviews\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "interviews"
+      },
+      "values": {
+        "interviews.id": "[42,0,\"I1\"]",
+        "interviews.application_id": "[42,0,\"A1\"]",
+        "interviews.starts": "2026-01-01T10:00Z",
+        "interviews.result": "pass"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"offers\",[\"[42,0,\\\"OF1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "offers"
+      },
+      "values": {
+        "offers.id": "[42,0,\"OF1\"]",
+        "offers.application_id": "[42,0,\"A1\"]",
+        "offers.amount": "5E+4",
+        "offers.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "employment_relationships"
+      },
+      "values": {
+        "employment_relationships.id": "[42,0,\"E1\"]",
+        "employment_relationships.candidate_id": "[42,0,\"C1\"]",
+        "employment_relationships.position_id": "[42,0,\"P1\"]",
+        "employment_relationships.valid_from": "2026-02-01",
+        "employment_relationships.valid_to": "2026-12-31"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"reporting_relationships\",[\"[42,0,\\\"RR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "element": "reporting_relationships"
+      },
+      "values": {
+        "reporting_relationships.id": "[42,0,\"RR1\"]",
+        "reporting_relationships.employee_id": "[42,0,\"E1\"]",
+        "reporting_relationships.manager_id": "[42,0,\"E1\"]",
+        "reporting_relationships.valid_from": "2026-06-01",
+        "reporting_relationships.valid_to": "2026-12-31"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"organizational_units.organization_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"organizational_units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"organizations\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "organizational_units.organization_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"organizational_units\",[\"[42,0,\\\"U1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"organizations\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"positions.unit_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"positions\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"organizational_units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "positions.unit_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"organizational_units\",[\"[42,0,\\\"U1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"positions.unit_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"positions\\\",[\\\"[42,0,\\\\\\\"P2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"organizational_units\\\",[\\\"[42,0,\\\\\\\"U1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "positions.unit_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"organizational_units\",[\"[42,0,\\\"U1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications.candidate_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"candidates\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "applications.candidate_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"candidates\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications.position_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"positions\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "applications.position_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications.candidate_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"candidates\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "applications.candidate_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"candidates\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"applications.position_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"positions\\\",[\\\"[42,0,\\\\\\\"P2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "applications.position_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"interviews.application_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"interviews\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "interviews.application_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"interviews\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"offers.application_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"offers\\\",[\\\"[42,0,\\\\\\\"OF1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"applications\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "offers.application_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"offers\",[\"[42,0,\\\"OF1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"applications\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships.candidate_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"employment_relationships\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"candidates\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "employment_relationships.candidate_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"candidates\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships.position_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"employment_relationships\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"positions\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "employment_relationships.position_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"positions\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"reporting_relationships.employee_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"reporting_relationships\\\",[\\\"[42,0,\\\\\\\"RR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"employment_relationships\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "reporting_relationships.employee_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"reporting_relationships\",[\"[42,0,\\\"RR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships\",[\"[42,0,\\\"E1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:hr\",\"domain\",\"reporting_relationships.manager_id\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"reporting_relationships\\\",[\\\"[42,0,\\\\\\\"RR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:hr\\\",\\\"domain\\\",\\\"employment_relationships\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:hr",
+        "module": "domain",
+        "id": "reporting_relationships.manager_id"
+      },
+      "source": "[\"urn:umf:domain:hr\",\"domain\",\"reporting_relationships\",[\"[42,0,\\\"RR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:hr\",\"domain\",\"employment_relationships\",[\"[42,0,\\\"E1\\\"]\"]]"
+    }
+  ]
+}

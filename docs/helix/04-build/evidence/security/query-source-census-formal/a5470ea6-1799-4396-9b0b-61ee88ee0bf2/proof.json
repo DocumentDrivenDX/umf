@@ -1,0 +1,61 @@
+{
+  "status": "conditional-proof-passed",
+  "z3Version": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-query-source-census.py": "991936d1abe4687b5f74f1b63e01d25915216800ce4006df6ea9871df19d2cd6",
+    "tools/security/pg-inventory.py": "5a069e586cede0aa47c65fe0afb7d140f3c9a2a9041040701bb4f503c609fbc0",
+    "tools/security/pg-query-source-census.py": "0f0f916d42127ebd1d7aced56173bb8b96da0701d408526a5bcf3fa5a21aea44",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/security-query-source-census.sql": "3f1a7570b46c991b23bcf934d4b57ff319b42402d83c410aae28767f46446262"
+  },
+  "queries": [
+    {
+      "id": "complete-image-and-held-cut-preserve-execution-source",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-fun truthful_complete_source_image (SourceInterpretation) CensusImage)\n(declare-fun release_source () SourceInterpretation)\n(declare-fun execution_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(declare-fun expected_source () SourceInterpretation)\n(assert\n (forall ((pre_source SourceInterpretation) (release_source SourceInterpretation) )(let (($x16 (= pre_source release_source)))\n (let (($x19 (= (truthful_complete_source_image pre_source) (truthful_complete_source_image release_source))))\n (=> $x19 $x16))))\n )\n(assert\n (let (($x24 (= execution_source release_source)))\n (let (($x23 (= pre_source execution_source)))\n (and $x23 $x24))))\n(assert\n (let ((?x10 (truthful_complete_source_image expected_source)))\n (let (($x13 (= (truthful_complete_source_image release_source) ?x10)))\n (let (($x11 (= (truthful_complete_source_image pre_source) ?x10)))\n (and $x11 $x13)))))\n(assert\n (and (distinct execution_source expected_source) true))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "complete-image-rejects-drift-before-execution",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-fun truthful_complete_source_image (SourceInterpretation) CensusImage)\n(declare-fun expected_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(assert\n (forall ((pre_source SourceInterpretation) (release_source SourceInterpretation) )(let (($x16 (= pre_source release_source)))\n (let (($x19 (= (truthful_complete_source_image pre_source) (truthful_complete_source_image release_source))))\n (=> $x19 $x16))))\n )\n(assert\n (and (distinct pre_source expected_source) true))\n(assert\n (let ((?x10 (truthful_complete_source_image expected_source)))\n(= (truthful_complete_source_image pre_source) ?x10)))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "complete-image-rejects-drift-after-buffering",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-fun truthful_complete_source_image (SourceInterpretation) CensusImage)\n(declare-fun expected_source () SourceInterpretation)\n(declare-fun release_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(assert\n (forall ((pre_source SourceInterpretation) (release_source SourceInterpretation) )(let (($x16 (= pre_source release_source)))\n (let (($x19 (= (truthful_complete_source_image pre_source) (truthful_complete_source_image release_source))))\n (=> $x19 $x16))))\n )\n(assert\n (and (distinct release_source expected_source) true))\n(assert\n (let ((?x10 (truthful_complete_source_image expected_source)))\n(let (($x13 (= (truthful_complete_source_image release_source) ?x10)))\n(let (($x11 (= (truthful_complete_source_image pre_source) ?x10)))\n(and $x11 $x13)))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "endpoint-equality-alone-permits-source-aba",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-fun truthful_complete_source_image (SourceInterpretation) CensusImage)\n(declare-fun expected_source () SourceInterpretation)\n(declare-fun release_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(declare-fun execution_source () SourceInterpretation)\n(assert\n (forall ((pre_source SourceInterpretation) (release_source SourceInterpretation) )(let (($x16 (= pre_source release_source)))\n (let (($x19 (= (truthful_complete_source_image pre_source) (truthful_complete_source_image release_source))))\n (=> $x19 $x16))))\n )\n(assert\n (let ((?x10 (truthful_complete_source_image expected_source)))\n (let (($x13 (= (truthful_complete_source_image release_source) ?x10)))\n (let (($x11 (= (truthful_complete_source_image pre_source) ?x10)))\n (and $x11 $x13)))))\n(assert\n (= pre_source release_source))\n(assert\n (and (distinct execution_source expected_source) true))\n(check-sat)\n",
+      "witness": "[release_source = SourceInterpretation!val!0,\n execution_source = SourceInterpretation!val!1,\n expected_source = SourceInterpretation!val!0,\n pre_source = SourceInterpretation!val!0,\n truthful_complete_source_image = [SourceInterpretation!val!1 ->\n                                   CensusImage!val!1,\n                                   else -> CensusImage!val!0]]"
+    },
+    {
+      "id": "dependency-edges-alone-may-hide-source-body-change",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-fun expected_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(declare-fun dependency_edges_only_image (SourceInterpretation) CensusImage)\n(assert\n (and (distinct pre_source expected_source) true))\n(assert\n (= (dependency_edges_only_image pre_source) (dependency_edges_only_image expected_source)))\n(check-sat)\n",
+      "witness": "[expected_source = SourceInterpretation!val!1,\n pre_source = SourceInterpretation!val!0,\n dependency_edges_only_image = [else -> CensusImage!val!0]]"
+    },
+    {
+      "id": "faithful-data-update-does-not-require-source-change",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-sort SourceInterpretation 0)\n(declare-sort CensusImage 0)\n(declare-sort DataCut 0)\n(declare-fun truthful_complete_source_image (SourceInterpretation) CensusImage)\n(declare-fun release_source () SourceInterpretation)\n(declare-fun execution_source () SourceInterpretation)\n(declare-fun pre_source () SourceInterpretation)\n(declare-fun expected_source () SourceInterpretation)\n(declare-fun new_data () DataCut)\n(declare-fun old_data () DataCut)\n(assert\n (forall ((pre_source SourceInterpretation) (release_source SourceInterpretation) )(let (($x16 (= pre_source release_source)))\n (let (($x19 (= (truthful_complete_source_image pre_source) (truthful_complete_source_image release_source))))\n (=> $x19 $x16))))\n )\n(assert\n (let (($x24 (= execution_source release_source)))\n (let (($x23 (= pre_source execution_source)))\n (and $x23 $x24))))\n(assert\n (let ((?x10 (truthful_complete_source_image expected_source)))\n (let (($x13 (= (truthful_complete_source_image release_source) ?x10)))\n (let (($x11 (= (truthful_complete_source_image pre_source) ?x10)))\n (and $x11 $x13)))))\n(assert\n (and (distinct old_data new_data) true))\n(check-sat)\n",
+      "witness": "[release_source = SourceInterpretation!val!0,\n new_data = DataCut!val!1,\n expected_source = SourceInterpretation!val!0,\n old_data = DataCut!val!0,\n pre_source = SourceInterpretation!val!0,\n execution_source = SourceInterpretation!val!0,\n truthful_complete_source_image = [else -> CensusImage!val!0]]"
+    }
+  ],
+  "scope": "Uninterpreted source-interpretation/image/data-cut algebra. Injective truthful complete observation, independently qualified expected interpretation and interior stable-cut coordination are premises. Pre/post comparison under those premises excludes execution under a changed source; endpoint equality alone permits ABA. Data cuts may change without changing source interpretation. Not proved: completeness or injectivity of the selected native catalog census, native JSON/SQL/collation refinement, original installer/provider authentication, catalog/MVCC snapshot freshness, host buffering or transport behavior, dynamic external executable/fact routing, writer participation, graph mappings or backend admission."
+}

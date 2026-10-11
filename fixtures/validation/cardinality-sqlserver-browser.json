@@ -1,6 +1,6 @@
 {
   "scope": "Qualified classification/projection and retained recovery in real Chromium; no host globals or external requests",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "classification": {
       "classified": 36,
@@ -34,17 +34,17 @@
   ],
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/cardinality-sqlserver-browser.ts": "360c78cbfa4a207c010129b5f34d96643c344b4aa84d2ca843794748c9241861",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce",
+    "scripts/core-ideals/cardinality-sqlserver-browser.ts": "3a1c10e4bb413b0958798dc5e41c3b5c6ff4f7ec92adcfe59c95da992e7df20c",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39",
     "scripts/core-ideals/cardinality-sqlserver-classification-browser.ts": "d85687cba0adb691dee5718fcaa532ada81f206ead648269b18c5520141e9c49",
-    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "3a7f40ad894f3237112dd4a63b0e6c95d310f21eebd96779b28fe860f002cd7c",
+    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "1408d96d26aa583edf71c8dd012f4bd389b91104776e324b1ea4449950afc4c5",
     "src/core-ideals/cardinality-sqlserver.ts": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
     "spec/core/sqlserver-cardinality-classification.schema.json": "669c52050ee28c8754923ea4ddd3487c5a568bc745a63dd7e4fa4015c7964a46",
-    "spec/extensions/sqlserver-cardinality/package.json": "eee8ae16bdece81fc3534a3ae78dfac683c9eedc48ab3cf31b7548458eb34591",
+    "spec/extensions/sqlserver-cardinality/package.json": "417038f2c6d1618600780370027f53fd9316f6c8dd664c4c307c4674af97dd4e",
     "fixtures/validation/cardinality-sqlserver-profile-native.json": "74dfd14a22d1fcb995f761550c3f71771f4ae6cc8c3f34bdc203e6d31aa4c758",
     "scripts/core-ideals/cardinality-sqlserver-projection-browser.ts": "055478c83840a1de5e3af5b2b35ec8ef5ed64873a464ef0983ce18515f917e0e",
-    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "d238967f830117c7724cc66125c7a726da0fc505961f159eb795ffcaee3f0170",
-    "fixtures/validation/cardinality-sqlserver-projection-native.json": "34d18c3385f6c8d4ac6deb05a2e30b66e3361de2f507c14bcd52a21c50a773f3"
+    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "0f7ee4006d81c3a1566a54531cbed8a1f6bb4afde2fae3631ca11179573bccbd",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json": "462e72a2472802420ce734ed3e73d74518b900c11fbc950cd6562fca4b4ede1d"
   }
 }
