@@ -11619,3 +11619,9 @@ authenticated original mapping/decoder/source/role/config closure and protected
 policy execution/publication remain required. Existing native packets retain their
 original owner source tuples; this owner-only increment does not promote backend
 bindings. Full goal active at26/132 with106 missing; publish directly to main.
+
+UMF main e3ef2089 advanced with schema-browser release work while this increment
+was being verified. Integration preserves that history; all390 selected owner
+source pins remain identical and `post-main-integration.json` records a fresh
+successful `bun run typecheck` for both library and tools configurations. Original
+source/browser receipts are unchanged; no native profile qualification is inferred.
