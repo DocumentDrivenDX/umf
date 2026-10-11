@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
       - name: Test command declarations
-        run: bun test tests/actions
+        run: bun test ./tests/actions/*.test.ts
       - name: Test actual PostgreSQL command execution
         run: |
           set -o pipefail
