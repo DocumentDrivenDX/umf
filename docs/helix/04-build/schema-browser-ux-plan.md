@@ -129,3 +129,77 @@ assets; mount two instances with independent catalogs and routes; inspect tables
 artifacts and ontology; verify host state/CSS isolation, local schemas, original
 text preservation and teardown. Browser package support is distinct from native
 rendering of PDF/DICOM or source collection.
+
+## npm and microsite release parity (owner amendment, 2026-10-10)
+
+Publish patch 1.0.1 to npm with the retained dual licensing. Pin it exactly in
+UMF's development dependencies and Bun lockfile. Catalog generation remains
+site-specific; rendering comes only from the installed release. Site assembly
+copies the package's exact renderer/browser CSS/API/assets, records a versioned
+asset manifest, and refuses changed bytes or mismatched workspace markup. Site
+branding CSS outside the browser workspace remains a host concern. CI installs
+from the lockfile and runs consumer checks on the installed package rather than
+recompiling the local source. New renderer source work needs a new immutable
+package release and explicit dependency update before website rollout.
+
+Acceptance: anonymous npm install by package name/version, package integrity,
+byte-identical site/package renderer and browser CSS, unchanged bookmarks,
+workspace markup parity, installed-package and artifact browser checks, page
+signature checks, live browser verification and successful deployment.
+
+## Full host embedding contract (owner amendment, 2026-10-10)
+
+Supersedes the pending patch-only publication: release 1.1.0 addresses the full
+external embedding request, with generic consumer examples and no consumer names.
+The immutable 1.0.0 release remains available. Preserve the existing microsite
+workspace, bookmark grammar, exact source strings and explicit validation scope.
+
+1. Publish catalog v1 JSON Schema and host contract: bounded entries, inline or
+   lazy HTTP(S) source URLs, categories, aliases, assets, annotations and revisions.
+   Validate at the boundary without dynamic code generation. Record documented
+   size limits, errors, CSP, browser versions and route grammar.
+2. Separate producer build from catalog generation and microsite assets. Ship
+   self-contained styles with design tokens, light/dark themes and system fonts.
+   Split optional readers; the JSON inspection path must start under strict CSP
+   without loading adapters that compile validators. Preserve qualified validation
+   rather than silently reporting inspection as full validation.
+3. Extend mount and the standalone iframe with versioned, origin/source checked
+   messaging. Support selection, categories, annotations, local-file visibility,
+   readiness, navigation and structured errors. Define readiness as initialized
+   catalog/UI; destroy removes listeners and pending operations. Two instances
+   must remain independent. Never accept executable schemas or message HTML.
+4. Export reusable property and relationship components with keyboard access,
+   exact identifiers/values, annotations and created/changed/removed styling.
+   Add read-only revision comparison and history; match by stable identifiers,
+   preserve originals and show changes without asserting semantic equivalence.
+5. Qualify a generic strict-CSP host: inline and remote catalog, lazy sources,
+   host-driven selection, relationship events, catalog 401/errors, themes,
+   hidden local files, malformed messages/origins, two instances and teardown.
+   Check existing tables, artifacts, ontology and downloads; no page errors or
+   accidental external requests. Verify component and revision comparison views.
+6. Build twice and compare output hashes, ship changelog/provenance/checksums,
+   publish npm, install anonymously by name/version, pin package+lock in site,
+   verify asset/workspace parity, signatures and deployed bytes. Publication
+   requires actual npm authentication; no success claim before registry evidence.
+
+Review gates: Astra Ultra reviews this plan before implementation and the final
+work before publication. Resolve actionable findings and record qualifications.
+Risks: runtime validators and format readers are coupled; isolate source inspection
+without weakening core validation. Messaging must check origin, Window source,
+instance and protocol version. Lazy fetches must preserve exact original strings
+and refuse stale selection races. Diff is structural, not semantic or enforcement.
+
+### Astra Ultra plan review disposition
+
+Accepted all six findings: fixed validator differential parity; transitive exact
+JSON/YAML split; correlated Promise selection and bounded source lifecycle;
+mutually exclusive bounded catalogs with collision checks; independent scoped
+components and exact structural diffs including order/unknown metadata; complete
+runtime manifest parity and two clean reproducible builds. Protocol v1 bootstrap
+uses explicit parent origin, source Window and instance ID, never first-message
+trust or wildcard origins. Catalog ready and selected-source completion are
+separate signals. JSON-only startup excludes YAML and optional native adapters.
+
+### Embedding implementation review and release gate
+
+Astra Ultra's final implementation review found no remaining concrete blocker after fixing transactional configure generations and acknowledgements, same-schema revision routes, srcdoc routes without a base element, fixed native grammar closure, and archived YAML initialization. The permanent harness covers missing renderer readiness, custom chrome/focus/theme/height controls, strict CSP, origin-isolated standalone messages and native fixity. Avro dynamic interpretation is intentionally qualified; its original/schema/dependencies remain exact. No browser cross-engine claim is made from Chromium evidence. Release 1.1.0 supersedes the pending npm-only 1.0.1 patch. The producer emits full payload manifests and provenance; CI verifies two clean rebuilds and exact installed-package microsite assets, including the browser base stylesheet. npm authentication is a release dependency, not an implementation approval.

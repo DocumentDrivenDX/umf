@@ -1,14 +1,16 @@
 import {chromium} from 'playwright';
 import {mkdtemp,cp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
-import {join} from 'node:path';
-const directory=await mkdtemp(join(tmpdir(),'umf-browser-consumer-')),pkg=join(directory,'package');
+import {join,resolve} from 'node:path';
+const directory=await mkdtemp(join(tmpdir(),'umf-browser-consumer-')),pkg=resolve(process.argv[2]??'node_modules/@documentdrivendx/umf-schema-browser');
 async function run(cmd:string[],cwd?:string){const child=Bun.spawn(cmd,{...(cwd?{cwd}:{}),stdout:'inherit',stderr:'inherit'});if(await child.exited)throw Error(cmd.join(' '));}
-await run(['bun','docs/helix/05-deploy/schema-browser/build.ts',pkg]);
+const metadata=await Bun.file(join(pkg,'package.json')).json();
 await run(['npm','pack','--cache',join(directory,'cache'),'--pack-destination',directory,'--silent'],pkg);
-const archive=join(directory,'documentdrivendx-umf-schema-browser-1.0.0.tgz');
+const archive=join(directory,metadata.name.replace(/^@/,'').replaceAll('/','-')+'-'+metadata.version+'.tgz');
 await run(['npm','install','--prefix',directory,'--cache',join(directory,'cache'),'--offline','--ignore-scripts','--no-audit','--no-fund',archive]);
 const installed=join(directory,'node_modules/@documentdrivendx/umf-schema-browser');
+await Bun.write(join(directory,'consumer.mts'),"import {mount,renderRecordMap,type Catalog} from '@documentdrivendx/umf-schema-browser'; const catalog:Catalog={version:1,entries:[]}; const handle=mount(document.body,{assetsUrl:'/assets/',catalog});handle.focus();renderRecordMap(document.body,{records:[],edges:[]});");await run([process.execPath,resolve('node_modules/typescript/bin/tsc'),'--ignoreConfig','--noEmit','--strict','--target','ES2022','--module','ESNext','--moduleResolution','Bundler',join(directory,'consumer.mts')],directory);
+await run([process.execPath,resolve('node_modules/typescript/bin/tsc'),'--ignoreConfig','--noEmit','--strict','--target','ES2022','--module','NodeNext','--moduleResolution','NodeNext',join(directory,'consumer.mts')],directory);
 await cp(installed,join(directory,'browser'),{recursive:true});
 const catalog=await Bun.file('docs/helix/05-deploy/microsite/dist/schema-catalog.json').json();
 const ids=['schema:medical-carrier@1.2.0:claims','schema:archaeology@1.0.0:ontology','pack:public-company-intelligence@1.1.0','artifact:public-company-intelligence@1.1.0:sec-snapshots'];

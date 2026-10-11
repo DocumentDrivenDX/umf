@@ -14,6 +14,8 @@ on:
       - 'scripts/actions-docs/**'
       - 'docs/helix/05-deploy/schema-browser/**'
       - 'scripts/schema-browser-package-browser.ts'
+      - 'scripts/schema-browser-embedding-browser.ts'
+      - 'scripts/schema-browser-reproducibility.ts'
       - 'src/**'
       - 'native/tablespec/relationship-runtime/domain-base-types.json'
       - 'native/tablespec/sources/src/tablespec/schemas/umf.schema.json'
@@ -55,6 +57,8 @@ on:
       - 'scripts/actions-docs/**'
       - 'docs/helix/05-deploy/schema-browser/**'
       - 'scripts/schema-browser-package-browser.ts'
+      - 'scripts/schema-browser-embedding-browser.ts'
+      - 'scripts/schema-browser-reproducibility.ts'
       - 'src/**'
       - 'native/tablespec/relationship-runtime/domain-base-types.json'
       - 'native/tablespec/sources/src/tablespec/schemas/umf.schema.json'
@@ -102,6 +106,16 @@ jobs:
           bun-version: '1.4.2'
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Select immutable schema browser producer runtime
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+      - name: Verify reproducible schema-browser producer
+        run: bun scripts/schema-browser-reproducibility.ts
+      - name: Restore action build runtime
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
       - name: Verify medical family artifacts
         run: |
           bun scripts/build-medical-subpacks.ts --check
@@ -122,14 +136,14 @@ jobs:
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
-      - name: Build reusable browser distribution
-        run: |
-          bun docs/helix/05-deploy/schema-browser/build.ts
-          bun docs/helix/05-deploy/schema-browser/publish-site.ts
+      - name: Install pinned released schema browser assets
+        run: bun docs/helix/05-deploy/schema-browser/publish-site.ts
       - name: Install browser qualification runtime
         run: bun x playwright install --with-deps chromium
       - name: Qualify reusable browser package
         run: bun scripts/schema-browser-package-browser.ts
+      - name: Qualify strict-CSP schema browser embedding
+        run: bun scripts/schema-browser-embedding-browser.ts
       - name: Qualify artifact collection browser
         run: bun scripts/artifact-collections-browser.ts
       - name: Check action guide generation and examples

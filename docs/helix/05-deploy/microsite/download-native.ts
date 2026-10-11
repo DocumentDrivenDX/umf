@@ -1,36 +1,41 @@
-import {exportJsonSchemaBundle,exportJsonSchema} from '../../../../src/adapters/json-schema/index';
-import {exportAvroBundle,exportAvroSchema} from '../../../../src/adapters/avro/index';
-import {exportGraphqlBundle,exportGraphqlSchema} from '../../../../src/adapters/graphql/index';
-import {exportOpenapiBundle,exportOpenapiDocument} from '../../../../src/adapters/openapi/index';
-import {exportDeltaTable} from '../../../../src/adapters/delta/table';
-import {exportDeltaLog} from '../../../../src/adapters/delta/log';
-import {exportIcebergTable} from '../../../../src/adapters/iceberg/table';
-import {exportDbtSemanticManifest} from '../../../../src/adapters/dbt/semantic';
-import {exportDbtArtifact} from '../../../../src/adapters/dbt/artifact';
-import {exportTypeSpecSources} from '../../../../src/adapters/typespec/index';
-import {exportSmithySources} from '../../../../src/adapters/smithy/sources';
-import {exportArrowIpcCapture} from '../../../../src/adapters/arrow/capture';
-import {exportParquetCapture} from '../../../../src/adapters/parquet/index';
-import {exportGeneralizedRdfDataset} from '../../../../src/adapters/generalized-rdf/index';
-import {exportSqlServerCatalog} from '../../../../src/adapters/sqlserver/index';
-import {exportPostgresqlCatalogCapture} from '../../../../src/adapters/postgresql/catalog';
-import {exportProtobufDescriptorSet} from '../../../../src/adapters/protobuf/index';
-import {exportSparkSchema} from '../../../../src/adapters/spark/index';
-import {exportDeltaSchema} from '../../../../src/adapters/delta/index';
-import {exportIcebergSchema} from '../../../../src/adapters/iceberg/index';
-import {exportTableSpec} from '../../../../src/adapters/tablespec/index';
-import {exportLinkmlDocument} from '../../../../src/adapters/linkml/index';
-import {exportOdcsDocument} from '../../../../src/adapters/odcs/index';
-import {exportJsonLdDocument} from '../../../../src/adapters/jsonld/index';
-import {exportRdfNQuads} from '../../../../src/adapters/rdf/index';
-import {exportOwlTurtle} from '../../../../src/adapters/owl/index';
-import {exportShaclTurtle} from '../../../../src/adapters/shacl/index';
-import {exportDbtManifest} from '../../../../src/adapters/dbt/index';
-import {exportSmithyJson} from '../../../../src/adapters/smithy/index';
-import {exportArrowSchema} from '../../../../src/adapters/arrow/index';
-const adapters={exportJsonSchemaBundle,exportAvroBundle,exportGraphqlBundle,exportOpenapiBundle,exportDeltaTable,exportDeltaLog,exportIcebergTable,exportDbtSemanticManifest,exportDbtArtifact,exportTypeSpecSources,exportSmithySources,exportArrowIpcCapture,exportParquetCapture,exportGeneralizedRdfDataset,exportSqlServerCatalog,exportPostgresqlCatalogCapture,exportJsonSchema,exportAvroSchema,exportGraphqlSchema,exportProtobufDescriptorSet,exportSparkSchema,exportDeltaSchema,exportIcebergSchema,exportOpenapiDocument,exportTableSpec,exportLinkmlDocument,exportOdcsDocument,exportJsonLdDocument,exportRdfNQuads,exportOwlTurtle,exportShaclTurtle,exportDbtManifest,exportSmithyJson,exportArrowSchema};
+import {ensureYaml} from '../schema-browser/format-runtime';
 import type {Parsed} from './explorer-model';
-/** Native exporters validate their pinned representation before emitting content. */
+const adapterLoaders={
+ exportJsonSchemaBundle:()=>import('../../../../src/adapters/json-schema/index').then(m=>m.exportJsonSchemaBundle),
+ exportJsonSchema:()=>import('../../../../src/adapters/json-schema/index').then(m=>m.exportJsonSchema),
+ exportAvroBundle:()=>import('../../../../src/adapters/avro/index').then(m=>m.exportAvroBundle),
+ exportAvroSchema:()=>import('../../../../src/adapters/avro/index').then(m=>m.exportAvroSchema),
+ exportGraphqlBundle:()=>import('../../../../src/adapters/graphql/index').then(m=>m.exportGraphqlBundle),
+ exportGraphqlSchema:()=>import('../../../../src/adapters/graphql/index').then(m=>m.exportGraphqlSchema),
+ exportOpenapiBundle:()=>import('../../../../src/adapters/openapi/index').then(m=>m.exportOpenapiBundle),
+ exportOpenapiDocument:()=>import('../../../../src/adapters/openapi/index').then(m=>m.exportOpenapiDocument),
+ exportDeltaTable:()=>import('../../../../src/adapters/delta/table').then(m=>m.exportDeltaTable),
+ exportDeltaLog:()=>import('../../../../src/adapters/delta/log').then(m=>m.exportDeltaLog),
+ exportIcebergTable:()=>import('../../../../src/adapters/iceberg/table').then(m=>m.exportIcebergTable),
+ exportDbtSemanticManifest:()=>import('../../../../src/adapters/dbt/semantic').then(m=>m.exportDbtSemanticManifest),
+ exportDbtArtifact:()=>import('../../../../src/adapters/dbt/artifact').then(m=>m.exportDbtArtifact),
+ exportTypeSpecSources:()=>import('../../../../src/adapters/typespec/index').then(m=>m.exportTypeSpecSources),
+ exportSmithySources:()=>import('../../../../src/adapters/smithy/sources').then(m=>m.exportSmithySources),
+ exportArrowIpcCapture:()=>import('../../../../src/adapters/arrow/capture').then(m=>m.exportArrowIpcCapture),
+ exportParquetCapture:()=>import('../../../../src/adapters/parquet/index').then(m=>m.exportParquetCapture),
+ exportGeneralizedRdfDataset:()=>import('../../../../src/adapters/generalized-rdf/index').then(m=>m.exportGeneralizedRdfDataset),
+ exportSqlServerCatalog:()=>import('../../../../src/adapters/sqlserver/index').then(m=>m.exportSqlServerCatalog),
+ exportPostgresqlCatalogCapture:()=>import('../../../../src/adapters/postgresql/catalog').then(m=>m.exportPostgresqlCatalogCapture),
+ exportProtobufDescriptorSet:()=>import('../../../../src/adapters/protobuf/index').then(m=>m.exportProtobufDescriptorSet),
+ exportSparkSchema:()=>import('../../../../src/adapters/spark/index').then(m=>m.exportSparkSchema),
+ exportDeltaSchema:()=>import('../../../../src/adapters/delta/index').then(m=>m.exportDeltaSchema),
+ exportIcebergSchema:()=>import('../../../../src/adapters/iceberg/index').then(m=>m.exportIcebergSchema),
+ exportTableSpec:()=>import('../../../../src/adapters/tablespec/index').then(m=>m.exportTableSpec),
+ exportLinkmlDocument:()=>import('../../../../src/adapters/linkml/index').then(m=>m.exportLinkmlDocument),
+ exportOdcsDocument:()=>import('../../../../src/adapters/odcs/index').then(m=>m.exportOdcsDocument),
+ exportJsonLdDocument:()=>import('../../../../src/adapters/jsonld/index').then(m=>m.exportJsonLdDocument),
+ exportRdfNQuads:()=>import('../../../../src/adapters/rdf/index').then(m=>m.exportRdfNQuads),
+ exportOwlTurtle:()=>import('../../../../src/adapters/owl/index').then(m=>m.exportOwlTurtle),
+ exportShaclTurtle:()=>import('../../../../src/adapters/shacl/index').then(m=>m.exportShaclTurtle),
+ exportDbtManifest:()=>import('../../../../src/adapters/dbt/index').then(m=>m.exportDbtManifest),
+ exportSmithyJson:()=>import('../../../../src/adapters/smithy/index').then(m=>m.exportSmithyJson),
+ exportArrowSchema:()=>import('../../../../src/adapters/arrow/index').then(m=>m.exportArrowSchema),
+};
 const exporters:Record<string,[string,string]>={
  'umf.delta.table':['exportDeltaTable','delta-table.json'],'umf.delta.log':['exportDeltaLog','delta-log.json'],'umf.iceberg.table':['exportIcebergTable','iceberg-table.json'],'umf.dbt.semantic':['exportDbtSemanticManifest','semantic-manifest.json'],'umf.dbt.artifact':['exportDbtArtifact','dbt-artifact.json'],'umf.typespec':['exportTypeSpecSources','typespec-sources.json'],'umf.arrow.ipc':['exportArrowIpcCapture','schema.arrow'],'umf.parquet':['exportParquetCapture','schema.parquet'],'umf.generalized-rdf':['exportGeneralizedRdfDataset','rdf-dataset.json'],'umf.sqlserver':['exportSqlServerCatalog','sqlserver-catalog.json'],'umf.postgresql.catalog':['exportPostgresqlCatalogCapture','postgresql-catalog.json'],
  'umf.json-schema':['exportJsonSchemaBundle','json-schema-bundle.json'],'umf.avro':['exportAvroBundle','avro-bundle.json'],'umf.graphql':['exportGraphqlBundle','graphql-bundle.json'],'umf.protobuf':['exportProtobufDescriptorSet','schema.pb'],
@@ -39,4 +44,4 @@ const exporters:Record<string,[string,string]>={
  'umf.jsonld':['exportJsonLdDocument','schema.jsonld'],'umf.rdf':['exportRdfNQuads','schema.nq'],'umf.owl':['exportOwlTurtle','schema.owl.ttl'],'umf.shacl':['exportShaclTurtle','schema.shacl.ttl'],
  'umf.dbt.manifest':['exportDbtManifest','manifest.json'],'umf.smithy':['exportSmithyJson','model.smithy.json'],'umf.arrow':['exportArrowSchema','schema.arrow.json'],
 };
-export function nativeDownloads(parsed:Parsed){if(!parsed.document)return [];const out:{name:string;content:string|Uint8Array}[]=[];for(const id of Object.keys(parsed.document.vocabularies)){const spec=exporters[id];if(!spec)continue;const fn=(adapters as unknown as Record<string,unknown>)[spec[0]];if(typeof fn!=='function')continue;try{out.push({name:spec[1],content:(()=>{const value=['umf.linkml','umf.odcs'].includes(id)?fn(parsed.document,'json'):fn(parsed.document);return typeof value==='string'||value instanceof Uint8Array?value:JSON.stringify(value,null,2);})()});}catch(error){out.push({name:spec[1]+'.export-error.txt',content:'Native recovery blocked: '+String(error instanceof Error?error.message:error)});}}return out;}
+export async function nativeDownloads(parsed:Parsed){if(!parsed.document)return [];const {prepareNativeValidators}=await import('../schema-browser/native-fixed');await prepareNativeValidators();await ensureYaml();const out:{name:string;content:string|Uint8Array}[]=[];for(const id of Object.keys(parsed.document.vocabularies)){const spec=exporters[id];if(!spec)continue;const load=(adapterLoaders as Record<string,()=>Promise<any>>)[spec[0]];if(!load)continue;try{const fn=await load();out.push({name:spec[1],content:(()=>{const value=['umf.linkml','umf.odcs'].includes(id)?fn(parsed.document,'json'):fn(parsed.document);return typeof value==='string'||value instanceof Uint8Array?value:JSON.stringify(value,null,2);})()});}catch(error){out.push({name:spec[1]+'.export-error.txt',content:'Native recovery blocked: '+String(error instanceof Error?error.message:error)});}}return out;}

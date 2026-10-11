@@ -1,0 +1,99 @@
+PASS local file control hidden
+PASS dark theme
+PASS custom category labels
+PASS table rendered
+PASS hero hidden
+PASS host theme variables
+PASS focus enters inspector heading
+PASS revision current distinct from base
+PASS historical drill-in route retains revision
+PASS base source immutable
+PASS lazy source loads
+PASS slow source superseded
+PASS navigation event corresponds to rendered source
+PASS full ontology diagram
+PASS malformed and sibling messages refused
+PASS revision comparison rendered
+PASS host annotations
+PASS annotations preserve history controls
+PASS export postgresql
+PASS export sqlserver
+PASS export delta
+PASS export json-schema
+PASS export avro
+PASS export graphql
+PASS export protobuf
+PASS export openapi
+PASS export spark
+PASS native source companion
+PASS native JSON Schema recovery
+PASS native recovery delta
+PASS native filename delta schema.delta.json
+PASS native byte fixity delta schema.delta.json
+PASS native recovery iceberg
+PASS native filename iceberg schema.iceberg.json
+PASS native byte fixity iceberg schema.iceberg.json
+PASS native recovery arrow
+PASS native filename arrow schema.arrow.json
+PASS native byte fixity arrow schema.arrow.json
+PASS native recovery sqlserver
+PASS native filename sqlserver sqlserver-catalog.json
+PASS native byte fixity sqlserver sqlserver-catalog.json
+PASS native recovery postgresql
+PASS native filename postgresql postgresql-catalog.json
+PASS native byte fixity postgresql postgresql-catalog.json
+PASS native recovery dbt
+PASS native filename dbt manifest.json
+PASS native byte fixity dbt manifest.json
+PASS native recovery odcs
+PASS native filename odcs contract.json
+PASS native byte fixity odcs contract.json
+PASS native recovery linkml
+PASS native filename linkml schema.linkml.json
+PASS native byte fixity linkml schema.linkml.json
+PASS native recovery avro
+PASS native filename avro avro-bundle.json
+PASS Avro dynamic validation explicitly qualified
+PASS Avro schema dependencies source and remaining diagnostics exact
+PASS native recovery graphql
+PASS native filename graphql graphql-bundle.json
+PASS native byte fixity graphql graphql-bundle.json
+PASS native recovery smithy
+PASS native filename smithy model.smithy.json
+PASS native byte fixity smithy model.smithy.json
+PASS native recovery spark
+PASS native filename spark schema.spark.json
+PASS native byte fixity spark schema.spark.json
+PASS native recovery generalized-rdf
+PASS native filename generalized-rdf rdf-dataset.json
+PASS native byte fixity generalized-rdf rdf-dataset.json
+PASS native recovery jsonld
+PASS native filename jsonld schema.jsonld
+PASS native byte fixity jsonld schema.jsonld
+PASS native recovery rdf
+PASS native filename rdf schema.nq
+PASS native byte fixity rdf schema.nq
+PASS native recovery owl
+PASS native filename owl schema.owl.ttl
+PASS native byte fixity owl schema.owl.ttl
+PASS native recovery shacl
+PASS native filename shacl schema.shacl.ttl
+PASS native byte fixity shacl schema.shacl.ttl
+PASS native recovery openapi
+PASS native filename openapi openapi-bundle.json
+PASS native byte fixity openapi openapi-bundle.json
+PASS catalog failure rejects ready
+PASS queued selection rejects with HTTP evidence
+PASS direct map marker IDs isolated
+PASS map update refreshes focus
+PASS prototype-named diff properties removed
+PASS component styles do not leak
+PASS cross-origin standalone protocol initializes
+PASS latest configure acknowledges
+PASS configure failure correlated
+PASS missing renderer rejects ready
+PASS destroy keeps other instance alive
+COMPLETE 95 checks
+
+Installed no-build example: mounted, selected record and focused heading under strict CSP.
+Chromium 153.0.8010.12; strict CSP, cross-origin protocol and direct components qualified.

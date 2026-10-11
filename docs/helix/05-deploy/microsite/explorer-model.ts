@@ -14,6 +14,7 @@ export interface Definition {key:string;module:string;id:string;title:string;val
 export interface Parsed {document?:Document;native?:Record<string,any>;label?:string;definitions:Definition[];diagnostics:string;valid:boolean;complete:boolean}
 export const key=(module:string,id:string)=>JSON.stringify([module,id]);
 export function parseEntry(entry:Entry):Parsed {
+ if(typeof entry.text!=='string')throw Error('Source not loaded');
  const tree=entry.format==='json'?parseNativeJson(entry.text):parseNativeYaml(entry.text);
  const native=nativeView(tree);
  if(!native||typeof native!=='object'||Array.isArray(native))throw new Error('Expected a schema or pack object.');
@@ -36,3 +37,5 @@ export function matches(entry:Entry,query:string):boolean {return `${entry.title
 
 /** Numeric lexemes remain explicit tokens in the metadata view; source text stays exact. */
 function nativeView(tree:NativeJson):any {switch(tree.kind){case 'number':return {numberToken:tree.value};case 'string':case 'boolean':return tree.value;case 'null':return null;case 'array':return tree.items.map(nativeView);case 'object':return Object.fromEntries(Object.entries(tree.members).map(([k,v])=>[k,nativeView(v)]));}}
+/** Exact source values for structural comparison, independent of core admission. */
+export function sourceValue(entry:Entry){if(typeof entry.text!=='string')throw Error('Source not loaded');return nativeView(entry.format==='json'?parseNativeJson(entry.text):parseNativeYaml(entry.text));}
