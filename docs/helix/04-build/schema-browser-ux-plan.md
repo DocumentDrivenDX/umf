@@ -319,6 +319,12 @@ shows no behavior defect, record that result without manufacturing a code change
 
 ### Owner discussion
 
+2026-10-11 continuation: the owner authorized publication and site rollout, then
+selected 1.1.2 because concurrent main had already published 1.1.1 for a separate
+reproducibility fix. The historical candidate/evidence above remains scoped to
+its tested source. Integrated release custody and fresh checks are recorded in
+[schema-browser-1.1.2-release.md](evidence/schema-browser-1.1.2-release.md).
+
 Accept the requested capabilities within the scoped contract. Do not adopt the
 1.0.0 unsafe-eval allowance or unset-base-uri workaround as the current host
 requirement. Keep the implemented selection signature. Treat permission badges
