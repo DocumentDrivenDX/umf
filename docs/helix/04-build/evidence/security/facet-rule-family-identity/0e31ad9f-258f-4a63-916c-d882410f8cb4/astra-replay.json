@@ -1,0 +1,114 @@
+{
+  "hostAudit": {
+    "receipt": "/private/tmp/truss-security-main-integration/docs/helix/04-build/evidence/original-occurrence-inventory/9e3c6886-8650-4fe1-8b33-72dfbe69f119/receipt.json",
+    "receiptSha256": "67012326edcbd669d0b4770f66b28e3c4433f957d226c2e2b9be7de48baad635",
+    "zipSha256": "3a48796b33ed2e23143b6d765387abb01dfbfba8121a2b2181031470c2d61324",
+    "sourcePinCount": 705,
+    "exactZipEntries": true,
+    "currentPins": true,
+    "rawTestSummary": {
+      "passed": 85,
+      "failed": 0,
+      "assertions": 788,
+      "files": 7
+    },
+    "strictTypecheckExit": 0,
+    "hostLogSha256": "0de7786c393497e3509459de208731171809f37b17522be0dff6ff5c7acb2312",
+    "hostTestsExecutedByReviewer": false
+  },
+  "formalReplay": {
+    "receipt": "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/04-build/evidence/security/facet-rule-family-identity/0e31ad9f-258f-4a63-916c-d882410f8cb4/proof.json",
+    "receiptSha256": "7fcd294821fdc02b4d9e99b61f2c7f8db2cb81c087710bf4a648f7c1e8c3e2be",
+    "zipSha256": "873151f1dd372ddb382aaeefd22b180c19edd3adfe98ecd43494a7f564ad02d0",
+    "sourcePinCount": 11,
+    "exactZipEntries": true,
+    "currentPins": true,
+    "solver": "4.15.4",
+    "observations": [
+      {
+        "id": "two-decimal-duties-same-position-and-parameters",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "fcbeb550a86f5026a9736f5d7ce30cf00bd718150f42e26107f2f8f4feea74fa",
+        "freshContext": true
+      },
+      {
+        "id": "full-tuple-forbids-family-collapse",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "b97522f8b03b7191f4430be0ae1e317a40a7c17f481711dbef52b04cb52d00cb",
+        "freshContext": true
+      },
+      {
+        "id": "position-only-collapses-two-decimal-duties",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "39d21178bf317acfd04e3440bd43fa2da903f8e8e2bec66d09b2874cf3d0a4b9",
+        "freshContext": true
+      },
+      {
+        "id": "parameter-only-collapses-two-decimal-duties",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "ae520905ea3d1cb502f505810eb14a51ab03285bdb18567cb770f2cfed3dad21",
+        "freshContext": true
+      },
+      {
+        "id": "tuple-correspondence-does-not-prove-authority-or-enforcement",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "b516f80e45230c4180cc25ae1690d6dd9545ce5f3375937e596197d895ed09b1",
+        "freshContext": true
+      },
+      {
+        "id": "erase-candidate-profile-allows-collision",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "b4327a753a218b118d2751ca2f02e90bb995796bc8066473530879d0c6083a56",
+        "freshContext": true
+      },
+      {
+        "id": "full-tuple-forbids-candidate-profile-collision",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "f9d2f939a81e83ca0dd4796fd785b3cd5c50753990e9b147f5d82054ac5a9a59",
+        "freshContext": true
+      },
+      {
+        "id": "erase-semantic-owner-allows-collision",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "b3640552f280018340e9604737657dabe627cabd04ff7fc4b196b165e626c4e8",
+        "freshContext": true
+      },
+      {
+        "id": "full-tuple-forbids-semantic-owner-collision",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "aa8d7bca34447bee7ce94c98f478d138f2a2113246f4d2dd6786819cc47076e8",
+        "freshContext": true
+      },
+      {
+        "id": "erase-original-occurrence-allows-collision",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "9a7fe1027cdb033fcd951b25a7ac17b6d558940a07c7d35c581c39b47239d830",
+        "freshContext": true
+      },
+      {
+        "id": "full-tuple-forbids-original-occurrence-collision",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "5ab02d80644064b43165c7ee7582d8d83ac1ba6df8fbb594f3fe2df29c56b229",
+        "freshContext": true
+      }
+    ],
+    "counts": {
+      "unsat": 4,
+      "sat": 7
+    }
+  },
+  "remainingFindings": [],
+  "nativeExecution": false,
+  "acceptanceCasesPromoted": []
+}
