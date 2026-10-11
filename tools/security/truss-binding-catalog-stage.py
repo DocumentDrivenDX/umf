@@ -47,20 +47,40 @@ owner_receipt=json.loads(frozen[str(interpretation/'receipt.json')])
 if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h for p,h in owner_receipt['sourceDigests'].items()):raise ValueError('Original interpretation source changed')
 binding_bytes=frozen[str(interpretation/'binding.json')] if '--opaque' not in sys.argv else b'\x00\xffopaque 1e999999999999999999999999999999 -1e999999999999999999999999999999'
 authored_fixture='--authored-relationship' in sys.argv
+composite_fixture='--composite-key' in sys.argv
 fixture_artifact=None
-if authored_fixture:
- if not pending_layout or '--opaque' in sys.argv:raise ValueError('Authored coexistence requires original association pending layout')
+if authored_fixture or composite_fixture:
+ if not pending_layout or '--opaque' in sys.argv:raise ValueError('Source fixtures require original association pending layout')
  fixture_artifact=next(a for a in json.loads(frozen[str(IR)])['artifacts'] if a['id']=='natural-count-self-join')
  original_core=fixture_artifact['request']['modules'][0]['documentJson'];core=json.loads(original_core)
- core['modules'][0]['relationships']=[{'id':'WorksWith','name':'Works with','source':[{'module':'m','element':'Staff'}],'target':[{'module':'m','element':'Project','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
+ if authored_fixture:core['modules'][0]['relationships']=[{'id':'WorksWith','name':'Works with','source':[{'module':'m','element':'Staff'}],'target':[{'module':'m','element':'Project','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
+ if composite_fixture:
+  module=core['modules'][0];elements={e['id']:e for e in module['elements']}
+  fixture_binding=json.loads(binding_bytes);ontology=json.loads(base64.b64decode(fixture_binding['ontologyArtifact']['bytesBase64']))
+  def qualified(element):return {'documentId':'domain','moduleId':'m','elementId':element}
+  for record,field in [('Staff','staffTenant'),('Assignment','assignmentStaffTenant')]:
+   module['elements'].append({'id':field,'kind':'field','scalarType':'string','nullability':'required','cardinality':'one','extensions':{},'name':field})
+   ref={'module':'m','element':field};elements[record]['members'].append(ref)
+   elements[record]['keys'][0]['fields'].insert(1,ref)
+  ontology['entities'][0]['fields'].append({'ref':qualified('staffTenant'),'protection':'unprotected'})
+  ontology['associations'][1]['fields'].append({'ref':qualified('assignmentStaffTenant'),'protection':'unprotected'})
+  ontology['associations'][1]['endpoints'][0]['fields'].append(qualified('assignmentStaffTenant'))
+  role=fixture_binding['mappings'][1]['roles'][0]
+  role['associationFields'].append(qualified('assignmentStaffTenant'));role['targetFields'].append(qualified('staffTenant'))
+  ontology_bytes=json.dumps(ontology,separators=(',',':')).encode()
+  fixture_binding['ontologyArtifact']['bytesBase64']=base64.b64encode(ontology_bytes).decode()
+  fixture_binding['ontologyArtifact']['sha256']=sha(ontology_bytes);fixture_binding['ontologySha256']=sha(ontology_bytes)
+  binding_bytes=json.dumps(fixture_binding,separators=(',',':')).encode()
  fixture_artifact['request']['modules'][0]['documentJson']=json.dumps(core,separators=(',',':'))
  new_core_sha=sha(fixture_artifact['request']['modules'][0]['documentJson'].encode());old_core_sha=json.loads(binding_bytes)['coreSha256']
  fixture_artifact['request']['modules'][0]['pin']['sha256']=new_core_sha
  if binding_bytes.count(old_core_sha.encode())!=1:raise ValueError('Unique original core digest required')
  binding_bytes=binding_bytes.replace(old_core_sha.encode(),new_core_sha.encode())
+mapping_fragments=([json.dumps(m,separators=(',',':')).encode().hex() for m in json.loads(binding_bytes)['mappings']] if composite_fixture else [next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{i}') for i in (0,1)]) if '--opaque' not in sys.argv else []
+owned_field_count=11 if composite_fixture else 9
 binding={'state':'present','vocabulary':{'identity':'uninterpreted-original-binding' if '--opaque' in sys.argv else 'truss-binary-association-candidate','version':'0.1.0' if '--opaque' in sys.argv else '0.2.0','sha256':sha(b'archive-custody-only-not-vocabulary-authority')},'artifact':{'identity':'original-binding-artifact','bytesBase64':base64.b64encode(binding_bytes).decode(),'sha256':sha(binding_bytes)}}
 out=ROOT/'docs/helix/04-build/evidence/security/truss-binding-catalog-stage'/str(uuid.uuid4());out.mkdir(parents=True)
-if authored_fixture:(out/'authored-fixture.json').write_text(json.dumps({'artifact':fixture_artifact,'bindingHex':binding_bytes.hex()},indent=2)+'\n')
+if authored_fixture or composite_fixture:(out/'authored-fixture.json').write_text(json.dumps({'artifact':fixture_artifact,'bindingHex':binding_bytes.hex()},indent=2)+'\n')
 with zipfile.ZipFile(out/'preimages.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
  for p,b in frozen.items():archive.writestr(p.lstrip('/'),b)
 with zipfile.ZipFile(out/'preimages.zip') as archive:
@@ -191,7 +211,7 @@ try:
  if packet.get('kind')!='result':raise ValueError(packet.get('reason','Original staging unavailable'))
  child.stdin.close();check('bridge-exit',0,child.wait(timeout=5))
  check('original-archive-bridge',artifact['request']['modules'][0]['documentJson'],packet['originalText'])
- check('five-records',5,len(packet['staged']['types']));check('nine-owned-fields',9,len(packet['staged']['properties']));check('five-keys',5,len(packet['staged']['keys']));check('original-core-relationship-count',int(authored_fixture),len(packet['staged']['relationships']))
+ check('five-records',5,len(packet['staged']['types']));check('complete-owned-field-count',owned_field_count,len(packet['staged']['properties']));check('five-keys',5,len(packet['staged']['keys']));check('original-core-relationship-count',int(authored_fixture),len(packet['staged']['relationships']))
  check('native-non-primary-keys',[[5,0]],c.run('SELECT count(*),count(*) FILTER(WHERE is_primary) FROM truss.key_def'))
  check('native-original-archive',[[packet['originalText']]],c.run('SELECT document::text FROM truss.schema_doc WHERE doc_id=\'domain\''))
  source=json.loads(packet['originalText']);elements={e['id']:e for e in source['modules'][0]['elements']};records=[e for e in elements.values() if e.get('kind')=='record']
@@ -218,7 +238,7 @@ try:
   except pg8000.exceptions.DatabaseError as error:check(label,{'code':'55000','message':'original prestate archive profile correspondence required'},{'code':error.args[0].get('C'),'message':error.args[0].get('M')})
   else:raise ValueError(label+' admitted')
   c.run('ROLLBACK TO SAVEPOINT profile_mismatch');c.run('RELEASE SAVEPOINT profile_mismatch');check(label+'-restored',baseline,archive_state())
- check('original-core-only-native-inventory', ([['endpoint',1]] if authored_fixture else [])+[['key',5],['property',9]]+([['relationship',1]] if authored_fixture else [])+[['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_core_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
+ check('original-core-only-native-inventory', ([['endpoint',1]] if authored_fixture else [])+[['key',5],['property',owned_field_count]]+([['relationship',1]] if authored_fixture else [])+[['type',5]], c.run('SELECT family,count(*) FROM truss.runtime_collect_new_core_catalog_inventory(:r::int) GROUP BY family ORDER BY family',r=packet['staged']['provisionalRevision']))
  c.run('SAVEPOINT inventory_primary_fault');baseline=archive_state()
  c.run('UPDATE truss.key_def SET is_primary=true WHERE type_id=(SELECT min(type_id) FROM truss.key_def)')
  refusal('inventory-primary-substitution','SELECT * FROM truss.runtime_collect_new_core_catalog_inventory(:r::int)',{'code':'55000','message':'stored original ordered Key definition correspondence'},r=packet['staged']['provisionalRevision'])
@@ -230,7 +250,7 @@ try:
  check('original-native-binding-observation',[[binding_bytes.hex(),packet['originalInputHex'],sha(binding_bytes),*operation]],observed)
  if '--opaque' not in sys.argv:
   for index in (0,1):
-   expected=next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{index}')
+   expected=mapping_fragments[index]
    check(f'native-original-mapping-{index}',[[expected]],c.run("SELECT encode(truss.runtime_collect_original_association_mapping(:r::int,:p),'hex')",r=packet['staged']['provisionalRevision'],p=f'/mappings/{index}'))
   fragment='{ "literal" : "\\\" } ] , mappings 雪", "nested": [{"x":true}], "numeric": 1e999999999999999999 }'.encode()
   lexical=[('first',b'{"mappings":['+fragment+b', {}],"other":null}',fragment),('escaped-root',b' {"other":{"mappings":[]},"mapp\\u0069ngs" : [ \n'+fragment+b' ]} \n',fragment),('last',b'{"other":[{},false],"mappings":[null, {}]}',b'{}')]
@@ -239,7 +259,7 @@ try:
   for label,original,expected in lexical:
    pointer='/mappings/4095' if label=='last-index' else '/mappings/1' if label=='last' else '/mappings/0'
    check('native-lexical-'+label,[[expected.hex()]],c.run("SELECT encode(truss.runtime_extract_original_association_mapping(decode(:h,'hex'),:p),'hex')",h=original.hex(),p=pointer))
-  check('native-mapping-batch-original-fragments',[[i,next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{i}')] for i in (0,1)],c.run("SELECT mapping_index,encode(mapping_bytes,'hex') FROM truss.runtime_extract_original_association_mapping_batch(decode(:h,'hex'))",h=binding_bytes.hex()))
+  check('native-mapping-batch-original-fragments',[[i,mapping_fragments[i]] for i in (0,1)],c.run("SELECT mapping_index,encode(mapping_bytes,'hex') FROM truss.runtime_extract_original_association_mapping_batch(decode(:h,'hex'))",h=binding_bytes.hex()))
   maximum=b'{"mappings":['+b'{},'*4095+b'{}]}'
   check('native-mapping-batch-count-boundary',[[4096,0,4095]],c.run("SELECT count(*)::int,min(mapping_index),max(mapping_index) FROM truss.runtime_extract_original_association_mapping_batch(decode(:h,'hex'))",h=maximum.hex()))
   refusal('native-mapping-batch-count-over',"SELECT * FROM truss.runtime_extract_original_association_mapping_batch(decode(:h,'hex'))",{'code':'54000','message':'original mapping batch count exceeded'},h=(b'{"mappings":['+b'{},'*4096+b'{}]}').hex())
@@ -290,13 +310,13 @@ try:
   native_types={row[0]:row[1] for row in c.run("SELECT element,type_id::text FROM truss.type_def WHERE document_id='domain' AND module='m'")}
   expected=[]
   for index,(association,source,target) in enumerate([('Ownership','Resource','Project'),('Assignment','Staff','Project')]):
-   fragment=next(o['observed'] for o in owner_receipt['observations'] if o['id']==f'original-mapping-fragment-{index}')
+   fragment=mapping_fragments[index]
    expected.append([candidate_ids[index],association,native_types[association],native_types[source],native_types[target],'pk','operation_binding',f'/mappings/{index}',fragment])
   check('pending-candidate-native-correspondence',expected,c.run("SELECT r.rel_type_id::text,r.rel_id,r.assoc_type_id::text,e.source_type::text,e.target_type::text,r.target_key,r.definition_source_kind,r.pending_mapping_pointer,encode(r.pending_mapping_bytes,'hex') FROM truss.rel_def r JOIN truss.rel_endpoint e USING(rel_type_id) WHERE r.definition_source_kind='operation_binding' ORDER BY r.rel_type_id"))
   check('pending-candidate-exact-storage',[[0,None,0,None,'independent',True,False,None],[0,None,0,None,'independent',True,False,None]],c.run("SELECT source_min,source_max,target_min,target_max,lifecycle,directed,composition,inverse FROM truss.rel_def WHERE definition_source_kind='operation_binding' ORDER BY rel_type_id"))
   actual_operation=c.run('SELECT original_writer_xid::text,operation_ordinal::text FROM truss.row_home_operation')[0]
   check('pending-candidate-original-operation',[actual_operation+[rev],actual_operation+[rev]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text FROM truss.rel_def WHERE definition_source_kind='operation_binding' ORDER BY rel_type_id"))
-  check('pending-candidate-all-original-association-fields',[['Assignment',3],['Ownership',2]],c.run("SELECT t.element,count(p.prop_id)::int FROM truss.type_def t JOIN truss.prop_def p ON p.type_id=t.type_id WHERE t.element IN ('Assignment','Ownership') GROUP BY t.element ORDER BY t.element"))
+  check('pending-candidate-all-original-association-fields',[['Assignment',4 if composite_fixture else 3],['Ownership',2]],c.run("SELECT t.element,count(p.prop_id)::int FROM truss.type_def t JOIN truss.prop_def p ON p.type_id=t.type_id WHERE t.element IN ('Assignment','Ownership') GROUP BY t.element ORDER BY t.element"))
   check('pending-candidate-original-authored-lineage-preserved',prior_lineage,c.run('SELECT to_jsonb(l) FROM truss.relationship_lineage l ORDER BY rel_type_id'))
   check('pending-candidate-observed-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
   source_query='SELECT * FROM truss.runtime_collect_pending_association_source_candidate(:r::int)'
@@ -367,9 +387,13 @@ try:
    ('unused-entity-duplicate',False,{'code':'55000','message':'duplicate original entity identity'}),
    ('unused-entity-malformed',False,{'code':'22023','message':'qualified original association reference required'}),
    ('unknown-ontology-content',True,None),
-   ('unknown-ontology-nul',False,{'code':'0A000','message':'native ontology unique-key parser profile unavailable'})]:
+   ('unknown-ontology-nul',False,{'code':'0A000','message':'native ontology unique-key parser profile unavailable'})]+([
+   ('association-fields-reversed',False,{'code':'55000','message':'original association endpoint correspondence required'}),
+   ('target-fields-reversed',False,{'code':'55000','message':'original ordered endpoint key correspondence required'})] if composite_fixture else []):
    fixture=json.loads(binding_bytes);ontology=json.loads(base64.b64decode(fixture['ontologyArtifact']['bytesBase64']))
-   if label=='second-storage':fixture['mappings'][1]['storage']['directed']=False
+   if label=='association-fields-reversed':fixture['mappings'][1]['roles'][0]['associationFields'].reverse()
+   elif label=='target-fields-reversed':fixture['mappings'][1]['roles'][0]['targetFields'].reverse()
+   elif label=='second-storage':fixture['mappings'][1]['storage']['directed']=False
    elif label=='second-role-alias':
     ontology['associations'][1]['endpoints'][0]['role']=True;fixture['mappings'][1]['roles'][0]['role']='true';fixture['mappings'][1]['sourceRole']='true'
    elif label=='association-key-alias':ontology['associations'][1]['keyId']=True;fixture['mappings'][1]['instanceKeyId']='true'
@@ -394,11 +418,28 @@ try:
     check('candidate-paired-'+label+'-retained',[[f'/mappings/{i}',candidate_ids[i]] for i in range(2)],c.run('SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',r=rev))
     check('candidate-paired-'+label+'-original-ontology',[[original_binding.hex()]],c.run("SELECT encode(original_binding_bytes,'hex') FROM truss.catalog_binding_archive WHERE revision=:r::int",r=rev))
    else:refusal('candidate-paired-'+label,'SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',expected_error,r=rev)
+   if label in ('association-fields-reversed','target-fields-reversed'):
+    resolver_query="SELECT pg_get_functiondef('truss.runtime_resolve_pending_association_candidate(integer,bytea)'::regprocedure)"
+    original_resolver=c.run(resolver_query)[0][0]
+    if label=='association-fields-reversed':
+     ordered="(endpoint->'fields')::jsonb IS DISTINCT FROM role->'associationFields'"
+     erased="NOT ((endpoint->'fields')::jsonb @> (role->'associationFields') AND (role->'associationFields') @> (endpoint->'fields')::jsonb)"
+    else:
+     ordered='k.prop_ids=target_fields';erased='k.prop_ids @> target_fields AND k.prop_ids <@ target_fields'
+    check('candidate-paired-'+label+'-single-comparison-erasure',1,original_resolver.count(ordered))
+    c.run('SAVEPOINT order_erasure_mutant');mutant_state=archive_state()
+    c.run(original_resolver.replace(ordered,erased))
+    check('candidate-paired-'+label+'-erased-order-admits',[[f'/mappings/{i}',candidate_ids[i]] for i in range(2)],c.run('SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',r=rev))
+    check('candidate-paired-'+label+'-erased-order-exact-native-rows',[[candidate_ids[i],f'/mappings/{i}',json.dumps(fixture['mappings'][i],separators=(',',':')).encode().hex()] for i in range(2)],c.run("SELECT rel_type_id::text,pending_mapping_pointer,encode(pending_mapping_bytes,'hex') FROM truss.rel_def WHERE definition_source_kind='operation_binding' ORDER BY rel_type_id"))
+    c.run('ROLLBACK TO SAVEPOINT order_erasure_mutant');c.run('RELEASE SAVEPOINT order_erasure_mutant')
+    check('candidate-paired-'+label+'-erased-order-full-restoration',mutant_state,archive_state())
+    check('candidate-paired-'+label+'-original-resolver-restored',[[original_resolver]],c.run(resolver_query))
+    refusal('candidate-paired-'+label+'-restored-order-refuses','SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',expected_error,r=rev)
    c.run('ROLLBACK TO SAVEPOINT paired_candidate_source');c.run('RELEASE SAVEPOINT paired_candidate_source');check('candidate-paired-'+label+'-restored',baseline,archive_state())
   check('pending-native-column-types-and-collation',[['pending_binding_revision','int4',None],['pending_mapping_bytes','bytea',None],['pending_mapping_pointer','text','C'],['pending_operation_ordinal','int8',None],['pending_writer_xid','xid8',None]],c.run("SELECT a.attname,t.typname,coll.collname FROM pg_attribute a JOIN pg_type t ON t.oid=a.atttypid LEFT JOIN pg_collation coll ON coll.oid=a.attcollation WHERE a.attrelid='truss.rel_def'::regclass AND a.attname LIKE 'pending_%' AND NOT a.attisdropped ORDER BY a.attname"))
   native_op=c.run('SELECT original_writer_xid::text,operation_ordinal::text FROM truss.row_home_operation')[0]
   association_id=c.run("SELECT type_id::text FROM truss.type_def WHERE document_id='domain' AND module='m' AND element='Assignment'")[0][0]
-  mapping_hex=next(o['observed'] for o in owner_receipt['observations'] if o['id']=='original-mapping-fragment-1')
+  mapping_hex=mapping_fragments[1]
   shape_id=str(int(c.run('SELECT coalesce(max(rel_type_id),0) FROM truss.rel_def')[0][0])+1)
   base={'document_id':'domain','rel_type_id':shape_id,'module':'m','rel_id':'Assignment','name':'Assignment','source_min':'0','source_max':None,'target_min':'0','target_max':None,'lifecycle':'independent','directed':True,'target_key':'pk','composition':False,'assoc_type_id':association_id,'since_rev':rev,'doc_ord':'0','definition_source_kind':'operation_binding','pending_writer_xid':native_op[0],'pending_operation_ordinal':native_op[1],'pending_binding_revision':rev,'pending_mapping_pointer':'/mappings/1','pending_mapping_bytes':mapping_hex}
   types={'rel_type_id':'int','source_min':'int','source_max':'int','target_min':'int','target_max':'int','directed':'boolean','composition':'boolean','assoc_type_id':'int','since_rev':'int','doc_ord':'int','pending_writer_xid':'xid8','pending_operation_ordinal':'bigint','pending_binding_revision':'int','definition_rev':'int','definition_doc_ord':'int','binding_source_rev':'int'}
@@ -444,7 +485,7 @@ try:
   check('pending-source-tests-whole-restored',baseline,archive_state())
  c.run('ROLLBACK');check('rollback-prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision'));check('rollback-catalog',[[0,0,0,0,1 if occupied else 0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc),(SELECT count(*) FROM truss.catalog_binding_archive)'))
  phase='source-current';check('source-pins-current',True,all(Path(p).read_bytes()==b for p,b in frozen.items()))
- receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'authoredCoexistenceInstallerFixture':authored_fixture,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Authored coexistence selection, when enabled, is an explicit source fixture validated by the original UMF producer; it is not newly owner-issued ontology meaning. Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver; pgserver startup/cleanup uses a single-handle subclass with a test-private mutex/socket directory and captured implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
+ receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'authoredCoexistenceInstallerFixture':authored_fixture,'compositeKeyInstallerFixture':composite_fixture,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Authored coexistence and composite-key selections, when enabled, are explicit source fixtures validated by the original UMF producer; it is not newly owner-issued ontology meaning. Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver; pgserver startup/cleanup uses a single-handle subclass with a test-private mutex/socket directory and captured implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
 
 except Exception as error:
  (out/'failure.json').write_text(json.dumps({'status':'fail','phase':phase,'reason':str(error),'observations':checks,'sourceSha256':pins,'queryLog':query_log},indent=2)+'\n');print(json.dumps({'status':'fail','receipt':str(out/'failure.json'),'phase':phase,'reason':str(error)}));raise
