@@ -14,6 +14,7 @@ paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
 for directory in ['packages/umf-bun/src','packages/postgresql/src','docs/helix/02-design/contracts/bindings']:
  paths += [p for p in (T/directory).rglob('*') if p.is_file() and p.suffix in ['.ts','.json']]
 paths += [T/'docs/helix/02-design/contracts/acceptance-input-v0.1.schema.json']
+paths += [Path(pgserver.__file__).parent/name for name in ['postgres_server.py','_commands.py','utils.py']]
 # Capture and execute the full declared Ajv dependency closure from copied packages.
 pending=[(ROOT/'node_modules/ajv').resolve()];dependencies={}
 while pending:
@@ -52,7 +53,13 @@ def check(name,expected,observed):
 try:
  check('bun1.4.2','1.4.2',subprocess.run(['bun','--version'],capture_output=True,text=True,check=True,timeout=5).stdout.strip())
  check('pgserver-version','0.1.4+truss.pg16.15',importlib.metadata.version('pgserver'));check('pg8000-version','1.31.5',importlib.metadata.version('pg8000'))
- temporary=tempfile.TemporaryDirectory(prefix='original-owner-catalog-');server=pgserver.get_server(Path(temporary.name)/'data',cleanup_mode='delete')
+ temporary=tempfile.TemporaryDirectory(prefix='umf-security-pg-',dir='/private/tmp')
+ class IsolatedPostgresServer(pgserver.PostgresServer):
+  runtime_path=Path(temporary.name)/'runtime'
+  lock_path=Path(temporary.name)/'runtime.lock'
+  _lock=pgserver.PostgresServer.fasteners.InterProcessLock(lock_path)
+ server=IsolatedPostgresServer(Path(temporary.name)/'data',cleanup_mode='delete')
+ check('runtime-private-lock-directory',True,server.lock_path.parent==Path(temporary.name))
  uri=urlparse(server.get_uri());host=parse_qs(uri.query).get('host',[uri.hostname])[0];port=uri.port or 5432
  c=pg8000.native.Connection(user='postgres',database=uri.path.lstrip('/'),unix_sock=str(Path(host)/f'.s.PGSQL.{port}'),ssl_context=False,timeout=5)
  check('postgresql16.15',[['160015']],c.run('SHOW server_version_num'))
@@ -119,7 +126,7 @@ try:
   c.run('ROLLBACK TO SAVEPOINT new_key_prestate');c.run('RELEASE SAVEPOINT new_key_prestate');check(name+'-catalog-restored',state,snapshot())
  c.run('ROLLBACK');check('rollback-catalog',[[0,0,0,0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc)'))
  phase='source-current';check('source-pins-current',True,all(Path(p).read_bytes()==b for p,b in frozen.items()))
- receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner preparation and provisional native catalog staging, rollback-only','acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; no authenticated owner/binding/current cut','No relationship binding or revision publication','RPC adapter, not whole installed public runtime/driver','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
+ receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner preparation and provisional native catalog staging, rollback-only','acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; no authenticated owner/binding/current cut','No relationship binding or revision publication','RPC adapter, not whole installed public runtime/driver; single-handle test-private mutex/socket configuration and observed captured pgserver implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
 
 except Exception as error:
  (out/'failure.json').write_text(json.dumps({'status':'fail','phase':phase,'reason':str(error),'observations':checks,'sourceSha256':pins,'queryLog':query_log},indent=2)+'\n');print(json.dumps({'status':'fail','receipt':str(out/'failure.json'),'phase':phase,'reason':str(error)}));raise

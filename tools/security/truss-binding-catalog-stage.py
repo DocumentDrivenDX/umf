@@ -14,6 +14,7 @@ paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
 for directory in ['packages/umf-bun/src','packages/postgresql/src','docs/helix/02-design/contracts/bindings']:
  paths += [p for p in (T/directory).rglob('*') if p.is_file() and p.suffix in ['.ts','.json']]
 paths += [T/'docs/helix/02-design/contracts/acceptance-input-v0.1.schema.json']
+paths += [Path(pgserver.__file__).parent/name for name in ['postgres_server.py','_commands.py','utils.py']]
 pending_layout='--pending-layout' in sys.argv
 pending_ddl=T/'docs/helix/04-build/evidence/catalog-pending-binding-source.owner-export.sql'
 if pending_layout:
@@ -70,7 +71,15 @@ def check(name,expected,observed):
 try:
  check('bun1.4.2','1.4.2',subprocess.run(['bun','--version'],capture_output=True,text=True,check=True,timeout=5).stdout.strip())
  check('pgserver-version','0.1.4+truss.pg16.15',importlib.metadata.version('pgserver'));check('pg8000-version','1.31.5',importlib.metadata.version('pg8000'))
- temporary=tempfile.TemporaryDirectory(prefix='original-owner-catalog-');server=pgserver.get_server(Path(temporary.name)/'data',cleanup_mode='delete')
+ temporary=tempfile.TemporaryDirectory(prefix='umf-security-pg-',dir='/private/tmp')
+ class IsolatedPostgresServer(pgserver.PostgresServer):
+  # This database directory has exactly one test process/handle. Preserve the
+  # installed startup/cleanup implementation, isolate its filesystem mutex.
+  runtime_path=Path(temporary.name)/'runtime'
+  lock_path=Path(temporary.name)/'runtime.lock'
+  _lock=pgserver.PostgresServer.fasteners.InterProcessLock(lock_path)
+ server=IsolatedPostgresServer(Path(temporary.name)/'data',cleanup_mode='delete')
+ check('runtime-private-lock-directory',True,server.lock_path.parent==Path(temporary.name))
  uri=urlparse(server.get_uri());host=parse_qs(uri.query).get('host',[uri.hostname])[0];port=uri.port or 5432
  c=pg8000.native.Connection(user='postgres',database=uri.path.lstrip('/'),unix_sock=str(Path(host)/f'.s.PGSQL.{port}'),ssl_context=False,timeout=5)
  check('postgresql16.15',[['160015']],c.run('SHOW server_version_num'))
@@ -92,7 +101,7 @@ try:
  child=subprocess.Popen(['bun',str(bridge/'bridge.ts')],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
  init={'artifact':artifact,'fixture':json.loads(frozen[str(T/'docs/helix/02-design/contracts/bindings/acceptance-input-capacity-v0.1.fixture.json')]),'ownerDirectory':str(bridge/'owner'),'dependenciesPackage':str(dep_root/'package.json'),'binding':binding}
  def archive_state():
-  return c.run("SELECT (SELECT coalesce(jsonb_agg(to_jsonb(a) ORDER BY revision),'[]'::jsonb) FROM truss.catalog_binding_archive a),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o),(SELECT jsonb_agg(to_jsonb(d) ORDER BY rev,ord) FROM truss.schema_doc d),(SELECT jsonb_agg(to_jsonb(r) ORDER BY rev) FROM truss.schema_rev r),(SELECT coalesce(jsonb_agg(to_jsonb(k) ORDER BY k.type_id,k.key_num),'[]'::jsonb) FROM truss.key_def k),(SELECT coalesce(jsonb_agg(to_jsonb(r) ORDER BY r.rel_type_id),'[]'::jsonb) FROM truss.rel_def r),(SELECT coalesce(jsonb_agg(to_jsonb(e) ORDER BY e.rel_type_id,e.source_type,e.target_type),'[]'::jsonb) FROM truss.rel_endpoint e),(SELECT coalesce(jsonb_agg(to_jsonb(l) ORDER BY l.rel_type_id),'[]'::jsonb) FROM truss.relationship_lineage l)")
+  return c.run("SELECT (SELECT coalesce(jsonb_agg(to_jsonb(a) ORDER BY revision),'[]'::jsonb) FROM truss.catalog_binding_archive a),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o),(SELECT jsonb_agg(to_jsonb(d) ORDER BY rev,ord) FROM truss.schema_doc d),(SELECT jsonb_agg(to_jsonb(r) ORDER BY rev) FROM truss.schema_rev r),(SELECT coalesce(jsonb_agg(to_jsonb(k) ORDER BY k.type_id,k.key_num),'[]'::jsonb) FROM truss.key_def k),(SELECT coalesce(jsonb_agg(to_jsonb(r) ORDER BY r.rel_type_id),'[]'::jsonb) FROM truss.rel_def r),(SELECT coalesce(jsonb_agg(to_jsonb(e) ORDER BY e.rel_type_id,e.source_type,e.target_type),'[]'::jsonb) FROM truss.rel_endpoint e),(SELECT coalesce(jsonb_agg(to_jsonb(l) ORDER BY l.rel_type_id),'[]'::jsonb) FROM truss.relationship_lineage l),(SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY t.type_id),'[]'::jsonb) FROM truss.type_def t),(SELECT coalesce(jsonb_agg(to_jsonb(p) ORDER BY p.prop_id),'[]'::jsonb) FROM truss.prop_def p)")
  def stage_binding(rev,body=binding_bytes):
   return c.run("SELECT truss.runtime_stage_catalog_binding(:r::int,decode(:h,'hex'))",r=str(rev),h=body.hex())
  def refusal(label,query,expected,acting_role=None,**parameters):
@@ -300,6 +309,28 @@ try:
   c.run('ROLLBACK TO SAVEPOINT pending_source_document_fault');c.run('RELEASE SAVEPOINT pending_source_document_fault')
   check('pending-source-candidate-original-document-restored',original_state,archive_state())
   refusal('pending-source-candidate-other-revision',source_query,{'code':'55000','message':'pending source candidate unpublished exclusion required'},r=str(int(rev)+1))
+  effect_query='SELECT * FROM truss.runtime_collect_pending_association_effect_candidate(:r::int) ORDER BY family,identity::text'
+  actual_effects=c.run(effect_query,r=rev)
+  check('pending-effect-candidate-complete-new-row-count',[[len(actual_effects)]],c.run("SELECT (SELECT count(*) FROM truss.type_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.prop_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.key_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.rel_def WHERE since_rev=:r::int)+(SELECT count(*) FROM truss.rel_endpoint e JOIN truss.rel_def r USING(rel_type_id) WHERE r.since_rev=:r::int)",r=rev))
+  check('pending-effect-candidate-relationship-identities',[['relationship',[str(i+1),'domain','m',name]] for i,name in enumerate(['Ownership','Assignment'])],sorted([row for row in actual_effects if row[0]=='relationship'],key=lambda row:int(row[1][0])))
+  check('pending-effect-candidate-endpoint-identities',[['endpoint',[str(i+1),native_types[source],native_types[target]]] for i,(source,target) in enumerate([('Resource','Project'),('Staff','Project')])],sorted([row for row in actual_effects if row[0]=='endpoint'],key=lambda row:int(row[1][0])))
+  check('pending-effect-candidate-readonly-generation',[[before_generation+4]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
+  refusal('ordinary-pending-effect-candidate',effect_query,{'code':'42501'},acting_role=True,r=rev)
+  for fault,mutation,message in [
+   ('storage',"UPDATE truss.rel_def SET directed=false WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
+   ('owner',"UPDATE truss.rel_def SET assoc_type_id=(SELECT type_id FROM truss.type_def WHERE element='Staff') WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
+   ('name',"UPDATE truss.rel_def SET name='substituted-name' WHERE rel_type_id=2",'pending association exact physical definition correspondence required'),
+   ('orientation',"UPDATE truss.rel_endpoint SET source_type=target_type,target_type=source_type WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
+   ('missing-endpoint',"DELETE FROM truss.rel_endpoint WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
+   ('extra-endpoint',"INSERT INTO truss.rel_endpoint(rel_type_id,source_type,target_type) SELECT rel_type_id,target_type,target_type FROM truss.rel_endpoint WHERE rel_type_id=2",'pending association exact physical endpoint correspondence required'),
+   ('fabricated-lineage',"INSERT INTO truss.relationship_lineage(rel_type_id,lineage_category,identity_profile,original_identity_bytes) VALUES(2,'authored','excluded-installer-fabrication',decode('abcd','hex'))",'pending association exact physical definition correspondence required'),
+   ('core-field',"UPDATE truss.prop_def SET scalar_type='integer' WHERE prop_id=(SELECT min(prop_id) FROM truss.prop_def)",'stored original Field definition correspondence')]:
+   c.run('SAVEPOINT pending_effect_fault');original_state=archive_state();c.run(mutation)
+   if fault in ('extra-endpoint','fabricated-lineage'):
+    check('pending-effect-candidate-'+fault+'-source-custody-still-positive',allocated,c.run('SELECT mapping_pointer,relationship_id FROM truss.runtime_collect_pending_association_source_candidate(:r::int)',r=rev))
+   refusal('pending-effect-candidate-'+fault,effect_query,{'code':'55000','message':message},r=rev)
+   c.run('ROLLBACK TO SAVEPOINT pending_effect_fault');c.run('RELEASE SAVEPOINT pending_effect_fault')
+   check('pending-effect-candidate-'+fault+'-restored',original_state,archive_state())
   refusal('pending-candidate-complete-inventory-closed','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
   refusal('pending-candidate-repeat-source-closed','SELECT * FROM truss.runtime_stage_pending_association_candidate(:r::int)',{'code':'55000','message':'unique original declaration required'},r=rev)
   refusal('pending-candidate-finalizer-closed','SET CONSTRAINTS truss.runtime_operation_commit_barrier IMMEDIATE',{'code':'55000','message':'complete runtime finalizer is not installed'})
@@ -390,7 +421,7 @@ try:
   check('pending-source-tests-whole-restored',baseline,archive_state())
  c.run('ROLLBACK');check('rollback-prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision'));check('rollback-catalog',[[0,0,0,0,1 if occupied else 0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc),(SELECT count(*) FROM truss.catalog_binding_archive)'))
  phase='source-current';check('source-pins-current',True,all(Path(p).read_bytes()==b for p,b in frozen.items()))
- receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
+ receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'pendingSourceShapeControls':pending_layout,'unregisteredPendingStagingCandidate':pending_layout,'pendingLayoutAdopted':False,'acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending layout controls and original-source physical metadata staging are excluded installer candidates; no registered producer, accepted association lineage, native data authority, complete inventory/report/promotion/post-head publication; native fields are bounded to 256 and escaped NUL ontology content receives an explicit unsupported-parser refusal','RPC adapter, not whole installed public runtime/driver; pgserver startup/cleanup uses a single-handle subclass with a test-private mutex/socket directory and captured implementation sources','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
 
 except Exception as error:
  (out/'failure.json').write_text(json.dumps({'status':'fail','phase':phase,'reason':str(error),'observations':checks,'sourceSha256':pins,'queryLog':query_log},indent=2)+'\n');print(json.dumps({'status':'fail','receipt':str(out/'failure.json'),'phase':phase,'reason':str(error)}));raise
