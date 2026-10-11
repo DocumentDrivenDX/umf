@@ -518,3 +518,47 @@ authority cuts and seven semantic operation bodies remain unqualified. Earlier
 source-derived role proofs retain their historical source scope; no fresh
 whole-program, SQL or temporal refinement proof follows. No original required
 case is promoted; acceptance remains26/132 and the full goal remains active.
+
+
+### Operator-backed hidden definer and source-derived guard laws — 2026-10-10
+
+[Native integration](../../04-build/evidence/security/truss-operator-routes/integration.json) records Truss main
+`f48975262c74317940329c4f70bd193db81b68fa`. A native operator invokes a SECURITY DEFINER
+implementation in a distinct function schema to which the ordinary caller has
+no USAGE. The caller also lacks direct UPDATE, but the operator commits a row
+UPDATE whose changed xmin is independently observed. The merged census retains
+that hidden function and refuses an identical unsafe baseline. Revoking function
+EXECUTE then returns42501 with unchanged xmin; scoped correspondence and operator
+removal restore the baseline. The proposed EXECUTE-ignoring operator bypass was
+not observed. No thirteenth inventory section or new permission semantics is
+introduced: this validates an actual route covered by the existing conservative
+function census.
+
+The fixed PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 SCRAM fixture passes107 observations across38 inventories with21 frozen
+inputs. The unchanged separately installed53-source wheel passes336 tests,
+including original-native operator packet regressions. The read-only Astra review
+verifies the native source/preimage and wheel pins. Library source remains the
+reviewed71ba19f8 implementation; no unchanged owner build is attributed as new
+implementation.
+
+[Source-derived analysis](../../04-build/evidence/security/truss-definer-census-formal/cfa978ae-c2c9-4fef-b244-4495aab10da9/proof.json) recognizes the complete exact
+census SQL subset and extracts the actual final three Python classifier
+statements. Three UNSAT violation queries show the selected hidden executable
+definer cannot be filtered by schema access, a nonempty census cannot match and
+an earlier refusal cannot clear. Three SAT controls populate a safe empty
+profile, the hidden operator witness and a namespace-filter-erasure leak. All six
+SMT byte digests replay independently. Sixty-four Boolean vectors execute the
+extracted actual tail;38 original native inventory tail replays preserve refusal
+when the census is nonempty. The role-route fold is retained, without replacing
+the full classifier with a handwritten policy implementation.
+
+Complete faithful immutable native rows and effective privilege facts are explicit
+analysis premises. This is a recognized-filter and pure-tail proof, not native SQL
+semantics, full Python ingress/admission, authenticated producer, dependency
+closure, temporal-cut or protected-publication refinement. Operator
+support/selectivity/planner, type/extension and trigger/default/RLS paths remain
+required. The actual protected capture/writer protocol and seven semantic bodies
+remain open. This augments US-056-AC5/AC9/AC10 component evidence without
+promoting any original requirement. Full acceptance remains26/132 and the goal
+stays active.
