@@ -1,0 +1,32 @@
+{
+  "sourcePreimages": [
+    {
+      "path": "tools/security/pg-private-diagnostics.py",
+      "sha256": "4952e8714fe2bc92c4265d8091042e479e5716dae1c8de63a584337b4e35e2c0",
+      "archive": "0/pg-private-diagnostics.py"
+    },
+    {
+      "path": "tests/security/native/pg-raw-membership.py",
+      "sha256": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+      "archive": "1/pg-raw-membership.py"
+    },
+    {
+      "path": "docs/helix/03-test/security/cases.json",
+      "sha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+      "archive": "2/cases.json"
+    },
+    {
+      "path": "tests/security/native/pg-raw-membership-oracle.json",
+      "sha256": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+      "archive": "3/pg-raw-membership-oracle.json"
+    },
+    {
+      "path": "tests/security/native/pg-raw-membership.sql",
+      "sha256": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+      "archive": "4/pg-raw-membership.sql"
+    }
+  ],
+  "receiptSha256": "6a45c3d567898ee6448bde9c21234413a11c5543b133a9cf1ff19f4eb59929d7",
+  "captureScope": "After-run archive matches frozen pre-run source hashes, not hermetic; cleanup is producer-path attested",
+  "backendCasePromoted": false
+}
