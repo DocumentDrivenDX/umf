@@ -24,6 +24,9 @@ build-time validators under strict CSP, with lazy YAML and native recovery.
 The microsite installs the exact integrity-locked release and checks the complete
 runtime asset closure and workspace markup. See [changes](CHANGELOG.md).
 
+This checkout prepares an unreleased 1.1.1 accessibility and source-loading fix.
+The installation commands below continue to name the published 1.1.0 release.
+
 Copy `node_modules/@documentdrivendx/umf-schema-browser/assets/` to your static
 server, for example `/schema-browser/`. Use a bundler for the exported API, or
 serve the package's `index.js` directly as browser ESM.
@@ -79,6 +82,10 @@ default-src 'none'; base-uri 'none'; script-src 'self'; style-src 'self'; frame-
 
 No `unsafe-eval`, inline executable script, external font or worker is required. The srcdoc mount inherits the host policy; no base element is inserted. Fixed validators are compiled during the producer build. Arbitrary native semantic compilation is qualified rather than enabled by weakening CSP. Use the standalone page as an ordinary iframe source
 when your policy forbids srcdoc. The package has no external font requirement.
+This policy is a tested baseline for both embedding forms, rather than a universal
+minimum. Optional image display, cross-origin hosting and iframe sandbox/download
+permissions are explained in [HOST_CONTRACT.md](HOST_CONTRACT.md). A browser
+download does not require the Blob fetch allowance used by byte-readback tests.
 
 Catalogs are caller-selected data; schema source strings are never injected as
 HTML or executed. This is source/schema inspection, not a PDF/DICOM viewer,
@@ -87,6 +94,8 @@ scope remain qualified in the UI. Unknown metadata, original source text,
 license/redistribution declarations and original/derived distinctions remain
 available. Declared download URLs must resolve to HTTP(S); other schemes are refused. Network fetches and local browser memory are not resource-unbounded
 services; the local file picker retains its 4 MB limit.
+Lazy pack manifests and ontology companions stay unloaded until selected.
+Metadata-dependent details link to their source overview when it is not yet loaded.
 
 ## Build
 

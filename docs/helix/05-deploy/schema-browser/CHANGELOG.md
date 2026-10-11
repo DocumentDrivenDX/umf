@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 (unreleased)
+
+Fix light/dark diff and annotation contrast, relationship-number paint and direct
+component theme tokens. Reserve space for multiple map annotations, expose record
+change states in text, and make source panes keyboard scrollable. Selecting a
+pack-linked schema no longer fetches unselected manifests or ontology companions;
+metadata-dependent details remain explicitly unavailable until their source is
+selected. Clarify the tested CSP baseline and optional download/image permissions.
+Mount options, catalog version and source preservation contracts are unchanged.
+
 ## 1.1.0
 
 Versioned catalog/host contract; correlated selection and navigation/error events;

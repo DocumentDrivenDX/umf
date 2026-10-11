@@ -9,7 +9,7 @@ export function ontologyModel(parsed:Parsed){
  const edges:Edge[]=(parsed.document?.modules??[]).flatMap(m=>(Array.isArray(m.relationships)?m.relationships:[]).map((r:any)=>({key:JSON.stringify(['relationship',m.id,r.id]),module:m.id,value:r})));
  return {records,fields,edges};
 }
-const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(tag==='pre')n.tabIndex=0;if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 const pretty=displayLabel;
 const span=(v:any)=>v?`${v.min}..${v.max}`:'Not declared';
 const endpointKey=(e:any)=>key(e.module,e.element);
@@ -40,7 +40,7 @@ export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entrie
   if(definition.value.description)b.append(el('p',String(definition.value.description)));
   if(target){
    const profile=entries.find(e=>e.id===`pack:${entry.pack}@${entry.packVersion}`);
-   const targets=profile?JSON.parse(profile.text!).execution_profile?.targets:undefined;
+   const targets=profile?.text?JSON.parse(profile.text).execution_profile?.targets:undefined;
    // CONTRACT-053 maps each graph Record to its exact table schema ID.
    const table=targets?.graph?.includes('ontology')&&entries.find(e=>e.id===`schema:${entry.pack}@${entry.packVersion}:${target.id}`&&targets.tabular?.includes(target.id));
    if(table){const a=el('a','View corresponding table','ref-link') as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:table.id});b.append(a);}
