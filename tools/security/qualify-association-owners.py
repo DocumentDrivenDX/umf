@@ -84,6 +84,13 @@ with tempfile.TemporaryDirectory(prefix='association-owner-') as directory:
  test=frozen/'test.py';test.write_bytes(files[str(T/'packages/python/tests/test_security_association_binding.py')]);(frozen/'fixtures').mkdir()
  for name in ['security-association-core.json','security-association-ontology.json']:(frozen/'fixtures'/name).write_bytes(files[str(T/'packages/python/tests/fixtures'/name)])
  sys.path.insert(0,str(python_root));helpers=runpy.run_path(str(test));binding=helpers['wire'](helpers['inputs']());basis_result=helpers['prepare_association_binding'](core,ontology,binding)
+ import io,unittest
+ test_log=io.StringIO();test_result=unittest.TextTestRunner(stream=test_log,verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(helpers['BindingTests']))
+ (out/'association-tests.log').write_text(test_log.getvalue())
+ check('captured-association-tests',43,test_result.testsRun);check('captured-association-tests-pass',True,test_result.wasSuccessful())
+ for index,association in enumerate(basis_result.associations):
+  check(f'explicit-storage-pointer-{index}',f'/mappings/{index}/storage',association.storage.source_pointer)
+  check(f'explicit-storage-values-{index}',['0','*','0','*',True,'independent',False,None],[association.storage.source_min,association.storage.source_max,association.storage.target_min,association.storage.target_max,association.storage.directed,association.storage.lifecycle,association.storage.composition,association.storage.inverse])
  check('same-original-core',sha(core),sha(basis_result.core_bytes));check('same-original-ontology',sha(ontology),sha(basis_result.ontology_bytes));check('complete-two-associations',2,len(basis_result.associations));check('basis-not-authority','original_source_correspondence_only',basis_result.scope)
  (out/'binding.json').write_bytes(binding)
 unchanged();assert sha(binary.read_bytes())==binary_hash
