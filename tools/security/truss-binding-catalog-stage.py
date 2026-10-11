@@ -430,6 +430,11 @@ try:
   check('pending-report-original-host-result-shape-refusals',{name:'Exact bounded original native report basis bytes required' for name in ['empty','duplicate','null','extra','uppercase','odd','nonhex','emptyHex','oversize']},pending_packet['shapeRefusals'])
   check('pending-report-original-host-revision-no-coercion',{name:{'message':'Original positive native revision required','sqlCalls':0} for name in ['numeric','boxed','coercion']},pending_packet['revisionRefusals'])
   check('pending-report-original-host-stale-native-basis','Native staging refusal 55000',pending_packet['staleRefusal'])
+  check('pending-report-original-host-large-generation-exact-native-bytes',pending_packet['largeGenerationDirectHex'],pending_packet['largeGenerationBasisHex'])
+  large_generation=json.loads(bytes.fromhex(pending_packet['largeGenerationBasisHex']))
+  check('pending-report-original-host-large-generation-text','9007199254740993',large_generation['effectGeneration'])
+  check('pending-report-original-host-large-generation-native-number',9007199254740993,large_generation['originalOperation']['effect_generation'])
+  (out/'large-generation-basis.json').write_text(json.dumps({'basisHex':pending_packet['largeGenerationBasisHex'],'sha256':sha(bytes.fromhex(pending_packet['largeGenerationBasisHex'])),'scope':'private-native-full-operation-large-generation-exact-host-custody'},indent=2)+'\n')
   check('pending-report-original-host-scope','original_pending_association_report_basis_only',pending_packet['basis']['scope'])
   check('pending-report-original-host-revision',rev,pending_packet['basis']['provisionalRevision'])
   basis_query="SELECT encode(truss.runtime_collect_pending_association_report_basis_candidate(:r::int),'hex')"
@@ -441,7 +446,8 @@ try:
   check('pending-report-basis-full-native-documents',[row[0] for row in c.run('SELECT to_jsonb(d) FROM truss.schema_doc d WHERE rev=:r::int ORDER BY ord',r=rev)],basis['documents'])
   check('pending-report-basis-actual-cut',actual_operation+[str(before_generation+4),rev],[basis['writerXid'],basis['operationOrdinal'],basis['effectGeneration'],basis['revision']])
   check('pending-report-basis-not-accepted-report',False,basis['acceptedReportQualified'])
-  check('pending-report-basis-explicit-profile','truss-pending-association-report-basis-candidate/0.1.0',basis['profile'])
+  check('pending-report-basis-full-native-operation',c.run('SELECT to_jsonb(o) FROM truss.row_home_operation o')[0][0],basis['originalOperation'])
+  check('pending-report-basis-explicit-profile','truss-pending-association-report-basis-candidate/0.2.0',basis['profile'])
   check('pending-report-basis-original-packet-bytes',basis_hex,c.run(basis_query,r=rev)[0][0])
   check('pending-report-basis-original-packet-digest',sha(bytes.fromhex(basis_hex)),c.run("SELECT encode(sha256(truss.runtime_collect_pending_association_report_basis_candidate(:r::int)),'hex')",r=rev)[0][0])
   (out/'report-basis.json').write_text(json.dumps({'basisHex':basis_hex,'sha256':sha(bytes.fromhex(basis_hex)),'profile':basis['profile'],'scope':'private-unregistered-original-source-and-five-family-value-basis'},indent=2)+'\n')
@@ -519,6 +525,25 @@ try:
   c.run('ROLLBACK TO SAVEPOINT pending_report_aba_source');c.run('RELEASE SAVEPOINT pending_report_aba_source')
   check('pending-report-basis-aba-full-restoration',report_state,archive_state())
   check('pending-report-basis-aba-original-current',[['']],c.run(require_basis,r=rev,b=basis_hex))
+  # Equal input/binding/metadata/coordinates cannot reuse a packet after another
+  # original operation byte member changes under excluded installer mutation.
+  c.run('SAVEPOINT pending_report_operation_source');operation_state=archive_state()
+  c.run('CREATE OR REPLACE FUNCTION truss.runtime_guard_operation_originals() RETURNS trigger LANGUAGE plpgsql VOLATILE SECURITY INVOKER SET search_path=pg_catalog,pg_temp AS $$BEGIN RETURN NEW; END;$$')
+  c.run("UPDATE truss.row_home_operation SET effect_obligation_bytes=decode('070809','hex')")
+  c.run(original_guard)
+  check('pending-report-basis-operation-source-same-cut',[basis['writerXid'],basis['operationOrdinal'],basis['effectGeneration']],c.run('SELECT original_writer_xid::text,operation_ordinal::text,effect_generation::text FROM truss.row_home_operation')[0])
+  check('pending-report-basis-operation-source-same-values',physical_values,c.run(value_query,r=rev))
+  changed_operation_hex=c.run(basis_query,r=rev)[0][0];changed_operation=json.loads(bytes.fromhex(changed_operation_hex))
+  check('pending-report-basis-operation-source-same-input',basis['originalInputHex'],changed_operation['originalInputHex'])
+  check('pending-report-basis-operation-source-same-binding',basis['originalBindingHex'],changed_operation['originalBindingHex'])
+  check('pending-report-basis-operation-source-new-original-bytes','\\x070809',changed_operation['originalOperation']['effect_obligation_bytes'])
+  check('pending-report-basis-operation-source-new-current',[['']],c.run(require_basis,r=rev,b=changed_operation_hex))
+  refusal('pending-report-basis-operation-source-old-refuses',require_basis,{'code':'55000','message':'current original pending association report basis correspondence required'},r=rev,b=basis_hex)
+  c.run('ROLLBACK TO SAVEPOINT pending_report_operation_source');c.run('RELEASE SAVEPOINT pending_report_operation_source')
+  check('pending-report-basis-operation-source-full-restoration',operation_state,archive_state())
+  check('pending-report-basis-operation-source-guard-restored',[[original_guard]],c.run("SELECT pg_get_functiondef('truss.runtime_guard_operation_originals()'::regprocedure)"))
+  check('pending-report-basis-operation-source-original-current',[['']],c.run(require_basis,r=rev,b=basis_hex))
+
 
 
 

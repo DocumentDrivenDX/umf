@@ -53,6 +53,14 @@ try{
   await connection.unsafe('ROLLBACK TO SAVEPOINT pending_host_stale_basis');
   await connection.unsafe('RELEASE SAVEPOINT pending_host_stale_basis');
   await recheckPendingCatalogReportBasis(connection,prepared,basis);
-  emit({kind:'pendingReportResult',basis,refusals,shapeRefusals,revisionRefusals,staleRefusal});
+  await connection.unsafe('SAVEPOINT pending_host_large_generation');
+  await connection.unsafe('UPDATE truss.row_home_operation SET effect_generation=9007199254740993');
+  const largeGeneration=await collectPendingCatalogReportBasis(connection,prepared,phase.revision);
+  await recheckPendingCatalogReportBasis(connection,prepared,largeGeneration);
+  const largeDirect=await connection.unsafe("SELECT encode(truss.runtime_collect_pending_association_report_basis_candidate($1::int),'hex') AS original_basis_hex",[phase.revision]);
+  await connection.unsafe('ROLLBACK TO SAVEPOINT pending_host_large_generation');
+  await connection.unsafe('RELEASE SAVEPOINT pending_host_large_generation');
+  await recheckPendingCatalogReportBasis(connection,prepared,basis);
+  emit({kind:'pendingReportResult',basis,refusals,shapeRefusals,revisionRefusals,staleRefusal,largeGenerationBasisHex:largeGeneration.originalBasisHex,largeGenerationDirectHex:largeDirect[0].original_basis_hex});
  }
 }catch(error){emit({kind:'failure',reason:(error as Error).message});process.exitCode=1}

@@ -46,7 +46,10 @@ value_drift = z3.And(z3.Select(identity_sets[0], id_witness),
  z3.Select(images[0], id_witness) != z3.Select(images[1], id_witness))
 # Abstract codec outputs: byte equality is not presumed injective for a real codec.
 encoded = z3.Consts('encoded_basis_before encoded_basis_after', Bytes)
-packet_projection = z3.And(*[v for k,v in guards.items() if k != 'operation'])
+# Candidate0.2 carries the complete operation snapshot in its packet.
+packet_projection = complete
+operation_erased_projection = z3.And(*[v for k,v in guards.items() if k != 'operation'])
+operation_erased_codec = z3.Implies(encoded[0] == encoded[1], operation_erased_projection)
 codec_correspondence = z3.Implies(encoded[0] == encoded[1], packet_projection)
 authority, registered = z3.Bools('authenticated_original_owner registered_semantic_profile')
 def without(*names):
@@ -63,9 +66,10 @@ specs = [
  ('omit-document-comparison-admits-document-substitution', without('documents'), documents[0]!=documents[1], 'sat'),
  ('omit-full-operation-comparison-admits-unmodeled-operation-change', without('operation'), operation_rows[0]!=operation_rows[1], 'sat'),
  ('omit-generation-and-full-operation-comparisons-admits-generation-change', without('generation','operation'), gens[1]>gens[0], 'sat'),
- ('exact-encoded-recheck-forbids-drift-under-codec-premise', [codec_correspondence,encoded[0]==encoded[1]], z3.Or(source_drift,value_drift), 'unsat'),
+ ('exact-encoded-recheck-forbids-drift-under-codec-premise', [codec_correspondence,encoded[0]==encoded[1]], z3.Or(source_drift,value_drift,operation_rows[0]!=operation_rows[1],gens[0]!=gens[1],writers[0]!=writers[1],ordinals[0]!=ordinals[1],revisions[0]!=revisions[1]), 'unsat'),
  ('encoded-equality-without-codec-premise-admits-collision', [encoded[0]==encoded[1]], source_drift, 'sat'),
- ('encoded-packet-equality-does-not-prove-remaining-operation-equality', [codec_correspondence, encoded[0]==encoded[1]], operation_rows[0]!=operation_rows[1], 'sat'),
+ ('full-operation-encoded-equality-forbids-remaining-operation-drift', [codec_correspondence, encoded[0]==encoded[1]], operation_rows[0]!=operation_rows[1], 'unsat'),
+ ('operation-erased-codec-admits-remaining-operation-drift', [operation_erased_codec, encoded[0]==encoded[1]], operation_rows[0]!=operation_rows[1], 'sat'),
  ('selected-correspondence-does-not-prove-authority', [complete], z3.And(z3.Not(authority),z3.Not(registered)), 'sat'),
 ]
 # Captured endpoints alone cannot detect an intervening change restored before end.
