@@ -62,7 +62,7 @@ Readers can start with the [beginner guide](../04-build/guides/actions/index.md)
 
 ## Breaking Changes and Required Actions
 
-No documentation-driven API migration is required. The action and native reference profiles remain experimental: pin the recorded core/action versions and qualify your consumer rather than treating this release as a production compatibility guarantee. Active governed artifact IDs use US/TD/STP-900 and CONTRACT-900/901; redirects preserve historic identities.
+No documentation-driven API migration is required. The action and native reference profiles remain experimental: pin the recorded core/action versions and qualify your consumer rather than treating this release as a production compatibility guarantee. Active governed action identities use FEAT/SD-900, US/TD/STP-900 for declarations, US/TD/STP-901 for execution, and CONTRACT-900/901; redirects preserve historic identities.
 
 ## Migration or Rollback Guidance
 
