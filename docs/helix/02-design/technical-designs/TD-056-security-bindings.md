@@ -1351,3 +1351,62 @@ Next integration must replace synthetic registrar facts with the original
 owner authority/artifact and coherent-cut protocol, qualify installed closure
 and protect the carrier throughout the registered adapter. No public API or
 ordinary registry grants are added to Truss.
+
+
+### Native current-authority primitive and lock boundary — 2026-10-10
+
+The [final native receipt](../../04-build/evidence/security/truss-protected-capture-candidate/85d31486-2f88-48e5-b492-ec15b9d730f3/native.json) extends the protected capture candidate to39
+matching observations. Seven original source pins/preimages and six actual
+installed routine identities, owners, settings and complete bodies are retained.
+READ COMMITTED is independently observed and explicitly required by the writer.
+RR/Serializable refusal is currently source-reviewed, not natively exercised.
+The earlier23/33/38 schedules and their preimages remain historical evidence.
+
+A separate non-login authority responsibility owns a private, fixed single-actor
+row with permitted/generation fields. Only the writer can execute its private
+check helper. The helper locks the selected row FOR SHARE, then checks complete
+row presence, permission and exact captured generation before the writer inserts
+its synthetic effect. Ordinary authority SELECT/UPDATE/helper execution and
+revoker direct UPDATE refuse. The registered revoker routine updates the row;
+it is the selected native mutation route in this fixture, not a complete policy
+administration or ontology resolver interface.
+
+Actual revocation after capture refuses without effects. A separately issued
+capability matching the revoked generation independently isolates permission
+false; regrant advances the generation and the earlier capability remains stale.
+A fresh matching generation produces an independently inspected original effect.
+An independently submitted revoker times out with native55P03 while the writer
+retains the authority row lock; authority remains unchanged. After writer rollback,
+the same revoker succeeds and advances the generation. This is one bounded native
+row-lock schedule, not proof of complete writer participation, fair termination,
+deadlock freedom or final publication. PostgreSQL16's documented FOR SHARE
+conflicts and transaction/savepoint release rules govern this candidate:
+https://www.postgresql.org/docs/16/explicit-locking.html.
+
+[Formal guard analysis](../../04-build/evidence/security/truss-capture-authority-formal/19fe84d8-27c7-4bc7-b323-52ad9fe0223d/proof.json) saves eight independently replayable formulas:
+four UNSAT laws and four SAT positive/weakened controls. Positive generation
+integers are unbounded in the model. Exact authority-check and writer routine
+bodies are recognized, but SQL execution/FOUND/atomic exception behavior and
+complete faithful current authority are premises. The held-lock serialization
+law explicitly assumes revoker exclusion; it is not derived PostgreSQL semantics.
+The stale mutant requires captured<current; advancement requires next>current.
+Originally parsed native bytes are frozen, canonical invocation is required,
+and saved formula bytes are rechecked before publication. No SQL/Python/compiler
+refinement, ontology resolution or publication-drain theorem is asserted.
+
+The adjacent native acceptance-map.json links all39 observations to original
+US-056-AC5/AC9/AC10 and PA-N01/03/04/05/07/08/09/11 component schedules without
+claiming those complete schedules passed. The two sanitized failure controls
+remain passing; new UUID receipts use exclusive creation, preserving reruns.
+Astra review findings about independent permission evidence and proof source
+custody/directional controls were applied before final qualification.
+
+This supplies a current-authority physical primitive only. Production subject
+mapping, original ontology/policy/artifact admission, coherent complete source
+cuts, all authority mutation/callable dependencies, resource/family bindings,
+protected carrier lifecycle and final release remain required. Savepoint rollback
+releases the native authority lock and restores native capability reuse; the
+existing host ticket remains burned. This cannot replace durable pending-buffer
+custody or L03 revocation/drain. No Truss public API or supported backend profile
+is promoted. PA01–PA04, seven semantic bodies and the original132 required cases
+remain open at the historical26/132 checkpoint.
