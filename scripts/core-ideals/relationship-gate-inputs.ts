@@ -31,6 +31,6 @@ export async function relationshipSourceHashes(){
   async function visit(dir:string){for(const entry of await readdir(dir,{withFileTypes:true})){const p=dir+'/'+entry.name;if(entry.isDirectory()){if(!['node_modules','.cache','target','build'].includes(entry.name))await visit(p);}else if(/\.(ts|py|json|sql)$/.test(p))paths.push(p);}}
   await visit(root);
  }
- paths.push('package.json','bun.lock','fixtures/relationship/authored/corpus.json','fixtures/projections/ddd-authored-relationships/base.json');
+ paths.push('package.json','bun.lock','bunfig.toml','test-setup.ts','fixtures/relationship/authored/corpus.json','fixtures/projections/ddd-authored-relationships/base.json');
  return Object.fromEntries(await Promise.all(paths.sort().map(async p=>[p,digest(await readEvidence(p))])));
 }
