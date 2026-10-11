@@ -1,0 +1,10 @@
+error: unable to normalize alternate object path: /private/tmp/umf-main-actions-integration-e44cd15f/.git/objects
+error: unable to normalize alternate object path: /private/tmp/umf-main-actions-integration-e44cd15f/.git/objects
+error: unable to normalize alternate object path: /private/tmp/umf-main-actions-integration-e44cd15f/.git/objects
+fatal: bad object HEAD
+Traceback (most recent call last):
+  File "/opt/replay.py", line 63, in <module>
+    subprocess.run(['git', 'diff', '--exit-code', 'HEAD', '--', *guarded], check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'diff', '--exit-code', 'HEAD', '--', 'src', 'scripts', 'spec', 'tests', 'native', 'package.json', 'bun.lock']' returned non-zero exit status 128.

@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:example:orders-consumers:1",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "orders-consumer-demo-1"
+    },
+    "context": {
+      "$ref": "urn:umf:core:element-selection:0.1.0"
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "exact-key-rename"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "nativePath": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "scalarType": {
+                "type": "string"
+              },
+              "control": {
+                "enum": [
+                  "text",
+                  "number",
+                  "checkbox"
+                ]
+              },
+              "requiredPresence": {
+                "const": true
+              },
+              "nullable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "source",
+              "target",
+              "path",
+              "nativePath",
+              "description",
+              "scalarType",
+              "control",
+              "requiredPresence",
+              "nullable"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "visualization": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "element": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "module",
+              "element",
+              "path",
+              "label",
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "to": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "role"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "svg": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "nodes",
+        "edges",
+        "svg"
+      ],
+      "additionalProperties": false
+    },
+    "pipeline": {
+      "type": "object",
+      "properties": {
+        "execution": {
+          "const": "local-transform-and-validation-only"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "dependsOn"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "operationPath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "execution",
+        "steps",
+        "operationPath"
+      ],
+      "additionalProperties": false
+    },
+    "validator": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "object"
+        },
+        "serviceSchema": {
+          "type": "object"
+        },
+        "avro": {
+          "$ref": "urn:umf:projection:tablespec-avro:0.1.0"
+        },
+        "document": {
+          "$ref": "urn:umf:projection:avro-json-schema:0.1.0"
+        }
+      },
+      "required": [
+        "schema",
+        "serviceSchema",
+        "avro",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "form": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "nativePath": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "scalarType": {
+                "type": "string"
+              },
+              "control": {
+                "enum": [
+                  "text",
+                  "number",
+                  "checkbox"
+                ]
+              },
+              "requiredPresence": {
+                "const": true
+              },
+              "nullable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "source",
+              "target",
+              "path",
+              "nativePath",
+              "description",
+              "scalarType",
+              "control",
+              "requiredPresence",
+              "nullable"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "agentContext": {
+      "type": "object",
+      "properties": {
+        "operationPath": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "object"
+        },
+        "aggregate": {
+          "$ref": "urn:umf:ddd:0.1.0#/$defs/entity"
+        },
+        "service": {
+          "$ref": "urn:umf:ddd:0.1.0#/$defs/service"
+        },
+        "contextPointer": {
+          "const": "/context"
+        },
+        "limitsPointer": {
+          "const": "/limits"
+        }
+      },
+      "required": [
+        "operationPath",
+        "operation",
+        "aggregate",
+        "service",
+        "contextPointer",
+        "limitsPointer"
+      ],
+      "additionalProperties": false
+    },
+    "humanDocumentation": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile",
+    "context",
+    "limits",
+    "transform",
+    "visualization",
+    "pipeline",
+    "validator",
+    "form",
+    "agentContext",
+    "humanDocumentation"
+  ],
+  "additionalProperties": false
+}

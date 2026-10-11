@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 /** Host-only native discovery and existing Avro tree retention, not facet acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
@@ -15,7 +16,7 @@ for(const [index,text] of sources.entries()){
  const source=importAvroSchema(text,{id:`avro-facet-discovery-${index}`});
  for(const format of ['json','yaml'] as const){
   const restored=readDocument(writeDocument(source,format),format);
-  assert.deepEqual(getAvroNode(restored,''),getAvroNode(source,''));
+  assertJsonDataEqual(getAvroNode(restored,''),getAvroNode(source,''));
   assert.deepEqual(JSON.parse(exportAvroSchema(restored)),JSON.parse(text));recoveries++;
  }
 }

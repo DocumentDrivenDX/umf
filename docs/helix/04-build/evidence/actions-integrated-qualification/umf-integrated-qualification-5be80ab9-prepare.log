@@ -1,0 +1,3 @@
+{"stage": "container-install", "command": ["bun", "install", "--frozen-lockfile"]}
+{"stage": null, "command": [".venv/bin/python", "scripts/refresh-core-checks.py", "--prepare-namespaces"]}
+{"stage": "container-protobuf", "command": ["bun", "run", "build:protobuf"]}

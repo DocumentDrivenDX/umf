@@ -1373,7 +1373,7 @@
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
+    "scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/parquet/facets/bytes-max1-0-embedded.parquet": "023586481a6dda093ed32b66d8c8ebd089e07d895754059284ee9bb81240ffc9",
     "fixtures/parquet/facets/bytes-max1-0-plain.parquet": "2f51627b7030e833895a6a18ad45c6cebbf004e583dbc33831ef41eda2622b1f",
@@ -1456,7 +1456,7 @@
     "fixtures/parquet/facets/uint8-max-plain.parquet": "43a6e4064b60a1a958023f974933391f1125a71e8ef0968736627343a704aa82",
     "fixtures/parquet/facets/uint8-min-embedded.parquet": "48bc5fdc8c5bcf6ce1a89d21ea000128744e351a1aa2b100a3b001eb1b4b4742",
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
-    "fixtures/validation/facets-parquet-discovery-native.json": "c394004c2d37ecf8fa64e1e599914e14bb72c2c2928803d118492f4b2ede9e55",
+    "fixtures/validation/facets-parquet-discovery-native.json": "fd0327d502aaa14619d8d514910ac91ce14921a9d3afe87147b3a1ea82b0c478",
     "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
     "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
     "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
@@ -1464,7 +1464,7 @@
     "native/parquet/sources/NOTICE": "28768ced5daf23a48a7fa7da0a16846c8c254e0a065cf29d5b17ef7fbad2e5fd",
     "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
     "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736",
-    "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
+    "package.json": "e9fe3ba2ba6981e3adbe92e1f67aa3daa98ea5a76528e56d0192ff6446f707cb",
     "scripts/core-ideals/facets-parquet-discovery.ts": "cfa003f682268eba18470598d22793ad4d71c9d350ee56245a81989388dad78d",
     "src/adapters/parquet/field-metadata.ts": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af",
     "src/adapters/parquet/footer.ts": "9d7f0077301cc2877fa46e12b515461d2333387af641f64e50dd30c2ff34ef07",
@@ -1472,9 +1472,14 @@
     "src/adapters/parquet/logical.ts": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42",
     "src/adapters/parquet/metadata.ts": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a",
     "src/adapters/parquet/schema.ts": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
-    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
+    "src/model/json.ts": "3f1348c5e8e9d340c301611e607919b420b034fb777ef6817adf2b8f8450e020",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0"
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-parquet-discovery-native.py": [
+      "/work/scripts/core-ideals/facets-parquet-discovery-native.py"
+    ]
   }
 }

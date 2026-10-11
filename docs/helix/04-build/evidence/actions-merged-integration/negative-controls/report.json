@@ -1,0 +1,70 @@
+{
+  "pass": true,
+  "scope": "Copied-record negative controls; actual executed source and observation remain unchanged",
+  "auditSha256": "207c53c311f3863322a9a4ec5782eaff76d1c20420ddaa88b39a651d58729c61",
+  "controls": [
+    {
+      "control": "omitted-source-input",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/omitted-source-input.json",
+      "inputSha256": "766763af9d971abcdef1871e6744409c4cba2425b1e007195460ceae31183a6c",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/omitted-source-input.log",
+      "logSha256": "2db92bdae3365a6199cdf34edbda115ab2909acd6b03e07287ad3754664e259e"
+    },
+    {
+      "control": "forged-source-input",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/forged-source-input.json",
+      "inputSha256": "4bb62aeb47450c97a2dad87b559056bcf8fe5c42aab6f77ec630a78c073bddc5",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/forged-source-input.log",
+      "logSha256": "82b69bcfdcab2d340d4c1b3d2875e8b77c2da1599719cbe1a689c555834eab9e"
+    },
+    {
+      "control": "failed-prerequisite",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/failed-prerequisite.json",
+      "inputSha256": "25cd65cdc94d8619206213e54f4e7ecf6259b01e11784a608945cb574f258732",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/failed-prerequisite.log",
+      "logSha256": "1fefcbd8e5e6fd191e9fe9109d3673fc28b181e47914a4c3ed44b9deeff222bd"
+    },
+    {
+      "control": "repeated-semantic-selection",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/repeated-semantic-selection.json",
+      "inputSha256": "e6cd3ef47795ed564d64c2f0b35041b13abe4d71a1b67220e0ebee8ae6480a68",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/repeated-semantic-selection.log",
+      "logSha256": "3094cc4a6eaceee977d83de4a1027afcfe51150a5c3209c258a90a211fc2e8c4"
+    },
+    {
+      "control": "noop-csv-command",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/noop-csv-command.json",
+      "inputSha256": "8613376d9e19bbcb31dedf41bed9664d3cb03beb87117118918058c5e7e35466",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/noop-csv-command.log",
+      "logSha256": "6750140c22785e6f8ecd68d512e0052203d0a58cd4ace909e41db2436d646e90"
+    },
+    {
+      "control": "omitted-output",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/omitted-output.json",
+      "inputSha256": "51f9eda40af8bba604e4c0a9de3959fca1da988a5929b7bef9aa009d3c974c78",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/omitted-output.log",
+      "logSha256": "234375a5cd1836e71b6bfde97ab146c3259aac193e033ddc361eb384e1a86e90"
+    },
+    {
+      "control": "forged-inherited-fixture",
+      "refused": true,
+      "exitCode": 1,
+      "input": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/forged-inherited-fixture.json",
+      "inputSha256": "4b8f6c1b3df3822b22c826096fbf1ffc663162c8884461a49b415fbbe99b8a53",
+      "log": "/private/tmp/umf-merged-actions-qualification-1fa21f6e-r2-execution/negative-controls/forged-inherited-fixture.log",
+      "logSha256": "91e645d5d1917a99f199dedede12f0d87f89552ee73a83487e1fa8f802456f39"
+    }
+  ]
+}

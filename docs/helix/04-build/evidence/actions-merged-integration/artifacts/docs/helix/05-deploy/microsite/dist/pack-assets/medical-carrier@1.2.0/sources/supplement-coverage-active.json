@@ -1,0 +1,44 @@
+{
+  "resourceType": "Coverage",
+  "id": "active",
+  "status": "active",
+  "beneficiary": {
+    "reference": "Patient/member"
+  },
+  "subscriber": {
+    "reference": "Patient/member"
+  },
+  "payor": [
+    {
+      "reference": "Organization/payer"
+    }
+  ],
+  "period": {
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "costToBeneficiary": [
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "urn:umf:medical:synthetic-codes",
+            "code": "copay"
+          }
+        ]
+      },
+      "valueMoney": {
+        "value": 10,
+        "currency": "USD"
+      }
+    }
+  ],
+  "extension": [
+    {
+      "url": "urn:umf:plan-reference",
+      "valueReference": {
+        "reference": "InsurancePlan/plan"
+      }
+    }
+  ]
+}

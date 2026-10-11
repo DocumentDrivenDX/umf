@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Check support and evidence · UMF</title><meta name="description" content="Learn UMF actions through real examples, readable diagrams and scoped evidence."><link rel="stylesheet" href="guide.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../index.html">UMF</a><a href="../docs.html">Developers</a><a href="index.html">Actions</a><a href="../explorer.html">Schema explorer</a><a href="../demo.html">Playground</a></header><div class="layout"><aside aria-label="Action guide"><nav><a href="index.html">Understand and use UMF actions</a>
+<a href="concepts.html">Meet the model</a>
+<a href="getting-started.html">Inspect your first action</a>
+<a href="declarations.html">Describe a change precisely</a>
+<a href="execution.html">Follow a consumer execution</a>
+<a href="receipts-and-queries.html">Know when a query is fresh enough</a>
+<a href="formal-analysis.html">Find mistakes before they become incidents</a>
+<a href="api-reference.html">Public action API reference</a>
+<a href="support-and-evidence.html" aria-current="page">Check support and evidence</a>
+<a href="glossary.html">Words used in this guide</a></nav></aside><main id="content"><h1 id="check-support-and-evidence">Check support and evidence</h1>
+<p>The final action acceptance certificate is certified for its stated bounded profile, not for every possible UMF action or deployment. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.</p>
+<h2 id="frozen-integrated-qualification">Frozen integrated qualification</h2>
+<p>The current <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.md">merged acceptance certificate</a> qualifies core 0.8.0 and umf.actions 0.1.0 on frozen source <code>1fa21f6ea1d7a3e1009746da99f1a61d444cd489</code>. Its <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-integrated-certification.json">machine-readable certificate</a> and <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-merged-integration/audit.json">independent audit</a> bind the actual commands, inputs, runtime versions and retained results.</p>
+<ul>
+<li>Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.</li>
+<li>Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.</li>
+<li>Public browser interpretation: 44 cases with Bun parity. The tutorial observes commit, SQL rollback, durable refusal and replay, query visibility and revoked-replay denial.</li>
+<li>Integration checks: 371 schemas, 63 extension packages, type and browser builds, 43 Python tests, CSV controls and five affected browser integrations.</li>
+<li>Bounded design checks: 22 SMT outcomes and 13 TLC runs using the pinned public Java runtime. These check the stated model bounds, not arbitrary deployments.</li>
+<li>All 21 action acceptance criteria have executed passing witnesses. Seven audit controls reject omitted or forged inputs and invalid execution claims.</li>
+</ul>
+<p>The <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-documentation/qualification-integrated-5be80ab9/README.md">immutable strict baseline</a> separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source <code>5be80ab9</code>. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.</p>
+<p>Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.</p>
+<h2 id="subsequent-main-integration">Subsequent main integration</h2>
+<p>Later main changes add shared security metadata and extend core 0.8 inspection. They have a <a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-security-integration/README.md">separate integration record</a>; they do not change the frozen certificate above.</p>
+<p>Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.</p>
+<p>The retained qualification records identify the source revision and profile they verify. Consult the release delivery record for CI and deployed-site verification. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.</p>
+<h2 id="historical-qualification">Historical qualification</h2>
+<ul>
+<li>Core document version: 0.8.0. Action extension: umf.actions 0.1.0.</li>
+<li>Portable declarations: public registration, authoring, inspection, editing and profile comparison; 54 portable tests in the recorded campaign.</li>
+<li>Explicit interpretation: bounded rules/1 and keys/1, with separately supplied state for evaluation.</li>
+<li>Native reference consumer: the fixed owned PostgreSQL 17.9/Bun 1.4.2 profile; 119 recorded native tests.</li>
+<li>Browser: Chromium 153.0.8010.12, 44 shared cases with Bun parity and no external requests.</li>
+<li>Final snapshot regression and admission: 2,314 distinct tests, zero failures; the certificate records the exact disjoint gates and inputs.</li>
+</ul>
+<ul>
+<li><a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-certification.md">Final scoped certificate</a></li>
+<li><a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-certification.json">Machine-readable certificate</a></li>
+<li><a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/04-build/evidence/actions-documentation-execution.md">Documentation execution evidence</a></li>
+<li><a href="https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/02-design/actions-prior-art-decisions.md">Original prior-art decisions</a></li>
+</ul>
+<p>These results describe the frozen replay source and recorded inputs. This guide and subsequent integration have their own dated verification evidence; neither silently changes the historic certificate nor claims it binds newly changed bytes.</p>
+<h2 id="important-boundaries">Important boundaries</h2>
+<p>Declaration support is broader than native execution. Composite-Key declarations do not promise every store codec. The recorded native subset includes tested string tuples and alias behavior. Core/portable admitted decimal or binary values do not imply native rules/1 execution support; the first consumer&#39;s scalar subset is boolean/integer/string.</p>
+<p>Owned lifecycle, undirected linked meaning and Association-Record native execution remain unsupported in this reference subset. Relevant unknown dependencies refuse eligibility. Arbitrary extra triggers, outside writers, remote policy enforcement, arbitrary code loading, workflows, cancellation, allocated identities, external side effects, cross-store commits, warehouse freshness and production/downstream adoption are not qualified here.</p>
+<p>Public comparisons with Palantir, Smithy, Dafny, Koka, Axon, Cedar and Temporal informed design choices. No connected Palantir tenant or those action runtimes was exercised. They are not interchangeable implementations of this protocol.</p>
+<h2 id="predict-the-result">Predict the result</h2>
+<p>If a profile supplies an evidence URL for every obligation and declaredCompatible becomes true, has UMF verified execution?</p>
+<p>Answer: no. Locators are inert strings. executionVerified remains false. Runtime qualification is separate.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"84287e292ed30b4b5f2dc505902fcf1570bc73143e643353f85b0dc7406983fc"}</script></body></html>

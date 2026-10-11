@@ -1,0 +1,10 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/iceberg/table-promotion.test.ts:
+(pass) US-021-AC8: six primitive widenings match independent native evolution and preserve history [1721.50ms]
+(pass) US-021-AC8: invalid promotions and unknown historical dependencies fail atomically [457.91ms]
+
+ 2 pass
+ 0 fail
+ 85 expect() calls
+Ran 2 tests across 1 file. [5.15s]

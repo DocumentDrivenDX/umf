@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:smithy:native-selection:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "shapeIds"
+  ],
+  "properties": {
+    "shapeIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+      }
+    }
+  }
+}

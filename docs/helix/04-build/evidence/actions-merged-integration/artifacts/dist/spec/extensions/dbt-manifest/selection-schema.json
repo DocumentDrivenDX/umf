@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:dbt:dependency-selection:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "selected",
+            "blocked"
+          ]
+        },
+        "complete": {
+          "const": false
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "includeMacros": {
+          "type": "boolean"
+        },
+        "maxDepth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 128
+        },
+        "maxNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "collection": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "depth": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 128
+              }
+            },
+            "required": [
+              "id",
+              "collection",
+              "path",
+              "depth"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dependent": {
+                "type": "string"
+              },
+              "dependency": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "resource",
+                  "macro"
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "resolved": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "dependent",
+              "dependency",
+              "kind",
+              "path",
+              "resolved"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "boundary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "edge": {
+                "type": "object",
+                "properties": {
+                  "dependent": {
+                    "type": "string"
+                  },
+                  "dependency": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "resource",
+                      "macro"
+                    ]
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "resolved": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "dependent",
+                  "dependency",
+                  "kind",
+                  "path",
+                  "resolved"
+                ],
+                "additionalProperties": false
+              },
+              "reason": {
+                "enum": [
+                  "macro-excluded",
+                  "depth-limit",
+                  "node-limit"
+                ]
+              }
+            },
+            "required": [
+              "edge",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "complete",
+        "roots",
+        "includeMacros",
+        "maxDepth",
+        "maxNodes",
+        "nodes",
+        "edges",
+        "boundary",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "source",
+    "selection"
+  ],
+  "additionalProperties": false
+}

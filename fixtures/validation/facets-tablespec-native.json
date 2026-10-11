@@ -21,14 +21,14 @@
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/facets-tablespec-classification-oracle.py"
       ],
       "exitCode": 0
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/facets-tablespec-suite-oracle.py"
       ],
       "exitCode": 0
@@ -42,32 +42,32 @@
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/facets-tablespec-projection-oracle.py"
       ],
       "exitCode": 0
     },
     {
       "command": [
-        "/home/erik/Projects/tablespec/.venv/bin/python",
+        ".venv/bin/python",
         "scripts/core-ideals/facets-tablespec-projection-values-oracle.py"
       ],
       "exitCode": 0
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-classification-oracle.py": "0aef55b62b9afcc485b72a33f5a76c0076351e25f78ed478bfe3d27f91c9a52e",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-values-oracle.py": "f839493dad4a134f4da149862f3b523cd786bb9f6a9ccae76461d9a1592f603d",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-suite-oracle.py": "f8ef9d32a016285db11673ba7a466dce1b25489b840081d23c3f0393f184f771",
-    "fixtures/validation/facets-tablespec-classification-native.json": "5c76e6e925a91932e2657a8318628a62e9b1d5744ff51890e8a70784e4a64abb",
+    "scripts/core-ideals/facets-tablespec-classification-oracle.py": "0aef55b62b9afcc485b72a33f5a76c0076351e25f78ed478bfe3d27f91c9a52e",
+    "scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+    "scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
+    "scripts/core-ideals/facets-tablespec-projection-values-oracle.py": "f839493dad4a134f4da149862f3b523cd786bb9f6a9ccae76461d9a1592f603d",
+    "scripts/core-ideals/facets-tablespec-suite-oracle.py": "f8ef9d32a016285db11673ba7a466dce1b25489b840081d23c3f0393f184f771",
+    "fixtures/validation/facets-tablespec-classification-native.json": "9b392e35623bc0e5347b0723c473397ca2cfa4c9192aea6df1d7383696a2a424",
     "fixtures/validation/facets-tablespec-classification.json": "0ef5c6aef6e357cf255d2104f7cf016e35b2bb9a2718c19bdd0fbc9820cd0014",
-    "fixtures/validation/facets-tablespec-profile-native.json": "0ed2e93c5627a3e168e031cefc947e9b62203de5095255f70dc1969843092a38",
-    "fixtures/validation/facets-tablespec-projection-native.json": "c7ae6d13e53f50a959e052ae54f2609bf2a179d05555fab148f3aacf92381d9f",
-    "fixtures/validation/facets-tablespec-projection-values-native.json": "9759a732fc373af011e66c893deb025196c7aa15c0ed43b94f46be50b87e2e96",
+    "fixtures/validation/facets-tablespec-profile-native.json": "b1a9c6ee249d66a1340110ba906c7befdf8ced01e035e050390f7885ca0694fb",
+    "fixtures/validation/facets-tablespec-projection-native.json": "7a48f7ceec619b8389b383ebea5a883a6d33b8c44508564cb9e4c889d4bee98a",
+    "fixtures/validation/facets-tablespec-projection-values-native.json": "9a96236a9f24971af44cac6936de0ab6189091957d8b0ff0e8cd709769132269",
     "fixtures/validation/facets-tablespec-projection.json": "f0eb7903035d56f550ab2f15d6011ed0dfe43f267bddec0c1ea375b2b136b06a",
-    "fixtures/validation/facets-tablespec-suite-native.json": "66a715042311351c9bd1e0cd299b35ecc5838b2d8e7bfc3682294fa20dc69dcf",
+    "fixtures/validation/facets-tablespec-suite-native.json": "57f27984c6f14e9341e95da65a9d9331a494eb869e800e476689cba9f919ed03",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
     "native/tablespec/facets-runtime/casting_utils.py": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114",
@@ -90,10 +90,27 @@
     "scripts/core-ideals/facets-tablespec-projection-cases.ts": "4bc5b134865c0df979bb65029260aa654fc70f244c77e939fe3e142c218e43dc",
     "spec/core/facets-tablespec-projection.schema.json": "899efd30aa2542ab25e4cb65fc2163efa2bb29f07e25939e2186e3b2819f9046",
     "spec/core/tablespec-facet-classification.schema.json": "65b41d0a6ef03e292f6539c3c0aab192245457c04c6a662001059c2198d015b3",
-    "spec/extensions/tablespec-facets/package.json": "831df225b894a3083ee8758096315b238f7e402aa1782642410238529f7030fa",
+    "spec/extensions/tablespec-facets/package.json": "396215e5874f3f5ac15eea4db04e50828143c61786b361ccab64ef74301220d9",
     "spec/extensions/tablespec-facets/schema.json": "4eb6436aa5de58b3749bcc7d8e31a2b87898179860971d1f27bb4b4d72b9b7a7",
     "src/core-ideals/facets-tablespec-projection.ts": "3046a9c5c2afcaa62c235f367a5783791524b43ab18125f8baef3d56df641497",
     "src/core-ideals/facets-tablespec.ts": "85788db939b162e3ca3af3d7aa06919afb4f428218d906e38ecde96033462f5d",
     "src/core-ideals/tablespec-facet-suite.ts": "95f2d4b35276c7832d8fa9ef6108a526eddfc545efbbf9e205231264c7730744"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-tablespec-classification-oracle.py": [
+      "/work/scripts/core-ideals/facets-tablespec-classification-oracle.py"
+    ],
+    "scripts/core-ideals/facets-tablespec-profile-oracle.py": [
+      "/work/scripts/core-ideals/facets-tablespec-profile-oracle.py"
+    ],
+    "scripts/core-ideals/facets-tablespec-projection-oracle.py": [
+      "/work/scripts/core-ideals/facets-tablespec-projection-oracle.py"
+    ],
+    "scripts/core-ideals/facets-tablespec-projection-values-oracle.py": [
+      "/work/scripts/core-ideals/facets-tablespec-projection-values-oracle.py"
+    ],
+    "scripts/core-ideals/facets-tablespec-suite-oracle.py": [
+      "/work/scripts/core-ideals/facets-tablespec-suite-oracle.py"
+    ]
   }
 }

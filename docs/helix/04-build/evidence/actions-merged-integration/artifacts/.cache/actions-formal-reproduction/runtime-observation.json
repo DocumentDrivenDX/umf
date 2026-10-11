@@ -1,0 +1,22 @@
+{
+  "imageReference": "eclipse-temurin@sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5",
+  "manifestDigest": "sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5",
+  "repoDigestVerified": true,
+  "imageId": "sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5",
+  "os": "linux",
+  "architecture": "arm64",
+  "javaCommand": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--entrypoint",
+    "java",
+    "eclipse-temurin@sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5",
+    "--version"
+  ],
+  "exitCode": 0,
+  "javaVersion": "openjdk 21.0.12.1 2026-08-18 LTS",
+  "javaLogSha256": "31c56f92082dd196281086e4714d9ad56668dc30ffc27699367ee081dfc3a5ae"
+}

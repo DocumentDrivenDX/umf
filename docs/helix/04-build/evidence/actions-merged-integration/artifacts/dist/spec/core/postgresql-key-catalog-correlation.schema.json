@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:postgresql-key-catalog-correlation:1.0.0",
+  "title": "PostgreSQL Key catalog correlation result; consistency only",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "nativeSupplement",
+    "root",
+    "nativeCatalog",
+    "matches",
+    "sameSnapshotVerified",
+    "authenticated",
+    "idealEqualityVerified"
+  ],
+  "properties": {
+    "nativeSupplement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "root": {
+      "$ref": "urn:umf:native-json:0.1.0"
+    },
+    "nativeCatalog": {
+      "type": "string",
+      "minLength": 1
+    },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "identity",
+          "relationPath",
+          "indexPath",
+          "componentPaths"
+        ],
+        "properties": {
+          "identity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema",
+              "table",
+              "index"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              },
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "index": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "relationPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "indexPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "componentPaths": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "sameSnapshotVerified": {
+      "const": false
+    },
+    "authenticated": {
+      "const": false
+    },
+    "idealEqualityVerified": {
+      "const": false
+    }
+  }
+}

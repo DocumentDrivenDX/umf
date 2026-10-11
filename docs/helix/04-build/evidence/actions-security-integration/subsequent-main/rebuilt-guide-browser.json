@@ -1,0 +1,745 @@
+{
+  "profile": "umf.actions.documentation-browser/1",
+  "base": "http://127.0.0.1:41291/umf/",
+  "browser": "153.0.8010.12",
+  "checks": [
+    {
+      "route": "index.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "concepts.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "getting-started.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17,
+          "button": 20
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35,
+          "button": 41
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "declarations.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "execution.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "receipts-and-queries.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "formal-analysis.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "api-reference.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "support-and-evidence.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "glossary.html",
+      "width": 1440,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "h1": 53,
+          "header a": 21,
+          "aside a": 21,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "h1": 107,
+          "header a": 43,
+          "aside a": 43,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "index.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "concepts.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "getting-started.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17,
+          "button": 20
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35,
+          "button": 41
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "declarations.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "execution.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "receipts-and-queries.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "formal-analysis.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "api-reference.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "support-and-evidence.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "main p": 21,
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "main p": 43,
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    },
+    {
+      "route": "glossary.html",
+      "width": 390,
+      "oneH1": true,
+      "noOverflow": true,
+      "visibleLabelBoundsFit": true,
+      "assetIntegrity": true,
+      "reviewedHtmlIntegrity": true,
+      "cssLayoutZoom": {
+        "factor": 2,
+        "beforeGlyphHeights": {
+          "h1": 42,
+          "header a": 21,
+          "aside a": 17,
+          "footer": 17
+        },
+        "afterGlyphHeights": {
+          "h1": 84,
+          "header a": 43,
+          "aside a": 35,
+          "footer": 35
+        },
+        "noOverflow": true,
+        "responsiveFigures": "shrink to fit; SVG glyph doubling is not asserted"
+      }
+    }
+  ],
+  "entryChecks": [
+    {
+      "route": "index.html",
+      "width": 1440,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "docs.html",
+      "width": 1440,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "demo.html",
+      "width": 1440,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "ecosystem.html",
+      "width": 1440,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "explorer.html",
+      "width": 1440,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "index.html",
+      "width": 390,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "docs.html",
+      "width": 390,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "demo.html",
+      "width": 390,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "ecosystem.html",
+      "width": 390,
+      "actionsNavigation": true,
+      "noOverflow": true
+    },
+    {
+      "route": "explorer.html",
+      "width": 390,
+      "actionsNavigation": true,
+      "noOverflow": true
+    }
+  ],
+  "screenshots": [
+    "1440-index-figure-1.png",
+    "1440-index-viewport.png",
+    "1440-index.png",
+    "1440-zoom200-index-figure-1.png",
+    "1440-zoom200-index.png",
+    "1440-zoom200-index-viewport.png",
+    "1440-concepts-figure-1.png",
+    "1440-zoom200-concepts-figure-1.png",
+    "1440-zoom200-concepts.png",
+    "1440-zoom200-concepts-viewport.png",
+    "1440-getting-started-viewport.png",
+    "1440-zoom200-getting-started.png",
+    "1440-zoom200-getting-started-viewport.png",
+    "1440-declarations-figure-1.png",
+    "1440-declarations-figure-2.png",
+    "1440-zoom200-declarations-figure-1.png",
+    "1440-zoom200-declarations-figure-2.png",
+    "1440-zoom200-declarations.png",
+    "1440-zoom200-declarations-viewport.png",
+    "1440-execution-figure-1.png",
+    "1440-execution-figure-2.png",
+    "1440-execution.png",
+    "1440-zoom200-execution-figure-1.png",
+    "1440-zoom200-execution-figure-2.png",
+    "1440-zoom200-execution.png",
+    "1440-zoom200-execution-viewport.png",
+    "1440-receipts-and-queries-figure-1.png",
+    "1440-receipts-and-queries.png",
+    "1440-zoom200-receipts-and-queries-figure-1.png",
+    "1440-zoom200-receipts-and-queries.png",
+    "1440-zoom200-receipts-and-queries-viewport.png",
+    "1440-formal-analysis-figure-1.png",
+    "1440-formal-analysis.png",
+    "1440-zoom200-formal-analysis-figure-1.png",
+    "1440-zoom200-formal-analysis.png",
+    "1440-zoom200-formal-analysis-viewport.png",
+    "1440-zoom200-api-reference.png",
+    "1440-zoom200-api-reference-viewport.png",
+    "1440-zoom200-support-and-evidence.png",
+    "1440-zoom200-support-and-evidence-viewport.png",
+    "1440-zoom200-glossary.png",
+    "1440-zoom200-glossary-viewport.png",
+    "390-index-figure-1.png",
+    "390-index-viewport.png",
+    "390-index.png",
+    "390-zoom200-index-figure-1.png",
+    "390-zoom200-index.png",
+    "390-zoom200-index-viewport.png",
+    "390-concepts-figure-1.png",
+    "390-concepts.png",
+    "390-zoom200-concepts-figure-1.png",
+    "390-zoom200-concepts.png",
+    "390-zoom200-concepts-viewport.png",
+    "390-getting-started-viewport.png",
+    "390-getting-started.png",
+    "390-zoom200-getting-started.png",
+    "390-zoom200-getting-started-viewport.png",
+    "390-declarations-figure-1.png",
+    "390-declarations-figure-2.png",
+    "390-declarations.png",
+    "390-zoom200-declarations-figure-1.png",
+    "390-zoom200-declarations-figure-2.png",
+    "390-zoom200-declarations.png",
+    "390-zoom200-declarations-viewport.png",
+    "390-execution-figure-1.png",
+    "390-execution-figure-2.png",
+    "390-execution.png",
+    "390-zoom200-execution-figure-1.png",
+    "390-zoom200-execution-figure-2.png",
+    "390-zoom200-execution.png",
+    "390-zoom200-execution-viewport.png",
+    "390-receipts-and-queries-figure-1.png",
+    "390-receipts-and-queries.png",
+    "390-zoom200-receipts-and-queries-figure-1.png",
+    "390-zoom200-receipts-and-queries.png",
+    "390-zoom200-receipts-and-queries-viewport.png",
+    "390-formal-analysis-figure-1.png",
+    "390-formal-analysis.png",
+    "390-zoom200-formal-analysis-figure-1.png",
+    "390-zoom200-formal-analysis.png",
+    "390-zoom200-formal-analysis-viewport.png",
+    "390-api-reference.png",
+    "390-zoom200-api-reference.png",
+    "390-zoom200-api-reference-viewport.png",
+    "390-support-and-evidence.png",
+    "390-zoom200-support-and-evidence.png",
+    "390-zoom200-support-and-evidence-viewport.png",
+    "390-glossary.png",
+    "390-zoom200-glossary.png",
+    "390-zoom200-glossary-viewport.png",
+    "1440-site-index.png",
+    "1440-site-docs.png",
+    "1440-site-demo.png",
+    "1440-site-ecosystem.png",
+    "1440-site-explorer.png",
+    "390-site-index.png",
+    "390-site-docs.png",
+    "390-site-demo.png",
+    "390-site-ecosystem.png",
+    "390-site-explorer.png"
+  ],
+  "externalRequests": [],
+  "pageErrors": [],
+  "legacyEntryExternalRequests": [
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
+  ]
+}

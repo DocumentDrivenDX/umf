@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:smithy-json-schema:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "source",
+    "assembly",
+    "policy",
+    "complete",
+    "issues",
+    "converter"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "assembly": {
+      "$ref": "urn:umf:smithy:assembly-result:0.1.0"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "rootShape",
+        "profile",
+        "usage",
+        "lossPolicy",
+        "baseUri"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootShape": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "enum": [
+            "native-defaults-2020-12",
+            "native-root-definition-2020-12",
+            "native-service-context-2020-12"
+          ]
+        },
+        "usage": {
+          "const": "native-emission"
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        },
+        "baseUri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "serviceContext": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "profile": {
+                "const": "native-service-context-2020-12"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "serviceContext"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "serviceContext"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "representation-change",
+              "not-enforced",
+              "unsupported",
+              "annotation-only"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "nativeSchema": {
+      "type": "string"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "converter": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adaptedSchema": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSchema"
+        ],
+        "properties": {
+          "policy": {
+            "properties": {
+              "lossPolicy": {
+                "const": "allow-reported-loss"
+              }
+            }
+          },
+          "assembly": {
+            "properties": {
+              "status": {
+                "const": "assembled"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "required": [
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "policy": {
+            "properties": {
+              "profile": {
+                "enum": [
+                  "native-root-definition-2020-12",
+                  "native-service-context-2020-12"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "adaptedSchema"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "adaptedSchema"
+        ]
+      },
+      "then": {
+        "properties": {
+          "policy": {
+            "properties": {
+              "profile": {
+                "enum": [
+                  "native-root-definition-2020-12",
+                  "native-service-context-2020-12"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

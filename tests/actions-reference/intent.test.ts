@@ -1,0 +1,20 @@
+import {test,expect} from 'bun:test';
+import fixture from '../../fixtures/actions/approve.json';
+import type {Document} from '../../src/model/types';
+import type {Action} from '../../src/extensions/actions';
+import {referenceIntent} from '../../scripts/actions-reference/intent';
+import type {ReferenceInvokeRequest} from '../../scripts/actions-reference/protocol';
+test('original-revision intent uses exact typed equality, presence and declared concurrency order',()=>{
+ const document=structuredClone(fixture) as unknown as Document,action=(document.modules[0]!.extensions!['umf.actions'] as any).actions[0] as Action;
+ document.modules[0]!.elements.push({id:'amount',kind:'field',scalarType:'integer',cardinality:'one',nullability:'absent-allowed',extensions:{}});
+ action.parameters.push({id:'amount',kind:'value',field:{module:'sales',element:'amount'},required:false});
+ action.reads.push({...structuredClone(action.writes[0]!),id:'order-read'});
+ const request:ReferenceInvokeRequest={protocol:'umf.actions.tx/1',target:{module:'sales',action:'approve',revision:'r1'},key:'token',correlation:'first',inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]},amount:{integerToken:'1e2'}},expectedVersions:[{frame:'order-write',version:'v1'},{frame:'order-read',version:'v0'}]};
+ let getterCalls=0;const hostile=structuredClone(action);Object.defineProperty(hostile,'description',{enumerable:true,get(){getterCalls++;return 'hostile';}});expect(()=>referenceIntent(document,hostile,request)).toThrow();expect(getterCalls).toBe(0);
+ const original=referenceIntent(document,action,request),retry=structuredClone(request);retry.inputs.amount={integerToken:'100.00'};retry.expectedVersions!.reverse();retry.key='another';retry.correlation='another';
+ expect(referenceIntent(document,action,retry)).toBe(original);
+ retry.inputs.amount={integerToken:'101'};expect(referenceIntent(document,action,retry)).not.toBe(original);
+ delete retry.inputs.amount;const absent=referenceIntent(document,action,retry);retry.inputs.amount=null;expect(referenceIntent(document,action,retry)).not.toBe(absent);
+ retry.target.revision='r2';expect(referenceIntent(document,action,retry)).not.toBe(original);
+ retry.expectedVersions!.push({frame:'unknown',version:'v'});expect(()=>referenceIntent(document,action,retry)).toThrow();
+});

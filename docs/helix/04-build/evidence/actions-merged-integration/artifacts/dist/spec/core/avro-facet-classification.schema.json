@@ -1,0 +1,675 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:avro-facet-classification:1.0.0",
+  "title": "Avro profile-qualified facet classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "outcome",
+    "source",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-avro-facets"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "exact",
+        "approximated",
+        "not-expressible",
+        "unknown"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.5.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.5.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "location",
+        "nativeSource",
+        "identity",
+        "mode",
+        "profile",
+        "obligation"
+      ],
+      "properties": {
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "dependencyId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "nativeSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "schema"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "declared-schema",
+            "apache-datum-writer",
+            "fastavro-schemaless-writer",
+            "unresolved"
+          ]
+        },
+        "obligation": {
+          "enum": [
+            "value-domain",
+            "exact-input"
+          ]
+        },
+        "author": {
+          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.avro.facets",
+        "version": "1.0.0",
+        "nativeVersion": "1.12.0",
+        "subset": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "location",
+        "nativeFragment",
+        "facets",
+        "branches",
+        "observations"
+      ],
+      "properties": {
+        "origin": {
+          "const": "classified"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "dependencyId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "nativeFragment": {
+          "$ref": "urn:umf:native-json:0.1.0"
+        },
+        "facets": {
+          "type": "object",
+          "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+          "properties": {
+            "length": {
+              "type": "object",
+              "required": [
+                "max",
+                "unit"
+              ],
+              "properties": {
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "enum": [
+                    "unicode-scalar",
+                    "byte"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991,
+              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+            },
+            "integerWidth": {
+              "type": "object",
+              "required": [
+                "bits",
+                "signed"
+              ],
+              "properties": {
+                "bits": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "signed": {
+                  "type": "boolean"
+                }
+              },
+              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
+              "additionalProperties": false
+            }
+          },
+          "dependentRequired": {
+            "precision": [
+              "scale"
+            ],
+            "scale": [
+              "precision"
+            ]
+          },
+          "additionalProperties": false
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "location",
+              "declarationLocation",
+              "nativeFragment",
+              "declarationFragment",
+              "family",
+              "facets",
+              "interpretation",
+              "enforcement"
+            ],
+            "properties": {
+              "location": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "dependencyId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "declarationLocation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "dependencyId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "nativeFragment": {
+                "$ref": "urn:umf:native-json:0.1.0"
+              },
+              "declarationFragment": {
+                "$ref": "urn:umf:native-json:0.1.0"
+              },
+              "family": {
+                "enum": [
+                  "integer",
+                  "float",
+                  "decimal",
+                  "string",
+                  "binary",
+                  "null",
+                  "unsupported"
+                ]
+              },
+              "facets": {
+                "type": "object",
+                "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+                "properties": {
+                  "length": {
+                    "type": "object",
+                    "required": [
+                      "max",
+                      "unit"
+                    ],
+                    "properties": {
+                      "max": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "unit": {
+                        "enum": [
+                          "unicode-scalar",
+                          "byte"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "precision": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991,
+                    "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+                  },
+                  "scale": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991,
+                    "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+                  },
+                  "integerWidth": {
+                    "type": "object",
+                    "required": [
+                      "bits",
+                      "signed"
+                    ],
+                    "properties": {
+                      "bits": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "signed": {
+                        "type": "boolean"
+                      }
+                    },
+                    "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
+                    "additionalProperties": false
+                  }
+                },
+                "dependentRequired": {
+                  "precision": [
+                    "scale"
+                  ],
+                  "scale": [
+                    "precision"
+                  ]
+                },
+                "additionalProperties": false
+              },
+              "interpretation": {
+                "enum": [
+                  "declared",
+                  "unknown",
+                  "unsupported"
+                ]
+              },
+              "enforcement": {
+                "const": "unverified"
+              }
+            }
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "concept",
+              "idealPath",
+              "location",
+              "interpretation",
+              "outcome",
+              "basis"
+            ],
+            "properties": {
+              "concept": {
+                "enum": [
+                  "length",
+                  "decimal",
+                  "integerWidth",
+                  "conversion",
+                  "native"
+                ]
+              },
+              "idealPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "location": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "dependencyId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "interpretation": {
+                "enum": [
+                  "declared",
+                  "inferred",
+                  "unknown",
+                  "unsupported"
+                ]
+              },
+              "outcome": {
+                "enum": [
+                  "exact",
+                  "approximated",
+                  "not-expressible",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "location",
+          "targetPath",
+          "value",
+          "reason",
+          "outcome",
+          "binding",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "dependencyId": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "targetPath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "binding": {
+            "const": {
+              "id": "umf.avro.facets",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence"
+            }
+          },
+          "recovery": {
+            "const": "Retain original native archive and authored facets; interpretation does not replace native meaning"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "exact"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "const": "exact"
+          },
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

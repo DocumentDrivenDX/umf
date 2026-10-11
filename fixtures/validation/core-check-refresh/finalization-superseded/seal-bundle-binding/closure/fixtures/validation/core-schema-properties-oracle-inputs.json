@@ -1,0 +1,295 @@
+{
+  "scope": "Exact integer64 and decimal(20,2) literal acceptance, not native storage equivalence",
+  "probes": [
+    {
+      "domain": "integer",
+      "token": "-9223372036854775809",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "-9223372036854775808",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "-2",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "-1",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "-0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "0.0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "0e99999999",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "1",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "1.20",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1.001",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1.5",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "2",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "2e0",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "1e-1",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "0.01",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "0.009",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "999999999999999999.99",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1000000000000000000",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "9223372036854775807",
+      "accepted": true
+    },
+    {
+      "domain": "integer",
+      "token": "9223372036854775808",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1e30",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1e-30",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1e99999999",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "01",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "NaN",
+      "accepted": false
+    },
+    {
+      "domain": "integer",
+      "token": "1\n",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "-9223372036854775809",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "-9223372036854775808",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "-2",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-1",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "-0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0e99999999",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.20",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1.001",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "1.5",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "2",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "2e0",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1e-1",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.01",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "0.009",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "999999999999999999.99",
+      "accepted": true
+    },
+    {
+      "domain": "decimal",
+      "token": "1000000000000000000",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "9223372036854775807",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "9223372036854775808",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "1e30",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "1e-30",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "1e99999999",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "01",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "NaN",
+      "accepted": false
+    },
+    {
+      "domain": "decimal",
+      "token": "1\n",
+      "accepted": false
+    }
+  ]
+}

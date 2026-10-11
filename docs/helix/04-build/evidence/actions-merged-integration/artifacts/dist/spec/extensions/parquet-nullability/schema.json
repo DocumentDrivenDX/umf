@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:nullability-binding:1.0.0",
+  "title": "Retained Parquet physical availability scope",
+  "type": "object",
+  "required": [
+    "origin",
+    "binding",
+    "scope",
+    "carrier",
+    "interpretation",
+    "nativePath",
+    "contextIndex",
+    "repetitionLevel"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.parquet.nullability",
+        "version": "1.0.0"
+      }
+    },
+    "scope": {
+      "enum": [
+        "row-leaf-value",
+        "repeated-element-value",
+        "write-input",
+        "unresolved"
+      ]
+    },
+    "carrier": {
+      "enum": [
+        "definition-level",
+        "unresolved"
+      ]
+    },
+    "interpretation": {
+      "enum": [
+        "declared",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "nativePath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contextIndex": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "repetitionLevel": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "nativeCompositeKey": {
+    "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "bun": "1.4.2",
+    "components": 2,
+    "family": "string",
+    "swappedIdentitiesDistinct": true,
+    "commits": 2,
+    "restartedReplay": "exact",
+    "scope": "One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"
+  },
+  "nativeUnsupportedRelationships": {
+    "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "bun": "1.4.2",
+    "declarations": [
+      "owned",
+      "association-record"
+    ],
+    "validMetadata": true,
+    "independentLayoutControl": "admitted",
+    "allInputsTyped": "admitted",
+    "prepare": "refused",
+    "preview": "unsupported/PARAMETER",
+    "invoke": "unsupported/PARAMETER",
+    "businessAccesses": 0,
+    "transactionalWrites": 0,
+    "allActionTablesGuarded": 20,
+    "allActionRowsUnchanged": true,
+    "scope": "Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"
+  },
+  "nativeRefinement": {
+    "profile": "umf.actions.finite-idempotent-set/1",
+    "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "alphabet": [
+      "invoke-A",
+      "invoke-B",
+      "lookup-A",
+      "revoke",
+      "grant",
+      "retire"
+    ],
+    "depth": 3,
+    "traces": 216,
+    "transitions": 648,
+    "mismatches": 0,
+    "scope": "One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"
+  },
+  "nativeMutation": {
+    "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "killed": 3,
+    "total": 3,
+    "witnesses": [
+      {
+        "id": "skip-replay",
+        "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+        "mutantSha256": "6c745a46fbaf20bb4efb9e516f3a8e5d44399587fcef04aaeb9ff4172a3df67d",
+        "trace": [
+          "invoke-A",
+          "invoke-A"
+        ],
+        "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"
+      },
+      {
+        "id": "ignore-role-membership",
+        "sourceSha256": "78265b7610012a9ea028ec117d6ff67608ef5bd4558eb12dabf56724eefd2865",
+        "mutantSha256": "9d9fcd5f213e9b2797c55a8bf07ebad7a0b1764f8ea91ed3fc154c30e46b9a15",
+        "trace": [
+          "invoke-A",
+          "revoke",
+          "invoke-A"
+        ],
+        "reason": "Error: NATIVE_REFINEMENT invoke-A \u2192 revoke \u2192 invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"
+      },
+      {
+        "id": "omit-terminal-audit",
+        "sourceSha256": "a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f",
+        "mutantSha256": "e80b4a2b64ca1f21736aa52d118bc4c041670d26e4b1b00a00a3c571979d3147",
+        "trace": [
+          "invoke-A"
+        ],
+        "reason": "Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"
+      }
+    ]
+  },
+  "nativeInvariantMutation": {
+    "bun": "1.4.2",
+    "nativeVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "killed": 2,
+    "total": 2,
+    "witnesses": [
+      {
+        "id": "per-key-canonical-identity",
+        "sourceSha256": "a4f5b334780f9945b26108fc7b5ac12132398961d2b6b745ba4764a4bdda3c30",
+        "mutantSha256": "1fa33c5a3edf594a89907d77267aaa04c3a6f1fe7cb1eac87c8849147991106c",
+        "baseline": "passed",
+        "boundary": "alias canonical identity",
+        "expected": [
+          "entity:2",
+          "entity:2"
+        ],
+        "actual": [
+          "key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]",
+          "key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"
+        ]
+      },
+      {
+        "id": "skip-missing-projection-prefix",
+        "sourceSha256": "d97bb62fe3b872fb2b40d84b15bd52457ffda3011b42f9cb79cf75e902503ccd",
+        "mutantSha256": "6c95edb557b90afcb6929094fd714e1a0bb4e949479a96455815d5550186a3d8",
+        "baseline": "passed",
+        "boundary": "projection missing-prefix visibility",
+        "expected": {
+          "delivery": {
+            "status": "delivered",
+            "prefix": "0"
+          },
+          "prefix": "0",
+          "content": {
+            "profile": {
+              "id": "umf.actions.native-graph",
+              "version": "1"
+            },
+            "entities": [
+              {
+                "id": "5",
+                "record": {
+                  "element": "order",
+                  "module": "sales"
+                },
+                "fields": {
+                  "[\"sales\",\"id\"]": {
+                    "string": "one"
+                  },
+                  "[\"sales\",\"status\"]": {
+                    "string": "pending"
+                  }
+                },
+                "version": "original-version"
+              },
+              {
+                "id": "6",
+                "record": {
+                  "element": "order",
+                  "module": "sales"
+                },
+                "fields": {
+                  "[\"sales\",\"id\"]": {
+                    "string": "two"
+                  },
+                  "[\"sales\",\"status\"]": {
+                    "string": "pending"
+                  }
+                },
+                "version": "original-version"
+              }
+            ],
+            "links": []
+          },
+          "queued": [
+            "2"
+          ],
+          "readStatus": "pending"
+        },
+        "actual": {
+          "delivery": {
+            "status": "delivered",
+            "prefix": "2"
+          },
+          "prefix": "2",
+          "content": {
+            "profile": {
+              "id": "umf.actions.native-graph",
+              "version": "1"
+            },
+            "entities": [
+              {
+                "id": "5",
+                "record": {
+                  "element": "order",
+                  "module": "sales"
+                },
+                "fields": {
+                  "[\"sales\",\"id\"]": {
+                    "string": "one"
+                  },
+                  "[\"sales\",\"status\"]": {
+                    "string": "pending"
+                  }
+                },
+                "version": "original-version"
+              },
+              {
+                "id": "6",
+                "record": {
+                  "element": "order",
+                  "module": "sales"
+                },
+                "fields": {
+                  "[\"sales\",\"id\"]": {
+                    "string": "two"
+                  },
+                  "[\"sales\",\"status\"]": {
+                    "string": "approved"
+                  }
+                },
+                "version": "b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"
+              }
+            ],
+            "links": []
+          },
+          "queued": [
+            "2"
+          ],
+          "readStatus": "visible"
+        }
+      }
+    ],
+    "scope": "One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"
+  }
+}

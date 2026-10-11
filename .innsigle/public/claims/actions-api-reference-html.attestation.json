@@ -1,0 +1,53 @@
+{
+  "payload": {
+    "innsigle": "1",
+    "type": "https://innsigle.dev/claim/colophon/v1",
+    "issued_at": "2026-10-11T03:14:46Z",
+    "issuer": {
+      "id": "documentdrivendx-umf",
+      "name": "DocumentDrivenDX UMF",
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json"
+    },
+    "subjects": [
+      {
+        "uri": "https://documentdrivendx.github.io/umf/actions/api-reference.html",
+        "digest": {
+          "alg": "sha256",
+          "value": "f785f6ef4889909539d8aa1072fcab1703a5e7d46bcf84db721be84ae0b9a976"
+        }
+      }
+    ],
+    "colophon": {
+      "schema_version": "1",
+      "composition": "model-primary",
+      "ingredients": [
+        {
+          "kind": "model",
+          "name": "OpenAI Codex",
+          "role": "draft and rewrite"
+        },
+        {
+          "kind": "human",
+          "name": "Erik Labianca",
+          "role": "direction and review"
+        },
+        {
+          "kind": "tool",
+          "name": "innsigle-seal",
+          "role": "colophon preparation and sealing"
+        }
+      ],
+      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+    }
+  },
+  "payload_encoding": "json",
+  "signatures": [
+    {
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "alg": "ed25519",
+      "sig": "HxP8pa-0qFIjcvpYr0u7uEn6jABGlME54CXUXV4-zswSMphLV3z-nefQqa5LRnMfNypa04kIaLHz6Z3CD0NAAg",
+      "signed_at": "2026-10-11T03:14:46Z"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "resourceType": "Claim",
+  "id": "paid-denied",
+  "status": "active",
+  "type": {
+    "coding": [
+      {
+        "system": "urn:umf:medical:synthetic-codes",
+        "code": "professional"
+      }
+    ]
+  },
+  "use": "claim",
+  "patient": {
+    "reference": "Patient/member"
+  },
+  "created": "2026-01-02",
+  "insurer": {
+    "reference": "Organization/payer"
+  },
+  "insurance": [
+    {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+        "reference": "Coverage/active"
+      }
+    }
+  ],
+  "item": [
+    {
+      "sequence": 1,
+      "productOrService": {
+        "coding": [
+          {
+            "system": "urn:umf:medical:synthetic-codes",
+            "code": "service-1"
+          }
+        ]
+      },
+      "modifier": [
+        {
+          "coding": [
+            {
+              "system": "urn:umf:medical:synthetic-codes",
+              "code": "example-modifier"
+            }
+          ]
+        }
+      ],
+      "servicedDate": "2026-01-03",
+      "quantity": {
+        "value": 1
+      },
+      "unitPrice": {
+        "value": 100,
+        "currency": "USD"
+      },
+      "net": {
+        "value": 100,
+        "currency": "USD"
+      }
+    },
+    {
+      "sequence": 2,
+      "productOrService": {
+        "coding": [
+          {
+            "system": "urn:umf:medical:synthetic-codes",
+            "code": "service-2"
+          }
+        ]
+      },
+      "modifier": [
+        {
+          "coding": [
+            {
+              "system": "urn:umf:medical:synthetic-codes",
+              "code": "example-modifier"
+            }
+          ]
+        }
+      ],
+      "servicedDate": "2026-01-03",
+      "quantity": {
+        "value": 1
+      },
+      "unitPrice": {
+        "value": 100,
+        "currency": "USD"
+      },
+      "net": {
+        "value": 100,
+        "currency": "USD"
+      }
+    }
+  ],
+  "total": {
+    "value": 200,
+    "currency": "USD"
+  },
+  "extension": [
+    {
+      "url": "urn:umf:uninterpreted",
+      "valueString": "retained extension content"
+    }
+  ]
+}

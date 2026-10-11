@@ -1,0 +1,158 @@
+{
+  "profile": "umf.actions.exact-identity-migration/1",
+  "sourceBase": "b9e4b1cf383d95997016594da5e70d5cb198f558",
+  "governingReason": "Primary independently allocated US/TD/STP-078 to public-company intelligence; preserve both meanings and use US/TD/STP-900 for active actions. CONTRACT-900/901 unchanged.",
+  "allowedFileTransforms": [
+    {
+      "oldPath": "docs/helix/README.md",
+      "newPath": "docs/helix/README.md",
+      "oldSha256": "d98c7179cc78a6c1f3801eebfc7c76261275f64461d3569b789fb4995fae9657",
+      "newSha256": "f6810758d869e3db8cedb2664bebb11030ee6188294c35b7dcc11eea26b9c0fb",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/03-test/test-plans/STP-078-declarative-actions.md",
+      "newPath": "docs/helix/03-test/test-plans/STP-900-declarative-actions.md",
+      "oldSha256": "57b53d3804c03a413559d6f151272e002f0acad7641baa87a9b075693e44639c",
+      "newSha256": "2eab18d83b2c187749fe5b52b24e08ca17a0852719940e9ae763b90bbcdd1fc4",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file",
+      "redirectSha256": "4f7d2bc3989befb7e02c5982c20b93c3a6bc390502ab60992cfd3faa76e3c499"
+    },
+    {
+      "oldPath": "docs/helix/02-design/technical-designs/TD-078-declarative-actions.md",
+      "newPath": "docs/helix/02-design/technical-designs/TD-900-declarative-actions.md",
+      "oldSha256": "3d14041439e89c6b4284949d6d62a99a51f8c7129b81227a84d446cff81eec7e",
+      "newSha256": "500e9fc47be1f90eb1c1127b6a9593c36a07fc962b87e5977e20f7135a74da6e",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file",
+      "redirectSha256": "71911e21adb5d54465504c1e64e4b1c7f5d4f2013a7d9cb4ff0bf1341d16e6a6"
+    },
+    {
+      "oldPath": "docs/helix/03-test/test-plans/STP-055-declarative-actions.md",
+      "newPath": "docs/helix/03-test/test-plans/STP-055-declarative-actions.md",
+      "oldSha256": "2c3c0bf4e5d993642f7654593d7500a7f057a871d466b480cb8292264a501c15",
+      "newSha256": "066d64ef298f3928261b5bcf75592d91fc317fa95c54234069f5286b291c14e8",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/02-design/technical-designs/TD-055-declarative-actions.md",
+      "newPath": "docs/helix/02-design/technical-designs/TD-055-declarative-actions.md",
+      "oldSha256": "482507efb1f29bfe08fdbcb2bdb42015bee26a5e1cb2fa02225488aaacd20c71",
+      "newSha256": "ce2950e72df64d83fea5b57dbe8567cce1c0269dc9576bd435088463823dd623",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+      "newPath": "docs/helix/02-design/solution-designs/SD-008-declarative-actions.md",
+      "oldSha256": "5c9fce16a3c74fec5faa9c92db00c78dfd0a935fcb8548c1253cf18c66fa7aef",
+      "newSha256": "cab8fbe9e0979984850ba9ac7833f655fe7e8d74aa2c0c926756cbd18ba36ff0",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md",
+      "newPath": "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md",
+      "oldSha256": "3cab2c74d47f52773f0d81bc1961f9a654ec4eb9aa24d90a683b21f0d7f215b9",
+      "newSha256": "704364916ce2d37400511125794e594e77e90030630c9b9b1db53a2814cdd7c2",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-078-declarative-actions.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
+      "oldSha256": "f42699b622d9ef048b3f0c0fc194e48cc082301164a6372bef4a7193b670ed20",
+      "newSha256": "93372a2d2438b5eb5478a5c58f73b7f2d94aeb40d49f8ca7b647bcd9b1fc9d5e",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file",
+      "redirectSha256": "30fded550ac13b9ba5963b55a637e1090dc6ae5a9ffe85bc50bf4ea26ca6b16f"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-056-transactional-actions.md",
+      "oldSha256": "48f4f8a0489ffcb5c45421542efdfd691f263a164fc346beead0235cb144bf8e",
+      "newSha256": "f8db2348e86c9f9c13c600ef24acf733af64c41ce47402dd95b6189dfe2fb8a6",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-055-declarative-actions.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-055-declarative-actions.md",
+      "oldSha256": "a912ef8842a0ad75ad81c674ae05c77ac4aa1928b064f3a82da664faa8e19b33",
+      "newSha256": "d71d4cdfde892f88d01467e304da99a39e778d09072f6e35b83c5a92045c64f8",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+      "newPath": "docs/helix/01-frame/features/FEAT-008-declarative-actions.md",
+      "oldSha256": "fdbeee3c4b8fb55178e4ad8274cdb68e217aa4a28cc085ac1c6f6f532db0abb0",
+      "newSha256": "07830df0a54223b5eded6f1fbf7baf194d1b16c4195b943f1eb5a74f2996d84e",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/contracts.test.ts",
+      "newPath": "tests/actions/contracts.test.ts",
+      "oldSha256": "fb19007dd18c4e541fc4061a0c94228ca91267c25dff18b54c5495312a519162",
+      "newSha256": "2fd18b54c9aec3d112af3fdff1a976b98dbb262ab32e93d0c02148f2472e7c7f",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/corpus.test.ts",
+      "newPath": "tests/actions/corpus.test.ts",
+      "oldSha256": "5d1cbbd5710708a62bd3a72b54a1bdd6def9da95945c62805fe35521554a7293",
+      "newSha256": "8c3967aa4689eb9c3107a0815ba32497caadb8eed37ab285edc1cae3af5b2f16",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "newPath": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "oldSha256": "a9e6438d27f6fc8aa08a8bb55e8bcc8d1934c8f82fcfca0ec25d096cb5a3fb5c",
+      "newSha256": "fcb6456a7ae6b88d40a450d741d8701e39ee038e3b8e524906f02398759b39dd",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/assessment.test.ts",
+      "newPath": "tests/actions/assessment.test.ts",
+      "oldSha256": "7df9c5ade9b49730ab3d4d9a57b0e3af47dcd8344f92f3a44c0fa1ba28bcf728",
+      "newSha256": "5022ba9c516814e2122077eea6117b3e863f645047bd7b2d0b65eab5fe58b173",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/structure.test.ts",
+      "newPath": "tests/actions/structure.test.ts",
+      "oldSha256": "3ce870d76ac1d4f61aea14724462087ae96a1140b3c446e9320334041dea33e8",
+      "newSha256": "4059702b969fd0c8f0821d42aa5cad5053aa73e17327af8a529a7a23e0f6ac07",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/preservation.test.ts",
+      "newPath": "tests/actions/preservation.test.ts",
+      "oldSha256": "6d181a70eb01660e2147fdb40a42568bec6281532f1b3123cd01a59feb624100",
+      "newSha256": "68fd058ad1947608e493e68b6e7d4f3a91f363d6e12f0f781264f7e89893bd77",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "tests/actions/reports.test.ts",
+      "newPath": "tests/actions/reports.test.ts",
+      "oldSha256": "4a16043bd893f46f535367d7dd2d5f7cb8062fae5b39b75d9fe430fdfadb384e",
+      "newSha256": "2d4c5b50b825ad8e245edbf98ffeb485ca9287f3494407519c8e79891b38f17e",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/02-design/architecture.md",
+      "newPath": "docs/helix/02-design/architecture.md",
+      "oldSha256": "b1b13208291a5d5b83a8066296c5d1d3abde543fc88afe82f0a388575fed1959",
+      "newSha256": "7d43c3ce417e4e13c5999e531e4662d5d4fc9add8170e6cd21be57cd19981c19",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "scripts/actions-browser.ts",
+      "newPath": "scripts/actions-browser.ts",
+      "oldSha256": "91490af90a54c08df7c8586ef6f8c527b1358e42f6c1e8375b42b91849ce6114",
+      "newSha256": "a807de623d85b8bf019d7cda64449eefbc5eb0ded339956fdea8850f566386df",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    },
+    {
+      "oldPath": "docs/helix/04-build/actions-documentation-plan.md",
+      "newPath": "docs/helix/04-build/actions-documentation-plan.md",
+      "oldSha256": "21a7f01838fa943900c8641a0f3690f3bf9c73b366279f0c724bf46b1d856988",
+      "newSha256": "1ab08f556acaab9af4f267a9df5cadc807fdee22df9225c933f1dde98665a839",
+      "onlyAllowedTransform": "Exact US/TD/STP-078 to US/TD/STP-900 token substitution in this enumerated file"
+    }
+  ],
+  "originalCertificates": "Unchanged; original identities remain historical qualification subjects."
+}

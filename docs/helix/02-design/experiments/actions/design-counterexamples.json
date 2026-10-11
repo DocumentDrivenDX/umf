@@ -1,0 +1,191 @@
+{
+  "scope": "Normative counterexample sketches; not full UMF inputs or executable acceptance tests",
+  "cases": [
+    {
+      "id": "D01",
+      "kind": "declaration",
+      "case": "duplicate read frame IDs select different identities",
+      "expected": {
+        "code": "ACTION_IDENTITY",
+        "execution": "refused"
+      }
+    },
+    {
+      "id": "D02",
+      "kind": "declaration",
+      "case": "duplicate write frame IDs",
+      "expected": {
+        "code": "ACTION_IDENTITY",
+        "execution": "refused"
+      }
+    },
+    {
+      "id": "D03",
+      "kind": "declaration",
+      "case": "same frame ID appears in reads and writes",
+      "expected": {
+        "code": "ACTION_IDENTITY",
+        "execution": "refused"
+      }
+    },
+    {
+      "id": "D04",
+      "kind": "declaration",
+      "case": "rule references an absent frame ID",
+      "expected": {
+        "code": "ACTION_REFERENCE",
+        "execution": "refused"
+      }
+    },
+    {
+      "id": "D05",
+      "kind": "verification",
+      "binding": "recipe",
+      "effects": [
+        {
+          "effect": "update",
+          "outcome": "changed"
+        },
+        {
+          "effect": "link",
+          "outcome": "no-op"
+        }
+      ],
+      "expected": {
+        "effectEntries": 2,
+        "netChanges": 1,
+        "noOp": false,
+        "replayVerification": "unchanged"
+      }
+    },
+    {
+      "id": "D06",
+      "kind": "verification",
+      "binding": "recipe",
+      "effects": [
+        {
+          "effect": "link",
+          "outcome": "no-op"
+        }
+      ],
+      "expected": {
+        "effectEntries": 1,
+        "netChanges": 0,
+        "noOp": true,
+        "businessVersionDelta": 0
+      }
+    },
+    {
+      "id": "D07",
+      "kind": "verification",
+      "binding": "recipe",
+      "effects": [
+        {
+          "effect": "set-a",
+          "outcome": "changed"
+        },
+        {
+          "effect": "restore-a",
+          "outcome": "changed"
+        }
+      ],
+      "expected": {
+        "effectEntries": 2,
+        "netChanges": 0,
+        "noOp": true,
+        "businessVersionDelta": 0
+      }
+    },
+    {
+      "id": "D08",
+      "kind": "precedence",
+      "fresh": true,
+      "entityExists": true,
+      "expectedVersionMatches": false,
+      "precondition": "false",
+      "expected": {
+        "status": "conflict",
+        "code": "EXPECTED_VERSION",
+        "preconditionEvaluated": false,
+        "businessChanges": 0,
+        "outcomeRecords": 1
+      }
+    },
+    {
+      "id": "D09",
+      "kind": "precedence",
+      "fresh": true,
+      "entityExists": true,
+      "expectedVersionMatches": false,
+      "precondition": "evaluation-error",
+      "expected": {
+        "status": "conflict",
+        "code": "EXPECTED_VERSION",
+        "preconditionEvaluated": false,
+        "businessChanges": 0,
+        "outcomeRecords": 1
+      }
+    },
+    {
+      "id": "D10",
+      "kind": "precedence",
+      "fresh": true,
+      "entityExists": true,
+      "expectedVersionMatches": true,
+      "precondition": "evaluation-error",
+      "expected": {
+        "status": "failed",
+        "code": "RULE_EVALUATION",
+        "businessChanges": 0,
+        "outcomeRecords": 0
+      }
+    },
+    {
+      "id": "D11",
+      "kind": "precedence",
+      "fresh": true,
+      "entityExists": false,
+      "expectedVersionMatches": false,
+      "precondition": "false",
+      "expected": {
+        "status": "rejected",
+        "code": "ENTITY_MISSING",
+        "preconditionEvaluated": false,
+        "businessChanges": 0,
+        "outcomeRecords": 1
+      }
+    },
+    {
+      "id": "D12",
+      "kind": "precedence",
+      "fresh": true,
+      "inputAdmitted": false,
+      "entityExists": false,
+      "expectedVersionMatches": false,
+      "expected": {
+        "status": "unsupported",
+        "code": "PARAMETER",
+        "businessChanges": 0,
+        "outcomeRecords": 0
+      }
+    },
+    {
+      "id": "D13",
+      "kind": "verification",
+      "binding": "recipe",
+      "case": "one declared effect omitted from verification",
+      "expected": {
+        "commitAllowed": false
+      }
+    },
+    {
+      "id": "D14",
+      "kind": "verification",
+      "binding": "handler",
+      "case": "wrong deployment or missing postcondition verification",
+      "expected": {
+        "commitAllowed": false
+      }
+    }
+  ]
+}

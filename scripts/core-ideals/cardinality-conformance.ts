@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertNativeRepresentationEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import {isAbsolute,relative,resolve,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
@@ -41,7 +42,7 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   if(name.startsWith('cardinality-core')){
    for(const p of ['spec/core/cardinality-operation.schema.json','spec/core/cardinality-transition.schema.json','spec/core/cardinality-selection.schema.json','spec/core/kind-operation-v3.schema.json','spec/core/record-type-operation-v3.schema.json','spec/core/nullability-operation-v2.schema.json'])required(r,p);
    for(const proof of ['core-cardinality-browser','core-cardinality-operations-browser','cardinality-field-operations-browser','cardinality-selection-browser']){
-    required(r,file(proof));const browser=await load(file(proof));assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
+    required(r,file(proof));const browser=await load(file(proof));assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assertNativeRepresentationEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
    }
   }
   if(!name.startsWith('cardinality-core')){
@@ -59,12 +60,12 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
   assert.ok(r.runs?.length,`${path}: missing child commands`);for(const run of r.runs)assert.equal(run.exitCode,0,`${path}: failed child command`);
   if(part==='browser'){
    assert.equal(r.browser,refresh.browser??'148.0.7778.0');assert.ok(Object.keys(r.checks).length);
-   if(Object.hasOwn(r,'externalRequests'))assert.deepEqual(r.externalRequests,[]);
+   if(Object.hasOwn(r,'externalRequests'))assertNativeRepresentationEqual(r.externalRequests,[]);
    const children=Object.keys(r.sha256??{}).filter(p=>p.endsWith('-browser.json'));assert.ok(children.length);
    for(const child of children){
     const rel=recordedRepositoryPath(child),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
     assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${path}: unsafe evidence path`);
-    const browser=await load(rel);assert.equal(browser.browser,r.browser);assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
+    const browser=await load(rel);assert.equal(browser.browser,r.browser);assertNativeRepresentationEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
    }
   }
   else {
@@ -72,8 +73,8 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
    if(system==='tablespec')assert.equal(r.nativeVersion,'647e8e566ad78b864282ec65c0b0b2237aa63084');
    if(system==='postgresql')assert.equal(r.nativeVersion,'17.4');
    if(system==='sqlserver')assert.equal(r.nativeVersion,'16.0.4295.3');
-   if(system==='avro')assert.deepEqual(r.nativeVersions,{apache:'1.12.0',fastavro:'1.12.2'});
-   if(system==='parquet')assert.deepEqual(r.nativeVersions,{pyarrow:'21.0.0'});
+   if(system==='avro')assertNativeRepresentationEqual(r.nativeVersions,{apache:'1.12.0',fastavro:'1.12.2'});
+   if(system==='parquet')assertNativeRepresentationEqual(r.nativeVersions,{pyarrow:'21.0.0'});
   }
   await verify(r,path);
  }
@@ -83,8 +84,8 @@ export async function verifyCardinalityEvidence(reader:Reader=read){
 }
 const upgrade=(source:u.Document)=>u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target;
 function retained(before:u.Document,after:u.Document){
- for(const [key,value] of Object.entries(before.extensions??{}))assert.deepEqual(after.extensions?.[key],value);
- for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assert.deepEqual(target.extensions[key],value);}
+ for(const [key,value] of Object.entries(before.extensions??{}))assertNativeRepresentationEqual(after.extensions?.[key],value);
+ for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assertNativeRepresentationEqual(target.extensions[key],value);}
 }
 function unknown(source:u.Document){const d=u.copyJson(source) as unknown as u.Document;d.vocabularies.future={version:'1.0.0'};d.extensions={...d.extensions,future:{meaning:['9007199254740993',null]}};return d;}
 // These are test orchestration adapters over independently schema-checked public receipts.
@@ -112,26 +113,26 @@ export async function verifyCardinalityRoundTrips(){
    b.rows.push({author,request:{...base.request,mode}});
   }
   for(const row of b.rows){
-   const before=u.copyJson(row.author),r=await b.project(row);assert.deepEqual(row.author,before);counts.authoredCases++;
+   const before=u.copyJson(row.author),r=await b.project(row);assertNativeRepresentationEqual(row.author,before);counts.authoredCases++;
    assert.equal(r.mapping.origin,'authored');assert.equal(r.mapping.cardinality,row.author.provenance.cardinality);
    if(!counts.labels.includes(r.mapping.cardinality))counts.labels.push(r.mapping.cardinality);
    if(r.status==='blocked'){assert.equal(row.request.mode,'strict');assert.equal(r.target,undefined);assert.ok(r.residuals.length);counts.strictBlocks++;continue;}
    assert.equal(r.status,'projected');assert.ok(r.target);
    if(row.request.mode==='strict')assert.equal(r.residuals.length,0);
    if(r.residuals.length){assert.equal(row.request.mode,'report');assert.notEqual(r.mapping.outcome,'exact');counts.reportResiduals++;}
-   for(const format of ['json','yaml'] as const){assert.deepEqual(await b.recover(roundTrip(r,format)),row.author.target);counts.idealRecoveries++;}
+   for(const format of ['json','yaml'] as const){assertNativeRepresentationEqual(await b.recover(roundTrip(r,format)),row.author.target);counts.idealRecoveries++;}
    if(b.compose){b.compose(r);counts.compositions++;}
    if(system==='tablespec'){
     const text=u.exportTableSpec(r.target),source=tableSpecCardinalitySource(text),c=u.classifyTableSpecCardinality(source,{column:0,profile:'runtime-model',mode:'report'});assert.ok(c.target);assert.equal(u.recoverTableSpecCardinalitySource(c,c.target),text);counts.compositions++;
    }
   }
-  counts.labels.sort();assert.deepEqual(counts.labels,['array','map','one','unspecified']);assert.ok(counts.strictBlocks&&counts.reportResiduals&&counts.idealRecoveries);
+  counts.labels.sort();assertNativeRepresentationEqual(counts.labels,['array','map','one','unspecified']);assert.ok(counts.strictBlocks&&counts.reportResiduals&&counts.idealRecoveries);
  }
  function native(system:System,source:u.Document,classify:(source:u.Document)=>any,recover:(r:any)=>unknown,expected:unknown,mode:string){
-  const input=unknown(source),before=u.copyJson(input),r=classify(input),counts=coverage[system];counts.nativeCases++;assert.deepEqual(input,before);assert.equal(r.mapping.origin,'classified');
+  const input=unknown(source),before=u.copyJson(input),r=classify(input),counts=coverage[system];counts.nativeCases++;assertNativeRepresentationEqual(input,before);assert.equal(r.mapping.origin,'classified');
   if(r.status==='blocked'){assert.equal(mode,'strict');assert.ok(r.residuals.length);assert.equal(r.target,undefined);counts.nativeBlocks++;return;}
   assert.equal(r.status,'classified');retained(input,r.target);if(mode==='strict')assert.equal(r.residuals.length,0);
-  for(const format of ['json','yaml'] as const){assert.deepEqual(recover(roundTrip(r,format)),expected);counts.nativeRecoveries++;}
+  for(const format of ['json','yaml'] as const){assertNativeRepresentationEqual(recover(roundTrip(r,format)),expected);counts.nativeRecoveries++;}
  }
  for(const c of cardinalityTableSpecCases())native('tablespec',c.source,s=>u.classifyTableSpecCardinality(s,c.request),r=>u.recoverTableSpecCardinalitySource(r,r.target),c.text,c.request.mode);
  const pg=await Bun.file(file('cardinality-postgresql-catalog-native')).json(),pgSource=upgrade(u.importPostgresqlCatalogCapture(pg.captureSource,{id:'gate'})),supplement=JSON.stringify(pg.supplement);
@@ -158,13 +159,13 @@ export async function verifyCardinalityRoundTrips(){
   for(const row of proof.rows){
    if(row.result.status==='blocked')continue;
    const key=row.request.storage+':'+row.author.provenance.cardinality;if(seen.has(key))continue;seen.add(key);
-   const result=await bindings[system].project(row);assert.deepEqual(result,row.result);
+   const result=await bindings[system].project(row);assertNativeRepresentationEqual(result,row.result);
    let classified:any;
    if(system==='postgresql'){
     const column=u.getPostgresqlColumnMetadata(source).find(c=>c.relation.name===row.request.tableName)!;assert.ok(column);
     classified=u.classifyPostgresqlCardinality(source,{column:column.path,nativeSource:proof.nativeSource,supplement:proof.supplement,profile:'stored-value',mode:'report'});
     assert.equal(classified.mapping.cardinality,row.request.storage==='scalar'?'one':row.request.storage==='array'?'array':'unspecified');
-    assert.deepEqual(u.recoverPostgresqlCardinalitySource(classified,classified.target!),{nativeSource:proof.nativeSource,supplement:proof.supplement});
+    assertNativeRepresentationEqual(u.recoverPostgresqlCardinalitySource(classified,classified.target!),{nativeSource:proof.nativeSource,supplement:proof.supplement});
    }else{
     const column=u.getSqlServerColumnMetadata(source).find(c=>c.table.name===row.request.tableName)!;assert.ok(column);
     const check=u.getSqlServerConstraintMetadata(source).tables.find(t=>t.table.name===column.table.name)!.checks[0];
@@ -174,7 +175,7 @@ export async function verifyCardinalityRoundTrips(){
     assert.equal(u.recoverSqlServerCardinalitySource(classified,classified.target!),proof.nativeSource);
    }
    if(result.mapping.outcome==='exact'&&result.mapping.cardinality!=='unspecified')assert.equal(classified.mapping.cardinality,result.mapping.cardinality);
-   assert.deepEqual(await bindings[system].recover(result),row.author.target);coverage[system].compositions++;
+   assertNativeRepresentationEqual(await bindings[system].recover(result),row.author.target);coverage[system].compositions++;
   }
  }
  for(const system of cardinalitySystems)assert.ok(coverage[system].nativeBlocks&&coverage[system].nativeRecoveries);

@@ -1,0 +1,12 @@
+{"stage": null, "command": [".venv/bin/python", "scripts/refresh-core-checks.py"]}
+{"step": 1, "total": 174, "command": ["bun", "run", "typecheck"]}
+{"step": 2, "total": 174, "command": ["bun", "run", "test:schemas"]}
+Failed ['bun', 'run', 'test:schemas']; inspect fixtures/validation/core-check-refresh/002.log
+Traceback (most recent call last):
+  File "/opt/replay.py", line 88, in <module>
+    run(command)
+  File "/opt/replay.py", line 24, in run
+    subprocess.run(command, check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['.venv/bin/python', 'scripts/refresh-core-checks.py']' returned non-zero exit status 1.

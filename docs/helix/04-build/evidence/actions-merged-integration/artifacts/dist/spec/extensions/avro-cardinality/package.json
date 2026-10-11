@@ -1,0 +1,218 @@
+{
+  "id": "umf.avro.cardinality",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Avro declared container shape with retained native item schemas and union meaning",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:avro:cardinality-binding:1.0.0",
+    "title": "Retained Avro Cardinality scope",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "nativeColumn",
+      "binding",
+      "profile",
+      "basis",
+      "location",
+      "nativeFragment",
+      "interpretation",
+      "nativeAllowsNull",
+      "definitions"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "nativeColumn": {
+        "type": "string",
+        "minLength": 1
+      },
+      "binding": {
+        "const": {
+          "id": "umf.avro.cardinality",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "present-non-null-schema",
+          "unresolved"
+        ]
+      },
+      "basis": {
+        "const": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+      },
+      "location": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "dependencyId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "nativeFragment": {
+        "$ref": "#/$defs/node"
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativeAllowsNull": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "definitions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "dependencyId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-042; schema-level shape, not codec or native equivalence",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "Avro",
+      "version": "1.12.0",
+      "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+    },
+    "evidence": [
+      "tests/core-ideals/cardinality-avro.test.ts",
+      "fixtures/validation/cardinality-avro-profile-native.json"
+    ]
+  }
+}

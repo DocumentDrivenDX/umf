@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-08T22:52:11Z",
+    "issued_at": "2026-10-11T03:14:54Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -11,34 +11,34 @@
     },
     "subjects": [
       {
-        "uri": "https://documentdrivendx.github.io/umf/docs.html/",
+        "uri": "https://documentdrivendx.github.io/umf/docs.html",
         "digest": {
           "alg": "sha256",
-          "value": "0754a21f9a45d070236393cfae9503fd44bd488687f1aa7bf659ffca501acc18"
+          "value": "e1de907d7fe493955abe135d2a8c4402fef9f8fa7a8ac8e9d422073263452b42"
         }
       }
     ],
     "colophon": {
       "schema_version": "1",
-      "composition": "mixed",
+      "composition": "model-primary",
       "ingredients": [
         {
-          "kind": "human",
-          "name": "operator",
-          "role": "outline"
-        },
-        {
           "kind": "model",
-          "name": "Claude",
-          "role": "expand"
+          "name": "OpenAI Codex",
+          "role": "draft and rewrite"
         },
         {
           "kind": "human",
-          "name": "operator",
-          "role": "final-edit"
+          "name": "Erik Labianca",
+          "role": "direction and review"
+        },
+        {
+          "kind": "tool",
+          "name": "innsigle-seal",
+          "role": "colophon preparation and sealing"
         }
       ],
-      "notes": null
+      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
     }
   },
   "payload_encoding": "json",
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "RnK8_wCf8d2IMGbMSeRxUSFw7-8noVEk7EbfsVkgafEK-nKVzkpEm26w8wfnYFEKWI7Kvd6D1J1vMXJm4XkdAw",
-      "signed_at": "2026-10-08T22:52:11Z"
+      "sig": "ue7w4xv8ja6cVACaVqQvPi8NpGYoFhzpghXd88AQ9dthYU5q7cyQ7Lpq5Q2MTZCMLapwGUZlucK27ZtGupuSCA",
+      "signed_at": "2026-10-11T03:14:54Z"
     }
   ]
 }

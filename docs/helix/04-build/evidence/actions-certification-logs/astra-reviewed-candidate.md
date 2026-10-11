@@ -1,0 +1,15 @@
+# Action acceptance qualification — 2026-10-09
+
+Status: **all execution gates passed; final claim audit pending**. The [machine-readable certificate](actions-certification.json) binds all 21 acceptance criteria to exact sources, governing documents, witnesses and execution evidence. Its `certified` flag remains false until the final independent claim audit.
+
+Scope is UMF core 0.8.0, `umf.actions` 0.1.0, CONTRACT-052/053 and US-055/056, including the fixed owned PostgreSQL reference consumer. The governed US/TD/STP/Contract artifacts remain drafts; execution qualification does not promote their approval state. Production/downstream adoption, external or cross-store business effects, arbitrary added triggers/outside writers, unqualified layouts and universal correctness remain outside this qualification.
+
+All 174 native/browser commands and 6 auxiliary checks passed. Full disjoint regression passed 2297 tests across 421 files with 133,117 assertions and zero failures. The separate admission/evidence gate passed 17 tests across 8 files with 210 assertions and zero failures: **2,314 distinct tests across 429 files, all passing**. All six integrity families passed in both the replay and delivered managed worktree. Publication completed 24 aggregate roots and preserves immutable historical evidence.
+
+The action-specific gates passed 54 portable tests, 119 native reference tests and 351 schema checks; both TypeScript configurations passed. Chromium 153.0.8010.12 ran all 44 shared action cases with Bun parity and no external requests. The reference consumer ran on PostgreSQL 17.9 and Bun 1.4.2; other core native adapters retain their own recorded versions and subsets.
+
+Fresh native refinement executed 216 histories and 648 transitions with zero mismatches. All five actual implementation mutants produced their required semantic failures, with independently checked source and replacement hashes and passing original controls. Composite-Key replay and explicit refusal of unqualified owned/Association-Record layouts passed. These are bounded implementation results; earlier SMT/TLC/history reports remain separately scoped design evidence.
+
+Execution source is frozen replay revision `fb3d05fdf17cb4221b6e06518bae4a823d78da31`, with 6,990 captured inputs. The separately reviewed publication-only repair binds its original frozen source hash and current finalization hash; every other executed input remains exact. The certificate records both replay image identities, the exact publication diff, complete raw logs, 825 native action input hashes, eight governing-document hashes and the additional fixture lineage. The replay revision is a synthetic disposable-checkout commit; the managed worktree retains the implementation and evidence for review.
+
+Delivered evidence includes 467 byte-verified generated fixture/log files and 14 proof-referenced browser/runtime artifacts. [Intermediate failures and superseded captures](actions-certification-history.md) remain historical and contribute no passing credits to the final execution.

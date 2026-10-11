@@ -1,0 +1,80 @@
+{
+  "stage": {
+    "stage": "actions",
+    "ownedContainer": "umf-integrated-qualification-40e83200-actions",
+    "command": [
+      "docker",
+      "run",
+      "--network",
+      "umf-integrated-qualification-40e83200",
+      "-v",
+      "/private/tmp/umf-integrated-qualification-40e83200:/work",
+      "-v",
+      "/var/run/docker.sock:/var/run/docker.sock",
+      "-e",
+      "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-40e83200",
+      "-e",
+      "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "--name",
+      "umf-integrated-qualification-40e83200-actions",
+      "--entrypoint",
+      "bun",
+      "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "scripts/actions-reference/qualify-foundation.ts"
+    ],
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "exitCode": 1,
+    "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+    "log": "/private/tmp/umf-integrated-qualification-40e83200-actions-native.log",
+    "logSha256": "e579fe22ffd664d92059ccc221fc5b35c96fab00e724abbc621994fbd85c19f4",
+    "generatedReports": {
+      "fixtures/actions/reference-foundation.json": "47587bb3997f81a4295456204eb68b6202bbac754ddcf6569955de6fc3b2a6b3"
+    }
+  },
+  "runtime": {
+    "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+    "command": [
+      "scripts/actions-reference/qualify-foundation.ts"
+    ],
+    "entrypoint": [
+      "bun"
+    ],
+    "pins": {
+      "UMF_REFERENCE_DOCKER_NETWORK": "umf-integrated-qualification-40e83200",
+      "UMF_REPLAY_IMAGE_ID": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "UMF_EXPECTED_CHROMIUM_VERSION": "153.0.8010.12"
+    },
+    "mounts": [
+      {
+        "source": "/private/tmp/umf-integrated-qualification-40e83200",
+        "destination": "/work",
+        "rw": true
+      },
+      {
+        "source": "/var/run/docker.sock",
+        "destination": "/var/run/docker.sock",
+        "rw": true
+      }
+    ],
+    "networks": [
+      "umf-integrated-qualification-40e83200"
+    ]
+  },
+  "files": {
+    "umf-integrated-execution-observation-40e83200.json": "00d632c4a9258ba5435d188a371074e07c47368c81410fc79c598ff7e2d0fc45",
+    "reference-foundation.json": "47587bb3997f81a4295456204eb68b6202bbac754ddcf6569955de6fc3b2a6b3",
+    "umf-integrated-runtime-observation-40e83200.json": "eb7f135ffd85a4b085b0d272187f6534b515a035a502c9ef5b57e0cca698aa56",
+    "umf-integrated-qualification-40e83200-actions-native.log": "e579fe22ffd664d92059ccc221fc5b35c96fab00e724abbc621994fbd85c19f4"
+  },
+  "foundationMeaning": "Pre-existing earlier-source successful report, observed during failed current-source stage; not fresh successful output.",
+  "retainedOwner": {
+    "owner": "e9713e76-bef1-446e-a9f6-4196ee824a6c",
+    "container": "umf-actions-handler-43cabc9f-7f95-42a1-8712-d1d02226cd4a",
+    "containerId": "e9f12d4e6c0ceb49d9f69e784c4bdcd354a88d2d00b7de30918a038a9a8f06f0"
+  },
+  "operatorRecovery": {
+    "command": "Qualified recoverReferenceHandlerLaunch() in original frozen source and pinned runtime",
+    "exitCode": 0,
+    "cleanupConfirmed": true
+  }
+}

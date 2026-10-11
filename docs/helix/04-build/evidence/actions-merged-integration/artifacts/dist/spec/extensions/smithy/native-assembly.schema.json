@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:smithy:native-assembly:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "valid",
+    "events"
+  ],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "SUPPRESSED",
+              "NOTE",
+              "WARNING",
+              "DANGER",
+              "ERROR"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "shapeId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "filename",
+              "line",
+              "column"
+            ],
+            "properties": {
+              "filename": {
+                "type": "string"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "column": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "modelJson": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "valid": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "modelJson"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "modelJson"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:smithy:native-structure:0.1.0",
+  "type": "object",
+  "required": [
+    "smithy"
+  ],
+  "properties": {
+    "smithy": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "shapes": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/shape"
+      }
+    }
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+        },
+        "traits": {
+          "type": "object"
+        }
+      }
+    },
+    "shape": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "traits": {
+          "type": "object"
+        },
+        "mixins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "list"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "member": {
+                "$ref": "#/$defs/member"
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "member"
+                ]
+              },
+              {
+                "required": [
+                  "mixins"
+                ],
+                "properties": {
+                  "mixins": {
+                    "minItems": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "map"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/member"
+              },
+              "value": {
+                "$ref": "#/$defs/member"
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "key",
+                  "value"
+                ]
+              },
+              {
+                "required": [
+                  "mixins"
+                ],
+                "properties": {
+                  "mixins": {
+                    "minItems": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "structure",
+                  "union",
+                  "enum",
+                  "intEnum"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/member"
+                }
+              }
+            },
+            "required": []
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "service"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "rename": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": []
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "operation"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input": {
+                "$ref": "#/$defs/reference"
+              },
+              "output": {
+                "$ref": "#/$defs/reference"
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            },
+            "required": []
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "resource"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "collectionOperations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "create": {
+                "$ref": "#/$defs/reference"
+              },
+              "put": {
+                "$ref": "#/$defs/reference"
+              },
+              "read": {
+                "$ref": "#/$defs/reference"
+              },
+              "update": {
+                "$ref": "#/$defs/reference"
+              },
+              "delete": {
+                "$ref": "#/$defs/reference"
+              },
+              "list": {
+                "$ref": "#/$defs/reference"
+              },
+              "identifiers": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/reference"
+                }
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            },
+            "required": []
+          }
+        }
+      ]
+    }
+  }
+}

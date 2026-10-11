@@ -1,0 +1,25 @@
+$ bun scripts/actions-docs/portable-example.ts && bun scripts/actions-docs/refusal-example.ts && bun scripts/actions-docs/rule-example.ts
+{
+  "module": "sales",
+  "action": "approve",
+  "valid": true,
+  "complete": false,
+  "unchecked": [
+    "authorization"
+  ],
+  "declaredCompatible": false,
+  "executionVerified": false,
+  "businessWrites": 0
+}
+{
+  "code": "ACTION_IDENTITY",
+  "sourceUnchanged": true,
+  "businessWrites": 0
+}
+{
+  "compiledType": "boolean",
+  "satisfied": true,
+  "unsatisfied": false,
+  "businessWrites": 0,
+  "stateSource": "explicitly supplied illustrative state; not authenticated store state"
+}

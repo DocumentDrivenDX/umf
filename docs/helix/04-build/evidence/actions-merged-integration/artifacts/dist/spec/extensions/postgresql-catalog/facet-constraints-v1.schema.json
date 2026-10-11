@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://umf.dev/extensions/postgresql-catalog/facet-constraints-v1.schema.json",
+  "description": "Internal facet constraint observations. Unknown properties remain native; schema validity does not prove enforcement or correspondence.",
+  "type": "object",
+  "required": [
+    "profile",
+    "serverVersion",
+    "encoding",
+    "constraints"
+  ],
+  "properties": {
+    "profile": {
+      "const": "postgresql-facet-constraints-discovery-v1"
+    },
+    "serverVersion": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "encoding": {
+      "type": "string"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/constraint"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "column": {
+      "type": "object",
+      "required": [
+        "number",
+        "name",
+        "typeOid",
+        "typeSchema",
+        "typeName",
+        "typeKind",
+        "modifier",
+        "dimensions"
+      ],
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32767
+        },
+        "name": {
+          "type": "string"
+        },
+        "typeOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "typeSchema": {
+          "type": "string"
+        },
+        "typeName": {
+          "type": "string"
+        },
+        "typeKind": {
+          "type": "string"
+        },
+        "modifier": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 2147483647
+        },
+        "dimensions": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "additionalProperties": true
+    },
+    "operator": {
+      "type": "object",
+      "required": [
+        "oid",
+        "schema",
+        "name",
+        "leftTypeOid",
+        "rightTypeOid",
+        "resultTypeOid",
+        "functionOid",
+        "functionSchema",
+        "functionName"
+      ],
+      "properties": {
+        "oid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "leftTypeOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "rightTypeOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "resultTypeOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "functionOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "functionSchema": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "function": {
+      "type": "object",
+      "required": [
+        "oid",
+        "schema",
+        "name",
+        "argumentTypeOids",
+        "resultTypeOid",
+        "kind",
+        "volatility",
+        "strict"
+      ],
+      "properties": {
+        "oid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "argumentTypeOids": {
+          "type": "string"
+        },
+        "resultTypeOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "volatility": {
+          "type": "string"
+        },
+        "strict": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "constraint": {
+      "type": "object",
+      "required": [
+        "oid",
+        "schema",
+        "relation",
+        "relationKind",
+        "name",
+        "validated",
+        "noInherit",
+        "isLocal",
+        "inheritanceCount",
+        "parentOid",
+        "definition",
+        "columnNumbers",
+        "expression",
+        "nodeTree",
+        "columns",
+        "operatorLookups",
+        "functionLookups"
+      ],
+      "properties": {
+        "oid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "relationKind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        },
+        "noInherit": {
+          "type": "boolean"
+        },
+        "isLocal": {
+          "type": "boolean"
+        },
+        "inheritanceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "parentOid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "columnNumbers": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 32767
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expression": {
+          "type": "string"
+        },
+        "nodeTree": {
+          "type": "string"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/column"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operatorLookups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/operator"
+          }
+        },
+        "functionLookups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/function"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

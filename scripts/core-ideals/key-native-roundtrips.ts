@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-assert';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 
@@ -44,17 +45,17 @@ export async function verifyKeyNativeRoundTrips() {
   row.source.vocabularies.future={version:'1.0.0'};
   row.source.extensions={...row.source.extensions,future:{opaque:['9007199254740993',null,{uninterpreted:true}]}};
   const before=structuredClone(row.source),r=await row.classify(row.source,'report');
-  assert.deepEqual(row.source,before,'classification mutated native source');
+  assertJsonDataEqual(row.source,before,'classification mutated native source');
   const strict=await row.classify(row.source,'strict');
   if(r.residuals.length){assert.equal(strict.status,'blocked');assert.equal(strict.target,undefined);count.strictBlocks++;}
   if(row.blocked){
    assert.equal(r.status,'blocked');assert.equal(r.target,undefined);count.blocked++;
-   for(const format of ['json','yaml'] as const){const stored=u.readJsonValue(u.writeJsonValue(r,format),format) as any;assert.deepEqual(u.exportParquetCapture(stored.source),row.native);count.recoveries++;}
+   for(const format of ['json','yaml'] as const){const stored=u.readJsonValue(u.writeJsonValue(r,format),format) as any;assertNativeRepresentationEqual(u.exportParquetCapture(stored.source),row.native);count.recoveries++;}
    continue;
   }
   assert.equal(r.status,'classified');count.classified++;
-  assert.deepEqual(r.target.modules,row.source.modules);
-  assert.deepEqual(r.target.extensions.future,row.source.extensions.future);
+  assertJsonDataEqual(r.target.modules,row.source.modules);
+  assertJsonDataEqual(r.target.extensions.future,row.source.extensions.future);
   assert.ok(r.observations.every((o:any)=>o.authorIntent==='unknown'),'native observation invented authored identity');
   if(row.system==='postgresql'){
    const byTable=(name:string)=>r.observations.find((o:any)=>o.identity.table===name);
@@ -67,12 +68,12 @@ export async function verifyKeyNativeRoundTrips() {
   }
   for(const format of ['json','yaml'] as const){
    const saved=u.readJsonValue(u.writeJsonValue(r,format),format) as any;
-   assert.deepEqual(await row.recover(saved,saved.target),row.native);count.recoveries++;
+   assertNativeRepresentationEqual(await row.recover(saved,saved.target),row.native);count.recoveries++;
    const changed=structuredClone(saved.target);changed.id='stale-target';
    await assert.rejects(async()=>row.recover(saved,changed));count.refusals++;
    if(saved.observations.length){const forged=structuredClone(saved);forged.observations[0].authorIntent='authored';await assert.rejects(async()=>row.recover(forged,saved.target));count.refusals++;}
   }
  }
- assert.deepEqual(Object.keys(coverage),['tablespec','postgresql','sqlserver','avro','parquet']);
+ assertJsonDataEqual(Object.keys(coverage),['tablespec','postgresql','sqlserver','avro','parquet']);
  return coverage;
 }

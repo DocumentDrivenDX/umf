@@ -3,7 +3,7 @@
 #   docker build -t umf-core-replay docker/core-replay
 # Sibling oracle containers (PostgreSQL, SQL Server) are started through the host Docker socket.
 FROM ubuntu:24.04
-ARG BUN_VERSION=1.3.14
+ARG BUN_VERSION=1.4.2
 ARG GO_VERSION=1.27.1
 ARG DOCKER_CLI_VERSION=29.4.0
 ARG PLAYWRIGHT_VERSION=1.63.0

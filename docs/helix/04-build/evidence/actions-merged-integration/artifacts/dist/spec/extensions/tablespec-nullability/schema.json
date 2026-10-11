@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:tablespec:nullability-binding:1.0.0",
+  "title": "Retained TableSpec availability binding scope",
+  "type": "object",
+  "required": [
+    "origin",
+    "binding",
+    "profile",
+    "context",
+    "carrier",
+    "interpretation",
+    "nativePath"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.tablespec.nullability",
+        "version": "1.0.0"
+      }
+    },
+    "profile": {
+      "enum": [
+        "runtime-model",
+        "checked-schema",
+        "unresolved"
+      ]
+    },
+    "context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "carrier": {
+      "enum": [
+        "null-value",
+        "unresolved"
+      ]
+    },
+    "interpretation": {
+      "enum": [
+        "declared",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "nativePath": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

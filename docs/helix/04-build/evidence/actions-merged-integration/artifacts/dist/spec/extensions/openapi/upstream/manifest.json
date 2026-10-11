@@ -1,0 +1,30 @@
+{
+  "description": "Official OpenAPI object schemas; embedded Schema Object dialects are not validated by these resources",
+  "resources": [
+    {
+      "file": "3.1-schema.json",
+      "url": "https://spec.openapis.org/oas/3.1/schema/2026-08-03",
+      "sha256": "59f106413cb48c31299f96f024c938d3628aed6cd02cd14bcfb2fcaae7a130b6"
+    },
+    {
+      "file": "3.2-schema.json",
+      "url": "https://spec.openapis.org/oas/3.2/schema/2026-08-30",
+      "sha256": "ec53db6e114b768ff2d273b232bda210f51b70c5e57d57ac8daf7e8496a6e073"
+    },
+    {
+      "file": "3.0-schema.json",
+      "url": "https://spec.openapis.org/oas/3.0/schema/2024-10-18",
+      "sha256": "2385f5bbb8c37878daae73baeabe7f34b2f022a4a8c049329ee61f71796f039c"
+    },
+    {
+      "file": "2.0-schema.json",
+      "url": "https://spec.openapis.org/oas/2.0/schema/2017-08-27",
+      "sha256": "b36871c8016292c5e66dd3b203e69aeff98bfef97e0b3c67c1909036095586a5"
+    }
+  ],
+  "license": {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/LICENSE",
+    "sha256": "4948367c65e1ce06690e2cadc6e86fce1a6a6db55ef874ce4b78c0f472ce5f13"
+  }
+}

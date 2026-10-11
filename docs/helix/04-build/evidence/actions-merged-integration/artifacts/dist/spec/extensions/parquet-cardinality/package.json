@@ -1,0 +1,262 @@
+{
+  "id": "umf.parquet.cardinality",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Checked Parquet logical value roles retaining native wrappers, keys and refinements",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:parquet:cardinality-binding:1.0.0",
+    "title": "Retained Parquet Cardinality role",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "profile",
+      "basis",
+      "node"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.parquet.cardinality",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "present-value-schema",
+          "unresolved"
+        ]
+      },
+      "basis": {
+        "const": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native"
+      },
+      "node": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "identity",
+          "index",
+          "path",
+          "nativeFragment",
+          "shape",
+          "role",
+          "nativeNullable",
+          "residuals"
+        ],
+        "properties": {
+          "identity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nativeFragment": {
+            "type": "object"
+          },
+          "shape": {
+            "enum": [
+              "one",
+              "array",
+              "map",
+              "unspecified"
+            ]
+          },
+          "role": {
+            "enum": [
+              "scalar",
+              "record",
+              "array",
+              "map",
+              "unresolved"
+            ]
+          },
+          "nativeNullable": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "scalarType": {
+            "enum": [
+              "boolean",
+              "integer",
+              "decimal",
+              "float",
+              "string",
+              "binary",
+              "date",
+              "time",
+              "timestamp"
+            ]
+          },
+          "itemIndex": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "recordMembers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "container": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index",
+                  "kind",
+                  "nullable",
+                  "repeatedIndex",
+                  "elementIndex",
+                  "elementNullable",
+                  "layout"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "kind": {
+                    "const": "list"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  },
+                  "repeatedIndex": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "elementIndex": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "elementNullable": {
+                    "type": "boolean"
+                  },
+                  "layout": {
+                    "enum": [
+                      "two-level",
+                      "three-level"
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index",
+                  "kind",
+                  "nullable",
+                  "repeatedIndex",
+                  "keyIndex",
+                  "valueNullable",
+                  "duplicateKeys"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "kind": {
+                    "const": "map"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  },
+                  "repeatedIndex": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "keyIndex": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "valueIndex": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "valueNullable": {
+                    "type": "boolean"
+                  },
+                  "duplicateKeys": {
+                    "const": "last-value"
+                  }
+                }
+              }
+            ]
+          },
+          "residuals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "reason"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-042; present-value shape, not enforcement, value conversion or native equivalence",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "Parquet",
+      "version": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native"
+    },
+    "evidence": [
+      "tests/core-ideals/cardinality-parquet.test.ts",
+      "fixtures/validation/cardinality-parquet-profile-native.json"
+    ]
+  }
+}

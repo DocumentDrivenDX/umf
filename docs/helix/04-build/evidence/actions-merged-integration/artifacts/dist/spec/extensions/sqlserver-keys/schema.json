@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:sqlserver:key-binding:1.0.0",
+  "title": "SQL Server observed key enforcement, never authored identity",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "binding",
+    "profile",
+    "nativeSource",
+    "observations"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.keys",
+        "version": "1.0.0",
+        "nativeVersion": "16.0.4295.3",
+        "subset": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence"
+      }
+    },
+    "profile": {
+      "const": "captured-stored-values"
+    },
+    "nativeSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "identity",
+          "nativePath",
+          "fields",
+          "primary",
+          "enforcement",
+          "equality",
+          "ignoreDuplicateKey",
+          "authorIntent",
+          "provenance",
+          "scope",
+          "reasons"
+        ],
+        "properties": {
+          "identity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema",
+              "table",
+              "indexId",
+              "name"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              },
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "indexId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "module",
+                "element"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "enforcement": {
+            "enum": [
+              "immediate-unique-nonnull",
+              "conditional",
+              "nullable",
+              "not-unique",
+              "unavailable",
+              "unknown"
+            ]
+          },
+          "equality": {
+            "enum": [
+              "exact-on-representable-values",
+              "incompatible",
+              "unknown"
+            ]
+          },
+          "ignoreDuplicateKey": {
+            "type": "boolean"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "provenance": {
+            "const": "inferred"
+          },
+          "scope": {
+            "const": "captured-table-stored-values"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

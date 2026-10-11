@@ -1,0 +1,149 @@
+{
+  "id": "umf.dbt.artifact",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Exact dbt run-results/catalog/freshness artifacts and native shape diagnostics",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:dbt:artifact:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "dbt-artifact-json"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "required": [
+      "profile",
+      "root"
+    ],
+    "additionalProperties": true,
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-022 AC7–AC9; preserve exact artifact JSON independently of native schema validity; edits are reviewable metadata, not changed execution or warehouse state",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "dbt generated artifacts",
+      "version": "run-results v6, catalog v1, sources v3; dbt Core 1.10.0 fixtures",
+      "subset": "Exact JSON preservation and candidate edits; native schema shapes; no artifact correlation or execution guarantees"
+    },
+    "evidence": [
+      "tests/dbt/artifact.test.ts",
+      "fixtures/dbt/artifacts/oracle-results.json",
+      "fixtures/dbt/artifacts/browser-results.json",
+      "tests/dbt/freshness.test.ts",
+      "fixtures/dbt/freshness/oracle-results.json",
+      "fixtures/dbt/freshness/browser-results.json",
+      "tests/dbt/failure.test.ts",
+      "fixtures/dbt/failure/provenance.json"
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 21, in <module>
+    for p,h in v['sourceInputs'].items():assert (F/p).is_file() and not (F/p).is_symlink() and sha(F/p)==h and digest(gitbytes(revision,p))==h,p
+AssertionError: src/index.ts

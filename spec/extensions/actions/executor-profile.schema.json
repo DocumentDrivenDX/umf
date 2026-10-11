@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:executor-profile:0.1.0",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actionVersion": {
+      "const": "0.1.0"
+    },
+    "coreVersion": {
+      "const": "0.8.0"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "obligation": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "unsupported",
+              "unknown"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "obligation",
+          "status",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "action"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "actionVersion",
+    "coreVersion",
+    "claims",
+    "source",
+    "identity"
+  ],
+  "additionalProperties": false
+}

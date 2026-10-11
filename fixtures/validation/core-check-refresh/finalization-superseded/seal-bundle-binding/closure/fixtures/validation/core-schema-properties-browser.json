@@ -1,0 +1,33 @@
+{
+  "scope": "Experimental core 0.8.0 validation, public authoring/default operations and retained migration; native bindings/admission not claimed",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "cases": 38,
+    "recoveries": 4,
+    "refusals": 12,
+    "getterCalls": 0,
+    "extensionChecks": 6,
+    "unknownUnitChecks": 4
+  },
+  "externalRequests": [],
+  "bundleSha256": "30b2a4a3812ac77b25afa955d4eb62b85edc6a5ddfbba18d24170b2b9f9f156e",
+  "sha256": {
+    "src/model/selection.ts": "101d15bea9c048316aa557b82d6a8edab31573cd976bf30f1e50ceba11b65dda",
+    "src/model/selection-schemas.ts": "1c0142a7e5a92ad804590e6aae6ab5d5c9e4be97f2e56baa51a36cab79f7dfd5",
+    "src/model/schema-properties-transition-schema.ts": "620628fb3f7e92e5bcd422f3210bd89c8f1e42be326b4e446d6b83febdf51597",
+    "spec/core/schema-properties-transition.schema.json": "76e7115be996ae74963144bef06edb998fa592ed3f3ee717190abe13480a2d70",
+    "spec/core/schema-properties-selection.schema.json": "a91d735e8303ebc376a8119ccd8e10d9bd02b49343a9967e3061414d8a5daa8b",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/schema-properties.ts": "1bb9c41b8a904b09d679e6231a2af7b3c425e9d4d93e97a0700d296eed4773e2",
+    "src/model/schema-properties-transition.ts": "e8e4a567c2073c5cd07b66d13b970ec21c2cfc6e1725601cafbc8308967a4e56",
+    "src/validation/schema-properties.ts": "db5e4a0cbb2de5fc1dd5b5720c03ec36470739deb0b81522036f5171614588bd",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/index.ts": "96f162b7ad57eaa24f4557d10a8f975a9ef5435a24663e76b7a30c9721b1d786",
+    "spec/core/schema-properties-document.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "scripts/core-schema-properties-browser.ts": "372f2cf4be3b23100392f8af8eed37ff6ce926a361babc9f4372e466d6db8831",
+    "scripts/core-schema-properties-cases.ts": "19318bc59ff57aefb51f0b89722150bfdc5fdb8bfa659ac0da5bba4ae2d6c1d2",
+    "tests/core/schema-properties.test.ts": "015fd9aa4a5fa2dfb3be3b39fdbb65a771ca5fb20a497d20c82d01d4e116fe44",
+    "tests/core/schema-properties-review.test.ts": "283c28a4717d16082320879e5ea148c0604e56065df53f3fcdc8e48764a1231b"
+  }
+}

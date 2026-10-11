@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:tablespec:key-binding:1.0.0",
+  "title": "TableSpec native key observations; not authored identity",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "binding",
+    "profile",
+    "observations"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.tablespec.keys",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference"
+      }
+    },
+    "profile": {
+      "const": "declared-metadata"
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nativePath",
+          "kind",
+          "state",
+          "interpretation",
+          "columns",
+          "resolvedFields",
+          "enforcement",
+          "authorIntent",
+          "basis"
+        ],
+        "properties": {
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "primary",
+              "alternate"
+            ]
+          },
+          "state": {
+            "enum": [
+              "absent",
+              "empty",
+              "declared",
+              "invalid"
+            ]
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resolvedFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "module",
+                "element"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "enforcement": {
+            "const": "unknown"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "table_name": "stops",
+  "description": "Selected stops.txt fields.",
+  "columns": [
+    {
+      "name": "stop_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "stop_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "stop_name"
+    },
+    {
+      "name": "stop_lat",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "WGS84 decimal spelling; conditionally required."
+    },
+    {
+      "name": "stop_lon",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "WGS84 decimal spelling; conditionally required."
+    },
+    {
+      "name": "location_type",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Blank defaults to a stop; retain blank separately."
+    },
+    {
+      "name": "parent_station",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Conditional parent reference."
+    }
+  ],
+  "primary_key": [
+    "stop_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "parent_station",
+        "references_table": "stops",
+        "references_column": "stop_id"
+      }
+    ]
+  }
+}

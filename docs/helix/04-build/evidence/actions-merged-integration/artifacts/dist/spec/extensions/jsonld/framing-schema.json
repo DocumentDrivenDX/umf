@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:jsonld:framing:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "lossPolicy": {
+      "enum": [
+        "report",
+        "reject"
+      ]
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "candidate": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "resourcesUsed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "frame": {
+      "$ref": "#/$defs/node"
+    },
+    "framingOptions": {
+      "type": "object",
+      "properties": {
+        "embed": {
+          "enum": [
+            "@once",
+            "@always",
+            "@never",
+            "@first",
+            "@last"
+          ]
+        },
+        "explicit": {
+          "type": "boolean"
+        },
+        "requireAll": {
+          "type": "boolean"
+        },
+        "omitDefault": {
+          "type": "boolean"
+        },
+        "omitGraph": {
+          "type": "boolean"
+        },
+        "pruneBlankNodeIdentifiers": {
+          "type": "boolean"
+        },
+        "frameDefault": {
+          "type": "boolean"
+        },
+        "ordered": {
+          "type": "boolean"
+        },
+        "compactArrays": {
+          "type": "boolean"
+        },
+        "compactToRelative": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "embed",
+        "explicit",
+        "requireAll",
+        "omitDefault",
+        "frameDefault",
+        "ordered",
+        "compactArrays",
+        "compactToRelative"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "source",
+    "lossPolicy",
+    "status",
+    "complete",
+    "resourcesUsed",
+    "diagnostics",
+    "frame",
+    "framingOptions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "candidate"
+          ]
+        }
+      }
+    }
+  ]
+}

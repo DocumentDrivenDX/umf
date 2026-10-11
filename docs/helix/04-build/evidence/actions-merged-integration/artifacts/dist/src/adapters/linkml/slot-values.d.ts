@@ -1,0 +1,51 @@
+import { type Document, type Diagnostic } from '../../model/types';
+import type { NativeJson } from '../../model/native-json';
+export declare const LINKML_SCALAR_SLOT_FIELDS: {
+    readonly domain: 'string';
+    readonly inherited: 'boolean';
+    readonly readonly: 'string';
+    readonly ifabsent: 'string';
+    readonly list_elements_unique: 'boolean';
+    readonly list_elements_ordered: 'boolean';
+    readonly shared: 'boolean';
+    readonly key: 'boolean';
+    readonly identifier: 'boolean';
+    readonly designates_type: 'boolean';
+    readonly role: 'string';
+    readonly relational_role: 'string';
+    readonly range: 'string';
+    readonly required: 'boolean';
+    readonly recommended: 'boolean';
+    readonly multivalued: 'boolean';
+    readonly inlined: 'boolean';
+    readonly inlined_as_list: 'boolean';
+    readonly minimum_value: 'number';
+    readonly maximum_value: 'number';
+    readonly pattern: 'string';
+    readonly value_presence: 'string';
+    readonly equals_string: 'string';
+    readonly equals_number: 'number';
+    readonly equals_expression: 'string';
+    readonly exact_cardinality: 'number';
+    readonly minimum_cardinality: 'number';
+    readonly maximum_cardinality: 'number';
+    readonly description: 'string';
+};
+export type LinkmlScalarSlotField = keyof typeof LINKML_SCALAR_SLOT_FIELDS;
+export interface LinkmlSlotValuesReport {
+    source: Document;
+    className: string;
+    slotName: string;
+    scope: 'document-scalar-slot-values';
+    status: 'resolved' | 'blocked';
+    complete: false;
+    fields: Partial<Record<LinkmlScalarSlotField, NativeJson>>;
+    derivations: {
+        field: LinkmlScalarSlotField;
+        path: string;
+        rule: 'base' | 'slot-inheritance' | 'slot-usage' | 'default-range' | 'identifier-required' | 'key-required' | 'list-inlined';
+        value: NativeJson;
+    }[];
+    diagnostics: Diagnostic[];
+}
+export declare function inspectLinkmlSlotValues(document: Document, className: string, slotName: string): LinkmlSlotValuesReport;

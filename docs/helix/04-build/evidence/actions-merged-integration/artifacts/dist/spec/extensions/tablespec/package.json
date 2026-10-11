@@ -1,0 +1,181 @@
+{
+  "id": "umf.tablespec",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "TableSpec native table schemas and derived core scalar metadata",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:tablespec:0.1.0",
+    "type": "object",
+    "required": [
+      "profile",
+      "root",
+      "originalSource",
+      "originalFormat"
+    ],
+    "properties": {
+      "profile": {
+        "const": "tablespec-table-1"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      },
+      "originalSource": {
+        "type": "string",
+        "maxLength": 4000000
+      },
+      "originalFormat": {
+        "enum": [
+          "json",
+          "yaml"
+        ]
+      },
+      "splitFiles": {
+        "type": "object",
+        "required": [
+          "table.yaml"
+        ],
+        "minProperties": 2,
+        "maxProperties": 1000,
+        "additionalProperties": {
+          "type": "string",
+          "maxLength": 4000000
+        },
+        "properties": {
+          "table.yaml": {
+            "type": "string",
+            "maxLength": 4000000
+          }
+        }
+      }
+    },
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-030; source preservation and scalar-family classification, not complete Pydantic validation or coercion",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "TableSpec",
+      "version": "source commit 647e8e566ad78b864282ec65c0b0b2237aa63084; table version 1.0",
+      "subset": "Monolithic JSON/YAML ingestion and split file-bundle capture; copied table/column metadata access and edits, core scalar families and native recovery. Schema projections are separately qualified by CONTRACT-033, CONTRACT-038 and CONTRACT-039. Split loader migrations, split-to-monolithic lowering, native validation/coercion and general value transforms remain open."
+    },
+    "evidence": [
+      "tests/tablespec/roundtrip.test.ts",
+      "native/tablespec/sources.json",
+      "fixtures/tablespec/oracle.json",
+      "fixtures/tablespec/browser.json",
+      "tests/tablespec/split.test.ts",
+      "fixtures/tablespec/split-oracle.json",
+      "tests/tablespec/table-edits.test.ts",
+      "fixtures/tablespec/table-edits-oracle.json",
+      "tests/tablespec/table-metadata.test.ts",
+      "tests/tablespec/boundaries.test.ts",
+      "fixtures/tablespec/boundaries-oracle.json"
+    ]
+  }
+}

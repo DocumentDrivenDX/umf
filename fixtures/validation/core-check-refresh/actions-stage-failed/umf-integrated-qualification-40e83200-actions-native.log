@@ -1,0 +1,338 @@
+1 | import {referenceHandlerImage} from './sandbox';
+2 | import {createHash} from 'node:crypto';
+3 | async function run(args:string[]):Promise<{stdout:string;stderr:string}>{const child=Bun.spawn(args,{stdout:'pipe',stderr:'pipe'}),[stdout,stderr,exit]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);if(exit)throw Error(stdout+'\n'+stderr);return {stdout,stderr};}
+                                                                                                                                                                                                                                                                                ^
+error: bun test v1.4.2 (744846f84)
+{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","nativeVersionNumber":"170009"}
+{"nativeCompositeKey":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","components":2,"family":"string","swappedIdentitiesDistinct":true,"commits":2,"restartedReplay":"exact","scope":"One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"}}
+{"nativeUnsupportedRelationships":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","declarations":["owned","association-record"],"validMetadata":true,"independentLayoutControl":"admitted","allInputsTyped":"admitted","prepare":"refused","preview":"unsupported/PARAMETER","invoke":"unsupported/PARAMETER","businessAccesses":0,"transactionalWrites":0,"allActionTablesGuarded":20,"allActionRowsUnchanged":true,"scope":"Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"}}
+{"nativeRefinement":{"profile":"umf.actions.finite-idempotent-set/1","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","alphabet":["invoke-A","invoke-B","lookup-A","revoke","grant","retire"],"depth":3,"traces":216,"transitions":648,"mismatches":0,"scope":"One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"}}
+{"nativeMutation":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":3,"total":3,"witnesses":[{"id":"skip-replay","sourceSha256":"a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f","mutantSha256":"6c745a46fbaf20bb4efb9e516f3a8e5d44399587fcef04aaeb9ff4172a3df67d","trace":["invoke-A","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"},{"id":"ignore-role-membership","sourceSha256":"78265b7610012a9ea028ec117d6ff67608ef5bd4558eb12dabf56724eefd2865","mutantSha256":"9d9fcd5f213e9b2797c55a8bf07ebad7a0b1764f8ea91ed3fc154c30e46b9a15","trace":["invoke-A","revoke","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → revoke → invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"},{"id":"omit-terminal-audit","sourceSha256":"a5afa95d64a42d009bdf4fc6bea47b77e4fce59b0813c19ce828ede21237d51f","mutantSha256":"e80b4a2b64ca1f21736aa52d118bc4c041670d26e4b1b00a00a3c571979d3147","trace":["invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"}]}}
+{"nativeInvariantMutation":{"bun":"1.4.2","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":2,"total":2,"witnesses":[{"id":"per-key-canonical-identity","sourceSha256":"a4f5b334780f9945b26108fc7b5ac12132398961d2b6b745ba4764a4bdda3c30","mutantSha256":"1fa33c5a3edf594a89907d77267aaa04c3a6f1fe7cb1eac87c8849147991106c","baseline":"passed","boundary":"alias canonical identity","expected":["entity:2","entity:2"],"actual":["key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]","key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"]},{"id":"skip-missing-projection-prefix","sourceSha256":"d97bb62fe3b872fb2b40d84b15bd52457ffda3011b42f9cb79cf75e902503ccd","mutantSha256":"6c95edb557b90afcb6929094fd714e1a0bb4e949479a96455815d5550186a3d8","baseline":"passed","boundary":"projection missing-prefix visibility","expected":{"delivery":{"status":"delivered","prefix":"0"},"prefix":"0","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"}],"links":[]},"queued":["2"],"readStatus":"pending"},"actual":{"delivery":{"status":"delivered","prefix":"2"},"prefix":"2","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"approved"}},"version":"b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"}],"links":[]},"queued":["2"],"readStatus":"visible"}}],"scope":"One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"}}
+
+
+tests/actions-reference/executor.test.ts:
+(pass) native SET invocation atomically commits typed verification, replays, preserves no-op versions and rolls back audit failure [4538.63ms]
+(pass) native missing/version/precondition terminal decisions persist and replay without reevaluating state [3176.97ms]
+(pass) native concurrent invokes retain one same-token result and serialize distinct-token resource assertions [2364.27ms]
+
+tests/actions-reference/admission.test.ts:
+(pass) trusted issuer authenticates human and service independently and refuses credential tampering [0.34ms]
+(pass) logical requests refuse spoofed context and canonicalize version assertions by declaration [0.32ms]
+(pass) lossless native codec preserves every admitted string identity and refuses ambiguous representations [0.13ms]
+
+tests/actions-reference/store.test.ts:
+(pass) native store foundation enforces exact aliases, FKs, control serialization and atomic rollback [2317.11ms]
+(pass) native lossless payloads and identity buckets preserve NUL/surrogates, large tokens/Keys and digest collisions [2419.53ms]
+(pass) native qualified isolation preserves exact concurrent uniqueness and independent stores [1724.13ms]
+
+tests/actions-reference/handlers.test.ts:
+(pass) trusted handler allowlist binds exact immutable copied code and retirement cannot be silently reinstalled [0.37ms]
+(pass) qualified handlers still require whole understood declaration including opaque profile members and unused model dependencies [91.14ms]
+
+tests/actions-reference/sandbox.test.ts:
+(pass) actual isolated handler foundation > copied authenticated ordered gateway calls and isolated runtime [392.28ms]
+(pass) actual isolated handler foundation > asynchronous candidate dispatch is refused rather than outliving an attempt [317.16ms]
+(pass) actual isolated handler foundation > deployment build mismatch refuses before dispatch [0.28ms]
+(pass) actual isolated handler foundation > unauthenticated output and caught gateway refusal cannot finish successfully [669.72ms]
+(pass) actual isolated handler foundation > authenticated malformed requests and stderr flooding refuse [1296.05ms]
+(pass) actual isolated handler foundation > hostile numeric protocol payloads normalize to FRAME_ACCESS before dispatch [671.23ms]
+(pass) actual isolated handler foundation > absolute deadline refuses success even when synchronous dispatch delays timers [3433.02ms]
+(pass) actual isolated handler foundation > invalid and truncated UTF-8 fail through the profile protocol error [665.14ms]
+(pass) actual isolated handler foundation > infinite computation, protocol flood and operation 257 abort [2476.73ms]
+
+tests/actions-reference/policy.test.ts:
+(pass) native current policy gates protected callbacks and serializes revocation with accepted work [2647.41ms]
+
+tests/actions-reference/audit.test.ts:
+(pass) native terminal audit protects executor attempt/profile, trusted actor/policy and omits raw inputs [2091.03ms]
+(pass) native audit access denies before row queries and separates header/detail roles and family scope [2422.74ms]
+(pass) native audit horizon is pinned, expiry irreversible and payload selection stops before disclosure [3416.81ms]
+
+tests/actions-reference/evolution.test.ts:
+(pass) evolution review preserves exact signature/frame/condition/policy/profile/unknown changes without proving caller compatibility [667.90ms]
+(pass) native immutable revision comparison flags strengthened conditions and leaves original replay and explicit fresh selection independent [2921.21ms]
+
+tests/actions-reference/create.test.ts:
+(pass) native CREATE proves aliases, preserves pre-state, supports later SET and blocks all-Key/concurrent collisions [5293.50ms]
+
+tests/actions-reference/receipts.test.ts:
+(pass) native exact receipt map includes baseline, committed order and no-op/replay without preview writes [2706.12ms]
+(pass) native no-op at genesis retains sequence-zero receipt without an outbox event [2321.09ms]
+(pass) late native audit failure rolls back the tentative receipt and all business facts [1862.44ms]
+(pass) native committed outbox and receipt fields reject mutation and deletion [2328.00ms]
+
+tests/actions-reference/launch-owner.test.ts:
+(pass) native delayed CREATE preserves unresolved ownership across consumer restart, never starts late and recovers only acknowledged CID [1606.35ms]
+(pass) native delayed START cannot activate an acknowledged container after immutable CID removal [1659.46ms]
+(pass) native handler uses the reviewed program snapshot across durable launcher admission latency [368.58ms]
+(pass) stale owner cannot acknowledge into or release a subsequent slot; malformed ownership keeps admission closed [120.12ms]
+
+tests/actions-reference/relationship-gateway.test.ts:
+(pass) linked gateway validates authored endpoint orientation before absence and permanently aborts invalid calls [51.58ms]
+(pass) candidate LINK/UNLINK enforce write access, preserve pre-state and discard restored membership [71.32ms]
+(pass) candidate relationship mutation preserves authored target Key while accepting a read-only target reference [77.79ms]
+(pass) candidate net changes retain combined first-modification order and remove restored relationships [47.19ms]
+
+tests/actions-reference/outcomes.test.ts:
+(pass) native protected terminal lookup retains original decisions across retirement, service changes and restart [2904.01ms]
+
+tests/actions-reference/intent.test.ts:
+(pass) original-revision intent uses exact typed equality, presence and declared concurrency order [183.62ms]
+
+tests/actions-reference/discovery.test.ts:
+(pass) native discovery permission protects token presence across changing revision policies before any token SQL access [2440.51ms]
+
+tests/actions-reference/revisions.test.ts:
+(pass) native revision retention preserves original source across retirement and refuses replacement [2345.70ms]
+
+tests/actions-reference/process-recovery.test.ts:
+(pass) actual command-process death before commit rolls back; death after native acknowledgement reconciles once in a fresh process [2303.77ms]
+
+tests/actions-reference/restore.test.ts:
+(pass) physical older backup stays fenced across epochs and restart; explicit validated namespace starts independent genesis [3452.26ms]
+(pass) new genesis refuses alias reconciliation, unsupported domain and isolated required relationships atomically [2423.14ms]
+(pass) required linked genesis remaps native IDs, preserves alternate key identity and publishes exact baseline [2358.99ms]
+(pass) whole restored database fences every business and administration namespace before exposure [2483.33ms]
+(pass) corrupted restored edge with both endpoint Records unrelated to authored relationship refuses without repair [2634.34ms]
+
+tests/actions-reference/projection.test.ts:
+(pass) native full graph baseline and reordered duplicate delivery preserve all primitives, exact receipts and independent named prefixes [3722.25ms]
+(pass) projection authority cannot collide with business audit roles; malformed retained meaning refuses without loss [2045.81ms]
+(pass) unknown native fact meaning remains queued and never advances its sequence [2327.18ms]
+
+tests/actions-reference/sandbox-security.test.ts:
+(pass) handler clears image and client proxy credentials before any program/subprocess observes environment [735.75ms]
+(pass) native host sentinel/socket/listener and external route are inaccessible; kernel confinement is enforced [414.61ms]
+(pass) native process bound refuses additional forks while successful children are reaped [378.39ms]
+(pass) actual cgroup memory exhaustion yields LIMIT with native OOM evidence and confirmed removal [415.62ms]
+(pass) timeout, malformed protocol and dispatch refusal each independently confirm owned removal [2824.64ms]
+(pass) native watchdog stops an executing handler after its Bun supervisor is killed [10509.59ms]
+
+tests/actions-reference/handler-executor.test.ts:
+(pass) native isolated handler commits typed outputs, pins verification, previews without effects and replays after retirement/restart [4736.70ms]
+42 |    {body:write+`process.stdout.write('x'.repeat(2*1024*1024));`+outputs,code:'LIMIT'},
+43 |    {body:write+`process.stderr.write('x'.repeat(128*1024));`+outputs,code:'LIMIT'},
+44 |    {body:write+`for(let i=0;i<257;i++)await gateway.exists('order-read');`+outputs,code:'LIMIT'},
+45 |    {body:write+`const buffers=[];for(;;)buffers.push(Buffer.alloc(8*1024*1024,1));`,code:'LIMIT'}];
+46 |   for(const [index,entry] of cases.entries()){const {document,action}=source();if('deleteAllowed' in entry)action.writes[0].delete=true;if(entry.falsePost)action.postconditions[0].rule={language:'umf.actions.rules',version:'1',expression:JSON.stringify({literal:{boolean:false}}),references:[]};const deployment=install(handlers,entry.body),target={module:'sales',action:'approve',revision:'negative-'+index};await executor.admission.revisions.retain('s',target,document,deployment);let changed=0;const originalSet=ReferenceMutationGateway.prototype.set;ReferenceMutationGateway.prototype.set=function(...args){const result=originalSet.apply(this,args);if(result==='changed')changed++;return result;};
+47 |    try{expect(await executor.invoke('s',credential,{protocol:'umf.actions.tx/1',target,key:'failed-'+index,inputs:{order:input}})).toEqual({status:'failed',code:entry.code});if(entry.code==='LIMIT')expect(changed).toBe(1);}finally{ReferenceMutationGateway.prototype.set=originalSet;}
+                                                                                                                                        ^
+error: expect(received).toEqual(expected)
+
+  {
+-   "code": "PARAMETER",
++   "code": "LIMIT",
+    "status": "failed",
+  }
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:47:132)
+      at async withReferenceStore (/work/tests/actions-reference/native-harness.ts:11:41)
+      at async <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:38:8)
+(fail) native handler access/output/postcondition failures roll back every protected and business write [10314.42ms]
+52 |  await withReferenceStore(async store=>{
+53 |   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),handlers=new ReferenceHandlerRegistry(),executor=new ReferenceActionExecutor(policy,handlers),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'});await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);
+54 |   const setup=()=>{const {document,action}=source(),record=document.modules[0]!.elements.find(element=>element.id==='order')!;document.modules[0]!.elements.push({id:'external',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}});(record.members as any[]).push({module:'sales',element:'external'});(record.keys as any[]).push({id:'external',name:'external',primary:false,fields:[{module:'sales',element:'external'}]});document.modules[0]!.elements.find(element=>element.id==='id')!.facets={length:{max:5,unit:'unicode-scalar'}};action.parameters=[{id:'id',kind:'value',field:{module:'sales',element:'id'},required:true}];action.reads=[];action.writes=[{...action.writes[0],id:'create',create:true,fields:['id','external','status'].map(element=>({module:'sales',element})),selector:{language:'umf.actions.keys',version:'1',expression:JSON.stringify({key:'pk',components:[{input:'id'}]}),references:[{parameter:'id'}]}}];action.outputs[1].target={module:'sales',element:'order',key:'externa
+55 |   const tail=`return {status:{string:'approved'},order:{key:{module:'sales',element:'order',key:'external'},components:[{string:'ext'}]}};`,assignment=(idValue:unknown,include=true)=>[...(include?[{field:{module:'sales',element:'id'},value:idValue}]:[]),{field:{module:'sales',element:'external'},value:{string:'ext'}},{field,value:{string:'approved'}}];
+56 |   const cases=[{values:assignment(null),code:'CONSTRAINT'},{values:assignment({string:'fresh'},false),code:'PARAMETER'},{values:assignment({string:'too-long'}),code:'CONSTRAINT'},{values:assignment({string:'\ud800'}),code:'CONSTRAINT'},{values:assignment({integerToken:'01'}),code:'PARAMETER'}];
+57 |   for(const [index,entry] of cases.entries()){const {document}=setup(),body=`await gateway.create('create',${JSON.stringify(entry.values)});`+tail,deployment=install(handlers,body),target={module:'sales',action:'approve',revision:'bad-create-'+index};await executor.admission.revisions.retain('s',target,document,deployment);expect(await executor.invoke('s',credential,{protocol:'umf.actions.tx/1',target,key:'bad-create-'+index,inputs:{id:{string:'fresh'}}})).toEqual({status:'failed',code:entry.code});for(const table of ['action_entity','action_key_alias','action_outcome','action_audit','action_outbox'])expect(await store.sql.unsafe('select * from '+table)).toHaveLength(0);expect((await store.sql`select business_sequence::text from action_store`)[0]!.business_sequence).toBe('0');}
+
+error: expect(received).toEqual(expected)
+
+  {
+-   "code": "CONSTRAINT",
++   "code": "LIMIT",
+    "status": "failed",
+  }
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:57:462)
+      at async withReferenceStore (/work/tests/actions-reference/native-harness.ts:11:41)
+      at async <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:52:8)
+(fail) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [2415.39ms]
+60 | },60000);
+61 | test('arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries',async()=>{
+62 |  await withReferenceStore(async store=>{
+63 |   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),handlers=new ReferenceHandlerRegistry(),executor=new ReferenceActionExecutor(policy,handlers),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'}),{document,action}=source();action.parameters=[{id:'guess',kind:'value',field:{module:'sales',element:'id'},required:true}];action.outputs=[{id:'order',kind:'entity',target:input.key,required:true}];action.reads=[];action.writes=[];action.postconditions=[];const deployment=install(handlers,`return {order:{key:{module:'sales',element:'order',key:'pk'},components:[inputs.guess]}};`),target={module:'sales',action:'approve',revision:'no-read-output'};await executor.admission.revisions.retain('s',target,document,deployment);await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,doc
+64 |   let businessReads=0;const transaction=store.transaction.bind(store);store.transaction=((name,operation)=>transaction(name,(tx,control)=>operation(new Proxy(tx,{apply(target,thisArg,args){const text=(args[0] as string[]).join('?');if(/action_entity|action_key_alias/.test(text)){businessReads++;throw Error('Output lookup outside business capability');}return Reflect.apply(target,thisArg,args);}}),control))) as typeof store.transaction;
+65 |   for(const guess of ['o1','absent'])expect(await executor.invoke('s',credential,{protocol:'umf.actions.tx/1',target,key:'guess-'+guess,inputs:{guess:{string:guess}}})).toEqual({status:'failed',code:'PARAMETER'});expect(businessReads).toBe(0);expect(await store.sql`select * from action_outcome`).toHaveLength(0);expect(await store.sql`select * from action_audit`).toHaveLength(0);expect(await store.sql`select * from action_outbox`).toHaveLength(0);expect((await store.sql`select business_sequence::text from action_store`)[0]!.business_sequence).toBe('0');
+
+error: expect(received).toEqual(expected)
+
+  {
+-   "code": "PARAMETER",
++   "code": "LIMIT",
+    "status": "failed",
+  }
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:65:170)
+      at async withReferenceStore (/work/tests/actions-reference/native-harness.ts:11:41)
+      at async <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:62:8)
+(fail) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [2957.53ms]
+66 |  });
+67 | },60000);
+68 | test('native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps',async()=>{
+69 |  await withReferenceStore(async store=>{
+70 |   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),handlers=new ReferenceHandlerRegistry(),executor=new ReferenceActionExecutor(policy,handlers),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'}),document=structuredClone(linkedFixture) as unknown as Document,action=(document.modules[0]!.extensions!['umf.actions'] as any).actions[0];action.binding={kind:'handler',profile:{id:'umf.actions.container',version:'1'},handler:{id:'approve-handler',version:'1'}};action.reads=action.writes.splice(1);for(const relationship of document.modules[0]!.relationships as any[])relationship.targetMultiplicity.min=1;await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','create-order',['approver']);for(const record of ['customer','product'])await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,document,{module:'sales',element:record},{[JSON.stringify(['sales',recor
+71 |   const body=`await gateway.create('order-write',[{field:{module:'sales',element:'id'},value:inputs['order-id']},{field:{module:'sales',element:'status'},value:{string:'new'}}]);await gateway.set('order-write',[{field:{module:'sales',element:'status'},value:{string:'approved'}}]);await gateway.link({module:'sales',relationship:'order-customer'},'order-write','customer-write');await gateway.link({module:'sales',relationship:'order-product'},'order-write','product-write');return {};`,deployment=install(handlers,body),target={module:'sales',action:'create-order',revision:'handler-links'},inputs={'order-id':{string:'new'},customer:{key:{module:'sales',element:'customer',key:'pk'},components:[{string:'customer'}]},product:{key:{module:'sales',element:'product',key:'pk'},components:[{string:'product'}]}};await executor.admission.revisions.retain('s',target,document,deployment);const request={protocol:'umf.actions.tx/1',target,key:'linked',inputs},result=await executor.invoke('s',credential,request);expect(result.st
+
+error: expect(received).toBe(expected)
+
+Expected: "committed"
+Received: "failed"
+
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:71:1031)
+      at async withReferenceStore (/work/tests/actions-reference/native-harness.ts:11:41)
+      at async <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:69:8)
+(fail) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [4267.59ms]
+75 | },60000);
+76 | test('retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission',async()=>{
+77 |  await withReferenceStore(async store=>{
+78 |   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),handlers=new ReferenceHandlerRegistry(),executor=new ReferenceActionExecutor(policy,handlers),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'}),{document}=source(),body=`await gateway.read('order-read',{module:'sales',element:'status'});${write}${outputs}`,deployment=install(handlers,body),target={module:'sales',action:'approve',revision:'pinned'},request={protocol:'umf.actions.tx/1',target,key:'admitted',inputs:{order:input}};await executor.admission.revisions.retain('s',target,document,deployment);await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,document,{module:'sales',element:'order'},fields,'v0'));
+79 |   let notify:()=>void=()=>{};const called=new Promise<void>(resolve=>{notify=resolve;}),original=ReferenceMutationGateway.prototype.read;ReferenceMutationGateway.prototype.read=function(...args){const value=original.apply(this,args);notify();return value;};let pending:ReturnType<ReferenceActionExecutor['invoke']>|undefined;let timer:ReturnType<typeof setTimeout>|undefined;
+80 |   try{pending=executor.invoke('s',credential,request);await Promise.race([called,new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(Error('Actual handler RPC not observed')),10000);})]);handlers.retire(deployment);const result=await pending;expect(result.status).toBe('committed');if(result.status!=='committed'||result.verification.kind!=='handler')throw Error('Expected pinned handler');expect(result.verification.deployment).toEqual(deployment);expect(await executor.invoke('s',credential,{...request,key:'after-retirement'})).toEqual({status:'unsupported',code:'PARAMETER'});expect(await executor.invoke('s',credential,request)).toEqual(result);expect(await store.sql`select * from action_outcome`).toHaveLength(1);expect(await store.sql`select * from action_audit`).toHaveLength(1);}
+
+error: Actual handler RPC not observed
+      at /work/tests/actions-reference/handler-executor.test.ts:80:142
+(fail) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [13575.88ms]
+86 | test('durable operator catalog survives new consumers, scopes stores and permanently retains retirement',async()=>{
+87 |  await withReferenceStore(async store=>{
+88 |   const issuer=new ReferenceActionIssuer(),credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'}),{document}=source(),body=write+outputs,program={id:'approve-handler',version:'1',source:body,build:referenceHandlerBuild(body)},catalog=new ReferenceHandlerCatalog(store),target={module:'sales',action:'approve',revision:'durable'},request={protocol:'umf.actions.tx/1',target,key:'first',inputs:{order:input}};
+89 |   for(const name of ['s','other']){await store.create(name,'tenant','epoch');const policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy,catalog),deployment=await catalog.publish(name,program);await executor.admission.revisions.retain(name,target,document,deployment);await policy.membership(name,'person','approver',true);await policy.replayDiscovery(name,'sales','approve',['approver']);await store.transaction(name,(tx,control)=>seedReferenceEntity(tx,control,document,{module:'sales',element:'order'},fields,'v0'));}
+90 |   const restarted=new ReferenceActionStore(store.url);try{
+91 |    const restoredCatalog=new ReferenceHandlerCatalog(restarted),consumer=new ReferenceActionExecutor(new ReferenceActionPolicy(restarted,issuer),restoredCatalog),result=await consumer.invoke('s',credential,request);expect(result.status).toBe('committed');expect(await consumer.preview('s',credential,{protocol:request.protocol,target,inputs:request.inputs})).toMatchObject({status:'preview'});
+                                                                                                                                                                                                                                                  ^
+error: expect(received).toBe(expected)
+
+Expected: "committed"
+Received: "failed"
+
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:91:238)
+      at async withReferenceStore (/work/tests/actions-reference/native-harness.ts:11:41)
+      at async <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:87:8)
+(fail) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [2810.55ms]
+ 99 |  await withReferenceStore(async store=>{
+100 |   await store.create('s','tenant','epoch');const issuer=new ReferenceActionIssuer(),policy=new ReferenceActionPolicy(store,issuer),catalog=new ReferenceHandlerCatalog(store),executor=new ReferenceActionExecutor(policy,catalog),{document}=source(),body=`await gateway.read('order-read',{module:'sales',element:'status'});await new Promise(resolve=>setTimeout(resolve,1200));${write}${outputs}`,deployment=await catalog.publish('s',{id:'approve-handler',version:'1',build:referenceHandlerBuild(body),source:body}),target={module:'sales',action:'approve',revision:'catalog-race'},request={protocol:'umf.actions.tx/1',target,key:'admitted',inputs:{order:input}},credential=issuer.issue({tenant:'tenant',principal:'person',service:'service'});
+101 |   await executor.admission.revisions.retain('s',target,document,deployment);await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,document,{module:'sales',element:'order'},fields,'v0'));
+102 |   let notify=()=>{};const called=new Promise<void>(resolve=>{notify=resolve;}),original=ReferenceMutationGateway.prototype.read;ReferenceMutationGateway.prototype.read=function(...args){const result=original.apply(this,args);notify();return result;};let pending:ReturnType<ReferenceActionExecutor['invoke']>|undefined,retirement:Promise<void>|undefined,timer:ReturnType<typeof setTimeout>|undefined,retired=false;
+103 |   try{
+104 |    pending=executor.invoke('s',credential,request);await Promise.race([called,new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(Error('Actual handler admission beacon missing')),5000);})]);
+                                                                                                                                                ^
+error: Actual handler admission beacon missing
+      at <anonymous> (/work/tests/actions-reference/handler-executor.test.ts:104:139)
+(fail) native catalog retirement waits for admitted handler commit then refuses fresh work [7406.37ms]
+
+tests/actions-reference/graph.test.ts:
+(pass) native final graph applies CREATE/LINK and UNLINK/DELETE deltas and sees unselected competing edges [2690.45ms]
+
+tests/actions-reference/recipe.test.ts:
+(pass) native candidate recipe orders missing inputs, versions, conditions and evaluates isolated final state [3358.96ms]
+
+tests/actions-reference/composite-key.test.ts:
+(pass) native composite Keys preserve ordered components through preparation, freeze, typed results and restarted replay [3871.04ms]
+(pass) native owned and association-Record declarations refuse before business access or any transactional write [3322.12ms]
+
+tests/actions-reference/preview.test.ts:
+(pass) native preview is advisory, ordered and write-free under independent SQL write guards [3823.89ms]
+
+tests/actions-reference/state.test.ts:
+(pass) native frozen frames resolve primary/alternate Keys to one resource and reject duplicate alias writes atomically [3002.87ms]
+
+tests/actions-reference/native-refinement.test.ts:
+(pass) native bounded traces refine independent authorization, token, retirement and atomic-state semantics [37405.89ms]
+(pass) native refinement kills replay, authorization and terminal-audit implementation mutants [4271.95ms]
+
+tests/actions-reference/fresh-admission.test.ts:
+(pass) native fresh admission refuses full-declaration unknowns and fences without business or terminal writes [2738.30ms]
+
+tests/actions-reference/recovery.test.ts:
+(pass) native server abort after all writes retries at most three complete transactions [10118.68ms]
+(pass) injected lost acknowledgement after actual commit never retries; new connection recovers keyed original result [5867.67ms]
+(pass) native backend termination before acknowledgement is indeterminate and never automatically retried [1599.07ms]
+(pass) retry rechecks authorization after a native rollback and intervening revocation [3473.75ms]
+(pass) native unknown-completion diagnostics never qualify as known rollback retries [5504.18ms]
+
+tests/actions-reference/invariant-mutants.test.ts:
+(pass) native alias and projection histories kill actual canonicalization and prefix-gap implementation mutants [4135.11ms]
+
+tests/actions-reference/attempts.test.ts:
+(pass) native early-denial journal requires no business SELECT and never records untrusted actor or secrets [2983.28ms]
+(pass) native abort observations survive rollback with distinct retry IDs and one terminal atomic ID [3532.56ms]
+(pass) uncertain acknowledgement shares the terminal ID without inventing rollback or retry [3241.74ms]
+(pass) actual journal SQL failures and throwing diagnostics cannot replace commit or trigger business retry [2922.57ms]
+(pass) operational journal reader has independent header/detail grants and irreversible visibility retention [4767.90ms]
+(pass) caller mutation during journal latency cannot change the admitted invocation [3134.52ms]
+(pass) late native rollback preserves attempt observations and no terminal or business write [4337.02ms]
+(pass) unknown or inconsistent operational headers refuse without changing retained source [3111.23ms]
+(pass) a row committed after the journal existence boundary cannot bypass native expiry [4234.76ms]
+(pass) native journal lock timeout and async failing diagnostics stay outside business classification [3907.47ms]
+(pass) rejected replay and token reuse attribute the original authorized revision, never the requested substitute [3342.55ms]
+(pass) supervisor death after acknowledged start leaves unresolved observation and no invented business result [3416.00ms]
+(pass) unqualified retained deployment meaning stays intact but never enters attempt telemetry [3136.32ms]
+(pass) malformed retained details refuse only authorized detail reads while exact bytes stay intact [2518.45ms]
+(pass) business audit grants cannot authorize operational attempt observations [1673.16ms]
+
+tests/actions-reference/link-executor.test.ts:
+(pass) native ordered CREATE/LINK satisfies required relationships, stamps read-only targets and replays exact typed changes [4237.17ms]
+(pass) native LINK set no-ops/restoration preserve versions; hidden-edge constraints precede posts and link-only stamps conflict [7107.39ms]
+
+tests/actions-reference/gateway.test.ts:
+(pass) gateway verifies immediate writes, reports net restoration and isolates snapshots [4.81ms]
+(pass) gateway permanently aborts outside-frame, immutable-Key and invalid refinement attempts [3.72ms]
+(pass) gateway unions write aliases while read grants cannot widen write permission [9.92ms]
+(pass) public typed input admission refuses coercible malformed literal wrappers [1.41ms]
+(pass) gateway operation bound counts no-ops and permanently aborts on operation 257 [287.18ms]
+(pass) gateway reads candidate state through read aliases without granting writes and keeps pre-state frozen [2.75ms]
+(pass) gateway delete unions only write grants and permanently rejects canonical alias reuse [15.01ms]
+(pass) gateway runtime value refinement failure has stable CONSTRAINT and permanent abort [3.20ms]
+(pass) gateway CREATE keeps pre-state absent, emits one final creation and never permits created deletion [10.45ms]
+(pass) gateway CREATE requires the exact frozen primary tuple and primary-origin create flag [4.01ms]
+(pass) gateway CREATE cannot borrow Field permission from a proven read alias [4.57ms]
+
+tests/actions-reference/reader-revocation.test.ts:
+(pass) native audit read linearizes before queued revocation and later denial selects no protected rows [2665.56ms]
+(pass) native projection read linearizes before queued revocation and later denial selects no protected rows [2817.35ms]
+
+tests/actions-reference/preparation.test.ts:
+(pass) fresh preparation gates the entire retained declaration before narrow input and rule consumers [222.23ms]
+(pass) fresh preparation retains qualified create/link selectors and their ordered identities [153.79ms]
+(pass) mutation endpoint invariant dependencies admit before false preconditions, including read-only targets [247.76ms]
+
+tests/actions-reference/relationship-snapshot.test.ts:
+(pass) native linked snapshots preserve direction, canonical read aliases and durable rejection under preview write guards [7141.22ms]
+
+tests/actions-reference/delete.test.ts:
+(pass) native deletion is canonical, atomic and replayable; alias reuse and remaining-link constraints roll back [6252.32ms]
+
+tests/actions-reference/lookup-horizon.test.ts:
+(pass) logical lookup malformed envelopes refuse PARAMETER before authentication or native access [0.29ms]
+(pass) native namespace-lifetime token recognition survives expiry, changed intent and a fresh consumer without reexecution [3414.57ms]
+
+tests/actions-reference/creation-relationships.test.ts:
+(pass) CREATE lower bounds use targets per source and sources per target independently [130.04ms]
+
+7 tests failed:
+(fail) native handler access/output/postcondition failures roll back every protected and business write [10314.42ms]
+(fail) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [2415.39ms]
+(fail) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [2957.53ms]
+(fail) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [4267.59ms]
+(fail) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [13575.88ms]
+(fail) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [2810.55ms]
+(fail) native catalog retirement waits for admitted handler commit then refuses fresh work [7406.37ms]
+
+ 112 pass
+ 7 fail
+ 1780 expect() calls
+Ran 119 tests across 39 files. [335.29s]
+
+      at run (/work/scripts/actions-reference/qualify-foundation.ts:3:269)
+
+Bun v1.4.2 (Linux arm64)
