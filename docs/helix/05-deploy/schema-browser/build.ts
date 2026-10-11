@@ -15,14 +15,14 @@ const plugin={name:'fixed-browser-profile',setup(build:any){
  build.onLoad({filter:/src\/model\/native-json\.ts$/},async()=>{let text=await Bun.file(join(repo,'src/model/native-json.ts')).text();text=text.replace(/import \{[^\n]+\} from 'yaml';/,"let parseDocument:any,isMap:any,isSeq:any,isScalar:any;export function configureYaml(y:any){({parseDocument,isMap,isSeq,isScalar}=y);}");const start=text.indexOf('export function parseNativeJson('),end=text.indexOf('export function renderTree(');text=text.slice(0,start)+"export {exactJson as parseNativeJson} from "+JSON.stringify(join(source,'exact-json.ts'))+";\n"+text.slice(end);return {contents:text,loader:'ts'};});
  build.onLoad({filter:/src\/model\/serialization\.ts$/},async()=>{let text=await Bun.file(join(repo,'src/model/serialization.ts')).text();text=text.replace(/import \{[^\n]+\} from 'yaml';/,"let parseDocument:any,isMap:any,isSeq:any,isScalar:any,isAlias:any,stringify:any;export function configureYaml(y:any){({parseDocument,isMap,isSeq,isScalar,isAlias,stringify}=y);}");text="import {exactJsonValue} from "+JSON.stringify(join(source,'exact-json.ts'))+";\n"+text;text=text.replace("if (format === 'json') {", "if (format === 'json') { return exactJsonValue(text);");return {contents:text,loader:'ts'};});
 }};
-const renderer=await Bun.build({entrypoints:[resolve(source,'../microsite/explorer.ts')],target:'browser',format:'esm',splitting:true,plugins:[plugin],minify:true,metafile:true,outdir:join(output,'assets')});
+const renderer=await Bun.build({entrypoints:[resolve(source,'../microsite/explorer.ts')],target:'browser',format:'esm',splitting:true,plugins:[plugin],minify:{whitespace:true,syntax:true,identifiers:false},metafile:true,outdir:join(output,'assets')});
 if(!renderer.success)throw Error(renderer.logs.map(log=>String(log).slice(0,500)).join('\n'));
 const {thirdPartyNotices}=await import('./notices');
 await Bun.write(join(output,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(repo,Object.keys((typeof renderer.metafile==='string'?JSON.parse(renderer.metafile):renderer.metafile as any).inputs)));
 // Offline consumers do not need Google Fonts, a site logo, or public datasets.
 const style=await Bun.file(join(source,'style.css')).text();
 await Bun.write(join(output,'assets/style.css'),style);
-const build=await Bun.build({entrypoints:[join(source,'index.ts')],target:'browser',format:'esm',outdir:output,minify:true});
+const build=await Bun.build({entrypoints:[join(source,'index.ts')],target:'browser',format:'esm',outdir:output,minify:{whitespace:true,syntax:true,identifiers:false}});
 if(!build.success)throw Error(build.logs.join('\n'));
 const types=Bun.spawn(['bun',join(repo,'node_modules/typescript/bin/tsc'),join(source,'index.ts'),'--ignoreConfig','--declaration','--emitDeclarationOnly','--skipLibCheck','--strict','--target','ES2022','--module','ESNext','--moduleResolution','Bundler','--outDir',join(output,'types')],{stdout:'inherit',stderr:'inherit'});
 if(await types.exited)throw Error('Browser API declaration build failed.');

@@ -1,0 +1,183 @@
+{
+  "id": "gtfs-schedule",
+  "version": "1.0.0",
+  "description": "GTFS Schedule basic fixed-stop transit profile",
+  "domain_types": {
+    "gtfs_id": {
+      "description": "Feed-local opaque text; retain leading zeros."
+    },
+    "gtfs_service_time": {
+      "description": "H:MM:SS or HH:MM:SS service-day time; hours may exceed 23; agency timezone governs."
+    },
+    "gtfs_date": {
+      "description": "YYYYMMDD service date text."
+    }
+  },
+  "sources": {
+    "feed": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "urn:umf:unresolved:gtfs-schedule-feed",
+      "format": "zip/csv",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "description": "Unresolved agency feed; choose and pin an actual feed before ingestion."
+    },
+    "documentation": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "format": "markdown",
+      "revision": "3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+      },
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "GTFS specification contributors"
+      },
+      "description": "Fingerprint of documentation bytes inspected during authoring; not a checksum of dataset rows."
+    }
+  },
+  "schemas": [
+    {
+      "id": "agency",
+      "format": "tablespec",
+      "reference": "umf/agency.json"
+    },
+    {
+      "id": "stops",
+      "format": "tablespec",
+      "reference": "umf/stops.json"
+    },
+    {
+      "id": "routes",
+      "format": "tablespec",
+      "reference": "umf/routes.json"
+    },
+    {
+      "id": "trips",
+      "format": "tablespec",
+      "reference": "umf/trips.json"
+    },
+    {
+      "id": "stop_times",
+      "format": "tablespec",
+      "reference": "umf/stop_times.json"
+    },
+    {
+      "id": "calendar",
+      "format": "tablespec",
+      "reference": "umf/calendar.json"
+    },
+    {
+      "id": "calendar_dates",
+      "format": "tablespec",
+      "reference": "umf/calendar_dates.json"
+    }
+  ],
+  "source_bindings": [
+    {
+      "schema_id": "agency",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "agency",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "stops",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "stops",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "routes",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "routes",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "trips",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "trips",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "stop_times",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "stop_times",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "calendar",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "calendar",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "calendar_dates",
+      "source_id": "feed",
+      "role": "rows"
+    },
+    {
+      "schema_id": "calendar_dates",
+      "source_id": "documentation",
+      "role": "reference"
+    }
+  ],
+  "profile": {
+    "subset": "Selected basic Schedule fields; no Realtime, fares, shapes, frequencies, transfers, translations or flexible service.",
+    "feed": "Unresolved; specification profile only, no agency snapshot is claimed.",
+    "member_bindings": {
+      "agency": "agency.txt",
+      "stops": "stops.txt",
+      "routes": "routes.txt",
+      "trips": "trips.txt",
+      "stop_times": "stop_times.txt",
+      "calendar": "calendar.txt",
+      "calendar_dates": "calendar_dates.txt"
+    },
+    "conditional_rules": [
+      "agency_id required for multiple agencies; agency association remains conditional.",
+      "At least one route name is required.",
+      "stop name/coordinates depend on location_type.",
+      "Service IDs resolve over the union of calendar and calendar_dates.",
+      "Calendar requirements depend on dates-only service; exceptions can introduce service IDs.",
+      "Arrival/departure requirements depend on timing and stop position."
+    ],
+    "blank_values": "Optional and conditional CSV blanks need explicit consumer handling; no blanket null/default coercion.",
+    "relationships": "Only unconditional in-profile references are TableSpec foreign keys; conditional and union references remain stated here.",
+    "documentation_revision": "3c9e7b904b5035349622f03e11851e25c16d1d99",
+    "schema_format": "TableSpec 1.0 JSON",
+    "support": "Schema metadata and exact adapter recovery only; no source data ingestion or native equivalence.",
+    "data_snapshot": "No dataset bytes bundled or SHA-256-pinned. Consumers must select and pin local inputs before execution.",
+    "unknown_content": "Retain original source fields, files and bytes; unsupported content requires an explicit loss report."
+  }
+}

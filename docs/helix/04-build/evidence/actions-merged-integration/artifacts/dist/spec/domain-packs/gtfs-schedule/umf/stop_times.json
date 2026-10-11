@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "table_name": "stop_times",
+  "description": "Fixed-stop stop_times.txt subset; flexible location groups/windows are excluded.",
+  "columns": [
+    {
+      "name": "trip_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Trip identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "arrival_time",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Conditional service-day time, may exceed 24 hours.",
+      "domain_type": "gtfs_service_time"
+    },
+    {
+      "name": "departure_time",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Conditional service-day time, may exceed 24 hours.",
+      "domain_type": "gtfs_service_time"
+    },
+    {
+      "name": "stop_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Stop identifier in the fixed-stop subset.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "stop_sequence",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Ordered occurrence, not a stop identifier."
+    },
+    {
+      "name": "timepoint",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Blank source default retained."
+    }
+  ],
+  "primary_key": [
+    "trip_id",
+    "stop_sequence"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "trip_id",
+        "references_table": "trips",
+        "references_column": "trip_id"
+      },
+      {
+        "column": "stop_id",
+        "references_table": "stops",
+        "references_column": "stop_id"
+      }
+    ]
+  }
+}

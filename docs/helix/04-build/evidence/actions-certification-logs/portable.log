@@ -1,0 +1,76 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/actions/api.test.ts:
+(pass) inspection reports inert profiles and every primitive/dependency obligation [33.24ms]
+(pass) duplicate registration refuses; unrelated registry semantic errors propagate [41.66ms]
+(pass) semantic violations remain inspectable and prevent assessment/authoring [48.65ms]
+(pass) authoring retains unknown rule/profile meaning without treating it as execution [31.35ms]
+(pass) exact declaration assessment is separate from runtime verification [82.95ms]
+(pass) supported claims cannot erase future effect or model meaning [49.50ms]
+(pass) known roles/1 declaration permits safe editing while unrelated unknown vocabulary survives [57.39ms]
+(pass) unknown package-use metadata and core availability cannot be erased by claims or edits [130.41ms]
+(pass) known profile envelopes/dependencies and model qualifiers preserve unknown meaning [141.98ms]
+(pass) registry callbacks cannot suppress recognized action errors [34.85ms]
+(pass) warnings at existing model obligations and transitive package qualifiers block compatibility [130.19ms]
+(pass) relationship dependency indexes do not import unrelated element vocabulary qualifiers [43.02ms]
+(pass) unknown nested action references remain inspectable and unchecked [91.70ms]
+(pass) opaque future effect objects never acquire model-reference semantics [46.62ms]
+(pass) later known effect reference qualifiers are inventoried before selector compilation [52.12ms]
+
+tests/actions/assessment.test.ts:
+(pass) @covers US-055-AC5: complete exact snapshot comparison never proves execution [143.11ms]
+(pass) @covers US-055-AC5: missing, unsupported, unknown and malformed claims cannot waive obligations [401.83ms]
+(pass) @covers US-055-AC5: unsupported future lifecycle and transitive qualifiers stay unoverrideable [297.23ms]
+(pass) @covers US-055-AC5: unknown effects and referenced native extensions are never claimed away [78.85ms]
+
+tests/actions/contracts.test.ts:
+(pass) @covers US-055-AC1: exact targets and stable identity [71.17ms]
+(pass) @covers US-055-AC2: rules and handlers are inert [13.55ms]
+(pass) @covers US-055-AC3: ordered create link and property effects [205.04ms]
+(pass) @covers US-055-AC4: mandatory execution obligations and handler output metadata [31.46ms]
+(pass) @covers US-055-AC7: DDD bindings are explicit and remain independent [85.87ms]
+(pass) @covers US-055-AC4: opaque policy resources preserve distinct obligations without enforcement evidence [49.35ms]
+(pass) @covers US-055-AC4 @covers US-055-AC5 @covers US-055-AC6: actor profile remains preserved and cannot be claimed as enforced [30.87ms]
+(pass) @covers US-055-AC5: unsupported float and temporal parameter meanings remain unclaimable [38.81ms]
+
+tests/actions/corpus.test.ts:
+(pass) @covers US-055-AC1 @covers US-055-AC3 @covers US-055-AC4 @covers US-055-AC6 @covers US-055-AC8 @covers US-055-AC9: language-neutral declaration corpus checks independent expected decisions [950.45ms]
+
+tests/actions/interpreter.test.ts:
+(pass) EX-01: exact integer equality/arithmetic never use floating-point coercion [8.38ms]
+(pass) EX-01: optional absence differs from null and can be guarded left-to-right [10.64ms]
+(pass) EX-01: every skipped branch is checked for syntax/type/phase/dependency/access [3.48ms]
+(pass) EX-01: state existence guards absent identities; writes confer no reads [4.32ms]
+(pass) EX-01: outputs and post-state are explicitly postcondition-only [5.13ms]
+(pass) EX-01: depth, syntax node, text, numeric expansion and wrapper limits refuse [8.83ms]
+(pass) EX-01: entity selection preserves original tuples and uses core equality bytes [2.92ms]
+(pass) EX-01: ordered explicit key components require exact Fields and declared dependencies [3.77ms]
+(pass) EX-01: typed admission rejects missing required, wrong wrappers and undeclared values [3.24ms]
+(pass) EX-01: present does not fabricate a field value from an absent entity [1.95ms]
+(pass) EX-01: relationship absence requires an explicit snapshot and exact directed read access [30.91ms]
+(pass) strict consumers refuse external references and uninterpreted selected Field meaning [4.80ms]
+(pass) strict reference admission covers exists frames and selected component inputs [0.32ms]
+(pass) strict exists and input selection refuse transitive unknown Record and Key meaning [5.94ms]
+(pass) rule literal compilation and native snapshot reads refuse coercible malformed wrappers [3.10ms]
+
+tests/actions/preservation.test.ts:
+(pass) @covers US-055-AC6: JSON/YAML recover exact future meaning and rule text with isolated results [75.46ms]
+(pass) @covers US-055-AC6: an unrelated unknown extension survives a safe known-profile action edit [18.77ms]
+(pass) @covers US-055-AC8: structural/version/identity failures are atomic and getters stay inert [19.24ms]
+(pass) @covers US-055-AC8: every array/expression boundary accepts its bound and refuses bound plus one [9.17ms]
+
+tests/actions/reports.test.ts:
+(pass) @covers US-055-AC5: actual reports satisfy published exact report/profile schemas [43.19ms]
+
+tests/actions/structure.test.ts:
+(pass) action structural admission (partial STP-055 evidence) > actual registry compiler accepts the complete core 0.8.0 fixture [13.67ms]
+(pass) action structural admission (partial STP-055 evidence) > required policy, malformed known effects and ambiguous bindings refuse [0.48ms]
+(pass) action structural admission (partial STP-055 evidence) > future effects and unrelated unknown members retain their exact data [0.07ms]
+(pass) action structural admission (partial STP-055 evidence) > copy isolation and hostile getters [0.07ms]
+(pass) action structural admission (partial STP-055 evidence) > non-BMP expression bounds count UTF-16 units even for opaque languages [0.49ms]
+(pass) action structural admission (partial STP-055 evidence) > array and expression bounds fail before producing a typed action [0.35ms]
+
+ 54 pass
+ 0 fail
+ 332 expect() calls
+Ran 54 tests across 8 files. [6.23s]

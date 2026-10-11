@@ -1,0 +1,636 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:arrow:integration-schema:0.1.0",
+  "description": "Schema portion of Arrow integration JSON, including future type names and unknown properties retained without interpretation. Buffer/data validity and native IPC representability are separate.",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "metadata": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "fields"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "field": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "dictionary": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "indexType": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "const": "int"
+                },
+                "bitWidth": {
+                  "enum": [
+                    8,
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "isSigned": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name",
+                "bitWidth",
+                "isSigned"
+              ],
+              "additionalProperties": true
+            },
+            "isOrdered": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "name",
+        "nullable",
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "type": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "null"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "NONE"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "bool"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "binary"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "largebinary"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "binaryview"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "utf8"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "largeutf8"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "utf8view"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "list"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "largelist"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "listview"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "largelistview"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "struct"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "struct_"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "runendencoded"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "int"
+            },
+            "bitWidth": {
+              "enum": [
+                8,
+                16,
+                32,
+                64
+              ]
+            },
+            "isSigned": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "bitWidth",
+            "isSigned"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "floatingpoint"
+            },
+            "precision": {
+              "enum": [
+                "HALF",
+                "SINGLE",
+                "DOUBLE"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "precision"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "decimal"
+            },
+            "bitWidth": {
+              "enum": [
+                32,
+                64,
+                128,
+                256
+              ]
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 76
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          },
+          "required": [
+            "name",
+            "precision",
+            "scale"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "date"
+            },
+            "unit": {
+              "enum": [
+                "DAY",
+                "MILLISECOND"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "unit"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "time"
+            },
+            "unit": {
+              "enum": [
+                "SECOND",
+                "MILLISECOND",
+                "MICROSECOND",
+                "NANOSECOND"
+              ]
+            },
+            "bitWidth": {
+              "enum": [
+                32,
+                64
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "unit",
+            "bitWidth"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "timestamp"
+            },
+            "unit": {
+              "enum": [
+                "SECOND",
+                "MILLISECOND",
+                "MICROSECOND",
+                "NANOSECOND"
+              ]
+            },
+            "timezone": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "unit"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "duration"
+            },
+            "unit": {
+              "enum": [
+                "SECOND",
+                "MILLISECOND",
+                "MICROSECOND",
+                "NANOSECOND"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "unit"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "interval"
+            },
+            "unit": {
+              "enum": [
+                "YEAR_MONTH",
+                "DAY_TIME",
+                "MONTH_DAY_NANO"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "unit"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "fixedsizebinary"
+            },
+            "byteWidth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            }
+          },
+          "required": [
+            "name",
+            "byteWidth"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "fixedsizelist"
+            },
+            "listSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            }
+          },
+          "required": [
+            "name",
+            "listSize"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "map"
+            },
+            "keysSorted": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "union"
+            },
+            "mode": {
+              "enum": [
+                "DENSE",
+                "SPARSE"
+              ]
+            },
+            "typeIds": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 127
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "mode",
+            "typeIds"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "null",
+                  "NONE",
+                  "bool",
+                  "binary",
+                  "largebinary",
+                  "binaryview",
+                  "utf8",
+                  "largeutf8",
+                  "utf8view",
+                  "list",
+                  "largelist",
+                  "listview",
+                  "largelistview",
+                  "struct",
+                  "struct_",
+                  "runendencoded",
+                  "int",
+                  "floatingpoint",
+                  "decimal",
+                  "date",
+                  "time",
+                  "timestamp",
+                  "duration",
+                  "interval",
+                  "fixedsizebinary",
+                  "fixedsizelist",
+                  "map",
+                  "union"
+                ]
+              }
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    }
+  }
+}

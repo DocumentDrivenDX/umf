@@ -1,0 +1,2175 @@
+resource_key,source_id,resource_type,native_id,resource_json
+hl7::Claim/100150,hl7-claim,Claim,100150,"{
+  ""resourceType"": ""Claim"",
+  ""id"": ""100150"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the Oral Health Claim</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://happyvalley.com/claim"",
+      ""value"": ""12345""
+    }
+  ],
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/claim-type"",
+        ""code"": ""oral""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/1""
+  },
+  ""created"": ""2014-08-16"",
+  ""insurer"": {
+    ""reference"": ""Organization/2""
+  },
+  ""provider"": {
+    ""reference"": ""Organization/1""
+  },
+  ""priority"": {
+    ""coding"": [
+      {
+        ""code"": ""normal""
+      }
+    ]
+  },
+  ""payee"": {
+    ""type"": {
+      ""coding"": [
+        {
+          ""code"": ""provider""
+        }
+      ]
+    }
+  },
+  ""careTeam"": [
+    {
+      ""sequence"": 1,
+      ""provider"": {
+        ""reference"": ""Practitioner/example""
+      }
+    }
+  ],
+  ""diagnosis"": [
+    {
+      ""sequence"": 1,
+      ""diagnosisCodeableConcept"": {
+        ""coding"": [
+          {
+            ""code"": ""123456""
+          }
+        ]
+      }
+    }
+  ],
+  ""insurance"": [
+    {
+      ""sequence"": 1,
+      ""focal"": true,
+      ""identifier"": {
+        ""system"": ""http://happyvalley.com/claim"",
+        ""value"": ""12345""
+      },
+      ""coverage"": {
+        ""reference"": ""Coverage/9876B1""
+      }
+    }
+  ],
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""careTeamSequence"": [
+        1
+      ],
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""code"": ""1200""
+          }
+        ]
+      },
+      ""servicedDate"": ""2014-08-16"",
+      ""unitPrice"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      }
+    }
+  ]
+}"
+hl7::ClaimResponse/R3500,hl7-claimresponse,ClaimResponse,R3500,"{
+  ""resourceType"": ""ClaimResponse"",
+  ""id"": ""R3500"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the ClaimResponse</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://www.BenefitsInc.com/fhir/remittance"",
+      ""value"": ""R3500""
+    }
+  ],
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/claim-type"",
+        ""code"": ""oral""
+      }
+    ]
+  },
+  ""subType"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/ex-claimsubtype"",
+        ""code"": ""emergency""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/1""
+  },
+  ""created"": ""2014-08-16"",
+  ""insurer"": {
+    ""identifier"": {
+      ""system"": ""http://www.jurisdiction.org/insurers"",
+      ""value"": ""555123""
+    }
+  },
+  ""requestor"": {
+    ""reference"": ""Organization/1""
+  },
+  ""request"": {
+    ""reference"": ""http://www.BenefitsInc.com/fhir/oralhealthclaim/15476332402""
+  },
+  ""outcome"": ""complete"",
+  ""disposition"": ""Claim settled as per contract."",
+  ""payeeType"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/payeetype"",
+        ""code"": ""provider""
+      }
+    ]
+  },
+  ""item"": [
+    {
+      ""itemSequence"": 1,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""eligible""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 135.57,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""copay""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 10.00,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""eligpercent""
+              }
+            ]
+          },
+          ""value"": 80.00
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""http://terminology.hl7.org/CodeSystem/adjudication-reason"",
+                ""code"": ""ar002"",
+                ""display"": ""Plan Limit Reached""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 90.47,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    }
+  ],
+  ""total"": [
+    {
+      ""category"": {
+        ""coding"": [
+          {
+            ""code"": ""submitted""
+          }
+        ]
+      },
+      ""amount"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""category"": {
+        ""coding"": [
+          {
+            ""code"": ""benefit""
+          }
+        ]
+      },
+      ""amount"": {
+        ""value"": 90.47,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""payment"": {
+    ""type"": {
+      ""coding"": [
+        {
+          ""system"": ""http://terminology.hl7.org/CodeSystem/ex-paymenttype"",
+          ""code"": ""complete""
+        }
+      ]
+    },
+    ""date"": ""2014-08-31"",
+    ""amount"": {
+      ""value"": 100.47,
+      ""currency"": ""USD""
+    },
+    ""identifier"": {
+      ""system"": ""http://www.BenefitsInc.com/fhir/paymentidentifier"",
+      ""value"": ""201408-2-1569478""
+    }
+  }
+}"
+hl7::Coverage/9876B1,hl7-coverage,Coverage,9876B1,"{
+  ""resourceType"": ""Coverage"",
+  ""id"": ""9876B1"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the coverage</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://benefitsinc.com/certificate"",
+      ""value"": ""12345""
+    }
+  ],
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/v3-ActCode"",
+        ""code"": ""EHCPOL"",
+        ""display"": ""extended healthcare""
+      }
+    ]
+  },
+  ""policyHolder"": {
+    ""reference"": ""http://benefitsinc.com/FHIR/Organization/CBI35""
+  },
+  ""subscriber"": {
+    ""reference"": ""Patient/4""
+  },
+  ""beneficiary"": {
+    ""reference"": ""Patient/4""
+  },
+  ""dependent"": ""0"",
+  ""relationship"": {
+    ""coding"": [
+      {
+        ""code"": ""self""
+      }
+    ]
+  },
+  ""period"": {
+    ""start"": ""2011-05-23"",
+    ""end"": ""2012-05-23""
+  },
+  ""payor"": [
+    {
+      ""reference"": ""Organization/2""
+    }
+  ],
+  ""class"": [
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""group""
+          }
+        ]
+      },
+      ""value"": ""CB135"",
+      ""name"": ""Corporate Baker's Inc. Local #35""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""subgroup""
+          }
+        ]
+      },
+      ""value"": ""123"",
+      ""name"": ""Trainee Part-time Benefits""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""plan""
+          }
+        ]
+      },
+      ""value"": ""B37FC"",
+      ""name"": ""Full Coverage: Medical, Dental, Pharmacy, Vision, EHC""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""subplan""
+          }
+        ]
+      },
+      ""value"": ""P7"",
+      ""name"": ""Includes afterlife benefits""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""class""
+          }
+        ]
+      },
+      ""value"": ""SILVER"",
+      ""name"": ""Silver: Family Plan spouse only""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""subclass""
+          }
+        ]
+      },
+      ""value"": ""Tier2"",
+      ""name"": ""Low deductable, max $20 copay""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""sequence""
+          }
+        ]
+      },
+      ""value"": ""9""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""rxid""
+          }
+        ]
+      },
+      ""value"": ""MDF12345""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""rxbin""
+          }
+        ]
+      },
+      ""value"": ""987654""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""rxgroup""
+          }
+        ]
+      },
+      ""value"": ""M35PT""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""rxpcn""
+          }
+        ]
+      },
+      ""value"": ""234516""
+    },
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/coverage-class"",
+            ""code"": ""sequence""
+          }
+        ]
+      },
+      ""value"": ""9""
+    }
+  ]
+}"
+hl7::CoverageEligibilityRequest/52345,hl7-eligibility-request,CoverageEligibilityRequest,52345,"{
+  ""resourceType"": ""CoverageEligibilityRequest"",
+  ""id"": ""52345"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the CoverageEligibilityRequest</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://happyvalley.com/coverageelegibilityrequest"",
+      ""value"": ""52345""
+    }
+  ],
+  ""status"": ""active"",
+  ""priority"": {
+    ""coding"": [
+      {
+        ""code"": ""normal""
+      }
+    ]
+  },
+  ""purpose"": [
+    ""validation""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/pat1""
+  },
+  ""created"": ""2014-08-16"",
+  ""provider"": {
+    ""reference"": ""Organization/1""
+  },
+  ""insurer"": {
+    ""reference"": ""Organization/2""
+  },
+  ""insurance"": [
+    {
+      ""focal"": true,
+      ""coverage"": {
+        ""reference"": ""Coverage/9876B1""
+      }
+    }
+  ]
+}"
+hl7::CoverageEligibilityResponse/E2500,hl7-eligibility-response,CoverageEligibilityResponse,E2500,"{
+  ""resourceType"": ""CoverageEligibilityResponse"",
+  ""id"": ""E2500"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the CoverageEligibilityResponse.</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://www.BenefitsInc.com/fhir/coverageeligibilityresponse"",
+      ""value"": ""881234""
+    }
+  ],
+  ""status"": ""active"",
+  ""purpose"": [
+    ""validation""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/pat1""
+  },
+  ""created"": ""2014-08-16"",
+  ""request"": {
+    ""reference"": ""http://www.BenefitsInc.com/fhir/coverageeligibilityrequest/225476332402""
+  },
+  ""outcome"": ""complete"",
+  ""disposition"": ""Policy is currently in-force."",
+  ""insurer"": {
+    ""reference"": ""Organization/2""
+  },
+  ""insurance"": [
+    {
+      ""coverage"": {
+        ""reference"": ""Coverage/9876B1""
+      },
+      ""inforce"": true
+    }
+  ]
+}"
+hl7::EnrollmentRequest/22345,hl7-enrollment,EnrollmentRequest,22345,"{
+  ""resourceType"": ""EnrollmentRequest"",
+  ""id"": ""22345"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the EnrollmentRequest.</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://happyvalley.com/enrollmentrequest"",
+      ""value"": ""EN22345""
+    }
+  ],
+  ""status"": ""active"",
+  ""created"": ""2014-08-16"",
+  ""insurer"": {
+    ""reference"": ""Organization/2""
+  },
+  ""provider"": {
+    ""reference"": ""Organization/1""
+  },
+  ""candidate"": {
+    ""reference"": ""Patient/1""
+  },
+  ""coverage"": {
+    ""reference"": ""Coverage/9876B1""
+  }
+}"
+hl7::ExplanationOfBenefit/EB3500,hl7-eob,ExplanationOfBenefit,EB3500,"{
+  ""resourceType"": ""ExplanationOfBenefit"",
+  ""id"": ""EB3500"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the ExplanationOfBenefit</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://www.BenefitsInc.com/fhir/explanationofbenefit"",
+      ""value"": ""987654321""
+    }
+  ],
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""http://terminology.hl7.org/CodeSystem/claim-type"",
+        ""code"": ""oral""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/pat1""
+  },
+  ""created"": ""2014-08-16"",
+  ""enterer"": {
+    ""reference"": ""Practitioner/1""
+  },
+  ""insurer"": {
+    ""reference"": ""Organization/3""
+  },
+  ""provider"": {
+    ""reference"": ""Practitioner/1""
+  },
+  ""payee"": {
+    ""type"": {
+      ""coding"": [
+        {
+          ""system"": ""http://terminology.hl7.org/CodeSystem/payeetype"",
+          ""code"": ""provider""
+        }
+      ]
+    },
+    ""party"": {
+      ""reference"": ""Organization/2""
+    }
+  },
+  ""facility"": {
+    ""reference"": ""Location/1""
+  },
+  ""claim"": {
+    ""reference"": ""Claim/100150""
+  },
+  ""claimResponse"": {
+    ""reference"": ""ClaimResponse/R3500""
+  },
+  ""outcome"": ""complete"",
+  ""disposition"": ""Claim settled as per contract."",
+  ""careTeam"": [
+    {
+      ""sequence"": 1,
+      ""provider"": {
+        ""reference"": ""Practitioner/example""
+      }
+    }
+  ],
+  ""insurance"": [
+    {
+      ""focal"": true,
+      ""coverage"": {
+        ""reference"": ""Coverage/9876B1""
+      }
+    }
+  ],
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""careTeamSequence"": [
+        1
+      ],
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/ex-USCLS"",
+            ""code"": ""1205""
+          }
+        ]
+      },
+      ""servicedDate"": ""2014-08-16"",
+      ""unitPrice"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      },
+      ""udi"": [
+        {
+          ""reference"": ""Device/example""
+        }
+      ],
+      ""encounter"": [
+        {
+          ""reference"": ""Encounter/example""
+        }
+      ],
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""eligible""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 120.00,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""eligpercent""
+              }
+            ]
+          },
+          ""value"": 0.80
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 96.00,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    },
+    {
+      ""sequence"": 2,
+      ""careTeamSequence"": [
+        1
+      ],
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""code"": ""group""
+          }
+        ]
+      },
+      ""servicedDate"": ""2014-08-16"",
+      ""net"": {
+        ""value"": 200.00,
+        ""currency"": ""USD""
+      },
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 180.00,
+            ""currency"": ""USD""
+          }
+        }
+      ],
+      ""detail"": [
+        {
+          ""sequence"": 1,
+          ""productOrService"": {
+            ""coding"": [
+              {
+                ""code"": ""group""
+              }
+            ]
+          },
+          ""net"": {
+            ""value"": 200.00,
+            ""currency"": ""USD""
+          },
+          ""udi"": [
+            {
+              ""reference"": ""Device/example""
+            }
+          ],
+          ""adjudication"": [
+            {
+              ""category"": {
+                ""coding"": [
+                  {
+                    ""code"": ""benefit""
+                  }
+                ]
+              },
+              ""amount"": {
+                ""value"": 180.00,
+                ""currency"": ""USD""
+              }
+            }
+          ],
+          ""subDetail"": [
+            {
+              ""sequence"": 1,
+              ""productOrService"": {
+                ""coding"": [
+                  {
+                    ""system"": ""http://terminology.hl7.org/CodeSystem/ex-USCLS"",
+                    ""code"": ""1205""
+                  }
+                ]
+              },
+              ""unitPrice"": {
+                ""value"": 200.00,
+                ""currency"": ""USD""
+              },
+              ""net"": {
+                ""value"": 200.00,
+                ""currency"": ""USD""
+              },
+              ""udi"": [
+                {
+                  ""reference"": ""Device/example""
+                }
+              ],
+              ""adjudication"": [
+                {
+                  ""category"": {
+                    ""coding"": [
+                      {
+                        ""code"": ""eligible""
+                      }
+                    ]
+                  },
+                  ""amount"": {
+                    ""value"": 200.00,
+                    ""currency"": ""USD""
+                  }
+                },
+                {
+                  ""category"": {
+                    ""coding"": [
+                      {
+                        ""code"": ""eligpercent""
+                      }
+                    ]
+                  },
+                  ""value"": 0.90
+                },
+                {
+                  ""category"": {
+                    ""coding"": [
+                      {
+                        ""code"": ""benefit""
+                      }
+                    ]
+                  },
+                  ""amount"": {
+                    ""value"": 180.00,
+                    ""currency"": ""USD""
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  ""total"": [
+    {
+      ""category"": {
+        ""coding"": [
+          {
+            ""code"": ""submitted""
+          }
+        ]
+      },
+      ""amount"": {
+        ""value"": 135.57,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""category"": {
+        ""coding"": [
+          {
+            ""code"": ""benefit""
+          }
+        ]
+      },
+      ""amount"": {
+        ""value"": 96.00,
+        ""currency"": ""USD""
+      }
+    }
+  ]
+}"
+hl7::InsurancePlan/example,hl7-insuranceplan,InsurancePlan,example,"{
+  ""resourceType"": ""InsurancePlan"",
+  ""id"": ""example"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\""><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example</p><p><b>name</b>: foo</p></div>""
+  },
+  ""name"": ""foo""
+}"
+hl7::PaymentReconciliation/ER2500,hl7-payment,PaymentReconciliation,ER2500,"{
+  ""resourceType"": ""PaymentReconciliation"",
+  ""id"": ""ER2500"",
+  ""text"": {
+    ""status"": ""generated"",
+    ""div"": ""<div xmlns=\""http://www.w3.org/1999/xhtml\"">A human-readable rendering of the PaymentReconciliation</div>""
+  },
+  ""identifier"": [
+    {
+      ""system"": ""http://www.BenefitsInc.com/fhir/enrollmentresponse"",
+      ""value"": ""781234""
+    }
+  ],
+  ""status"": ""active"",
+  ""period"": {
+    ""start"": ""2014-08-16"",
+    ""end"": ""2014-08-31""
+  },
+  ""created"": ""2014-08-16"",
+  ""paymentIssuer"": {
+    ""reference"": ""Organization/2""
+  },
+  ""request"": {
+    ""reference"": ""http://www.BenefitsInc.com/fhir/eligibility/225476332402""
+  },
+  ""requestor"": {
+    ""reference"": ""Organization/1""
+  },
+  ""outcome"": ""complete"",
+  ""disposition"": ""2014 August mid-month settlement."",
+  ""paymentDate"": ""2014-08-01"",
+  ""paymentAmount"": {
+    ""value"": 7000.00,
+    ""currency"": ""USD""
+  },
+  ""paymentIdentifier"": {
+    ""system"": ""http://www.BenefitsInc.com/payment/2018"",
+    ""value"": ""10-12345""
+  },
+  ""detail"": [
+    {
+      ""identifier"": {
+        ""system"": ""http://www.BenefitsInc.com/payment/2018/detail"",
+        ""value"": ""10-12345-001""
+      },
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/payment-type"",
+            ""code"": ""payment""
+          }
+        ]
+      },
+      ""request"": {
+        ""identifier"": {
+          ""system"": ""http://happyvalleyclinic.com/claim"",
+          ""value"": ""AB12345""
+        }
+      },
+      ""submitter"": {
+        ""reference"": ""Organization/1""
+      },
+      ""response"": {
+        ""identifier"": {
+          ""system"": ""http://www.BenefitsInc.com/fhir/claimresponse"",
+          ""value"": ""CR20140815-AB12345""
+        }
+      },
+      ""date"": ""2014-08-16"",
+      ""payee"": {
+        ""reference"": ""Organization/1""
+      },
+      ""amount"": {
+        ""value"": 3500.00,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""identifier"": {
+        ""system"": ""http://www.BenefitsInc.com/payment/2018/detail"",
+        ""value"": ""10-12345-002""
+      },
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/payment-type"",
+            ""code"": ""payment""
+          }
+        ]
+      },
+      ""request"": {
+        ""reference"": ""http://www.BenefitsInc.com/fhir/oralhealthclaim/225476332699""
+      },
+      ""date"": ""2014-08-12"",
+      ""amount"": {
+        ""value"": 4000.00,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""identifier"": {
+        ""system"": ""http://www.BenefitsInc.com/payment/2018/detail"",
+        ""value"": ""10-12345-003""
+      },
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""http://terminology.hl7.org/CodeSystem/payment-type"",
+            ""code"": ""advance""
+          }
+        ]
+      },
+      ""date"": ""2014-08-16"",
+      ""amount"": {
+        ""value"": -1500.00,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""formCode"": {
+    ""coding"": [
+      {
+        ""system"": ""http://ncforms.org/formid"",
+        ""code"": ""PAYREC/2016/01B""
+      }
+    ]
+  },
+  ""processNote"": [
+    {
+      ""type"": ""display"",
+      ""text"": ""Due to the year end holiday the cutoff for submissions for December will be the 28th.""
+    }
+  ]
+}"
+supplement::Claim/authorization-approved,supplement-claim-authorization-approved,Claim,authorization-approved,"{
+  ""resourceType"": ""Claim"",
+  ""id"": ""authorization-approved"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""preauthorization"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""sequence"": 1,
+      ""focal"": true,
+      ""coverage"": {
+        ""reference"": ""Coverage/active""
+      }
+    }
+  ],
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-1""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""sequence"": 2,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-2""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""total"": {
+    ""value"": 200,
+    ""currency"": ""USD""
+  },
+  ""extension"": [
+    {
+      ""url"": ""urn:umf:uninterpreted"",
+      ""valueString"": ""retained extension content""
+    }
+  ]
+}
+"
+supplement::Claim/authorization-denied,supplement-claim-authorization-denied,Claim,authorization-denied,"{
+  ""resourceType"": ""Claim"",
+  ""id"": ""authorization-denied"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""preauthorization"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""sequence"": 1,
+      ""focal"": true,
+      ""coverage"": {
+        ""reference"": ""Coverage/active""
+      }
+    }
+  ],
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-1""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""sequence"": 2,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-2""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""total"": {
+    ""value"": 200,
+    ""currency"": ""USD""
+  },
+  ""extension"": [
+    {
+      ""url"": ""urn:umf:uninterpreted"",
+      ""valueString"": ""retained extension content""
+    }
+  ]
+}
+"
+supplement::Claim/paid-denied,supplement-claim-paid-denied,Claim,paid-denied,"{
+  ""resourceType"": ""Claim"",
+  ""id"": ""paid-denied"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""sequence"": 1,
+      ""focal"": true,
+      ""coverage"": {
+        ""reference"": ""Coverage/active""
+      }
+    }
+  ],
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-1""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""sequence"": 2,
+      ""productOrService"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""service-2""
+          }
+        ]
+      },
+      ""modifier"": [
+        {
+          ""coding"": [
+            {
+              ""system"": ""urn:umf:medical:synthetic-codes"",
+              ""code"": ""example-modifier""
+            }
+          ]
+        }
+      ],
+      ""servicedDate"": ""2026-01-03"",
+      ""quantity"": {
+        ""value"": 1
+      },
+      ""unitPrice"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      },
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""total"": {
+    ""value"": 200,
+    ""currency"": ""USD""
+  },
+  ""extension"": [
+    {
+      ""url"": ""urn:umf:uninterpreted"",
+      ""valueString"": ""retained extension content""
+    }
+  ]
+}
+"
+supplement::Coverage/active,supplement-coverage-active,Coverage,active,"{
+  ""resourceType"": ""Coverage"",
+  ""id"": ""active"",
+  ""status"": ""active"",
+  ""beneficiary"": {
+    ""reference"": ""Patient/member""
+  },
+  ""subscriber"": {
+    ""reference"": ""Patient/member""
+  },
+  ""payor"": [
+    {
+      ""reference"": ""Organization/payer""
+    }
+  ],
+  ""period"": {
+    ""start"": ""2026-01-01"",
+    ""end"": ""2026-12-31""
+  },
+  ""costToBeneficiary"": [
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""copay""
+          }
+        ]
+      },
+      ""valueMoney"": {
+        ""value"": 10,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""extension"": [
+    {
+      ""url"": ""urn:umf:plan-reference"",
+      ""valueReference"": {
+        ""reference"": ""InsurancePlan/plan""
+      }
+    }
+  ]
+}
+"
+supplement::Coverage/inactive,supplement-coverage-inactive,Coverage,inactive,"{
+  ""resourceType"": ""Coverage"",
+  ""id"": ""inactive"",
+  ""status"": ""cancelled"",
+  ""beneficiary"": {
+    ""reference"": ""Patient/member""
+  },
+  ""subscriber"": {
+    ""reference"": ""Patient/member""
+  },
+  ""payor"": [
+    {
+      ""reference"": ""Organization/payer""
+    }
+  ],
+  ""period"": {
+    ""start"": ""2026-01-01"",
+    ""end"": ""2026-12-31""
+  },
+  ""costToBeneficiary"": [
+    {
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""copay""
+          }
+        ]
+      },
+      ""valueMoney"": {
+        ""value"": 10,
+        ""currency"": ""USD""
+      }
+    }
+  ],
+  ""extension"": [
+    {
+      ""url"": ""urn:umf:plan-reference"",
+      ""valueReference"": {
+        ""reference"": ""InsurancePlan/plan""
+      }
+    }
+  ]
+}
+"
+supplement::CoverageEligibilityRequest/negative,supplement-eligibility-negative-request,CoverageEligibilityRequest,negative,"{
+  ""resourceType"": ""CoverageEligibilityRequest"",
+  ""id"": ""negative"",
+  ""status"": ""active"",
+  ""purpose"": [
+    ""validation"",
+    ""benefits""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""servicedDate"": ""2026-01-03"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""coverage"": {
+        ""reference"": ""Coverage/inactive""
+      }
+    }
+  ]
+}
+"
+supplement::CoverageEligibilityResponse/negative,supplement-eligibility-negative-response,CoverageEligibilityResponse,negative,"{
+  ""resourceType"": ""CoverageEligibilityResponse"",
+  ""id"": ""negative"",
+  ""status"": ""active"",
+  ""purpose"": [
+    ""validation"",
+    ""benefits""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""request"": {
+    ""reference"": ""CoverageEligibilityRequest/negative""
+  },
+  ""outcome"": ""complete"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""coverage"": {
+        ""reference"": ""Coverage/inactive""
+      },
+      ""inforce"": false,
+      ""item"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""benefit"": [
+            {
+              ""type"": {
+                ""coding"": [
+                  {
+                    ""system"": ""urn:umf:medical:synthetic-codes"",
+                    ""code"": ""annual-limit""
+                  }
+                ]
+              },
+              ""allowedMoney"": {
+                ""value"": 1000,
+                ""currency"": ""USD""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+"
+supplement::CoverageEligibilityRequest/positive,supplement-eligibility-positive-request,CoverageEligibilityRequest,positive,"{
+  ""resourceType"": ""CoverageEligibilityRequest"",
+  ""id"": ""positive"",
+  ""status"": ""active"",
+  ""purpose"": [
+    ""validation"",
+    ""benefits""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""servicedDate"": ""2026-01-03"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""coverage"": {
+        ""reference"": ""Coverage/active""
+      }
+    }
+  ]
+}
+"
+supplement::CoverageEligibilityResponse/positive,supplement-eligibility-positive-response,CoverageEligibilityResponse,positive,"{
+  ""resourceType"": ""CoverageEligibilityResponse"",
+  ""id"": ""positive"",
+  ""status"": ""active"",
+  ""purpose"": [
+    ""validation"",
+    ""benefits""
+  ],
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""request"": {
+    ""reference"": ""CoverageEligibilityRequest/positive""
+  },
+  ""outcome"": ""complete"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""insurance"": [
+    {
+      ""coverage"": {
+        ""reference"": ""Coverage/active""
+      },
+      ""inforce"": true,
+      ""item"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""benefit"": [
+            {
+              ""type"": {
+                ""coding"": [
+                  {
+                    ""system"": ""urn:umf:medical:synthetic-codes"",
+                    ""code"": ""annual-limit""
+                  }
+                ]
+              },
+              ""allowedMoney"": {
+                ""value"": 1000,
+                ""currency"": ""USD""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+"
+supplement::EnrollmentRequest/enroll,supplement-enrollment-request,EnrollmentRequest,enroll,"{
+  ""resourceType"": ""EnrollmentRequest"",
+  ""id"": ""enroll"",
+  ""status"": ""active"",
+  ""created"": ""2026-01-01"",
+  ""candidate"": {
+    ""reference"": ""Patient/member""
+  },
+  ""coverage"": {
+    ""reference"": ""Coverage/active""
+  }
+}
+"
+supplement::EnrollmentResponse/enrolled,supplement-enrollment-response,EnrollmentResponse,enrolled,"{
+  ""resourceType"": ""EnrollmentResponse"",
+  ""id"": ""enrolled"",
+  ""status"": ""active"",
+  ""request"": {
+    ""reference"": ""EnrollmentRequest/enroll""
+  },
+  ""outcome"": ""complete"",
+  ""created"": ""2026-01-01""
+}
+"
+supplement::ExplanationOfBenefit/paid-denied,supplement-eob,ExplanationOfBenefit,paid-denied,"{
+  ""resourceType"": ""ExplanationOfBenefit"",
+  ""id"": ""paid-denied"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-04"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""provider"": {
+    ""reference"": ""Organization/provider-unresolved""
+  },
+  ""claim"": {
+    ""reference"": ""Claim/paid-denied""
+  },
+  ""claimResponse"": {
+    ""reference"": ""ClaimResponse/paid-denied""
+  },
+  ""outcome"": ""complete"",
+  ""item"": [
+    {
+      ""sequence"": 1,
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    },
+    {
+      ""sequence"": 2,
+      ""net"": {
+        ""value"": 100,
+        ""currency"": ""USD""
+      }
+    }
+  ]
+}
+"
+supplement::Patient/member,supplement-patient,Patient,member,"{
+  ""resourceType"": ""Patient"",
+  ""id"": ""member"",
+  ""active"": true,
+  ""identifier"": [
+    {
+      ""system"": ""urn:umf:synthetic-member"",
+      ""value"": ""member-001""
+    }
+  ]
+}
+"
+supplement::Organization/payer,supplement-payer,Organization,payer,"{
+  ""resourceType"": ""Organization"",
+  ""id"": ""payer"",
+  ""active"": true,
+  ""name"": ""Fabricated Example Payer""
+}
+"
+supplement::PaymentReconciliation/remit,supplement-payment,PaymentReconciliation,remit,"{
+  ""resourceType"": ""PaymentReconciliation"",
+  ""id"": ""remit"",
+  ""status"": ""active"",
+  ""created"": ""2026-01-04"",
+  ""paymentDate"": ""2026-01-04"",
+  ""paymentAmount"": {
+    ""value"": 80,
+    ""currency"": ""USD""
+  },
+  ""detail"": [
+    {
+      ""identifier"": {
+        ""value"": ""allocation-1""
+      },
+      ""request"": {
+        ""reference"": ""Claim/paid-denied""
+      },
+      ""response"": {
+        ""reference"": ""ClaimResponse/paid-denied""
+      },
+      ""amount"": {
+        ""value"": 80,
+        ""currency"": ""USD""
+      },
+      ""type"": {
+        ""coding"": [
+          {
+            ""system"": ""urn:umf:medical:synthetic-codes"",
+            ""code"": ""payment""
+          }
+        ]
+      }
+    }
+  ]
+}
+"
+supplement::InsurancePlan/plan,supplement-plan,InsurancePlan,plan,"{
+  ""resourceType"": ""InsurancePlan"",
+  ""id"": ""plan"",
+  ""status"": ""active"",
+  ""name"": ""Fabricated benefit plan"",
+  ""ownedBy"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""period"": {
+    ""start"": ""2026-01-01"",
+    ""end"": ""2026-12-31""
+  }
+}
+"
+supplement::ClaimResponse/authorization-approved,supplement-response-authorization-approved,ClaimResponse,authorization-approved,"{
+  ""resourceType"": ""ClaimResponse"",
+  ""id"": ""authorization-approved"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""preauthorization"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""request"": {
+    ""reference"": ""Claim/authorization-approved""
+  },
+  ""outcome"": ""complete"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""item"": [
+    {
+      ""itemSequence"": 1,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 80,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""approved""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 20,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    },
+    {
+      ""itemSequence"": 2,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 0,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""denied""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    }
+  ]
+}
+"
+supplement::ClaimResponse/authorization-denied,supplement-response-authorization-denied,ClaimResponse,authorization-denied,"{
+  ""resourceType"": ""ClaimResponse"",
+  ""id"": ""authorization-denied"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""preauthorization"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""request"": {
+    ""reference"": ""Claim/authorization-denied""
+  },
+  ""outcome"": ""complete"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""item"": [
+    {
+      ""itemSequence"": 1,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 0,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""denied""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    },
+    {
+      ""itemSequence"": 2,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 0,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""denied""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    }
+  ]
+}
+"
+supplement::ClaimResponse/paid-denied,supplement-response-paid-denied,ClaimResponse,paid-denied,"{
+  ""resourceType"": ""ClaimResponse"",
+  ""id"": ""paid-denied"",
+  ""status"": ""active"",
+  ""type"": {
+    ""coding"": [
+      {
+        ""system"": ""urn:umf:medical:synthetic-codes"",
+        ""code"": ""professional""
+      }
+    ]
+  },
+  ""use"": ""claim"",
+  ""patient"": {
+    ""reference"": ""Patient/member""
+  },
+  ""created"": ""2026-01-02"",
+  ""request"": {
+    ""reference"": ""Claim/paid-denied""
+  },
+  ""outcome"": ""complete"",
+  ""insurer"": {
+    ""reference"": ""Organization/payer""
+  },
+  ""item"": [
+    {
+      ""itemSequence"": 1,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 80,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""approved""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 20,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    },
+    {
+      ""itemSequence"": 2,
+      ""adjudication"": [
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""submitted""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""benefit""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 0,
+            ""currency"": ""USD""
+          },
+          ""reason"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""denied""
+              }
+            ]
+          }
+        },
+        {
+          ""category"": {
+            ""coding"": [
+              {
+                ""system"": ""urn:umf:medical:synthetic-codes"",
+                ""code"": ""member-liability""
+              }
+            ]
+          },
+          ""amount"": {
+            ""value"": 100,
+            ""currency"": ""USD""
+          }
+        }
+      ]
+    }
+  ],
+  ""payment"": {
+    ""date"": ""2026-01-04"",
+    ""amount"": {
+      ""value"": 80,
+      ""currency"": ""USD""
+    }
+  }
+}
+"

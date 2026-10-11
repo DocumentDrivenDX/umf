@@ -1,0 +1,17 @@
+{
+  "command": [
+    "bun",
+    "test",
+    "tests/core-ideals/cardinality-conformance.test.ts",
+    "tests/core-ideals/facets-conformance.test.ts",
+    "tests/core-ideals/facets-evidence.test.ts",
+    "tests/core-ideals/field-conformance.test.ts",
+    "tests/core-ideals/key-conformance.test.ts",
+    "tests/core-ideals/key-evidence.test.ts",
+    "tests/core-ideals/nullability-conformance.test.ts",
+    "tests/core-ideals/relationship-conformance.test.ts"
+  ],
+  "exitCode": 0,
+  "log": "fixtures/validation/core-check-refresh/container-gates.log",
+  "logSha256": "d55fff303103bb1509d7659881235180a6ba21f0a8f6435fe826c7b100cbae44"
+}

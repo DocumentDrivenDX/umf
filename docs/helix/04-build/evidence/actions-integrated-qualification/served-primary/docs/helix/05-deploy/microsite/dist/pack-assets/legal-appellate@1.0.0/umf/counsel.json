@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "table_name": "counsel",
+  "description": "CONTRACT-058 bounded appellate fixture: counsel.",
+  "columns": [
+    {
+      "name": "counsel_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "counsel.counsel_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "counsel.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "counsel_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "counsel.counsel_name; preserve source scope and qualification."
+    },
+    {
+      "name": "party_scope",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "counsel.party_scope; preserve source scope and qualification."
+    },
+    {
+      "name": "source_page_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "counsel.source_page_id; preserve source scope and qualification."
+    },
+    {
+      "name": "as_of_date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "counsel.as_of_date; preserve source scope and qualification."
+    },
+    {
+      "name": "observation_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "counsel.observation_status; preserve source scope and qualification."
+    },
+    {
+      "name": "source_excerpt",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "counsel.source_excerpt; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "counsel_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      },
+      {
+        "column": "source_page_id",
+        "references_table": "decision_pages",
+        "references_column": "page_id"
+      }
+    ]
+  }
+}

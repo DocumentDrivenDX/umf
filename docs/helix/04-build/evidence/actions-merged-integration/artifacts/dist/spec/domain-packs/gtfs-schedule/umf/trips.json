@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "table_name": "trips",
+  "description": "Selected trips.txt fields. service_id resolves against calendar OR calendar_dates.",
+  "columns": [
+    {
+      "name": "route_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "service_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "trip_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "trip_headsign",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "trip_headsign"
+    },
+    {
+      "name": "direction_id",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "direction_id"
+    }
+  ],
+  "primary_key": [
+    "trip_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "route_id",
+        "references_table": "routes",
+        "references_column": "route_id"
+      }
+    ]
+  }
+}

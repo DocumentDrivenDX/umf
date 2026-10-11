@@ -1,0 +1,11 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/arrow/flatbuffer-encode.test.ts:
+(pass) US-016-AC8: every decoded native metadata model re-encodes with exact logical content [8223.54ms]
+(pass) US-016-AC8: explicit zero defaults, empty vectors and absent fields remain distinct [87.64ms]
+(pass) US-016-AC8: edits propagate and semantic drift or unknown fields block encoding [318.39ms]
+
+ 3 pass
+ 0 fail
+ 150 expect() calls
+Ran 3 tests across 1 file. [11.92s]

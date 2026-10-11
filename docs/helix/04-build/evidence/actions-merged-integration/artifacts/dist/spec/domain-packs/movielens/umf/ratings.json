@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "table_name": "ratings",
+  "description": "MovieLens ratings.csv field profile; no inferred primary key.",
+  "columns": [
+    {
+      "name": "userId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Anonymized user identifier; no users table is published."
+    },
+    {
+      "name": "movieId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Movie identifier."
+    },
+    {
+      "name": "rating",
+      "data_type": "DECIMAL",
+      "nullable": false,
+      "description": "Half-star score from 0.5 through 5.0.",
+      "domain_type": "movie_rating"
+    },
+    {
+      "name": "timestamp",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "UTC epoch seconds.",
+      "domain_type": "epoch_seconds"
+    }
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "movieId",
+        "references_table": "movies",
+        "references_column": "movieId"
+      }
+    ]
+  }
+}

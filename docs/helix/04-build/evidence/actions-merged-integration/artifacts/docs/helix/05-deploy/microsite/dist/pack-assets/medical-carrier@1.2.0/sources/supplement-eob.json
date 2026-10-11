@@ -1,0 +1,47 @@
+{
+  "resourceType": "ExplanationOfBenefit",
+  "id": "paid-denied",
+  "status": "active",
+  "type": {
+    "coding": [
+      {
+        "system": "urn:umf:medical:synthetic-codes",
+        "code": "professional"
+      }
+    ]
+  },
+  "use": "claim",
+  "patient": {
+    "reference": "Patient/member"
+  },
+  "created": "2026-01-04",
+  "insurer": {
+    "reference": "Organization/payer"
+  },
+  "provider": {
+    "reference": "Organization/provider-unresolved"
+  },
+  "claim": {
+    "reference": "Claim/paid-denied"
+  },
+  "claimResponse": {
+    "reference": "ClaimResponse/paid-denied"
+  },
+  "outcome": "complete",
+  "item": [
+    {
+      "sequence": 1,
+      "net": {
+        "value": 100,
+        "currency": "USD"
+      }
+    },
+    {
+      "sequence": 2,
+      "net": {
+        "value": 100,
+        "currency": "USD"
+      }
+    }
+  ]
+}

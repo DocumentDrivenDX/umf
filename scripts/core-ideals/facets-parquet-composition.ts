@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
@@ -22,7 +23,7 @@ for(const row of parquetFacetProjectionCases()){
   const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(classification),format),format) as unknown as typeof classification;
   assert.deepEqual(u.recoverParquetFacetSource(receipt,receipt.target!),bytes);nativeRecoveries++;
   const idealReceipt=u.readJsonValue(u.writeJsonValue(u.copyJson(projection),format),format) as unknown as typeof projection;
-  assert.deepEqual(recoverFacetsFromParquet(idealReceipt,bytes),row.author.target);idealRecoveries++;
+  assertJsonDataEqual(recoverFacetsFromParquet(idealReceipt,bytes),row.author.target);idealRecoveries++;
  }
  const authored=row.author.operation==='declare-core-facets'?row.author.request:{};
  const same=Object.entries(authored).every(([key,value])=>JSON.stringify((classification.mapping.facets as Record<string,unknown>)[key])===JSON.stringify(value));

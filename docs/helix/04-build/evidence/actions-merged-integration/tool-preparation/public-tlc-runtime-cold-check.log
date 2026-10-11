@@ -1,0 +1,25 @@
+Collecting z3-solver==4.15.3.0
+  Using cached z3_solver-4.15.3.0-py3-none-macosx_13_0_arm64.whl (36.9 MB)
+Installing collected packages: z3-solver
+Successfully installed z3-solver-4.15.3.0
+WARNING: You are using pip version 21.2.4; however, version 26.0.1 is available.
+You should consider upgrading via the '/private/tmp/umf-main-actions-integration-e44cd15f/.cache/actions-formal-reproduction/venv/bin/python -m pip install --upgrade pip' command.
+{"checks": 22, "satWitnesses": 8, "unsatQueries": 8, "counterexamples": 3, "compositionPairs": 9}
+docker.io/library/eclipse-temurin@sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5: Pulling from library/eclipse-temurin
+Digest: sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5
+Status: Image is up to date for eclipse-temurin@sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5
+docker.io/library/eclipse-temurin@sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5
+{"name": "good-same", "exit": 0, "complete": true, "invariantViolation": null, "stateCounts": ["17090", "6248"]}
+{"name": "good-distinct", "exit": 0, "complete": true, "invariantViolation": null, "stateCounts": ["48396", "16164"]}
+{"name": "namespace-same", "exit": 12, "complete": false, "invariantViolation": "AtMostOnce", "stateCounts": ["3934", "1653"]}
+{"name": "split-same", "exit": 12, "complete": false, "invariantViolation": "AtomicEvidence", "stateCounts": ["46", "28"]}
+{"name": "earlyack-same", "exit": 12, "complete": false, "invariantViolation": "AckDurable", "stateCounts": ["47", "29"]}
+{"name": "auth-same", "exit": 12, "complete": false, "invariantViolation": "NoProtectedDisclosure", "stateCounts": ["932", "451"]}
+{"name": "lostupdate-distinct", "exit": 12, "complete": false, "invariantViolation": "Conservation", "stateCounts": ["1368", "599"]}
+{"name": "gapvisible-distinct", "exit": 12, "complete": false, "invariantViolation": "VisiblePrefix", "stateCounts": ["1605", "745"]}
+{"name": "lagwatermark-distinct", "exit": 12, "complete": false, "invariantViolation": "WatermarkComplete", "stateCounts": ["2707", "1208"]}
+{"name": "witness-NoSuccessReachable", "positiveReachabilityWitness": true, "exit": 12}
+{"name": "witness-NoAcknowledgementReachable", "positiveReachabilityWitness": true, "exit": 12}
+{"name": "witness-NoRecoveredReplayReachable", "positiveReachabilityWitness": true, "exit": 12}
+{"name": "progress-stable-environment", "finiteFairProgress": true, "assumptions": "No crashes/deployment/revocation; weak fairness per client step and pending event application; stable authorized storage environment", "exit": 0}
+Outputs retained in /private/tmp/umf-main-actions-integration-e44cd15f/.cache/actions-formal-reproduction

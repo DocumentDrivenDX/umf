@@ -386,6 +386,16 @@ export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
 export {coreSchemaPropertiesTransitionSchema} from './model/schema-properties-transition-schema';
 
+// Declarative action metadata; execution requires a separately qualified consumer.
+export {registerActions,declareAction,inspectActions,editAction,assessAction,actionsPackage} from './extensions/actions';
+export type {Action,ActionIdentity,ActionParameter,ActionReference,ActionKeyReference,ActionRelationshipReference,ActionRule,ActionRuleReference,ActionFrame,ActionCondition,ActionEffect,ActionBinding,ActionAssignment,ActionEntityBinding,ActionValueBinding,ActionAuthorization,ActionObligation,ActionObligationKind,ActionInspection,InspectedAction,ActionExecutorProfile,ActionAssessment} from './extensions/actions';
+// Explicit bounded consumer interpretation, separate from inert metadata inspection.
+export {compileActionRule,actionExpressionLimits} from './extensions/actions/expression';
+export type {ActionExpression,ActionRulePhase,CompiledActionRule,ActionExpressionType} from './extensions/actions/expression';
+export {compileActionSelector,selectActionIdentity,admitActionInputs} from './extensions/actions/selector';
+export type {ActionInputs,ActionEntityInput,CompiledActionSelector,SelectedActionIdentity} from './extensions/actions/selector';
+export {evaluateActionRule,actionFieldValueKey} from './extensions/actions/evaluation';
+export type {ActionFrameState,ActionBusinessState,ActionRuleState} from './extensions/actions/evaluation';
 export {generateDomainPackSchema} from './domain-packs/schema';
 export {default as domainPackSchema} from '../spec/extensions/domain-pack/schema.json';
 export {default as domainPackPackage} from '../spec/extensions/domain-pack/package.json';

@@ -1,6 +1,6 @@
 {
   "scope": "Authored Parquet Cardinality projection and fresh-native classification with both retained recovery directions; acceptance remains unfinished",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 160,
     "projected": 132,
@@ -10,11 +10,11 @@
     "forgedRefusals": 132
   },
   "externalRequests": [],
-  "bundleSha256": "57e4f79e93c579409524a75c814ec04a13e171e0b1d00fcd16e0082fc889a0a2",
+  "bundleSha256": "d46e0aa9c492c2128bfc3e145d2a0a43bbb0bee47a1a28762dd507dfca91a190",
   "sha256": {
     "fixtures/validation/cardinality-parquet-projection-corpus.json": "49fb56593eca9bd9681ed8c2819f3a9e223139c2a9c7d4e097e83ad49307e4cc",
-    "fixtures/validation/cardinality-parquet-projection-native.json": "f4bf961b8fd90b7f45de0c645e94dddb65f2aeb0482d42561694b7504b13d571",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "fixtures/validation/cardinality-parquet-projection-native.json": "f0b1322186ca51f37fd0addcbbeae8898d767d8fa712479b5e6e24bce9a2d6ac",
+    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
     "src/core-ideals/cardinality-parquet-projection.ts": "b9ef913c65c4a71c50a6cbcfc1581fb3054f1d9c5b8ee2101e7dcda7d39b12df",
     "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270",
     "spec/core/cardinality-parquet-projection.schema.json": "633f86720229f41409fec137d85c92833f204483cc0487ec8a53cafe0299abc0",

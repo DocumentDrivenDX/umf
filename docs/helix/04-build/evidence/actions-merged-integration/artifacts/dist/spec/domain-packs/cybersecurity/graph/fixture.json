@@ -1,0 +1,855 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:cybersecurity",
+    "revision": "1.0.0",
+    "sha256": "dc9dacef8f3159023177cabea26ba1000d8f2ba27a7ee7504526758daf2f0864"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "cybersecurity",
+    "version": "1.0.0",
+    "sha256": "778d70a2a1b9b48d558e85a89e3a3ddbe4177fcf1123ace7657134c83ec03b15"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_accounts",
+          "template_authentication_events",
+          "template_devices",
+          "template_event_incident_links",
+          "template_findings",
+          "template_identities",
+          "template_incidents",
+          "template_network_activity",
+          "template_scenarios",
+          "template_sessions"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_accounts": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "865bc0bbe539551a15deb5143503c33a6eca20493bdb3b6cc8a4727426394954"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/accounts.csv",
+      "revision": "1.0.0"
+    },
+    "template_authentication_events": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "67660417d39faf9d60540c0241bf182b6c53e68b6e79c673b93286a3e04ea269"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/authentication_events.csv",
+      "revision": "1.0.0"
+    },
+    "template_devices": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "08007e34d5563508b2f5a7d7832409b29048c9b3986c3522286017a1b5f9b917"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/devices.csv",
+      "revision": "1.0.0"
+    },
+    "template_event_incident_links": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4dc38cb1f4e61318686649a9919967d4ed38e5ebf44297c519ebb33b68fb6ccd"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/event_incident_links.csv",
+      "revision": "1.0.0"
+    },
+    "template_findings": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "403f753d45d7af63dcbb09c65fc8d75f9ce0459687731ae78a3e9616b2d6e942"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/findings.csv",
+      "revision": "1.0.0"
+    },
+    "template_identities": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bd4abd16db5f0c50394979ed797ec2e67def298786dab61889eed9d641e3fc12"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/identities.csv",
+      "revision": "1.0.0"
+    },
+    "template_incidents": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "35b11fd4221a4371d88c04fc6a1b5ffa6bca431018a12ca33f010e73f80b0af1"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/incidents.csv",
+      "revision": "1.0.0"
+    },
+    "template_network_activity": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4851383503ca18dcc6f3a4b3424443214b3a639642ba48132373b38b37337421"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/network_activity.csv",
+      "revision": "1.0.0"
+    },
+    "template_scenarios": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5b2c6bcb9ad54cb57b22d1975100880559e011d98c287a8b137bda762fbb822e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/scenarios.csv",
+      "revision": "1.0.0"
+    },
+    "template_sessions": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5435d4bffe9d312aa654e4502215ebe0682c7b0da4f72a1e06eeb7fae954a060"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/sessions.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "identities",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "accounts",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "devices",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "sessions",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "scenarios",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "authentication_events",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "network_activity",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "findings",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "incidents",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "event_incident_links",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_accounts": {
+        "algorithm": "sha256",
+        "value": "865bc0bbe539551a15deb5143503c33a6eca20493bdb3b6cc8a4727426394954"
+      },
+      "template_authentication_events": {
+        "algorithm": "sha256",
+        "value": "67660417d39faf9d60540c0241bf182b6c53e68b6e79c673b93286a3e04ea269"
+      },
+      "template_devices": {
+        "algorithm": "sha256",
+        "value": "08007e34d5563508b2f5a7d7832409b29048c9b3986c3522286017a1b5f9b917"
+      },
+      "template_event_incident_links": {
+        "algorithm": "sha256",
+        "value": "4dc38cb1f4e61318686649a9919967d4ed38e5ebf44297c519ebb33b68fb6ccd"
+      },
+      "template_findings": {
+        "algorithm": "sha256",
+        "value": "403f753d45d7af63dcbb09c65fc8d75f9ce0459687731ae78a3e9616b2d6e942"
+      },
+      "template_identities": {
+        "algorithm": "sha256",
+        "value": "bd4abd16db5f0c50394979ed797ec2e67def298786dab61889eed9d641e3fc12"
+      },
+      "template_incidents": {
+        "algorithm": "sha256",
+        "value": "35b11fd4221a4371d88c04fc6a1b5ffa6bca431018a12ca33f010e73f80b0af1"
+      },
+      "template_network_activity": {
+        "algorithm": "sha256",
+        "value": "4851383503ca18dcc6f3a4b3424443214b3a639642ba48132373b38b37337421"
+      },
+      "template_scenarios": {
+        "algorithm": "sha256",
+        "value": "5b2c6bcb9ad54cb57b22d1975100880559e011d98c287a8b137bda762fbb822e"
+      },
+      "template_sessions": {
+        "algorithm": "sha256",
+        "value": "5435d4bffe9d312aa654e4502215ebe0682c7b0da4f72a1e06eeb7fae954a060"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "dc9dacef8f3159023177cabea26ba1000d8f2ba27a7ee7504526758daf2f0864",
+      "umf/accounts.json": "7f132834916ce43ca03509038d36866059075e7a00967b9b7ea2fe2f04da12f6",
+      "umf/authentication_events.json": "37ced4c9b8c814f5309bd6e5ba56efe19b182678ec9ae3971194bf9de748cda2",
+      "umf/devices.json": "f5b5b9b866a39b80f2727de07446d779a31702f401156b28c91214ca79f098b9",
+      "umf/event_incident_links.json": "03aa3d1534ffe89edca77634eec636ddb15fd9d4afb8d14620ed698fd37290ef",
+      "umf/findings.json": "5eadb66b72eaacb68e6bad94cfc60e8ec8fb5ad95c0aa3450e89562d413f93b0",
+      "umf/identities.json": "bfc7b7b571cc4294f47e90a0364b3206913bde3d3ef602b4e3c1b6825fae972b",
+      "umf/incidents.json": "139450007ff3413ebbdd59d0b5d8752755a5055d71b27974f6ab753cfe4a30ec",
+      "umf/network_activity.json": "e2d7363bf90ce1ae7b6b40c176318ef6f9462d7cb89982c113d271b23143e71b",
+      "umf/scenarios.json": "63fd3ab259c70128ed3c638631add926187901afef6043e6cab7d8aa885ac1f6",
+      "umf/sessions.json": "dc77a4fc5961ea3438f8b900df411238592def309842c872225a21d457422183"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "cybersecurity",
+      "sha256": "778d70a2a1b9b48d558e85a89e3a3ddbe4177fcf1123ace7657134c83ec03b15",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "fa8b032b9ab1c13d1af3ed0b98153fcd276678cd977d572e2a69054d9e6e9a55",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"identities\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "identities"
+      },
+      "values": {
+        "identities.id": "[42,0,\"I1\"]",
+        "identities.publisher": "vendor-a",
+        "identities.native_id": "same"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"identities\",[\"[42,0,\\\"I2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "identities"
+      },
+      "values": {
+        "identities.id": "[42,0,\"I2\"]",
+        "identities.publisher": "vendor-b",
+        "identities.native_id": "same"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"accounts\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "accounts"
+      },
+      "values": {
+        "accounts.id": "[42,0,\"A1\"]",
+        "accounts.identity_id": "[42,0,\"I1\"]",
+        "accounts.name": "Synthetic account"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"devices\",[\"[42,0,\\\"D1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "devices"
+      },
+      "values": {
+        "devices.id": "[42,0,\"D1\"]",
+        "devices.publisher": "vendor-a",
+        "devices.native_id": "device"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"devices\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "devices"
+      },
+      "values": {
+        "devices.id": "[42,0,\"D2\"]",
+        "devices.publisher": "vendor-b",
+        "devices.native_id": "device"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "sessions"
+      },
+      "values": {
+        "sessions.id": "[42,0,\"S1\"]",
+        "sessions.account_id": "[42,0,\"A1\"]",
+        "sessions.device_id": "[42,0,\"D1\"]",
+        "sessions.started_at": "2026-01-01T10:00Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "sessions"
+      },
+      "values": {
+        "sessions.id": "[42,0,\"S2\"]",
+        "sessions.account_id": "[42,0,\"A1\"]",
+        "sessions.device_id": "[42,0,\"D2\"]",
+        "sessions.started_at": "2026-01-01T10:06Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "scenarios"
+      },
+      "values": {
+        "scenarios.id": "[42,0,\"SC1\"]",
+        "scenarios.label": "five failures then success from new device"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E1\"]",
+        "authentication_events.session_id": "[42,0,\"S1\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "failure",
+        "authentication_events.event_time": "2026-01-01T10:01Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E2\"]",
+        "authentication_events.session_id": "[42,0,\"S1\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "failure",
+        "authentication_events.event_time": "2026-01-01T10:02Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E3\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E3\"]",
+        "authentication_events.session_id": "[42,0,\"S1\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "failure",
+        "authentication_events.event_time": "2026-01-01T10:03Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E4\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E4\"]",
+        "authentication_events.session_id": "[42,0,\"S1\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "failure",
+        "authentication_events.event_time": "2026-01-01T10:04Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E5\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E5\"]",
+        "authentication_events.session_id": "[42,0,\"S1\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "failure",
+        "authentication_events.event_time": "2026-01-01T10:05Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E6\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "authentication_events"
+      },
+      "values": {
+        "authentication_events.id": "[42,0,\"E6\"]",
+        "authentication_events.session_id": "[42,0,\"S2\"]",
+        "authentication_events.scenario_id": "[42,0,\"SC1\"]",
+        "authentication_events.outcome": "success",
+        "authentication_events.event_time": "2026-01-01T10:06Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"network_activity\",[\"[42,0,\\\"N1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "network_activity"
+      },
+      "values": {
+        "network_activity.id": "[42,0,\"N1\"]",
+        "network_activity.session_id": "[42,0,\"S1\"]",
+        "network_activity.destination": "example.invalid",
+        "network_activity.bytes": "1024"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"findings\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "findings"
+      },
+      "values": {
+        "findings.id": "[42,0,\"F1\"]",
+        "findings.device_id": "[42,0,\"D1\"]",
+        "findings.evidence_id": "[42,0,\"E1\"]",
+        "findings.severity": "medium"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"incidents\",[\"[42,0,\\\"IN1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "incidents"
+      },
+      "values": {
+        "incidents.id": "[42,0,\"IN1\"]",
+        "incidents.status": "review"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"event_incident_links\",[\"[42,0,\\\"X1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "element": "event_incident_links"
+      },
+      "values": {
+        "event_incident_links.id": "[42,0,\"X1\"]",
+        "event_incident_links.event_id": "[42,0,\"E1\"]",
+        "event_incident_links.incident_id": "[42,0,\"IN1\"]"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"accounts.identity_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"accounts\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"identities\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "accounts.identity_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"accounts\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"identities\",[\"[42,0,\\\"I1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions.account_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"accounts\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "sessions.account_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"accounts\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions.device_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"devices\\\",[\\\"[42,0,\\\\\\\"D1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "sessions.device_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"devices\",[\"[42,0,\\\"D1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions.account_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"accounts\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "sessions.account_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"accounts\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions.device_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"devices\\\",[\\\"[42,0,\\\\\\\"D2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "sessions.device_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"devices\",[\"[42,0,\\\"D2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E3\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E3\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E3\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E3\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E4\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E4\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E4\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E4\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E5\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E5\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E5\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E5\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E6\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E6\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events.scenario_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E6\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"scenarios\\\",[\\\"[42,0,\\\\\\\"SC1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "authentication_events.scenario_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E6\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"scenarios\",[\"[42,0,\\\"SC1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"network_activity.session_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"network_activity\\\",[\\\"[42,0,\\\\\\\"N1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"sessions\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "network_activity.session_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"network_activity\",[\"[42,0,\\\"N1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"sessions\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"findings.device_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"findings\\\",[\\\"[42,0,\\\\\\\"F1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"devices\\\",[\\\"[42,0,\\\\\\\"D1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "findings.device_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"findings\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"devices\",[\"[42,0,\\\"D1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"findings.evidence_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"findings\\\",[\\\"[42,0,\\\\\\\"F1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "findings.evidence_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"findings\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"event_incident_links.event_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"event_incident_links\\\",[\\\"[42,0,\\\\\\\"X1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"authentication_events\\\",[\\\"[42,0,\\\\\\\"E1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "event_incident_links.event_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"event_incident_links\",[\"[42,0,\\\"X1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"authentication_events\",[\"[42,0,\\\"E1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"event_incident_links.incident_id\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"event_incident_links\\\",[\\\"[42,0,\\\\\\\"X1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:cybersecurity\\\",\\\"domain\\\",\\\"incidents\\\",[\\\"[42,0,\\\\\\\"IN1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:cybersecurity",
+        "module": "domain",
+        "id": "event_incident_links.incident_id"
+      },
+      "source": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"event_incident_links\",[\"[42,0,\\\"X1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:cybersecurity\",\"domain\",\"incidents\",[\"[42,0,\\\"IN1\\\"]\"]]"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:assessment:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "profile": {
+      "$ref": "urn:umf:actions:executor-profile:0.1.0"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "declaredCompatible": {
+      "type": "boolean"
+    },
+    "executionVerified": {
+      "const": false
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "obligation": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "unsupported",
+              "unknown"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "obligation",
+          "path",
+          "status",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "profile",
+    "identity",
+    "declaredCompatible",
+    "executionVerified",
+    "outcomes",
+    "diagnostics"
+  ],
+  "additionalProperties": false
+}

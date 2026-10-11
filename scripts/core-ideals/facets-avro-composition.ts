@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
@@ -16,12 +17,12 @@ for(const row of facetsAvroProjectionCases()){
  const family=row.author.target.modules[0]!.elements[0]!.scalarType as u.ScalarType;
  const c=avroFacetCase(projection.nativeSchema!,family,{location:{path:'/fields/0/type'},profile:row.request.profile,obligation:row.request.obligation});
  const classification=u.classifyAvroFacets(c.document,c.request);assert.equal(classification.status,'classified');
- const original=u.exportAvroBundle(c.document),classifiedNative=u.exportAvroBundle(classification.target!);assert.equal(classifiedNative.schema,original.schema);assert.deepEqual(classifiedNative.dependencies,original.dependencies);
+ const original=u.exportAvroBundle(c.document),classifiedNative=u.exportAvroBundle(classification.target!);assert.equal(classifiedNative.schema,original.schema);assertJsonDataEqual(classifiedNative.dependencies,original.dependencies);
  for(const format of ['json','yaml'] as const){
   const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(classification),format),format) as unknown as typeof classification;
-  assert.deepEqual(u.recoverAvroFacetSource(receipt,receipt.target!),{schema:projection.nativeSchema,dependencies:[]});nativeRecoveries++;
+  assertJsonDataEqual(u.recoverAvroFacetSource(receipt,receipt.target!),{schema:projection.nativeSchema,dependencies:[]});nativeRecoveries++;
   const idealReceipt=u.readJsonValue(u.writeJsonValue(u.copyJson(projection),format),format) as unknown as typeof projection;
-  assert.deepEqual(recoverFacetsFromAvro(idealReceipt,idealReceipt.nativeSchema!),row.author.target);idealRecoveries++;
+  assertJsonDataEqual(recoverFacetsFromAvro(idealReceipt,idealReceipt.nativeSchema!),row.author.target);idealRecoveries++;
  }
  const authored=row.author.operation==='declare-core-facets'?row.author.request:{};
  const same=Object.entries(authored).every(([key,value])=>JSON.stringify((classification.mapping.facets as Record<string,unknown>)[key])===JSON.stringify(value));

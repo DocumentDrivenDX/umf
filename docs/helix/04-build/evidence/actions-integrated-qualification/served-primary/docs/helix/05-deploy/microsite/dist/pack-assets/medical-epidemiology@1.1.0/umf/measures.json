@@ -1,0 +1,118 @@
+{
+  "version": "1.0",
+  "table_name": "measures",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 CDC/NCHS leading-causes-of-death aggregate records and two separate fabricated zero/suppression cases.",
+  "columns": [
+    {
+      "name": "measure_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "measure key"
+    },
+    {
+      "name": "source_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "source id"
+    },
+    {
+      "name": "year",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "year"
+    },
+    {
+      "name": "geography",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "geography"
+    },
+    {
+      "name": "geography_vintage",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "geography vintage"
+    },
+    {
+      "name": "cause",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "cause"
+    },
+    {
+      "name": "case_definition",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "case definition"
+    },
+    {
+      "name": "measure",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "measure"
+    },
+    {
+      "name": "count",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "count"
+    },
+    {
+      "name": "count_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "count status"
+    },
+    {
+      "name": "adjusted_rate",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "adjusted rate"
+    },
+    {
+      "name": "rate_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "rate status"
+    },
+    {
+      "name": "rate_unit",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "rate unit"
+    },
+    {
+      "name": "adjustment",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "adjustment"
+    },
+    {
+      "name": "population_denominator",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "population denominator"
+    },
+    {
+      "name": "denominator_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "denominator status"
+    },
+    {
+      "name": "uncertainty_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "uncertainty json"
+    },
+    {
+      "name": "native_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "native json"
+    }
+  ],
+  "primary_key": [
+    "measure_key"
+  ]
+}

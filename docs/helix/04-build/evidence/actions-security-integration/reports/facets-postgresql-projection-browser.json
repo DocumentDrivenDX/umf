@@ -1,0 +1,24 @@
+{
+  "scope": "Public authored PostgreSQL facet projection, native SQL parity and both ideal receipt serializations in Chromium/WASM; full binding compatibility acceptance remains separate",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "cases": 232,
+    "projected": 145,
+    "blocked": 87,
+    "recoveries": 290,
+    "commentRefusals": 1,
+    "commentRecoveries": 1
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/core-ideals/facets-postgresql-projection.ts": "14b171761d661519fe46cc0a93780a28538e64936b35b9d95318fd47597dd2a5",
+    "src/index.ts": "43dcc0468d22c382d5a59fe9e65aadab197da27356031054dc8277c8803a8ab0",
+    "spec/core/facets-postgresql-projection.schema.json": "ed76ebc56b23843f95bf4a19bb66e0a08a055090838c14ac2f4ccc8890a93675",
+    "scripts/core-ideals/facets-postgresql-projection-browser.ts": "72ba659fb1ea6d6c4d8462b0579d5a3549eb732a3723be4997d53df1c9e41d17",
+    "scripts/core-ideals/facets-postgresql-projection-cases.ts": "d78ebd7742f3c4a414a3a0b1273b326e99bac5695e7252ed13ff6d1f7f75f8d3",
+    "fixtures/validation/facets-postgresql-projection-native.json": "7b201c0b5e3853eb0f4061babb83296858d812a1a0486f84c870dcbf4189ab24",
+    "dist/umf.js": "24c83ee8ecd29071fc96d2f2d4d350cb56bdd67d475deaf9e170ced1e1067009",
+    "dist/postgresql/runtime.js": "224a16eba6bf216975f07d2e6a23590a3208d07747ed7827bfa9ec2463a940fb",
+    "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "version": "1.0",
+  "table_name": "yellow_trips",
+  "description": "Yellow-trip dictionary field profile including the 2025 CBD fee. All columns permit source nulls; this is not a month-specific Parquet physical schema. No trip identity is supplied upstream.",
+  "columns": [
+    {
+      "name": "VendorID",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Provider code; dictionary revision retained; do not close the code set."
+    },
+    {
+      "name": "tpep_pickup_datetime",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Source civil datetime spelling; no UTC assumption.",
+      "domain_type": "taxi_datetime"
+    },
+    {
+      "name": "tpep_dropoff_datetime",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Source civil datetime spelling; no UTC assumption.",
+      "domain_type": "taxi_datetime"
+    },
+    {
+      "name": "passenger_count",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "Source numeric carrier; missing and anomalous values are not corrected."
+    },
+    {
+      "name": "trip_distance",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "Meter distance in miles."
+    },
+    {
+      "name": "RatecodeID",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "Source numeric code carrier; 99 denotes unknown, separately from null."
+    },
+    {
+      "name": "store_and_fwd_flag",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Y/N source code, not coerced to boolean."
+    },
+    {
+      "name": "PULocationID",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Pickup zone identifier."
+    },
+    {
+      "name": "DOLocationID",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Dropoff zone identifier."
+    },
+    {
+      "name": "payment_type",
+      "data_type": "INTEGER",
+      "nullable": true,
+      "description": "Payment code; unknown is distinct from null."
+    },
+    {
+      "name": "fare_amount",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "extra",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "mta_tax",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "tip_amount",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; cash tips are absent.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "tolls_amount",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "improvement_surcharge",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "total_amount",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; excludes cash tips.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "congestion_surcharge",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "airport_fee",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    },
+    {
+      "name": "cbd_congestion_fee",
+      "data_type": "FLOAT",
+      "nullable": true,
+      "description": "USD; retain source floating-point values.",
+      "domain_type": "taxi_usd"
+    }
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "PULocationID",
+        "references_table": "taxi_zones",
+        "references_column": "LocationID"
+      },
+      {
+        "column": "DOLocationID",
+        "references_table": "taxi_zones",
+        "references_column": "LocationID"
+      }
+    ]
+  }
+}

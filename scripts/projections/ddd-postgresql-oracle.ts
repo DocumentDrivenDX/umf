@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from '../core-ideals/json-data-assert';
 // @covers US-048-AC1 @covers US-048-AC4 @covers US-048-AC5 @covers US-048-AC6 @covers US-048-AC7
 import assert from 'node:assert/strict';import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';import {dddPostgresqlCases} from './ddd-postgresql-cases';
@@ -14,7 +15,7 @@ try{
  await sql(await Bun.file('fixtures/projections/ddd-authored-relationships/expected-postgresql-relationships.sql').text());const expected=await catalog();
  for(const c of dddPostgresqlCases().filter(c=>c.valid)){
   const r=await projectDddToPostgresql(c.logical,c.binding,c.policy,backend);assert.equal(r.status,'projected',c.id);await sql('DROP SCHEMA IF EXISTS archive CASCADE; DROP SCHEMA sales CASCADE;\n'+r.nativeSource!);const actual=await catalog();if(c.id==='keyed-association-and-fk')assert.deepEqual(actual,expected);
-  assert.deepEqual(await recoverDddPostgresqlIdeal(r,r.targetArchive!,backend),{logical:c.logical,binding:c.binding,policy:c.policy});assert.equal(await recoverDddPostgresqlNative(r,r.targetArchive!,backend),r.nativeSource);
+  assertJsonDataEqual(await recoverDddPostgresqlIdeal(r,r.targetArchive!,backend),{logical:c.logical,binding:c.binding,policy:c.policy});assert.equal(await recoverDddPostgresqlNative(r,r.targetArchive!,backend),r.nativeSource);
   if(c.id==='text-key')for(const column of actual.columns.filter((x:any)=>(x.table==='customers'&&x.name==='id')||(x.table==='orders'&&x.name==='customerId')))assert.equal(column.collation,'C');
   const probes:any[]=[];const composite=c.id==='nullable-composite';
   probes.push(await probe('parent',`INSERT INTO sales.customers(id,name${composite?',code':''}) VALUES(1,'customer'${composite?',7':''}) RETURNING 'accepted'::text`));

@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "issue_groups",
+  "description": "CONTRACT-058 bounded appellate fixture: issue_groups.",
+  "columns": [
+    {
+      "name": "issue_group_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "issue_groups.issue_group_id; preserve source scope and qualification."
+    },
+    {
+      "name": "disputed_issue",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "issue_groups.disputed_issue; preserve source scope and qualification."
+    },
+    {
+      "name": "legal_basis",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "issue_groups.legal_basis; preserve source scope and qualification."
+    },
+    {
+      "name": "comparison_scope",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "issue_groups.comparison_scope; preserve source scope and qualification."
+    },
+    {
+      "name": "qualification",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "issue_groups.qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "issue_group_id"
+  ]
+}

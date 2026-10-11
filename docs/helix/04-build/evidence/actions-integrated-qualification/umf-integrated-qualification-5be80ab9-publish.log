@@ -1,0 +1,4 @@
+{"stage": "container-schema-properties-inputs", "command": ["bun", "scripts/core-schema-properties-oracle-inputs.ts"]}
+{"stage": "container-schema-properties-oracle", "command": [".venv/bin/python", "scripts/core-schema-properties-oracle.py"]}
+{"stage": null, "command": ["bun", "-e", "import {relationshipSourceHashes} from './scripts/core-ideals/relationship-gate-inputs'; await Bun.write('fixtures/validation/core-check-refresh/relationship-source-hashes.json', JSON.stringify(await relationshipSourceHashes(), null, 2));"]}
+{"stage": "container-publication", "command": [".venv/bin/python", "scripts/publish-core-check-refresh.py"]}

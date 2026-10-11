@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "parquet-file-source"
+    },
+    "encoding": {
+      "const": "hex"
+    },
+    "bytes": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{2})*$",
+      "maxLength": 2000000
+    }
+  },
+  "required": [
+    "profile",
+    "encoding",
+    "bytes"
+  ],
+  "additionalProperties": true
+}

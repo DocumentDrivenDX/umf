@@ -1,0 +1,14 @@
+{
+  "files": {
+    "umf-integrated-qualification-01a391b6-prepare.log": "6a046c2ba10df89d9ecdde8a72587caa1692a1a9b4612d5693812c8f5a498fa2",
+    "container-runtime.json": "dc996a196d36d4ad96ad5785ef772bf67a72f820d045c909c58e71a66c5a54d6",
+    "umf-integrated-execution-observation-01a391b6.json": "039645f7d2719dc4cfad90bf1ed5efbd7a96f342dd4f412f5eaf0304cc1f4f59",
+    "prepare-runtime-observation.json": "dc996a196d36d4ad96ad5785ef772bf67a72f820d045c909c58e71a66c5a54d6",
+    "umf-primary-local-filesystem-01a391b6.json": "5acd055c69c9cc42744812fdf1057a42c0a9c4202bc5d54f2003ffcdda2cd8f0",
+    "umf-integrated-qualification-01a391b6-native.log": "f2a703fff2e3716fecc28e3550f14aa87bd1076a0100368080276168967bd309",
+    "umf-integrated-runtime-observation-01a391b6.json": "db747cc646cda0df1a9276c51685820243a2a113cc591ef3a361ab05cd02b002",
+    "pre-existing-native-browser.json": "1c1836404c560ca0557d661df3bac92e3705c16a76f3e17d7533ab64b06b2249"
+  },
+  "meaning": "Prepare passed, native command-plan reconstruction failed before any native/browser commands because detached historical baseline commit objects were absent after self-contained repack. Imported exact cc1446 baseline objects from prior frozen checkout; current source unchanged.",
+  "preExistingReportMeaning": "Observed stale committed native-browser bytes during failed command-plan reconstruction; no native/browser command executed and not fresh success."
+}

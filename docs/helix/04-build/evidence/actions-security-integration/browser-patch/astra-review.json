@@ -1,0 +1,20 @@
+{
+  "reviewer": "Astra Ultra",
+  "scope": "browser1.1.1 repair against main49 and tooling-only966 delta",
+  "approved": true,
+  "originalInputsVerified": 1214,
+  "fixedPackagesVerified": 64,
+  "crossContextRuntimeFilesVerified": 66,
+  "completeCandidateParity": true,
+  "consumerChecks": 14,
+  "cspChecks": 95,
+  "requiredBeforeDelivery": [
+    "publish committed producer",
+    "pin exact release",
+    "unconditional installed byte parity",
+    "final site build/browser/signature checks",
+    "CI",
+    "main deployment verification"
+  ],
+  "coreNativeRerunRequired": false
+}

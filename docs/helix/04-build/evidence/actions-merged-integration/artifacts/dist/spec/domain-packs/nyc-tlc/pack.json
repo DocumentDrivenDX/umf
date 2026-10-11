@@ -1,0 +1,102 @@
+{
+  "id": "nyc-tlc",
+  "version": "1.0.0",
+  "description": "NYC TLC yellow taxi trips and zone lookup",
+  "domain_types": {
+    "taxi_datetime": {
+      "description": "Civil timestamp spelling; timezone and conversion remain unresolved."
+    },
+    "taxi_usd": {
+      "description": "USD source floating-point carrier; not an exact-decimal equivalence claim."
+    }
+  },
+  "sources": {
+    "yellow": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet",
+      "format": "parquet",
+      "revision": "2025-01",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NYC TLC"
+      }
+    },
+    "zones": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv",
+      "format": "csv",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NYC TLC"
+      }
+    },
+    "documentation": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf",
+      "format": "pdf",
+      "revision": "2025-03-18",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "b9e9f0ecfa6bd9cc847283379173fd764fe1ab76d2fa143329f541cb1f479993"
+      },
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NYC Taxi and Limousine Commission"
+      },
+      "description": "Fingerprint of documentation bytes inspected during authoring; not a checksum of dataset rows."
+    }
+  },
+  "schemas": [
+    {
+      "id": "yellow_trips",
+      "format": "tablespec",
+      "reference": "umf/yellow_trips.json"
+    },
+    {
+      "id": "taxi_zones",
+      "format": "tablespec",
+      "reference": "umf/taxi_zones.json"
+    }
+  ],
+  "source_bindings": [
+    {
+      "schema_id": "yellow_trips",
+      "source_id": "yellow",
+      "role": "rows"
+    },
+    {
+      "schema_id": "yellow_trips",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "taxi_zones",
+      "source_id": "zones",
+      "role": "rows"
+    },
+    {
+      "schema_id": "taxi_zones",
+      "source_id": "documentation",
+      "role": "reference"
+    }
+  ],
+  "profile": {
+    "subset": "Yellow taxis only; green, FHV and HVFHV are excluded.",
+    "nullability": "Permissive admission, not producer guarantees.",
+    "physical_types": "Authored numeric carriers; actual Parquet types and schema drift require a pinned-file inspection.",
+    "documentation_revision": "2025-03-18",
+    "schema_format": "TableSpec 1.0 JSON",
+    "support": "Schema metadata and exact adapter recovery only; no source data ingestion or native equivalence.",
+    "data_snapshot": "No dataset bytes bundled or SHA-256-pinned. Consumers must select and pin local inputs before execution.",
+    "unknown_content": "Retain original source fields, files and bytes; unsupported content requires an explicit loss report."
+  }
+}

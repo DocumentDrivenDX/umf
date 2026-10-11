@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "table_name": "decision_pages",
+  "description": "CONTRACT-058 bounded appellate fixture: decision_pages.",
+  "columns": [
+    {
+      "name": "page_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_pages.page_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_pages.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "pdf_page",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "decision_pages.pdf_page; preserve source scope and qualification."
+    },
+    {
+      "name": "text",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_pages.text; preserve source scope and qualification."
+    },
+    {
+      "name": "text_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decision_pages.text_status; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "page_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      }
+    ]
+  }
+}

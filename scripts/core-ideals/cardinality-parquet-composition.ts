@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import type {Element} from '../../src/model/types';
 import {importParquetSchema,exportParquetCapture,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifyParquetCardinality,recoverParquetCardinalityBytes,readJsonValue,writeJsonValue} from '../../src';
 import {recoverCardinalityFromParquet,type CardinalityParquetProjection} from '../../src/core-ideals/cardinality-parquet-projection';
@@ -22,7 +23,7 @@ export function verifyParquetCardinalityComposition(projection:CardinalityParque
   const nativeReceipt=readJsonValue(writeJsonValue(classified,format),format) as unknown as typeof classified;
   assert.deepEqual(recoverParquetCardinalityBytes(nativeReceipt,nativeReceipt.target!),bytes);nativeRecoveries++;
   const idealReceipt=readJsonValue(writeJsonValue(projection,format),format) as unknown as typeof projection;
-  assert.deepEqual(recoverCardinalityFromParquet(idealReceipt,bytes),projection.author.target);idealRecoveries++;
+  assertJsonDataEqual(recoverCardinalityFromParquet(idealReceipt,bytes),projection.author.target);idealRecoveries++;
  }
  return {nativeRecoveries,idealRecoveries,nativeCardinality:classified.mapping.cardinality,authoredCardinality:projection.mapping.cardinality,nativeNodes:classified.mapping.nodes.length};
 }

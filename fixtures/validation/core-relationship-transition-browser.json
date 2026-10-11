@@ -1,6 +1,6 @@
 {
   "scope": "Experimental 0.6.0 to 0.7.0 relationship upgrade, rollback and receipt verification only; public integration and native admission remain separate",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 7,
     "recoveries": 14,
@@ -8,20 +8,20 @@
     "getterCalls": 0
   },
   "externalRequests": [],
-  "bundleSha256": "24a7a713c335230559f9c83a273560f1a182fe796f3944ea89ea54adc0f6d49a",
+  "bundleSha256": "17bb4f741371d5713306e12e82712b328da0784f29f077e840d5e82556ed070b",
   "sha256": {
     "scripts/core-relationship-transition-browser.ts": "787faaccf1ebd0aec25e711b5147f5e90df2d849417d7cd20408788bed9feb25",
     "scripts/core-relationship-transition-cases.ts": "4eab41c4c42620bf50f39ae838404c89a957b407e7060d76f0cb9406714ff90a",
     "scripts/core-relationship-cases.ts": "53c70e52f9f0780f8e25d967fe1d056e64423aac24063eada41967fd820e7809",
     "scripts/core-relationship-transition-schema.ts": "9d5f942aa2c6b541e9e9986e599dafdbae939e2b4e1523702222e2987841f615",
     "src/model/relationship-transition.ts": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36",
-    "src/validation/relationships.ts": "5d94c2df0847d0315b514a005407d6e95f34531d9822ae5b2db48f176673a932",
-    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
-    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/validation/relationships.ts": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8",
+    "src/validation/keys.ts": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
+    "src/model/json.ts": "3f1348c5e8e9d340c301611e607919b420b034fb777ef6817adf2b8f8450e020",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "spec/core/relationship-document.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
-    "spec/core/relationship-transition.schema.json": "04f3a9f22f29058a150288ec678eb22a127879302f2e38783c0824a4479042d0",
+    "spec/core/relationship-document.schema.json": "1ba5a38f95e135c3d4e6757259e6c7c75edb9aaa3fff98931f92e1890ded450d",
+    "spec/core/relationship-transition.schema.json": "50c0d1d593395e1cfc33b605c6e35c13fe5cda872ca44ce596d13d8022804c6d",
     "tests/core/relationship-transition.test.ts": "4425c8304e253ce5ab7efa7225195246ddb05653ed285f2026d2dc0a57243720"
   }
 }

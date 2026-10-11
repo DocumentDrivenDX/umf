@@ -1,0 +1,141 @@
+{
+  "id": "movielens",
+  "version": "1.0.0",
+  "description": "MovieLens 32M ratings and tags",
+  "domain_types": {
+    "movie_genres": {
+      "description": "Pipe-delimited source genres, including the no-genres marker."
+    },
+    "movie_rating": {
+      "description": "Decimal half-star scale.",
+      "allowed_values": [
+        "0.5",
+        "1.0",
+        "1.5",
+        "2.0",
+        "2.5",
+        "3.0",
+        "3.5",
+        "4.0",
+        "4.5",
+        "5.0"
+      ]
+    },
+    "epoch_seconds": {
+      "description": "Integer seconds from 1970-01-01T00:00:00Z."
+    }
+  },
+  "sources": {
+    "release": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://files.grouplens.org/datasets/movielens/ml-32m.zip",
+      "format": "zip/csv",
+      "revision": "ml-32m (2023-10-13)",
+      "license": {
+        "redistribution": "restricted"
+      },
+      "provenance": {
+        "publisher": "GroupLens, University of Minnesota"
+      }
+    },
+    "documentation": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://files.grouplens.org/datasets/movielens/ml-32m-README.html",
+      "format": "html",
+      "revision": "ml-32m (generated 2023-10-13)",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e6dcbfef34db80c937babd537b3fab2f33f4d62c904a57b7b1811f6b9e4f7353"
+      },
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "GroupLens, University of Minnesota"
+      },
+      "description": "Fingerprint of documentation bytes inspected during authoring; not a checksum of dataset rows."
+    }
+  },
+  "schemas": [
+    {
+      "id": "movies",
+      "format": "tablespec",
+      "reference": "umf/movies.json"
+    },
+    {
+      "id": "links",
+      "format": "tablespec",
+      "reference": "umf/links.json"
+    },
+    {
+      "id": "ratings",
+      "format": "tablespec",
+      "reference": "umf/ratings.json"
+    },
+    {
+      "id": "tags",
+      "format": "tablespec",
+      "reference": "umf/tags.json"
+    }
+  ],
+  "source_bindings": [
+    {
+      "schema_id": "movies",
+      "source_id": "release",
+      "role": "rows"
+    },
+    {
+      "schema_id": "movies",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "links",
+      "source_id": "release",
+      "role": "rows"
+    },
+    {
+      "schema_id": "links",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "ratings",
+      "source_id": "release",
+      "role": "rows"
+    },
+    {
+      "schema_id": "ratings",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "tags",
+      "source_id": "release",
+      "role": "rows"
+    },
+    {
+      "schema_id": "tags",
+      "source_id": "documentation",
+      "role": "reference"
+    }
+  ],
+  "profile": {
+    "subset": "Four CSV files in the fixed ml-32m release; no fabricated user records.",
+    "privacy": "Publisher-anonymized user IDs; no independent privacy certification.",
+    "license": "Research conditions, attribution and same-conditions redistribution; commercial use requires publisher permission. See official README.",
+    "member_bindings": {
+      "movies": "movies.csv",
+      "links": "links.csv",
+      "ratings": "ratings.csv",
+      "tags": "tags.csv"
+    },
+    "documentation_revision": "ml-32m (generated 2023-10-13)",
+    "schema_format": "TableSpec 1.0 JSON",
+    "support": "Schema metadata and exact adapter recovery only; no source data ingestion or native equivalence.",
+    "data_snapshot": "No dataset bytes bundled or SHA-256-pinned. Consumers must select and pin local inputs before execution.",
+    "unknown_content": "Retain original source fields, files and bytes; unsupported content requires an explicit loss report."
+  }
+}

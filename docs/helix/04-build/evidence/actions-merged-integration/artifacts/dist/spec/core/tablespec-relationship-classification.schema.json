@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:tablespec-relationship-classification:1.0.0",
+  "title": "TableSpec relationship metadata classification and retained recovery",
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "outcome",
+    "source",
+    "request",
+    "binding",
+    "observations",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-tablespec-relationships"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "exact",
+        "unknown",
+        "not-expressible"
+      ]
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "target": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "profile"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "const": "declared-metadata"
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.tablespec.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nativePath",
+          "carrier",
+          "state",
+          "native",
+          "sourceColumn",
+          "targetTable",
+          "targetColumn",
+          "resolvedSource",
+          "enforcement",
+          "authorIntent",
+          "basis"
+        ],
+        "properties": {
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "carrier": {
+            "enum": [
+              "foreign_keys",
+              "outgoing",
+              "referenced_by",
+              "incoming",
+              "unknown"
+            ]
+          },
+          "state": {
+            "enum": [
+              "declared",
+              "invalid",
+              "unknown"
+            ]
+          },
+          "native": {
+            "$ref": "#/$defs/node"
+          },
+          "sourceColumn": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "targetTable": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "targetColumn": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "resolvedSource": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "enforcement": {
+            "const": "unknown"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "outcome",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Original native archive retained; no authored relationship inferred"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "exact"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "const": "exact"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "profile": "umf.actions.integrated-execution-observation/2",
+  "sourceRevision": "40e83200c16e9daa632ed269831cf0f72002533d",
+  "runtimeImage": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+  "runs": [
+    {
+      "stage": "native",
+      "ownedContainer": "umf-integrated-qualification-40e83200-native",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-40e83200",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-40e83200:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-40e83200",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "--name",
+        "umf-integrated-qualification-40e83200-native",
+        "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "native"
+      ],
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "exitCode": 0,
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+      "log": "/private/tmp/umf-integrated-qualification-40e83200-native.log",
+      "logSha256": "f7d60c5f272deb3b996b0af891aeea247975cf89a45fad35f2d5b72447ae6a19",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/native-browser.json": "e5c0d17512b60802563d3bc8e06f006bdb12bc284853b84f93ba9ae41d6ee6a1"
+      }
+    },
+    {
+      "stage": "auxiliary",
+      "ownedContainer": "umf-integrated-qualification-40e83200-auxiliary",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-40e83200",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-40e83200:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-40e83200",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "--name",
+        "umf-integrated-qualification-40e83200-auxiliary",
+        "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "auxiliary"
+      ],
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "exitCode": 0,
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+      "log": "/private/tmp/umf-integrated-qualification-40e83200-auxiliary.log",
+      "logSha256": "d1bece63cea07f13f250215a682d3279268a0b7500a48ce22ce8f85569abe8fd",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/auxiliary.json": "861ca7e00670ca9aaac32928c3ae9765a45c00f5d3c98daeaa19082b702108f9",
+        "fixtures/extension-package-audit.json": "329bfe34582ad9a160b73dc1075fd3b8981a01be6083feb1f680b38688c950ec",
+        "fixtures/json-schema-audit.json": "1a0ee93ab26155e4ec66cd769a2876b5a0df0dccc8339ea2eeff55ffa2fb0010"
+      }
+    },
+    {
+      "stage": "regression",
+      "ownedContainer": "umf-integrated-qualification-40e83200-regression",
+      "command": [
+        "docker",
+        "run",
+        "--network",
+        "umf-integrated-qualification-40e83200",
+        "-v",
+        "/private/tmp/umf-integrated-qualification-40e83200:/work",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "-e",
+        "UMF_REFERENCE_DOCKER_NETWORK=umf-integrated-qualification-40e83200",
+        "-e",
+        "UMF_REPLAY_IMAGE_ID=sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "--name",
+        "umf-integrated-qualification-40e83200-regression",
+        "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+        "regression"
+      ],
+      "imageId": "sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249",
+      "exitCode": 1,
+      "completionObservation": "Direct subprocess completion, closed log stream and inspected container exit",
+      "log": "/private/tmp/umf-integrated-qualification-40e83200-regression.log",
+      "logSha256": "fa9506e235654d89e14116e7ce316f089d066463de9e5219125152ab19a930ae",
+      "generatedReports": {
+        "fixtures/validation/core-check-refresh/regression.json": "b455b229c119af23dfe8b2178c39e53f70eec35d6953c674c953511e55969efa"
+      }
+    }
+  ]
+}

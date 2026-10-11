@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "table_name": "tags",
+  "description": "MovieLens tags.csv field profile; repeated tag events are not deduplicated.",
+  "columns": [
+    {
+      "name": "userId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Anonymized user identifier."
+    },
+    {
+      "name": "movieId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Movie identifier."
+    },
+    {
+      "name": "tag",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "User text retained verbatim."
+    },
+    {
+      "name": "timestamp",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "UTC epoch seconds.",
+      "domain_type": "epoch_seconds"
+    }
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "movieId",
+        "references_table": "movies",
+        "references_column": "movieId"
+      }
+    ]
+  }
+}

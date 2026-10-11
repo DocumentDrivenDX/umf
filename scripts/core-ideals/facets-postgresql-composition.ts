@@ -1,5 +1,6 @@
 /** Compose authored projection with an independently captured PostgreSQL catalog. */
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
@@ -25,7 +26,7 @@ for(const [index,row] of facetsPostgresqlProjectionCases().entries()){
  assert.equal(classification.status,'classified');assert.ok(classification.target);
  const recovered=await u.recoverPostgresqlFacetSource(classification,classification.target,backend);
  assert.equal(recovered.nativeSource,nativeSource);assert.equal(recovered.supplement,supplement);nativeRecoveries++;
- assert.deepEqual(await u.recoverFacetsFromPostgresql(projection,projection.nativeSql!,backend),projection.source);idealRecoveries++;
+ assertJsonDataEqual(await u.recoverFacetsFromPostgresql(projection,projection.nativeSql!,backend),projection.source);idealRecoveries++;
  const authored=row.author.operation==='declare-core-facets'?row.author.request:{};
  const same=Object.entries(authored).every(([key,value])=>JSON.stringify((classification.mapping.facets as Record<string,unknown>)[key])===JSON.stringify(value));
  const nativeRefinements=Object.fromEntries(Object.entries(classification.mapping.facets).filter(([key])=>!Object.hasOwn(authored,key)));

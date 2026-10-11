@@ -36,7 +36,7 @@
         "yaml": "2.9.1",
       },
       "devDependencies": {
-        "@documentdrivendx/umf-schema-browser": "1.1.0",
+        "@documentdrivendx/umf-schema-browser": "1.1.1",
         "@launchql/protobufjs": "7.2.6",
         "@types/bun": "1.4.2",
         "@types/n3": "1.26.4",
@@ -52,7 +52,6 @@
     "jsonld@9.0.0": "patches/jsonld@9.0.0.patch",
   },
   "packages": {
-    "@documentdrivendx/umf-schema-browser": ["@documentdrivendx/umf-schema-browser@1.1.0", "", {}, "sha512-nmRCn/OiUqXDuUOaMKsIlpl4yNGy9t+Oh+T68A0GRjiWTwt2CFtlZDWQ/oIwobdKiCmCOE/URFHV9VaXF/kWgQ=="],
     "@alloy-js/core": ["@alloy-js/core@0.24.1", "", { "dependencies": { "@types/ws": "^8.18.1", "@vue/reactivity": "^3.5.35", "cli-table3": "^0.6.5", "devalue": "^5.8.1", "pathe": "^2.0.3", "picocolors": "^1.1.1", "ws": "^8.21.0" } }, "sha512-cye97/HGo0/G8XIc8UnS0PaSoSOj9DDPEiuKsXsn7xQgR1sbL+Nf0oTMZnL2fFb7mRnmULO84x5wK8R/YtReTg=="],
 
     "@alloy-js/csharp": ["@alloy-js/csharp@0.24.0", "", { "dependencies": { "@alloy-js/core": "~0.24.0", "@alloy-js/msbuild": "~0.24.0", "change-case": "^5.4.4", "marked": "^18.0.5", "pathe": "^2.0.3" } }, "sha512-TR+VAAnwbFV7YWnGSlyqL2X2/lrS3UBZ8JBKxszn7z+yk4Y5Sgs6dag3xPZMR5CsQXbxkN3gY/c4G3vqgKZf9A=="],
@@ -72,6 +71,8 @@
     "@colors/colors": ["@colors/colors@1.5.0", "", {}, "sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ=="],
 
     "@digitalbazaar/http-client": ["@digitalbazaar/http-client@4.4.0", "", { "dependencies": { "ky": "^1.14.3", "undici": "^6.28.0" } }, "sha512-ODhCGmElUPmR3IR+KZmBNkRAFyjJ01rxvk2E+/qQ2h2EGPJH5k6bz3N24ympGc5+i4YCGk/ipIpmkwc0+iSmRg=="],
+
+    "@documentdrivendx/umf-schema-browser": ["@documentdrivendx/umf-schema-browser@1.1.1", "", {}, "sha512-Yf2+ic0DeVX0OHUX5KCPfVUnutNE6yIKLPrQdGUkTY+fWlrIEhXWCUPRAkFkl197wdql4llB3RHKZHvvYwF/lg=="],
 
     "@inquirer/ansi": ["@inquirer/ansi@2.0.8", "", {}, "sha512-WpQM+Ti6Z40EFwwt+uL2p4UabT+W179zHp6HhLVOzfbwnVn05IPO/eXIZXGNqcT1jbQ15SujNLzQ39k4QPPxBQ=="],
 

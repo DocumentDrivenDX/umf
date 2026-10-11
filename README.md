@@ -1,5 +1,7 @@
 # UMF
 
+Start with the [action guide](docs/helix/04-build/guides/actions/index.md) for runnable examples, diagrams, CQRS and formal-analysis explanations. [Recorded action qualification](docs/helix/04-build/evidence/actions-certification.md) has exact versions and limits; [current documentation delivery](docs/helix/04-build/evidence/actions-documentation-execution.md) is separate.
+
 UMF is a machine-readable metamodel and schema interchange fabric for complex
 systems built over evolving, partly understood data shapes. Reuse metadata for
 transforms, visualization, generators, forms, AI context, and human documentation
@@ -247,7 +249,7 @@ package presence does not establish full JavaScript or native-adapter parity.
 UMF owns the reusable Delta generator used by Ashlar. Physical choices live in
 `umf.delta.definition` and exact schemas in `umf.delta`; unsupported meaning stays
 serializable and blocks generation. See
-[CONTRACT-050](docs/helix/02-design/contracts/CONTRACT-050-delta-ddl.md).
+[CONTRACT-064](docs/helix/02-design/contracts/CONTRACT-064-delta-ddl.md).
 
 ```typescript
 import {defineDeltaTable, generateDeltaDDLBundle} from '@umf/core';

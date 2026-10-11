@@ -1,0 +1,127 @@
+{
+  "tool": "TLC pinned official 1.7.4; Java21 isolated existing UMF replay image",
+  "assumptions": [
+    "Atomic qualified business+outcome+outbox commit except split mutant",
+    "Transaction authorization lock couples revoke and commit",
+    "Synthetic single product stock2, 2 clients, 2 stable tokens or same token, revisions1/2, one crash/retry per client",
+    "Safety configurations have no fairness; separate finite progress configuration assumes weak fairness and no environment faults; no core/native implementation proof",
+    "Inventory decrement protocol abstraction; order creation is checked separately by command semantics/history oracle"
+  ],
+  "results": [
+    {
+      "name": "good-same",
+      "exit": 0,
+      "complete": true,
+      "invariantViolation": null,
+      "stateCounts": [
+        "17090",
+        "6248"
+      ]
+    },
+    {
+      "name": "good-distinct",
+      "exit": 0,
+      "complete": true,
+      "invariantViolation": null,
+      "stateCounts": [
+        "48396",
+        "16164"
+      ]
+    },
+    {
+      "name": "namespace-same",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "AtMostOnce",
+      "stateCounts": [
+        "3934",
+        "1653"
+      ]
+    },
+    {
+      "name": "split-same",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "AtomicEvidence",
+      "stateCounts": [
+        "46",
+        "28"
+      ]
+    },
+    {
+      "name": "earlyack-same",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "AckDurable",
+      "stateCounts": [
+        "47",
+        "29"
+      ]
+    },
+    {
+      "name": "auth-same",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "NoProtectedDisclosure",
+      "stateCounts": [
+        "932",
+        "451"
+      ]
+    },
+    {
+      "name": "lostupdate-distinct",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "Conservation",
+      "stateCounts": [
+        "1368",
+        "599"
+      ]
+    },
+    {
+      "name": "gapvisible-distinct",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "VisiblePrefix",
+      "stateCounts": [
+        "1605",
+        "745"
+      ]
+    },
+    {
+      "name": "lagwatermark-distinct",
+      "exit": 12,
+      "complete": false,
+      "invariantViolation": "WatermarkComplete",
+      "stateCounts": [
+        "2707",
+        "1208"
+      ]
+    },
+    {
+      "name": "witness-NoSuccessReachable",
+      "positiveReachabilityWitness": true,
+      "exit": 12
+    },
+    {
+      "name": "witness-NoAcknowledgementReachable",
+      "positiveReachabilityWitness": true,
+      "exit": 12
+    },
+    {
+      "name": "witness-NoRecoveredReplayReachable",
+      "positiveReachabilityWitness": true,
+      "exit": 12
+    },
+    {
+      "name": "progress-stable-environment",
+      "finiteFairProgress": true,
+      "assumptions": "No crashes/deployment/revocation; weak fairness per client step and pending event application; stable authorized storage environment",
+      "exit": 0
+    }
+  ],
+  "sources": {
+    "Commands.tla": "dbd6e81febbe53eaa90ca40b122e10a82e0a7843273fb304b49c7bc52604d3e1",
+    "run_tlc.py": "0f39738c641b259e2f8068b1b549091aa65d16ac0cf1a90cc2e217964b889128"
+  }
+}

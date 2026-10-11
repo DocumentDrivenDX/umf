@@ -1,0 +1,78 @@
+{
+  "status": "failed generated-report immutability postcheck; no qualification claimed",
+  "sourceRevision": "1fa21f6ea1d7a3e1009746da99f1a61d444cd489",
+  "reason": "Same unsupported Edition2024 diagnostic names dependent versus root proto file; entire other report content unchanged",
+  "closedStages": [
+    [
+      "install",
+      0
+    ],
+    [
+      "python-runtime",
+      0
+    ],
+    [
+      "library",
+      0
+    ],
+    [
+      "postgresql",
+      0
+    ],
+    [
+      "protobuf",
+      0
+    ],
+    [
+      "demo",
+      0
+    ],
+    [
+      "explorer",
+      0
+    ],
+    [
+      "typecheck",
+      0
+    ],
+    [
+      "domain-schema",
+      0
+    ],
+    [
+      "schemas",
+      0
+    ],
+    [
+      "regression-1",
+      0
+    ],
+    [
+      "regression-2",
+      0
+    ],
+    [
+      "regression-3",
+      0
+    ]
+  ],
+  "sha256": {
+    "coordinator.py": "63fe57c7e41d22d80a3991d6d751b7ff02c1859788a4bc50e722de589f4c56bd",
+    "protobuf-emission-corpus-fresh.json": "59409521cace91aebb82f2f90c69afb91ff463d0ebda1d8e38fe7d5faccbc584",
+    "observation.json": "900949738a5fecadcd89548988283e764589cc23b4bf830e30531129780fbcd8",
+    "domain-schema.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "postgresql.log": "ff57f00c9aaa6dae62bec8a6c1326f5b3a8716f4dcadfea7b58c615635dac7b7",
+    "typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "schemas.log": "96c7970d02182acb77f67b8195a863bca16c031b4aa903835b174af6d65400db",
+    "library.log": "707393fb145ea32781c47e534a2bc7ba12c1d4dd552ba22babe41434bc8d6b12",
+    "demo.log": "12d6582aac6ae01f2cb097e31af6c48378ac1fa8179fb0f45ec678accf123d68",
+    "protobuf.log": "ed2ac73e02436886ef92b87bfddff9b646adc34fc5b121bda9600912b071ab62",
+    "fixture-difference.patch": "c3b3636902a2c1d12ed8b509ba8930abed4050659736ed3ad032ffa5c327b1ce",
+    "regression-1.log": "7854590307d0dd298126db887e3447abd2c352d50599be2764a7630dc1e6bdde",
+    "python-runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "regression-3.log": "4c7cfdfb9046def505fabc37ca2d2819adda4a18e216efe9c8c508c42ba33de6",
+    "regression-2.log": "bcf3cdc9adc2c74ec9c69a063705de3b11eb79c90c923ef05b9cf1a07f9bea8d",
+    "explorer.log": "c0166c7e335fb5a1586bd84ede026af5381235788b6eb5387df6b29922b67c53",
+    "install.log": "85d1ee01e87cc942eeb7f025ded595a03171bf4517f6f178b5f2eaf943a758f9"
+  }
+}

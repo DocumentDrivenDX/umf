@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "courts",
+  "description": "CONTRACT-058 bounded appellate fixture: courts.",
+  "columns": [
+    {
+      "name": "court_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "courts.court_id; preserve source scope and qualification."
+    },
+    {
+      "name": "name",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "courts.name; preserve source scope and qualification."
+    },
+    {
+      "name": "court_level",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "courts.court_level; preserve source scope and qualification."
+    },
+    {
+      "name": "jurisdiction",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "courts.jurisdiction; preserve source scope and qualification."
+    },
+    {
+      "name": "listing_url",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "courts.listing_url; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "court_id"
+  ]
+}

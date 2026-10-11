@@ -1,0 +1,29 @@
+{
+  "scope": "Read-only original0.8 Cardinality inspection plus historical core0.4 inspection, authoring, verified receipts and migration recovery; native bindings remain unfinished",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "original08Inspections": 5,
+    "recoveries": 18,
+    "transitions": 16,
+    "refusals": 14,
+    "getterCalls": 0,
+    "authorRecoveries": 8,
+    "authorRefusals": 5
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "spec/core/cardinality-operation-v5.schema.json": "17fa2d53947450942e7e67e5d3b4ec49030ea2cc9965d804f52ab9564332de27",
+    "spec/core/schema-properties-document.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "scripts/core-cardinality-operations-browser.ts": "97a2c86550a3d0d83ad218c5a8e8c01d0f1a88bcc42cea0a2ff39d35c0cf7d67",
+    "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
+    "spec/core/cardinality-transition.schema.json": "7542f458ae6f04cbd38bb26ddbb3b3b428c8c288ee792e844226a1d5e487ca0f",
+    "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
+    "src/model/cardinality.ts": "14955a4e5fd41dc0a6ab5e13ceac37bf4264ff6e35e35af462da3ee918c8eb5c",
+    "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+    "src/index.ts": "43dcc0468d22c382d5a59fe9e65aadab197da27356031054dc8277c8803a8ab0",
+    "dist/umf.js": "24c83ee8ecd29071fc96d2f2d4d350cb56bdd67d475deaf9e170ced1e1067009"
+  }
+}

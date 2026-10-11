@@ -15,7 +15,7 @@ assert.deepEqual(getAvroFieldMetadata(avro).map(row=>row.element.name),['custome
 for(const format of ['json','yaml'] as const)assert.equal(exportAvroSchema(readDocument(writeDocument(avro,format),format)),avroText);
 assert(avro.modules.every(module=>!Object.hasOwn(module,'relationships')));
 
-const python=Bun.spawn(['/home/erik/Projects/umf/.venv/bin/python','scripts/relationship/avro-parquet-native.py'],{stdout:'pipe',stderr:'pipe'});
+const python=Bun.spawn([globalThis.process.env.UMF_PYTHON_PATH ?? '.venv/bin/python','scripts/relationship/avro-parquet-native.py'],{stdout:'pipe',stderr:'pipe'});
 const [stdout,stderr,code]=await Promise.all([new Response(python.stdout).text(),new Response(python.stderr).text(),python.exited]);
 assert.equal(code,0,stderr||stdout);
 const parquetNative=JSON.parse(stdout);

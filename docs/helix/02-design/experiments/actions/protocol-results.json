@@ -1,0 +1,38 @@
+{
+  "bounds": {
+    "clients": 2,
+    "token": 1,
+    "revisions": 2,
+    "initialStock": 2,
+    "calls": 2,
+    "deployments": 1,
+    "revocations": 1
+  },
+  "abstraction": "Atomic invocations, finite safety only; native transaction/race tests are separate.",
+  "results": {
+    "stable": {
+      "states": 12,
+      "transitions": 17,
+      "counterexample": null
+    },
+    "revision-namespace": {
+      "states": 14,
+      "transitions": 18,
+      "counterexample": [
+        "commit r1; acknowledgement lost",
+        "deploy r2",
+        "execute r2 under same token"
+      ]
+    },
+    "stale-auth": {
+      "states": 12,
+      "transitions": 17,
+      "counterexample": [
+        "commit r1; acknowledgement lost",
+        "revoke",
+        "disclose protected replay"
+      ]
+    }
+  },
+  "sourceSha256": "f79738f4286c9a118afe6a1994b4c325ba12c4ac14efaa94b37107a863b4d86e"
+}

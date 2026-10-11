@@ -1,0 +1,402 @@
+{
+  "umf": "0.8.0",
+  "id": "actions-reference",
+  "vocabularies": {
+    "umf.actions": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "sales",
+      "namespace": "sales",
+      "elements": [
+        {
+          "id": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "status",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "order",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "id"
+            },
+            {
+              "module": "sales",
+              "element": "status"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "customer-id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "customer",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "customer-id"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "customer-id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "product-id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "product",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "product-id"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "product-id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "umf.actions": {
+          "actions": [
+            {
+              "id": "create-order",
+              "name": "Create order",
+              "description": "Create an order and associate its customer and product.",
+              "parameters": [
+                {
+                  "id": "order-id",
+                  "kind": "value",
+                  "field": {
+                    "module": "sales",
+                    "element": "id"
+                  },
+                  "required": true
+                },
+                {
+                  "id": "customer",
+                  "kind": "entity",
+                  "target": {
+                    "module": "sales",
+                    "element": "customer",
+                    "key": "pk"
+                  },
+                  "required": true
+                },
+                {
+                  "id": "product",
+                  "kind": "entity",
+                  "target": {
+                    "module": "sales",
+                    "element": "product",
+                    "key": "pk"
+                  },
+                  "required": true
+                }
+              ],
+              "outputs": [],
+              "preconditions": [],
+              "postconditions": [],
+              "failures": [],
+              "reads": [],
+              "writes": [
+                {
+                  "id": "order-write",
+                  "record": {
+                    "module": "sales",
+                    "element": "order"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"key\":\"pk\",\"components\":[{\"input\":\"order-id\"}]}",
+                    "references": [
+                      {
+                        "parameter": "order-id"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [
+                    {
+                      "module": "sales",
+                      "element": "id"
+                    },
+                    {
+                      "module": "sales",
+                      "element": "status"
+                    }
+                  ],
+                  "relationships": [
+                    {
+                      "module": "sales",
+                      "relationship": "order-customer"
+                    },
+                    {
+                      "module": "sales",
+                      "relationship": "order-product"
+                    }
+                  ],
+                  "create": true,
+                  "delete": false
+                },
+                {
+                  "id": "customer-write",
+                  "record": {
+                    "module": "sales",
+                    "element": "customer"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"entity\":\"customer\"}",
+                    "references": [
+                      {
+                        "parameter": "customer"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [],
+                  "relationships": [],
+                  "create": false,
+                  "delete": false
+                },
+                {
+                  "id": "product-write",
+                  "record": {
+                    "module": "sales",
+                    "element": "product"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"entity\":\"product\"}",
+                    "references": [
+                      {
+                        "parameter": "product"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [],
+                  "relationships": [],
+                  "create": false,
+                  "delete": false
+                }
+              ],
+              "binding": {
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                },
+                "effects": [
+                  {
+                    "id": "create",
+                    "kind": "create",
+                    "record": {
+                      "module": "sales",
+                      "element": "order"
+                    },
+                    "key": "pk",
+                    "values": [
+                      {
+                        "field": {
+                          "module": "sales",
+                          "element": "id"
+                        },
+                        "value": {
+                          "parameter": "order-id"
+                        }
+                      },
+                      {
+                        "field": {
+                          "module": "sales",
+                          "element": "status"
+                        },
+                        "value": {
+                          "literal": {
+                            "string": "new"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "link-customer",
+                    "kind": "link",
+                    "relationship": {
+                      "module": "sales",
+                      "relationship": "order-customer"
+                    },
+                    "source": {
+                      "created": "create"
+                    },
+                    "target": {
+                      "parameter": "customer"
+                    }
+                  },
+                  {
+                    "id": "link-product",
+                    "kind": "link",
+                    "relationship": {
+                      "module": "sales",
+                      "relationship": "order-product"
+                    },
+                    "source": {
+                      "created": "create"
+                    },
+                    "target": {
+                      "parameter": "product"
+                    }
+                  }
+                ]
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "attribution": {
+                "subject": "person-required"
+              },
+              "atomicity": "single-store",
+              "idempotency": "caller-key-optional",
+              "result": {
+                "identities": "created-and-changed",
+                "version": "store-opaque",
+                "receipt": "read-at-least"
+              }
+            }
+          ]
+        }
+      },
+      "relationships": [
+        {
+          "id": "order-customer",
+          "name": "order-customer",
+          "source": [
+            {
+              "module": "sales",
+              "element": "order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "customer",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "order-product",
+          "name": "order-product",
+          "source": [
+            {
+              "module": "sales",
+              "element": "order"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "product",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

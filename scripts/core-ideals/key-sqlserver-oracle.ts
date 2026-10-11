@@ -1,3 +1,4 @@
+import {assertJsonDataEqual} from './json-data-assert';
 /** Independent SQL Server execution of projector-generated DDL. Host-only. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
@@ -24,7 +25,7 @@ try{
   c.request.namespace='dbo';c.request.tableName='key_projection_'+i;c.request.keyNames.forEach(k=>k.name+='_'+i);
   const receipt=projectKeysToSqlServer(c.source,c.authors,c.request);assert.equal(receipt.status,c.expected);
   if(receipt.status==='blocked'){assert.equal(receipt.nativeSql,undefined);continue;}
-  receipts.push(receipt);await sql('umf_keys',receipt.nativeSql!);assert.deepEqual(recoverKeysSqlServerIdeal(receipt,receipt.target!),c.source);recoveryCount++;
+  receipts.push(receipt);await sql('umf_keys',receipt.nativeSql!);assertJsonDataEqual(recoverKeysSqlServerIdeal(receipt,receipt.target!),c.source);recoveryCount++;
   const table='[dbo].'+quote(c.request.tableName),columns=c.request.columns.map(col=>quote(col.name)).join(', '),first=c.request.columns[0]!.nativeType;
   const value=first==='bit'?'1':first==='varbinary'?'0x01':first==='nvarchar'?"N'a'":first==='decimal'&&c.name==='decimal'?'1.23':'1';
   const insert=(a:string,b:string)=>`INSERT INTO ${table} (${columns}) VALUES (${a},${b});`;

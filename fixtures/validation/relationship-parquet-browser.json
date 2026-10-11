@@ -1,6 +1,6 @@
 {
   "scope": "Authored target-key-record projection and composed retained recovery; broader compatibility and full binding acceptance remain unfinished",
-  "browser": "148.0.7778.0",
+  "browser": "153.0.8010.12",
   "checks": {
     "cases": 48,
     "idealRecoveries": 32,
@@ -15,13 +15,13 @@
   "sha256": {
     "src/core-ideals/relationship-parquet-projection.ts": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd",
     "spec/core/relationship-parquet-projection.schema.json": "ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
+    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
     "scripts/core-ideals/relationship-parquet-cases.ts": "a67defc54d3c1445a808e8086dba20d6a4695333558c9995a965d466416d6f09",
     "scripts/core-ideals/relationship-parquet-browser.ts": "596444192095962acf9c4eee91218ae950884aa800cc51745684eff8b01e0ed5",
     "tests/core-ideals/relationship-parquet.test.ts": "effada4fdd1e8d2bbaba5eda8a7803b997c499966bcd9975eeee7e5866256558",
     "src/core-ideals/relationship-parquet-carrier.ts": "a760913bfe8bb33f5e3db82658f01648855a6c0f43c8a4062831edc1590828ab",
     "src/core-ideals/relationship-parquet.ts": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151",
-    "fixtures/validation/relationship-parquet-native.json": "bc070246b092016cec9723edd4934560b76c6df769df00b28450c01b016e038a",
-    "dist/umf.js": "343bb884ad77172fa456eedcc8bc7b88cfefcc366c46379c2465815e95c7b2ce"
+    "fixtures/validation/relationship-parquet-native.json": "8859cc83d1750289797a48fcdeeda9b815679d11bbadea5e34d1ff366abbd7d6",
+    "dist/umf.js": "e8a63ab080f2d30d7550c3e603f5a3660e57e32acb52a430eae0cc1e0500ff39"
   }
 }

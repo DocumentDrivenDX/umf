@@ -51,8 +51,13 @@ relationship and binding acceptance”; those results qualify their recorded
 source, versions and subsets. The core 0.8.0 API simplification and current-only
 Key tuple correction have later scoped evidence in
 [schema-property execution evidence](evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
-Fresh repository regression and native qualification remain incomplete for that
-revision; earlier green acceptance must not be presented as current acceptance.
+The later [action certificate](evidence/actions-certification.md) records completed
+core regression and bounded native qualification at its captured revision. The
+current integration changes those inputs and needs fresh evidence; earlier green
+acceptance must not be presented as acceptance of changed source. The
+[documentation build plan](actions-documentation-plan.md) and
+[delivery record](evidence/actions-documentation-execution.md) govern the new
+learning path and website build.
 
 | Next work | Governing input | Completion boundary |
 | --- | --- | --- |
@@ -62,6 +67,59 @@ revision; earlier green acceptance must not be presented as current acceptance.
 
 These are preparation and verification obligations. They do not select a new
 finalization subset or waive the remaining product requirements.
+
+### Action formal-analysis execution (2026-10-08)
+
+Astra-reviewed bounded plan executed: independent Z3 command relations, actual
+phased TLC safety/progress checks and native-history sequentialization. Semantic
+counterexamples changed association observability, transactional cross-Key alias
+resolution and executor-owned invariant dependency boundaries. See
+[findings/results/limits](evidence/actions-formal-analysis.md). These are design
+and synthetic executor observations, not public-library or production acceptance.
+
+### Declarative action design iteration 2 (2026-10-08)
+
+Owner-directed improvement adds CONTRACT-057 for bounded rule/key selectors,
+revision/invocation/lookup, controlled handler access, concurrency/auth timing,
+validation-only preview and audit/receipt epochs. CONTRACT-056 now distinguishes
+role authorization from general policy bindings. ACT-09–13 and EX-01–EX-05 are
+allocated; no new runtime or public-library acceptance is claimed.
+
+Implement complete normative fixtures and the declaration library first; optional
+static rule checking follows with its own versioned evidence. Consumer executor
+code requires a separate story/design for isolation, native invariant scope,
+policy coupling and durable reconciliation. Current core qualification remains
+an independent gate. Earlier bounded experiments remain evidence only for their
+original synthetic subset; they do not prove the expanded contract.
+
+### Declarative action design handoff (2026-10-08)
+
+Current action identities are FEAT-900, SD-900, US/TD/STP-900 for declarations and US/TD/STP-901 for the transactional consumer, governed by CONTRACT-900/901. The dated handoff below retains its former branch-local IDs; source-specific qualification keeps those historical identities. Security artifacts now own the overlapping IDs on main.
+
+Owner scope now includes implementation and complete bounded qualification in the
+isolated worktree. FR-51, FEAT-008,
+US-078, CONTRACT-056, SD-008, TD-078 and STP-078 define a local-document extension
+contract. US-056, TD-056 and STP-056 allocate the requested reference-consumer
+implementation and EX-01–05 qualification; production release and downstream
+adoption remain separate.
+Current TableSpec finalization/offline-composition priorities are not displaced.
+
+| Gate | Governing artifact | Required outcome |
+| --- | --- | --- |
+| Requirements/interface review | FEAT-008, US-078, CONTRACT-056 | Review local-only references, explicit-key recipes, contract read/write frames, postconditions, handler/profile boundaries and independent DDD binding. |
+| Library implementation readiness | TD-078, STP-078, current core evidence | Resolve current core qualification gaps; create exercising tests for all nine ACs before acceptance; preserve whole-document registry behavior. |
+| Declaration library acceptance | TD-078, STP-078 | Package/schema audits, scoped regression, typechecks, public build and Bun/Chromium proof with exact versions/fingerprints and limits. |
+| Consumer executor qualification | CONTRACT-057, TD-056, STP-056 | Real store evidence for authorization, state checks, atomic failure, replay races, native side effects and freshness receipts; no mock-derived support claim. |
+
+Scoped public-library tests and actual Chromium now pass;
+[historical certification](evidence/actions-certification.md) records completed
+qualification for its exact sources and bounded reference consumer. Fresh
+integrated qualification is tracked separately in the documentation delivery record. The bounded design investigation
+has executed portable, real-store and protocol experiments; see
+[evidence](evidence/actions-plan-execution.md) for separate gate status. Core admission, native equivalence,
+Python action-semantic support, Palantir import/export and cross-document action
+references remain separate. The other consumer proposal sections are not adopted
+by this action handoff.
 
 ### Format separation follow-on
 
@@ -5453,7 +5511,7 @@ evidence is recorded in [python-consumers.md](evidence/python-consumers.md).
 
 Owner direction assigns all pack metadata, tabular schemas and schema tooling to
 UMF, with generation, CSV output, ingestion and data testing in TableSpec.
-CONTRACT-052 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
+CONTRACT-056 governs `umf.domain-pack` and `umf.dataset-source` 1.0.0, source
 provenance and explicit execution boundaries. The legal source pack lives under
 `spec/domain-packs/legal/`; generated consumer snapshots preserve compatibility.
 
@@ -5483,7 +5541,7 @@ specific redistribution clearance. Scoped evidence:
 
 ### Mixed legal corpus (2026-10-08)
 
-Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-052.
+Owner direction updates the existing legal pack to 1.1.0 under CONTRACT-056.
 Retain the eight generated firm-operation tables; add one sourced case, seven
 original public PDFs and 383 per-page extraction records. Court filings,
 deposition designations and corporate exhibits remain separately qualified.
@@ -5495,12 +5553,12 @@ Scoped checks and limitations are recorded in
 
 ### Medical carrier and terminology expansion — pending (2026-10-08)
 
-Authority: FR-45 and CONTRACT-052. This is a dependency sequence for the expanded
+Authority: FR-51 and CONTRACT-056. This is a dependency sequence for the expanded
 requirement, not execution evidence or an implementation-ready schema design.
 The clinical 1.0.0 checks remain scoped to their existing corpus.
 
 1. Inventory exact CMS synthetic RIF, DE-SynPUF, Blue Button and official FHIR
-   candidate files against every carrier area in CONTRACT-052. Record versions,
+   candidate files against every carrier area in CONTRACT-056. Record versions,
    coverage gaps, download/access requirements and embedded terminology rights.
    Select the smallest useful enrollment/claim source subset; keep historical
    ICD-9 claims separate. Exit: source/rights manifest and explicit gap matrix.
@@ -5532,7 +5590,7 @@ coverage matrix and the separate consumer gates pass.
 
 ### Epidemiology and imaging subpacks — pending (2026-10-08)
 
-Authority: FR-45 and CONTRACT-052. Keep these independent of carrier delivery,
+Authority: FR-51 and CONTRACT-056. Keep these independent of carrier delivery,
 while sharing the versioned terminology/source-binding work above.
 
 - Epidemiology: select a bounded CDC WONDER export and pin query, release,
@@ -5552,11 +5610,11 @@ Frame linked stories/designs/tests for each subpack before implementation.
 Cross-subpack tests must reject fabricated patient links and population-to-patient
 promotion. Record source coverage and rights gaps without inventing source facts.
 
-### Medical subpack implementation — US-055 (2026-10-08)
+### Medical subpack implementation — US-078 (2026-10-08)
 
-US-055 / TD-055 / STP-055 implement a bounded first delivery of the carrier,
+US-078 / TD-078 / STP-078 implement a bounded first delivery of the carrier,
 epidemiology, imaging and terminology requirements above. Four independent
-1.0.0 packs use CONTRACT-052 and the unchanged shared source exporter and TableSpec
+1.0.0 packs use CONTRACT-056 and the unchanged shared source exporter and TableSpec
 local ingestion/archive paths. Browser-compatible projections retain original
 text and exact native fragments; the host builder produces deterministic source
 manifests, native TableSpec schemas and CSV rows without fetching.
@@ -5575,18 +5633,18 @@ CMS/TCIA source qualification, full dictionaries/maps, richer native-conformance
 profiles and Truss/Ashlar engine adoption still require separate execution evidence.
 ## Full domain catalog first release
 
-Astra ultra reviewed SD-026 and CONTRACT-053. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
+Astra ultra reviewed SD-026 and CONTRACT-057. Implement shared profile admission, target-scoped ingestion, mixed-schema ZIP closure, synthetic run provenance, opt-in bounded sources and trusted fixture checks before qualifying the fourteen new packs. TD-063 through TD-076 and STP-063 through STP-076 own each domain slice. Legal/medical receive ontology schemas without regenerating fixed clinical content. Evidence distinguishes schema visibility, component replay and local engines from deferred native-source, realism and graph-storage support.
 
 ### Domain catalog first release
 
 The sixteen-pack catalog, mixed-target schemas, trusted TableSpec replay and graph
-companions are implemented under SD-026/CONTRACT-053. See
+companions are implemented under SD-026/CONTRACT-057. See
 [evidence/domain-pack-catalog.md](evidence/domain-pack-catalog.md) for reproduction,
 review corrections, executable results and remaining qualification boundaries.
 
 ### Public dataset schema packs (2026-10-08)
 
-FR-45 and CONTRACT-052 govern the owner's selected NYC TLC, MovieLens,
+FR-51 and CONTRACT-056 govern the owner's selected NYC TLC, MovieLens,
 NOAA GHCN Daily and GTFS Schedule profiles. Generate 16 authored TableSpec
 schemas and four external-source manifests with distinct documentation pins.
 Preserve native missing/time/code semantics and explicit unresolved row inputs.
@@ -5602,7 +5660,7 @@ new TableSpec generator is claimed.
 
 ### Ontology-aware schema explorer (2026-10-08)
 
-Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-053 graph-schema
+Extend the existing FR-39/FR-41 metadata consumer and CONTRACT-057 graph-schema
 inspection: split Tables/Ontology navigation, display record-owned properties
 and keys, separate incoming/outgoing relationships, and provide clickable
 record neighborhoods/full-model maps. Reuse stable module/element identity.
@@ -5647,7 +5705,7 @@ before publication. Rollback restores the prior viewer and rebuilds bundles.
 
 ### Integrated medical family and public samples
 
-Owner direction completes the sample integration under US-055/TD-055/STP-055:
+Owner direction completes the sample integration under US-078/TD-078/STP-078:
 qualify bounded public CMS CSV and TCIA DICOM sources, retain exact native meaning
 and originals, add all subpack fixed profiles/ontology companions, link the
 Medical family in the explorer and expose allowed original/row downloads.
@@ -5691,7 +5749,7 @@ production scheduler/email remain separately owned consumer work.
 ### Ashlar-driven Delta DDL generation — 2026-10-08
 
 Owner direction places the reusable Delta DDL generator in UMF.
-[CONTRACT-050](../02-design/contracts/CONTRACT-050-delta-ddl.md) defines
+[CONTRACT-064](../02-design/contracts/CONTRACT-064-delta-ddl.md) defines
 `umf.delta.definition` 0.1.0 alongside existing exact `umf.delta` schemas.
 The pure TypeScript API generates proposed managed CREATE statements with
 explicit nullability, clustering/partitioning and five selected table properties.
@@ -5710,7 +5768,7 @@ layout before replacing installation input.
 
 ### Delta DDL decimal iteration — 2026-10-08
 
-CONTRACT-050 now covers canonical decimal(p,s) declarations with precision 1–38
+CONTRACT-062 now covers canonical decimal(p,s) declarations with precision 1–38
 and scale 0–precision. The emitter preserves both authored integers without
 rounding/defaulting; unsupported bounds, noncanonical spellings and SQL-like
 content refuse. Exact original schema recovery remains required.
@@ -5726,7 +5784,7 @@ dialects remain subsequent explicit work, not claimed support.
 
 ### Delta DDL recursive type iteration — 2026-10-08
 
-Owner direction grows the reusable generator in UMF. CONTRACT-050 now permits
+Owner direction grows the reusable generator in UMF. CONTRACT-062 now permits
 recursive STRUCT/ARRAY/MAP and explicit TIMESTAMP_NTZ without changing the
 preserved schema envelope or definition vocabulary shape. Ordered struct fields,
 quoted names, decimal parameters and nullability remain explicit. Non-null array
@@ -5748,7 +5806,7 @@ core-to-physical projection remain separate work.
 
 ### Delta DDL column-description iteration — 2026-10-08
 
-Reusable generation remains UMF-owned. CONTRACT-050 now interprets only the
+Reusable generation remains UMF-owned. CONTRACT-062 now interprets only the
 Delta field metadata key `comment`, at top-level and nested STRUCT fields.
 Empty/Unicode descriptions and apostrophes/backslashes retain exact source
 schema and emit escaped Databricks literals. Other metadata, nonstring comments,
@@ -5767,7 +5825,7 @@ separate increments.
 ### Delta DDL complete-bundle iteration — 2026-10-08
 
 Reusable multi-table generation now belongs to UMF through
-`generateDeltaDDLBundle`, governed by CONTRACT-050. The browser-compatible API
+`generateDeltaDDLBundle`, governed by CONTRACT-062. The browser-compatible API
 retains caller order, exact per-table schemas, copied physical definitions and
 source document IDs. It requires explicit catalog/schema/table names and refuses
 empty bundles, duplicate document IDs, case-insensitive qualified-name collisions

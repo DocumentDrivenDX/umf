@@ -1,0 +1,332 @@
+{
+  "id": "umf.rdf",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "RDF 1.1 N-Quads/Turtle/TriG source and editable dataset terms with local blank-node scope",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:rdf:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "enum": [
+          "rdf11-nquads",
+          "rdf11-turtle",
+          "rdf11-trig"
+        ]
+      },
+      "baseIRI": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "namedGraphs": {
+        "type": "array",
+        "maxItems": 10000,
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "blank"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "blankNodeScope": {
+        "type": "string",
+        "minLength": 1
+      },
+      "quads": {
+        "type": "array",
+        "maxItems": 10000,
+        "items": {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            },
+            "predicate": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            "object": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "literal"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "datatype": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string",
+                      "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value",
+                    "datatype"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            },
+            "graph": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "default"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            }
+          },
+          "required": [
+            "subject",
+            "predicate",
+            "object",
+            "graph"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "originalSource": {
+        "type": "string",
+        "maxLength": 4000000
+      }
+    },
+    "required": [
+      "profile",
+      "blankNodeScope",
+      "quads",
+      "originalSource"
+    ],
+    "additionalProperties": true,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "profile": {
+              "enum": [
+                "rdf11-turtle",
+                "rdf11-trig"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "baseIRI": {}
+          },
+          "required": [
+            "baseIRI"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "profile": {
+              "const": "rdf11-trig"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "namedGraphs": {}
+          },
+          "required": [
+            "namedGraphs"
+          ]
+        }
+      }
+    ]
+  },
+  "semantics": "CONTRACT-025; ordered quad occurrences preserve syntax-level information, dataset meaning has set semantics; blank labels are scoped, no entailment",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "RDF",
+      "version": "RDF 1.1 N-Quads/Turtle/TriG; N3.js 2.7.12",
+      "subset": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes, RDF 1.2, entailment or canonicalization"
+    },
+    "evidence": [
+      "tests/rdf/merge.test.ts",
+      "fixtures/rdf/merge/oracle-results.json",
+      "fixtures/rdf/merge/browser-results.json",
+      "tests/rdf/rdf.test.ts",
+      "fixtures/rdf/nquads/oracle-results.json",
+      "fixtures/rdf/nquads/browser-results.json",
+      "tests/rdf/rename.test.ts",
+      "fixtures/rdf/rename/oracle-results.json",
+      "fixtures/rdf/rename/browser-results.json",
+      "tests/rdf/trig.test.ts",
+      "fixtures/rdf/trig/oracle-results.json",
+      "fixtures/rdf/trig/browser-results.json",
+      "tests/rdf/turtle.test.ts",
+      "fixtures/rdf/turtle/oracle-results.json",
+      "fixtures/rdf/turtle/browser-results.json"
+    ]
+  }
+}

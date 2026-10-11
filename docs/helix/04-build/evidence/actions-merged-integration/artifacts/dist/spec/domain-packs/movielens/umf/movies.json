@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "table_name": "movies",
+  "description": "MovieLens movies.csv field profile.",
+  "columns": [
+    {
+      "name": "movieId",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "Dataset movie identifier."
+    },
+    {
+      "name": "title",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Retain manually entered title."
+    },
+    {
+      "name": "genres",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Pipe-delimited source list; preserve empty/no-genres marker.",
+      "domain_type": "movie_genres"
+    }
+  ],
+  "primary_key": [
+    "movieId"
+  ]
+}
