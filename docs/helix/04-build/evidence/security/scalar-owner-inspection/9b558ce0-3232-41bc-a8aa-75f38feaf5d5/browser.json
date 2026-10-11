@@ -1,0 +1,165 @@
+{
+  "browserVersion": "153.0.8010.12",
+  "rows": [
+    {
+      "id": "known-boolean",
+      "passed": true
+    },
+    {
+      "id": "known-integer",
+      "passed": true
+    },
+    {
+      "id": "known-decimal",
+      "passed": true
+    },
+    {
+      "id": "known-float",
+      "passed": true
+    },
+    {
+      "id": "known-string",
+      "passed": true
+    },
+    {
+      "id": "known-binary",
+      "passed": true
+    },
+    {
+      "id": "known-date",
+      "passed": true
+    },
+    {
+      "id": "known-time",
+      "passed": true
+    },
+    {
+      "id": "known-timestamp",
+      "passed": true
+    },
+    {
+      "id": "future-label",
+      "passed": true
+    },
+    {
+      "id": "missing-field-label",
+      "passed": true
+    },
+    {
+      "id": "group-without-label",
+      "passed": true
+    },
+    {
+      "id": "unspecified-role",
+      "passed": true
+    },
+    {
+      "id": "future-role",
+      "passed": true
+    },
+    {
+      "id": "original-copy-isolation",
+      "passed": true
+    },
+    {
+      "id": "result-cannot-mutate-input",
+      "passed": true
+    },
+    {
+      "id": "scalar-one",
+      "passed": true
+    },
+    {
+      "id": "container-scalar-conflict-array",
+      "passed": true
+    },
+    {
+      "id": "container-does-not-inherit-item-label-array",
+      "passed": true
+    },
+    {
+      "id": "item-label-remains-qualified-array",
+      "passed": true
+    },
+    {
+      "id": "container-scalar-conflict-map",
+      "passed": true
+    },
+    {
+      "id": "container-does-not-inherit-item-label-map",
+      "passed": true
+    },
+    {
+      "id": "item-label-remains-qualified-map",
+      "passed": true
+    },
+    {
+      "id": "qualified-module-identity",
+      "passed": true
+    },
+    {
+      "id": "missing-module",
+      "passed": true
+    },
+    {
+      "id": "missing-element",
+      "passed": true
+    },
+    {
+      "id": "malformed-identity-null",
+      "passed": true
+    },
+    {
+      "id": "malformed-identity-[]",
+      "passed": true
+    },
+    {
+      "id": "malformed-identity-{}",
+      "passed": true
+    },
+    {
+      "id": "malformed-identity-{\"module\":\"m\",\"element\":\"\"}",
+      "passed": true
+    },
+    {
+      "id": "malformed-identity-{\"module\":\"m\",\"element\":\"v\",\"future\":true}",
+      "passed": true
+    },
+    {
+      "id": "duplicate-source-identity",
+      "passed": true
+    },
+    {
+      "id": "group-label-forbidden-by-source",
+      "passed": true
+    },
+    {
+      "id": "invalid-source-label",
+      "passed": true
+    },
+    {
+      "id": "unsupported-envelope-0.1.0",
+      "passed": true
+    },
+    {
+      "id": "unsupported-envelope-0.6.0",
+      "passed": true
+    },
+    {
+      "id": "unsupported-envelope-0.8.0",
+      "passed": true
+    },
+    {
+      "id": "unsupported-envelope-future",
+      "passed": true
+    },
+    {
+      "id": "getter-refusal",
+      "passed": true
+    },
+    {
+      "id": "getter-not-invoked",
+      "passed": true
+    }
+  ]
+}

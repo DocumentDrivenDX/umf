@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:evolution-policy:1.0.0",
+  "title": "Core evolution preservation policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile"
+  ],
+  "properties": {
+    "profile": {
+      "const": "core-0.8-absent-string-additions/0.1"
+    }
+  }
+}

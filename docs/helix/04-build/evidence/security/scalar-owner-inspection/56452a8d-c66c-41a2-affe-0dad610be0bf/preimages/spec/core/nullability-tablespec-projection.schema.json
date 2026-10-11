@@ -1,0 +1,437 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:nullability-tablespec-projection:1.0.0",
+  "title": "Authored availability projection to an explicitly selected TableSpec profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "profileNotes",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-nullability-tablespec"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tableName",
+        "columnName",
+        "nativeType",
+        "mode",
+        "profile",
+        "context",
+        "carrier"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "columnName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "nativeType": {
+          "enum": [
+            "BOOLEAN",
+            "INTEGER",
+            "DECIMAL",
+            "FLOAT",
+            "TEXT",
+            "VARCHAR",
+            "CHAR",
+            "DATE",
+            "DATETIME",
+            "TIMESTAMP"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "runtime-model",
+            "checked-schema",
+            "unresolved"
+          ]
+        },
+        "context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "null-value",
+            "unresolved"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.nullability.tablespec",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Single authored Field availability; explicit profile/context/null-value carrier; no omitted-member or native execution equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "outcome",
+        "nullability",
+        "encoding",
+        "context",
+        "carrier",
+        "profile"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativePath": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "nullability": {
+          "enum": [
+            "required",
+            "absent-allowed",
+            "unspecified"
+          ]
+        },
+        "encoding": {
+          "enum": [
+            "boolean",
+            "context-map",
+            "omitted"
+          ]
+        },
+        "context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "null-value",
+            "unresolved"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "runtime-model",
+            "checked-schema",
+            "unresolved"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "profileNotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "profile",
+          "code",
+          "message"
+        ],
+        "properties": {
+          "profile": {
+            "const": "checked-schema"
+          },
+          "code": {
+            "const": "SCALAR_BOOLEAN_REJECTED"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    },
+    {
+      "$comment": "UMF projection policy",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "warning"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              },
+              "diagnostics": {
+                "type": "array",
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "const": "strict"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "const": "exact"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "unknown",
+                      "approximated",
+                      "not-expressible"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
