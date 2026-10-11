@@ -23,7 +23,7 @@ Later main changes add shared security metadata and extend core 0.8 inspection. 
 
 Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.
 
-The combined release verification is still in progress. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.
+The retained qualification records identify the source revision and profile they verify. Consult the release delivery record for CI and deployed-site verification. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.
 
 ## Historical qualification
 

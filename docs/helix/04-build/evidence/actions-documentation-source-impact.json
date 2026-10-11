@@ -9221,5 +9221,25 @@
     "firstCiFailure": "Guide manifest retains pre-merge package/workflow hashes; rebuild required",
     "evidence": "actions-security-integration/subsequent-main/integration.json",
     "deliveryPending": true
+  },
+  "finalBrowserEmbeddingIntegration": {
+    "main": "96649e17",
+    "frozenActionIntegration": "2dfa0e144fab9eef443a1364a7fde511e04a64b5",
+    "sharedLibrarySchemaNativeActionBodiesUnchangedSince49": true,
+    "dependencyChange": "exact dependency-free browser1.1.1 patch; Bun1.3.14 producer, Bun1.4.2 action/docs checks",
+    "scope": "New browser1.1 embedding/CSP/lazy UI assets plus browserproducerrepair; security tools/docs separate. Original1.1.0producer failed exact replay with1214matchinginputs;1.1.1 disablesidentifierminification andpins64validationinputs. No native119/strict174rerun warranted by this website-only delta.",
+    "evidence": "actions-security-integration/browser-patch/README.md",
+    "historicalCertificatesUnchanged": true,
+    "finalSiteChecksRequired": [
+      "unconditional exact installed parity",
+      "catalog build",
+      "package/CSP/artifact browsers",
+      "explorer desktop/mobile",
+      "guide generation/negative controls/examples/browser",
+      "16 page signatures",
+      "CI",
+      "actual merged deployment"
+    ],
+    "deliveryPending": true
   }
 }
