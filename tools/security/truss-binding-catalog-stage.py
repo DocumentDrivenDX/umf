@@ -14,6 +14,18 @@ paths += [T/f'packages/postgresql/native/{n}.sql' for n in components]
 for directory in ['packages/umf-bun/src','packages/postgresql/src','docs/helix/02-design/contracts/bindings']:
  paths += [p for p in (T/directory).rglob('*') if p.is_file() and p.suffix in ['.ts','.json']]
 paths += [T/'docs/helix/02-design/contracts/acceptance-input-v0.1.schema.json']
+pending_layout='--pending-layout' in sys.argv
+pending_ddl=T/'docs/helix/04-build/evidence/catalog-pending-binding-source.owner-export.sql'
+if pending_layout:
+ if '--opaque' in sys.argv:raise ValueError('Pending source shape fixture requires original association candidate')
+ paths += [pending_ddl,T/'docs/helix/02-design/contracts/catalog-pending-binding-source-v0.1.proposal.sql',T/'docs/helix/02-design/contracts/catalog-pending-binding-source-v0.1.proposal.umf.json',T/'docs/helix/04-build/evidence/design-audit/catalog-pending-binding-source.json']
+ capture=json.loads(paths[-1].read_text())
+ paths += [ROOT/name for name in capture['ownerSourcePins']]
+ for name,h in capture['ownerSourcePins'].items():
+  if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=h:raise ValueError('Pending layout owner entry source changed')
+ for name,key in [('sourcePath','sourceSha256'),('modelPath','modelSha256'),('ddlPath','ddlSha256')]:
+  if hashlib.sha256(Path(capture[name]).read_bytes()).hexdigest()!=capture[key]:raise ValueError('Pending layout owner artifact changed')
+
 interpretation=ROOT/'docs/helix/04-build/evidence/security/association-owner-interpretation/f316ca00-80f1-4da5-8b97-686e6c278733'
 paths += [interpretation/'binding.json',interpretation/'receipt.json']
 # Capture and execute the full declared Ajv dependency closure from copied packages.
@@ -64,6 +76,7 @@ try:
  check('postgresql16.15',[['160015']],c.run('SHOW server_version_num'))
  phase='layout';c.run(frozen[str(layout)].decode())
  for name in components:phase='install:'+name;c.run(frozen[str(T/f'packages/postgresql/native/{name}.sql')].decode())
+ if pending_layout:phase='pending-layout';c.run(frozen[str(pending_ddl)].decode())
  c.run('CREATE ROLE truss_binding_untrusted NOLOGIN');c.run('GRANT USAGE ON SCHEMA truss TO truss_binding_untrusted')
  occupied='--occupied' in sys.argv
  if occupied:
@@ -77,14 +90,16 @@ try:
  child=subprocess.Popen(['bun',str(bridge/'bridge.ts')],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
  init={'artifact':artifact,'fixture':json.loads(frozen[str(T/'docs/helix/02-design/contracts/bindings/acceptance-input-capacity-v0.1.fixture.json')]),'ownerDirectory':str(bridge/'owner'),'dependenciesPackage':str(dep_root/'package.json'),'binding':binding}
  def archive_state():
-  return c.run("SELECT (SELECT coalesce(jsonb_agg(to_jsonb(a) ORDER BY revision),'[]'::jsonb) FROM truss.catalog_binding_archive a),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o),(SELECT jsonb_agg(to_jsonb(d) ORDER BY rev,ord) FROM truss.schema_doc d),(SELECT jsonb_agg(to_jsonb(r) ORDER BY rev) FROM truss.schema_rev r),(SELECT coalesce(jsonb_agg(to_jsonb(k) ORDER BY k.type_id,k.key_num),'[]'::jsonb) FROM truss.key_def k)")
+  return c.run("SELECT (SELECT coalesce(jsonb_agg(to_jsonb(a) ORDER BY revision),'[]'::jsonb) FROM truss.catalog_binding_archive a),(SELECT jsonb_agg(to_jsonb(o)) FROM truss.row_home_operation o),(SELECT jsonb_agg(to_jsonb(d) ORDER BY rev,ord) FROM truss.schema_doc d),(SELECT jsonb_agg(to_jsonb(r) ORDER BY rev) FROM truss.schema_rev r),(SELECT coalesce(jsonb_agg(to_jsonb(k) ORDER BY k.type_id,k.key_num),'[]'::jsonb) FROM truss.key_def k),(SELECT coalesce(jsonb_agg(to_jsonb(r) ORDER BY r.rel_type_id),'[]'::jsonb) FROM truss.rel_def r),(SELECT coalesce(jsonb_agg(to_jsonb(e) ORDER BY e.rel_type_id,e.source_type,e.target_type),'[]'::jsonb) FROM truss.rel_endpoint e)")
  def stage_binding(rev,body=binding_bytes):
   return c.run("SELECT truss.runtime_stage_catalog_binding(:r::int,decode(:h,'hex'))",r=str(rev),h=body.hex())
  def refusal(label,query,expected,acting_role=None,**parameters):
   c.run('SAVEPOINT binding_refusal');before=archive_state()
   if acting_role:c.run('SET LOCAL ROLE truss_binding_untrusted')
   try:c.run(query,**parameters)
-  except pg8000.exceptions.DatabaseError as error:check(label,expected,{'code':error.args[0].get('C'),'message':error.args[0].get('M')} if 'message' in expected else {'code':error.args[0].get('C')})
+  except pg8000.exceptions.DatabaseError as error:
+   observed_error={'code':error.args[0].get('C'),'message':error.args[0].get('M'),'constraint':error.args[0].get('n')}
+   check(label,expected,{key:observed_error[key] for key in expected})
   else:raise ValueError(label+' admitted')
   c.run('ROLLBACK TO SAVEPOINT binding_refusal');c.run('RELEASE SAVEPOINT binding_refusal');check(label+'-zero-effects',before,archive_state())
  def binding_probes(rev):
@@ -113,6 +128,9 @@ try:
    c.run('ROLLBACK TO SAVEPOINT prior_drift');c.run('RELEASE SAVEPOINT prior_drift');check('occupied-prior-restored',baseline,archive_state())
   c.run('SAVEPOINT retained_binding');stage_binding(rev)
   for label,sql in [('immutable-update',"UPDATE truss.catalog_binding_archive SET artifact_identity_utf8=convert_to('substituted','UTF8')"),('immutable-delete','DELETE FROM truss.catalog_binding_archive'),('immutable-truncate','TRUNCATE truss.catalog_binding_archive')]:
+   if pending_layout and label=='immutable-truncate':
+    refusal('pending-fk-truncate-exclusion',sql,{'code':'0A000','message':'cannot truncate a table referenced in a foreign key constraint'})
+    label='immutable-truncate-cascade';sql+=' CASCADE'
    refusal(label,sql,{'code':'55000','message':'original binding archive is immutable; retention profile required'})
   refusal('duplicate-stage',"SELECT truss.runtime_stage_catalog_binding(:r::int,decode(:h,'hex'))",{'code':'55000','message':'original binding archive already staged'},r=str(rev),h=binding_bytes.hex())
   for label,sql in [('routine',"SELECT truss.runtime_stage_catalog_binding(1,decode('01','hex'))"),('read','SELECT * FROM truss.catalog_binding_archive'),('insert',"INSERT INTO truss.catalog_binding_archive DEFAULT VALUES"),('update','UPDATE truss.catalog_binding_archive SET revision=revision'),('delete','DELETE FROM truss.catalog_binding_archive'),('truncate','TRUNCATE truss.catalog_binding_archive')]:
@@ -202,9 +220,56 @@ try:
  refusal('ordinary-binding-observation','SELECT * FROM truss.runtime_collect_original_catalog_binding(:r::int)',{'code':'42501'},acting_role=True,r=packet['staged']['provisionalRevision'])
  check('host-archive-digest',sha(binding_bytes),packet['staged']['bindingArchiveSha256'])
  check('prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a WHERE revision=0 ORDER BY revision'))
+ if pending_layout:
+  phase='pending-source-shape';baseline=archive_state();rev=packet['staged']['provisionalRevision']
+  check('pending-native-column-types-and-collation',[['pending_binding_revision','int4',None],['pending_mapping_bytes','bytea',None],['pending_mapping_pointer','text','C'],['pending_operation_ordinal','int8',None],['pending_writer_xid','xid8',None]],c.run("SELECT a.attname,t.typname,coll.collname FROM pg_attribute a JOIN pg_type t ON t.oid=a.atttypid LEFT JOIN pg_collation coll ON coll.oid=a.attcollation WHERE a.attrelid='truss.rel_def'::regclass AND a.attname LIKE 'pending_%' AND NOT a.attisdropped ORDER BY a.attname"))
+  native_op=c.run('SELECT original_writer_xid::text,operation_ordinal::text FROM truss.row_home_operation')[0]
+  association_id=c.run("SELECT type_id::text FROM truss.type_def WHERE document_id='domain' AND module='m' AND element='Assignment'")[0][0]
+  mapping_hex=next(o['observed'] for o in owner_receipt['observations'] if o['id']=='original-mapping-fragment-1')
+  base={'document_id':'domain','rel_type_id':'1','module':'m','rel_id':'Assignment','name':'Assignment','source_min':'0','source_max':None,'target_min':'0','target_max':None,'lifecycle':'independent','directed':True,'target_key':'pk','composition':False,'assoc_type_id':association_id,'since_rev':rev,'doc_ord':'0','definition_source_kind':'operation_binding','pending_writer_xid':native_op[0],'pending_operation_ordinal':native_op[1],'pending_binding_revision':rev,'pending_mapping_pointer':'/mappings/1','pending_mapping_bytes':mapping_hex}
+  types={'rel_type_id':'int','source_min':'int','source_max':'int','target_min':'int','target_max':'int','directed':'boolean','composition':'boolean','assoc_type_id':'int','since_rev':'int','doc_ord':'int','pending_writer_xid':'xid8','pending_operation_ordinal':'bigint','pending_binding_revision':'int','definition_rev':'int','definition_doc_ord':'int','binding_source_rev':'int'}
+  def pending_insert(values):
+   cols=list(values);expr=[("decode(:"+name+"::text,'hex')" if name in ('pending_mapping_bytes','binding_source_bytes') else ':'+name+'::'+types.get(name,'text')) for name in cols]
+   return 'INSERT INTO truss.rel_def('+','.join(cols)+') VALUES('+','.join(expr)+') RETURNING definition_source_kind'
+  c.run('SAVEPOINT pending_positive')
+  generation=c.run('SELECT effect_generation FROM truss.row_home_operation')[0][0]
+  check('pending-shape-complete-original-row',[['operation_binding']],c.run(pending_insert(base),**base))
+  check('pending-shape-native-custody',[[*native_op,rev,'/mappings/1',mapping_hex,association_id]],c.run("SELECT pending_writer_xid::text,pending_operation_ordinal::text,pending_binding_revision::text,pending_mapping_pointer,encode(pending_mapping_bytes,'hex'),assoc_type_id::text FROM truss.rel_def WHERE rel_type_id=1"))
+  check('pending-shape-observed-generation',[[generation+1]],c.run('SELECT effect_generation FROM truss.row_home_operation'))
+  refusal('pending-complete-inventory-still-unregistered','SELECT * FROM truss.runtime_collect_new_catalog_inventory(:r::int)',{'code':'0A000','message':'registered binding effect inventory required'},r=rev)
+  refusal('pending-current-commit-barrier-still-closed','SET CONSTRAINTS truss.runtime_operation_commit_barrier IMMEDIATE',{'code':'55000','message':'complete runtime finalizer is not installed'})
+  refusal('ordinary-pending-read','SELECT * FROM truss.rel_def',{'code':'42501'},acting_role=True)
+  c.run('ROLLBACK TO SAVEPOINT pending_positive');c.run('RELEASE SAVEPOINT pending_positive');check('pending-shape-positive-restored',baseline,archive_state())
+  faults=[(name+'-missing',{name:None},'23514','rel_def_definition_source_complete') for name in ['pending_writer_xid','pending_operation_ordinal','pending_binding_revision','pending_mapping_pointer','pending_mapping_bytes','assoc_type_id']]
+  faults += [('missing-kind',{'definition_source_kind':None},'23514','rel_def_definition_source_complete'),('absent-writer',{'pending_writer_xid':'1'},'23503','rel_def_pending_operation_fk'),('empty-pointer',{'pending_mapping_pointer':''},'23514','rel_def_definition_source_complete'),('oversized-pointer',{'pending_mapping_pointer':'x'*4097},'23514','rel_def_definition_source_complete'),('empty-fragment',{'pending_mapping_bytes':''},'23514','rel_def_definition_source_complete'),('oversized-fragment',{'pending_mapping_bytes':'01'*1048577},'23514','rel_def_definition_source_complete'),('mixed-document-source',{'definition_rev':rev,'definition_doc_ord':'0','definition_document_id':'domain'},'23514','rel_def_definition_source_complete'),('mixed-accepted-binding',{'binding_source_rev':rev,'binding_source_pointer':'/mappings/1','binding_source_bytes':'01'},'23514','rel_def_definition_source_complete'),('premature-accepted-kind',{'definition_source_kind':'accepted_binding'},'23514','rel_def_definition_source_complete'),('unknown-kind',{'definition_source_kind':'unknown'},'23514','rel_def_definition_source_complete'),('nonpositive-pending-revision',{'pending_binding_revision':'0'},'23514','rel_def_definition_source_complete'),('negative-ordinal',{'pending_operation_ordinal':'-1'},'23514','rel_def_definition_source_complete'),('absent-operation',{'pending_operation_ordinal':'999'},'23503','rel_def_pending_operation_fk')]
+  for label,changes,code,constraint in faults:
+   values={**base,**changes};refusal('pending-shape-'+label,pending_insert(values),{'code':code,'constraint':constraint},**values)
+  c.run('SAVEPOINT pending_missing_archive')
+  c.run('ALTER TABLE truss.catalog_binding_archive DISABLE TRIGGER runtime_binding_archive_immutable')
+  c.run('DELETE FROM truss.catalog_binding_archive WHERE revision=:r::int',r=rev)
+  c.run('ALTER TABLE truss.catalog_binding_archive ENABLE ALWAYS TRIGGER runtime_binding_archive_immutable')
+  refusal('pending-shape-absent-original-archive',pending_insert(base),{'code':'23503','constraint':'rel_def_pending_binding_fk'},**base)
+  c.run('ROLLBACK TO SAVEPOINT pending_missing_archive');c.run('RELEASE SAVEPOINT pending_missing_archive');check('pending-missing-archive-restored',baseline,archive_state())
+  check('pending-missing-archive-guard-restored',[['A']],c.run("SELECT tgenabled::text FROM pg_trigger WHERE tgrelid='truss.catalog_binding_archive'::regclass AND tgname='runtime_binding_archive_immutable'"))
+  c.run('SAVEPOINT pending_revision_equality')
+  # Excluded installer document fixture makes the legacy since_rev/doc_ord FK
+  # independently valid at revision zero; it is not accepted catalog history.
+  c.run('INSERT INTO truss.schema_doc SELECT 0,ord,doc_id,doc_revision,umf_version,content_sha256,document,validation FROM truss.schema_doc WHERE rev=:r::int',r=rev)
+  unequal={**base,'since_rev':'0'}
+  refusal('pending-shape-positive-archive-revision-must-match-since',pending_insert(unequal),{'code':'23514','constraint':'rel_def_definition_source_complete'},**unequal)
+  c.run('ROLLBACK TO SAVEPOINT pending_revision_equality');c.run('RELEASE SAVEPOINT pending_revision_equality');check('pending-revision-equality-fixture-restored',baseline,archive_state())
+  refusal('ordinary-pending-insert',pending_insert(base),{'code':'42501'},acting_role=True,**base)
+  for kind,source in [('accepted_document',{'definition_rev':rev,'definition_doc_ord':'0','definition_document_id':'domain'}),('accepted_binding',{'binding_source_rev':rev,'binding_source_pointer':'/mappings/1','binding_source_bytes':'01'})]:
+   c.run('SAVEPOINT original_source_shape');values={**base,**{name:None for name in ['pending_writer_xid','pending_operation_ordinal','pending_binding_revision','pending_mapping_pointer','pending_mapping_bytes']},**source,'definition_source_kind':kind}
+   check('original-'+kind+'-shape-preserved',[[kind]],c.run(pending_insert(values),**values))
+   c.run('ROLLBACK TO SAVEPOINT original_source_shape');c.run('RELEASE SAVEPOINT original_source_shape');check('original-'+kind+'-shape-restored',baseline,archive_state())
+   for name in ['pending_writer_xid','pending_operation_ordinal','pending_binding_revision','pending_mapping_pointer','pending_mapping_bytes']:
+    mixed={**values,name:base[name]}
+    refusal('original-'+kind+'-rejects-single-'+name,pending_insert(mixed),{'code':'23514','constraint':'rel_def_definition_source_complete'},**mixed)
+  check('pending-source-tests-whole-restored',baseline,archive_state())
  c.run('ROLLBACK');check('rollback-prior-archive-preserved',prior_archive,c.run('SELECT to_jsonb(a) FROM truss.catalog_binding_archive a ORDER BY revision'));check('rollback-catalog',[[0,0,0,0,1 if occupied else 0]],c.run('SELECT (SELECT count(*) FROM truss.type_def),(SELECT count(*) FROM truss.prop_def),(SELECT count(*) FROM truss.key_def),(SELECT count(*) FROM truss.schema_doc),(SELECT count(*) FROM truss.catalog_binding_archive)'))
  phase='source-current';check('source-pins-current',True,all(Path(p).read_bytes()==b for p,b in frozen.items()))
- receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','No vocabulary interpretation/registration, relationship definition or revision publication; explicit fixture JSON homes do not interpret binding homes','RPC adapter, not whole installed public runtime/driver','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
+ receipt={'status':'pass','observations':checks,'sourceSha256':pins,'queryLog':query_log,'result':packet,'dependencies':{m['name']:m['version'] for m in dependencies.values()},'scope':'Installer-only original owner cohort and provisional operation-linked binding byte custody, rollback-only','bindingKind':'opaque-binary' if '--opaque' in sys.argv else 'original-association-candidate','occupiedInstallerFixture':occupied,'pendingSourceShapeOnly':pending_layout,'acceptancePromoted':False,'limitations':['Synthetic operation admission artifacts; original prestate is actual native capture but no authenticated owner/issuer/current cut or accepted-report custody','Pending row tests, when selected, are excluded installer shape/FK fixtures, not an admitted relationship producer or source interpreter; no vocabulary interpretation/registration or revision publication; explicit fixture JSON homes do not interpret binding homes','RPC adapter, not whole installed public runtime/driver','Captured declared Ajv JS/JSON closure; native runtime versions observed, not whole installed package qualification']}
 
 except Exception as error:
  (out/'failure.json').write_text(json.dumps({'status':'fail','phase':phase,'reason':str(error),'observations':checks,'sourceSha256':pins,'queryLog':query_log},indent=2)+'\n');print(json.dumps({'status':'fail','receipt':str(out/'failure.json'),'phase':phase,'reason':str(error)}));raise
