@@ -1194,3 +1194,34 @@ The persistent raw probe now compares native pg_proc.prosrc against exact body b
 A transactional control replaces only the retirement body with an unconditional return. It rejects the source baseline, matches an explicitly authored one-body mutation and demonstrates that a name-only assessor would miss the change. Rollback restores all bodies; each of the five final schedule cuts independently repeats complete correspondence. Eight complete expected/native body snapshots and two drift/control observations are retained. Evidence validation requires all ten assertion identities and all nine typed body records at each snapshot.
 
 The native run passes1431 unique matching observations across five schedules, with90 current source digests. Astra ultra independently extracted all routine bodies, confirmed the later override and exact mutation/restoration/final snapshots, and found no actionable defect. This is installed-source correspondence for the reviewed PostgreSQL17.9 fixture subset, not independent semantic correctness, general SQL parsing, complete resolution/dependency inventory or public native admission. B12 and L03 remain unregistered; full backend acceptance remains26/132 and the original goal stays active. Twenty-seven component groups and107 evidence checks pass. Astra independently checked the source-coverage expression and rejected thirteen missing, duplicate or malformed evidence variants, finding no actionable defect.
+
+
+### Truss SCRAM authentication and session lifetime — 2026-10-10
+
+[Direct-main integration evidence](truss-scram-authentication/integration.json) records Truss main
+`bb5eb75a018e068c281c565ae49e9a50825ee400`. The separately installed combined wheel matches53 source,
+owner-asset and typing files, passes328 tests and212 Python boundary imports.
+The original PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 Unix-socket SCRAM fixture passes82 observations across31 inventories,
+with21 frozen source/preimage pins. Native authentication log entries bind the
+ordinary role and SCRAM method to its backend PID. Wrong credentials and missing
+roles refuse28P01. NOLOGIN changes inventory qualification and refuses new
+sessions28000, but two established authenticated sessions remain usable.
+Restoring LOGIN allows a fresh connection. Thus authentication establishes a
+connection identity; login permission alone cannot revoke current operation
+authority or retire existing sessions. Protected admission must independently
+establish current authority at its coherent cut.
+
+Four failure controls cover receipt/stderr secret redaction, an unwritable receipt
+sink, continued connection cleanup and cluster cleanup after failures. Astra ultra
+feedback was applied and the captured helper bytes execute directly. The final
+read-only review verifies current pins and preserves the qualification boundary.
+Historical Truss development evidence retains its original source hashes.
+
+This supplies component evidence for US-056-AC5/AC9/AC10. It does not prove
+production/TLS authentication, native protected ontology mapping, complete
+collection/current cuts, PA01/PA02 completion, seven semantic operation bodies
+or complete backend acceptance. Historical acceptance remains26/132; every
+original required case remains governed by the existing plan and the goal stays
+active. No source-derived formal theorem gains native/temporal premises merely
+from this fixture's success.

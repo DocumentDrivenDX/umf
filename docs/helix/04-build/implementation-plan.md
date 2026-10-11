@@ -10183,3 +10183,34 @@ publication obligations remain required. Historical acceptance stays26/132,
 no original case is promoted, and the full goal remains active.
 
 The [final Astra ultra read-only review](evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/astra-review.json) independently replays11 formulas and reproduces32 actual Python vectors/29 native predicate results, confirming seven source/preimage pins and all formula hashes. Two exact invocation controls refuse wrong-root and extra-argument calls. No native rerun or full acceptance promotion follows from the review.
+
+
+### Truss SCRAM authentication and session lifetime — 2026-10-10
+
+[Direct-main integration evidence](evidence/security/truss-scram-authentication/integration.json) records Truss main
+`bb5eb75a018e068c281c565ae49e9a50825ee400`. The separately installed combined wheel matches53 source,
+owner-asset and typing files, passes328 tests and212 Python boundary imports.
+The original PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
+1.31.5 Unix-socket SCRAM fixture passes82 observations across31 inventories,
+with21 frozen source/preimage pins. Native authentication log entries bind the
+ordinary role and SCRAM method to its backend PID. Wrong credentials and missing
+roles refuse28P01. NOLOGIN changes inventory qualification and refuses new
+sessions28000, but two established authenticated sessions remain usable.
+Restoring LOGIN allows a fresh connection. Thus authentication establishes a
+connection identity; login permission alone cannot revoke current operation
+authority or retire existing sessions. Protected admission must independently
+establish current authority at its coherent cut.
+
+Four failure controls cover receipt/stderr secret redaction, an unwritable receipt
+sink, continued connection cleanup and cluster cleanup after failures. Astra ultra
+feedback was applied and the captured helper bytes execute directly. The final
+read-only review verifies current pins and preserves the qualification boundary.
+Historical Truss development evidence retains its original source hashes.
+
+This supplies component evidence for US-056-AC5/AC9/AC10. It does not prove
+production/TLS authentication, native protected ontology mapping, complete
+collection/current cuts, PA01/PA02 completion, seven semantic operation bodies
+or complete backend acceptance. Historical acceptance remains26/132; every
+original required case remains governed by the existing plan and the goal stays
+active. No source-derived formal theorem gains native/temporal premises merely
+from this fixture's success.
