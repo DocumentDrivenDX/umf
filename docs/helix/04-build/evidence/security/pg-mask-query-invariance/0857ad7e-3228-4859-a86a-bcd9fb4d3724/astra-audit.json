@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "method": "Independent read-only source/current-ZIP/native-receipt exact-vector audit; no native execution",
+  "receiptSha256": "bdf2a3d4f703f0fbc1710e08c5fc28e8888fb8f4571767211036c46de6cb9da0",
+  "captureSha256": "8eeeb58219fd139b2b7b1094d6112772d1400a7bb0c3828ee64034396d4472b4",
+  "archiveSha256": "c68df1de74156a30ad7d2148c02025ab679a17c873363460b90f16fa01d01bbf",
+  "sourcePins": 5,
+  "exactCurrentArchiveAndIndependentInputSet": true,
+  "nativeEngine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "uniqueObservations": 102,
+  "originalObservations": 57,
+  "newExactInvarianceVectors": 45,
+  "threeCuts": [
+    "original",
+    "hidden-value-changed",
+    "hidden-value-restored"
+  ],
+  "operators": [
+    "filter",
+    "sort",
+    "group",
+    "join",
+    "aggregate"
+  ],
+  "actors": [
+    "umf_sec_alice",
+    "umf_sec_bob",
+    "umf_sec_outsider"
+  ],
+  "typeSensitiveObservationEquality": true,
+  "independentlyAuthoredExpectedVectorsMatch": true,
+  "weakenedBobBeforeAfterRestore": [
+    [
+      "RAB",
+      "RB"
+    ],
+    [
+      "RAB"
+    ],
+    [
+      "RAB",
+      "RB"
+    ]
+  ],
+  "exactNativeViewDefinitionsOwnersAclOptionsMatch": true,
+  "cleanupScope": "Successful label-checked Docker removal is required by the producer before exclusive UUID directory publication. No separate cleanup command output is retained and no Docker command was run by this review.",
+  "limits": [
+    "Fixed stable identity/eligibility and constant restricted display; hidden RB salary changes200to100andback.",
+    "Native weakened-view control changes raw-value selection; no weaker native variant for every public operator is claimed.",
+    "Source/fixture custody is not hermetic runtime, authenticated issuer, compiler/lineage completeness or B08 admission.",
+    "Result equality does not establish diagnostic/error/timing/resource or concurrent-authority noninterference."
+  ],
+  "nativeExecution": false,
+  "acceptancePromoted": false,
+  "remainingFindings": []
+}

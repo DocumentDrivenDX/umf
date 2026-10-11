@@ -26,8 +26,11 @@ for operator,safe,weak in [
 ]:
  assumptions=[z3.Or(*eligible),z3.Or(*[a[i]!=b[i] for i in range(2)]),*[m==7 for m in [*mask,*mask_after]]]
  def solve(extra):
-  solver=z3.Solver();solver.set(timeout=10000);solver.add(*assumptions,*extra);result=solver.check()
-  return str(result),solver.sexpr(),str(solver.model()) if result==z3.sat else None
+  solver=z3.Solver();solver.set(timeout=10000);solver.add(*assumptions,*extra)
+  query=solver.to_smt2();result=solver.check()
+  replay_context=z3.Context();replay=z3.Solver(ctx=replay_context);replay.set(timeout=10000);replay.from_string(query)
+  if str(replay.check())!=str(result):raise AssertionError('Fresh context replay differs')
+  return str(result),query,str(solver.model()) if result==z3.sat else None
  safety,query,_=solve([safe]);population,pq,_=solve([]);control,cq,witness=solve([weak])
  if (safety,population,control)!=('unsat','sat','sat'):raise AssertionError(operator)
  rows.append({'operator':operator,'safety':safety,'population':population,'weakened':control,'safetyQuery':query,'populationQuery':pq,'weakenedQuery':cq,'counterexample':witness})

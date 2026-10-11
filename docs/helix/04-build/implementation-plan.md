@@ -11203,3 +11203,38 @@ Astra identified ADMIN-only membership widening outside the earlier USAGE/SET pr
 Final conditional formal `security/pg-statistics-role-proof/d58cac3b-3c52-4b0b-b701-75f0f24c15a9/proof.json` contains seven queries (three UNSAT/four SAT), adding ADMIN-option reachability. The SET-only and ADMIN-only countermodels isolate one selected getter and one executing bridge with no ownership/grant-restoration flags. Prior1100b70d/25fed768 are historical captured versions. The three exclusion theorems follow directly from the declared no-risk relation under complete native predicate premises, not a necessity or SQL-refinement theorem. Whole acceptance stays26/132.
 
 Astra independently audited final native `security/pg-statistics-role-closure/ba4279bf-0b34-495c-b124-a029aae84504` (five source/archive pins,111 observations,24 trace hashes) and formald58cac3b (four source pins,seven fresh-context replays). No scoped landing blocker remained. Both ADMIN-only widening and formal countermodel isolation findings are resolved. Scope excludes arbitrary multistep changes, concurrency and complete B10 admission.
+
+
+### Protected disclosure query invariance — 2026-10-11
+
+The US-056-AC6 / pg-raw.B08 component now exercises permitted queries over the
+published constant disclosure, rather than only refusal of queries over an
+omitted raw salary column. For each original Alice/Bob/outsider connection,
+independently authored filter, sort with identity tie-break, group, join and
+aggregate vectors are checked at the original hidden-value cut, after an
+excluded assessor changes Bob's hidden salary from200 to100, and after exact
+restoration. All45 new observations match; the outsider's empty population is
+included. The deliberately weakened pre-mask salary predicate changes Bob's
+visible identity selection under the same hidden-value change, demonstrating an
+actual native negative control. All102 observations pass on PostgreSQL17.9.
+
+Run `python3 tools/security/pg-mask-query.py`. Immutable evidence is
+`evidence/security/pg-mask-query-invariance/0857ad7e-3228-4859-a86a-bcd9fb4d3724`:
+receipt, declared-source archive and digests, capture metadata, and the refreshed
+conditional two-resource constant-mask algebra (five operators,15 SMT queries).
+The owned container removal returned success before receipt publication.
+The formal model assumes shared stable eligibility and constant disclosure;
+it does not prove installed SQL, arbitrary transforms, NULL/error/timing behavior,
+or compiler correctness. The native run is a fixed synthetic relational fixture,
+not an admitted policy compiler or complete query-lineage implementation.
+B08 remains open; no backend case or public profile is promoted. The full goal
+remains active and broad acceptance remains26/132.
+
+Astra ultra verified all five exact archive/current source pins, the complete
+102-label inventory and type-sensitive authored vectors, installed view bodies
+and ACLs, and the weakened-view mutation/restoration sequence. Its formal feedback
+is implemented: SMT is captured before solving and independently replayed in a
+fresh solver context inside the producer. Astra separately replayed all15 clean
+queries (five UNSAT/ten SAT). Adjacent audit/review/replay receipts retain this
+scoped review; no landing blocker remains. The broader acceptance run is separate
+from this review and does not inherit its verdict.
