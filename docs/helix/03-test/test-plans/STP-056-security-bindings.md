@@ -1491,3 +1491,27 @@ An instantaneous `live()` result must never authorize a later unguarded operatio
 For Truss B11/B12/L03, require original configured release bytes to stay uniquely selected through the declared protected use boundary. Exercise a second matching archive INSERT as well as UPDATE/DELETE; row-level lock evidence alone does not establish phantom exclusion. A preexisting archive table writer and row locker must refuse under the selected bounded acquisition profile. Establish old REPEATABLE READ and SERIALIZABLE snapshots, commit a matching insert from an independent connection, show the old count differs from current, and require selection refusal before returned policy bytes. Verify exact isolation refusal provenance, including READ ONLY.
 
 Retain native RELEASE/reparent, later rollback preservation, rollback across acquisition with unchanged parent xid and transaction-end release. The final twelve-test Trussc870eec9 component and four-failure omitted-table-lockcc13998c control qualify the private native archive selector only. Conditional UMF04cc4ef2 analysis assumes freshness and external exclusion. Whole-source/current-authority stability, same-writer exclusion, original host acquisition use, scan/resource accounting, authenticated capture, and final report publication must still be established by the actual backend runner before these required case IDs pass. No acceptance case is added, removed or promoted.
+
+### B10 native catalog/statistics observation obligations — 2026-10-11
+
+For all four backend B10 cases, exercise ordinary actor access to actual native
+catalog/statistics/plan/error and alternate-endpoint channels in addition to denied
+private row/count operations. Vary the actual private population without changing
+public resource outcomes and compare every declared untrusted observable. Include
+an analyzed-table cardinality control and applicable table/index size or equivalent
+native metadata. Distinguish physical aggregate statistics from logical association
+counts; do not infer graph coverage from a flat relation. Preserve original oracle
+and source/channel inventories. Test fixture counts alone cannot certify complete
+native observation coverage or noninterference.
+
+Truss native private ACL exclusion is insufficient: its ordinary catalog-only
+role observes pg_class.reltuples changing1→2 while direct private SELECT/count
+still refuse42501. A positive mediated profile must prove private executor/
+receiver credential custody and deny every alternate untrusted SQL/diagnostic
+route. A direct SQL profile must independently qualify all native diagnostic/
+catalog/callable restrictions. Merely naming a route mediated or asserting a
+configuration boolean is not a tested enforcement boundary. This tightens test
+interpretation under CONTRACT-063 and US-056-AC8; B10 remains required and unbound,
+and26/132 acceptance is unchanged.
+
+Retained native counterexample and integrated composition: [Truss main3bce4c77 evidence](https://github.com/DocumentDrivenDX/truss/blob/3bce4c777d5c9b631482084bd792337e18e2f27a/docs/helix/04-build/evidence/python-psycopg-epoch-cut/ed2ea7b9-ad94-40ed-b12d-84e346e20a7e/receipt.json). Its184-method component pass does not establish hidden-fact observation isolation.
