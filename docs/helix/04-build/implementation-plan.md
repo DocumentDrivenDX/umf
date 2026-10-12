@@ -11625,3 +11625,24 @@ was being verified. Integration preserves that history; all390 selected owner
 source pins remain identical and `post-main-integration.json` records a fresh
 successful `bun run typecheck` for both library and tools configurations. Original
 source/browser receipts are unchanged; no native profile qualification is inferred.
+
+### Fresh full security acceptance checkpoint — 2026-10-11
+
+Fresh execution of `bun docs/helix/02-design/spikes/security/acceptance.ts`
+re-runs all26 bound cases: S01–S12, pg-raw B01–B07/B11/B13–B16 and L01/L02.
+All26 are accepted. The overall gate intentionally exits1:106 required cases
+have no reviewed runner/oracle/implementation binding. All28 criteria remain
+allocated across the original132-case plan. Aggregate and per-case receipts are
+retained under `evidence/security/`;434 unique exercising source fingerprints
+were independently checked against current files after completion. This is fresh
+execution evidence, not a hash-only replay of the historical checkpoint.
+
+Truss main03f03a76 separately retains160 native composition tests after concurrent
+host integration, plus the release-observation formal model's three UNSAT/two SAT
+results. These do not promote unbound backend cases. Truss/Ashlar/Delta native
+ordinary enforcement, remaining raw-table cases, authenticated original owner/
+subject/mapping/current authority, complete mutation and protected publication/
+drain remain required. Preserve the original requirements and acceptance plan;
+next admitted implementations must supply complete case runners and independent
+native inventory rather than reinterpret component spikes as backend acceptance.
+Goal remains active at26/132 with106 missing bindings.
