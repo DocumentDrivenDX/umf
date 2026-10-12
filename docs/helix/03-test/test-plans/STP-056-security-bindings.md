@@ -1607,3 +1607,33 @@ obtaining an installer, retain prior inventory and ordinary results across each
 refusal, and cover actual history/composition and partial installation controls.
 No old receipt is rewritten and no original case is promoted. All132 required
 cases and106 missing executable bindings remain in scope.
+
+
+### Source-current native refusal preservation — 2026-10-12
+
+`tools/security/current-native-refusals.py` freshly executes the nine pinned
+current-main compiler cases while the existing owned PostgreSQL17.9 raw fixture
+is protected. Each original response retains exact factory/lower observations
+and diagnostics, no executable output, unchanged complete captured inventory/
+authority facts, and exact independently authored ordinary-actor resource IDs.
+Three actual TCP SCRAM actor connections per case retain original session/current
+user, native PID and ROLE=none. The excluded administrator reads all five resources
+as a separate negative control. All82 observations pass.
+
+The harness validates the original compiler observation digest and exact nine-case
+population/expectations before creating its labelled disposable container. Three
+tampered-artifact/population/expectation controls refuse before the native phase.
+The final owned-label/removal/absence check passes and retains Docker's exact
+response. Prior database-default and case-sensitive absence-check harness defects
+remain separately recorded; neither is counted as a passing native run.
+Receipt: `../../04-build/evidence/security/current-native-refusals-20261012/receipt.json`.
+Native source preimages are retained; original compiler preimages are referenced
+from the existing current-main witness archive without another large duplicate.
+
+Run `python3 tools/security/current-native-refusals.py --compiler-receipt
+<current-compiler-receipt> --output <receipt-directory>` against the isolated local
+Docker runtime. Existing receipt pins must match before original native execution.
+This is B09/B12 and AC7/AC10 prerequisite evidence, not candidate installation,
+admitted source-to-native semantics, actual history/composition, partial policy
+activation or final publication lifetime. No original backend case is promoted.
+All132 cases and106 missing executable bindings remain required.
