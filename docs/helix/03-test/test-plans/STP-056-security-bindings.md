@@ -1577,3 +1577,33 @@ current original run and control mapping. No B07/B09/B12/B15/B16 or lifecycle ca
 is accepted from it. All132 cases remain required. Databricks workspace/catalog
 and actual ordinary identities for Ashlar/Delta are unresolved; do not simulate
 those roles with an excluded administrator or claim local PostgreSQL proves them.
+
+
+### Current compiler refusal witness — 2026-10-12
+
+The older activation-compiler-boundary.py/witness remains historical evidence: it
+uses the stale owner checkout and an older transport. A separate current witness
+now builds the actual compiler from exact main40b812c and executes nine original
+requests through ordinary/security registration boundaries. Real registration
+reachability, missing registration, supported mask source, unsupported path/mask,
+prohibited original-field filtering and invalid report/history inputs retain
+exact callback observations and refusal codes. All protected requests emit no
+SQL/parameters/plan and never invoke the registered backend's lower callback.
+
+Run `python3 tools/security/current-compiler-boundary.py --weft-root <checkout>
+--expected-weft-commit <exact-commit> --output <receipt-directory>`. The script
+requires a clean tracked compiler source at that exact commit, freezes declared
+repository/build/witness/binary inputs and checks them unchanged after all cases.
+The private witness forwards exact requestJson bytes to the actual compiler.
+`../../04-build/evidence/security/current-compiler-boundary-20261012/receipt.json`
+retains exact requests/results, original build logs, source digests and preimages.
+Pinned build/runtime inputs are observed premises; external Cargo/toolchain
+closure and held source/authority lifetime are not proved.
+
+This is current compiler-refusal component evidence for B09/B12 and AC7/AC10
+prerequisites, not a native preservation runner or admitted lowering path. The
+original native B09 runner must use current original preparation inputs before
+obtaining an installer, retain prior inventory and ordinary results across each
+refusal, and cover actual history/composition and partial installation controls.
+No old receipt is rewritten and no original case is promoted. All132 required
+cases and106 missing executable bindings remain in scope.
