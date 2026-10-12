@@ -41,3 +41,43 @@ export function securityPolicyDependencies(policyInput:SecurityPolicy,resolution
   const sorted=(map:Map<string,SecurityRef>)=>[...map].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,ref])=>ref);
   return {fields:sorted(fields),associations:sorted(associations)};
 }
+
+export interface SecurityIdentityTransportDependencies extends SecurityDependencies {
+  /** Keep policy reads distinct from extra key/endpoint transport requirements. */
+  policyFields:SecurityRef[];
+  records:{type:SecurityRef;keyId:string;keyFields:SecurityRef[];endpoints:{role:string;target:SecurityRef;fields:SecurityRef[]}[]}[];
+}
+/** Identity/endpoint reconstruction closure, not complete disclosure or issuer authority.
+ *
+ * Key and endpoint component order comes from the validated original model. Native
+ * providers must preserve that order; neither row position nor field labels infer
+ * identity. Extra property/disclosure/query requirements need separate admission.
+ */
+export function securityIdentityTransportDependencies(policyInput:SecurityPolicy,resolutionInput:SecurityResolution):SecurityIdentityTransportDependencies {
+  const inspected=requireSecurityInterpretation(policyInput,resolutionInput);
+  const policy=inspected.source as unknown as SecurityPolicy,resolution=inspected.resolution as unknown as SecurityResolution;
+  const dependencies=securityPolicyDependencies(policy,resolution);
+  const types=new Map([...resolution.ontology.entities,...resolution.ontology.associations].map(t=>[id(t.type),t]));
+  const selected=new Map<string,SecurityEntity>();
+  const select=(ref:SecurityRef)=>selected.set(id(ref),types.get(id(ref))!);
+  select(resolution.ontology.subject);
+  for(const rule of policy.rules)rule.target.forEach(select);
+  dependencies.associations.forEach(select);
+  // Map iteration reaches newly selected targets; existing entries are not
+  // revisited. This also covers association targets and finite cyclic schemas.
+  for(const type of selected.values())if('endpoints' in type)
+    (type as SecurityAssociation).endpoints.forEach(endpoint=>select(endpoint.target));
+  const fields=new Map(dependencies.fields.map(ref=>[id(ref),ref]));
+  const records=[...selected].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,type])=>{
+    const record=resolution.documents.find(d=>d.document.id===type.type.documentId)!.document.modules.find(m=>m.id===type.type.moduleId)!.elements.find(e=>e.id===type.type.elementId)!;
+    const key=(record.keys as {id:string;fields:{module:string;element:string}[]}[]).find(k=>k.id===type.keyId)!;
+    const keyFields=key.fields.map(field=>({documentId:type.type.documentId,moduleId:field.module,elementId:field.element}));
+    keyFields.forEach(ref=>fields.set(id(ref),ref));
+    const endpoints=('endpoints' in type?(type as SecurityAssociation).endpoints:[]).map(endpoint=>{
+      endpoint.fields.forEach(ref=>fields.set(id(ref),ref));
+      return {role:endpoint.role,target:endpoint.target,fields:endpoint.fields};
+    });
+    return {type:type.type,keyId:type.keyId,keyFields,endpoints};
+  });
+  return {policyFields:dependencies.fields,fields:[...fields].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,ref])=>ref),associations:dependencies.associations,records};
+}

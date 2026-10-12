@@ -297,3 +297,35 @@ Truss PostgreSQL16.15 administrative spike obtains43 catalog ShareLocks for the4
 The conditional ordering proof has six queries (two UNSAT/four SAT): complete commit-time exclusion plus a fresh snapshot prevents modeled source drift; independent protected fact publication is also needed for authority. Old snapshots, pending catalog writers, early release and independent authority changes retain SAT witnesses. This models one source and one fact transition, not arbitrary ABA, concrete PostgreSQL/driver/lock refinement or issuer authentication. No new backend test is admitted and the132-case acceptance scope is unchanged.
 
 Database-local advisory participation does not establish closure for PostgreSQL shared catalogs: a second database can acquire the same key and change shared role membership while the original reader holds its barrier. The actual writer domain must cover all relevant database and cluster scopes, not merely key equality. The final native spike exercises this shared-role bypass. Original callable/plan/invalidation correspondence also remains required: an immediate repeated call after666 DDL returned555 in historical f8005795, whereas a fresh census followed by different query text returned666. The different sequences do not identify a cache mechanism or prove every current call follows the current catalog source. A qualified compiler/executor must supply its actual callable/compiled-plan correspondence rather than infer it from hashes or these finite probes.
+
+## Private facts and native diagnostic observation — 2026-10-11
+
+US-056-AC8's hidden-fact requirement covers every untrusted observation channel,
+not merely SELECT/count on the private relation. A backend profile MUST account
+for system catalogs, table/index statistics, plans/errors and alternate endpoints
+that can reveal fact presence or cardinality. Table ACL/RLS/column-mask refusal
+MUST NOT stand in for complete observation isolation. Unknown diagnostic/channel
+coverage refuses positive admission. Original trusted producer and receiver/
+credential custody MUST be independently qualified; client/configuration flags
+such as sqlExposure=false or a matching role name are not evidence.
+
+A mediated backend may keep authorization facts and SQL executor credentials in
+the trusted service and expose only qualified policy/result operations. Its
+profile MUST prove all untrusted routes use that boundary and that no alternate
+SQL credential or diagnostic path remains available. A native SQL profile instead
+must independently qualify its complete catalog/callable/diagnostic restrictions.
+These are backend qualification choices under shared semantics, not a change to
+UMF core or an assumption that any current backend already provides isolation.
+The same obligation applies to raw association tables and graph node/edge stores.
+Aggregate physical statistics need not equal a logical graph association count;
+each selected representation requires its own observation controls.
+
+Truss's PostgreSQL18.6 / pgserver-pg18 18.6.1 / psycopg3.3.6 binary owned flat
+fixture supplies a concrete counterexample: an ordinary role receives42501 for
+private Assignment SELECT/count yet observes pg_class.reltuples1 then2 after
+controlled population changes and ANALYZE. This is finite analyzed-table evidence,
+not an exact general row-count oracle, graph proof or general timing guarantee.
+No backend acceptance binding is promoted by that counterexample. The original
+132-case plan and hidden-fact acceptance criteria remain unchanged.
+
+Retained native counterexample and integrated composition: [Truss main3bce4c77 evidence](https://github.com/DocumentDrivenDX/truss/blob/3bce4c777d5c9b631482084bd792337e18e2f27a/docs/helix/04-build/evidence/python-psycopg-epoch-cut/ed2ea7b9-ad94-40ed-b12d-84e346e20a7e/receipt.json). Its184-method component pass does not establish hidden-fact observation isolation.

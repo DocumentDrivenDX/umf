@@ -77,3 +77,16 @@ invalidates prior evidence. Old snapshots cannot adopt new authority generations
 
 Done requires actual assertions, matching command/source receipts and no skipped
 required cases. Compiler/native profile gaps remain open rather than assumed.
+
+
+### Identity transport closure controls — 2026-10-11
+
+For US-079 AC3/AC10 prerequisites, preserve separate policy reads versus extra
+instance keys; preserve original compound-key and endpoint role/component order;
+exclude unused ontology records; include identity/endpoints even for literal
+association conditions; refuse unknown meaning without source mutation; reach
+endpoint identities for association resource targets and nested association targets.
+Eight new unit controls plus three dependency/write regressions pass in the final
+owner packet, with six checks replayed through the exported browser bundle. This
+qualifies metadata derivation only. Native mapping/decoding, trusted completeness,
+authenticated subject/current authority and final disclosure still need evidence.

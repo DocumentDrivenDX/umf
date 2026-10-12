@@ -11592,3 +11592,79 @@ The archive cut is one physical prerequisite for CONTRACT-063 and STP-056 B11/B1
 Astra required explicit formal state qualification: the final released-guard counter retains held-before/held-after and unchanged positive parent identity, but release is stipulated rather than derived from a rollback/stack transition. Saved SMT files have exact receipt digests/readback and fresh-context replay; prior5242b34b retains the pre-review formula/source tuple.
 
 Truss4ac008e7 is pushed directly to main with final source, tests and retained evidence. Astra independently replays all eight final formulas and verifies native200-source/1614-binary/twelve-test/482-import/owned-cleanup evidence and the exact four-failure countervariant. All437 unique registered gate source fingerprints plus gate/plan remain current; retained correspondence is not another full-gate execution. Broader security acceptance remains open.
+
+
+### Shared original identity/endpoint transport closure — 2026-10-11
+
+Added `securityIdentityTransportDependencies` and its metadata type to the pure
+UMF extension API. The original policy-dependency operation retains its existing
+meaning. New closure adds selected instance Keys and declared endpoint transport,
+including association resource targets and nested endpoint types; original key and
+role component orders are preserved. The ten-field original fixture identifies
+assignmentId/ownerId beyond its eight live policy reads. This supplies the next
+backend fact-reconstruction obligation without Python semantic traversal.
+
+Final `evidence/security/identity-transport/3eaa920d-af84-4695-8d18-7d797e16a795`
+passes11 unit controls, library/tools TypeScript checks and six actual Chromium
+exported-bundle checks, with390 current/archived source pins and exact bundle SHA256.
+Initial3a57d327 qualifies the earlier nine-unit/five-browser subset before association
+resource-target closure; eec973bb qualifies11/six/library checks but its supplementary
+tools check exposes Playwright recursive-type inference failure. Final JSON tooling
+boundary removes that inference failure; original library types remain unchanged.
+Source/toolchain/dependency delivery is not hermetically qualified, and no installed
+package/native backend or new formal refinement theorem is claimed.
+
+Backend identity-provider capture, original typed key/endpoint fact construction,
+authenticated original mapping/decoder/source/role/config closure and protected
+policy execution/publication remain required. Existing native packets retain their
+original owner source tuples; this owner-only increment does not promote backend
+bindings. Full goal active at26/132 with106 missing; publish directly to main.
+
+UMF main e3ef2089 advanced with schema-browser release work while this increment
+was being verified. Integration preserves that history; all390 selected owner
+source pins remain identical and `post-main-integration.json` records a fresh
+successful `bun run typecheck` for both library and tools configurations. Original
+source/browser receipts are unchanged; no native profile qualification is inferred.
+
+### Fresh full security acceptance checkpoint — 2026-10-11
+
+Fresh execution of `bun docs/helix/02-design/spikes/security/acceptance.ts`
+re-runs all26 bound cases: S01–S12, pg-raw B01–B07/B11/B13–B16 and L01/L02.
+All26 are accepted. The overall gate intentionally exits1:106 required cases
+have no reviewed runner/oracle/implementation binding. All28 criteria remain
+allocated across the original132-case plan. Aggregate and per-case receipts are
+retained under `evidence/security/`;434 unique exercising source fingerprints
+were independently checked against current files after completion. This is fresh
+execution evidence, not a hash-only replay of the historical checkpoint.
+
+Truss main03f03a76 separately retains160 native composition tests after concurrent
+host integration, plus the release-observation formal model's three UNSAT/two SAT
+results. These do not promote unbound backend cases. Truss/Ashlar/Delta native
+ordinary enforcement, remaining raw-table cases, authenticated original owner/
+subject/mapping/current authority, complete mutation and protected publication/
+drain remain required. Preserve the original requirements and acceptance plan;
+next admitted implementations must supply complete case runners and independent
+native inventory rather than reinterpret component spikes as backend acceptance.
+Goal remains active at26/132 with106 missing bindings.
+
+### Protected observation-channel implementation exits — 2026-10-11
+
+TD-056's C01–C07 sequence reconciles the original PostgreSQL17.9 deny-first
+candidate with Truss18.6 opaque-EXPLAIN counterevidence on main87e4b672. Next
+implementation work must capture actual receiver routes, credential ownership and
+native endpoints, then connect an original authenticated subject/private executor
+to closed semantic dispatch. An absent receiver or incomplete inventory is unknown,
+not a fabricated zero-channel proof. Empty queries/results and zero-edge profiles
+still require unconditional deployment/channel qualification under the original
+backend requirement issuer. No source/core/SQL/callback escape or request boolean
+may supply admission authority.
+
+Shared UMF owns semantic demands, result dispositions and independent qualification
+obligations. Backend owners retain receiver/credential/routing implementation and
+native RLS/ACL/masking/source/writer guards. Preserve all raw-table and graph
+semantics and existing direct-RLS profile evidence; qualify each supported channel
+separately. C01–C07 closeouts require original B04/B05/B10/B11/B12/B16 and lifecycle
+native outcomes, then fresh original132-case execution. No component pass alone
+promotes a supported backend. Current gate stays26/132 with106 unbound cases;
+original issuer/subject/mapping/target authenticity and complete protected source/
+publication/recovery remain required. Goal active.

@@ -434,7 +434,7 @@ export type {SecurityReadHandle} from './extensions/security/registration';
 export {SecurityAuthorityGuard} from './extensions/security/authority-guard';
 export {evaluateSecurityWrite} from './extensions/security/write';
 export type {SecurityWriteProfile,SecurityWriteState,SecurityWriteRequest,SecurityWriteResult} from './extensions/security/write';
-export {securityPolicyDependencies} from './extensions/security/dependencies';
+export {securityPolicyDependencies,securityIdentityTransportDependencies,type SecurityIdentityTransportDependencies} from './extensions/security/dependencies';
 export type {SecurityDependencies} from './extensions/security/dependencies';
 export {validateSecurityDisclosure,encodeSecurityDisclosure,decodeSecurityDisclosure} from './extensions/security/disclosure';
 export type {SecurityDisclosureBatch} from './extensions/security/disclosure';
