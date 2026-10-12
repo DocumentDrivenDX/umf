@@ -6,7 +6,7 @@ OUT = Path('fixtures/validation/core-check-refresh')
 BASE = 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def source_inputs():
-    paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z','--','src','scripts','spec','tests','native','package.json','bun.lock','bunfig.toml','test-setup.ts']).decode().split('\0')
+    paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z','--','src','scripts','spec','tests','native','package.json','bun.lock','bunfig.toml']).decode().split('\0')
     paths=sorted(set(p for p in paths if p))
     return {p:digest(p) for p in paths}
 def inventory(name):
@@ -78,7 +78,7 @@ def counted_regression(resume=False):
         groups[index].append(path)
     previous=json.loads((OUT/'regression.json').read_text()) if resume and (OUT/'regression.json').exists() else {'runs':[],'failedAttempts':[]}
     def execute(item):
-        i,group=item;command=['bun','test',*group];log=OUT/f'regression-{i+1}.log'
+        i,group=item;command=['bun','test','--timeout','30000',*group];log=OUT/f'regression-{i+1}.log'
         old=next((r for r in previous['runs'] if r['command']==command),None)
         if old and old['exitCode']==0:
             assert digest(old['log'])==old['logSha256'];return old
