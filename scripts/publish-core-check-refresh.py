@@ -48,7 +48,8 @@ def main():
   match=summaries[-1];ok,bad,checks,total,size=map(int,match.groups())
   assert run['command'][:2]==['bun','test']
   test_files=run['command'][2:]
-  if test_files[:2]==['--timeout','30000']:test_files=test_files[2:]
+  if test_files[:3]==['--timeout','30000','--parallel=1']:test_files=test_files[3:]
+  elif test_files[:2]==['--timeout','30000']:test_files=test_files[2:]
   assert bad==0 and ok==total and size==len(test_files)
   assert all(p.endswith('.test.ts') and p.startswith('tests/') for p in test_files)
   counted.extend(test_files);passed+=ok;failed+=bad;assertions+=checks;files+=size

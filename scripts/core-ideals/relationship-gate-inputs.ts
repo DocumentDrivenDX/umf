@@ -20,7 +20,7 @@ export const relationshipRefreshCommands=[
  ['bun','scripts/core-ideals/relationship-extras-oracle.ts'],
  ...['tablespec-projection','avro-projection','parquet','sqlserver','postgresql','extras'].map(s=>['bun',`scripts/core-ideals/relationship-${s}-browser.ts`]),
  ['bun','scripts/core-ideals/relationship-conformance-browser.ts'],
- ['bun','test','--timeout','30000',...relationshipTests],['bun','run','typecheck'],
+ ['bun','test','--timeout','30000','--parallel=1',...relationshipTests],['bun','run','typecheck'],
 ];
 export const digest=(text:string|Uint8Array)=>createHash('sha256').update(text).digest('hex');
 export function safePath(path:string){const rel=relative(process.cwd(),resolve(path)).split(sep).join('/');if(!path||path.includes('\\')||path.startsWith('/')||rel.startsWith('..')||rel!==path)throw Error('Unsafe proof path '+path);return path;}

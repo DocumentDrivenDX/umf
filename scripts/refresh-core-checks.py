@@ -78,7 +78,7 @@ def counted_regression(resume=False):
         groups[index].append(path)
     previous=json.loads((OUT/'regression.json').read_text()) if resume and (OUT/'regression.json').exists() else {'runs':[],'failedAttempts':[]}
     def execute(item):
-        i,group=item;command=['bun','test','--timeout','30000',*group];log=OUT/f'regression-{i+1}.log'
+        i,group=item;command=['bun','test','--timeout','30000','--parallel=1',*group];log=OUT/f'regression-{i+1}.log'
         old=next((r for r in previous['runs'] if r['command']==command),None)
         if old and old['exitCode']==0:
             assert digest(old['log'])==old['logSha256'];return old
