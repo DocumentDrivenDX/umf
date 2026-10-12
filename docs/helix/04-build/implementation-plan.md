@@ -11699,3 +11699,18 @@ remaining physical/result/dependency lowering refusal. Original compiler evidenc
 and source pins are retained in `evidence/security/weft-current-handoff-20261012/`.
 This is a handoff/admission checkpoint, not native security support. Original132
 cases remain required; the full shared goal stays active.
+
+
+### Shared component/native test handoff — 2026-10-12
+
+STP-056/TD-056 now trace Weft's optional presence, active withholding, numeric
+ledger and physical-shape components to current original tests and source pins.
+`evidence/security/weft-component-coverage-20261012/` retains the original328-test
+run and R08/R09/R11/R13 mapping. All core source pins match current Weft main;
+no new test execution is claimed by this reconciliation. The plan explicitly
+requires original SQL/parameter correspondence, native source/role drift controls,
+missing-obligation refusal, mid-installation rollback and unknown-settlement retry.
+Pure structural/semantic checks cannot close those native obligations. No backend
+case is promoted. Ashlar/Delta test workspace/catalog and actual ordinary actors
+remain unresolved; a text-only question requests those names without credentials.
+Independent local implementation remains available and the full goal stays active.

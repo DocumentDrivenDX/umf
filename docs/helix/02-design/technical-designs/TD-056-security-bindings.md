@@ -2236,3 +2236,24 @@ is completing owned physical/result/dependency coverage and native host integrat
 through that actual interface; a local replacement compiler or fixed read receiver
 cannot close it. Trace FR-19–22 / Weft CONTRACT-007 and shared CONTRACT-063,
 US-056 AC7/AC10 prerequisites. No full backend case is promoted.
+
+
+## Result/physical implementation checkpoint — 2026-10-12
+
+Weft mainfdb2a3e now checks conservative optional Original/Absent declarations,
+exact supplied-fact presence and active Withheld precedence. Its owned context
+also checks bounded physical-plan structure; opaque numeric metadata is charged
+by original lexical bytes. Current source-matched retained Rust evidence is328
+passing targeted tests. STP-056's current component table identifies native
+integration controls that remain required; none of these pure methods authenticates
+facts, proves SQL/parameter meaning, closes selected native obligations or enables
+compiler emission. Supplied-truth correspondence alone cannot prove presence.
+
+The next physical integration must bind original query/parameter requirements to
+actual backend SQL and immutable source/current-authority/host lifetime. Exact
+structured operation shape cannot stand in for that correspondence. Cross-world
+mask/presence simulations and finite conditional proofs retain their original
+scope; real installed codecs/masks and every declared observable route still need
+native qualification. Cloud workspace/catalog/ordinary identity selection remains
+an explicit unknown for Ashlar/Delta acceptance. The original132-case scope and
+full shared implementation goal remain unchanged.

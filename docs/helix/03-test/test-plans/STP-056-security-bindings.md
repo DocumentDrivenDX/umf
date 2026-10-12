@@ -1542,3 +1542,38 @@ private executor handles and cells must never become user outputs. TD-056 exits
 C01–C07 sequence these prerequisites without adding/removing case IDs or accepting
 caller flags as evidence. All original132 cases remain required;26 pass and106
 remain unbound. B10 and complete protected observation isolation remain open.
+
+
+## Current result and physical component coverage — 2026-10-12
+
+Weft mainfdb2a3e's original Rust run passes257 unit,68 security-admission and3
+literal tests. The source pins were independently matched to current files; this
+is verification of the retained run, not a new rerun. The following supersedes
+only the older component-gap descriptions; the original backend cases remain open.
+
+| Control | Current exercising evidence | Still required at each native backend |
+| --- | --- | --- |
+| R08 active withholding |24 supplied-fact controls across active/false mask, value/null/absence and four candidate cells. Active Withheld accepts only its value-free cell. | Authenticated original facts; installed mask/query behavior; bag/retained/history/diagnostic bypass controls; final protected publication. |
+| R09 exact presence | Optional declarations require Original and Absent; all six value/null/absence substitutions and omitted presence metadata refuse. | Actual carrier/codec/presence correspondence; native null/absence/transform/withheld controls at ordinary API and SQL routes; historical/source mappings. |
+| R11 bounded issuance | Shared ledger now accounts for opaque numeric spelling; physical declarations test depth, per-operation and aggregate limits. | Native workload/resource/refusal evidence and no partial output/effects; external immutable evidence tied to exact source/build. |
+| R13 physical declaration structure | Unique installation/execution IDs; bounded nonempty NUL-free SQL; contiguous parameters; typed provenance shape;512 operations and16384-slot boundaries. | Original SQL/parameter origin/domain correspondence, complete capabilities and obligations, actual native installation/DDL/effects/rollback/current authority. |
+
+R13 is a component control, not a new acceptance case or an SQL feature allowlist.
+Its checker admits shape only; even nonempty nonsyntactic SQL may pass shape and
+must fail its later actual backend/native admission. Successful shape, cell or
+supplied-fact checks issue no execution authority and public security compilation
+remains blocked. Supplied-truth checks do not establish original value or absence.
+
+Next integration controls: mutate SQL and parameter provenance after shape checks;
+substitute a same-shaped operation from another original query/target/action;
+change native function/role/mapping source before first effects and final release;
+remove a selected capability's obligation; fail mid-installation; and retry after
+unknown settlement. Require refusal/rollback under the original actual host/native
+protocol. Caller-produced coverage flags, matching labels, endpoint hashes or a
+pure check result cannot replace that protocol.
+
+`../../04-build/evidence/security/weft-component-coverage-20261012/` retains the
+current original run and control mapping. No B07/B09/B12/B15/B16 or lifecycle case
+is accepted from it. All132 cases remain required. Databricks workspace/catalog
+and actual ordinary identities for Ashlar/Delta are unresolved; do not simulate
+those roles with an excluded administrator or claim local PostgreSQL proves them.
