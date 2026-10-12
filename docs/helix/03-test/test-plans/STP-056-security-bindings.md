@@ -1637,3 +1637,23 @@ This is B09/B12 and AC7/AC10 prerequisite evidence, not candidate installation,
 admitted source-to-native semantics, actual history/composition, partial policy
 activation or final publication lifetime. No original backend case is promoted.
 All132 cases and106 missing executable bindings remain required.
+
+
+### Native receipt finalization failure controls — 2026-10-12
+
+The current refusal harness now retains native workStatus separately from cleanup.
+A successful native run with unverified cleanup receives
+`native-passed-cleanup-unverified`, never the accepted passed status. Cleanup
+transport/ownership/removal failures return evidence rather than replacing the
+original native exception or preventing receipt serialization. Only an exact
+owned-container absence response can verify completion; prefix-name responses
+refuse. Frozen reviewed cleanup source is compiled directly, without relying on
+an unrelated imported module.
+
+Four failure-path tests pass, including foreign ownership, transport/removal
+uncertainty, wrong/prefix names, original failure retention and no-creation paths.
+The final source-native replay again passes82 observations and actual owned
+removal/absence. Receipt:
+`../../04-build/evidence/security/native-receipt-finalization-20261012/receipt.json`.
+This corrects receipt truthfulness for B12/AC10 prerequisites; it does not qualify
+full activation/lifetime or promote an original backend case.

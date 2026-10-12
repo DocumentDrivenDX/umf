@@ -5,7 +5,8 @@
 import argparse,hashlib,json,os,re,secrets,subprocess,time,uuid
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--compiler-receipt',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
-root=Path.cwd();sources=[Path(__file__).resolve(),a.compiler_receipt.resolve(),a.compiler_receipt.with_name('observations.json').resolve(),root/'tests/security/native/pg-raw-membership.sql',root/'tests/security/native/pg-raw-membership-oracle.json',root/'tools/security/pg-inventory.py',root/'tools/security/pg-authority-cut.py'];frozen={p:p.read_bytes() for p in sources}
+root=Path.cwd();cleanup_source=Path(__file__).with_name('native_owned_cleanup.py').resolve();sources=[cleanup_source,Path(__file__).resolve(),a.compiler_receipt.resolve(),a.compiler_receipt.with_name('observations.json').resolve(),root/'tests/security/native/pg-raw-membership.sql',root/'tests/security/native/pg-raw-membership-oracle.json',root/'tools/security/pg-inventory.py',root/'tools/security/pg-authority-cut.py'];frozen={p:p.read_bytes() for p in sources}
+cleanup_module={};exec(compile(frozen[cleanup_source],str(cleanup_source),'exec'),cleanup_module)
 receipt=json.loads(frozen[a.compiler_receipt.resolve()]);assert receipt['status']=='current-compiler-refusal-component-passed' and receipt['buildExitCode']==0
 for name,h in receipt['sourceDigests'].items():
  path=Path(name);b=path.read_bytes();assert hashlib.sha256(b).hexdigest()==h,name;frozen[path]=b
@@ -69,15 +70,8 @@ try:
  result.update(status='current-native-refusal-component-passed',compilerCommit=receipt['weftCommit'],sourcesUnchanged=True,sourceDigests={str(p):hashlib.sha256(b).hexdigest() for p,b in frozen.items()},scope='Nine current compiler cases while an owned PostgreSQL17.9 raw fixture remains protected. No candidate installation, source-to-native semantic admission, real history/composition/partial activation or complete B09/B12 qualification.')
 except BaseException as e:result['failure']={'type':type(e).__name__,'message':str(e)};raise
 finally:
- cleanup={'attempted':attempted,'ownedLabelVerified':False,'removed':False}
- if attempted:
-  inspect=command(['docker','inspect',name,'--format','{{ index .Config.Labels "umf.security.run" }}'])
-  if inspect.returncode==0:
-   if require(inspect)!=run_id:raise RuntimeError('Owned fixture label mismatch; cleanup refused')
-   cleanup['ownedLabelVerified']=True;removed=command(['docker','rm','-f',name]);cleanup['removed']=removed.returncode==0;cleanup['removeExitCode']=removed.returncode;require(removed)
-   after=command(['docker','inspect',name]);cleanup['postRemoveExitCode']=after.returncode;cleanup['postRemoveStdout']=after.stdout;cleanup['postRemoveStderr']=after.stderr;cleanup['absentAfterRemoval']=after.returncode!=0 and 'no such' in after.stderr.lower() and name in after.stderr
-  elif 'no such' in inspect.stderr.lower() and name in inspect.stderr:cleanup['absentAfterRemoval']=True
-  else:cleanup['unknown']=True
- result['cleanup']=cleanup;(out/'native.json').write_text(json.dumps(result,indent=2)+'\n')
-if attempted and not cleanup.get('absentAfterRemoval'):raise RuntimeError('Cleanup completion not independently observed')
+ cleanup=cleanup_module['cleanup_owned'](command,name,run_id,attempted)
+ cleanup_module['finalize_status'](result,cleanup)
+ (out/'native.json').write_text(json.dumps(result,indent=2)+'\n')
+if attempted and not cleanup['verified']:raise RuntimeError('Cleanup completion not independently observed')
 print(json.dumps({'status':result['status'],'observations':len(observations),'cleanup':cleanup}))
