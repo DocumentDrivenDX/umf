@@ -1,0 +1,37 @@
+name: Command execution
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  commands:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Test command declarations
+        run: bun scripts/run-tests.ts ./tests/actions/*.test.ts
+      - name: Test actual PostgreSQL command execution
+        run: |
+          set -o pipefail
+          bun run test:actions 2>&1 | tee command-execution.log
+      - name: Build public browser library
+        run: bun run build
+      - name: Test command API in Chromium
+        run: bun scripts/actions-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: command-execution-evidence
+          path: |
+            command-execution.log
+            fixtures/actions/browser.json

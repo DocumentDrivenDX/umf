@@ -41,17 +41,17 @@
     "scripts/core-ideals/facets-avro-discovery-native.py": "20e4c51560e00dee6f4a0beba207e2a80f974237a9598625aca9bfd12bb56f40",
     "scripts/core-ideals/facets-avro-projection-native.py": "c174dd8c76cfbcbea35f8c04238727e4ef32cd9c29e5a3fe55b8a81ea9147ba3",
     "scripts/core-ideals/facets-avro-selection-native.py": "38d5bbab7d5f85bc1254a5840b5bd5a4456ca8d20b1343206df29e718cceafe6",
-    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
     "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
-    "fixtures/validation/facets-avro-composition.json": "90c291618ba31095b6a4b6d4b5d4c287dbbbd5eb931bc4fbb1f33caaec8e0f23",
-    "fixtures/validation/facets-avro-discovery-native.json": "b9103219c3f7eaedcd5484a4d9f48225db4af63948766e88d5d306901d944621",
-    "fixtures/validation/facets-avro-discovery.json": "849139daaea538b79ede3679c1b337b4e42adb55ecb1c82287b62255354a5040",
-    "fixtures/validation/facets-avro-projection-native.json": "65f54e2783e6949f305abbf00132897bf6b806ce379adda59b0d66f5955a4e66",
+    "fixtures/validation/facets-avro-composition.json": "00b81abb00e384937307aedc4d2734a03f7c599a4f1f3052d79056a4be173e39",
+    "fixtures/validation/facets-avro-discovery-native.json": "491f134972f3a028a456e84c8b0fd3647bf0379ccf07d38ba7fd3ee2966f2f50",
+    "fixtures/validation/facets-avro-discovery.json": "c0405895a4204e1e4099f68a857b6204a30e871c3ac6512e70d405eb3ee9bf10",
+    "fixtures/validation/facets-avro-projection-native.json": "ac5b05b095a7c4fce714bb6f654ae4189dddfe4dc35ff18568f4d225d809d9c9",
     "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
-    "fixtures/validation/facets-avro-selection-native.json": "372fb180bc8e21b4809d3494848a4a97b9395f5830b67d72f6c207a165186121",
-    "fixtures/validation/facets-avro-selection-oracle.json": "77ad5b24924d84918558ee0d3f6daaa7f038f3063f6483e5422570d8743be59d",
-    "package.json": "e9fe3ba2ba6981e3adbe92e1f67aa3daa98ea5a76528e56d0192ff6446f707cb",
+    "fixtures/validation/facets-avro-selection-native.json": "4d50ab89e56fab99263d5c7a8bcc93642e9af10b18e3e689678cad1809d0f787",
+    "fixtures/validation/facets-avro-selection-oracle.json": "ccb72b03caf633fb9d2740c44217c0709cf770c47153805c1ebed8edca355c88",
+    "package.json": "07b85a0ac92031b4a00e8dc5c0527c502d021268fdad694dca358ffe8aa04823",
     "scripts/core-ideals/facets-avro-cases.ts": "3d461a5175c61bbd5b41842457f07e5b8a8a7cc358f28061e12bcb0e7fe5a0ee",
     "scripts/core-ideals/facets-avro-composition.ts": "ae60e7b594c0beef4f4e036b0164b493de288337693b652b922f2e29f94a2eb9",
     "scripts/core-ideals/facets-avro-discovery.ts": "eff132c0ce2c30eef023988b5ae7df0835697d64ae2105cb266d1d0bdfb38023",
@@ -69,11 +69,11 @@
     "src/adapters/json-schema/tree.ts": "e1b4756e9d37d681f0cc0a4e722dff7ebfb23e8b6b444a0f0f4463cfa766fc28",
     "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
     "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
-    "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
+    "src/core-ideals/facets-avro-projection.ts": "a6a22cd04ef97a7a8e574cfd7d585c72b6255ccaa256368f1743ca66a9f089ba",
     "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
-    "src/index.ts": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
+    "src/index.ts": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
-    "src/model/json.ts": "3f1348c5e8e9d340c301611e607919b420b034fb777ef6817adf2b8f8450e020",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
     "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
     "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
@@ -83,13 +83,13 @@
   },
   "normalizedFingerprintAliases": {
     "scripts/core-ideals/facets-avro-discovery-native.py": [
-      "/work/scripts/core-ideals/facets-avro-discovery-native.py"
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-avro-discovery-native.py"
     ],
     "scripts/core-ideals/facets-avro-projection-native.py": [
-      "/work/scripts/core-ideals/facets-avro-projection-native.py"
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-avro-projection-native.py"
     ],
     "scripts/core-ideals/facets-avro-selection-native.py": [
-      "/work/scripts/core-ideals/facets-avro-selection-native.py"
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-avro-selection-native.py"
     ]
   }
 }

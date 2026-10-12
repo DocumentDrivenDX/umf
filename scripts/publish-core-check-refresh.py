@@ -46,9 +46,13 @@ def main():
   check_run(run);text=Path(run['log']).read_text()
   summaries=list(re.finditer(r'\n\s*(\d+) pass\n\s*(\d+) fail\n\s*(\d+) expect\(\) calls\nRan (\d+) tests across (\d+) files\.',text));assert summaries
   match=summaries[-1];ok,bad,checks,total,size=map(int,match.groups())
-  assert bad==0 and ok==total and size==len(run['command'])-2
-  assert run['command'][:2]==['bun','test'] and all(p.endswith('.test.ts') for p in run['command'][2:])
-  counted.extend(run['command'][2:]);passed+=ok;failed+=bad;assertions+=checks;files+=size
+  assert run['command'][:2] in [['bun','test'],['bun','scripts/run-tests.ts']]
+  test_files=run['command'][2:]
+  if test_files[:3]==['--timeout','30000','--parallel=1']:test_files=test_files[3:]
+  elif test_files[:2]==['--timeout','30000']:test_files=test_files[2:]
+  assert bad==0 and ok==total and size==len(test_files)
+  assert all(p.endswith('.test.ts') and p.startswith('tests/') for p in test_files)
+  counted.extend(test_files);passed+=ok;failed+=bad;assertions+=checks;files+=size
  expected=sorted(p for p in subprocess.check_output(['rg','--files','tests'],text=True).splitlines() if p.endswith('.test.ts') and not ('/core-ideals/' in p and (p.endswith('conformance.test.ts') or p.endswith('evidence.test.ts'))))
  assert sorted(counted)==expected and len(counted)==len(set(counted)),'Incomplete or overlapping live regression'
  regression_record={'tests':passed,'failures':failed,'assertions':assertions,'files':files,'execution':{'path':str(OUT/'regression.json'),'sha256':digest(OUT/'regression.json')}}

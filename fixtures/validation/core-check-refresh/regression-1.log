@@ -1,72 +1,183 @@
+{"testProcess":"tests/jsonld/compaction.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/compaction.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/compaction.test.ts:
+(pass) US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies [18165.79ms]
+(pass) US-026-AC9: compact exact values, list/JSON ordering, target context, options and copied edits [1561.61ms]
+(pass) US-026-AC9: required context, explicit policies, unknown content and isolated target contexts [101.61ms]
+
+ 3 pass
+ 0 fail
+ 2854 expect() calls
+Ran 3 tests across 1 file. [22.70s]
+{"testProcess":"tests/jsonld/compaction.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":2854,"completeSummary":true,"logSha256":"d94ded73cb935bdafff725c66ab222681b800a472a38a83e27288238e80b65ce"}
+{"testProcess":"tests/jsonld/framing.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/framing.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/framing.test.ts:
+(pass) US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies [7050.70ms]
+(pass) US-026-AC10/11: exact values, views, edits, invalid unmatched frames and opaque controls [1539.40ms]
+(pass) US-026-AC10: framing option validation, unknown representation and context isolation [132.00ms]
+
+ 3 pass
+ 0 fail
+ 1741 expect() calls
+Ran 3 tests across 1 file. [11.57s]
+{"testProcess":"tests/jsonld/framing.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":1741,"completeSummary":true,"logSha256":"e35cafa58ef095f877c113ee64a1aa9be50df623df23e88b5ed4372f580e23c2"}
+{"testProcess":"tests/jsonld/jsonld.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/jsonld.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/jsonld.test.ts:
+(pass) US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons [23172.79ms]
+(pass) US-026-AC4: loss policy, exact numbers, copies and explicit missing contexts [262.49ms]
+(pass) US-026-AC4: supplied contexts are isolated per operation and recover across formats [155.58ms]
+
+ 3 pass
+ 0 fail
+ 5054 expect() calls
+Ran 3 tests across 1 file. [26.43s]
+{"testProcess":"tests/jsonld/jsonld.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":5054,"completeSummary":true,"logSha256":"f338cd62233a7fb594ee666ff51ebe36a86a6f2663b8124b6c707f2e5ad29df4"}
+{"testProcess":"tests/jsonld/nest.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/nest.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/nest.test.ts:
+(pass) US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals [523.86ms]
+
+ 1 pass
+ 0 fail
+ 43 expect() calls
+Ran 1 test across 1 file. [3.44s]
+{"testProcess":"tests/jsonld/nest.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"cd097f40fba888c1a1b0db4a78c8c386d33178da817825eb131444a4851466f1"}
+{"testProcess":"tests/jsonld/numeric.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/numeric.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/numeric.test.ts:
+(pass) US-026-AC7: exact numbers retain numeric semantics through expansion and edits [711.53ms]
+(pass) US-026-AC7: conformance comparison cannot conceal rounded decimals or opaque literal changes [5.12ms]
+
+ 2 pass
+ 0 fail
+ 79 expect() calls
+Ran 2 tests across 1 file. [3.52s]
+{"testProcess":"tests/jsonld/numeric.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":79,"completeSummary":true,"logSha256":"004c36a0e6cb2169dcb7a50ee6bbf01c9c37bcd72516cf8eb4dc913976853dd3"}
+{"testProcess":"tests/jsonld/to-rdf.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/to-rdf.test.ts"]}
+
+tests/jsonld/to-rdf.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) US-026-AC13: complete toRDF corpus retains sources, candidates and every gap [35132.61ms]
+(pass) US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits [4659.98ms]
+(pass) US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets [1.57ms]
+
+ 3 pass
+ 0 fail
+ 4509 expect() calls
+Ran 3 tests across 1 file. [42.62s]
+{"testProcess":"tests/jsonld/to-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4509,"completeSummary":true,"logSha256":"a0af46e2b7c4e2426781c47ed115d8efc47bee003b87916d80225c8a45f38404"}
+{"testProcess":"tests/rdf/merge.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdf/merge.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/rdf/merge.test.ts:
+(pass) US-025-AC7: all positive RDF source datasets merge with independent blank scopes [40728.11ms]
+(pass) US-025-AC7: shared labels remain linked within each input, never across inputs [57.61ms]
+(pass) US-025-AC7: unknown encodings block atomically and other metadata remains in source reports [47.02ms]
+
+ 3 pass
+ 0 fail
+ 5189 expect() calls
+Ran 3 tests across 1 file. [43.57s]
+{"testProcess":"tests/rdf/merge.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":5189,"completeSummary":true,"logSha256":"5380a6408812642b155b83308aba6d0c36854efad1e7f17b1eec7a872aca8c0d"}
+{"testProcess":"tests/rdf/rename.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdf/rename.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/rdf/rename.test.ts:
+(pass) US-025-AC4: corpus IRI renames match native datasets through both UMF formats [5268.54ms]
+(pass) US-025-AC4: all term positions change while literal text, blank scope and source stay intact [39.99ms]
+(pass) US-025-AC4: collisions, absent terms, invalid IRIs and unknown encoding block atomically [138.82ms]
+
+ 3 pass
+ 0 fail
+ 775 expect() calls
+Ran 3 tests across 1 file. [8.43s]
+{"testProcess":"tests/rdf/rename.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":775,"completeSummary":true,"logSha256":"5c523e0c74737a8c90dcfc3fbc628894b3eee3b989e05cff2bc11030715e6411"}
+{"testProcess":"tests/rdf/turtle.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdf/turtle.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/rdf/turtle.test.ts:
+(pass) US-025-AC5: full official Turtle corpus, expected graphs and candidate exports [16486.12ms]
+(pass) US-025-AC5: blank allocation, explicit labels, base resolution and literal lexemes are stable [76.91ms]
+(pass) US-025-AC5: named graph loss, missing base and RDF 1.2 syntax are explicit failures [29.63ms]
+
+ 3 pass
+ 0 fail
+ 1934 expect() calls
+Ran 3 tests across 1 file. [19.54s]
+{"testProcess":"tests/rdf/turtle.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":1934,"completeSummary":true,"logSha256":"0a56e717b4dfd82ddc775dacd221becad50ce3f75929cccbbac0c7ba3961b674"}
+{"testProcess":"tests/rdfxml/literals.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdfxml/literals.test.ts"]}
 bun test v1.4.2 (744846f84)
 
 tests/rdfxml/literals.test.ts:
-(pass) SPIKE-006: literal repair preserves authored XML structure and every official graph outcome [48.14ms]
+(pass) SPIKE-006: literal repair preserves authored XML structure and every official graph outcome [18.41ms]
+
+ 1 pass
+ 0 fail
+ 419 expect() calls
+Ran 1 test across 1 file. [38.00ms]
+{"testProcess":"tests/rdfxml/literals.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":419,"completeSummary":true,"logSha256":"f775d727bed4b748e44e84a252fbf7ef2a83d5768647fefe6770b7ecae3f0dfd"}
+{"testProcess":"tests/shacl/float.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/float.test.ts"]}
 
 tests/shacl/float.test.ts:
-(pass) US-028 mixed numeric promotions agree with direct native C conversions [27343.29ms]
+bun test v1.4.2 (744846f84)
+(pass) US-028 mixed numeric promotions agree with direct native C conversions [20146.86ms]
 (pass) US-028 float lexical validation, signed zero, ties and bounded conversion [0.25ms]
-(pass) US-028 conversion limit blocks without a partial report or source loss [138.74ms]
+(pass) US-028 conversion limit blocks without a partial report or source loss [100.10ms]
 
-tests/shacl/targets.test.ts:
-(pass) US-028 Core target sets match native SPARQL across official and authored graphs [5770.28ms]
-(pass) US-028 graph boundaries, exact literals, cycles, deactivation and atomic target edit [1063.41ms]
-(pass) US-028 malformed or unsupported target declarations cannot silently select a subset [1234.47ms]
-
-tests/shacl/paths.test.ts:
-(pass) US-028 graph preservation, all path operators and independent expected sets [7613.45ms]
-(pass) US-028 malformed paths remain recoverable but cannot be evaluated [1431.25ms]
-(pass) US-028 unknown encoding, scopes, copied values and atomic rejection [565.87ms]
-(pass) US-028 bounded recursive structure and expensive finite traversal fail without mutation [659.56ms]
-(pass) US-028 pinned official graph inventory and independent corpus evidence [1242.14ms]
+ 3 pass
+ 0 fail
+ 998 expect() calls
+Ran 3 tests across 1 file. [23.09s]
+{"testProcess":"tests/shacl/float.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":998,"completeSummary":true,"logSha256":"45ae5b16d80fa40057e6b827d596a5384ade00970567734c43a710d0da154c95"}
+{"testProcess":"tests/shacl/metadata.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/metadata.test.ts"]}
+bun test v1.4.2 (744846f84)
 
 tests/shacl/metadata.test.ts:
-(pass) US-028 metadata supports consumers without collapsing native declarations [1246.97ms]
-(pass) US-028 invalid paths and literal property links remain explicit metadata [120.56ms]
+(pass) US-028 metadata supports consumers without collapsing native declarations [913.21ms]
+(pass) US-028 invalid paths and literal property links remain explicit metadata [95.58ms]
 
-tests/jsonld/numeric.test.ts:
-(pass) US-026-AC7: exact numbers retain numeric semantics through expansion and edits [915.73ms]
-(pass) US-026-AC7: conformance comparison cannot conceal rounded decimals or opaque literal changes [1.39ms]
+ 2 pass
+ 0 fail
+ 41 expect() calls
+Ran 2 tests across 1 file. [3.90s]
+{"testProcess":"tests/shacl/metadata.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":41,"completeSummary":true,"logSha256":"5f6f5c968cd50ee547bfd200adeae8d451f6f4d2f222013532f88b96a5e75483"}
+{"testProcess":"tests/shacl/paths.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/paths.test.ts"]}
 
-tests/jsonld/compaction.test.ts:
-(pass) US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies [34485.40ms]
-(pass) US-026-AC9: compact exact values, list/JSON ordering, target context, options and copied edits [2779.89ms]
-(pass) US-026-AC9: required context, explicit policies, unknown content and isolated target contexts [154.97ms]
+tests/shacl/paths.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) US-028 graph preservation, all path operators and independent expected sets [5242.70ms]
+(pass) US-028 malformed paths remain recoverable but cannot be evaluated [1162.76ms]
+(pass) US-028 unknown encoding, scopes, copied values and atomic rejection [414.62ms]
+(pass) US-028 bounded recursive structure and expensive finite traversal fail without mutation [559.49ms]
+(pass) US-028 pinned official graph inventory and independent corpus evidence [60.70ms]
 
-tests/jsonld/to-rdf.test.ts:
-(pass) US-026-AC13: complete toRDF corpus retains sources, candidates and every gap [65242.34ms]
-(pass) US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits [7147.37ms]
-(pass) US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets [58.01ms]
+ 5 pass
+ 0 fail
+ 862 expect() calls
+Ran 5 tests across 1 file. [10.46s]
+{"testProcess":"tests/shacl/paths.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":862,"completeSummary":true,"logSha256":"4d576994d177d5e92708214c1084c30181ef628140d461967f761da43fdd4541"}
+{"testProcess":"tests/shacl/targets.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/targets.test.ts"]}
+bun test v1.4.2 (744846f84)
 
-tests/jsonld/jsonld.test.ts:
-(pass) US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons [41378.48ms]
-(pass) US-026-AC4: loss policy, exact numbers, copies and explicit missing contexts [425.96ms]
-(pass) US-026-AC4: supplied contexts are isolated per operation and recover across formats [257.50ms]
+tests/shacl/targets.test.ts:
+(pass) US-028 Core target sets match native SPARQL across official and authored graphs [5035.04ms]
+(pass) US-028 graph boundaries, exact literals, cycles, deactivation and atomic target edit [967.26ms]
+(pass) US-028 malformed or unsupported target declarations cannot silently select a subset [1085.14ms]
 
-tests/jsonld/framing.test.ts:
-(pass) US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies [14471.05ms]
-(pass) US-026-AC10/11: exact values, views, edits, invalid unmatched frames and opaque controls [2426.55ms]
-(pass) US-026-AC10: framing option validation, unknown representation and context isolation [167.10ms]
-
-tests/jsonld/nest.test.ts:
-(pass) US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals [716.44ms]
-
-tests/rdf/merge.test.ts:
-(pass) US-025-AC7: all positive RDF source datasets merge with independent blank scopes [72222.67ms]
-(pass) US-025-AC7: shared labels remain linked within each input, never across inputs [88.27ms]
-(pass) US-025-AC7: unknown encodings block atomically and other metadata remains in source reports [70.13ms]
-
-tests/rdf/rename.test.ts:
-(pass) US-025-AC4: corpus IRI renames match native datasets through both UMF formats [7456.40ms]
-(pass) US-025-AC4: all term positions change while literal text, blank scope and source stay intact [49.59ms]
-(pass) US-025-AC4: collisions, absent terms, invalid IRIs and unknown encoding block atomically [155.05ms]
-
-tests/rdf/turtle.test.ts:
-(pass) US-025-AC5: full official Turtle corpus, expected graphs and candidate exports [28827.61ms]
-(pass) US-025-AC5: blank allocation, explicit labels, base resolution and literal lexemes are stable [125.78ms]
-(pass) US-025-AC5: named graph loss, missing base and RDF 1.2 syntax are explicit failures [56.76ms]
+ 3 pass
+ 0 fail
+ 159 expect() calls
+Ran 3 tests across 1 file. [9.97s]
+{"testProcess":"tests/shacl/targets.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":159,"completeSummary":true,"logSha256":"fad3e3628426518f243d111daef887011a0d5637352d37f51e083debcfb932af"}
 
  38 pass
  0 fail
  24657 expect() calls
-Ran 38 tests across 14 files. [332.65s]
+Ran 38 tests across 14 files. [229.43s]

@@ -1,0 +1,14 @@
+$ bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts
+$ bun scripts/build.ts
+Browser ESM built: 11917760 bytes; declarations emitted.
+$ bun scripts/build-postgresql.ts
+Optional PostgreSQL parser/deparser browser runtime built
+Built 12 adapter test prerequisites.
+17.9: Pulling from library/postgres
+Digest: sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545
+Status: Image is up to date for postgres:17.9
+docker.io/library/postgres:17.9
+mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27: Pulling from playwright
+Digest: sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+Status: Image is up to date for mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27

@@ -1,0 +1,18 @@
+{"testProcess":"tests/arrow/flatbuffer-encode.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/arrow/flatbuffer-encode.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/arrow/flatbuffer-encode.test.ts:
+(pass) US-016-AC8: every decoded native metadata model re-encodes with exact logical content [11799.43ms]
+(pass) US-016-AC8: explicit zero defaults, empty vectors and absent fields remain distinct [128.23ms]
+(pass) US-016-AC8: edits propagate and semantic drift or unknown fields block encoding [411.23ms]
+
+ 3 pass
+ 0 fail
+ 150 expect() calls
+Ran 3 tests across 1 file. [16.58s]
+{"testProcess":"tests/arrow/flatbuffer-encode.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":150,"completeSummary":true,"logSha256":"2b11d78999cb21ef65ac6ff0a166ac4bbe7cabe2d955db381286faa70ae57a66"}
+
+ 3 pass
+ 0 fail
+ 150 expect() calls
+Ran 3 tests across 1 files. [16.59s]

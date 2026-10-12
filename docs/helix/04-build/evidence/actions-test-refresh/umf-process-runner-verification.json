@@ -1,0 +1,33 @@
+{
+  "sourceRevision": "5529ead377ddf2ae267c426e18aec3d0ca90e9e4",
+  "passingControls": {
+    "tests": 14,
+    "files": 3,
+    "assertions": 227
+  },
+  "refusalControls": [
+    "assertion failure",
+    "missing complete summary",
+    "skipped test",
+    "overlapping file selection"
+  ],
+  "records": [
+    {
+      "path": "/private/tmp/umf-process-runner-control.log",
+      "sha256": "2a55ac5b65d967f74eaf1e6cde7c44403e83c8468399594c2ee68c0bb92a17db"
+    },
+    {
+      "path": "/private/tmp/umf-process-runner-native-control.log",
+      "sha256": "2d5e2aff3190c676e837e31d12981a9c7cd1726a6d8cfe17b6a80ca42eaecd8f"
+    },
+    {
+      "path": "/private/tmp/umf-process-runner-refusal-controls.json",
+      "sha256": "fb3692e29d416ea3cd5f530ef8dbfca377f5499532194b982cfc975e627809ab"
+    },
+    {
+      "path": "/private/tmp/umf-process-runner-overlap-control.log",
+      "sha256": "9e21c5af3ac21b4a8b093dbbc70263dfb8ab5694fd79e625bfa51a0bc2b6032d"
+    }
+  ],
+  "scope": "Runner controls only; complete qualification remains in progress"
+}
