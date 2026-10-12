@@ -2129,3 +2129,59 @@ Truss PostgreSQL16.15 administrative spike obtains43 catalog ShareLocks for the4
 The conditional ordering proof has six queries (two UNSAT/four SAT): complete commit-time exclusion plus a fresh snapshot prevents modeled source drift; independent protected fact publication is also needed for authority. Old snapshots, pending catalog writers, early release and independent authority changes retain SAT witnesses. This models one source and one fact transition, not arbitrary ABA, concrete PostgreSQL/driver/lock refinement or issuer authentication. No new backend test is admitted and the132-case acceptance scope is unchanged.
 
 Database-local advisory participation does not establish closure for PostgreSQL shared catalogs: a second database can acquire the same key and change shared role membership while the original reader holds its barrier. The actual writer domain must cover all relevant database and cluster scopes, not merely key equality. The final native spike exercises this shared-role bypass. Original callable/plan/invalidation correspondence also remains required: an immediate repeated call after666 DDL returned555 in historical f8005795, whereas a fresh census followed by different query text returned666. The different sequences do not identify a cache mechanism or prove every current call follows the current catalog source. A qualified compiler/executor must supply its actual callable/compiled-plan correspondence rather than infer it from hashes or these finite probes.
+
+## Protected observation-channel qualification sequence — 2026-10-11
+
+Governing CONTRACT-063 and US-056-AC5/AC8/AC9/AC10 retain the original privacy
+strength. The existing PostgreSQL17.9 deny-first candidate remains a candidate;
+its explicit catalog ACL evidence cannot qualify arbitrary native command
+observability. A new engine18.6 / pgserver-pg18 18.6.1 / psycopg3.3.6 binary
+counterexample in [Truss87e4b672](https://github.com/DocumentDrivenDX/truss/blob/87e4b6729e593ddd140ec091954510843ac82c8c/docs/helix/04-build/evidence/python-psycopg-epoch-cut/f79cd220-5c0d-4b1d-beb2-9f662aa40d2d/opaque-explain-counterexample.json)
+revokes direct catalog SELECT and routine EXECUTE. Its ordinary actor still
+executes EXPLAIN ANALYZE BUFFERS on an explicitly granted opaque definer. Public
+output is unchanged, one row in each world; shared hit blocks change1→304 after
+private growth. The fixed scan is not a policy evaluator or exact count oracle.
+Its185-method component pass does not promote B10 or prove general timing/privacy.
+
+For the protected Truss/Ashlar integration, use the existing shared semantic
+policy/compiler and backend-native RLS/ACL/masking/cut enforcement behind a
+qualified semantic receiver. This is the next implementation direction, not an
+activated public profile. Direct SQL profiles require their own complete native
+command/diagnostic/deployment qualification and remain unqualified where that
+coverage is unknown. Raw tables and typed graph stores retain equal semantic
+requirements; the receiver choice does not change their logical storage model.
+
+The shared requirement issuer should produce independent channel/privacy duties
+under backend-requirement-issuer-v0.2, retaining every original source/scope/kind
+and occurrence. Backend owners implement receiver routing, credentials, native
+source/callable/writer guards and final publication. Shared interfaces and exact
+request/result contracts remain governed by CONTRACT-063; no transport API,
+core-envelope change or new accepted capability is defined by this sequence.
+
+| Exit | Concrete implementation/evidence | Original cases |
+|---|---|---|
+| C01 actual channel inventory | Capture original configured receiver routes, native roles, SQL/admin/diagnostic endpoints and credential holders from their owning implementations; unknown routes refuse. | B04/B05/B10/B12 |
+| C02 original authentication/credential custody | Independently authenticate end-user subject and original private executor/server/issuer; prove no untrusted party receives credentials, connections, authority flags or reconstructed private facts. Same-name roles and matching bytes are insufficient. | B05/B10/B11/B12 |
+| C03 closed semantic dispatch | Derive dispatch from original prepared semantic input; bind exact supported operations/parameters on the original host attempt. Exercise rejection of SQL/EXPLAIN/DDL/decoder/callback/handle substitution and alternate-route bypass. | B04/B06/B08/B10/B12 |
+| C04 native source and current authority | Complete original mapping/codec/fact/source/callable/privilege closure with fresh guarded current authority and every writer path; fail closed on unknown/different coverage. | B01–B03/B09/B11/B13/L11/L13 |
+| C05 original publication/diagnostics | Release only original qualified rows/keys/field dispositions and sanitized diagnostics; compare all declared user observables across unrelated private worlds, including error/plan/log/count/cursor paths. | B07/B08/B10/B15/B16 |
+| C06 native drain and recovery | Retain original native/host acquisitions until last application release, including buffers, cancellation and failed/unknown transitions; independently reconcile recovery before reopening. | L03–L14 |
+| C07 reviewed full qualification | Bind exercised source/oracle/implementation/native inventories to original acceptance IDs; fresh gate execution is required before a backend profile is admitted. | All12 semantic and30 backend cases |
+
+C01–C07 are implementation exits, not additional acceptance cases or proof
+receipts. Implement/verify them in order; no caller/configuration boolean can
+satisfy channel closure. Keep ordinary SQL and protected semantic dispatch
+qualifications separate. Existing administrative/owned service helpers supply
+qualified prerequisites only. Installation migration and rollout remain closed
+until selected native bodies, receiver/credential/routing custody and complete
+case evidence pass; rollback closes the receiver/admission path without widening
+ordinary grants or reverting to an unqualified SQL route.
+
+Formal applicability: observation equality and endpoint completeness become
+registered profile obligations, with original native/receiver inputs. No analyzer
+run on this plan can establish those inputs or command closure. The retained
+native counterexample supplies physical evidence against ACL-only inference;
+existing conditional source/current-authority/publication laws keep their original
+scope. Concrete receiver/credential implementation and independent native tests
+must precede refinement claims. Full acceptance remains26/132 with106 unbound
+cases; graph/Delta implementation and original scope remain required.

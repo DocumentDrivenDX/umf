@@ -1515,3 +1515,25 @@ interpretation under CONTRACT-063 and US-056-AC8; B10 remains required and unbou
 and26/132 acceptance is unchanged.
 
 Retained native counterexample and integrated composition: [Truss main3bce4c77 evidence](https://github.com/DocumentDrivenDX/truss/blob/3bce4c777d5c9b631482084bd792337e18e2f27a/docs/helix/04-build/evidence/python-psycopg-epoch-cut/ed2ea7b9-ad94-40ed-b12d-84e346e20a7e/receipt.json). Its184-method component pass does not establish hidden-fact observation isolation.
+
+### Closed command/receiver boundary qualification tests — 2026-10-11
+
+For B04/B05/B10/B12, explicit table/catalog/routine ACL denials must be paired
+with native command controls. Truss87e4b672 supplies a fixed opaque-definer
+EXPLAIN ANALYZE BUFFERS counterexample after catalog SELECT/EXECUTE revocation:
+same output and one row, shared hits1→304 under private growth. This is not an
+exact cardinality oracle or qualified policy runtime. Include executing EXPLAIN,
+COPY, prepared/cached commands, user-owned wrappers/operators/types, errors/logs,
+stream/cursor and alternate credential/endpoint paths applicable to the selected
+profile. Do not claim complete closure from this finite list.
+
+For a mediated profile, exercise actual receiver rejection of arbitrary SQL,
+EXPLAIN/DDL, caller actor/authority flags, decoder callbacks, copied handles and
+alternate direct access while retaining original authorized semantic outcomes.
+Capture independent actual routing/credential/native endpoint inventories before
+and after adversarial changes. Require the native receiver and original trusted
+semantic producer to enforce the same source/current-authority/publication cut;
+private executor handles and cells must never become user outputs. TD-056 exits
+C01–C07 sequence these prerequisites without adding/removing case IDs or accepting
+caller flags as evidence. All original132 cases remain required;26 pass and106
+remain unbound. B10 and complete protected observation isolation remain open.

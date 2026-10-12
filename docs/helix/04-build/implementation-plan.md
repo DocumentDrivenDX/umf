@@ -11646,3 +11646,25 @@ drain remain required. Preserve the original requirements and acceptance plan;
 next admitted implementations must supply complete case runners and independent
 native inventory rather than reinterpret component spikes as backend acceptance.
 Goal remains active at26/132 with106 missing bindings.
+
+### Protected observation-channel implementation exits — 2026-10-11
+
+TD-056's C01–C07 sequence reconciles the original PostgreSQL17.9 deny-first
+candidate with Truss18.6 opaque-EXPLAIN counterevidence on main87e4b672. Next
+implementation work must capture actual receiver routes, credential ownership and
+native endpoints, then connect an original authenticated subject/private executor
+to closed semantic dispatch. An absent receiver or incomplete inventory is unknown,
+not a fabricated zero-channel proof. Empty queries/results and zero-edge profiles
+still require unconditional deployment/channel qualification under the original
+backend requirement issuer. No source/core/SQL/callback escape or request boolean
+may supply admission authority.
+
+Shared UMF owns semantic demands, result dispositions and independent qualification
+obligations. Backend owners retain receiver/credential/routing implementation and
+native RLS/ACL/masking/source/writer guards. Preserve all raw-table and graph
+semantics and existing direct-RLS profile evidence; qualify each supported channel
+separately. C01–C07 closeouts require original B04/B05/B10/B11/B12/B16 and lifecycle
+native outcomes, then fresh original132-case execution. No component pass alone
+promotes a supported backend. Current gate stays26/132 with106 unbound cases;
+original issuer/subject/mapping/target authenticity and complete protected source/
+publication/recovery remain required. Goal active.
