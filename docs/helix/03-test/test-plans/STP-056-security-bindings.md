@@ -1527,9 +1527,14 @@ COPY, prepared/cached commands, user-owned wrappers/operators/types, errors/logs
 stream/cursor and alternate credential/endpoint paths applicable to the selected
 profile. Do not claim complete closure from this finite list.
 
-For a mediated profile, exercise actual receiver rejection of arbitrary SQL,
-EXPLAIN/DDL, caller actor/authority flags, decoder callbacks, copied handles and
-alternate direct access while retaining original authorized semantic outcomes.
+For a mediated profile, exercise the original full Weft query interface and its
+complete source/security/execution obligations. Do not require a separate
+UMF/Truss SQL allowlist or blanket SQL/EXPLAIN/DDL rejection. Exercise refusal of
+unbound private-executor commands, caller actor/authority flags, decoder callbacks,
+copied handles and alternate direct access while retaining original authorized
+semantic outcomes. Qualify every selected native command observable and authority
+boundary; inability to enforce one remains an implementation gap, not authority
+to redefine the product query surface.
 Capture independent actual routing/credential/native endpoint inventories before
 and after adversarial changes. Require the native receiver and original trusted
 semantic producer to enforce the same source/current-authority/publication cut;
@@ -1537,3 +1542,118 @@ private executor handles and cells must never become user outputs. TD-056 exits
 C01–C07 sequence these prerequisites without adding/removing case IDs or accepting
 caller flags as evidence. All original132 cases remain required;26 pass and106
 remain unbound. B10 and complete protected observation isolation remain open.
+
+
+## Current result and physical component coverage — 2026-10-12
+
+Weft mainfdb2a3e's original Rust run passes257 unit,68 security-admission and3
+literal tests. The source pins were independently matched to current files; this
+is verification of the retained run, not a new rerun. The following supersedes
+only the older component-gap descriptions; the original backend cases remain open.
+
+| Control | Current exercising evidence | Still required at each native backend |
+| --- | --- | --- |
+| R08 active withholding |24 supplied-fact controls across active/false mask, value/null/absence and four candidate cells. Active Withheld accepts only its value-free cell. | Authenticated original facts; installed mask/query behavior; bag/retained/history/diagnostic bypass controls; final protected publication. |
+| R09 exact presence | Optional declarations require Original and Absent; all six value/null/absence substitutions and omitted presence metadata refuse. | Actual carrier/codec/presence correspondence; native null/absence/transform/withheld controls at ordinary API and SQL routes; historical/source mappings. |
+| R11 bounded issuance | Shared ledger now accounts for opaque numeric spelling; physical declarations test depth, per-operation and aggregate limits. | Native workload/resource/refusal evidence and no partial output/effects; external immutable evidence tied to exact source/build. |
+| R13 physical declaration structure | Unique installation/execution IDs; bounded nonempty NUL-free SQL; contiguous parameters; typed provenance shape;512 operations and16384-slot boundaries. | Original SQL/parameter origin/domain correspondence, complete capabilities and obligations, actual native installation/DDL/effects/rollback/current authority. |
+
+R13 is a component control, not a new acceptance case or an SQL feature allowlist.
+Its checker admits shape only; even nonempty nonsyntactic SQL may pass shape and
+must fail its later actual backend/native admission. Successful shape, cell or
+supplied-fact checks issue no execution authority and public security compilation
+remains blocked. Supplied-truth checks do not establish original value or absence.
+
+Next integration controls: mutate SQL and parameter provenance after shape checks;
+substitute a same-shaped operation from another original query/target/action;
+change native function/role/mapping source before first effects and final release;
+remove a selected capability's obligation; fail mid-installation; and retry after
+unknown settlement. Require refusal/rollback under the original actual host/native
+protocol. Caller-produced coverage flags, matching labels, endpoint hashes or a
+pure check result cannot replace that protocol.
+
+`../../04-build/evidence/security/weft-component-coverage-20261012/` retains the
+current original run and control mapping. No B07/B09/B12/B15/B16 or lifecycle case
+is accepted from it. All132 cases remain required. Databricks workspace/catalog
+and actual ordinary identities for Ashlar/Delta are unresolved; do not simulate
+those roles with an excluded administrator or claim local PostgreSQL proves them.
+
+
+### Current compiler refusal witness — 2026-10-12
+
+The older activation-compiler-boundary.py/witness remains historical evidence: it
+uses the stale owner checkout and an older transport. A separate current witness
+now builds the actual compiler from exact main40b812c and executes nine original
+requests through ordinary/security registration boundaries. Real registration
+reachability, missing registration, supported mask source, unsupported path/mask,
+prohibited original-field filtering and invalid report/history inputs retain
+exact callback observations and refusal codes. All protected requests emit no
+SQL/parameters/plan and never invoke the registered backend's lower callback.
+
+Run `python3 tools/security/current-compiler-boundary.py --weft-root <checkout>
+--expected-weft-commit <exact-commit> --output <receipt-directory>`. The script
+requires a clean tracked compiler source at that exact commit, freezes declared
+repository/build/witness/binary inputs and checks them unchanged after all cases.
+The private witness forwards exact requestJson bytes to the actual compiler.
+`../../04-build/evidence/security/current-compiler-boundary-20261012/receipt.json`
+retains exact requests/results, original build logs, source digests and preimages.
+Pinned build/runtime inputs are observed premises; external Cargo/toolchain
+closure and held source/authority lifetime are not proved.
+
+This is current compiler-refusal component evidence for B09/B12 and AC7/AC10
+prerequisites, not a native preservation runner or admitted lowering path. The
+original native B09 runner must use current original preparation inputs before
+obtaining an installer, retain prior inventory and ordinary results across each
+refusal, and cover actual history/composition and partial installation controls.
+No old receipt is rewritten and no original case is promoted. All132 required
+cases and106 missing executable bindings remain in scope.
+
+
+### Source-current native refusal preservation — 2026-10-12
+
+`tools/security/current-native-refusals.py` freshly executes the nine pinned
+current-main compiler cases while the existing owned PostgreSQL17.9 raw fixture
+is protected. Each original response retains exact factory/lower observations
+and diagnostics, no executable output, unchanged complete captured inventory/
+authority facts, and exact independently authored ordinary-actor resource IDs.
+Three actual TCP SCRAM actor connections per case retain original session/current
+user, native PID and ROLE=none. The excluded administrator reads all five resources
+as a separate negative control. All82 observations pass.
+
+The harness validates the original compiler observation digest and exact nine-case
+population/expectations before creating its labelled disposable container. Three
+tampered-artifact/population/expectation controls refuse before the native phase.
+The final owned-label/removal/absence check passes and retains Docker's exact
+response. Prior database-default and case-sensitive absence-check harness defects
+remain separately recorded; neither is counted as a passing native run.
+Receipt: `../../04-build/evidence/security/current-native-refusals-20261012/receipt.json`.
+Native source preimages are retained; original compiler preimages are referenced
+from the existing current-main witness archive without another large duplicate.
+
+Run `python3 tools/security/current-native-refusals.py --compiler-receipt
+<current-compiler-receipt> --output <receipt-directory>` against the isolated local
+Docker runtime. Existing receipt pins must match before original native execution.
+This is B09/B12 and AC7/AC10 prerequisite evidence, not candidate installation,
+admitted source-to-native semantics, actual history/composition, partial policy
+activation or final publication lifetime. No original backend case is promoted.
+All132 cases and106 missing executable bindings remain required.
+
+
+### Native receipt finalization failure controls — 2026-10-12
+
+The current refusal harness now retains native workStatus separately from cleanup.
+A successful native run with unverified cleanup receives
+`native-passed-cleanup-unverified`, never the accepted passed status. Cleanup
+transport/ownership/removal failures return evidence rather than replacing the
+original native exception or preventing receipt serialization. Only an exact
+owned-container absence response can verify completion; prefix-name responses
+refuse. Frozen reviewed cleanup source is compiled directly, without relying on
+an unrelated imported module.
+
+Four failure-path tests pass, including foreign ownership, transport/removal
+uncertainty, wrong/prefix names, original failure retention and no-creation paths.
+The final source-native replay again passes82 observations and actual owned
+removal/absence. Receipt:
+`../../04-build/evidence/security/native-receipt-finalization-20261012/receipt.json`.
+This corrects receipt truthfulness for B12/AC10 prerequisites; it does not qualify
+full activation/lifetime or promote an original backend case.

@@ -2162,7 +2162,7 @@ core-envelope change or new accepted capability is defined by this sequence.
 |---|---|---|
 | C01 actual channel inventory | Capture original configured receiver routes, native roles, SQL/admin/diagnostic endpoints and credential holders from their owning implementations; unknown routes refuse. | B04/B05/B10/B12 |
 | C02 original authentication/credential custody | Independently authenticate end-user subject and original private executor/server/issuer; prove no untrusted party receives credentials, connections, authority flags or reconstructed private facts. Same-name roles and matching bytes are insufficient. | B05/B10/B11/B12 |
-| C03 closed semantic dispatch | Derive dispatch from original prepared semantic input; bind exact supported operations/parameters on the original host attempt. Exercise rejection of SQL/EXPLAIN/DDL/decoder/callback/handle substitution and alternate-route bypass. | B04/B06/B08/B10/B12 |
+| C03 original query and execution binding | Consume the original Weft query/plan and its complete execution/security obligations; bind exact physical mappings, operations and parameters to the original host attempt. Preserve the full evolving Weft query surface without a separate UMF/Truss SQL allowlist. Reject unbound private-executor access, actor/authority flags, decoder/callback/handle substitution and alternate-route bypass. Qualify SQL/EXPLAIN/DDL observables and their actual authority separately. | B04/B06/B08/B10/B12 |
 | C04 native source and current authority | Complete original mapping/codec/fact/source/callable/privilege closure with fresh guarded current authority and every writer path; fail closed on unknown/different coverage. | B01–B03/B09/B11/B13/L11/L13 |
 | C05 original publication/diagnostics | Release only original qualified rows/keys/field dispositions and sanitized diagnostics; compare all declared user observables across unrelated private worlds, including error/plan/log/count/cursor paths. | B07/B08/B10/B15/B16 |
 | C06 native drain and recovery | Retain original native/host acquisitions until last application release, including buffers, cancellation and failed/unknown transitions; independently reconcile recovery before reopening. | L03–L14 |
@@ -2185,3 +2185,75 @@ existing conditional source/current-authority/publication laws keep their origin
 scope. Concrete receiver/credential implementation and independent native tests
 must precede refinement claims. Full acceptance remains26/132 with106 unbound
 cases; graph/Delta implementation and original scope remain required.
+
+
+## Query-surface reconciliation — 2026-10-12
+
+Truss CONTRACT-007 and its owner PRD select the full evolving Weft query surface.
+C03 now binds original query/plan/security and native execution obligations; it
+must not become an independent SQL coverage policy. The earlier fixed private
+read receiver is a scoped experiment, not the required product API or a condition
+that all protected queries must use its read-only request grammar. Unknown policy
+meaning or unavailable required security obligations still refuse activation or
+execution; a language allowlist cannot supply the missing implementation.
+
+Native RLS/ACL/masks and private credential boundaries remain necessary. Distinguish
+queries accepted by the original Weft interface from attempts to commandeer its
+private executor with unbound commands or callbacks. EXPLAIN/DDL/COPY and other
+observables retain their selected semantic/authority requirements and native
+qualification; dropping language coverage cannot count as satisfying them.
+Shared UMF defines policy meaning and evidence obligations. Weft owns its language
+and logical-plan contract; backend implementations supply their owned physical
+mapping/execution integration under the selected compiler interface. Do not invent
+or independently reinterpret a Weft interface to bypass missing owner obligations.
+
+Evidence `../../04-build/evidence/security/query-surface-alignment-20261012/receipt.json`
+retains the governing owner direction and design preimages. This is design
+alignment only; no query lowering, ontology-policy enforcement, observation
+isolation or original backend acceptance case is newly qualified.
+
+
+## Current owned compiler handoff — 2026-10-12
+
+Weft mainb62fbf7 contains the merged security foundation, superseding the stale
+owner checkout's uncommitted historical compile0.3/0.4 copies. Current explicit
+compatibility interfaces are weft-security-compile/0.1.0 and0.2.0; the latter
+selects the security registration factory. CONTRACT-007's compile0.5 path remains
+blocked-only. The ordinary compiler's evolving versions must not be reused as
+historical security aliases or silently drop selected policy source.
+
+Fresh current-main Rust security admission passes64 original tests and65 after
+a five-variant historical/unknown/empty-envelope control. All selected requests
+block before ordinary composition and emit no partial SQL/parameters/logicalPlan.
+The original registration path still returns
+WFT-SECURITY-LOWERING-UNSUPPORTED after scoped correspondence checks. Neither
+these tests nor registry selection supplies native installation, protected query
+execution, private facts, masking, current authority or publication.
+
+`../../04-build/evidence/security/weft-current-handoff-20261012/` retains the
+owned compiler receipt and exact current handoff pins. The next functional gap
+is completing owned physical/result/dependency coverage and native host integration
+through that actual interface; a local replacement compiler or fixed read receiver
+cannot close it. Trace FR-19–22 / Weft CONTRACT-007 and shared CONTRACT-063,
+US-056 AC7/AC10 prerequisites. No full backend case is promoted.
+
+
+## Result/physical implementation checkpoint — 2026-10-12
+
+Weft mainfdb2a3e now checks conservative optional Original/Absent declarations,
+exact supplied-fact presence and active Withheld precedence. Its owned context
+also checks bounded physical-plan structure; opaque numeric metadata is charged
+by original lexical bytes. Current source-matched retained Rust evidence is328
+passing targeted tests. STP-056's current component table identifies native
+integration controls that remain required; none of these pure methods authenticates
+facts, proves SQL/parameter meaning, closes selected native obligations or enables
+compiler emission. Supplied-truth correspondence alone cannot prove presence.
+
+The next physical integration must bind original query/parameter requirements to
+actual backend SQL and immutable source/current-authority/host lifetime. Exact
+structured operation shape cannot stand in for that correspondence. Cross-world
+mask/presence simulations and finite conditional proofs retain their original
+scope; real installed codecs/masks and every declared observable route still need
+native qualification. Cloud workspace/catalog/ordinary identity selection remains
+an explicit unknown for Ashlar/Delta acceptance. The original132-case scope and
+full shared implementation goal remain unchanged.

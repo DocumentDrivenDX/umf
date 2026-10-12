@@ -1,0 +1,20 @@
+{
+  "base": "f4ad4f5561591141bc19708097700b47642a59fc",
+  "governing_sources": {
+    "/private/tmp/truss-security-main-integration/docs/helix/01-frame/prd.md": "442d97eea9ddebf92ae466c000bed326211e310f9861d18b2dfe81d8ed93861e",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/contracts/CONTRACT-007-embedding-and-execution.md": "fbcdc5e3f33de2ae554a450158360d4c283c90ac08e14416f168c19fcfc14ed0",
+    "/Users/erik/Projects/weft/AGENTS.md": "d10e315200c67f4a7380e06120ea679769afaa6ca6e7e0df339e35326effd02a"
+  },
+  "updated_sources": {
+    "docs/helix/02-design/technical-designs/TD-056-security-bindings.md": "afc960a9b86721ac1c502161fc98a3feed97997a855db539da01d4a405a1551d",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "c7fe15f5b3fa7e17d6ab198c0cf0b44b7579caa67bb1386d52facfc6501733d4",
+    "docs/helix/04-build/implementation-plan.md": "2e876a2e8f0e40fa95b2ecae5cfe1d9775b8b8a327aa65e617a65b35c105ca9f"
+  },
+  "scope": "Reconcile downstream C03 and mediated tests to existing owner full Weft surface; no implementation, proof, or backend acceptance claim",
+  "validation": [
+    "git diff --check",
+    "original artifact frontmatter byte-identical",
+    "local receipt reference resolves",
+    "governing source snapshots retained"
+  ]
+}

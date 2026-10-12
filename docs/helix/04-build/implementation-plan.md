@@ -11672,3 +11672,48 @@ publication/recovery remain required. Goal active.
 ### Fresh complete command and adapter test execution — 2026-10-12
 
 The [fresh qualification](evidence/actions-test-refresh/README.md) at5529ead3 completes all174 native/browser commands, six auxiliary commands,17 strict evidence-gate tests and the full unfiltered `bun run test`:2,624 tests in493 files,163,133 assertions, zero failures. The independent inventory audit verifies one complete successful process per live test file;8,041 captured inputs match the delivery source. A fresh sequential Bun process per file resolves the prior shared-VM crash without changing handler deadlines or weakening rollback/native-semantic checks. Historical certificates retain their original source scope. Merge, main CI and deployed website verification remain required delivery exits.
+
+### Full Weft query-surface security alignment — 2026-10-12
+
+The C03 implementation exit and mediated-profile test instructions previously
+required rejection of arbitrary SQL/EXPLAIN/DDL through a closed semantic receiver.
+Current Truss owner PRD and CONTRACT-007 require the full evolving Weft query
+surface and prohibit an independent SQL allowlist. TD-056/STP-056 now consume
+original Weft query/plan/security/execution obligations and distinguish unbound
+private-executor access from authorized query execution. This supersedes the
+closed-dispatch product implication of the2026-10-11 plan entry; historical fixed
+read receiver experiments retain only their original scoped evidence.
+
+The governing source/preimage packet and receipt are retained under
+`evidence/security/query-surface-alignment-20261012/`. Exact native source/current
+policy/masks/private fact and observation qualification remain required. This
+alignment adds no support or case acceptance: all132 original cases remain
+required. Next functional integration must use the actual owned Weft boundary and
+backend physical execution rather than fabricate another local query language.
+
+
+### Current Weft main security handoff — 2026-10-12
+
+Weft mainb62fbf7 retains the current source-qualified65-test Rust security
+admission regression. The owner checkout is stale; historical uncommitted
+compile0.3/0.4 files must not overwrite current main or masquerade as integration.
+TD-056 records current dedicated security interface versions and the actual
+remaining physical/result/dependency lowering refusal. Original compiler evidence
+and source pins are retained in `evidence/security/weft-current-handoff-20261012/`.
+This is a handoff/admission checkpoint, not native security support. Original132
+cases remain required; the full shared goal stays active.
+
+
+### Shared component/native test handoff — 2026-10-12
+
+STP-056/TD-056 now trace Weft's optional presence, active withholding, numeric
+ledger and physical-shape components to current original tests and source pins.
+`evidence/security/weft-component-coverage-20261012/` retains the original328-test
+run and R08/R09/R11/R13 mapping. All core source pins match current Weft main;
+no new test execution is claimed by this reconciliation. The plan explicitly
+requires original SQL/parameter correspondence, native source/role drift controls,
+missing-obligation refusal, mid-installation rollback and unknown-settlement retry.
+Pure structural/semantic checks cannot close those native obligations. No backend
+case is promoted. Ashlar/Delta test workspace/catalog and actual ordinary actors
+remain unresolved; a text-only question requests those names without credentials.
+Independent local implementation remains available and the full goal stays active.

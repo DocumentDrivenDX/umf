@@ -1,0 +1,2578 @@
+{
+  "status": "incomplete",
+  "runId": "e684552e-df94-417a-9f31-586fd907f25d",
+  "observations": [
+    {
+      "id": "excluded-admin-control",
+      "expected": [
+        "RA",
+        "RAB",
+        "RB",
+        "RD",
+        "RO"
+      ],
+      "observed": [
+        "RA",
+        "RAB",
+        "RB",
+        "RD",
+        "RO"
+      ]
+    },
+    {
+      "id": "compiler:ordinary-factory-positive",
+      "expected": {
+        "ordinaryFactoryInvoked": true,
+        "securityFactoryInvoked": false,
+        "lowerInvoked": false,
+        "diagnosticCode": "WFT-WITNESS-ORDINARY"
+      },
+      "observed": {
+        "ordinaryFactoryInvoked": true,
+        "securityFactoryInvoked": false,
+        "lowerInvoked": false,
+        "diagnosticCode": "WFT-WITNESS-ORDINARY"
+      }
+    },
+    {
+      "id": "original-response:ordinary-factory-positive",
+      "requestJson": "{\"interfaceVersion\":\"weft-compile/0.1.0\",\"dialect\":\"weft-sql/0.1.0\",\"sql\":\"SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name\",\"modules\":[{\"documentJson\":\"{\\\"umf\\\":\\\"0.7.0\\\",\\\"id\\\":\\\"sales-fixture\\\",\\\"vocabularies\\\":{\\\"future.vendor\\\":{\\\"version\\\":\\\"99.0.0\\\"}},\\\"modules\\\":[{\\\"id\\\":\\\"sales\\\",\\\"namespace\\\":\\\"sales\\\",\\\"elements\\\":[{\\\"id\\\":\\\"customer\\\",\\\"name\\\":\\\"Customer\\\",\\\"kind\\\":\\\"record\\\",\\\"members\\\":[{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"customer-id\\\"},{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"customer-name\\\"},{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"customer-active\\\"}],\\\"extensions\\\":{}},{\\\"id\\\":\\\"orders\\\",\\\"name\\\":\\\"Orders\\\",\\\"kind\\\":\\\"record\\\",\\\"members\\\":[{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"order-customer\\\"},{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"order-total\\\"}],\\\"extensions\\\":{}},{\\\"id\\\":\\\"customer-id\\\",\\\"name\\\":\\\"id\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"integer\\\",\\\"nullability\\\":\\\"required\\\",\\\"cardinality\\\":\\\"one\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"integerWidth\\\":{\\\"bits\\\":64,\\\"signed\\\":false}}},{\\\"id\\\":\\\"customer-name\\\",\\\"name\\\":\\\"name\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"nullability\\\":\\\"required\\\",\\\"cardinality\\\":\\\"one\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"customer-active\\\",\\\"name\\\":\\\"active\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"boolean\\\",\\\"nullability\\\":\\\"required\\\",\\\"cardinality\\\":\\\"one\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"order-customer\\\",\\\"name\\\":\\\"customer_id\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"integer\\\",\\\"nullability\\\":\\\"required\\\",\\\"cardinality\\\":\\\"one\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"integerWidth\\\":{\\\"bits\\\":64,\\\"signed\\\":false}}},{\\\"id\\\":\\\"order-total\\\",\\\"name\\\":\\\"total\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"decimal\\\",\\\"nullability\\\":\\\"required\\\",\\\"cardinality\\\":\\\"one\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"precision\\\":28,\\\"scale\\\":2}}]}],\\\"extensions\\\":{\\\"future.vendor\\\":{\\\"unknown\\\":[\\\"keep\\\",{\\\"payload\\\":\\\"opaque\\\"}]}}}\",\"pin\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"},\"selectedModuleIds\":[\"sales\"]}],\"target\":{\"backendId\":\"truss.postgresql\",\"backendVersion\":\"fixture-0.1.0\",\"targetProfile\":\"fixture-only\",\"bindingJson\":\"{\\\"fixtureOnly\\\":true,\\\"profile\\\":\\\"synthetic-sales-v1\\\",\\\"documentId\\\":\\\"sales-fixture\\\",\\\"mappingOwner\\\":\\\"truss.postgresql\\\",\\\"mappingStatus\\\":\\\"illustrative-not-production\\\"}\",\"bindingSha256\":\"7d1e0f36a52d6db174ec3f5422dfa7152ea45905b8efca7b0847a5024b30e53c\"},\"options\":{\"allowCandidate\":true}}",
+      "observed": {
+        "lowerInvoked": false,
+        "ordinaryFactoryInvoked": true,
+        "response": {
+          "diagnostics": [
+            {
+              "code": "WFT-WITNESS-ORDINARY",
+              "message": "Observed ordinary factory",
+              "phase": "capability",
+              "recoverability": "correct-input",
+              "severity": "error"
+            }
+          ],
+          "interfaceVersion": "weft-compile/0.1.0",
+          "status": "blocked"
+        },
+        "securityFactoryInvoked": false
+      }
+    },
+    {
+      "id": "native-profile:ordinary-factory-positive",
+      "expected": {
+        "inventory": {
+          "engine": {
+            "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+            "number": "170009"
+          },
+          "namespace": {
+            "owner": "umf_sec_guardian",
+            "acl": "{umf_sec_guardian=UC/umf_sec_guardian,umf_sec_alice=U/umf_sec_guardian,umf_sec_bob=U/umf_sec_guardian,umf_sec_outsider=U/umf_sec_guardian}"
+          },
+          "objects": [
+            {
+              "name": "company",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "company_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee_native_login_key",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_employee_project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_employee_project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_resource_project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_resource_project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": true,
+              "force": true,
+              "settings": null
+            },
+            {
+              "name": "resource_child_carrier",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_child_carrier_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_disclosure",
+              "kind": "v",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": [
+                "security_barrier=true"
+              ]
+            },
+            {
+              "name": "resource_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_private_carrier",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_private_carrier_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_project",
+              "kind": "v",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": [
+                "security_barrier=true"
+              ]
+            }
+          ],
+          "columns": [
+            {
+              "table": "company",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "company_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee",
+              "position": 2,
+              "name": "native_login",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee_native_login_key",
+              "position": 1,
+              "name": "native_login",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 1,
+              "name": "employee_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 3,
+              "name": "active",
+              "type": "boolean",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project_pkey",
+              "position": 1,
+              "name": "employee_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project_pkey",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project_pkey",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project",
+              "position": 2,
+              "name": "company_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource",
+              "position": 2,
+              "name": "value",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier",
+              "position": 2,
+              "name": "private_value",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_disclosure",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_disclosure",
+              "position": 2,
+              "name": "cells",
+              "type": "jsonb",
+              "notNull": false,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 2,
+              "name": "bag",
+              "type": "jsonb",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 3,
+              "name": "retained",
+              "type": "bytea",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_project",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            }
+          ],
+          "constraints": [
+            {
+              "table": "company",
+              "name": "company_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "employee",
+              "name": "employee_native_login_key",
+              "kind": "u",
+              "definition": "UNIQUE (native_login)",
+              "validated": true
+            },
+            {
+              "table": "employee",
+              "name": "employee_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_employee_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (employee_id) REFERENCES security_raw.employee(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (employee_id, project_id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_project_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id, project_id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_project_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            },
+            {
+              "table": "project",
+              "name": "project_company_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (company_id) REFERENCES security_raw.company(id)",
+              "validated": true
+            },
+            {
+              "table": "project",
+              "name": "project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "resource",
+              "name": "resource_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "resource_child_carrier",
+              "name": "resource_child_carrier_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id)",
+              "validated": true
+            },
+            {
+              "table": "resource_child_carrier",
+              "name": "resource_child_carrier_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            },
+            {
+              "table": "resource_private_carrier",
+              "name": "resource_private_carrier_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id)",
+              "validated": true
+            },
+            {
+              "table": "resource_private_carrier",
+              "name": "resource_private_carrier_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            }
+          ],
+          "policies": [
+            {
+              "table": "resource",
+              "name": "resource_owner_projection",
+              "roles": [
+                "umf_sec_guardian"
+              ],
+              "command": "SELECT",
+              "permissive": "PERMISSIVE",
+              "using": "security_raw.allowed(id)",
+              "check": null
+            },
+            {
+              "table": "resource",
+              "name": "resource_read",
+              "roles": [
+                "umf_sec_alice",
+                "umf_sec_bob",
+                "umf_sec_outsider"
+              ],
+              "command": "SELECT",
+              "permissive": "PERMISSIVE",
+              "using": "security_raw.allowed(id)",
+              "check": null
+            }
+          ],
+          "views": [
+            {
+              "name": "resource_disclosure",
+              "definition": " SELECT r.id,\n    jsonb_build_array(jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'original', 'value', jsonb_build_object('string', r.id)), security_raw.note_cell(p.bag),\n        CASE\n            WHEN (r.id = 'RAB'::text) THEN jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'transformed', 'outputType', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'value', jsonb_build_object('string', 'restricted'))\n            ELSE jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'withheld')\n        END) AS cells\n   FROM (security_raw.resource r\n     LEFT JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));",
+              "settings": [
+                "security_barrier=true"
+              ]
+            },
+            {
+              "name": "resource_project",
+              "definition": " SELECT r.id AS resource_id,\n    o.project_id\n   FROM (((security_raw.resource r\n     JOIN security_raw.m2m_resource_project o ON ((o.resource_id = r.id)))\n     JOIN security_raw.m2m_employee_project a ON (((a.project_id = o.project_id) AND a.active)))\n     JOIN security_raw.employee e ON ((e.id = a.employee_id)))\n  WHERE (e.native_login = (SESSION_USER)::text);",
+              "settings": [
+                "security_barrier=true"
+              ]
+            }
+          ],
+          "routines": [
+            {
+              "name": "allowed",
+              "identity": "resource_id text",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+              "definition": "CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\n SELECT EXISTS(SELECT 1 FROM security_raw.m2m_resource_project o\n JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id\n JOIN security_raw.employee e ON e.id=a.employee_id\n WHERE o.resource_id=$1 AND a.active AND e.native_login=session_user::text)\n$function$\n",
+              "definer": true,
+              "settings": [
+                "search_path=pg_catalog"
+              ]
+            },
+            {
+              "name": "note_cell",
+              "identity": "bag jsonb",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+              "definition": "CREATE OR REPLACE FUNCTION security_raw.note_cell(bag jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE f jsonb := '{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"note\"}'::jsonb; note jsonb;\nBEGIN\n IF jsonb_typeof(bag) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001'; END IF;\n note := bag->'note';\n IF NOT (bag ? 'note') THEN RETURN jsonb_build_object('field',f,'disposition','absent'); END IF;\n IF jsonb_typeof(note)='null' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',NULL); END IF;\n IF jsonb_typeof(note)='string' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',jsonb_build_object('string',note #>> '{}')); END IF;\n RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001';\nEND $function$\n",
+              "definer": false,
+              "settings": [
+                "search_path=pg_catalog"
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "name": "postgres",
+              "login": true,
+              "superuser": true,
+              "bypass": true,
+              "inherit": true,
+              "createRole": true,
+              "createDb": true,
+              "replication": true,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_alice",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_bob",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_guardian",
+              "login": false,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_outsider",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            }
+          ],
+          "memberships": []
+        },
+        "authority": {
+          "employee": [
+            [
+              "Alice",
+              "umf_sec_alice"
+            ],
+            [
+              "Bob",
+              "umf_sec_bob"
+            ]
+          ],
+          "project": [
+            [
+              "A"
+            ],
+            [
+              "B"
+            ],
+            [
+              "D"
+            ]
+          ],
+          "resource": [
+            [
+              "RA"
+            ],
+            [
+              "RAB"
+            ],
+            [
+              "RB"
+            ],
+            [
+              "RD"
+            ],
+            [
+              "RO"
+            ]
+          ],
+          "assignment": [
+            [
+              "Alice",
+              "A",
+              true
+            ],
+            [
+              "Alice",
+              "B",
+              false
+            ],
+            [
+              "Bob",
+              "B",
+              true
+            ]
+          ],
+          "ownership": [
+            [
+              "RA",
+              "A"
+            ],
+            [
+              "RAB",
+              "A"
+            ],
+            [
+              "RAB",
+              "B"
+            ],
+            [
+              "RB",
+              "B"
+            ],
+            [
+              "RD",
+              "D"
+            ]
+          ]
+        }
+      },
+      "observed": {
+        "inventory": {
+          "engine": {
+            "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+            "number": "170009"
+          },
+          "namespace": {
+            "owner": "umf_sec_guardian",
+            "acl": "{umf_sec_guardian=UC/umf_sec_guardian,umf_sec_alice=U/umf_sec_guardian,umf_sec_bob=U/umf_sec_guardian,umf_sec_outsider=U/umf_sec_guardian}"
+          },
+          "objects": [
+            {
+              "name": "company",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "company_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee_native_login_key",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "employee_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_employee_project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_employee_project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_resource_project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "m2m_resource_project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "project",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "project_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": true,
+              "force": true,
+              "settings": null
+            },
+            {
+              "name": "resource_child_carrier",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_child_carrier_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_disclosure",
+              "kind": "v",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": [
+                "security_barrier=true"
+              ]
+            },
+            {
+              "name": "resource_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_private_carrier",
+              "kind": "r",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_private_carrier_pkey",
+              "kind": "i",
+              "owner": "umf_sec_guardian",
+              "acl": null,
+              "rls": false,
+              "force": false,
+              "settings": null
+            },
+            {
+              "name": "resource_project",
+              "kind": "v",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+              "rls": false,
+              "force": false,
+              "settings": [
+                "security_barrier=true"
+              ]
+            }
+          ],
+          "columns": [
+            {
+              "table": "company",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "company_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee",
+              "position": 2,
+              "name": "native_login",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee_native_login_key",
+              "position": 1,
+              "name": "native_login",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "employee_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 1,
+              "name": "employee_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project",
+              "position": 3,
+              "name": "active",
+              "type": "boolean",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project_pkey",
+              "position": 1,
+              "name": "employee_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_employee_project_pkey",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "m2m_resource_project_pkey",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project",
+              "position": 2,
+              "name": "company_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "project_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource",
+              "position": 2,
+              "name": "value",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier",
+              "position": 2,
+              "name": "private_value",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_child_carrier_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_disclosure",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_disclosure",
+              "position": 2,
+              "name": "cells",
+              "type": "jsonb",
+              "notNull": false,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_pkey",
+              "position": 1,
+              "name": "id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 2,
+              "name": "bag",
+              "type": "jsonb",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier",
+              "position": 3,
+              "name": "retained",
+              "type": "bytea",
+              "notNull": true,
+              "collation": "0",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_private_carrier_pkey",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_project",
+              "position": 1,
+              "name": "resource_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            },
+            {
+              "table": "resource_project",
+              "position": 2,
+              "name": "project_id",
+              "type": "text",
+              "notNull": false,
+              "collation": "100",
+              "acl": null,
+              "default": null
+            }
+          ],
+          "constraints": [
+            {
+              "table": "company",
+              "name": "company_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "employee",
+              "name": "employee_native_login_key",
+              "kind": "u",
+              "definition": "UNIQUE (native_login)",
+              "validated": true
+            },
+            {
+              "table": "employee",
+              "name": "employee_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_employee_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (employee_id) REFERENCES security_raw.employee(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (employee_id, project_id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_employee_project",
+              "name": "m2m_employee_project_project_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id, project_id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_project_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+              "validated": true
+            },
+            {
+              "table": "m2m_resource_project",
+              "name": "m2m_resource_project_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            },
+            {
+              "table": "project",
+              "name": "project_company_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (company_id) REFERENCES security_raw.company(id)",
+              "validated": true
+            },
+            {
+              "table": "project",
+              "name": "project_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "resource",
+              "name": "resource_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (id)",
+              "validated": true
+            },
+            {
+              "table": "resource_child_carrier",
+              "name": "resource_child_carrier_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id)",
+              "validated": true
+            },
+            {
+              "table": "resource_child_carrier",
+              "name": "resource_child_carrier_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            },
+            {
+              "table": "resource_private_carrier",
+              "name": "resource_private_carrier_pkey",
+              "kind": "p",
+              "definition": "PRIMARY KEY (resource_id)",
+              "validated": true
+            },
+            {
+              "table": "resource_private_carrier",
+              "name": "resource_private_carrier_resource_id_fkey",
+              "kind": "f",
+              "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+              "validated": true
+            }
+          ],
+          "policies": [
+            {
+              "table": "resource",
+              "name": "resource_owner_projection",
+              "roles": [
+                "umf_sec_guardian"
+              ],
+              "command": "SELECT",
+              "permissive": "PERMISSIVE",
+              "using": "security_raw.allowed(id)",
+              "check": null
+            },
+            {
+              "table": "resource",
+              "name": "resource_read",
+              "roles": [
+                "umf_sec_alice",
+                "umf_sec_bob",
+                "umf_sec_outsider"
+              ],
+              "command": "SELECT",
+              "permissive": "PERMISSIVE",
+              "using": "security_raw.allowed(id)",
+              "check": null
+            }
+          ],
+          "views": [
+            {
+              "name": "resource_disclosure",
+              "definition": " SELECT r.id,\n    jsonb_build_array(jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'original', 'value', jsonb_build_object('string', r.id)), security_raw.note_cell(p.bag),\n        CASE\n            WHEN (r.id = 'RAB'::text) THEN jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'transformed', 'outputType', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'value', jsonb_build_object('string', 'restricted'))\n            ELSE jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'withheld')\n        END) AS cells\n   FROM (security_raw.resource r\n     LEFT JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));",
+              "settings": [
+                "security_barrier=true"
+              ]
+            },
+            {
+              "name": "resource_project",
+              "definition": " SELECT r.id AS resource_id,\n    o.project_id\n   FROM (((security_raw.resource r\n     JOIN security_raw.m2m_resource_project o ON ((o.resource_id = r.id)))\n     JOIN security_raw.m2m_employee_project a ON (((a.project_id = o.project_id) AND a.active)))\n     JOIN security_raw.employee e ON ((e.id = a.employee_id)))\n  WHERE (e.native_login = (SESSION_USER)::text);",
+              "settings": [
+                "security_barrier=true"
+              ]
+            }
+          ],
+          "routines": [
+            {
+              "name": "allowed",
+              "identity": "resource_id text",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+              "definition": "CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\n SELECT EXISTS(SELECT 1 FROM security_raw.m2m_resource_project o\n JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id\n JOIN security_raw.employee e ON e.id=a.employee_id\n WHERE o.resource_id=$1 AND a.active AND e.native_login=session_user::text)\n$function$\n",
+              "definer": true,
+              "settings": [
+                "search_path=pg_catalog"
+              ]
+            },
+            {
+              "name": "note_cell",
+              "identity": "bag jsonb",
+              "owner": "umf_sec_guardian",
+              "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+              "definition": "CREATE OR REPLACE FUNCTION security_raw.note_cell(bag jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE f jsonb := '{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"note\"}'::jsonb; note jsonb;\nBEGIN\n IF jsonb_typeof(bag) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001'; END IF;\n note := bag->'note';\n IF NOT (bag ? 'note') THEN RETURN jsonb_build_object('field',f,'disposition','absent'); END IF;\n IF jsonb_typeof(note)='null' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',NULL); END IF;\n IF jsonb_typeof(note)='string' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',jsonb_build_object('string',note #>> '{}')); END IF;\n RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001';\nEND $function$\n",
+              "definer": false,
+              "settings": [
+                "search_path=pg_catalog"
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "name": "postgres",
+              "login": true,
+              "superuser": true,
+              "bypass": true,
+              "inherit": true,
+              "createRole": true,
+              "createDb": true,
+              "replication": true,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_alice",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_bob",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_guardian",
+              "login": false,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            },
+            {
+              "name": "umf_sec_outsider",
+              "login": true,
+              "superuser": false,
+              "bypass": false,
+              "inherit": true,
+              "createRole": false,
+              "createDb": false,
+              "replication": false,
+              "validUntil": null,
+              "settings": null
+            }
+          ],
+          "memberships": []
+        },
+        "authority": {
+          "employee": [
+            [
+              "Alice",
+              "umf_sec_alice"
+            ],
+            [
+              "Bob",
+              "umf_sec_bob"
+            ]
+          ],
+          "project": [
+            [
+              "A"
+            ],
+            [
+              "B"
+            ],
+            [
+              "D"
+            ]
+          ],
+          "resource": [
+            [
+              "RA"
+            ],
+            [
+              "RAB"
+            ],
+            [
+              "RB"
+            ],
+            [
+              "RD"
+            ],
+            [
+              "RO"
+            ]
+          ],
+          "assignment": [
+            [
+              "Alice",
+              "A",
+              true
+            ],
+            [
+              "Alice",
+              "B",
+              false
+            ],
+            [
+              "Bob",
+              "B",
+              true
+            ]
+          ],
+          "ownership": [
+            [
+              "RA",
+              "A"
+            ],
+            [
+              "RAB",
+              "A"
+            ],
+            [
+              "RAB",
+              "B"
+            ],
+            [
+              "RB",
+              "B"
+            ],
+            [
+              "RD",
+              "D"
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "baseline": {
+    "inventory": {
+      "engine": {
+        "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "number": "170009"
+      },
+      "namespace": {
+        "owner": "umf_sec_guardian",
+        "acl": "{umf_sec_guardian=UC/umf_sec_guardian,umf_sec_alice=U/umf_sec_guardian,umf_sec_bob=U/umf_sec_guardian,umf_sec_outsider=U/umf_sec_guardian}"
+      },
+      "objects": [
+        {
+          "name": "company",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "company_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "employee",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "employee_native_login_key",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "employee_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "m2m_employee_project",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "m2m_employee_project_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "m2m_resource_project",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "m2m_resource_project_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "project",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "project_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+          "rls": true,
+          "force": true,
+          "settings": null
+        },
+        {
+          "name": "resource_child_carrier",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource_child_carrier_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource_disclosure",
+          "kind": "v",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": [
+            "security_barrier=true"
+          ]
+        },
+        {
+          "name": "resource_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource_private_carrier",
+          "kind": "r",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource_private_carrier_pkey",
+          "kind": "i",
+          "owner": "umf_sec_guardian",
+          "acl": null,
+          "rls": false,
+          "force": false,
+          "settings": null
+        },
+        {
+          "name": "resource_project",
+          "kind": "v",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=arwdDxtm/umf_sec_guardian,umf_sec_alice=r/umf_sec_guardian,umf_sec_bob=r/umf_sec_guardian,umf_sec_outsider=r/umf_sec_guardian}",
+          "rls": false,
+          "force": false,
+          "settings": [
+            "security_barrier=true"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "table": "company",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "company_pkey",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "employee",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "employee",
+          "position": 2,
+          "name": "native_login",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "employee_native_login_key",
+          "position": 1,
+          "name": "native_login",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "employee_pkey",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_employee_project",
+          "position": 1,
+          "name": "employee_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_employee_project",
+          "position": 2,
+          "name": "project_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_employee_project",
+          "position": 3,
+          "name": "active",
+          "type": "boolean",
+          "notNull": true,
+          "collation": "0",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_employee_project_pkey",
+          "position": 1,
+          "name": "employee_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_employee_project_pkey",
+          "position": 2,
+          "name": "project_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_resource_project",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_resource_project",
+          "position": 2,
+          "name": "project_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_resource_project_pkey",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "m2m_resource_project_pkey",
+          "position": 2,
+          "name": "project_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "project",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "project",
+          "position": 2,
+          "name": "company_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "project_pkey",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource",
+          "position": 2,
+          "name": "value",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_child_carrier",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_child_carrier",
+          "position": 2,
+          "name": "private_value",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_child_carrier_pkey",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_disclosure",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_disclosure",
+          "position": 2,
+          "name": "cells",
+          "type": "jsonb",
+          "notNull": false,
+          "collation": "0",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_pkey",
+          "position": 1,
+          "name": "id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_private_carrier",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": true,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_private_carrier",
+          "position": 2,
+          "name": "bag",
+          "type": "jsonb",
+          "notNull": true,
+          "collation": "0",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_private_carrier",
+          "position": 3,
+          "name": "retained",
+          "type": "bytea",
+          "notNull": true,
+          "collation": "0",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_private_carrier_pkey",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_project",
+          "position": 1,
+          "name": "resource_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        },
+        {
+          "table": "resource_project",
+          "position": 2,
+          "name": "project_id",
+          "type": "text",
+          "notNull": false,
+          "collation": "100",
+          "acl": null,
+          "default": null
+        }
+      ],
+      "constraints": [
+        {
+          "table": "company",
+          "name": "company_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (id)",
+          "validated": true
+        },
+        {
+          "table": "employee",
+          "name": "employee_native_login_key",
+          "kind": "u",
+          "definition": "UNIQUE (native_login)",
+          "validated": true
+        },
+        {
+          "table": "employee",
+          "name": "employee_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_employee_project",
+          "name": "m2m_employee_project_employee_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (employee_id) REFERENCES security_raw.employee(id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_employee_project",
+          "name": "m2m_employee_project_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (employee_id, project_id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_employee_project",
+          "name": "m2m_employee_project_project_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_resource_project",
+          "name": "m2m_resource_project_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (resource_id, project_id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_resource_project",
+          "name": "m2m_resource_project_project_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES security_raw.project(id)",
+          "validated": true
+        },
+        {
+          "table": "m2m_resource_project",
+          "name": "m2m_resource_project_resource_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+          "validated": true
+        },
+        {
+          "table": "project",
+          "name": "project_company_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (company_id) REFERENCES security_raw.company(id)",
+          "validated": true
+        },
+        {
+          "table": "project",
+          "name": "project_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (id)",
+          "validated": true
+        },
+        {
+          "table": "resource",
+          "name": "resource_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (id)",
+          "validated": true
+        },
+        {
+          "table": "resource_child_carrier",
+          "name": "resource_child_carrier_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (resource_id)",
+          "validated": true
+        },
+        {
+          "table": "resource_child_carrier",
+          "name": "resource_child_carrier_resource_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+          "validated": true
+        },
+        {
+          "table": "resource_private_carrier",
+          "name": "resource_private_carrier_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (resource_id)",
+          "validated": true
+        },
+        {
+          "table": "resource_private_carrier",
+          "name": "resource_private_carrier_resource_id_fkey",
+          "kind": "f",
+          "definition": "FOREIGN KEY (resource_id) REFERENCES security_raw.resource(id)",
+          "validated": true
+        }
+      ],
+      "policies": [
+        {
+          "table": "resource",
+          "name": "resource_owner_projection",
+          "roles": [
+            "umf_sec_guardian"
+          ],
+          "command": "SELECT",
+          "permissive": "PERMISSIVE",
+          "using": "security_raw.allowed(id)",
+          "check": null
+        },
+        {
+          "table": "resource",
+          "name": "resource_read",
+          "roles": [
+            "umf_sec_alice",
+            "umf_sec_bob",
+            "umf_sec_outsider"
+          ],
+          "command": "SELECT",
+          "permissive": "PERMISSIVE",
+          "using": "security_raw.allowed(id)",
+          "check": null
+        }
+      ],
+      "views": [
+        {
+          "name": "resource_disclosure",
+          "definition": " SELECT r.id,\n    jsonb_build_array(jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'original', 'value', jsonb_build_object('string', r.id)), security_raw.note_cell(p.bag),\n        CASE\n            WHEN (r.id = 'RAB'::text) THEN jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'transformed', 'outputType', '{\"moduleId\": \"m\", \"elementId\": \"resourceId\", \"documentId\": \"domain\"}'::jsonb, 'value', jsonb_build_object('string', 'restricted'))\n            ELSE jsonb_build_object('field', '{\"moduleId\": \"m\", \"elementId\": \"salary\", \"documentId\": \"domain\"}'::jsonb, 'disposition', 'withheld')\n        END) AS cells\n   FROM (security_raw.resource r\n     LEFT JOIN security_raw.resource_private_carrier p ON ((p.resource_id = r.id)));",
+          "settings": [
+            "security_barrier=true"
+          ]
+        },
+        {
+          "name": "resource_project",
+          "definition": " SELECT r.id AS resource_id,\n    o.project_id\n   FROM (((security_raw.resource r\n     JOIN security_raw.m2m_resource_project o ON ((o.resource_id = r.id)))\n     JOIN security_raw.m2m_employee_project a ON (((a.project_id = o.project_id) AND a.active)))\n     JOIN security_raw.employee e ON ((e.id = a.employee_id)))\n  WHERE (e.native_login = (SESSION_USER)::text);",
+          "settings": [
+            "security_barrier=true"
+          ]
+        }
+      ],
+      "routines": [
+        {
+          "name": "allowed",
+          "identity": "resource_id text",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+          "definition": "CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\n SELECT EXISTS(SELECT 1 FROM security_raw.m2m_resource_project o\n JOIN security_raw.m2m_employee_project a ON a.project_id=o.project_id\n JOIN security_raw.employee e ON e.id=a.employee_id\n WHERE o.resource_id=$1 AND a.active AND e.native_login=session_user::text)\n$function$\n",
+          "definer": true,
+          "settings": [
+            "search_path=pg_catalog"
+          ]
+        },
+        {
+          "name": "note_cell",
+          "identity": "bag jsonb",
+          "owner": "umf_sec_guardian",
+          "acl": "{umf_sec_guardian=X/umf_sec_guardian,umf_sec_alice=X/umf_sec_guardian,umf_sec_bob=X/umf_sec_guardian,umf_sec_outsider=X/umf_sec_guardian}",
+          "definition": "CREATE OR REPLACE FUNCTION security_raw.note_cell(bag jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE f jsonb := '{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"note\"}'::jsonb; note jsonb;\nBEGIN\n IF jsonb_typeof(bag) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001'; END IF;\n note := bag->'note';\n IF NOT (bag ? 'note') THEN RETURN jsonb_build_object('field',f,'disposition','absent'); END IF;\n IF jsonb_typeof(note)='null' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',NULL); END IF;\n IF jsonb_typeof(note)='string' THEN RETURN jsonb_build_object('field',f,'disposition','original','value',jsonb_build_object('string',note #>> '{}')); END IF;\n RAISE EXCEPTION 'Unsupported note domain' USING ERRCODE='P0001';\nEND $function$\n",
+          "definer": false,
+          "settings": [
+            "search_path=pg_catalog"
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "name": "postgres",
+          "login": true,
+          "superuser": true,
+          "bypass": true,
+          "inherit": true,
+          "createRole": true,
+          "createDb": true,
+          "replication": true,
+          "validUntil": null,
+          "settings": null
+        },
+        {
+          "name": "umf_sec_alice",
+          "login": true,
+          "superuser": false,
+          "bypass": false,
+          "inherit": true,
+          "createRole": false,
+          "createDb": false,
+          "replication": false,
+          "validUntil": null,
+          "settings": null
+        },
+        {
+          "name": "umf_sec_bob",
+          "login": true,
+          "superuser": false,
+          "bypass": false,
+          "inherit": true,
+          "createRole": false,
+          "createDb": false,
+          "replication": false,
+          "validUntil": null,
+          "settings": null
+        },
+        {
+          "name": "umf_sec_guardian",
+          "login": false,
+          "superuser": false,
+          "bypass": false,
+          "inherit": true,
+          "createRole": false,
+          "createDb": false,
+          "replication": false,
+          "validUntil": null,
+          "settings": null
+        },
+        {
+          "name": "umf_sec_outsider",
+          "login": true,
+          "superuser": false,
+          "bypass": false,
+          "inherit": true,
+          "createRole": false,
+          "createDb": false,
+          "replication": false,
+          "validUntil": null,
+          "settings": null
+        }
+      ],
+      "memberships": []
+    },
+    "authority": {
+      "employee": [
+        [
+          "Alice",
+          "umf_sec_alice"
+        ],
+        [
+          "Bob",
+          "umf_sec_bob"
+        ]
+      ],
+      "project": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "D"
+        ]
+      ],
+      "resource": [
+        [
+          "RA"
+        ],
+        [
+          "RAB"
+        ],
+        [
+          "RB"
+        ],
+        [
+          "RD"
+        ],
+        [
+          "RO"
+        ]
+      ],
+      "assignment": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "ownership": [
+        [
+          "RA",
+          "A"
+        ],
+        [
+          "RAB",
+          "A"
+        ],
+        [
+          "RAB",
+          "B"
+        ],
+        [
+          "RB",
+          "B"
+        ],
+        [
+          "RD",
+          "D"
+        ]
+      ]
+    }
+  },
+  "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545",
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "failure": {
+    "type": "RuntimeError",
+    "message": "Owned fixture command failed: psql: error: connection to server at \"127.0.0.1\", port 5432 failed: FATAL:  database \"umf_sec_alice\" does not exist\n"
+  },
+  "cleanup": {
+    "attempted": true,
+    "ownedLabelVerified": true,
+    "removed": true,
+    "removeExitCode": 0,
+    "absentAfterRemoval": false
+  }
+}
