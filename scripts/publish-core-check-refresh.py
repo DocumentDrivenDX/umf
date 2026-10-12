@@ -46,7 +46,7 @@ def main():
   check_run(run);text=Path(run['log']).read_text()
   summaries=list(re.finditer(r'\n\s*(\d+) pass\n\s*(\d+) fail\n\s*(\d+) expect\(\) calls\nRan (\d+) tests across (\d+) files\.',text));assert summaries
   match=summaries[-1];ok,bad,checks,total,size=map(int,match.groups())
-  assert run['command'][:2]==['bun','test']
+  assert run['command'][:2] in [['bun','test'],['bun','scripts/run-tests.ts']]
   test_files=run['command'][2:]
   if test_files[:3]==['--timeout','30000','--parallel=1']:test_files=test_files[3:]
   elif test_files[:2]==['--timeout','30000']:test_files=test_files[2:]

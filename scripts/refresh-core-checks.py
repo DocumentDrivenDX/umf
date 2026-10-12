@@ -22,7 +22,7 @@ def commands():
     seen=set();result=[]
     for c in rows:
         c=list(c)
-        if len(c)>1 and c[1]=='test': continue  # counted regression is a separate execution
+        if c[:2] in [['bun','test'],['bun','scripts/run-tests.ts']]: continue  # counted regression is a separate execution
         if c[0].endswith('/python'): c[0]='.venv/bin/python'
         key=tuple(c)
         if key not in seen: seen.add(key);result.append(c)
@@ -78,7 +78,7 @@ def counted_regression(resume=False):
         groups[index].append(path)
     previous=json.loads((OUT/'regression.json').read_text()) if resume and (OUT/'regression.json').exists() else {'runs':[],'failedAttempts':[]}
     def execute(item):
-        i,group=item;command=['bun','test','--timeout','30000','--parallel=1',*group];log=OUT/f'regression-{i+1}.log'
+        i,group=item;command=['bun','scripts/run-tests.ts',*group];log=OUT/f'regression-{i+1}.log'
         old=next((r for r in previous['runs'] if r['command']==command),None)
         if old and old['exitCode']==0:
             assert digest(old['log'])==old['logSha256'];return old
@@ -95,7 +95,7 @@ def counted_regression(resume=False):
     if any(r['exitCode'] for r in rows):raise SystemExit('Live regression failed; inspect shard logs')
 def auxiliary():
     relationship=json.loads((OUT/'relationship-commands.json').read_text())
-    plan=[c for c in relationship if c[:2]==['bun','test']]+[
+    plan=[c for c in relationship if c[:2] in [['bun','test'],['bun','scripts/run-tests.ts']]]+[
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-oracle.py'],
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-projection-oracle.py'],
         ['bun','scripts/core-schema-properties-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]

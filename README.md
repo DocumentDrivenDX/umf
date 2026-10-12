@@ -19,8 +19,10 @@ Edition 2024 source operations and broader conformance remain unsupported.
 
 Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun run test`,
 and `bun run build`. `bun run test` builds the browser library, PostgreSQL parser,
-and adapter test bundles before running the complete test suite. The test harness
-uses a bounded 30-second default for corpus checks; explicit per-case budgets and
+and adapter test bundles before running every live test file in a fresh, sequential
+Bun process. This prevents accumulated VM state and keeps native ownership serial.
+The runner rejects incomplete summaries, failures and crashes; it does not retry or
+skip files. It uses a bounded 30-second default; explicit per-case budgets and
 reference-executor deadlines remain separate. Native command
 tests require a running Docker daemon; setup pulls PostgreSQL 17.9 and the public,
 digest-pinned handler image. Handler execution itself still forbids image pulls.
