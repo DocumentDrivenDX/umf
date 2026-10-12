@@ -1,0 +1,11 @@
+16 |   for await(const name of new Bun.Glob('**/*.test.ts').scan({cwd:path,onlyFiles:true,followSymlinks:false}))files.push(relative(process.cwd(),resolve(path,name)).split(sep).join('/'));
+17 |  }else if(info.isFile()&&path.endsWith('.test.ts'))files.push(relative(process.cwd(),path).split(sep).join('/'));
+18 |  else throw Error('Test selection is not a test file/directory');
+19 | }
+20 | files.sort();
+21 | if(!files.length||new Set(files).size!==files.length)throw Error('Empty or overlapping test inventory');
+                                                                ^
+error: Empty or overlapping test inventory
+      at /Users/erik/.codex/worktrees/actions-requirements-design/umf/scripts/run-tests.ts:21:60
+
+Bun v1.4.2 (macOS arm64)

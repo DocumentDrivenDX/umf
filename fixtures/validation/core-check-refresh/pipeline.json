@@ -1,0 +1,168 @@
+{
+  "sourceRevision": "5529ead377ddf2ae267c426e18aec3d0ca90e9e4",
+  "complete": true,
+  "driverSha256": "0fc0d3a1218284d3e6610ca3b4ed852a6550bff729163e6becb4ec1e3951b11a",
+  "containerInit": true,
+  "gateHelperSha256": "277f469bb4846938eba659caf5115ab216344137754bc390aefb62511d6cbd2d",
+  "executionFilesystem": "Docker named volume umf-final-qualification-40c2590a; original snapshot plus exact 5529ead3 process-isolated Git update verified against HEAD",
+  "historicalPathAlias": "/work mounts the same Docker volume as the execution directory",
+  "sourceUpdateBundleSha256": "ab1311bd0ad7faad415c2ce7f3e3c6d1482e88ad934ff1f065240722dd25951e",
+  "snapshotSha256": "d9eb7a5cd6eea45b274478d418d4c74916244d9bfed9cc9b39b612a5aae3820d",
+  "runs": [
+    {
+      "stage": "source-copy-integrity",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "HEAD",
+        "--",
+        "src",
+        "scripts",
+        "spec",
+        "tests",
+        "native",
+        "package.json",
+        "bun.lock",
+        "bunfig.toml",
+        "docs/helix/01-frame",
+        "docs/helix/02-design",
+        "docs/helix/03-test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.013,
+      "log": "fixtures/validation/core-check-refresh/pipeline-source-copy-integrity.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "arrow-corpus-control",
+      "command": [
+        "bun",
+        "scripts/run-tests.ts",
+        "tests/arrow/flatbuffer-encode.test.ts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 16.624,
+      "log": "fixtures/validation/core-check-refresh/pipeline-arrow-corpus-control.log",
+      "logSha256": "268e5d71d572b88afe06ec4ca6bd1cce712cbdc1cb5fac4222214b6e871ca305"
+    },
+    {
+      "stage": "prepare",
+      "command": [
+        "python",
+        "/opt/replay.py",
+        "prepare"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.975,
+      "log": "fixtures/validation/core-check-refresh/pipeline-prepare.log",
+      "logSha256": "6a046c2ba10df89d9ecdde8a72587caa1692a1a9b4612d5693812c8f5a498fa2"
+    },
+    {
+      "stage": "test-prerequisites",
+      "command": [
+        "bun",
+        "run",
+        "test:prepare"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.651,
+      "log": "fixtures/validation/core-check-refresh/pipeline-test-prerequisites.log",
+      "logSha256": "d1fb9c82b185b3ed751a4bd5f88240352118dae25e0b4218a336cd14b2c0cf42"
+    },
+    {
+      "stage": "regression",
+      "command": [
+        ".venv/bin/python",
+        "scripts/refresh-core-checks.py",
+        "--regression"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2599.97,
+      "log": "fixtures/validation/core-check-refresh/pipeline-regression.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "native",
+      "command": [
+        "python",
+        "/opt/replay.py",
+        "native"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2418.068,
+      "log": "fixtures/validation/core-check-refresh/pipeline-native.log",
+      "logSha256": "f7d60c5f272deb3b996b0af891aeea247975cf89a45fad35f2d5b72447ae6a19"
+    },
+    {
+      "stage": "auxiliary",
+      "command": [
+        "python",
+        "/opt/replay.py",
+        "auxiliary"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 86.496,
+      "log": "fixtures/validation/core-check-refresh/pipeline-auxiliary.log",
+      "logSha256": "d1bece63cea07f13f250215a682d3279268a0b7500a48ce22ce8f85569abe8fd"
+    },
+    {
+      "stage": "publish",
+      "command": [
+        "python",
+        "/opt/replay.py",
+        "publish"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.032,
+      "log": "fixtures/validation/core-check-refresh/pipeline-publish.log",
+      "logSha256": "40c4b18bc11e6c658df23be5c1b970911b82274a64ae2e5d7783d36da0a2dcd4"
+    },
+    {
+      "stage": "gates",
+      "command": [
+        "python",
+        "/opt/isolated-gates.py"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 944.753,
+      "log": "fixtures/validation/core-check-refresh/pipeline-gates.log",
+      "logSha256": "f2a8354b62b77778a23149fa2e6c70823c891acab0884e9f111215a3be52e8ab"
+    },
+    {
+      "stage": "full-suite",
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3374.869,
+      "log": "fixtures/validation/core-check-refresh/pipeline-full-suite.log",
+      "logSha256": "865b22b3f8a3194d92cdf5ec55cb7dd52809274b50e2769f2a4789e335656493"
+    },
+    {
+      "stage": "action-browser",
+      "command": [
+        "bun",
+        "scripts/actions-browser.ts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 8.338,
+      "log": "fixtures/validation/core-check-refresh/pipeline-action-browser.log",
+      "logSha256": "be3fd3e9f8bc2947eb9796af23dda761fc8aa97fd3577d1eecaefc4423688856"
+    },
+    {
+      "stage": "post-full-integrity",
+      "command": [
+        "bun",
+        "scripts/verify-current-core-evidence.ts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.404,
+      "log": "fixtures/validation/core-check-refresh/pipeline-post-full-integrity.log",
+      "logSha256": "7102e16df1ab618ad4e3decb3542bc1656c7f3b21197528b9834fc0e93f915fa"
+    }
+  ],
+  "runningStage": null
+}

@@ -1,6 +1,6 @@
 {
-  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
-  "parentRevision": "01a391b6110a6c9bcede51caf46ce2921795e727",
+  "sourceRevision": "5529ead377ddf2ae267c426e18aec3d0ca90e9e4",
+  "parentRevision": "f4ad4f5561591141bc19708097700b47642a59fc",
   "imageId": "sha256:45abc568755c07d95c5bc7370d0c580949d0e39f4177e254de2493100abd1ee1",
   "platform": "Linux-7.0.14-orbstack-00380-ga7e0a2dc9535-aarch64-with-glibc2.39",
   "python": "3.12.3",
@@ -10,7 +10,7 @@
   "go": "go version go1.27.1 linux/arm64",
   "finalizationPublisher": {
     "path": "scripts/publish-core-check-refresh.py",
-    "sha256": "73cf13038a873f613e05254545cebf17628b137bb4db51c476072000ff0daf23",
+    "sha256": "819c9f6066413bfa448c9ccc493a1f139bd634997054ab4435eb258399d661d7",
     "scope": "Publication-only tooling; native, auxiliary and regression execution source remains sourceRevision."
   }
 }

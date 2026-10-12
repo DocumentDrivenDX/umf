@@ -8110,7 +8110,7 @@
     },
     {
       "id": "case_19-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_19\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_19\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8180,7 +8180,7 @@
     },
     {
       "id": "case_25-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_25\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_25\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8230,7 +8230,7 @@
     },
     {
       "id": "case_27-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_27\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_27\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8290,7 +8290,7 @@
     },
     {
       "id": "case_31-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_31\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_31\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8340,7 +8340,7 @@
     },
     {
       "id": "case_33-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_33\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_33\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8400,7 +8400,7 @@
     },
     {
       "id": "case_37-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_37\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_37\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8470,7 +8470,7 @@
     },
     {
       "id": "case_43-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_43\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_43\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8520,7 +8520,7 @@
     },
     {
       "id": "case_45-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_45\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_45\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8580,7 +8580,7 @@
     },
     {
       "id": "case_49-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_49\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_49\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8630,7 +8630,7 @@
     },
     {
       "id": "case_51-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_51\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_51\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
