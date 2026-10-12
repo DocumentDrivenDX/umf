@@ -11687,3 +11687,15 @@ policy/masks/private fact and observation qualification remain required. This
 alignment adds no support or case acceptance: all132 original cases remain
 required. Next functional integration must use the actual owned Weft boundary and
 backend physical execution rather than fabricate another local query language.
+
+
+### Current Weft main security handoff — 2026-10-12
+
+Weft mainb62fbf7 retains the current source-qualified65-test Rust security
+admission regression. The owner checkout is stale; historical uncommitted
+compile0.3/0.4 files must not overwrite current main or masquerade as integration.
+TD-056 records current dedicated security interface versions and the actual
+remaining physical/result/dependency lowering refusal. Original compiler evidence
+and source pins are retained in `evidence/security/weft-current-handoff-20261012/`.
+This is a handoff/admission checkpoint, not native security support. Original132
+cases remain required; the full shared goal stays active.

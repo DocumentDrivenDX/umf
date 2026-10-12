@@ -1,0 +1,10 @@
+{
+  "weft_main": "b62fbf7ff0bcaf7240ba720bef41459509f75748",
+  "sources": {
+    "crates/weft-core/src/compile.rs": "27dd0a99e1d4d058308ac3905cd9e67abed6bd05bc4cb2adb46340b15632faff",
+    "crates/weft-core/src/security_backend.rs": "630ed24f24a6481fc5c5a1cb92cb1fc5abf3b76ed4781e935808d10bef26a254",
+    "crates/weft-core/tests/security_admission.rs": "9db6f59f5695f0926f2003a18efd724703cb736917a8f90aba4c4074149cb782",
+    "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "2639ac6b82759baf773d428c48bb8e7eb2008296a20eed5fe38f40fa8a2d85e6"
+  },
+  "scope": "Current compiler handoff; Rust65 passing admission tests only. Physical lowering/native execution unavailable."
+}

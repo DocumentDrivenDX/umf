@@ -2211,3 +2211,28 @@ Evidence `../../04-build/evidence/security/query-surface-alignment-20261012/rece
 retains the governing owner direction and design preimages. This is design
 alignment only; no query lowering, ontology-policy enforcement, observation
 isolation or original backend acceptance case is newly qualified.
+
+
+## Current owned compiler handoff — 2026-10-12
+
+Weft mainb62fbf7 contains the merged security foundation, superseding the stale
+owner checkout's uncommitted historical compile0.3/0.4 copies. Current explicit
+compatibility interfaces are weft-security-compile/0.1.0 and0.2.0; the latter
+selects the security registration factory. CONTRACT-007's compile0.5 path remains
+blocked-only. The ordinary compiler's evolving versions must not be reused as
+historical security aliases or silently drop selected policy source.
+
+Fresh current-main Rust security admission passes64 original tests and65 after
+a five-variant historical/unknown/empty-envelope control. All selected requests
+block before ordinary composition and emit no partial SQL/parameters/logicalPlan.
+The original registration path still returns
+WFT-SECURITY-LOWERING-UNSUPPORTED after scoped correspondence checks. Neither
+these tests nor registry selection supplies native installation, protected query
+execution, private facts, masking, current authority or publication.
+
+`../../04-build/evidence/security/weft-current-handoff-20261012/` retains the
+owned compiler receipt and exact current handoff pins. The next functional gap
+is completing owned physical/result/dependency coverage and native host integration
+through that actual interface; a local replacement compiler or fixed read receiver
+cannot close it. Trace FR-19–22 / Weft CONTRACT-007 and shared CONTRACT-063,
+US-056 AC7/AC10 prerequisites. No full backend case is promoted.
