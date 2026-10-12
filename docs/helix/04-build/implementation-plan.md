@@ -11668,3 +11668,22 @@ native outcomes, then fresh original132-case execution. No component pass alone
 promotes a supported backend. Current gate stays26/132 with106 unbound cases;
 original issuer/subject/mapping/target authenticity and complete protected source/
 publication/recovery remain required. Goal active.
+
+
+### Full Weft query-surface security alignment — 2026-10-12
+
+The C03 implementation exit and mediated-profile test instructions previously
+required rejection of arbitrary SQL/EXPLAIN/DDL through a closed semantic receiver.
+Current Truss owner PRD and CONTRACT-007 require the full evolving Weft query
+surface and prohibit an independent SQL allowlist. TD-056/STP-056 now consume
+original Weft query/plan/security/execution obligations and distinguish unbound
+private-executor access from authorized query execution. This supersedes the
+closed-dispatch product implication of the2026-10-11 plan entry; historical fixed
+read receiver experiments retain only their original scoped evidence.
+
+The governing source/preimage packet and receipt are retained under
+`evidence/security/query-surface-alignment-20261012/`. Exact native source/current
+policy/masks/private fact and observation qualification remain required. This
+alignment adds no support or case acceptance: all132 original cases remain
+required. Next functional integration must use the actual owned Weft boundary and
+backend physical execution rather than fabricate another local query language.

@@ -1527,9 +1527,14 @@ COPY, prepared/cached commands, user-owned wrappers/operators/types, errors/logs
 stream/cursor and alternate credential/endpoint paths applicable to the selected
 profile. Do not claim complete closure from this finite list.
 
-For a mediated profile, exercise actual receiver rejection of arbitrary SQL,
-EXPLAIN/DDL, caller actor/authority flags, decoder callbacks, copied handles and
-alternate direct access while retaining original authorized semantic outcomes.
+For a mediated profile, exercise the original full Weft query interface and its
+complete source/security/execution obligations. Do not require a separate
+UMF/Truss SQL allowlist or blanket SQL/EXPLAIN/DDL rejection. Exercise refusal of
+unbound private-executor commands, caller actor/authority flags, decoder callbacks,
+copied handles and alternate direct access while retaining original authorized
+semantic outcomes. Qualify every selected native command observable and authority
+boundary; inability to enforce one remains an implementation gap, not authority
+to redefine the product query surface.
 Capture independent actual routing/credential/native endpoint inventories before
 and after adversarial changes. Require the native receiver and original trusted
 semantic producer to enforce the same source/current-authority/publication cut;

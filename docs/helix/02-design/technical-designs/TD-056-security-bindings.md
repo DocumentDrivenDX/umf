@@ -2162,7 +2162,7 @@ core-envelope change or new accepted capability is defined by this sequence.
 |---|---|---|
 | C01 actual channel inventory | Capture original configured receiver routes, native roles, SQL/admin/diagnostic endpoints and credential holders from their owning implementations; unknown routes refuse. | B04/B05/B10/B12 |
 | C02 original authentication/credential custody | Independently authenticate end-user subject and original private executor/server/issuer; prove no untrusted party receives credentials, connections, authority flags or reconstructed private facts. Same-name roles and matching bytes are insufficient. | B05/B10/B11/B12 |
-| C03 closed semantic dispatch | Derive dispatch from original prepared semantic input; bind exact supported operations/parameters on the original host attempt. Exercise rejection of SQL/EXPLAIN/DDL/decoder/callback/handle substitution and alternate-route bypass. | B04/B06/B08/B10/B12 |
+| C03 original query and execution binding | Consume the original Weft query/plan and its complete execution/security obligations; bind exact physical mappings, operations and parameters to the original host attempt. Preserve the full evolving Weft query surface without a separate UMF/Truss SQL allowlist. Reject unbound private-executor access, actor/authority flags, decoder/callback/handle substitution and alternate-route bypass. Qualify SQL/EXPLAIN/DDL observables and their actual authority separately. | B04/B06/B08/B10/B12 |
 | C04 native source and current authority | Complete original mapping/codec/fact/source/callable/privilege closure with fresh guarded current authority and every writer path; fail closed on unknown/different coverage. | B01–B03/B09/B11/B13/L11/L13 |
 | C05 original publication/diagnostics | Release only original qualified rows/keys/field dispositions and sanitized diagnostics; compare all declared user observables across unrelated private worlds, including error/plan/log/count/cursor paths. | B07/B08/B10/B15/B16 |
 | C06 native drain and recovery | Retain original native/host acquisitions until last application release, including buffers, cancellation and failed/unknown transitions; independently reconcile recovery before reopening. | L03–L14 |
@@ -2185,3 +2185,29 @@ existing conditional source/current-authority/publication laws keep their origin
 scope. Concrete receiver/credential implementation and independent native tests
 must precede refinement claims. Full acceptance remains26/132 with106 unbound
 cases; graph/Delta implementation and original scope remain required.
+
+
+## Query-surface reconciliation — 2026-10-12
+
+Truss CONTRACT-007 and its owner PRD select the full evolving Weft query surface.
+C03 now binds original query/plan/security and native execution obligations; it
+must not become an independent SQL coverage policy. The earlier fixed private
+read receiver is a scoped experiment, not the required product API or a condition
+that all protected queries must use its read-only request grammar. Unknown policy
+meaning or unavailable required security obligations still refuse activation or
+execution; a language allowlist cannot supply the missing implementation.
+
+Native RLS/ACL/masks and private credential boundaries remain necessary. Distinguish
+queries accepted by the original Weft interface from attempts to commandeer its
+private executor with unbound commands or callbacks. EXPLAIN/DDL/COPY and other
+observables retain their selected semantic/authority requirements and native
+qualification; dropping language coverage cannot count as satisfying them.
+Shared UMF defines policy meaning and evidence obligations. Weft owns its language
+and logical-plan contract; backend implementations supply their owned physical
+mapping/execution integration under the selected compiler interface. Do not invent
+or independently reinterpret a Weft interface to bypass missing owner obligations.
+
+Evidence `../../04-build/evidence/security/query-surface-alignment-20261012/receipt.json`
+retains the governing owner direction and design preimages. This is design
+alignment only; no query lowering, ontology-policy enforcement, observation
+isolation or original backend acceptance case is newly qualified.
