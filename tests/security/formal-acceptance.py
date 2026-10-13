@@ -21,7 +21,8 @@ before={path:digest(path) for path in paths}
 proof_path=Path('docs/helix/04-build/evidence/security/formal.json')
 # Remove a retained result so only this completed solver invocation can supply it.
 proof_path.unlink(missing_ok=True)
-python=os.environ.get('UMF_Z3_PYTHON','/private/tmp/umf-security-proof-venv/bin/python3')
+# Use the runner's environment unless the operator selects a solver interpreter.
+python=os.environ.get('UMF_Z3_PYTHON',sys.executable)
 result=subprocess.run([python,'docs/helix/02-design/spikes/security/prove.py'],capture_output=True,text=True,timeout=20)
 if result.returncode or not proof_path.exists():raise RuntimeError('Fresh solver replay failed')
 proof=json.loads(proof_path.read_text());oracle=json.loads(Path(case['oracleSource']).read_text())
