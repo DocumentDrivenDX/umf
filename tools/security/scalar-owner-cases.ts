@@ -50,7 +50,7 @@ export function runScalarOwnerCases(){
  refused('duplicate-source-identity',()=>inspectCoreScalarType(duplicate,identity),'CORE_SCALAR_TYPE_SOURCE');
  refused('group-label-forbidden-by-source',()=>inspectCoreScalarType(source({kind:'group',scalarType:'string'}),identity),'CORE_SCALAR_TYPE_SOURCE');
  refused('invalid-source-label',()=>inspectCoreScalarType(source({kind:'field',scalarType:3}),identity),'CORE_SCALAR_TYPE_SOURCE');
- for(const umf of ['0.1.0','0.6.0','0.8.0','future'])refused('unsupported-envelope-'+umf,()=>inspectCoreScalarType({...d,umf} as Document,identity),'CORE_SCALAR_TYPE_VERSION');
+ for(const umf of ['0.1.0','0.6.0','0.9.0','future'])refused('unsupported-envelope-'+umf,()=>inspectCoreScalarType({...d,umf} as Document,identity),'CORE_SCALAR_TYPE_VERSION');
  let callbacks=0;const hostile={...d};Object.defineProperty(hostile,'modules',{enumerable:true,get(){callbacks++;return d.modules}});
  refused('getter-refusal',()=>inspectCoreScalarType(hostile,identity),'NON_JSON');check('getter-not-invoked',callbacks===0);
  return rows;

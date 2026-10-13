@@ -11753,3 +11753,8 @@ Final fresh 132-case gate for typed write comparison: all 26 implemented cases a
 `evidence/security/query-action-binding-gap-20261013/` records15 original TypeScript observations: for each predicate/order/group/join/aggregate, ungranted intended action refuses, separately granted unrelated action permits, and primary read action refuses. Inputs remain unchanged. A conditional action-selector model retains a SAT unrelated-action witness, proves exact selector equality excludes that witness (UNSAT), and admits a useful bound case (SAT). This is neither TypeScript refinement nor native enforcement proof.
 
 Current Weft `SecurityQueryProfile` already binds target/field/operator to exact separate actions with original-source checks. Continue B08 by composing that existing compiler artifact into the native backend, not by adding parallel UMF action-designation semantics. Original admitted-profile custody, compiler-derived lineage/parameters, native operator modes and pre-execution refusals remain required. All132 cases stay in scope; no new case is promoted.
+
+
+### Original core0.8 catalog source owner prerequisites — 2026-10-13
+
+[Evidence](evidence/security/core08-owner-20261013/receipt.json) qualifies the separate result0.2 owner versions for Record.members, scalar label and direct reference links. Four owner suites pass,48 current controls agree in Bun/Chromium153, typing passes and388 schemas/65 packages audit without failures. Original0.7/result0.1 schemas and meaning remain preserved. Truss must consume the committed owner revision through a separate exact producer before native core0.8 ingress; no acceptance case is promoted by these internal metadata operations.

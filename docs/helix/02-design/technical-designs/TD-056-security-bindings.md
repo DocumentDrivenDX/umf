@@ -2257,3 +2257,10 @@ scope; real installed codecs/masks and every declared observable route still nee
 native qualification. Cloud workspace/catalog/ordinary identity selection remains
 an explicit unknown for Ashlar/Delta acceptance. The original132-case scope and
 full shared implementation goal remain unchanged.
+
+
+## Original core0.8 catalog source inspectors — 2026-10-13
+
+The internal Record-members, scalar-label and direct reference-link owners now select separately closed result0.2 for exact original core0.8 sources. Original core0.7 continues to select result0.1 and its unchanged result schemas. Meaning algorithms retain ordered/opaque membership, scalar future labels, repeated qualified links and unverified provenance/type assertions. Current annotations, defaults and facets remain in the complete copied source; these inspectors do not infer their native enforcement or authenticate author/issuer authority. No public root export is added.
+
+`../../04-build/evidence/security/core08-owner-20261013/receipt.json` retains four passing owner suites,48 current controls agreeing in Bun/Chromium153, eight independent Astra controls, typing and388-schema/65-package audits. The initial unsupported0.8 controls were updated to future0.9; source0.7 result assertions remain unchanged. A mismatched future scalar/facet test source was corrected rather than broadening document validity. These owners are prerequisites for the separate Truss core0.8 producer; they do not implement its native ingress/report/migration, guarded catalog assessment, compiler physical mapping or protected execution. The original132-case scope remains unchanged.

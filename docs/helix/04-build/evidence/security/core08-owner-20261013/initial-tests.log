@@ -1,0 +1,50 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security-reference-links-owner.test.ts:
+ 6 | export function runReferenceLinksOwnerCases(){
+ 7 |  const rows:{id:string;passed:boolean}[]=[];
+ 8 |  const identity={module:'m',element:'v'},ref={role:'record-type',module:'m',element:'R'};
+ 9 |  const source=(properties:Record<string,unknown>={}):Document=>({umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},...properties},{id:'R',kind:'record',members:[],extensions:{}}]}]});
+10 |  const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+11 |  function check(id:string,passed:boolean){rows.push({id,passed});if(!passed)throw Error(id)}
+                                                                                               ^
+error: unsupported-0.8.0
+      at check (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/reference-links-owner-cases.ts:11:91)
+      at refuse (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/reference-links-owner-cases.ts:12:131)
+      at runReferenceLinksOwnerCases (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/reference-links-owner-cases.ts:34:54)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security-reference-links-owner.test.ts:3:111)
+(fail) original reference links preserve qualified ordered occurrences without type promotion [14.38ms]
+
+tests/security-scalar-owner.test.ts:
+ 7 |  const rows:{id:string;passed:boolean}[]=[];
+ 8 |  const source=(properties:Record<string,unknown>):Document=>({umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{},...properties}]}]});
+ 9 |  const identity={module:'m',element:'v'};
+10 |  const validator=createValidator();validator.addSchema(sourceSchema);const validResult=validator.compile(resultSchema);
+11 |  const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+12 |  function check(id:string,passed:boolean){rows.push({id,passed});if(!passed)throw Error(id)}
+                                                                                               ^
+error: unsupported-envelope-0.8.0
+      at check (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/scalar-owner-cases.ts:12:91)
+      at refused (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/scalar-owner-cases.ts:13:132)
+      at runScalarOwnerCases (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/scalar-owner-cases.ts:53:54)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security-scalar-owner.test.ts:3:111)
+(fail) original scalar owner preserves label role source context and refuses malformed inputs [22.20ms]
+
+tests/security-record-members-owner.test.ts:
+ 6 | export function runRecordMembersOwnerCases(){
+ 7 |  const rows:{id:string;passed:boolean}[]=[];
+ 8 |  const identity={module:'m',element:'r'};
+ 9 |  const source=(properties:Record<string,unknown>={}):Document=>({umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'r',kind:'record',extensions:{},...properties},{id:'v',kind:'field',extensions:{}}]}]});
+10 |  const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+11 |  function check(id:string,passed:boolean){rows.push({id,passed});if(!passed)throw Error(id)}
+                                                                                               ^
+error: unsupported-0.8.0
+      at check (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/record-members-owner-cases.ts:11:91)
+      at refuse (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/record-members-owner-cases.ts:12:131)
+      at runRecordMembersOwnerCases (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/record-members-owner-cases.ts:29:46)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security-record-members-owner.test.ts:3:108)
+(fail) original Record membership distinguishes absence empty order and unknown qualifiers [7.02ms]
+
+ 0 pass
+ 3 fail
+Ran 3 tests across 3 files. [646.00ms]
