@@ -1,0 +1,11 @@
+import {resolve,dirname} from 'node:path';
+import {createHash} from 'node:crypto';
+const folder=Bun.argv[2];if(!folder)throw Error('Historical evidence folder required');
+const root=resolve(import.meta.dir,'../..'),evaluator=resolve(root,'src/extensions/security/evaluate.ts');
+const original=await Bun.file(folder+'/prechange-evaluate.ts').text(),entry=folder+'/prechange-entry.ts';
+await Bun.write(entry,`import {evaluationFixture} from ${JSON.stringify(resolve(root,'tests/security/evaluation-fixture.ts'))};import {evaluateSecurityAccess} from ${JSON.stringify(evaluator)};const f=evaluationFixture(),resource=structuredClone(f.owner);resource.fields.find(x=>x.field.elementId==='ownerProject').value={string:'p2'};f.policy.rules=[{id:'owner-read',effect:'permit',actions:['read'],target:[f.owner.type],condition:{op:'literal',value:true}}];export default evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},resource);`);
+const built=await Bun.build({entrypoints:[entry],target:'bun',format:'esm',plugins:[{name:'retained-prechange-evaluator',setup(build){build.onLoad({filter:/\/src\/extensions\/security\/evaluate\.ts$/},args=>({contents:original,loader:'ts',resolveDir:dirname(args.path)}));}}]});
+if(!built.success)throw Error('Historical probe build failed');
+const js=await built.outputs[0]!.text(),observed=(await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'))).default;
+if(observed.decision!=='permit')throw Error('Historical inconsistency witness did not reproduce');
+await Bun.write(folder+'/prechange-replay.json',JSON.stringify({status:'reproduced',observed,originalSourceSha256:createHash('sha256').update(original).digest('hex'),scope:'Retained prechange evaluator with current unchanged fixture/core dependencies; selected semantic witness, not native admission.'},null,2)+'\n');console.log(JSON.stringify({status:'reproduced',decision:observed.decision}));

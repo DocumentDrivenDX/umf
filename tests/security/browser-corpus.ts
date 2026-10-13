@@ -181,3 +181,23 @@ export function securityDisclosureCorpus(){
   const outcomes=[{id:'typed-round-trip',expected:batch,observed},{id:'extra-withheld-value',expected:true,observed:refused}];
   return {cases:outcomes.length,mismatches:outcomes.filter(x=>JSON.stringify(x.expected)!==JSON.stringify(x.observed)).length,outcomes};
 }
+
+/** Shared cut consistency; no native provenance or backend admission claim. */
+export function securityFactConsistencyCorpus(){
+  const outcomes:{id:string;expected:string;observed:string}[]=[];
+  for(const mode of ['same','different','partial','distinct','integer-equivalent','null-absence']){
+    const f=evaluationFixture();let resource=structuredClone(f.owner),expected='permit';
+    f.policy.rules=[{id:'read-owner',effect:'permit',actions:['read'],target:[f.owner.type],condition:{op:'literal',value:true}}];
+    if(mode==='same')resource.fields.reverse();
+    if(mode==='different'){resource.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};expected='indeterminate';}
+    if(mode==='partial')resource.fields=resource.fields.filter(x=>x.field.elementId==='ownerId');
+    if(mode==='distinct'){resource.key=[{string:'o2'}];resource.fields.find(x=>x.field.elementId==='ownerId')!.value={string:'o2'};resource.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};}
+    if(mode==='integer-equivalent'||mode==='null-absence'){
+      resource=structuredClone(f.resource);f.cut.facts.push(structuredClone(f.resource));f.policy.rules=[{id:'read-resource',effect:'permit',actions:['read'],target:[resource.type],condition:{op:'literal',value:true}}];
+      if(mode==='integer-equivalent')resource.fields.find(x=>x.field.elementId==='salary')!.value={integerToken:'1e2'};
+      else{f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.nullability='absent-allowed';f.cut.facts.at(-1)!.fields.find(x=>x.field.elementId==='salary')!.value=null;resource.fields=resource.fields.filter(x=>x.field.elementId!=='salary');resource.absent=[ref('salary')];expected='indeterminate';}
+    }
+    outcomes.push({id:mode,expected,observed:evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},resource).decision});
+  }
+  return {cases:outcomes.length,mismatches:outcomes.filter(x=>x.expected!==x.observed).length,outcomes};
+}

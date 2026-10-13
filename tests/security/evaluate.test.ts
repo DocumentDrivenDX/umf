@@ -146,3 +146,42 @@ test('empty queries preflight prohibited fields and all original-action dependen
     expect(evaluateSecurityCollection(f.policy,f.resolution,f.cut,request)).toEqual({status:'refused',rows:[]});
   }
 });
+
+// @covers US-057-AC7
+// @covers US-079-AC3
+test('one cut refuses conflicting known projections of the same keyed fact',()=>{
+  const f=evaluationFixture();
+  f.policy.rules=[{id:'ownership-read',effect:'permit',actions:['read'],target:[f.owner.type],condition:{op:'literal',value:true}}];
+  const resource=structuredClone(f.owner);resource.fields.reverse();
+  const read=()=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},resource);
+  expect(read().decision).toBe('permit');
+  resource.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};
+  expect(read()).toEqual({decision:'indeterminate',output:[]});
+  resource.key=[{string:'other'}];resource.fields.find(x=>x.field.elementId==='ownerId')!.value={string:'other'};
+  expect(read().decision).toBe('permit');
+});
+test('consistent partial projections merge known values without inventing missing attributes',()=>{
+  const f=evaluationFixture();
+  f.policy.rules=[{id:'ownership-read',effect:'permit',actions:['read'],target:[f.owner.type],condition:{op:'literal',value:true}}];
+  const resource=structuredClone(f.owner);resource.fields=resource.fields.filter(x=>x.field.elementId==='ownerId');
+  expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},resource).decision).toBe('permit');
+});
+test('explicit null and absence conflict across known projections even without output selection',()=>{
+  const f=evaluationFixture();f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.nullability='absent-allowed';
+  const inventory=structuredClone(f.resource);inventory.fields.find(x=>x.field.elementId==='salary')!.value=null;f.cut.facts.push(inventory);
+  f.resource.fields=f.resource.fields.filter(x=>x.field.elementId!=='salary');f.resource.absent=[ref('salary')];
+  expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},f.resource)).toEqual({decision:'indeterminate',output:[]});
+});
+test('subject and inventory projections must agree on non-key attributes',()=>{
+  const f=evaluationFixture(),module=f.resolution.documents[0]!.document.modules[0]!;
+  module.elements.push({id:'staffDepartment',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}});
+  (module.elements.find(e=>e.id==='Staff')!.members as {module:string;element:string}[]).push({module:'m',element:'staffDepartment'});
+  f.resolution.ontology.entities.find(t=>t.type.elementId==='Staff')!.fields.push({ref:ref('staffDepartment'),protection:'unprotected'});
+  f.cut.coverage.find(c=>c.type.elementId==='Staff')!.fields.push(ref('staffDepartment'));
+  f.cut.subjects[0]!.fields.push({field:ref('staffDepartment'),value:{string:'engineering'}});
+  const inventory=structuredClone(f.cut.subjects[0]!);f.cut.facts.push(inventory);
+  const read=()=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},f.resource);
+  expect(read().decision).toBe('permit');
+  inventory.fields.find(x=>x.field.elementId==='staffDepartment')!.value={string:'sales'};
+  expect(read()).toEqual({decision:'indeterminate',output:[]});
+});

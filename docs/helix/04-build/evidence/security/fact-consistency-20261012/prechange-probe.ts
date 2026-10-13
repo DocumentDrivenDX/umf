@@ -1,0 +1,3 @@
+import {evaluationFixture} from '/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/evaluation-fixture';
+import {evaluateSecurityAccess} from '/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/evaluate';
+const f=evaluationFixture();const resource=structuredClone(f.owner);resource.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};f.policy.rules=[{id:'ownership-read',effect:'permit',actions:['read'],target:[f.owner.type],condition:{op:'literal',value:true}}];console.log(evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[]},resource));

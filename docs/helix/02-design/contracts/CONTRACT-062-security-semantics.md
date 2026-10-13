@@ -244,7 +244,14 @@ The first browser-compatible execution profile is bounded, nonrecursive read
 access over host-attested facts. A fact carries a qualified type, ordered core
 Key tuple, explicit field/value entries and explicit known-absent fields. Key
 field values, when supplied, MUST equal their tuple components. Duplicate facts,
-fields and contradictory absence declarations refuse admission.
+fields and contradictory absence declarations refuse admission. Across subject, fact
+inventory and requested resource projections, all known values for the same
+qualified core key identity and field MUST agree under the existing typed literal
+equality. Missing fields remain unknown; explicit absence is known and differs
+from null. Consistent partial projections may overlap without inventing missing
+attributes. This check does not authenticate the cut or prove complete inventory.
+The implementation retains input references rather than expanded numeric equality
+strings; it makes no total-process memory claim.
 
 A fact cut carries exactly one resolved subject, policy and ontology revisions,
 current/expected authority generation, association/type coverage and typed

@@ -97,6 +97,22 @@ function evaluator(policyInput:SecurityPolicy,resolutionInput:SecurityResolution
     keyFields(type).forEach((r,i)=>{const present=value(fact,r);if(present!==undefined&&literal(r,present)!==literal(r,fact.key[i]!))fail();});
   };
   [...cut.subjects,...cut.facts,...request.resources].forEach(validateFact);
+  // One logical cut cannot give conflicting known projections of one keyed fact.
+  // Missing fields are unknown here; explicit absence remains known and distinct.
+  // Retain validated input references, not expanded normalized numeric strings.
+  const knownByIdentity=new Map<string,Map<string,CoreLiteral|undefined>>();
+  for(const fact of [...cut.subjects,...cut.facts,...request.resources]){
+    step();const key=identity(fact),known=knownByIdentity.get(key)??new Map<string,CoreLiteral|undefined>();
+    const remember=(ref:SecurityRef,value:CoreLiteral|undefined)=>{
+      step();const name=id(ref),previous=known.get(name);
+      if(known.has(name)&&(previous===undefined?value!==undefined:
+        value===undefined||literal(ref,previous)!==literal(ref,value)))fail();
+      known.set(name,value);
+    };
+    for(const entry of fact.fields)remember(entry.field,entry.value);
+    for(const ref of fact.absent)remember(ref,undefined);
+    knownByIdentity.set(key,known);
+  }
   const subject=cut.subjects[0]!;if(id(subject.type)!==id(resolution.ontology.subject))fail();
   const factsByType=new Map<string,SecurityFact[]>(),factIds=new Set<string>();
   for(const fact of cut.facts){const key=identity(fact);if(factIds.has(key))fail();factIds.add(key);
