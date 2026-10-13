@@ -1,7 +1,7 @@
-import {Registry,readDocument,registerActions,inspectActions,compileActionRule,evaluateActionRule,actionFieldValueKey} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions,compileActionRule,evaluateActionRule,actionFieldValueKey} from '../../src/index';
 import fixture from '../../fixtures/actions/tutorial-postcondition.json';
 const document=readDocument(JSON.stringify(fixture),'json');
-const inspection=inspectActions(document,registerActions(new Registry()));
+const inspection=inspectActions(document,createUmfRegistry());
 if(!inspection.validation.valid||!inspection.validation.complete)throw Error('Tutorial declaration not interpreted');
 const action=inspection.actions[0]!.action,rule=action.postconditions[0]!.rule;
 const compiled=compileActionRule(document,action,rule,'post');

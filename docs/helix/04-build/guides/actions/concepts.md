@@ -10,7 +10,7 @@ Figure V1. The actual approve fixture defines sales.id, sales.status and sales.o
 
 ## What an extension adds
 
-An extension adds versioned meaning without changing the core model. The document declares umf.actions 0.1.0 and puts its action list under a module's extensions. Registering this package teaches a Registry how to check that vocabulary. It does not grant roles or install handlers.
+An extension adds versioned meaning without changing the core model. The document declares umf.actions 0.1.0 and puts its action list under a module's extensions. The normal UMF SDK includes the action types, schema and validation code. Use createUmfRegistry() to obtain a registry with action support already installed; there is no separate actions installation. The vocabulary descriptor remains a separate file inside the SDK so its exact semantic version is explicit. It does not grant roles or install handlers.
 
 Unknown extension content is retained. **Valid** means no known errors were found. **Complete** means all declared content was interpreted. A document can be valid and incomplete at the same time.
 

@@ -1,7 +1,7 @@
-import {Registry,readDocument,registerActions,inspectActions} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
 
-const registry=registerActions(new Registry());
+const registry=createUmfRegistry();
 const document=readDocument(JSON.stringify(fixture),'json');
 const inspection=inspectActions(document,registry);
 

@@ -17,6 +17,8 @@ descriptor fields and unknown options; an optional WASM worker imports source
 bundles and emits edited source with a recompilation check.
 Edition 2024 source operations and broader conformance remain unsupported.
 
+The normal SDK bundles `umf.actions`; use `createUmfRegistry()` for built-in action declaration support. Executors remain explicitly selected. `bun run build:sdk` creates one `.cache/sdk-distribution/umf-sdk.tgz` containing the library, types and schemas, including the action vocabulary descriptor. No separate actions installation is required.
+
 Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun run test`,
 and `bun run build`. `bun run test` builds the browser library, PostgreSQL parser,
 and adapter test bundles before running every live test file in a fresh, sequential

@@ -169,3 +169,9 @@ text as unchecked. Never claim rule interpretation from string preservation.
 No runtime method, endpoint or datastore is added to the public UMF library by
 this handoff. Runtime admission/observation schema publication may be reusable,
 but its trusted-session and adapter behavior belongs to the consumer.
+
+## Bundled SDK distribution — owner decision, 2026-10-13
+
+Action declaration support is first-class in the normal UMF SDK. `createUmfRegistry()` constructs a fresh registry containing the action schema and semantic validator. The vocabulary keeps its explicit namespace/version and unknown-content preservation. A bare `Registry` supports deliberately restricted interpretation. Neither initialization path selects an executor, authority, store or credentials.
+
+The normal distribution is one SDK archive containing browser ESM, TypeScript declarations and schemas. The action vocabulary descriptor is an internal schema artifact, not a separately installed product. Future releases coordinate these files as one SDK; historical action release evidence retains its original names and qualified sources. Execution runtimes retain the CONTRACT-901 boundary.
