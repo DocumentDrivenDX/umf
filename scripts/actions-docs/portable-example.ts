@@ -1,9 +1,9 @@
-import {Registry,readDocument,registerActions,inspectActions,assessAction,writeDocument} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions,assessAction,writeDocument} from '../../src/index';
 import type {ActionExecutorProfile} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
 
 export function runPortableExample() {
- const registry=registerActions(new Registry());
+ const registry=createUmfRegistry();
  const source=readDocument(JSON.stringify(fixture),'json');
  const before=JSON.stringify(source);
  const inspection=inspectActions(source,registry);

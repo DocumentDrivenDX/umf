@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-11T03:14:52Z",
+    "issued_at": "2026-10-13T14:06:44Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -11,34 +11,34 @@
     },
     "subjects": [
       {
-        "uri": "https://documentdrivendx.github.io/umf/actions/support-and-evidence.html",
+        "uri": "https://documentdrivendx.github.io/umf/actions/support-and-evidence.html/",
         "digest": {
           "alg": "sha256",
-          "value": "1015f248f83c2d776110b2bd8c68d4b83910b15522a1494056e8a06677776299"
+          "value": "be34af6bc8fc0d83a7b45f414cc947a71bb28f822ad99cdb6c73ec0a282577ef"
         }
       }
     ],
     "colophon": {
       "schema_version": "1",
-      "composition": "model-primary",
+      "composition": "mixed",
       "ingredients": [
         {
+          "kind": "human",
+          "name": "operator",
+          "role": "outline"
+        },
+        {
           "kind": "model",
-          "name": "OpenAI Codex",
-          "role": "draft and rewrite"
+          "name": "Claude",
+          "role": "expand"
         },
         {
           "kind": "human",
-          "name": "Erik Labianca",
-          "role": "direction and review"
-        },
-        {
-          "kind": "tool",
-          "name": "innsigle-seal",
-          "role": "colophon preparation and sealing"
+          "name": "operator",
+          "role": "final-edit"
         }
       ],
-      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+      "notes": null
     }
   },
   "payload_encoding": "json",
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "Zc43pHsSVA-SqZdcjDTyYLflOG1Aew4DJG27UQ4KrELiUjwy0KbLtGEBUZ7QlFxZ8-MaLwarBqyxMcx5UAe6DQ",
-      "signed_at": "2026-10-11T03:14:52Z"
+      "sig": "q7SiorFKhdWg3y23H0jKbdkywpRNI5N9HnKdRNRL3hOTU6wDfO7E3aDTjULa4tC0GHqDVkJlxpyeM6QyFECtAQ",
+      "signed_at": "2026-10-13T14:06:44Z"
     }
   ]
 }

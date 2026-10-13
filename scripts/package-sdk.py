@@ -1,0 +1,24 @@
+"""Create one deterministic, installable SDK archive from the actual build."""
+from pathlib import Path
+import gzip, hashlib, io, json, tarfile
+
+output = Path('.cache/sdk-distribution')
+files = sorted(p for p in Path('dist').rglob('*') if p.is_file() and not p.name.startswith('._'))
+required = ['dist/umf.js', 'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
+            'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js']
+assert all(Path(p).is_file() for p in required), 'SDK build is incomplete'
+assert all(not p.is_symlink() for p in files), 'SDK must contain regular build outputs'
+manifest = {'profile': 'umf.sdk.distribution/1', 'bundledVocabularies': {'umf.actions': '0.1.0'},
+            'sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}
+(output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+with (output / 'umf-sdk.tgz').open('wb') as raw:
+    with gzip.GzipFile(filename='', fileobj=raw, mode='wb', mtime=0) as compressed:
+        with tarfile.open(fileobj=compressed, mode='w|') as archive:
+            entries = [(p, str(p)) for p in files]
+            entries += [(output / name, name) for name in ['package.json', 'README.md', 'manifest.json']]
+            for path, name in entries:
+                data = path.read_bytes()
+                entry = tarfile.TarInfo('package/' + name)
+                entry.size, entry.mode, entry.mtime = len(data), 0o644, 0
+                archive.addfile(entry, io.BytesIO(data))
+print(json.dumps({'archive': str(output / 'umf-sdk.tgz'), 'files': len(files), 'actionsBundled': True}))

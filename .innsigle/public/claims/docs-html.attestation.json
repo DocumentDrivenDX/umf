@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-11T03:14:54Z",
+    "issued_at": "2026-10-13T14:06:44Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -11,7 +11,7 @@
     },
     "subjects": [
       {
-        "uri": "https://documentdrivendx.github.io/umf/docs.html",
+        "uri": "https://documentdrivendx.github.io/umf/docs.html/",
         "digest": {
           "alg": "sha256",
           "value": "e1de907d7fe493955abe135d2a8c4402fef9f8fa7a8ac8e9d422073263452b42"
@@ -20,25 +20,25 @@
     ],
     "colophon": {
       "schema_version": "1",
-      "composition": "model-primary",
+      "composition": "mixed",
       "ingredients": [
         {
+          "kind": "human",
+          "name": "operator",
+          "role": "outline"
+        },
+        {
           "kind": "model",
-          "name": "OpenAI Codex",
-          "role": "draft and rewrite"
+          "name": "Claude",
+          "role": "expand"
         },
         {
           "kind": "human",
-          "name": "Erik Labianca",
-          "role": "direction and review"
-        },
-        {
-          "kind": "tool",
-          "name": "innsigle-seal",
-          "role": "colophon preparation and sealing"
+          "name": "operator",
+          "role": "final-edit"
         }
       ],
-      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+      "notes": null
     }
   },
   "payload_encoding": "json",
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "ue7w4xv8ja6cVACaVqQvPi8NpGYoFhzpghXd88AQ9dthYU5q7cyQ7Lpq5Q2MTZCMLapwGUZlucK27ZtGupuSCA",
-      "signed_at": "2026-10-11T03:14:54Z"
+      "sig": "8kbdLmXGeO-nnlTYvrGAuIe_QEpcHY9EkPPNhwrh30RPWQ7odBkUNl3j1wLg-uJ62bsh_8-WrwTx2g41Ur_bCQ",
+      "signed_at": "2026-10-13T14:06:44Z"
     }
   ]
 }

@@ -20,7 +20,7 @@ try{
  if(await child.exited)throw Error('Public action Chromium qualification failed');
  const report=JSON.parse(await Bun.file(join(directory,'browser.json')).text());
  const actionPaths:string[]=[];for await(const path of new Bun.Glob('*.ts').scan({cwd:'src/extensions/actions'}))actionPaths.push('src/extensions/actions/'+path);
- const inputs=['src/index.ts','spec/extensions/actions/package.json','spec/extensions/actions/schema.json','dist/umf.js','fixtures/actions/approve.json','fixtures/actions/create-link.json','fixtures/actions/ddd-binding.json','fixtures/actions/composite-key.json','fixtures/actions/association-record.json','fixtures/actions/cases.json','tests/actions/case-corpus.ts','tests/actions/browser-corpus.ts','scripts/actions-browser.ts','scripts/actions-browser-driver.cjs',...actionPaths];
+ const inputs=['src/index.ts','src/registry/builtins.ts','spec/extensions/actions/package.json','spec/extensions/actions/schema.json','dist/umf.js','fixtures/actions/approve.json','fixtures/actions/create-link.json','fixtures/actions/ddd-binding.json','fixtures/actions/composite-key.json','fixtures/actions/association-record.json','fixtures/actions/cases.json','tests/actions/case-corpus.ts','tests/actions/browser-corpus.ts','scripts/actions-browser.ts','scripts/actions-browser-driver.cjs',...actionPaths];
  report.bun=Bun.version;report.playwright='1.63.0';report.image=image;report.sha256={};
  for(const path of inputs)report.sha256[path]=createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
  await Bun.write('fixtures/actions/browser.json',JSON.stringify(report,null,2)+'\n');

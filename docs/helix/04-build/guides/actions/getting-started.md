@@ -2,6 +2,10 @@
 
 You will read the actual approve fixture and inspect its declaration. No database, Docker or credentials are required.
 
+## Get the normal SDK
+
+The normal SDK includes action declaration support. There is no separate umf.actions installation. Build one installable archive with `bun run build:sdk`; it is written to `.cache/sdk-distribution/umf-sdk.tgz`. A consumer can install that file with `bun add /path/to/umf-sdk.tgz` and import `createUmfRegistry` from `@umf/core`. The source examples below run directly from the repository.
+
 ## Prepare the repository
 
 ```sh
@@ -20,10 +24,10 @@ The executable example below uses the public entry point. The relative paths are
 
 <!-- generated:portable-example:start -->
 ```ts
-import {Registry,readDocument,registerActions,inspectActions} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
 
-const registry=registerActions(new Registry());
+const registry=createUmfRegistry();
 const document=readDocument(JSON.stringify(fixture),'json');
 const inspection=inspectActions(document,registry);
 

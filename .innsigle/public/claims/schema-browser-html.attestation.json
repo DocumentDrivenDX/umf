@@ -2,7 +2,7 @@
   "payload": {
     "innsigle": "1",
     "type": "https://innsigle.dev/claim/colophon/v1",
-    "issued_at": "2026-10-11T18:20:30Z",
+    "issued_at": "2026-10-13T14:06:44Z",
     "issuer": {
       "id": "documentdrivendx-umf",
       "name": "DocumentDrivenDX UMF",
@@ -11,7 +11,7 @@
     },
     "subjects": [
       {
-        "uri": "https://documentdrivendx.github.io/umf/schema-browser.html",
+        "uri": "https://documentdrivendx.github.io/umf/schema-browser.html/",
         "digest": {
           "alg": "sha256",
           "value": "82b4575550d99855aef461c8bf67cd47161025a5bedcf04f7ba8f2b0ac5ad4f1"
@@ -20,25 +20,25 @@
     ],
     "colophon": {
       "schema_version": "1",
-      "composition": "model-primary",
+      "composition": "mixed",
       "ingredients": [
         {
+          "kind": "human",
+          "name": "operator",
+          "role": "outline"
+        },
+        {
           "kind": "model",
-          "name": "OpenAI Codex",
-          "role": "draft and rewrite"
+          "name": "Claude",
+          "role": "expand"
         },
         {
           "kind": "human",
-          "name": "Erik Labianca",
-          "role": "direction and review"
-        },
-        {
-          "kind": "tool",
-          "name": "innsigle-seal",
-          "role": "colophon preparation and sealing"
+          "name": "operator",
+          "role": "final-edit"
         }
       ],
-      "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+      "notes": null
     }
   },
   "payload_encoding": "json",
@@ -46,8 +46,8 @@
     {
       "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
       "alg": "ed25519",
-      "sig": "WgeKfGBwVSuuWv05QUrMD40oXic0YONfluH6Lq3k5xQqNtahTJmbyzDoKPbI2ncxJSBEhvrwiaIZr4hZJH3kBA",
-      "signed_at": "2026-10-11T18:20:30Z"
+      "sig": "0BxJFoZCU4Cv5WUo7EexOKHKwyTpInc4p8Pdox9KMRhuk4DiWbbIAnFlt69yBw5zYM19b6asgrDEZa6peFnEDw",
+      "signed_at": "2026-10-13T14:06:44Z"
     }
   ]
 }

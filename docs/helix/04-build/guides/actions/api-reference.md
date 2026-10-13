@@ -1,9 +1,10 @@
 # Public action API reference
 
-Import from the repository public entry point, src/index.ts, or from the built browser ESM dist/umf.js. The package is private and not available through npm installation. All declaration operations receive the caller's explicit Registry; they do not replace other installed vocabularies.
+Import from the repository public entry point, src/index.ts, or from the built browser ESM dist/umf.js. The package is private and not available through npm installation. Create the normal SDK registry with createUmfRegistry(); action support is included. All declaration operations receive that registry explicitly; they do not replace other installed vocabularies. A bare new Registry() remains available for consumers that deliberately choose their interpreted vocabularies.
 
 ## Declaration operations
 
+- createUmfRegistry(): Registry — creates a fresh SDK registry with the bundled action vocabulary and semantic validator. It installs no executor, credentials or business roles.
 - registerActions(registry: Registry): Registry — installs the exact package and semantic callback. Duplicate-version registration refuses; no dynamic loading or authorization is performed.
 - declareAction(source: Document, module: string, action: Action, registry: Registry): Document — adds a fresh action ID to an existing module, validates the whole document and returns a JSON-safe isolated copy. Unknown opaque rule text can be retained; known errors refuse.
 - inspectActions(source: Document, registry: Registry): ActionInspection — returns copied source, validation and ordered actions with their module, path and obligation inventory. Structural errors throw UmfError; semantically invalid admitted declarations remain inspectable with diagnostics. It evaluates no business state.

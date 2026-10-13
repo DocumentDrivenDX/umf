@@ -24,14 +24,17 @@ jobs:
         run: |
           set -o pipefail
           bun run test:actions 2>&1 | tee command-execution.log
-      - name: Build public browser library
-        run: bun run build
+      - name: Build bundled SDK
+        run: bun run test:sdk
       - name: Test command API in Chromium
         run: bun scripts/actions-browser.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: command-execution-evidence
+          include-hidden-files: true
           path: |
             command-execution.log
             fixtures/actions/browser.json
+            .cache/sdk-distribution/umf-sdk.tgz
+            .cache/sdk-distribution/manifest.json

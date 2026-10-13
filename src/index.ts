@@ -15,6 +15,7 @@ export * from './model/serialization';
 export * from './model/document';
 export * from './model/selection';
 export * from './registry/registry';
+export {createUmfRegistry} from './registry/builtins';
 export * from './validation/document';
 export { default as coreSchema } from '../spec/core/schema.json';
 export { default as coreNullabilitySchema } from '../spec/core/nullability-document.schema.json';
