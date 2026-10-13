@@ -172,22 +172,6 @@ jobs:
         with:
           name: generated-action-guides
           path: docs/helix/05-deploy/microsite/dist/actions
-      - name: Diagnose exact guide bytes
-        run: |
-          bun --revision
-          python3 - <<'PYDIAG'
-          from pathlib import Path
-          import hashlib, json, subprocess
-          base=Path('docs/helix/05-deploy/microsite/dist/actions')
-          for name in ['concepts.html','getting-started.html','example.js']:
-              path=base/name
-              row={'file':str(path),'actualSha256':hashlib.sha256(path.read_bytes()).hexdigest(),'committedSha256':hashlib.sha256(subprocess.check_output(['git','show','HEAD:'+str(path)])).hexdigest()}
-              if name.endswith('.html'):
-                  claim=json.loads(Path('.innsigle/public/claims/actions-'+name.replace('.','-')+'.attestation.json').read_text())
-                  row['claimedSha256']=claim['payload']['subjects'][0]['digest']['value']
-              print(json.dumps(row))
-          subprocess.run(['git','diff','--stat','--','src','spec','scripts/actions-docs','docs/helix/05-deploy/microsite/dist/actions','.innsigle/public/claims'],check=True)
-          PYDIAG
       - name: Verify page signatures
         run: node .tools/innsigle/src/cli.mjs verify --all
       - name: Include public keys and attestations

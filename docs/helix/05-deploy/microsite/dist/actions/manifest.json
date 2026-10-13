@@ -2,7 +2,7 @@
   "profile": "umf.actions.documentation-build/1",
   "ownership": "Only microsite/dist/actions; diagrams are inline inside signed HTML",
   "inputs": {
-    ".github/workflows/microsite.yml": "b65747c0cab951c4c27b79ee5e06b14aed7b36732346e232e9f0a0070a276166",
+    ".github/workflows/microsite.yml": "1715b74de2db394e544f6b2b96d90597191b6b582d32ecf2587d5b68f5cd4ac1",
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md": "82ce8949ae5e95cf531a0e1589504f8ac78a0b782aa606a2c633e2d8308c8680",
     "docs/helix/02-design/contracts/CONTRACT-002-json-schema.md": "1b113e256c6171bf3b729fa006b103e34e413807d20888d347adda6c964ab0f0",
@@ -127,7 +127,7 @@
     "scripts/actions-docs/browser-example.ts": "7313bfba2c5b28561c084bdf15b1fd105b5d5099f73104fb7ecda1064b2da394",
     "scripts/actions-docs/browser.ts": "489d1d878785551185b9ab98c0c60e5b3dbe55561bba58855c175f2bba96580a",
     "scripts/actions-docs/build-negative-controls.py": "9b534a03c4fea07f4bbb3984147bb51771ff44dc64ec788749e1c32ce4fb2663",
-    "scripts/actions-docs/build.ts": "b9b76b0dcb9def5a9b2994d9236871056522c9d4469ac9bc5fdd0b1052d236b2",
+    "scripts/actions-docs/build.ts": "2dde87a1a786c51153f083c52ea19db579be692d78230be85d48160ded89bc86",
     "scripts/actions-docs/check.ts": "cc68fd7a94fbbdbe5a64107b4d9cabe5a38f9f7196febbe8bd83731a715379ca",
     "scripts/actions-docs/inspect-example.ts": "183ced70463d7e319f1f0301c5cc7fa9c915039dda04f29bda3c59df0a6f7523",
     "scripts/actions-docs/native-example.ts": "8be3d7fc28f7390a4a7fd155a0f7717ff10029e917db519494cda56790add02b",
@@ -1408,20 +1408,20 @@
   },
   "outputs": {
     "guide.css": "92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d",
-    "example.js": "825d66b3138200e8e06685f8cba8732435257c770dffb8e3da39272a957b24f7",
-    "index.html": "eff313e4aa03e9660b38763a74f55446d1d1a85907c19d12abdda38752005b18",
-    "concepts.html": "fb103ad9d25af713420384a9b95cd00971fffcf58ceec7816f55675a82ead30f",
-    "getting-started.html": "603e6b25f964f5fbdd79dc164c803f671df51a34e56dce5b23dad036dde8e0a4",
-    "declarations.html": "4f4a92476ae8a2a176d80aecd46572bedbbae9ed99a58b5b3bcd0668dbc384a4",
-    "execution.html": "40f1134a6fdd0784a1ffb6757dd139155765fdd2a896c02527cd60d05f9a2455",
-    "receipts-and-queries.html": "cb913b84f996ca365976f6e1d07c9d017c01aa92022a2477c3ccc7fedea9b8a7",
-    "formal-analysis.html": "358dfb34bfc86cefd3f442e9f8f2cecd45f0f4ba575749df01077620c17380f5",
-    "api-reference.html": "259e1b170d5cfec0d7ded8919faca383b3aab08146a98a2a40f0523d39309ca7",
-    "support-and-evidence.html": "be34af6bc8fc0d83a7b45f414cc947a71bb28f822ad99cdb6c73ec0a282577ef",
-    "glossary.html": "095cded1fcf89707f27c18e61f28f623a3905172fabdade4770c027123137df0"
+    "example.js": "ae74990f8ad5e8346b6a8e9d18bc69bdad961a60edc5451be69baff1fabb6358",
+    "index.html": "0f9bdc26b70c5193ff56d0d0e00bafce06f04823c311317f4ed11d349eb72736",
+    "concepts.html": "60bdcb9f16e807fc17dbb7a3bb0013ca89a777156243aa35ad4e7a0faf0ffc36",
+    "getting-started.html": "b3bd16dbfa3ea08a3580d4ee3f83715592e380debcd11155fffda3f7177d7eca",
+    "declarations.html": "6acc7789d8f50fdc689ddab05604ea4d30871b77c6f8a359d5d7c66aa4f34651",
+    "execution.html": "f24fa15e193a85e19339273371e819451678f0f11d61de7277d19a7b24fbc221",
+    "receipts-and-queries.html": "8a697a8fe7c759f40c371cbc4195f593b1454c3f396ca12f1759525e62fb9f4d",
+    "formal-analysis.html": "d8595f3470876b2d3c1962ca4b5decb28c1769a66de28edca1895fbf421b0187",
+    "api-reference.html": "081d9b299f06579da32b9630b77a5f03fb0899c1aaf4eb70ced668caebada011",
+    "support-and-evidence.html": "d1fac7ac637f7ea5d3719ba743001f0edb59701e26233b4fa65ae08e7800eb29",
+    "glossary.html": "117a1f4fc89259fc3571c2f50fe9a21b3c4516f78829ffa0e0f79e73b4079b81"
   },
   "assetHashes": {
     "guide.css": "92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d",
-    "example.js": "825d66b3138200e8e06685f8cba8732435257c770dffb8e3da39272a957b24f7"
+    "example.js": "ae74990f8ad5e8346b6a8e9d18bc69bdad961a60edc5451be69baff1fabb6358"
   }
 }
