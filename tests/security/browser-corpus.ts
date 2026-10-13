@@ -141,7 +141,7 @@ export async function securityGuardCorpus(){
 
 export function securityWriteCorpus(){
   const outcomes:{id:string;expected:string;observed:string}[]=[];
-  for(const mutation of ['both-states','field-denied','ownership-denied','policy-denied','mixed-generation','missing-policy-field']){
+  for(const mutation of ['both-states','field-denied','ownership-denied','ownership-policy-denied','policy-denied','mixed-generation','missing-policy-field']){
     const f=writeFixture();let expected='deny';
     if(mutation==='both-states')expected='permit';
     if(mutation==='field-denied')f.policy.rules.find(r=>r.id==='writer')!.actions=f.policy.rules.find(r=>r.id==='writer')!.actions.filter(a=>a!=='write-fields');
@@ -149,6 +149,11 @@ export function securityWriteCorpus(){
       f.policy.rules.find(r=>r.id==='write-membership')!.condition={op:'literal',value:true};
       f.proposed.cut.facts.find(r=>r.type.elementId==='Ownership')!.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};
       f.policy.rules.find(r=>r.id==='writer')!.actions=f.policy.rules.find(r=>r.id==='writer')!.actions.filter(a=>a!=='change-owner');
+    }
+    if(mutation==='ownership-policy-denied'){
+      f.policy.rules.find(r=>r.id==='write-membership')!.condition={op:'literal',value:true};
+      f.proposed.cut.facts.find(r=>r.type.elementId==='Ownership')!.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};
+      f.policy.rules.find(r=>r.id==='writer')!.actions=f.policy.rules.find(r=>r.id==='writer')!.actions.filter(a=>a!=='change-policy');
     }
     if(mutation==='policy-denied'){f.profile.policyFields.push(f.profile.fieldActions[1]!.field);f.policy.rules.find(r=>r.id==='writer')!.actions=f.policy.rules.find(r=>r.id==='writer')!.actions.filter(a=>a!=='change-policy');}
     if(mutation==='missing-policy-field'){f.policy.rules.push({id:'salary-policy',effect:'require',actions:['update'],target:[ref('Resource')],condition:{op:'eq',left:{kind:'resource',field:ref('salary')},right:{kind:'resource',field:ref('salary')}}});expected='indeterminate';}

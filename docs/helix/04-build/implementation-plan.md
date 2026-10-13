@@ -11714,3 +11714,10 @@ Pure structural/semantic checks cannot close those native obligations. No backen
 case is promoted. Ashlar/Delta test workspace/catalog and actual ordinary actors
 remain unresolved; a text-only question requests those names without credentials.
 Independent local implementation remains available and the full goal stays active.
+
+
+### Ownership inventory policy-change authorization — 2026-10-12
+
+A native-independent semantic reproduction found evaluateSecurityWrite could permit a change to an Ownership inventory used by policy without the separate policy-change grant. The evaluator now includes that action on both update states when a changed declared ownership inventory belongs to the typed policy dependency closure. Create/delete declaring such inventories require it on their selected state. Unchanged inventories and changed policy-unused inventories retain their previous permission requirements. CONTRACT-062 records the explicit association dependency rule.
+
+[Evidence](evidence/security/ownership-policy-write-20261012/receipt.json) retains127 passing semantic security tests, source typecheck, Chromium153/Bun1.4.2 write corpus correspondence, five UNSAT/three SAT conditional Z3 queries including the historical omission witness, exact sources, and independent Astra Ultra replay/review. Isolated create/delete controls avoid accidental coverage through target policy fields; update controls require policy grants on both states. This is US-057-AC1 semantic prerequisite evidence only, not complete native write enforcement or new L01 case acceptance. The original132-case goal remains active.

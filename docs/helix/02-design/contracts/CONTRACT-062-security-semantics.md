@@ -314,7 +314,9 @@ state. Exact literal comparison distinguishes null, absence and changed values.
 Both update states must use the same subject, current policy/ontology, context
 and authority generation. Changed non-ownership authorization facts refuse;
 changed declared ownership association inventories require the separate ownership
-action on both states. Create/delete with declared ownership associations also
+action on both states. When a changed inventory belongs to the policy dependency
+closure, it also requires the separate policy-change action on both states.
+Create/delete bindings with such ownership inventories require both actions. Create/delete with declared ownership associations also
 require it. Every selected object, field, ownership and policy action is composed
 independently on the selected state(s); any unknown result refuses the write.
 The profile bounds distinct field actions to 64 and divides each state's step

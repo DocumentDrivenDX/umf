@@ -1,0 +1,44 @@
+{
+  "problem": "Changed policy-used Ownership inventory could permit without separately granted policy-change action. Reproduced pre-fix permit for ownerProject p1\u2192p2 with writer lacking change-policy.",
+  "implementation": "Require separate policyAction for changed declared ownership association in typed policy dependency closure on both update states; require it for single-state create/delete declaring such inventories. No semantic mutation effects performed.",
+  "validation": {
+    "semanticSecurityTests": 127,
+    "failed": 0,
+    "expectations": 1809,
+    "typecheck": "bun x tsc --noEmit pass",
+    "browser": {
+      "bun": "1.4.2",
+      "chromium": "153.0.8010.12"
+    },
+    "browserWriteCases": 7,
+    "browserWriteMismatches": 0,
+    "formal": "Z3 4.15.4:5UNSAT3SAT; independent Astra replay exact"
+  },
+  "review": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra",
+    "result": "Suggested isolated create/delete and non-overchecking controls retained. Final no actionable findings;12focusedtests and exact formal replay."
+  },
+  "acceptanceTraceability": [
+    {
+      "criterion": "US-057-AC1",
+      "relationship": "semantic-write-prerequisite",
+      "backendCases": [
+        "pg-raw.L01",
+        "truss.L01",
+        "delta-raw.L01",
+        "ashlar.L01"
+      ],
+      "caseClosed": false,
+      "qualification": "No new native write admission, original producer authentication, effect atomicity, guard participation or full backend case qualified."
+    }
+  ],
+  "formalScope": "Abstract selected-state/action fold, association-change/dependency/per-actionpermission premises. Not TypeScript refinement or fact-delta extraction/native proof.",
+  "sourceSha256": {
+    "src/extensions/security/write.ts": "b7052fee7826258aa49ec122824f9239b5af1c4407772abe417c7104dce472f9",
+    "tests/security/write.test.ts": "0317616d8e34ddd32558a6e5b1657669770851f69f63509877fcde3f65f1bcce",
+    "tests/security/browser-corpus.ts": "611c040fe559efe2b279f45fc0b0d5077416b7647a7b6feab9c55b7a993aaa97",
+    "tools/security/prove-ownership-policy-write.py": "ffca383c5cd3fbd344386c12440b6916a6453b5fc4eac6a22147d60abe8d4ae3",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "3ee66b5fd5f3d82ebb304bd79aa79d8c7cd90426805c7af6ce00e66706eeeeb1"
+  }
+}

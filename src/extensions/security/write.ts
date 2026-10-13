@@ -63,6 +63,7 @@ export function evaluateSecurityWrite(policyInput:SecurityPolicy,resolutionInput
     };
     const changed=type.fields.filter(field=>states.length===1||fieldValue(states[0]!,field.ref)!==fieldValue(states[1]!,field.ref)).map(f=>id(f.ref));
     let ownershipChanged=profile.ownershipFields.some(r=>changed.includes(id(r)));
+    let policyAssociationChanged=false;
     if(states.length===2){
       const a=states[0]!.cut,b=states[1]!.cut;
       if(a.generation!==b.generation||a.expectedGeneration!==b.expectedGeneration||a.policyId!==b.policyId||a.policyRevision!==b.policyRevision||a.ontologyDocumentId!==b.ontologyDocumentId||a.ontologyRevision!==b.ontologyRevision||canonicalSchemaJson(a.subjects)!==canonicalSchemaJson(b.subjects)||canonicalSchemaJson(a.context)!==canonicalSchemaJson(b.context))fail();
@@ -70,10 +71,14 @@ export function evaluateSecurityWrite(policyInput:SecurityPolicy,resolutionInput
       const before=grouped(a),after=grouped(b);
       for(const key of new Set([...before.keys(),...after.keys()]))if(canonicalSchemaJson((before.get(key)??[]).sort())!==canonicalSchemaJson((after.get(key)??[]).sort())){
         if(!profile.ownershipAssociations.some(r=>id(r)===key))fail();ownershipChanged=true;
+        if(dependencies.associations.some(r=>id(r)===key))policyAssociationChanged=true;
       }
-    }else if(profile.ownershipAssociations.length)ownershipChanged=true;
+    }else if(profile.ownershipAssociations.length){
+      ownershipChanged=true;
+      policyAssociationChanged=profile.ownershipAssociations.some(r=>dependencies.associations.some(d=>id(d)===id(r)));
+    }
     const objectAction=request.operation==='create'?profile.createAction:request.operation==='delete'?profile.deleteAction:profile.updateAction;
-    const checks=[objectAction,...new Set(changed.map(field=>actions.get(field)??fail())),...(ownershipChanged?[profile.ownershipAction]:[]),...(profile.policyFields.some(r=>changed.includes(id(r)))||(request.operation!=='update'&&dependencies.associations.some(r=>id(r)===id(type.type)))?[profile.policyAction]:[])];
+    const checks=[objectAction,...new Set(changed.map(field=>actions.get(field)??fail())),...(ownershipChanged?[profile.ownershipAction]:[]),...(policyAssociationChanged||profile.policyFields.some(r=>changed.includes(id(r)))||(request.operation!=='update'&&dependencies.associations.some(r=>id(r)===id(type.type)))?[profile.policyAction]:[])];
     const decisions:SecurityDecision[]=[];
     for(const state of states)for(const action of checks){
       const maxSteps=Math.floor(state.cut.maxSteps/checks.length);if(maxSteps<1)fail();

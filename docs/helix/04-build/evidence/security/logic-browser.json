@@ -28,14 +28,14 @@
     "tests/security/fixture.ts": "572f914713ea24d3e06b85a953cc9176fd98adf2e585e1cd6d838f27c1b694c6",
     "src/extensions/security/disclosure.ts": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec",
     "src/extensions/security/dependencies.ts": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7",
-    "src/extensions/security/write.ts": "d920957f75ae26b0a5a4c57ecc8a5c82902de85f7dc9ebf9f7745ee420fbf722",
+    "src/extensions/security/write.ts": "b7052fee7826258aa49ec122824f9239b5af1c4407772abe417c7104dce472f9",
     "tests/security/write-fixture.ts": "f52a37706b72a798adb300d5aa6af4f98a0cba8a1a8d1581c0bd2193bac1bc69",
     "src/extensions/security/authority-guard.ts": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3",
     "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
     "src/extensions/security/evaluate.ts": "243bfc2cdbb0cc8b930974c1c9b3cbda18313eae90a8ce5f0afb154b653790fc",
     "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
     "tests/security/evaluation-fixture.ts": "ecb9bbae23a4b26232fda959c59aa4dbe79a111699c670f1356dd0c7d251d8ad",
-    "tests/security/browser-corpus.ts": "c447a93d7d8397c2f8c3124589f297e7c7132f8925d738b20a822eedc5a956ee",
+    "tests/security/browser-corpus.ts": "611c040fe559efe2b279f45fc0b0d5077416b7647a7b6feab9c55b7a993aaa97",
     "tools/security/browser.ts": "95d0c474bc1d493d0da0197c84a618a0755662144901e0e4b9340f27070d920b",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
     "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
@@ -411,7 +411,7 @@
       ]
     },
     "write": {
-      "cases": 6,
+      "cases": 7,
       "mismatches": 0,
       "outcomes": [
         {
@@ -426,6 +426,11 @@
         },
         {
           "id": "ownership-denied",
+          "expected": "deny",
+          "observed": "deny"
+        },
+        {
+          "id": "ownership-policy-denied",
           "expected": "deny",
           "observed": "deny"
         },
