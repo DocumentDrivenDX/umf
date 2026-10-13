@@ -1,5 +1,6 @@
 import {copyJson} from '../../model/json';
-import {canonicalSchemaJson,literalIdentity} from '../../model/schema-literals';
+import {canonicalSchemaJson,checkSchemaLiteral,literalIdentity,type CoreLiteral} from '../../model/schema-literals';
+import {encodeCoreKeyTuple} from '../../model/key-tuple';
 import {securityPolicyDependencies} from './dependencies';
 import {requireSecurityInterpretation} from './policy';
 import {evaluateSecurityAccess,type SecurityFact,type SecurityFactCut} from './evaluate';
@@ -56,20 +57,61 @@ export function evaluateSecurityWrite(policyInput:SecurityPolicy,resolutionInput
         if(!state.resource.fields.some(f=>id(f.field)===id(field.ref))&&!state.resource.absent.some(r=>id(r)===id(field.ref)))fail();
       }
     }
+    // Separate conservative comparison ledger; never retain expanded scalar
+    // identities for entire inventories. Evaluated projections stay unchanged.
+    const comparisonLimit=Math.min(...states.map(state=>state.cut.maxSteps));
+    if(!Number.isSafeInteger(comparisonLimit)||comparisonLimit<1||comparisonLimit>1000000)fail();
+    let comparisonSteps=0,comparisonBytes=0;
+    const compareStep=()=>{if(++comparisonSteps>comparisonLimit)fail();};
+    const compareText=(value:string)=>{comparisonBytes+=value.length;if(comparisonBytes>4000000)fail();return value;};
+    const document=(ref:SecurityRef)=>resolution.documents.find(item=>item.document.id===ref.documentId)?.document??fail();
+    const element=(ref:SecurityRef)=>document(ref).modules.find(module=>module.id===ref.moduleId)?.elements.find(item=>item.id===ref.elementId)??fail();
+    const scalar=(ref:SecurityRef,value:CoreLiteral)=>{
+      compareStep();const field=element(ref);if(field.kind!=='field')fail();checkSchemaLiteral(document(ref),field,value);
+      return compareText(value===null?'null':literalIdentity(field,value));
+    };
+    type Projection=Map<string,{ref:SecurityRef;value:CoreLiteral|undefined}>;
+    const projection=(fields:SecurityFact['fields'],absent:SecurityRef[]=[]):Projection=>{
+      if(!Array.isArray(fields)||fields.length>4096||!Array.isArray(absent)||absent.length>4096)fail();
+      const result:Projection=new Map();
+      const add=(ref:SecurityRef,value:CoreLiteral|undefined)=>{compareStep();const key=compareText(id(ref));if(result.has(key))fail();result.set(key,{ref,value});};
+      for(const entry of fields){exact(entry,['field','value']);add(entry.field,entry.value);}
+      for(const ref of absent)add(ref,undefined);
+      return result;
+    };
+    const sameProjection=(a:Projection,b:Projection)=>{
+      if(a.size!==b.size)return false;
+      for(const [key,left] of a){compareStep();const right=b.get(key);if(!right)return false;
+        if(left.value===undefined||right.value===undefined){if(left.value!==right.value)return false;}
+        else if(scalar(left.ref,left.value)!==scalar(right.ref,right.value))return false;
+      }
+      return true;
+    };
+    const grouped=(facts:SecurityFact[])=>{
+      if(!Array.isArray(facts)||facts.length>10000)fail();
+      const result=new Map<string,Map<string,Projection>>();
+      for(const fact of facts){compareStep();exact(fact,['type','key','fields','absent']);const key=compareText(id(fact.type));
+        const binding=[...resolution.ontology.entities,...resolution.ontology.associations].find(item=>id(item.type)===key)??fail();
+        const tuple=encodeCoreKeyTuple(document(fact.type),{module:fact.type.moduleId,element:fact.type.elementId,key:binding.keyId},fact.key).bytesHex;
+        const factId=compareText(canonicalSchemaJson([key,binding.keyId,tuple]));const rows=result.get(key)??new Map<string,Projection>();
+        if(rows.has(factId))fail();rows.set(factId,projection(fact.fields,fact.absent));result.set(key,rows);
+      }
+      return result;
+    };
+    const sameRows=(a:Map<string,Projection>,b:Map<string,Projection>)=>a.size===b.size&&[...a].every(([key,fields])=>{compareStep();const other=b.get(key);return other!==undefined&&sameProjection(fields,other);});
+    const sameFacts=(a:SecurityFact[],b:SecurityFact[])=>{const left=grouped(a),right=grouped(b);return left.size===right.size&&[...left].every(([key,rows])=>{compareStep();const other=right.get(key);return other!==undefined&&sameRows(rows,other);});};
     const fieldValue=(state:SecurityWriteState,ref:SecurityRef)=>{
       const value=state.resource.fields.find(f=>id(f.field)===id(ref));if(!value)return 'absent';if(value.value===null)return 'null';
-      const element=resolution.documents.find(d=>d.document.id===ref.documentId)?.document.modules.find(m=>m.id===ref.moduleId)?.elements.find(e=>e.id===ref.elementId)??fail();
-      return literalIdentity(element,value.value);
+      return scalar(ref,value.value);
     };
     const changed=type.fields.filter(field=>states.length===1||fieldValue(states[0]!,field.ref)!==fieldValue(states[1]!,field.ref)).map(f=>id(f.ref));
     let ownershipChanged=profile.ownershipFields.some(r=>changed.includes(id(r)));
     let policyAssociationChanged=false;
     if(states.length===2){
       const a=states[0]!.cut,b=states[1]!.cut;
-      if(a.generation!==b.generation||a.expectedGeneration!==b.expectedGeneration||a.policyId!==b.policyId||a.policyRevision!==b.policyRevision||a.ontologyDocumentId!==b.ontologyDocumentId||a.ontologyRevision!==b.ontologyRevision||canonicalSchemaJson(a.subjects)!==canonicalSchemaJson(b.subjects)||canonicalSchemaJson(a.context)!==canonicalSchemaJson(b.context))fail();
-      const grouped=(cut:SecurityFactCut)=>{const result=new Map<string,string[]>();for(const fact of cut.facts){const key=id(fact.type),rows=result.get(key)??[];rows.push(canonicalSchemaJson(fact));result.set(key,rows);}return result;};
-      const before=grouped(a),after=grouped(b);
-      for(const key of new Set([...before.keys(),...after.keys()]))if(canonicalSchemaJson((before.get(key)??[]).sort())!==canonicalSchemaJson((after.get(key)??[]).sort())){
+      if(a.generation!==b.generation||a.expectedGeneration!==b.expectedGeneration||a.policyId!==b.policyId||a.policyRevision!==b.policyRevision||a.ontologyDocumentId!==b.ontologyDocumentId||a.ontologyRevision!==b.ontologyRevision||!sameFacts(a.subjects,b.subjects)||!sameProjection(projection(a.context),projection(b.context)))fail();
+      const before=grouped(a.facts),after=grouped(b.facts);
+      for(const key of new Set([...before.keys(),...after.keys()]))if(!sameRows(before.get(key)??new Map(),after.get(key)??new Map())){
         if(!profile.ownershipAssociations.some(r=>id(r)===key))fail();ownershipChanged=true;
         if(dependencies.associations.some(r=>id(r)===key))policyAssociationChanged=true;
       }

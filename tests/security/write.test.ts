@@ -95,3 +95,75 @@ test('unchanged used inventory and changed policy-unused inventory do not need p
     expect(run(f),String(used)).toBe('permit');
   }
 });
+
+// @covers US-057-AC1
+// @covers US-057-AC7
+test('write authority comparison ignores field order and equivalent typed context literals',()=>{
+  const reordered=writeFixture();
+  reordered.proposed.cut.facts.forEach(fact=>fact.fields.reverse());
+  reordered.policy.rules.find(rule=>rule.id==='writer')!.actions=reordered.policy.rules.find(rule=>rule.id==='writer')!.actions.filter(action=>!['change-owner','change-policy'].includes(action));
+  expect(run(reordered)).toBe('permit');
+  const context=writeFixture();const salary=context.profile.fieldActions[1]!.field;
+  context.resolution.ontology.context=[salary];
+  context.original.cut.context=[{field:salary,value:{integerToken:'100'}}];
+  context.proposed.cut.context=[{field:salary,value:{integerToken:'1e2'}}];
+  expect(run(context)).toBe('permit');
+  context.proposed.cut.context[0]!.value={integerToken:'200'};expect(run(context)).toBe('indeterminate');
+});
+
+// @covers US-057-AC1
+// @covers US-057-AC7
+test('write comparison uses typed subject keys and authorization fact values',()=>{
+  const f=writeFixture();
+  for(const name of ['staffId','assignmentStaff'])f.resolution.documents[0]!.document.modules[0]!.elements.find(element=>element.id===name)!.scalarType='integer';
+  for(const [state,token] of [[f.original,'100'],[f.proposed,'1e2']] as const){
+    state.cut.subjects[0]!.key=[{integerToken:token}];state.cut.subjects[0]!.fields[0]!.value={integerToken:token};
+    state.cut.facts.find(fact=>fact.type.elementId==='Assignment')!.fields.find(field=>field.field.elementId==='assignmentStaff')!.value={integerToken:token};
+  }
+  expect(run(f)).toBe('permit');
+  f.proposed.cut.subjects[0]!.key=[{integerToken:'200'}];f.proposed.cut.subjects[0]!.fields[0]!.value={integerToken:'200'};
+  expect(run(f)).toBe('indeterminate');
+});
+
+// @covers US-057-AC7
+test('write comparison rejects duplicate projections and exhausted comparison budgets',()=>{
+  for(const change of ['fact','field','context','budget'] as const){
+    const f=writeFixture();
+    if(change==='fact')f.proposed.cut.facts.push(structuredClone(f.proposed.cut.facts[0]!));
+    if(change==='field')f.proposed.cut.facts[0]!.fields.push(structuredClone(f.proposed.cut.facts[0]!.fields[0]!));
+    if(change==='context'){
+      const field=f.profile.fieldActions[1]!.field;f.resolution.ontology.context=[field];
+      f.original.cut.context=[{field,value:{integerToken:'1'}}];f.proposed.cut.context=[{field,value:{integerToken:'1'}},{field,value:{integerToken:'1'}}];
+    }
+    if(change==='budget'){f.original.cut.maxSteps=1;f.proposed.cut.maxSteps=1;}
+    expect(run(f),change).toBe('indeterminate');
+  }
+});
+
+// @covers US-057-AC7
+test('normalized comparison payload has a discriminating refusal independent of step exhaustion',()=>{
+  for(const [digits,expected] of [[999000,'permit'],[1000000,'indeterminate']] as const){
+    const f=writeFixture(),field=f.profile.fieldActions[1]!.field,token=`1e${digits-1}`;
+    f.resolution.ontology.context=[field];
+    for(const state of [f.original,f.proposed]){
+      state.resource.fields.find(entry=>entry.field.elementId==='salary')!.value={integerToken:token};
+      state.cut.context=[{field,value:{integerToken:token}}];state.cut.maxSteps=100000;
+    }
+    expect(run(f),String(digits)).toBe(expected);
+  }
+},20000);
+
+// @covers US-057-AC1
+test('numeric ownership equivalence avoids special actions while actual changes require both grants',()=>{
+  const f=writeFixture();
+  for(const name of ['projectId','ownerProject','assignmentProject'])f.resolution.documents[0]!.document.modules[0]!.elements.find(element=>element.id===name)!.scalarType='integer';
+  for(const state of [f.original,f.proposed]){
+    state.cut.facts.find(fact=>fact.type.elementId==='Ownership')!.fields.find(field=>field.field.elementId==='ownerProject')!.value={integerToken:state===f.original?'100':'1e2'};
+    state.cut.facts.find(fact=>fact.type.elementId==='Assignment')!.fields.find(field=>field.field.elementId==='assignmentProject')!.value={integerToken:'100'};
+  }
+  f.policy.rules.find(rule=>rule.id==='write-membership')!.condition={op:'literal',value:true};
+  const writer=f.policy.rules.find(rule=>rule.id==='writer')!;writer.actions=writer.actions.filter(action=>!['change-owner','change-policy'].includes(action));
+  expect(run(f)).toBe('permit');
+  f.proposed.cut.facts.find(fact=>fact.type.elementId==='Ownership')!.fields.find(field=>field.field.elementId==='ownerProject')!.value={integerToken:'200'};
+  expect(run(f)).toBe('deny');writer.actions.push('change-owner');expect(run(f)).toBe('deny');writer.actions.push('change-policy');expect(run(f)).toBe('permit');
+});

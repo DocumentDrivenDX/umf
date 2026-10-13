@@ -379,3 +379,10 @@ this operation neither authenticates a producer nor admits a physical mapping.
 Backend compilers must map the original ordered key/endpoint requirements, not
 invent identities from row ordinal, hash alone or labels. Core Key meaning is
 reused; no new core security admission or storage worldview is introduced.
+
+
+## Typed comparison of write authority states — 2026-10-13
+
+The selected record-ontology write evaluator compares original/proposed subject, context and authority inventories by original core typed key tuples and qualified field literal meaning. Reordering entries or using equivalent exact numeric/binary carriers does not itself change authority. Projection field sets remain exact across states: omission, explicit absence and null are distinct. Duplicate normalized identities or field declarations refuse; comparisons never fill another projection's missing fields. Actual changed ownership and policy-used inventories still require their separate actions on both states.
+
+A separate comparison ledger bounds selected row/field operations by the minimum supplied state step budget (maximum1,000,000) and normalized/reference text by4,000,000 UTF-16 code units. Core encoders and literal validators perform their own bounded work before output is charged. This ledger is not a total heap, preallocation or CPU bound. Expanded scalar identities are not retained for complete inventories. Retained exact-source regression, discriminating payload, browser and conditional formal evidence: `../../04-build/evidence/security/write-comparison-20261013/receipt.json`. Native state derivation, physical write/effect correspondence and authenticated host binding remain separate requirements.

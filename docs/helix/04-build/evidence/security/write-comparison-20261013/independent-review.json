@@ -1,0 +1,65 @@
+{
+  "status": "no-actionable-findings-in-stated-scope",
+  "sourceDigests": {
+    "tools/security/prove-write-comparison.py": "cfba9fe3b5a79a7866ec79743e7fbbbc3bf070bc09cd1b1dcd19c79d4a0bc7f5",
+    "src/extensions/security/write.ts": "83ca53c219cf038fc92664746f6188dc2894337a046d4fcd87f4048faa6d74c1",
+    "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "tests/security/write.test.ts": "6bb93bdd0d4b48cac22f8b88c8791dfc89b87d33eb441fd958a68a5133198862",
+    "tests/security/browser-corpus.ts": "4975fdaed71106203156b45acdbd7590cc0e119e0b334684c987df3b8c88b209",
+    "tools/security/write-comparison-prechange.ts": "2af28938c125c7b2f1a17ed60837fc21c3d7e7ee8af4e5aa93de0d02f8ebbfd6"
+  },
+  "formal": {
+    "solverVersion": "4.15.4",
+    "results": [
+      [
+        "equal-normalized-known-projections-cannot-be-a-change",
+        "unsat"
+      ],
+      [
+        "comparison-is-symmetric",
+        "unsat"
+      ],
+      [
+        "changed-policy-used-ownership-needs-both-state-grants",
+        "unsat"
+      ],
+      [
+        "distinct-carriers-can-have-equal-typed-meaning",
+        "sat"
+      ],
+      [
+        "explicit-absence-and-null-are-distinct",
+        "sat"
+      ]
+    ]
+  },
+  "unitTests": {
+    "exitCode": 0,
+    "log": "write-tests.log"
+  },
+  "scope": "Conditional single canonical atom and both-state action conjunction model; key grouping, normalization, unique map entries and complete traversal remain premises. No whole-inventory/refinement/resource/native/admission theorem. Native and browser replay not performed in this independent run.",
+  "prechangeReplay": {
+    "sourceMatchesHead": true,
+    "originalSourceSha256": "b7052fee7826258aa49ec122824f9239b5af1c4407772abe417c7104dce472f9",
+    "result": {
+      "status": "reproduced",
+      "results": [
+        {
+          "kind": "order",
+          "decision": "indeterminate"
+        },
+        {
+          "kind": "context",
+          "decision": "indeterminate"
+        },
+        {
+          "kind": "payload",
+          "decision": "permit"
+        }
+      ],
+      "originalSourceSha256": "b7052fee7826258aa49ec122824f9239b5af1c4407772abe417c7104dce472f9",
+      "scope": "Retained original write comparator with unchanged current fixture/core/evaluator dependencies; selected semantic witnesses only."
+    }
+  }
+}

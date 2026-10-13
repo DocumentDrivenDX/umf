@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/write-comparison-browser.ts": "44ee9b58a3f2763742f613f2044d41d024cbca4b851bec63416936f321a6e155",
+    "tests/security/browser-corpus.ts": "4975fdaed71106203156b45acdbd7590cc0e119e0b334684c987df3b8c88b209",
+    "src/extensions/security/write.ts": "83ca53c219cf038fc92664746f6188dc2894337a046d4fcd87f4048faa6d74c1",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa"
+  },
+  "cases": 9,
+  "mismatches": 0,
+  "inputUnchanged": true,
+  "results": [
+    {
+      "id": "baseline",
+      "actual": "permit",
+      "expected": "permit"
+    },
+    {
+      "id": "binary-key-and-field-hex-case",
+      "actual": "permit",
+      "expected": "permit"
+    },
+    {
+      "id": "semantically-duplicate-inventory-identity",
+      "actual": "indeterminate",
+      "expected": "indeterminate"
+    },
+    {
+      "id": "duplicate-field-in-matching-projections",
+      "actual": "indeterminate",
+      "expected": "indeterminate"
+    },
+    {
+      "id": "same-omitted-unused-authority-field",
+      "actual": "permit",
+      "expected": "permit"
+    },
+    {
+      "id": "omitted-vs-explicitly-absent-authority-field",
+      "actual": "indeterminate",
+      "expected": "indeterminate"
+    },
+    {
+      "id": "null-to-absence-requires-owner-action",
+      "actual": "deny",
+      "expected": "deny"
+    },
+    {
+      "id": "null-to-absence-with-owner-action",
+      "actual": "permit",
+      "expected": "permit"
+    },
+    {
+      "id": "present-and-explicitly-absent-duplicate",
+      "actual": "indeterminate",
+      "expected": "indeterminate"
+    }
+  ],
+  "externalRequests": 0,
+  "scope": "Actual browser selected record-ontology write comparison only; no backend provenance, native snapshots or policy admission."
+}
