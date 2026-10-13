@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 380,
-  "passed": 380,
+  "schemas": 385,
+  "passed": 385,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -746,6 +746,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/record-members-inspection.schema.json",
+      "id": "urn:umf:core:record-members-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/record-parquet-projection.schema.json",
       "id": "urn:umf:core:record-parquet-projection:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -776,6 +783,20 @@
     {
       "path": "spec/core/record-tablespec-projection.schema.json",
       "id": "urn:umf:core:record-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-inspection.schema.json",
+      "id": "urn:umf:core:record-type-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-journal.schema.json",
+      "id": "urn:umf:core:record-type-journal:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -818,6 +839,13 @@
     {
       "path": "spec/core/record-type-operation.schema.json",
       "id": "urn:umf:core:record-type-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/reference-links-inspection.schema.json",
+      "id": "urn:umf:core:reference-links-inspection:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -902,6 +930,13 @@
     {
       "path": "spec/core/relationship-transition.schema.json",
       "id": "urn:umf:core:relationship-transition:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/scalar-type-inspection.schema.json",
+      "id": "urn:umf:core:scalar-type-inspection:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

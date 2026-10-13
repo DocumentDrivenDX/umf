@@ -11669,6 +11669,9 @@ promotes a supported backend. Current gate stays26/132 with106 unbound cases;
 original issuer/subject/mapping/target authenticity and complete protected source/
 publication/recovery remain required. Goal active.
 
+### Fresh complete command and adapter test execution — 2026-10-12
+
+The [fresh qualification](evidence/actions-test-refresh/README.md) at5529ead3 completes all174 native/browser commands, six auxiliary commands,17 strict evidence-gate tests and the full unfiltered `bun run test`:2,624 tests in493 files,163,133 assertions, zero failures. The independent inventory audit verifies one complete successful process per live test file;8,041 captured inputs match the delivery source. A fresh sequential Bun process per file resolves the prior shared-VM crash without changing handler deadlines or weakening rollback/native-semantic checks. Historical certificates retain their original source scope. Merge, main CI and deployed website verification remain required delivery exits.
 
 ### Full Weft query-surface security alignment — 2026-10-12
 

@@ -29,7 +29,8 @@ test('US-004-AC1: explicit mapping reports every unsupported constraint and reta
  expect(()=>exportJsonSchema(targetOnly)).toThrow();
  expect(result.targetDiagnostics!.some(d=>d.code==='PROTOBUF_COMPILER_REQUIRED')).toBe(true);
  await Bun.write('fixtures/projections/constraints-result.json',JSON.stringify(result,null,2)+'\n');
-});
+// The first projection invokes Go with a cold compiler cache.
+},60_000);
 
 test('US-004-AC2: strict policy, missing/conflicting bindings and ambiguous shapes block explicitly',async()=>{
  const strict=await projectJsonSchemaToProtobuf(schemaDocument(constraints),{...options,lossPolicy:'strict'},compiler);

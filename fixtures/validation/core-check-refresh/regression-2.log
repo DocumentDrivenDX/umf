@@ -1,67 +1,170 @@
+{"testProcess":"tests/jsonld/flatten.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/flatten.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/flatten.test.ts:
+(pass) US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle [5168.71ms]
+(pass) US-026-AC8: precision, lists, graph merging, remote compaction, duplicates and copied edits [1047.08ms]
+(pass) US-026-AC8: explicit options, null context, unknown preservation and isolated contexts [143.09ms]
+
+ 3 pass
+ 0 fail
+ 998 expect() calls
+Ran 3 tests across 1 file. [9.53s]
+{"testProcess":"tests/jsonld/flatten.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":998,"completeSummary":true,"logSha256":"07d690eeaa4ba5605aa2dc7832e732e9bbf4ddde4a91122e97db24bf9fea3389"}
+{"testProcess":"tests/jsonld/from-rdf.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/from-rdf.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/from-rdf.test.ts:
+(pass) US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences [4747.50ms]
+(pass) US-026-AC12: exact literals, graph inventory, loss policies, compound literals and edits [1321.46ms]
+(pass) US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms [42.00ms]
+
+ 3 pass
+ 0 fail
+ 714 expect() calls
+Ran 3 tests across 1 file. [8.98s]
+{"testProcess":"tests/jsonld/from-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":714,"completeSummary":true,"logSha256":"bfef1674732a569bcd5e9e3f2cc6049eacefd827d274276f1c8f229d364a382e"}
+{"testProcess":"tests/jsonld/legacy.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/legacy.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/legacy.test.ts:
+(pass) US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode [1071.94ms]
+(pass) US-026-AC6: checked-in patch and installed sources match fresh-install evidence [1.17ms]
+
+ 2 pass
+ 0 fail
+ 124 expect() calls
+Ran 2 tests across 1 file. [3.85s]
+{"testProcess":"tests/jsonld/legacy.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":124,"completeSummary":true,"logSha256":"cba06792dee733fae53146c5773907b371c736586f6498337e0acc8de6c22f10"}
+{"testProcess":"tests/jsonld/numeric-rdf.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/numeric-rdf.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/numeric-rdf.test.ts:
+(pass) US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding [161.39ms]
+(pass) US-026-AC17: independent native numeric outcomes are qualified rather than coerced into agreement [6.76ms]
+(pass) US-026-AC17: numeric lexical forms retain their intended RDF datatypes [511.06ms]
+
+ 3 pass
+ 0 fail
+ 49 expect() calls
+Ran 3 tests across 1 file. [3.46s]
+{"testProcess":"tests/jsonld/numeric-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":49,"completeSummary":true,"logSha256":"ffa923e7e4bbb9b2c453e6cdaa93bf72fb7a79028c0580cc44c7eb2f4134d4b4"}
+{"testProcess":"tests/jsonld/rdf-terms.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/rdf-terms.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/rdf-terms.test.ts:
+(pass) US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries [0.42ms]
+(pass) US-026-AC15: BCP47 syntax handles private, grandfathered and duplicate subtags [0.12ms]
+
+ 2 pass
+ 0 fail
+ 57 expect() calls
+Ran 2 tests across 1 file. [4.00ms]
+{"testProcess":"tests/jsonld/rdf-terms.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"d61a92413008c5be3f4bc205c5e78af9f63f191122cf62479fcf35c876f7bfdd"}
+{"testProcess":"tests/jsonld/unicode-iri.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/jsonld/unicode-iri.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/jsonld/unicode-iri.test.ts:
+(pass) US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing [1350.07ms]
+(pass) US-026-AC16: independent parser limitations and escaped term evidence remain explicit [2.80ms]
+
+ 2 pass
+ 0 fail
+ 97 expect() calls
+Ran 2 tests across 1 file. [4.13s]
+{"testProcess":"tests/jsonld/unicode-iri.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":97,"completeSummary":true,"logSha256":"3c0dd50ccd62045265c9eb3cc703a0eb12fd00f09c10271713a60333937cfe09"}
+{"testProcess":"tests/rdf/rdf.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdf/rdf.test.ts"]}
+
+tests/rdf/rdf.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) US-025-AC1/3: complete official syntax corpus, native graph evidence and candidate round trips [4713.59ms]
+(pass) US-025-AC2: blank scope, lexical numbers, duplicates, unknown encoding and atomic edits [64.16ms]
+(pass) US-025-AC2: invalid Unicode cannot silently change during UTF-8 export [13.57ms]
+
+ 3 pass
+ 0 fail
+ 619 expect() calls
+Ran 3 tests across 1 file. [7.58s]
+{"testProcess":"tests/rdf/rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":619,"completeSummary":true,"logSha256":"24e9c9300c14928addf1951b7b8dbda8543d8bd5d0576d33fed7fe361222ff81"}
+{"testProcess":"tests/rdf/trig.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdf/trig.test.ts"]}
+
+tests/rdf/trig.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) US-025-AC6: full official TriG corpus, expected graphs and candidate exports [18130.83ms]
+(pass) US-025-AC6: empty graph identity survives edits and guarded IRI renames [135.94ms]
+(pass) US-025-AC6: graph declarations include empty anonymous graphs and reject loss [61.75ms]
+
+ 3 pass
+ 0 fail
+ 2387 expect() calls
+Ran 3 tests across 1 file. [21.27s]
+{"testProcess":"tests/rdf/trig.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":2387,"completeSummary":true,"logSha256":"d4f0464ee9ab99730f27bc2ff9d4c0678967338251e2603684dc5af9026e0d0d"}
+{"testProcess":"tests/rdfxml/feasibility.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/rdfxml/feasibility.test.ts"]}
 bun test v1.4.2 (744846f84)
 
 tests/rdfxml/feasibility.test.ts:
-(pass) SPIKE-006: finalization rejects truncated XML without returning a partial graph [17.03ms]
-(pass) SPIKE-006: all pinned W3C sources and outcomes remain reproducible [184.10ms]
-(pass) SPIKE-006: native evidence retains XML-literal discrepancies instead of claiming conformance [6.23ms]
+(pass) SPIKE-006: finalization rejects truncated XML without returning a partial graph [2.70ms]
+(pass) SPIKE-006: all pinned W3C sources and outcomes remain reproducible [38.11ms]
+(pass) SPIKE-006: native evidence retains XML-literal discrepancies instead of claiming conformance [0.42ms]
 
-tests/shacl/numeric.test.ts:
-(pass) US-028 exact numeric bounds, property comparisons and datatype boundaries [21745.70ms]
-(pass) US-028 mixed float/decimal promotion follows the declared numeric profile [96.67ms]
+ 3 pass
+ 0 fail
+ 1806 expect() calls
+Ran 3 tests across 1 file. [55.00ms]
+{"testProcess":"tests/rdfxml/feasibility.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":1806,"completeSummary":true,"logSha256":"203e54fe6fed0c17a5419841bc6bc0f0949d6831b3fc8927ea0c49ebb4eef2c2"}
+{"testProcess":"tests/shacl/engine.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/engine.test.ts"]}
+bun test v1.4.2 (744846f84)
 
 tests/shacl/engine.test.ts:
-(pass) US-028 engine: all official Core booleans, qualified reports and retained inputs [24265.77ms]
-(pass) US-028 engine rejects recursive and unsupported processing without losing sources [694.09ms]
-(pass) US-028 engine cannot silently stop after fifty repeated shape checks [138.66ms]
-(pass) US-028 explicit blank-node policy controls shared graph identity [227.65ms]
-(pass) US-028 native integer-rounding false pass is corrected with exact source retained [151.13ms]
+(pass) US-028 engine: all official Core booleans, qualified reports and retained inputs [17505.83ms]
+(pass) US-028 engine rejects recursive and unsupported processing without losing sources [509.48ms]
+(pass) US-028 engine cannot silently stop after fifty repeated shape checks [112.80ms]
+(pass) US-028 explicit blank-node policy controls shared graph identity [175.21ms]
+(pass) US-028 native integer-rounding false pass is corrected with exact source retained [111.34ms]
+
+ 5 pass
+ 0 fail
+ 1026 expect() calls
+Ran 5 tests across 1 file. [21.27s]
+{"testProcess":"tests/shacl/engine.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":1026,"completeSummary":true,"logSha256":"c487fd1bc1c821f5fe8f82cd1939e53be39e3ae8ebfaabfe21e0292872a76af3"}
+{"testProcess":"tests/shacl/lists.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/lists.test.ts"]}
 
 tests/shacl/lists.test.ts:
-(pass) US-028 malformed Core constraint lists never produce a conformance result [5746.29ms]
-(pass) US-028 empty, named, shared and duplicate-triple lists retain RDF set semantics [390.73ms]
+bun test v1.4.2 (744846f84)
+(pass) US-028 malformed Core constraint lists never produce a conformance result [4718.29ms]
+(pass) US-028 empty, named, shared and duplicate-triple lists retain RDF set semantics [340.07ms]
+
+ 2 pass
+ 0 fail
+ 201 expect() calls
+Ran 2 tests across 1 file. [7.85s]
+{"testProcess":"tests/shacl/lists.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":201,"completeSummary":true,"logSha256":"3f78943513710dbee568fadcb2b37dc3c9ef41684da2fb12612658f993a47ff7"}
+{"testProcess":"tests/shacl/numeric.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/numeric.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/shacl/numeric.test.ts:
+(pass) US-028 exact numeric bounds, property comparisons and datatype boundaries [17133.47ms]
+(pass) US-028 mixed float/decimal promotion follows the declared numeric profile [75.06ms]
+
+ 2 pass
+ 0 fail
+ 908 expect() calls
+Ran 2 tests across 1 file. [20.02s]
+{"testProcess":"tests/shacl/numeric.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":908,"completeSummary":true,"logSha256":"5744c2c156c5e0c70eb0bfdac851a00d617ac6c3332734072eafabb479894b2c"}
+{"testProcess":"tests/shacl/strings.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/shacl/strings.test.ts"]}
+bun test v1.4.2 (744846f84)
 
 tests/shacl/strings.test.ts:
-(pass) US-028 string constraints preserve lexical values and Unicode semantics [21320.90ms]
-(pass) US-028 malformed string parameters block without source loss [543.97ms]
+(pass) US-028 string constraints preserve lexical values and Unicode semantics [13313.20ms]
+(pass) US-028 malformed string parameters block without source loss [313.92ms]
 
-tests/jsonld/flatten.test.ts:
-(pass) US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle [9425.84ms]
-(pass) US-026-AC8: precision, lists, graph merging, remote compaction, duplicates and copied edits [2032.24ms]
-(pass) US-026-AC8: explicit options, null context, unknown preservation and isolated contexts [273.46ms]
-
-tests/jsonld/rdf-terms.test.ts:
-(pass) US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries [2.84ms]
-(pass) US-026-AC15: BCP47 syntax handles private, grandfathered and duplicate subtags [0.19ms]
-
-tests/jsonld/unicode-iri.test.ts:
-(pass) US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing [2264.99ms]
-(pass) US-026-AC16: independent parser limitations and escaped term evidence remain explicit [16.43ms]
-
-tests/jsonld/from-rdf.test.ts:
-(pass) US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences [9144.59ms]
-(pass) US-026-AC12: exact literals, graph inventory, loss policies, compound literals and edits [2580.81ms]
-(pass) US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms [74.48ms]
-
-tests/jsonld/numeric-rdf.test.ts:
-(pass) US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding [262.98ms]
-(pass) US-026-AC17: independent native numeric outcomes are qualified rather than coerced into agreement [9.19ms]
-(pass) US-026-AC17: numeric lexical forms retain their intended RDF datatypes [1160.87ms]
-
-tests/jsonld/legacy.test.ts:
-(pass) US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode [1540.48ms]
-(pass) US-026-AC6: checked-in patch and installed sources match fresh-install evidence [95.19ms]
-
-tests/rdf/rdf.test.ts:
-(pass) US-025-AC1/3: complete official syntax corpus, native graph evidence and candidate round trips [6836.28ms]
-(pass) US-025-AC2: blank scope, lexical numbers, duplicates, unknown encoding and atomic edits [88.19ms]
-(pass) US-025-AC2: invalid Unicode cannot silently change during UTF-8 export [24.84ms]
-
-tests/rdf/trig.test.ts:
-(pass) US-025-AC6: full official TriG corpus, expected graphs and candidate exports [36452.73ms]
-(pass) US-025-AC6: empty graph identity survives edits and guarded IRI renames [213.64ms]
-(pass) US-025-AC6: graph declarations include empty anonymous graphs and reject loss [99.95ms]
+ 2 pass
+ 0 fail
+ 651 expect() calls
+Ran 2 tests across 1 file. [16.45s]
+{"testProcess":"tests/shacl/strings.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":651,"completeSummary":true,"logSha256":"419fe2644e2ae7c1251a9b9058cace7d82ef9f17c859b88c27b5438d10e62d61"}
 
  35 pass
  0 fail
  9637 expect() calls
-Ran 35 tests across 13 files. [152.61s]
+Ran 35 tests across 13 files. [124.56s]

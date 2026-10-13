@@ -1,0 +1,155 @@
+{"testProcess":"tests/core-ideals/cardinality-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/cardinality-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [168412.69ms]
+(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [531.03ms]
+
+ 2 pass
+ 0 fail
+ 57 expect() calls
+Ran 2 tests across 1 file. [171.53s]
+{"testProcess":"tests/core-ideals/cardinality-conformance.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"e50418cfb112eb1f136aa173cb0192457264ff9c46e67349b8c815d927072db8"}
+{"testProcess":"tests/core-ideals/facets-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-conformance.test.ts:
+facets tablespec 0
+facets tablespec 40
+facets tablespec 80
+facets tablespec 120
+facets tablespec 160
+facets tablespec 200
+facets tablespec 240
+facets tablespec 280
+facets tablespec 320
+facets tablespec 360
+facets tablespec 400
+facets tablespec 440
+facets tablespec 480
+facets tablespec 520
+facets postgresql 0
+facets postgresql 40
+facets postgresql 80
+facets postgresql 120
+facets postgresql 160
+facets postgresql 200
+facets sqlserver 0
+facets sqlserver 40
+facets sqlserver 80
+facets sqlserver 120
+facets sqlserver 160
+facets sqlserver 200
+facets avro 0
+facets avro 40
+facets avro 80
+facets avro 120
+facets avro 160
+facets avro 200
+facets avro 240
+facets avro 280
+facets avro 320
+facets avro 360
+facets avro 400
+facets avro 440
+facets avro 480
+facets avro 520
+facets avro 560
+facets parquet 0
+facets parquet 40
+facets parquet 80
+facets parquet 120
+facets parquet 160
+facets parquet 200
+(pass) all five facet bindings preserve authored ideals, native refinements and explicit losses [609649.85ms]
+
+ 1 pass
+ 0 fail
+ 42 expect() calls
+Ran 1 test across 1 file. [612.25s]
+{"testProcess":"tests/core-ideals/facets-conformance.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":42,"completeSummary":true,"logSha256":"925c84b146afd9a0857e857beeaa883d3f2e1c629ecf8042b7ea6c870091ed09"}
+{"testProcess":"tests/core-ideals/facets-evidence.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-evidence.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-evidence.test.ts:
+(pass) facet evidence requires all five accepted bindings without granting ideal admission [381.70ms]
+(pass) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [528.35ms]
+(pass) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [1590.21ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [2.51s]
+{"testProcess":"tests/core-ideals/facets-evidence.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"4545e9659895358cd15dd60f683f1d0caeca5855cb21a88b09f841889358d1df"}
+{"testProcess":"tests/core-ideals/field-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/field-conformance.test.ts"]}
+
+tests/core-ideals/field-conformance.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) all five binding contracts enforce policy and recover ideal/native representations [2357.27ms]
+(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [671.77ms]
+(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [3.52ms]
+
+ 3 pass
+ 0 fail
+ 25 expect() calls
+Ran 3 tests across 1 file. [5.60s]
+{"testProcess":"tests/core-ideals/field-conformance.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":25,"completeSummary":true,"logSha256":"8d73d1dac13fd92aad38687ccc7e21b64374e2081cecd1dd6f86c4a4ad27d878"}
+{"testProcess":"tests/core-ideals/key-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/key-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/key-conformance.test.ts:
+(pass) Key ideal admission and five-system delivery retain both recovery directions without native equivalence [25387.03ms]
+
+ 1 pass
+ 0 fail
+ 5 expect() calls
+Ran 1 test across 1 file. [28.03s]
+{"testProcess":"tests/core-ideals/key-conformance.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":5,"completeSummary":true,"logSha256":"08496252f9ec1a9f4c60e85ada53a26dd117b5f7be2ee596dde204a66c2f5e25"}
+{"testProcess":"tests/core-ideals/key-evidence.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/key-evidence.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/key-evidence.test.ts:
+(pass) Key evidence requires complete current five-system qualifications without granting admission [58.72ms]
+(pass) Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs [55.05ms]
+
+ 2 pass
+ 0 fail
+ 22 expect() calls
+Ran 2 tests across 1 file. [118.00ms]
+{"testProcess":"tests/core-ideals/key-evidence.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":22,"completeSummary":true,"logSha256":"8608cd60fc87602bc66bcec5e95251b7958ead27fa5844232eb2d98c500d15d9"}
+{"testProcess":"tests/core-ideals/nullability-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/nullability-conformance.test.ts"]}
+
+tests/core-ideals/nullability-conformance.test.ts:
+bun test v1.4.2 (744846f84)
+(pass) five Nullability bindings preserve ideals, native payloads and explicit loss policy [8321.43ms]
+(pass) Nullability gate requires current core and five native/browser evidence records [503.72ms]
+
+ 2 pass
+ 0 fail
+ 17 expect() calls
+Ran 2 tests across 1 file. [11.41s]
+{"testProcess":"tests/core-ideals/nullability-conformance.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":17,"completeSummary":true,"logSha256":"5786572eb7853d822ae4c54583ae7ff60176b9926f1698ea89ffc2c83857e027"}
+{"testProcess":"tests/core-ideals/relationship-conformance.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/core-ideals/relationship-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/relationship-conformance.test.ts:
+(pass) authored shape corpus preserves unknown content, keyed association and migration rollback [10732.31ms]
+(pass) ideal admission and qualified five-system delivery require current executable proofs [88159.19ms]
+(pass) missing, failed, stale, tampered and version-mismatched proofs refuse admission [3865.15ms]
+
+ 3 pass
+ 0 fail
+ 15 expect() calls
+Ran 3 tests across 1 file. [105.69s]
+{"testProcess":"tests/core-ideals/relationship-conformance.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":15,"completeSummary":true,"logSha256":"8822931898e4244c529bd8495c01308025e093d774dd64bde2547d8191d03182"}
+
+ 17 pass
+ 0 fail
+ 210 expect() calls
+Ran 17 tests across 8 files. [937.29s]
+{"concept":"field","currentEvidenceVerified":true}
+{"concept":"nullability","currentEvidenceVerified":true}
+{"concept":"cardinality","currentEvidenceVerified":true}
+{"concept":"facets","currentEvidenceVerified":true}
+{"concept":"key","currentEvidenceVerified":true}
+{"concept":"relationship","currentEvidenceVerified":true}

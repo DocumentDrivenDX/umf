@@ -1,0 +1,23 @@
+{"testProcess":"tests/actions-reference/handler-executor.test.ts","command":["/opt/bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handler-executor.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/actions-reference/handler-executor.test.ts:
+(pass) native isolated handler commits typed outputs, pins verification, previews without effects and replays after retirement/restart [4738.82ms]
+(pass) native handler access/output/postcondition failures roll back every protected and business write [13678.03ms]
+(pass) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [5021.34ms]
+(pass) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [3244.25ms]
+(pass) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [4462.17ms]
+(pass) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [3057.41ms]
+(pass) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [3455.04ms]
+(pass) native catalog retirement waits for admitted handler commit then refuses fresh work [6000.27ms]
+
+ 8 pass
+ 0 fail
+ 211 expect() calls
+Ran 8 tests across 1 file. [43.93s]
+
+ 8 pass
+ 0 fail
+ 211 expect() calls
+Ran 8 tests across 1 files. [43.94s]
+{"testProcess":"tests/actions-reference/handler-executor.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":211,"completeSummary":true,"logSha256":"2749b0a05d9366b5ce286342a967ccbb9867305cdd5e37e35075a2da78143e61"}

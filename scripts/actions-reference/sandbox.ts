@@ -4,7 +4,7 @@ import {copyJson} from '../../src/model/json';
 import {UmfError} from '../../src/model/types';
 
 /** Host-only isolated runtime; trusted deployment admission lives in handlers.ts. */
-export const referenceHandlerImage='sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27';
+export const referenceHandlerImage='mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27';
 export type ReferenceHandlerOperation='read'|'exists'|'linked'|'create'|'set'|'delete'|'link'|'unlink';
 const confinement=['--pull=never','--network=none','--read-only','--user','65534:65534','--cap-drop=ALL','--security-opt=no-new-privileges','--pids-limit=32','--memory=128m','--memory-swap=128m','--cpus=1','--ipc=none','--log-driver=none','--entrypoint','/usr/bin/env'] as const;
 const runtime=['-i','HOME=/nonexistent','PATH=/usr/local/bin:/usr/bin:/bin','/usr/bin/timeout','--signal=KILL','10s','node','--max-old-space-size=64'] as const;

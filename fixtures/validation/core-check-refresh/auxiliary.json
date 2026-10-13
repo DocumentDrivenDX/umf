@@ -3,7 +3,7 @@
     {
       "command": [
         "bun",
-        "test",
+        "scripts/run-tests.ts",
         "tests/core/relationship-ideal.test.ts",
         "tests/core/relationship-transition.test.ts",
         "tests/core/relationship-operations.test.ts",
@@ -16,7 +16,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/auxiliary-1.log",
-      "logSha256": "16151f9336af904583000b0777c1462621dc5dcc4a56b100f963bc3b42a20bc0"
+      "logSha256": "75b4c09362a120692b5ee6aa712d687c43552e2266a847f3259cc67265adf181"
     },
     {
       "command": [
@@ -63,7 +63,7 @@
       ],
       "exitCode": 0,
       "log": "fixtures/validation/core-check-refresh/auxiliary-6.log",
-      "logSha256": "96c7970d02182acb77f67b8195a863bca16c031b4aa903835b174af6d65400db"
+      "logSha256": "096565865f3948447c1675e7e35ae0d63637e1e4579ea022eda760f91b5add97"
     }
   ]
 }

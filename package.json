@@ -16,7 +16,7 @@
   },
   "scripts": {
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
-    "test": "bun test tests",
+    "test": "bun run test:prepare && bun scripts/run-tests.ts",
     "build": "bun scripts/build.ts",
     "build:schema-browser": "bun docs/helix/05-deploy/schema-browser/build.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
@@ -35,7 +35,9 @@
     "docs:example": "bun scripts/actions-docs/inspect-example.ts",
     "docs:example:native": "bun scripts/actions-docs/native-example.ts",
     "docs:example:refusal": "bun scripts/actions-docs/refusal-example.ts",
-    "docs:example:rule": "bun scripts/actions-docs/rule-example.ts"
+    "docs:example:rule": "bun scripts/actions-docs/rule-example.ts",
+    "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts",
+    "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",
