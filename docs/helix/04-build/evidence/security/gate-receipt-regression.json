@@ -1,39 +1,94 @@
 {
   "status": "passed",
   "sourceDigests": {
-    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/gate-receipt-regression.py": "a80bce9635e29aa2aae4664d51255e304665804cafab85f218ddfdbc5e43bec1",
-    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/spikes/security/acceptance.ts": "bb96f2149bb68dafb9483469af017b041c99b2b9acf06cf1c6a34ac116fa565e",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/gate-receipt-regression.py": "4cef1fcb78ba5629f342955c7dc5df87579ea0e78d9b14907d7a827e37231d75",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
     "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
   },
   "observations": [
     {
       "id": "valid",
       "runnerExitCode": 0,
-      "accepted": true,
-      "expectedAccepted": true,
+      "accepted": [
+        true
+      ],
+      "expectedAccepted": [
+        true
+      ],
       "gateStatus": "failed"
     },
     {
       "id": "malformed",
       "runnerExitCode": 0,
-      "accepted": false,
-      "expectedAccepted": false,
+      "accepted": [
+        false
+      ],
+      "expectedAccepted": [
+        false
+      ],
       "gateStatus": "failed"
     },
     {
       "id": "missing-assertion",
       "runnerExitCode": 0,
-      "accepted": false,
-      "expectedAccepted": false,
+      "accepted": [
+        false
+      ],
+      "expectedAccepted": [
+        false
+      ],
       "gateStatus": "failed"
     },
     {
       "id": "stale-source",
       "runnerExitCode": 0,
-      "accepted": false,
-      "expectedAccepted": false,
+      "accepted": [
+        false
+      ],
+      "expectedAccepted": [
+        false
+      ],
+      "gateStatus": "failed"
+    },
+    {
+      "id": "changed-plan",
+      "runnerExitCode": 0,
+      "accepted": [
+        false,
+        false
+      ],
+      "expectedAccepted": [
+        false,
+        false
+      ],
+      "gateStatus": "failed"
+    },
+    {
+      "id": "changed-gate",
+      "runnerExitCode": 0,
+      "accepted": [
+        false,
+        false
+      ],
+      "expectedAccepted": [
+        false,
+        false
+      ],
+      "gateStatus": "failed"
+    },
+    {
+      "id": "changed-helper",
+      "runnerExitCode": 0,
+      "accepted": [
+        false,
+        false
+      ],
+      "expectedAccepted": [
+        false,
+        false
+      ],
       "gateStatus": "failed"
     }
   ],
-  "scope": "Actual current gate executed from original source with isolated one-case plans and reviewed zero-exit runners. Valid receipt is accepted; malformed, omitted assertion and changed source are rejected. All fixture full gates intentionally remain failed because remaining criteria are unallocated. No native backend admission or runner authenticity claim."
+  "scope": "Actual current gate executed from original source with isolated one-case receipt plans and two-case governing-drift plans with reviewed zero-exit runners. Valid receipt is accepted; malformed, omitted assertion, changed exercising source, changed governing plan and changed gate/helper sources are rejected. Governing changes invalidate every case result. Snapshot comparison does not prove held source, ABA exclusion or runtime provenance. All fixture full gates intentionally remain failed because remaining criteria are unallocated. No native backend admission or runner authenticity claim."
 }

@@ -4,7 +4,12 @@ import {resolve, relative, isAbsolute} from "node:path";
 import {runSecurityCommand} from "../../../../../tools/security/run-command";
 const root = "docs/helix/";
 const planPath = root + "03-test/security/cases.json";
-const plan = await Bun.file(planPath).json();
+const planBytes = new Uint8Array(await Bun.file(planPath).arrayBuffer());
+const initialPlanDigest = createHash("sha256").update(planBytes).digest("hex");
+const plan = JSON.parse(new TextDecoder().decode(planBytes));
+const gatePaths = [root + '02-design/spikes/security/acceptance.ts', 'tools/security/run-command.ts'];
+const initialGateSourceDigests: Record<string,string> = {};
+for (const file of gatePaths) initialGateSourceDigests[file] = createHash("sha256").update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest("hex");
 const errors: string[] = [];
 const ids = new Set<string>();
 const allocated = new Set<string>();
@@ -78,12 +83,22 @@ for (const c of plan.cases) {
   outcome.accepted=errors.length===caseErrorsBefore;
 }
 for (const criterion of requiredCriteria) if (!allocated.has(criterion)) errors.push(`unallocated ${criterion}`);
+// End-point custody check only: no held-file or ABA/runtime provenance theorem.
+const finalGateSourceDigests: Record<string,string|null> = {};
+let finalPlanDigest: string|null = null;
+try {finalPlanDigest = await hash(planPath);} catch { /* Missing governing input refuses. */ }
+for (const file of gatePaths) {
+  try {finalGateSourceDigests[file] = await hash(file);} catch {finalGateSourceDigests[file] = null;}
+}
+if (finalPlanDigest !== initialPlanDigest || gatePaths.some(file => finalGateSourceDigests[file] !== initialGateSourceDigests[file])) {
+  errors.push('governing plan or gate/helper source changed during execution');
+  for (const outcome of execution as {accepted:boolean}[]) outcome.accepted = false;
+}
 const receipt = {status: errors.length ? "failed" : "passed", requiredCases: ids.size,
   allocatedAcceptanceCriteria: allocated.size, errors,
-  execution,planDigest:await hash(planPath),gateSourceDigests:{
-    [root + '02-design/spikes/security/acceptance.ts']:await hash(root + '02-design/spikes/security/acceptance.ts'),
-    'tools/security/run-command.ts':await hash('tools/security/run-command.ts')},
-  scope:"Fresh execution from trusted reviewed runners; metadata does not prove runner honesty or independent native inventory"};
+  execution,planDigest:initialPlanDigest,finalPlanDigest,
+  gateSourceDigests:initialGateSourceDigests,finalGateSourceDigests,
+  scope:"Fresh execution from trusted reviewed runners; endpoint governing-input hashes detect observed drift only, not held source, ABA or runtime provenance. Metadata does not prove runner honesty or independent native inventory"};
 await Bun.write(root + "04-build/evidence/security/acceptance.json", JSON.stringify(receipt, null, 2) + "\n");
 console.log(JSON.stringify({status: receipt.status, requiredCases: ids.size, allocatedAcceptanceCriteria: allocated.size, missingOrFailed: errors.length}));
-process.exitCode = errors.length ? 1 : 0;
+if(errors.length)process.exitCode=1;

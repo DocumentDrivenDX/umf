@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B01",
   "backend": "pg-raw",
-  "runId": "2d63c082-9454-46d5-a519-1f502de72e3a",
+  "runId": "1e25cb81-c2df-4607-bc4d-5aec787172c1",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -16,7 +16,7 @@
       "serverVersionNum": "170009",
       "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
     },
-    "python": "3.9.6"
+    "python": "3.11.17"
   },
   "sourceDigests": {
     "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",

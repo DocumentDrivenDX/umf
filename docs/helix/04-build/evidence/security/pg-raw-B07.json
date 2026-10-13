@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B07",
   "backend": "pg-raw",
-  "runId": "f833e2c0-c4c8-46fd-985d-58b6467eb472",
+  "runId": "aacdaa97-34db-4956-86ca-d6a7cf532dda",
   "command": [
     "python3",
     "tests/security/native/pg-raw-membership.py"
@@ -16,7 +16,7 @@
       "serverVersionNum": "170009",
       "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
     },
-    "python": "3.9.6",
+    "python": "3.11.17",
     "bun": "1.4.2",
     "core": "0.8.0",
     "security": "0.1.0",
@@ -271,7 +271,7 @@
     "src/extensions/security/policy.ts": "111ff9253f8cba446a9d40cc6321050e2d4a7399c074e32cff288a5a343d253c",
     "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
     "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
-    "src/extensions/security/write.ts": "d920957f75ae26b0a5a4c57ecc8a5c82902de85f7dc9ebf9f7745ee420fbf722",
+    "src/extensions/security/write.ts": "b7052fee7826258aa49ec122824f9239b5af1c4407772abe417c7104dce472f9",
     "src/index.ts": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "14955a4e5fd41dc0a6ab5e13ceac37bf4264ff6e35e35af462da3ee918c8eb5c",

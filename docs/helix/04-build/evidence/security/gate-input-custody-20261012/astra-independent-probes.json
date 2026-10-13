@@ -1,0 +1,93 @@
+[
+  {
+    "scenario": "valid-two",
+    "accepted": [
+      true,
+      true
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "99839fb4fa77e8c80b0d031f52dfb20328a42f83aaf12b33a05c6aae72efbe74",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    }
+  },
+  {
+    "scenario": "changed-plan",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "04b7c9c52ed97aaa589d145da210657c11079cb676cb19a57f5bcca1965688e4",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    }
+  },
+  {
+    "scenario": "changed-gate",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "99839fb4fa77e8c80b0d031f52dfb20328a42f83aaf12b33a05c6aae72efbe74",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "4a7a3a6eaab51e4300f031820c1c098e78496e889af45fc4fc84eba14d55ad41",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    }
+  },
+  {
+    "scenario": "changed-helper",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "99839fb4fa77e8c80b0d031f52dfb20328a42f83aaf12b33a05c6aae72efbe74",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "6ddb1eb6495fe79547c583e7f4e19fb546cc9413fc834e4da046a36f8cc7d328"
+    }
+  },
+  {
+    "scenario": "missing-plan",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": null,
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    }
+  },
+  {
+    "scenario": "missing-gate",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "99839fb4fa77e8c80b0d031f52dfb20328a42f83aaf12b33a05c6aae72efbe74",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": null,
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    }
+  },
+  {
+    "scenario": "missing-helper",
+    "accepted": [
+      false,
+      false
+    ],
+    "initialDigestsPreserved": true,
+    "finalPlanDigest": "99839fb4fa77e8c80b0d031f52dfb20328a42f83aaf12b33a05c6aae72efbe74",
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": null
+    }
+  }
+]
