@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B16",
   "backend": "pg-raw",
-  "runId": "4a7d7d90-be05-4b9b-b019-358d3f2e95a9",
+  "runId": "3d987cfd-db3d-46d0-8891-c73dfa667727",
   "command": [
     "python3",
     "tests/security/native/pg-raw-scale.py"
@@ -966,7 +966,7 @@
         [
           {
             "state": "text",
-            "text": "377"
+            "text": "347"
           }
         ]
       ],
@@ -974,7 +974,7 @@
         [
           {
             "state": "text",
-            "text": "377"
+            "text": "347"
           }
         ]
       ]
@@ -1729,9 +1729,9 @@
                 }
               ]
             },
-            "Planning Time": 0.187,
+            "Planning Time": 0.086,
             "Triggers": [],
-            "Execution Time": 8.51
+            "Execution Time": 5.697
           }
         ],
         "excludedAssessorPlan": [
@@ -1765,9 +1765,9 @@
                 }
               ]
             },
-            "Planning Time": 0.121,
+            "Planning Time": 0.082,
             "Triggers": [],
-            "Execution Time": 0.068
+            "Execution Time": 0.051
           }
         ]
       },
@@ -1867,9 +1867,9 @@
                 }
               ]
             },
-            "Planning Time": 0.105,
+            "Planning Time": 0.095,
             "Triggers": [],
-            "Execution Time": 639.905
+            "Execution Time": 587.47
           }
         ],
         "excludedAssessorPlan": [
@@ -1903,9 +1903,9 @@
                 }
               ]
             },
-            "Planning Time": 0.099,
+            "Planning Time": 0.086,
             "Triggers": [],
-            "Execution Time": 2.576
+            "Execution Time": 2.552
           }
         ]
       },
@@ -2005,7 +2005,7 @@
                 }
               ]
             },
-            "Planning Time": 0.107,
+            "Planning Time": 0.091,
             "Triggers": [],
             "JIT": {
               "Functions": 4,
@@ -2016,7 +2016,7 @@
                 "Deforming": true
               }
             },
-            "Execution Time": 6439.543
+            "Execution Time": 6115.383
           }
         ],
         "excludedAssessorPlan": [
@@ -2085,9 +2085,9 @@
                 }
               ]
             },
-            "Planning Time": 0.204,
+            "Planning Time": 0.176,
             "Triggers": [],
-            "Execution Time": 10.897
+            "Execution Time": 11.175
           }
         ]
       }
@@ -2329,7 +2329,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-pw91z3j9",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-3rca6i91",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -2570,7 +2570,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-5_jf_eag",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-nqsb7yoa",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -2766,7 +2766,7 @@
               [
                 {
                   "state": "text",
-                  "text": "377"
+                  "text": "347"
                 }
               ]
             ],
@@ -2774,7 +2774,7 @@
               [
                 {
                   "state": "text",
-                  "text": "377"
+                  "text": "347"
                 }
               ]
             ]
@@ -2895,7 +2895,7 @@
         "journalEvidence": {
           "originalQueries": 76,
           "leases": 4,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-sugeq_x5",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-gv5r0h23",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL17.9 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3038,7 +3038,7 @@
       "tests/security/native/pg-raw-membership.py": "3b1e51ba864168dc3a697f0b7bfd736363e6e04499fb9ff69d2dc42924f301e4",
       "tools/security/pg-runtime-dependencies.py": "70ecbbc043014a0151b4e21c0e9d61c30d9985f09500a0d85f2a1e670c619aaa"
     },
-    "digest": "8c436e0c77efebc1886d26105f1c0910e5850403c52492f8fecaea026e16a8f0"
+    "digest": "0d93f3f498bb8725e02f8bd134c891e2becee6792dbb74131f278abd66e0deb4"
   },
   "scope": "Authored PostgreSQL17.9 forced-RLS raw profile at stable cut, exact total populations 1k/100k/1M, independent counts/samples, paired native plans and actual-driver text aggregate/native timeout/no partial output/failed transaction/explicit same-session recovery. No arbitrary workload SLA, streaming/final-publication, full diagnostic closure, graph or Delta qualification."
 }

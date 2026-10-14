@@ -50,7 +50,7 @@
     "acceptedCases": 26,
     "openCases": 119,
     "acceptanceReceiptCurrent": true,
-    "note": "Fresh 145-case replay:25 accepted/26 executed,119 missing bindings,S12 system-Python Z3 failure. Separate S12 pinned-interpreter replay passed; not substituted into gate."
+    "note": "Fresh full-gate replay:26 accepted/26 executed,119 missing bindings; S12 passed inside gate using explicit UMF_Z3_PYTHON."
   },
   "blockers": [
     "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
@@ -77,13 +77,13 @@
     "conditionalProofs": "20 passed; no new protection theorem",
     "nativeTruss": "1 passed in36.457s; fixed fixture only",
     "validatorIdentity": "US-079 aligns with governing cases and acceptance.ts",
-    "gateFormalEnvironment": "Initial full-gate S12 used system Python without Z3; independent S12 replay with UMF_Z3_PYTHON pinned interpreter passed. Do not replace full-gate outcome with separate result.",
+    "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
     "freshGate": {
       "requiredCases": 145,
       "executed": 26,
-      "accepted": 25,
+      "accepted": 26,
       "missingBindings": 119,
-      "formalEnvironmentFailure": "S12; separate pinned-interpreter replay passed; gate result unchanged"
+      "receipt": "docs/helix/04-build/evidence/security/full-gate-20261014-r2/receipt.json"
     }
   }
 }
