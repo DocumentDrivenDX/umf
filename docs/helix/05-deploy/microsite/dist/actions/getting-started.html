@@ -11,7 +11,28 @@
 <a href="glossary.html">Words used in this guide</a></nav></aside><main id="content"><h1 id="inspect-your-first-action">Inspect your first action</h1>
 <p>You will read the actual approve fixture and inspect its declaration. No database, Docker or credentials are required.</p>
 <h2 id="get-the-normal-sdk">Get the normal SDK</h2>
-<p>The normal SDK includes action declaration support. There is no separate umf.actions installation. Build one installable archive with <code>bun run build:sdk</code>; it is written to <code>.cache/sdk-distribution/umf-sdk.tgz</code>. A consumer can install that file with <code>bun add /path/to/umf-sdk.tgz</code> and import <code>createUmfRegistry</code> from <code>@umf/core</code>. The source examples below run directly from the repository.</p>
+<p><a href="https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.2.0">Download UMF 0.2.0</a>. One SDK contains the browser library, TypeScript declarations and schemas, including action declaration support. There is no separate actions package to install.</p>
+<p>Use Bun 1.4.2 for this example. In a new project directory, download and install the released SDK:</p>
+<pre><code data-language="sh">curl -fL https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.2.0/umf-sdk.tgz -o umf-sdk.tgz
+bun init -y
+bun add ./umf-sdk.tgz
+curl -fL https://raw.githubusercontent.com/DocumentDrivenDX/umf/umf-v0.2.0/fixtures/actions/approve.json -o approve.json</code></pre>
+<p>The release includes <a href="https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.2.0/SHA256SUMS">SHA256SUMS</a> for checking the downloaded archive. The SDK is distributed as this release archive; it is not published to npm.</p>
+<p>Create <code>inspect.ts</code> with the following code:</p>
+<pre><code data-language="ts">import {createUmfRegistry, readDocument, inspectActions} from &#39;@umf/core&#39;;
+
+const document = readDocument(await Bun.file(&#39;approve.json&#39;).text(), &#39;json&#39;);
+const inspection = inspectActions(document, createUmfRegistry());
+console.log(JSON.stringify({
+  action: inspection.actions[0]!.action.id,
+  valid: inspection.validation.valid,
+  complete: inspection.validation.complete,
+  businessWrites: 0
+}, null, 2));</code></pre>
+<p>Run <code>bun inspect.ts</code>. It prints the output explained below: action approve, valid true, complete false and zero business writes. <code>createUmfRegistry()</code> supplies the built-in action vocabulary. A host application selects its executor and credentials separately; inspecting a declaration never executes it.</p>
+<p>SDK version 0.2.0, core document format 0.8.0 and action vocabulary 0.1.0 identify different compatibility boundaries.</p>
+<h2 id="work-from-source-instead">Work from source instead</h2>
+<p>The repository examples are an alternative for contributors. To build the SDK archive yourself, run <code>bun run build:sdk</code>; the archive is written to <code>.cache/sdk-distribution/umf-sdk.tgz</code>.</p>
 <h2 id="prepare-the-repository">Prepare the repository</h2>
 <pre><code data-language="sh">git clone https://github.com/DocumentDrivenDX/umf.git
 cd umf
