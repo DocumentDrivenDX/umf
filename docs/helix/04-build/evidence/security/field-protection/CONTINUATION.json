@@ -49,8 +49,8 @@
     "addedNotRunCases": 13,
     "acceptedCases": 26,
     "openCases": 119,
-    "acceptanceReceiptCurrent": true,
-    "note": "Fresh full-gate replay:26 accepted/26 executed,119 missing bindings; S12 passed inside gate using explicit UMF_Z3_PYTHON."
+    "acceptanceReceiptCurrent": false,
+    "note": "Latest full-gate source checkpoint77d76abc accepted26/145 with119 missing bindings. Subsequent governing status text changed S12 contract pins; historical count is not a fresh gate result for current sources."
   },
   "blockers": [
     "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
@@ -64,7 +64,7 @@
       "B-SFP-000": "not measured"
     }
   },
-  "nextAction": "B-SFP-001: boundary + catalog scaffold under src/extensions/security/protection/ with failing S13-S25 runners written first; allocate S13-S25 in STP-079",
+  "nextAction": "Finish B-SFP-001 catalog wire schema/package and inspection surface; allocate S13-S25 and original failing runners before implementing catalog interpretation. Continue native original store/anchor/guard composition separately.",
   "validation": {
     "validate-evidence.py": "93 failed of 202 after amendment versus 91 failed on the unmodified origin/main tree; the two new failures are fresh-gate-plan-and-tooling (expected: plan digest changed) and fresh-formal.json (expected: contract bytes changed); the renamed 145-case check fails on the pre-existing US-055 criterion-ID expectation",
     "check-acceptance-allocation.py": "passed, 8 checks",
@@ -85,5 +85,12 @@
       "missingBindings": 119,
       "receipt": "docs/helix/04-build/evidence/security/full-gate-20261014-r2/receipt.json"
     }
-  }
+  },
+  "inProgressSlices": [
+    {
+      "id": "B-SFP-001",
+      "scope": "Internal source preservation and conservative boundary controls; catalog/schema/typed interpretation not implemented",
+      "receipt": "docs/helix/04-build/evidence/security/protection-source-20261014/receipt.json"
+    }
+  ]
 }

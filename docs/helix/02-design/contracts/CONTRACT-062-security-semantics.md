@@ -401,9 +401,11 @@ An original-source diagnostic demonstrates that all five operators can select a 
 
 **Status:** proposed normative text applied by owner direction on 2026-10-14
 (proposal P-D of the [field-protection plan](../../04-build/security-field-protection-plan.md)).
-It governs FEAT-008 SEC-13, SEC-14 and SEC-15. Nothing in this section is
-implemented; the implemented surface remains `umf.security` 0.1.0 with the
-`constant/0.1.0` transform. Planned semantic cases S13–S25 and the raw-backend
+It governs FEAT-008 SEC-13, SEC-14 and SEC-15. Catalog and transform interpretation in this section remain unimplemented.
+The internal `protection/source.ts` foundation now preserves unknown source
+content through the existing bounded JSON/YAML profile; it neither validates a
+catalog nor grants transform interpretation. The interpreted surface remains
+`umf.security` 0.1.0 with the `constant/0.1.0` transform. Planned semantic cases S13–S25 and the raw-backend
 P-cases are `not-run`.
 
 ### Protection document (`umf.security.protection` 0.1.0, proposed)

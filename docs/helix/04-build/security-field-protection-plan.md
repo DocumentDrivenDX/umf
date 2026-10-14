@@ -400,3 +400,28 @@ Plan readiness: scope, ordered slices, shared constraints and verification gates
 13. **Q13 Gate arithmetic.** Adding P-cases changes the 132-case total; does the owner want a separate protection gate or an enlarged single gate? **Resolved 2026-10-14 as an enlarged single gate of 145 cases (recorded assumption following the owner's direction to add P-cases to `cases.json`); a separate protection gate was not selected.**
 14. **Q14 Truss/Ashlar property bags.** When several logical fields share one physical bag, can a per-field mask be expressed natively at all (PG JSONB view projection yes; UC column mask on a STRUCT/MAP column unknown)? Forward-compat constraint only; verification deferred to those profiles.
 15. **Q15 Performance.** FEAT-008 asks for overhead at 1k/100k/1M; UDF masks on UC and barrier views on PG need the B16-style runtime; no SLA is invented.
+
+
+## Execution checkpoint — B-SFP-001 source foundation (2026-10-14)
+
+B-SFP-001 is **in progress**, not complete. Internal
+`src/extensions/security/protection/source.ts` provides bounded source read/write
+using the existing core JSON/YAML preservation profile. Unknown versions, future
+transform shapes and opaque native SQL text round-trip as data. No catalog
+package/schema, inspector, typed interpretation, transform evaluator or public
+SDK registration is supplied by this checkpoint.
+
+The planned conservative import-boundary negative controls now reject imports
+outside library/spec sources, host/package imports and selected host/dynamic-code
+names. This is a source guard, not arbitrary JavaScript noninterference. The
+initial compiler-API harness failed against installed TypeScript 7; the corrected
+guard uses Bun's import scanner. Real Chromium source round-trips and strict
+library/tool typechecks pass. [Evidence](evidence/security/protection-source-20261014/receipt.json)
+retains both the original harness failure and passing runs.
+
+Remaining B-SFP-001 work includes the catalog wire schema/package and full
+read/write/inspect/require surface; S13–S25 allocation/initial refusal runners and
+the downstream semantics remain required. The latest retained full gate recorded 26 accepted of 145 required at its
+original source pins. This governing-text addition changes the S12 contract
+pin; that old full-gate result is not current for the new sources. No case is
+added, retired or promoted by this preliminary source checkpoint.
