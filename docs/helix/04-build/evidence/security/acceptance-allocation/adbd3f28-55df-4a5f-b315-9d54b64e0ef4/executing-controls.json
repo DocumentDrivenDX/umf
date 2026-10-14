@@ -1,0 +1,231 @@
+{
+  "gate": {
+    "status": "failed",
+    "requiredCases": 2,
+    "allocatedAcceptanceCriteria": 28,
+    "errors": [
+      "unknown-execution: unrelated or unknown acceptance criterion US-079-AC11",
+      "duplicate case valid-after-error"
+    ],
+    "execution": [
+      {
+        "id": "unknown-execution",
+        "runId": "4bbbb6be-5b5d-4989-a9f2-20d7187ba5b6",
+        "command": [
+          "bun",
+          "runner.ts"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "outputExceeded": false,
+        "stdout": "{\"status\":\"passed\",\"id\":\"unknown-execution\",\"backend\":\"semantic\",\"runId\":\"4bbbb6be-5b5d-4989-a9f2-20d7187ba5b6\",\"command\":[\"bun\",\"runner.ts\"],\"covers\":[\"US-079-AC1\",\"US-079-AC2\",\"US-079-AC3\",\"US-079-AC4\",\"US-079-AC5\",\"US-079-AC6\",\"US-079-AC7\",\"US-079-AC8\",\"US-079-AC9\",\"US-079-AC10\",\"US-056-AC1\",\"US-056-AC2\",\"US-056-AC3\",\"US-056-AC4\",\"US-056-AC5\",\"US-056-AC6\",\"US-056-AC7\",\"US-056-AC8\",\"US-056-AC9\",\"US-056-AC10\",\"US-057-AC1\",\"US-057-AC2\",\"US-057-AC3\",\"US-057-AC4\",\"US-057-AC5\",\"US-057-AC6\",\"US-057-AC7\",\"US-057-AC8\",\"US-079-AC11\"],\"versions\":{\"bun\":\"1.4.2\"},\"sourceDigests\":{\"runner.ts\":\"ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63\",\"oracle.json\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"implementation.ts\":\"d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364\"},\"observations\":[{\"assertionId\":\"unknown-execution\",\"expected\":1,\"observed\":1}]}\n",
+        "stderr": "",
+        "fingerprints": {
+          "runner.ts": "ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63",
+          "oracle.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "implementation.ts": "d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364"
+        },
+        "accepted": false
+      },
+      {
+        "id": "valid-after-error",
+        "runId": "4491f0e0-5e72-4832-abbc-1353a1bf68fe",
+        "command": [
+          "bun",
+          "runner.ts"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "outputExceeded": false,
+        "stdout": "{\"status\":\"passed\",\"id\":\"valid-after-error\",\"backend\":\"semantic\",\"runId\":\"4491f0e0-5e72-4832-abbc-1353a1bf68fe\",\"command\":[\"bun\",\"runner.ts\"],\"covers\":[\"US-079-AC1\",\"US-079-AC2\",\"US-079-AC3\",\"US-079-AC4\",\"US-079-AC5\",\"US-079-AC6\",\"US-079-AC7\",\"US-079-AC8\",\"US-079-AC9\",\"US-079-AC10\",\"US-056-AC1\",\"US-056-AC2\",\"US-056-AC3\",\"US-056-AC4\",\"US-056-AC5\",\"US-056-AC6\",\"US-056-AC7\",\"US-056-AC8\",\"US-056-AC9\",\"US-056-AC10\",\"US-057-AC1\",\"US-057-AC2\",\"US-057-AC3\",\"US-057-AC4\",\"US-057-AC5\",\"US-057-AC6\",\"US-057-AC7\",\"US-057-AC8\"],\"versions\":{\"bun\":\"1.4.2\"},\"sourceDigests\":{\"runner.ts\":\"ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63\",\"oracle.json\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"implementation.ts\":\"d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364\"},\"observations\":[{\"assertionId\":\"valid-after-error\",\"expected\":1,\"observed\":1}]}\n",
+        "stderr": "",
+        "fingerprints": {
+          "runner.ts": "ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63",
+          "oracle.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "implementation.ts": "d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364"
+        },
+        "accepted": true
+      },
+      {
+        "id": "valid-after-error",
+        "runId": "8c3d3c81-13c7-4261-9e22-181983dfdbe8",
+        "command": [
+          "bun",
+          "runner.ts"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "outputExceeded": false,
+        "stdout": "{\"status\":\"passed\",\"id\":\"valid-after-error\",\"backend\":\"semantic\",\"runId\":\"8c3d3c81-13c7-4261-9e22-181983dfdbe8\",\"command\":[\"bun\",\"runner.ts\"],\"covers\":[\"US-079-AC1\",\"US-079-AC2\",\"US-079-AC3\",\"US-079-AC4\",\"US-079-AC5\",\"US-079-AC6\",\"US-079-AC7\",\"US-079-AC8\",\"US-079-AC9\",\"US-079-AC10\",\"US-056-AC1\",\"US-056-AC2\",\"US-056-AC3\",\"US-056-AC4\",\"US-056-AC5\",\"US-056-AC6\",\"US-056-AC7\",\"US-056-AC8\",\"US-056-AC9\",\"US-056-AC10\",\"US-057-AC1\",\"US-057-AC2\",\"US-057-AC3\",\"US-057-AC4\",\"US-057-AC5\",\"US-057-AC6\",\"US-057-AC7\",\"US-057-AC8\"],\"versions\":{\"bun\":\"1.4.2\"},\"sourceDigests\":{\"runner.ts\":\"ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63\",\"oracle.json\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"implementation.ts\":\"d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364\"},\"observations\":[{\"assertionId\":\"valid-after-error\",\"expected\":1,\"observed\":1}]}\n",
+        "stderr": "",
+        "fingerprints": {
+          "runner.ts": "ae6d4ae0717d1a16465274f0346bf8d01e85f9dc9cae45d393943a84efaefa63",
+          "oracle.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "implementation.ts": "d5e2b2f9192a9bbce4d61220d9376cf7ab75aaa8a3aee1a328eb19bf09e67364"
+        },
+        "accepted": false
+      }
+    ],
+    "planDigest": "28458a2cdbbf2d2e47296be0ca9abea75cc12992d18eb03e271f81b34b449d25",
+    "finalPlanDigest": "28458a2cdbbf2d2e47296be0ca9abea75cc12992d18eb03e271f81b34b449d25",
+    "gateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    },
+    "finalGateSourceDigests": {
+      "docs/helix/02-design/spikes/security/acceptance.ts": "7ce148c8306002371a8ab4f5649108f82e14e64d98ff2295c6ce6a7b0ea6a2b8",
+      "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce"
+    },
+    "scope": "Fresh execution from trusted reviewed runners; endpoint governing-input hashes detect observed drift only, not held source, ABA or runtime provenance. Metadata does not prove runner honesty or independent native inventory"
+  },
+  "runner": "// @covers US-079-AC1\n// @covers US-079-AC2\n// @covers US-079-AC3\n// @covers US-079-AC4\n// @covers US-079-AC5\n// @covers US-079-AC6\n// @covers US-079-AC7\n// @covers US-079-AC8\n// @covers US-079-AC9\n// @covers US-079-AC10\n// @covers US-056-AC1\n// @covers US-056-AC2\n// @covers US-056-AC3\n// @covers US-056-AC4\n// @covers US-056-AC5\n// @covers US-056-AC6\n// @covers US-056-AC7\n// @covers US-056-AC8\n// @covers US-056-AC9\n// @covers US-056-AC10\n// @covers US-057-AC1\n// @covers US-057-AC2\n// @covers US-057-AC3\n// @covers US-057-AC4\n// @covers US-057-AC5\n// @covers US-057-AC6\n// @covers US-057-AC7\n// @covers US-057-AC8\n// @covers US-079-AC11\nimport {createHash} from 'node:crypto';\nconst paths=['runner.ts','oracle.json','implementation.ts'];\nconst sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));\nconst id=Bun.env.UMF_SECURITY_CASE_ID;\nconst covers=JSON.parse(Bun.env.UMF_ALLOCATION_REQUIRED!);\nif(id==='unknown-execution')covers.push('US-079-AC11');\nconsole.log(JSON.stringify({status:'passed',id,backend:'semantic',runId:Bun.env.UMF_SECURITY_RUN_ID,command:['bun','runner.ts'],covers,versions:{bun:Bun.version},sourceDigests,observations:[{assertionId:id,expected:1,observed:1}]}));\n",
+  "plan": [
+    {
+      "id": "unknown-execution",
+      "backend": "semantic",
+      "required": true,
+      "covers": [
+        "US-079-AC1",
+        "US-079-AC2",
+        "US-079-AC3",
+        "US-079-AC4",
+        "US-079-AC5",
+        "US-079-AC6",
+        "US-079-AC7",
+        "US-079-AC8",
+        "US-079-AC9",
+        "US-079-AC10",
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC3",
+        "US-056-AC4",
+        "US-056-AC5",
+        "US-056-AC6",
+        "US-056-AC7",
+        "US-056-AC8",
+        "US-056-AC9",
+        "US-056-AC10",
+        "US-057-AC1",
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC4",
+        "US-057-AC5",
+        "US-057-AC6",
+        "US-057-AC7",
+        "US-057-AC8",
+        "US-079-AC11"
+      ],
+      "command": [
+        "bun",
+        "runner.ts"
+      ],
+      "testSource": "runner.ts",
+      "oracleSource": "oracle.json",
+      "implementationSources": [
+        "implementation.ts"
+      ],
+      "assertionIds": [
+        "unknown-execution"
+      ],
+      "timeoutMs": 10000
+    },
+    {
+      "id": "valid-after-error",
+      "backend": "semantic",
+      "required": true,
+      "covers": [
+        "US-079-AC1",
+        "US-079-AC2",
+        "US-079-AC3",
+        "US-079-AC4",
+        "US-079-AC5",
+        "US-079-AC6",
+        "US-079-AC7",
+        "US-079-AC8",
+        "US-079-AC9",
+        "US-079-AC10",
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC3",
+        "US-056-AC4",
+        "US-056-AC5",
+        "US-056-AC6",
+        "US-056-AC7",
+        "US-056-AC8",
+        "US-056-AC9",
+        "US-056-AC10",
+        "US-057-AC1",
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC4",
+        "US-057-AC5",
+        "US-057-AC6",
+        "US-057-AC7",
+        "US-057-AC8"
+      ],
+      "command": [
+        "bun",
+        "runner.ts"
+      ],
+      "testSource": "runner.ts",
+      "oracleSource": "oracle.json",
+      "implementationSources": [
+        "implementation.ts"
+      ],
+      "assertionIds": [
+        "valid-after-error"
+      ],
+      "timeoutMs": 10000
+    },
+    {
+      "id": "valid-after-error",
+      "backend": "semantic",
+      "required": true,
+      "covers": [
+        "US-079-AC1",
+        "US-079-AC2",
+        "US-079-AC3",
+        "US-079-AC4",
+        "US-079-AC5",
+        "US-079-AC6",
+        "US-079-AC7",
+        "US-079-AC8",
+        "US-079-AC9",
+        "US-079-AC10",
+        "US-056-AC1",
+        "US-056-AC2",
+        "US-056-AC3",
+        "US-056-AC4",
+        "US-056-AC5",
+        "US-056-AC6",
+        "US-056-AC7",
+        "US-056-AC8",
+        "US-056-AC9",
+        "US-056-AC10",
+        "US-057-AC1",
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC4",
+        "US-057-AC5",
+        "US-057-AC6",
+        "US-057-AC7",
+        "US-057-AC8"
+      ],
+      "command": [
+        "bun",
+        "runner.ts"
+      ],
+      "testSource": "runner.ts",
+      "oracleSource": "oracle.json",
+      "implementationSources": [
+        "implementation.ts"
+      ],
+      "assertionIds": [
+        "valid-after-error"
+      ],
+      "timeoutMs": 10000
+    }
+  ],
+  "oracle": "{}",
+  "implementation": "export const metadataFixture=true;"
+}

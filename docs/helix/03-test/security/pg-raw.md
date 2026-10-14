@@ -23,9 +23,9 @@ cannot close them. Matrix is a procedural expansion of the story test plans.
 
 ## Prerequisites
 
-Version/profile: PostgreSQL 17.9 synthetic spike; production engine/build remains independently selected.
-Fixture: Ordinary employee/company/m2m tables plus Clients, Projects, Staff, Assignment, Ownership and ProjectResource; separately protected columns/views.
-Mechanisms: RLS USING/WITH CHECK; GRANT/roles; secured field projections. Force/owner/bypass/constraint-error controls; no policy definer substitutions for original actor.
+Version/profile: PostgreSQL 17.9 synthetic spike for the accepted B/L cases; production engine/build remains independently selected. Field-protection P-cases (2026-10-14) and the `postgresql-raw/0.2.0` profile require a disposable PostgreSQL 18.x container with the exact minor, image digest, `server_version` and client build pinned at execution; 17.9 fixtures and receipts are not PostgreSQL 18 evidence, and every accepted case replayed on 18 receives a fresh receipt or is listed as not qualified on 18.
+Fixture: Ordinary employee/company/m2m tables plus Clients, Projects, Staff, Assignment, Ownership and ProjectResource; separately protected columns/views. P-cases add a masked `Resource.salary`-style field, a hashed join key, a tokenized `Resource.contactToken` field with a stand-in vault table owned by an excluded role, and (P07) authored `SECURITY LABEL` masking rules.
+Mechanisms: RLS USING/WITH CHECK; GRANT/roles; secured field projections. Force/owner/bypass/constraint-error controls; no policy definer substitutions for original actor. P-cases add column privileges with no table-level SELECT (withhold), owner-held `security_barrier` views projecting catalog transforms (mask/generalize/hash), `pg_read_all_data` and `row_security=off` controls, `RETURNING old/new` and virtual generated column controls.
 Use actual least-privilege subject connections and separately excluded assessor
 and installer identities. Complete issuer/fact/authority inventory is required.
 Seed Alice active on A, inactive on B; Bob active B; both Projects share Client C.
@@ -67,6 +67,15 @@ Every destructive drift control uses a disposable namespace/installation.
 | pg-raw.L12 | US-057-AC8 | activation-rollback: Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access. |
 | pg-raw.L13 | US-057-AC3 | authority-change-exhaustiveness: Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions. |
 | pg-raw.L14 | US-057-AC7 | effective-date-boundary: Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses. |
+| pg-raw.P01 | US-056-AC6 | column-privilege-withhold: Withheld fields never granted at column level; no ordinary table-level SELECT; selecting a withheld column refuses the whole statement (42501), reported as a statement-level refusal, never a `withheld` cell; permitted columns match the oracle. |
+| pg-raw.P02 | US-056-AC6 | protection-transform-correspondence: Barrier views project each catalog transform (mask classes, generalize, hash); per-actor values match the independent oracle byte-exact with `storageEffect`/output-domain metadata; no base-table SELECT. |
+| pg-raw.P03 | US-056-AC6 | disclosure-profile-query-use: Native operator behavior over generalize/hash/token carriers compared to effective retained properties; deterministic equality leakage admitted only where declared; prohibited operators refuse before rows; weakened-barrier counterexample retained. |
+| pg-raw.P04 | US-057-AC1 | mask-write-back-refusal: No field mutation without an `original` read disposition or declared blind write, including a proposed value equal to the mask output; absent UPDATE privilege as direct-SQL control; `RETURNING old/new` discloses no masked/withheld pre-image; no effects on failure. |
+| pg-raw.P05 | US-056-AC7 | virtual-generated-mask-carrier: PG 18 virtual generated column over a masked/withheld base is qualified by observed ordinary-role behavior or refused; refusal installs nothing weaker. |
+| pg-raw.P07 | US-056-AC7 | native-mask-rule-archive: Anonymizer `SECURITY LABEL` rules preserved as archive, uninterpreted; interpretation refuses; obligation `unverified`; admitted profile unchanged. |
+| pg-raw.P08 | US-056-AC6 | tokenization-stand-in: Deterministic tokens stored; vault owned by an excluded role; detokenize unreachable by ordinary roles; token joins match the oracle; `storageEffect` on transport; dump/replica propagation declared; obligations `unverified`. |
+
+The plan's slice label pg-raw.P06 (superuser/BYPASSRLS/owner/`row_security=off`/`pg_read_all_data` bypass visible only to excluded roles) is not a case ID; it executes as the procedural expansion of pg-raw.B04/B05/B14 below. All P-cases are `required` and `not-run` with no command (added 2026-10-14; see §Field-protection expansion).
 
 For each row, instantiate positive and negative controls at the native surface.
 Record original caller, complete native inventory, expected oracle outcome and
@@ -117,6 +126,47 @@ Implement these named cases before marking backend admission qualified. Preserve
 an independently computed oracle and match exact physical identities. Report
 performance observations separately from security correctness. Required native
 commands and profile adoption remain open until original consumer integration.
+
+## Field-protection expansion — 2026-10-14
+
+Owner direction (2026-10-14) applies proposal P-F of the
+[field-protection plan](../../04-build/security-field-protection-plan.md)
+(FEAT-008 SEC-13..15; CONTRACT-062/063 §Field protection). Seven P-cases are
+added above. The following obligations are owned by existing IDs and are
+executed as procedural expansions of those IDs; no case is retired, promoted or
+marked accepted by this expansion, and the accepted 17.9 receipts are unchanged.
+
+- **pg-raw.B04/B05/B14 (US-056-AC5), plan label P06.** Add `pg_read_all_data`
+  membership (it grants table SELECT and defeats column-privilege withhold and
+  no-table-SELECT barrier views without bypassing RLS), `row_security=off` (a
+  refusal witness for non-bypass roles, not a bypass), table owner without
+  `FORCE ROW LEVEL SECURITY`, `BYPASSRLS` and superuser to the privileged
+  controls. Each is visible only to excluded roles; NativeInventory asserts
+  ordinary roles are not members of `pg_read_all_data` and lists excluded
+  holders. Direct access adds `pg_dump`/replica reads as declared propagation.
+- **pg-raw.B07 (US-056-AC6).** Extend the typed field-publication vectors so
+  original null, original absence, `withheld`, each catalog transform output
+  (including `null-out`, which stays `transformed`) and `reversed` remain
+  distinct on the disclosure transport, with `storageEffect` per field. A
+  statement-level 42501 is recorded as an operation refusal, never as a cell.
+- **pg-raw.B08 (US-056-AC6).** Author a fresh native weakened-barrier control
+  on PostgreSQL 18 (the 17.9 `pg-mask-query.json` component and the Z3
+  `prove-mask-query.py` check are formal/historical counterparts, not 18
+  evidence); keep `LEAKPROOF`-marked user functions over masked columns and
+  planner/EXPLAIN exposure (B10 family) as refusals.
+- **pg-raw.L10 (US-057-AC6).** Declare token/mask propagation into logical and
+  physical dumps (`pg_dump --no-policies` exists in 18), replication, PITR and
+  exports per receipt; no claim that masks apply to dumps or replicas.
+
+Replay on PostgreSQL 18 (plan slice B-SFP-007): all 14 accepted cases (B01–B07,
+B11, B13–B16, L01, L02) receive fresh 18.x receipts; any case not replayed is
+listed as not qualified on 18. A 17.9-accepted case that fails on 18 is recorded
+as a failure; the oracle is never patched to pass. PostgreSQL Anonymizer 3.x
+lists PostgreSQL 14–18 support; P07 either installs it (superuser, preload) or
+uses authored labels without the extension, stated as a design choice in the
+receipt. Open questions Q3 (18.x minor/image), Q4 (virtual generated columns)
+and Q5 (`RETURNING old` under column privileges) are decided by execution, not
+assumed.
 
 
 ### B08 query-use binding controls

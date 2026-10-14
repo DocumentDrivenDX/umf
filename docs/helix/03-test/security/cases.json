@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "scope": "FEAT-008 first security qualification; planned required tests, not execution evidence",
+  "scope": "FEAT-008 first security qualification; planned required tests, not execution evidence; 2026-10-14 amendment adds 13 field-protection P-cases (pg-raw.P01-P05/P07/P08, delta-raw.P01-P04/P07/P08), all not-run; no case retired or promoted",
   "cases": [
     {
       "id": "S01",
@@ -1925,6 +1925,153 @@
       ]
     },
     {
+      "id": "pg-raw.P01",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "column-privilege-withhold",
+      "assertion": "Withheld fields are never granted at column level and no ordinary role holds table-level SELECT on a table with withheld columns; selecting a withheld column refuses the whole statement with SQLSTATE 42501, reported as a statement-level refusal and never as a per-cell withheld disposition; permitted columns still match the oracle.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P01"
+      ]
+    },
+    {
+      "id": "pg-raw.P02",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "protection-transform-correspondence",
+      "assertion": "Owner-held security_barrier views project each catalog transform (mask function classes, generalize buckets/date truncation, hash) for the authored Resource fields; per-actor disclosed values match the independent Python oracle byte-exact, with storageEffect and output-domain metadata on the disclosure transport; the base table grants no ordinary SELECT.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P02"
+      ]
+    },
+    {
+      "id": "pg-raw.P03",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "disclosure-profile-query-use",
+      "assertion": "Native predicate/order/group/join/aggregate behavior over generalize/hash/token carriers is observed per actor and compared to the catalog's effective retained properties: deterministic hash/token joins leak equality classes and are admitted only where the catalog declares equality retained; prohibited operators refuse before rows; the independent weakened-barrier counterexample remains a negative control.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P03"
+      ]
+    },
+    {
+      "id": "pg-raw.P04",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "mask-write-back-refusal",
+      "assertion": "A subject whose read disposition on a field is transformed or withheld cannot mutate that field: evaluateSecurityWrite and the write routine refuse without an original read disposition or declared blind-write permission, including a proposed value equal to the mask output; absent column UPDATE privilege is a direct-SQL negative control; RETURNING old/new never discloses the pre-image of a masked or withheld column; failed checks leave no effects.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P04"
+      ]
+    },
+    {
+      "id": "pg-raw.P05",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "virtual-generated-mask-carrier",
+      "assertion": "A PostgreSQL 18 virtual generated column over a masked or withheld base column is either qualified by observed privilege/planner behavior at an ordinary role or refused as a mask carrier; refusal installs no weaker profile and the barrier-view carrier remains the admitted one.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P05"
+      ]
+    },
+    {
+      "id": "pg-raw.P07",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "native-mask-rule-archive",
+      "assertion": "PostgreSQL Anonymizer SECURITY LABEL masking rules present in the fixture are preserved as native archive, never interpreted as protection or permission; interpretation refuses; the receipt lists the obligation as unverified and the admitted profile is unchanged.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P07"
+      ]
+    },
+    {
+      "id": "pg-raw.P08",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "tokenization-stand-in",
+      "assertion": "A stored-transformed Resource field holds deterministic tokens with the plaintext in a vault table owned by an excluded role; the detokenize routine is unreachable by ordinary roles (42501); token equality joins match the oracle; disclosure transport reports storageEffect; dump/replica propagation is declared; all tokenize obligations render unverified and no enforcement is claimed.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.P08"
+      ]
+    },
+    {
       "id": "truss.B01",
       "backend": "truss",
       "covers": [
@@ -3182,6 +3329,132 @@
       "timeoutMs": 60000,
       "assertionIds": [
         "delta-raw.L14"
+      ]
+    },
+    {
+      "id": "delta-raw.P01",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "withhold-view-carrier",
+      "assertion": "withheld maps only to a protected view omitting the column with no base-table SELECT; a NULL-returning column mask is observed at an ordinary identity to be indistinguishable from canonical NULL and the profile mapping withheld to it is refused without weakening the admitted profile.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P01"
+      ]
+    },
+    {
+      "id": "delta-raw.P02",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "protection-transform-correspondence",
+      "assertion": "Generated column-mask UDFs for catalog transforms whose output domain is castable to the column type disclose per-actor values matching the independent oracle byte-exact at an ordinary identity; non-castable output domains refuse generation; the receipt pins UDF text, owner and USING COLUMNS inputs.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P02"
+      ]
+    },
+    {
+      "id": "delta-raw.P03",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "disclosure-profile-query-use",
+      "assertion": "User predicates/joins/aggregates over masked columns are observed at an ordinary identity (masked versus original evaluation, EXPLAIN and error paths) and compared to the catalog's effective retained properties; prohibited operators on a selectable masked column cannot be natively expressed, so the profile refuses or withholds the column; no claim that Unity Catalog enforces prohibited.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P03"
+      ]
+    },
+    {
+      "id": "delta-raw.P04",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "native-write-surface-unsupported",
+      "assertion": "At the native SQL surface an INSERT of a row invisible to the writer's row filter succeeds, so the profile reports write obligations unsupported rather than enforced; ordinary identities hold no direct write grant; any positive write admission flows only through the separately receipted consumer-owned protected write path.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P04"
+      ]
+    },
+    {
+      "id": "delta-raw.P07",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "native-policy-archive",
+      "assertion": "ABAC row-filter/column-mask policy DDL present on the fixture is preserved as native archive, never interpreted as protection or permission in this profile; its EXCEPT principals, owners/MANAGE holders and metastore admins are inventoried as privileged exclusions; interpretation refuses and the admitted profile is unchanged.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P07"
+      ]
+    },
+    {
+      "id": "delta-raw.P08",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "tokenization-stand-in",
+      "assertion": "A stored-transformed field holds deterministic tokens with the plaintext in a vault table in an excluded schema; the detokenize function is unreachable by ordinary identities; token equality joins match the oracle; time travel, clone and Delta Sharing propagation of tokens is observed and declared; all tokenize obligations render unverified and no enforcement is claimed.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.P08"
       ]
     },
     {

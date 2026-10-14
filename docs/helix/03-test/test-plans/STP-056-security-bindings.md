@@ -38,8 +38,8 @@ case can be represented as a pass.
 | US-056-AC3 | delta-raw.B01, delta-raw.B02, delta-raw.B03, delta-raw.B13 | Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases. | `@covers US-056-AC3` required in exercising test | native integration |
 | US-056-AC4 | ashlar.B01, ashlar.B02, ashlar.B03, ashlar.B13 | Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases. | `@covers US-056-AC4` required in exercising test | native integration |
 | US-056-AC5 | pg-raw.B04, pg-raw.B05, pg-raw.B06, pg-raw.B14, truss.B04, truss.B05, truss.B06, truss.B14, delta-raw.B04, delta-raw.B05, delta-raw.B06, delta-raw.B14, ashlar.B04, ashlar.B05, ashlar.B06, ashlar.B14 | Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy. | `@covers US-056-AC5` required in exercising test | native integration |
-| US-056-AC6 | pg-raw.B07, pg-raw.B08, truss.B07, truss.B08, delta-raw.B07, delta-raw.B08, ashlar.B07, ashlar.B08 | Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier. | `@covers US-056-AC6` required in exercising test | native integration |
-| US-056-AC7 | pg-raw.B09, pg-raw.B15, truss.B09, truss.B15, delta-raw.B09, delta-raw.B15, ashlar.B09, ashlar.B15 | Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains. | `@covers US-056-AC7` required in exercising test | native integration |
+| US-056-AC6 | pg-raw.B07, pg-raw.B08, pg-raw.P01, pg-raw.P02, pg-raw.P03, pg-raw.P08, truss.B07, truss.B08, delta-raw.B07, delta-raw.B08, delta-raw.P02, delta-raw.P03, delta-raw.P08, ashlar.B07, ashlar.B08 | Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier. P-cases (2026-10-14): catalog transforms, disclosure-profile query use, column-privilege withhold and tokenization stand-ins disclose faithfully. | `@covers US-056-AC6` required in exercising test | native integration |
+| US-056-AC7 | pg-raw.B09, pg-raw.B15, pg-raw.P05, pg-raw.P07, truss.B09, truss.B15, delta-raw.B09, delta-raw.B15, delta-raw.P01, delta-raw.P07, ashlar.B09, ashlar.B15 | Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains. P-cases (2026-10-14): unqualified mask carriers and native masking/ABAC rules are refused or archived without weakening. | `@covers US-056-AC7` required in exercising test | native integration |
 | US-056-AC8 | pg-raw.B10, truss.B10, delta-raw.B10, ashlar.B10 | Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none. | `@covers US-056-AC8` required in exercising test | native integration |
 | US-056-AC9 | pg-raw.B11, truss.B11, delta-raw.B11, ashlar.B11 | Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses. | `@covers US-056-AC9` required in exercising test | native integration |
 | US-056-AC10 | pg-raw.B12, pg-raw.B16, truss.B12, truss.B16, delta-raw.B12, delta-raw.B16, ashlar.B12, ashlar.B16 | Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses. | `@covers US-056-AC10` required in exercising test | native integration |
@@ -52,6 +52,58 @@ Per-backend procedures in `../security/` specify original-role execution and
 scenario expansions. Named cases currently without commands are implementation
 obligations, explicitly not executable proof. Formal and native spike receipts
 are under `../../04-build/evidence/security/` with scope limits.
+
+Gate arithmetic (2026-10-14): `cases.json` holds 145 required cases: the
+original 132 plus 13 field-protection P-cases added by owner direction (seven
+`pg-raw.P*`, six `delta-raw.P*`), all `not-run`. The 26 cases accepted at the
+26/132 checkpoint keep their status; nothing is retired or promoted, so the
+current state is 26 accepted of 145 required with 119 open (118 `not-run`,
+pg-raw.B10 `counterexample-found`). The committed `acceptance.json` receipt
+predates the amended plan digest and must be re-executed by the next slice that
+runs the gate; an old receipt never substitutes for execution (CONTRACT-063).
+
+### Field-protection amendment — 2026-10-14
+
+Owner direction (2026-10-14) applies proposal P-F of the
+[field-protection plan](../../04-build/security-field-protection-plan.md),
+governed by FEAT-008 SEC-13..15 and CONTRACT-062/063 §Field protection. Rules:
+
+- New `P` case IDs exist only for obligations no existing required case owns.
+  Obligations an existing ID already owns are executed as procedural expansions
+  of that ID (B04/B05/B14 privileged bypass and direct access, B07
+  null/absence/withheld/transformed distinctness, B08 weakened-barrier and
+  query-use controls, L08 historical reads, L10 propagation). The plan's slice
+  labels pg-raw.P06, delta-raw.P05 and delta-raw.P06 are therefore not case
+  IDs; `pg-raw.md` and `delta-raw.md` record where each executes.
+- The `P` prefix names cases only; proposals P-A..P-G are plan items.
+- Every P-case is `required: true`, `status: not-run`, `command: null` until a
+  reviewed runner, independent oracle and implementation sources are bound.
+  Truss and Ashlar gain no cases; raw evidence closes raw cases only.
+- Prerequisites: PostgreSQL 18.x disposable container with the exact minor,
+  image digest and client build pinned at execution (17.9 fixtures are not
+  PG 18 evidence); Unity Catalog workspace with two independent ordinary
+  identities, an isolated catalog/schema, pinned DBR/warehouse versions and
+  compute tuple, and the SHA-256 of the cloud documentation copy read at
+  execution (AWS, Azure and GCP copies differ).
+
+| Case | AC | Owns |
+| --- | --- | --- |
+| pg-raw.P01 | US-056-AC6 | Column-privilege withhold; 42501 is a statement-level refusal, not a `withheld` cell; no table-level SELECT |
+| pg-raw.P02 | US-056-AC6 | Barrier-view catalog transforms match the independent oracle per actor |
+| pg-raw.P03 | US-056-AC6 | Disclosure-profile query-use admissibility versus native operator behavior |
+| pg-raw.P04 | US-057-AC1 | Mask write-back refusal; absent UPDATE as direct-SQL control; `RETURNING old/new` pre-image control |
+| pg-raw.P05 | US-056-AC7 | PG 18 virtual generated column as mask carrier qualified or refused |
+| pg-raw.P07 | US-056-AC7 | Anonymizer `SECURITY LABEL` rules archived, uninterpreted, `unverified` |
+| pg-raw.P08 | US-056-AC6 | Tokenization stand-in: token disclosure, unreachable detokenize, declared propagation |
+| delta-raw.P01 | US-056-AC7 | View-based withhold; NULL-mask carrier refused |
+| delta-raw.P02 | US-056-AC6 | Column-mask UDF catalog transforms match the oracle per actor |
+| delta-raw.P03 | US-056-AC6 | Masked-column operator behavior versus disclosure profile (Q6) |
+| delta-raw.P04 | US-057-AC1 | Native write surface `unsupported`; invisible-row INSERT witness |
+| delta-raw.P07 | US-056-AC7 | ABAC policy archive preserved; `EXCEPT` principals inventoried |
+| delta-raw.P08 | US-056-AC6 | Tokenization stand-in with time-travel/clone/share propagation observed |
+
+Semantic cases S13–S25 named in the plan belong to STP-079/US-079 and are not
+allocated here; their allocation remains an open M0 item.
 
 ## Data and Setup
 

@@ -163,7 +163,29 @@ default. The documented ABAC time-travel Beta needs eligible compute, managed
 tables, catalog commits and compatible column mapping; actual admission remains
 an execution gate: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/time-travel
 PostgreSQL owners and BYPASSRLS roles require explicit exclusion and testing:
-https://www.postgresql.org/docs/17/ddl-rowsecurity.html
+https://www.postgresql.org/docs/18/ddl-rowsecurity.html (PostgreSQL 18 page,
+inspected 2026-10-13; the 17 page governed the accepted 17.9 fixtures and
+remains historical). The 18 release notes list no RLS or column-privilege
+semantic change other than `pg_dump --no-policies`; `RETURNING old/new`,
+virtual generated columns and `AFTER` trigger role capture are 18 behaviors
+that the PostgreSQL 18 profile must test before any positive claim.
+
+Unity Catalog limitations (AWS documentation copies inspected 2026-10-13;
+the Azure/GCP copies differ, so the executing workspace's copy must be
+re-read and hashed at execution):
+[Row filters and column masks](https://docs.databricks.com/aws/en/tables/row-and-column-filters)
+(no filters/masks on views; one filter and one mask per column resolve per
+user; no time travel, deep/shallow clone or Delta Sharing on filtered/masked
+tables; no path, Delta Lake API, Iceberg REST or Unity REST access; DBR and
+dedicated-compute version floors for writes and MERGE restrictions),
+[ABAC overview](https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/),
+[ABAC requirements and limitations](https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/requirements)
+(policy quotas; `EXCEPT` principals see unfiltered, unmasked data; conflicting
+resolutions block access; release status of row-filter/column-mask policies
+not stated on the inspected AWS pages) and
+[Dynamic views](https://docs.databricks.com/aws/en/views/dynamic)
+(`is_account_group_member()` recommended; `is_member()` is Hive-compatibility).
+No write-side predicate equivalent to `WITH CHECK` is documented.
 
 ## Portable single-realm authority guard
 
@@ -329,3 +351,55 @@ No backend acceptance binding is promoted by that counterexample. The original
 132-case plan and hidden-fact acceptance criteria remain unchanged.
 
 Retained native counterexample and integrated composition: [Truss main3bce4c77 evidence](https://github.com/DocumentDrivenDX/truss/blob/3bce4c777d5c9b631482084bd792337e18e2f27a/docs/helix/04-build/evidence/python-psycopg-epoch-cut/ed2ea7b9-ad94-40ed-b12d-84e346e20a7e/receipt.json). Its184-method component pass does not establish hidden-fact observation isolation.
+
+## Field protection receipt members — 2026-10-14
+
+**Status:** proposed normative text applied by owner direction on 2026-10-14
+(proposal P-E of the [field-protection plan](../../04-build/security-field-protection-plan.md)).
+No receipt carrying these members exists yet; the binding profiles named here
+(`postgresql-raw/0.2.0`, `unity-delta-raw/0.1.0`) are proposed and `not-run`.
+
+A BindingReceipt for a profile that binds CONTRACT-062 §Field protection
+catalog MUST additionally carry:
+
+- `protectionRevision`: the exact `{id, revision}` of the referenced protection
+  document, pinned together with `policyRevision` and `modelRevision`.
+- Per bound field, in `mapping`: the logical transform identity
+  `{vocabulary, transform, version}`, the physical carrier of the transformed
+  value (view/routine/UDF path with engine-local identity per §Original-value
+  source correspondence), `storageEffect` (`disclosed-only` or
+  `stored-transformed`), the effective retained property set (authored
+  `disclosureProfile` united with determinism-implied properties) and the
+  admitted per-operator query use. Implied leakage MUST be reported even when
+  not authored.
+- For `stored-transformed` fields: `custody.owner`, `custody.vaultRef`,
+  `custody.keyRef` (opaque references; never secrets), `formatPreserving`, the
+  `reverseAction` ID, and one explicit propagation declaration for each of
+  `history`, `snapshots`, `exports`, `feeds` and `caches` stating whether
+  tokens propagate, who revokes reverse authority there and how revocation is
+  acknowledged. A missing declaration refuses admission.
+- Obligation outcomes: every tokenize/encrypt enforcement obligation is
+  `unverified` until a consumer vault/key profile supplies evidence; the
+  receipt text for such a field is "declared and preserved; enforcement
+  unqualified". `unverified` obligations block `qualified` status.
+- A per-profile capability subset listing each logical obligation as
+  `enforced`, `refused` or `unverified` with its prerequisite. A backend that
+  offers read-side mechanisms only MUST list write obligations as `refused`
+  (reported as `unsupported` at the native SQL surface) unless a separately
+  receipted consumer-owned write path is bound; that path carries its own
+  receipt, actor and evidence case IDs.
+- Native archive entries for native masking/filter rules outside the admitted
+  profile (PostgreSQL Anonymizer `SECURITY LABEL` rows, Unity Catalog ABAC
+  policy DDL), marked preserved and uninterpreted, with their `EXCEPT` or
+  bypass principals enumerated in `nativeInventory` as privileged exclusions.
+- Statement-level refusals (for example 42501 on a column privilege) recorded
+  as operation outcomes in `evidence`, never as `withheld` cell dispositions.
+- Engine pins: PostgreSQL 18.x exact `server_version`, image digest and client
+  build; Unity Catalog workspace, cloud, DBR/warehouse versions, compute tuple
+  and the SHA-256 of the cloud documentation copy read at execution.
+
+Key rotation, vault re-keying, protection-document revision changes and
+changes to a transform carrier's definition or dependency closure are
+authority-generation or source-definition changes that invalidate prior
+admission under §Precedence and Compatibility. A protection document is
+`invalidated` for a profile when any referenced transform becomes unknown.

@@ -1,0 +1,75 @@
+{
+  "plan": "docs/helix/04-build/security-field-protection-plan.md",
+  "planRevision": "2026-10-14 owner-directed amendment (slice B-SFP-000)",
+  "ownerDirection": "2026-10-14: build out the plan; apply upstream amendments P-A..P-G; treat Q10 as accepted",
+  "completedSlices": [
+    {
+      "id": "B-SFP-000",
+      "scope": "Upstream amendments P-A..P-G applied to FEAT-008, CONTRACT-062, CONTRACT-063, SD-008, STP-056, STP-057, 03-test/security/{pg-raw,delta-raw}.md and cases.json; plan marked",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/acceptance-allocation/adbd3f28-55df-4a5f-b315-9d54b64e0ef4/receipt.json"
+      ],
+      "evidenceProduced": "none; documentation and plan amendment only"
+    }
+  ],
+  "remainingSlices": [
+    "B-SFP-001",
+    "B-SFP-002",
+    "B-SFP-003",
+    "B-SFP-004",
+    "B-SFP-005",
+    "B-SFP-006",
+    "B-SFP-007",
+    "B-SFP-008",
+    "B-SFP-009",
+    "B-SFP-010",
+    "B-SFP-011",
+    "B-SFP-012",
+    "B-SFP-012a",
+    "B-SFP-013",
+    "B-SFP-014",
+    "B-SFP-017",
+    "B-SFP-015",
+    "B-SFP-016"
+  ],
+  "decisions": {
+    "P-A": "applied: FEAT-008 SEC-13",
+    "P-B": "applied: FEAT-008 SEC-14",
+    "P-C": "applied: FEAT-008 SEC-15",
+    "P-D": "applied: CONTRACT-062 section 'Field protection catalog and 0.2.0 disposition reference' (proposed, unimplemented)",
+    "P-E": "applied: CONTRACT-063 section 'Field protection receipt members'; PG 18 and UC citations with 2026-10-13 inspection date",
+    "P-F": "applied: 13 not-run cases added (pg-raw.P01-P05/P07/P08, delta-raw.P01-P04/P07/P08); B04/B05/B14/B07/B08/L08/L10 expansions; S13-S25 allocation to STP-079 still open",
+    "P-G": "applied: SD-008 section 'Field protection decisions'",
+    "Q10": "accepted 2026-10-14: B-SFP-017 in scope, unqualified until evidence",
+    "Q13": "enlarged single gate of 145 cases (recorded assumption following owner direction)"
+  },
+  "gate": {
+    "requiredCases": 145,
+    "originalRequiredCases": 132,
+    "addedNotRunCases": 13,
+    "acceptedCases": 26,
+    "openCases": 119,
+    "acceptanceReceiptCurrent": false,
+    "note": "docs/helix/04-build/evidence/security/acceptance.json carries the 132-case plan digest; re-execute the gate before citing a fresh count"
+  },
+  "blockers": [
+    "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
+    "PostgreSQL 18.x minor/image and Anonymizer install decision (Q3) not yet selected",
+    "tools/security/validate-evidence.py expects US-055-AC* criterion IDs while the plan uses US-079-AC*; pre-existing, outside B-SFP-000",
+    "Semantic cases S13-S25 not yet allocated in STP-079/US-079 or cases.json",
+    "docs/helix/04-build/evidence/security/formal.json pins CONTRACT-062/063 bytes; replay the Z3 conditional proofs against the amended contracts before citing it as fresh (no Z3 in this environment)"
+  ],
+  "tokenUsage": {
+    "ceiling": "unknown",
+    "basis": "unknown",
+    "perSlice": {
+      "B-SFP-000": "not measured"
+    }
+  },
+  "nextAction": "B-SFP-001: boundary + catalog scaffold under src/extensions/security/protection/ with failing S13-S25 runners written first; allocate S13-S25 in STP-079",
+  "validation": {
+    "validate-evidence.py": "93 failed of 202 after amendment versus 91 failed on the unmodified origin/main tree; the two new failures are fresh-gate-plan-and-tooling (expected: plan digest changed) and fresh-formal.json (expected: contract bytes changed); the renamed 145-case check fails on the pre-existing US-055 criterion-ID expectation",
+    "check-acceptance-allocation.py": "passed, 8 checks",
+    "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
+  }
+}
