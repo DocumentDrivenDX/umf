@@ -17,7 +17,9 @@ const validator=createValidator();validator.addSchema(sourceSchema);validator.ad
 /** Original0.7/v6 only. Recompute both kind declarations and type transition using the owner verifier.
  * Missing receipts and bare role strings are never adopted. Every current-model edit makes the receipt stale. */
 export function inspectCoreRecordTypeReceipt(input:Document,identityInput:CoreReferenceLinkIdentity,receiptInput:CoreRecordTypeDeclaration):CoreRecordTypeInspection {
- const links=inspectCoreReferenceLinks(input,identityInput);
+ const source=copyJson(input) as unknown as Document;
+ if(source?.umf!=='0.7.0')throw new UmfError('CORE_RECORD_TYPE_INSPECTION_SOURCE_VERSION','Only original0.7/v6 receipt correspondence is admitted');
+ const links=inspectCoreReferenceLinks(source,identityInput);
  if(receiptInput===undefined)throw new UmfError('CORE_RECORD_TYPE_INSPECTION_RECEIPT_REQUIRED','A separate explicit authoring receipt is required');
  const candidate=copyJson(receiptInput) as unknown as CoreRecordTypeDeclaration;
  if(candidate?.version!=='6.0.0')throw new UmfError('CORE_RECORD_TYPE_INSPECTION_VERSION','Only original0.7/v6 receipt correspondence is admitted');

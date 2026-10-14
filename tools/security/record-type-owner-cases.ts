@@ -51,7 +51,8 @@ export function runRecordTypeOwnerCases(){
   ['invented-native-path',(r:any)=>{r.provenance.nativePath='/native'}],
  ] as const){const changed=structuredClone(receipt);change(changed);refuse('receipt-substitution-'+id,()=>inspectCoreRecordTypeReceipt(current,identity,changed),['CORE_RECORD_TYPE_RECEIPT','CORE_KIND_RECEIPT','CORE_RECORD_TYPE_KIND','CORE_KIND_CONFLICT'])}
  for(const version of ['1.0.0','5.0.0','7.0.0','future'])refuse('unadmitted-receipt-'+version,()=>inspectCoreRecordTypeReceipt(current,identity,{...receipt,version} as any),'CORE_RECORD_TYPE_INSPECTION_VERSION');
- for(const umf of ['0.1.0','0.6.0','0.8.0'])refuse('unadmitted-source-'+umf,()=>inspectCoreRecordTypeReceipt({...current,umf} as Document,identity,receipt),'CORE_REFERENCE_LINKS_VERSION');
+ for(const umf of ['0.1.0','0.6.0','0.8.0','0.9.0'])refuse('unadmitted-source-'+umf,()=>inspectCoreRecordTypeReceipt({...current,umf} as Document,identity,receipt),'CORE_RECORD_TYPE_INSPECTION_SOURCE_VERSION');
+ check('generic-current-reference-support-does-not-promote-legacy-receipts',inspectCoreReferenceLinks({...current,umf:'0.8.0'},identity).version==='0.2.0');
  for(const requested of [null,[],{}, {...identity,extra:true}])refuse('invalid-identity-'+JSON.stringify(requested),()=>inspectCoreRecordTypeReceipt(current,requested as any,receipt),'CORE_REFERENCE_LINKS_IDENTITY');
  refuse('missing-qualified-owner',()=>inspectCoreRecordTypeReceipt(current,{module:'m',element:'missing'},receipt),'CORE_REFERENCE_LINKS_MISSING');
  let getters=0;const hostile={...receipt};Object.defineProperty(hostile,'source',{enumerable:true,get(){getters++;return receipt.source}});refuse('receipt-getter-refused',()=>inspectCoreRecordTypeReceipt(current,identity,hostile),'NON_JSON');check('receipt-getter-not-invoked',getters===0);

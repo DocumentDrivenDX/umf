@@ -1,0 +1,18 @@
+{
+  "status": "explicit-legacy-profile-refusal-passed",
+  "sourceHashes": {
+    "src/model/record-type-inspection.ts": "1746ffaa431b499e58bd259f8b0df0c5bbbc26317b8c878f4ac918f3f3c1bcc7",
+    "tools/security/record-type-owner-cases.ts": "b21ac3ffeeebdcf468784d80cb5a3b929e998277e9849bec4b3829bbd56dcda7",
+    "tests/security-record-type-owner.test.ts": "b07ed7d74c5e767d216f13025b47d9881ae08ff09a75438f564385456da75974"
+  },
+  "logs": {
+    "targeted.log": "f3e619f7a9e9c0b69bfffbabf90625b808d375c3a9271abf640b39d1cd69abe3",
+    "regression-before.log": "1a7cf97441de4363ba4bba3bed97d4a3435393b7b2fa23c2458eb3fea82aa149"
+  },
+  "scope": "Legacy original0.7/v6 record-type receipt inspector explicitly refuses other source versions using its own boundary. Generic reference inspector still admits0.8 under its independently versioned profile. No receipt/native authority promotion.",
+  "cause": "Underlying generic reference inspector now supports0.8; old owner test expected its version refusal, but legacy receipt inspection instead failed later on stale context. Preserve intended0.7-only boundary explicitly.",
+  "limits": [
+    "Internal receipt consistency only; no issuer authentication or native enforcement.",
+    "No0.8 record-type authoring/receipt qualification added."
+  ]
+}
