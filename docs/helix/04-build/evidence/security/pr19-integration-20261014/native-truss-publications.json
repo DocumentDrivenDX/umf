@@ -1,0 +1,46 @@
+{
+  "securityReady": false,
+  "observations": [
+    {
+      "subject": "Alice",
+      "expected": [],
+      "observed": [],
+      "ownNativeCallerAndPrivatePeer": true,
+      "cutsHeldThroughReceiver": true
+    },
+    {
+      "subject": "Bob",
+      "expected": [
+        [
+          {
+            "outcomeId": "original",
+            "disposition": "original",
+            "value": {
+              "string": "RB"
+            }
+          }
+        ]
+      ],
+      "observed": [
+        [
+          {
+            "value": {
+              "string": "RB"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          }
+        ]
+      ],
+      "ownNativeCallerAndPrivatePeer": true,
+      "cutsHeldThroughReceiver": true
+    },
+    {
+      "subject": "Outsider",
+      "expected": [],
+      "observed": [],
+      "ownNativeCallerAndPrivatePeer": true,
+      "cutsHeldThroughReceiver": true
+    }
+  ]
+}
