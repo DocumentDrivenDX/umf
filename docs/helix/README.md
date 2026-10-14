@@ -71,6 +71,12 @@ native port remain separate work.
 
 ## Current delivered scope
 
+The separately selected [RFC3339 exact instant helper](02-design/contracts/CONTRACT-065-rfc3339-exact-instant.md)
+provides precise instant keys/equality while retaining original text and local
+offset knowledge. [Basic Bun/browser evidence](04-build/evidence/rfc3339-exact-instant-20261014.md)
+does not establish Truss/Weft/Ashlar query adoption or change generic timestamp,
+temporal facets or temporal Key semantics.
+
 The shared [JavaScript numeric adapter](02-design/contracts/CONTRACT-049-schema-properties.md#shared-javascript-numeric-adapter-api-100)
 uses existing integer/decimal carriers for safe number admission, bigint
 conversion, exact decimal spelling and explicit lossless number conversion.

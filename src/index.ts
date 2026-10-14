@@ -382,6 +382,7 @@ export * from './projections/ddd-postgresql';
 
 export * from './model/schema-properties';
 export * from './adapters/javascript-numeric';
+export * from './adapters/rfc3339-exact-instant';
 export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';

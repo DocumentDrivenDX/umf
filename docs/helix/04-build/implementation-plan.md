@@ -11758,3 +11758,7 @@ Current Weft `SecurityQueryProfile` already binds target/field/operator to exact
 ### Original core0.8 catalog source owner prerequisites — 2026-10-13
 
 [Evidence](evidence/security/core08-owner-20261013/receipt.json) qualifies the separate result0.2 owner versions for Record.members, scalar label and direct reference links. Four owner suites pass,48 current controls agree in Bun/Chromium153, typing passes and388 schemas/65 packages audit without failures. Original0.7/result0.1 schemas and meaning remain preserved. Truss must consume the committed owner revision through a separate exact producer before native core0.8 ingress; no acceptance case is promoted by these internal metadata operations.
+
+### Shared exact instant operation — 2026-10-14
+
+Owner-directed consistent consumer timestamp equality starts with CONTRACT-065 and the pure public RFC3339 exact-instant1.0 helper. Canonical UTC whole seconds and unrounded fractional digits retain original text/offset knowledge; core timestamp, facets and Key meanings remain unchanged. Five basic Bun tests25 assertions, scoped strict typing and11 actual public-entry Chromium153 checks pass after Astra’s backward-scan fraction-trimming correction. [Evidence](evidence/rfc3339-exact-instant-20261014.md). Truss/Weft native binding and Ashlar exact-text adoption remain next, separately versioned deliverables.
