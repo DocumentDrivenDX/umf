@@ -33,6 +33,9 @@ CONTRACT-062/063 own exact semantics, bindings and evidence admission.
 | SEC-10 | Current-authority coordinator and propagation profiles | US-057-AC2–8 |
 | SEC-11 | Private observation/public disclosure separation | US-056-AC8 |
 | SEC-12 | Evidence runner and acceptance gate | US-079-AC10, US-056-AC10 |
+| SEC-13 | Protection transform catalog (`umf.security.protection` 0.1.0, proposed) and disclosure-profile query-use validator | Planned S13–S20 (STP-079 allocation pending); pg-raw.P02/P03, delta-raw.P02/P03 (`not-run`) |
+| SEC-14 | Tokenization/encryption obligation model, `reverseAction`, custody and propagation declarations | Planned S21–S23 (STP-079 allocation pending); pg-raw.P08, delta-raw.P08 and L10 expansions (`not-run`) |
+| SEC-15 | Write-admission extension: mask write-back refusal and tokenized-field mutation | Planned S24–S25 (STP-079 allocation pending); pg-raw.P04, delta-raw.P04 (`not-run`) |
 
 ## Solution Approaches
 
@@ -120,6 +123,54 @@ Authorization generation participation and complete facts are admission gates.
 Measure overhead at 1k/100k/1M rows, plans and concurrent revocation drain; no
 unsupported latency claim. Public semantic code remains browser-compatible.
 
+## Field protection decisions — 2026-10-14
+
+Owner direction (2026-10-14) applies proposal P-G of the
+[field-protection plan](../../04-build/security-field-protection-plan.md).
+These are design decisions; none is implemented or natively evidenced yet.
+
+1. **Layering.** Row/attribute meaning stays in `umf.security` (proposed minor
+   revision 0.2.0, additive). Named transforms (mask, generalize, hash,
+   tokenize, encrypt) live in a separate, independently versioned extension,
+   proposed `umf.security.protection` 0.1.0. `withhold` remains a `umf.security`
+   disposition, not a catalog transform. No core member is added.
+2. **PostgreSQL masking carrier.** PostgreSQL mask/generalize/hash dispositions
+   bind to owner-held `security_barrier` views (or fixed-`search_path`
+   `SECURITY DEFINER` functions) projecting the catalog transform, with no
+   base-table SELECT for ordinary roles; the accepted B07/B08 pattern. The
+   PostgreSQL Anonymizer extension (`SECURITY LABEL ... MASKED WITH ...`) is
+   preserved as native archive only and is not interpreted as protection,
+   because its superuser install/preload and dynamic masking role model are not
+   independently qualified. Attribute withhold binds to column privileges with
+   no table-level SELECT; a 42501 refusal is a whole-statement outcome, not a
+   `withheld` cell. Virtual generated columns over masked bases are refused
+   until pg-raw.P05 qualifies them. The PostgreSQL 18 profile is a new binding
+   version (`postgresql-raw/0.2.0`); 17.9 evidence is not reused as 18 evidence.
+3. **Unity Catalog write side.** Unity Catalog table-level row filters and
+   column masks are read-side only; no documented write-side predicate exists.
+   Native write obligations (delta-raw.L01/L02) are therefore reported
+   `unsupported` at the SQL surface. The only positive route is a consumer-owned
+   protected write path (plan slice B-SFP-017: a service applying
+   `evaluateSecurityWrite` to original and proposed state before `MERGE`, with
+   no direct write grant for ordinary identities) that carries its own receipt.
+   Q10 is accepted (2026-10-14): B-SFP-017 is in scope and remains unqualified
+   until native evidence exists. Without it, `unity-delta-raw` cannot reach
+   `qualified` under CONTRACT-063.
+4. **Unity Catalog withhold.** `withheld` maps only to a protected view that
+   omits the column with no base-table SELECT. A NULL-returning column mask is
+   refused as a `withheld` carrier because a direct SQL client cannot
+   distinguish it from canonical NULL.
+5. **Tokenization.** UMF declares and preserves custody, reversibility,
+   determinism and propagation; it never calls a vault or key service. All
+   tokenize/encrypt obligations render `unverified` in receipts until a
+   consumer profile supplies evidence.
+6. **Forward compatibility.** Policy and protection documents stay
+   storage-agnostic; Truss and Ashlar bind the same revisions through their own
+   mappings. Raw profiles use no graph vocabulary; raw evidence closes raw cases
+   only.
+
+Open design questions Q1–Q9, Q11, Q12, Q14 and Q15 remain as listed in the plan.
+
 ## Traceability
 
 TD-079/STP-079 own policy authoring and evaluation. TD-056/STP-056 own independent
@@ -134,6 +185,8 @@ remain native gates. Databricks guard realization and historical ABAC eligibilit
 must be selected and tested; absence refuses lifecycle qualification. SQL Server
 is a future core-admission witness. Full timing/constraint-error noninterference
 is not claimed; public diagnostics require a separately tested coarse projection.
-Recursive path language, nonconstant transforms and external-engine equivalence
-remain outside the initial interpreted subset. Production lowering API ownership
+Recursive path language and external-engine equivalence remain outside the
+initial interpreted subset. Nonconstant transforms are now designed (above) but
+remain outside the implemented `umf.security` 0.1.0 subset until the protection
+catalog and 0.2.0 disposition reference have Bun, Chromium and native evidence. Production lowering API ownership
 must be reconciled before integration, without weakening standalone meaning.

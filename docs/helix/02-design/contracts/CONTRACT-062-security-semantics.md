@@ -16,6 +16,9 @@ ddx:
 # CONTRACT-062: Shared security semantics
 
 **Version:** proposed `umf.security` 0.1.0. **Status:** draft; not core admission.
+A minor revision `umf.security` 0.2.0 and a companion extension
+`umf.security.protection` 0.1.0 are specified in §Field protection catalog
+(2026-10-14) as proposed text; neither is implemented or evidenced.
 
 ## Purpose
 
@@ -131,7 +134,8 @@ ones. For every field/action profile, predicate/order/group/join/aggregate use
 MUST select `disclosed`, `original-authorized` or `prohibited`; omission means
 `prohibited` for protected fields. `original-authorized` needs a separate exact
 action permission. Operators using withheld fields refuse. Canonical data is
-never overwritten by a read mask.
+never overwritten by a read mask (see §Field protection catalog for the
+write-side rule and the statement-level refusal distinction).
 
 ### Writes and time
 
@@ -392,3 +396,120 @@ A separate comparison ledger bounds selected row/field operations by the minimum
 The low-level semantic evaluator interprets `originalAction` as a trusted request assertion. It does not designate which separate action belongs to a field/operator. A caller-controlled request MUST therefore pass through an exact source-bound query profile before evaluation or execution. Weft owns the existing `weft.security.query-profile/0.1.0` binding of target, field, operator and designated original action; UMF MUST NOT introduce a competing compiler/profile designation. The profile pins original policy/ontology/model/mapping sources and rejects unrelated caller annotations. Its source-byte match is not authentication of the profile issuer or proof of native mapping.
 
 An original-source diagnostic demonstrates that all five operators can select a separately granted unrelated action at the unprofiled UMF evaluator. The externally intended designation in that diagnostic is deliberately absent from the ontology; this is not a native bypass or a defect in the profile-bound Weft path. B08 requires the actual installed backend to consume derived query lineage and the original admitted profile, refuse substitutions/source drift before issuing SQL, and qualify actual native disclosed/original/prohibited operator behavior. Existing low-level S08 checks alone do not close B08.
+
+## Field protection catalog and 0.2.0 disposition reference — 2026-10-14
+
+**Status:** proposed normative text applied by owner direction on 2026-10-14
+(proposal P-D of the [field-protection plan](../../04-build/security-field-protection-plan.md)).
+It governs FEAT-008 SEC-13, SEC-14 and SEC-15. Nothing in this section is
+implemented; the implemented surface remains `umf.security` 0.1.0 with the
+`constant/0.1.0` transform. Planned semantic cases S13–S25 and the raw-backend
+P-cases are `not-run`.
+
+### Protection document (`umf.security.protection` 0.1.0, proposed)
+
+A protection document is `{vocabulary:"umf.security.protection",
+version:"0.1.0", id, revision, transforms:[Transform], native?}`. `id` and
+`revision` are nonempty immutable identity strings; `native` is an opaque
+retained archive, never executable authority. `transforms` holds at most 256
+entries with unique `{id,version}` pairs. Transform MUST contain:
+
+| Member | Shape | Rules |
+| --- | --- | --- |
+| `id`, `version` | nonempty strings | Unique in the document; referenced from `umf.security` 0.2.0 dispositions as `{vocabulary,transform,version}` |
+| `kind` | `mask` \| `generalize` \| `hash` \| `tokenize` \| `encrypt` | Closed in 0.1.0; an unknown kind is preserved and blocks interpretation |
+| `inputDomain`, `outputDomain` | qualified Field references declaring exact literal domains | Output MAY differ from the canonical type; the distinction MUST survive disclosure encoding and query-use admission |
+| `determinism` | `deterministic` \| `random` \| `keyed-deterministic` | A fact about the transform, not an authored preference |
+| `reversibility` | `none` \| `keyed` \| `vault` | `keyed`/`vault` require `custody` and a `reverseAction` action ID distinct from every read, field and original-authorized action |
+| `disclosureProfile` | set drawn from `equality`, `order`, `prefix(n)`, `suffix(n)`, `length`, `format`, `nullity`, `range(bucket)`, `cardinality` | Authored retained properties; an absent property means not retained |
+| `queryUse` | per operator (`predicate`, `order`, `group`, `join`, `aggregate`): `disclosed` \| `original-authorized` \| `prohibited` | Omission means `prohibited` |
+| `parameters` | typed constants using existing exact literal carriers | At most 32; each literal at most 4,096 UTF-16 code units |
+| `custody` | `{owner, vaultRef?, keyRef?, formatPreserving, storageEffect:"stored-transformed", propagation:{history,snapshots,exports,feeds,caches}}` | Required for `tokenize`/`encrypt`; every propagation member is an explicit declaration; UMF validates presence and shape only |
+| `function` | for `mask`: `constant`, `partial`, `fixed-length-redact`, `regex-replace` (declared pattern), `null-out` | `null-out` is still `transformed`: it discloses a typed null that disposition metadata keeps distinct from canonical null |
+
+`generalize` declares one of `range-bucket`, `truncate-date` or `prefix-only`
+with its parameters. `hash` declares `algorithm` and salt custody (`none` or
+`keyed`); an unsalted hash is admitted only with `equality` retained and a
+mandatory dictionary-attack warning obligation in the receipt.
+
+### Effective disclosure and query-use admissibility
+
+The effective retained property set is the authored `disclosureProfile` united
+with the properties implied by `determinism`: `deterministic` and
+`keyed-deterministic` always imply `equality` (equality classes survive the
+transform); `random` implies nothing. An operator MAY be `disclosed` only when
+the effective set contains what that operator depends on: `join` and `group`
+need `equality`; `order` needs `order`; `aggregate` needs the aggregate's input
+property; `predicate` needs the property its comparison uses. A validator MUST
+refuse a `disclosed` selection whose dependency is not retained, and a receipt
+MUST report implied leakage (for example `equality` on a deterministic token)
+even when it is not authored. `random` tokenization therefore cannot admit
+`join` or `group` as `disclosed`. These rules derive from the catalog; a
+backend's observed behavior never widens them.
+
+### Disposition reference in `umf.security` 0.2.0
+
+A `transformed` disposition MAY reference a catalog transform as
+`{kind:"transformed", vocabulary:"umf.security.protection", transform, version,
+field}` in addition to the retained `{transform:"constant", version:"0.1.0",
+field, value}` form, which is unchanged. The policy pins the exact protection
+document `{id, revision}` it references. A reference to an unknown document,
+transform, version or kind is preserved and blocks interpretation. Migration
+0.1.0 → 0.2.0 is additive. Rollback 0.2.0 → 0.1.0 MUST refuse when any
+non-constant transform is referenced, because rollback must not broaden access
+(§Precedence and Compatibility). Disposition transport carries `storageEffect`
+per field so a consumer can distinguish a stored token from a plaintext value.
+
+### Tokenization, `original` and `reversed`
+
+For a field whose transform declares `storageEffect:"stored-transformed"`, the
+canonical physical carrier holds the token or ciphertext. The `original`
+disposition keeps its meaning (the stored canonical value), which for such a
+field is the token. Plaintext recovery is a distinct `reversed` disposition
+obtained only through the transform's `reverseAction`, evaluated as its own
+exact action with its own permission. No read, `original-authorized` or field
+mutation permission implies `reverseAction`. Key rotation and vault re-keying
+are authority-generation changes under CONTRACT-063.
+
+### Write-side rule (SEC-15)
+
+Changing a field requires, for the subject on that field, an `original` read
+disposition at the operation's authority cut or an explicitly declared
+blind-write permission bound to that field. Comparing the proposed value to
+the reader's mask output is neither necessary nor sufficient: a proposed value
+equal to a mask output is still refused without that disposition. Mutating a
+field declared `stored-transformed` additionally requires the declared
+vault-write action. `evaluateSecurityWrite` MUST apply this rule; a binding
+MUST refuse or prove impossible any path that writes a transformed or withheld
+value back as canonical data. Native column-`UPDATE` denial is defense in depth
+for direct SQL only.
+
+### Statement-level refusal is not a cell disposition
+
+A native refusal of a whole statement (for example PostgreSQL SQLSTATE 42501 on
+a column privilege) is an operation outcome. It MUST be reported as a refusal
+of the operation, never encoded as a per-cell `withheld` disposition, and a
+profile MUST NOT claim `withheld` delivery from such refusals.
+
+### Preservation and bounds
+
+`readProtectionSource`/`writeProtectionSource` preserve arbitrary bounded
+JSON/YAML content including unknown kinds and members;
+`inspectProtectionCatalog` reports valid and complete separately;
+`requireProtectionInterpretation` refuses incomplete closure. Pure reference
+evaluators exist only for transforms whose output is fully determined by
+declared parameters (`constant`, `partial`, `fixed-length-redact`,
+`range-bucket`, `truncate-date`, `prefix-only`); keyed and vault transforms are
+declared, not executed, by UMF (NFR-32). Catalog size, parameter sizes and
+generated SQL text length carry explicit bounds with `resource-exhausted`
+refusal. Public operations MUST execute in Bun and real Chromium without host
+APIs.
+
+### Unknowns recorded with this amendment
+
+Package split (one catalog or two), `withhold` as a transform for NULL-only
+backends (refused for now), salt custody for keyed hashes, detokenize as action
+versus disposition (action selected here, pending Weft query-profile review)
+and per-field masks inside shared property bags remain open questions Q1, Q2,
+Q11, Q12 and Q14 in the plan. Draft 2020-12 schema text for
+`spec/extensions/security-protection/` does not yet exist.

@@ -23,9 +23,9 @@ cannot close them. Matrix is a procedural expansion of the story test plans.
 
 ## Prerequisites
 
-Version/profile: Exact workspace/cloud, warehouse/runtime, managed-table protocol and policy feature status.
-Fixture: Ordinary managed employee/company/m2m tables plus Project ownership and Assignment; match declared association endpoint columns.
-Mechanisms: Unity Catalog roles/grants, row filters, column masks, governed-tag ABAC or protected views; direct/path/REST/Delta endpoint eligibility and native policy conflict controls.
+Version/profile: Exact workspace/cloud, warehouse/runtime, managed-table protocol and policy feature status. Field-protection P-cases (2026-10-14) and the `unity-delta-raw/0.1.0` profile additionally require two independent ordinary identities plus separately excluded installer/assessor identities (`databricks-actors.json` currently reports zero distinct non-installer identities: a hard external blocker), an isolated catalog/schema, pinned DBR/SQL-warehouse versions and compute tuple (DBR >= 12.2 for filters/masks; dedicated compute >= 16.3 for writes; DBR 17.2 for DELETE/UPDATE/MERGE on partition-column policies; DBR 19+ for the ABAC time-travel Beta), and the SHA-256 of the cloud documentation copy read at execution, because the AWS, Azure and GCP copies of the filter/mask page diverge (the Azure/GCP copies omit the time-travel and clone restrictions; the AWS wording governs this plan).
+Fixture: Ordinary managed employee/company/m2m tables plus Project ownership and Assignment; match declared association endpoint columns. P-cases add a masked field, a hashed join key, a tokenized field with a stand-in vault table in an excluded schema, and (P07) authored ABAC policies with `EXCEPT` principals.
+Mechanisms: Unity Catalog roles/grants, row filters, column masks, governed-tag ABAC or protected views; direct/path/REST/Delta endpoint eligibility and native policy conflict controls. P-cases add view-based withhold (no base-table SELECT), column-mask UDFs generated from the protection catalog, and observation of operator behavior over masked columns. Before any filter is generated, Q7 must be observed at an ordinary identity: a filter/mask UDF must read a private mapping table without granting it to the querying user, else the row-level design is refused.
 Use actual least-privilege subject connections and separately excluded assessor
 and installer identities. Complete issuer/fact/authority inventory is required.
 Seed Alice active on A, inactive on B; Bob active B; both Projects share Client C.
@@ -67,6 +67,14 @@ Every destructive drift control uses a disposable namespace/installation.
 | delta-raw.L12 | US-057-AC8 | activation-rollback: Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access. |
 | delta-raw.L13 | US-057-AC3 | authority-change-exhaustiveness: Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions. |
 | delta-raw.L14 | US-057-AC7 | effective-date-boundary: Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses. |
+| delta-raw.P01 | US-056-AC7 | withhold-view-carrier: `withheld` maps only to a protected view omitting the column with no base-table SELECT; a NULL-returning mask is observed indistinguishable from canonical NULL at an ordinary identity and that mapping is refused without weakening. |
+| delta-raw.P02 | US-056-AC6 | protection-transform-correspondence: Generated column-mask UDFs disclose per-actor values matching the independent oracle byte-exact; non-castable output domains refuse generation; UDF text, owner and `USING COLUMNS` pinned. |
+| delta-raw.P03 | US-056-AC6 | disclosure-profile-query-use: Predicates/joins/aggregates over masked columns observed at an ordinary identity (masked vs original evaluation, EXPLAIN, error paths) and compared to effective retained properties; `prohibited` on a selectable masked column refuses or withholds; no claim that Unity Catalog enforces `prohibited`. |
+| delta-raw.P04 | US-057-AC1 | native-write-surface-unsupported: INSERT of a row invisible to the writer's filter succeeds natively, so write obligations report `unsupported`; ordinary identities hold no direct write grant; positive writes flow only through the separately receipted consumer-owned write path. |
+| delta-raw.P07 | US-056-AC7 | native-policy-archive: ABAC policy DDL preserved as archive, uninterpreted; `EXCEPT` principals, owners/`MANAGE` holders and metastore admins inventoried as privileged exclusions; interpretation refuses; profile unchanged. |
+| delta-raw.P08 | US-056-AC6 | tokenization-stand-in: Deterministic tokens stored; vault in an excluded schema; detokenize unreachable by ordinary identities; token joins match the oracle; time-travel/clone/share propagation observed and declared; obligations `unverified`. |
+
+The plan's slice labels delta-raw.P05 (time travel/clone/share) and delta-raw.P06 (path/Delta API/Iceberg REST/Unity REST/dedicated-compute matrix) are not case IDs; they execute as procedural expansions of delta-raw.L08/L10 and delta-raw.B04 below. All P-cases are `required` and `not-run` with no command (added 2026-10-14; see §Field-protection expansion).
 
 For each row, instantiate positive and negative controls at the native surface.
 Record original caller, complete native inventory, expected oracle outcome and
@@ -117,6 +125,64 @@ Implement these named cases before marking backend admission qualified. Preserve
 an independently computed oracle and match exact physical identities. Report
 performance observations separately from security correctness. Required native
 commands and profile adoption remain open until original consumer integration.
+
+## Field-protection expansion — 2026-10-14
+
+Owner direction (2026-10-14) applies proposal P-F of the
+[field-protection plan](../../04-build/security-field-protection-plan.md)
+(FEAT-008 SEC-13..15; CONTRACT-062/063 §Field protection). Six P-cases are
+added above. The following obligations are owned by existing IDs and execute
+as procedural expansions; no case is retired, promoted or marked accepted, and
+every delta-raw case remains `not-run` until native execution at an ordinary
+identity in a real Unity Catalog workspace. Local Delta/Spark without Unity
+Catalog cannot exercise row filters or column masks and is not a qualification
+stand-in; it may only observe Delta token propagation (a P08 subset) labeled as
+such.
+
+- **delta-raw.B04 (US-056-AC5), plan label P06.** Exercise or list as
+  unavailable-not-passed each alternate surface: SQL warehouse, standard
+  cluster, dedicated cluster (DBR >= 16.3 for writes), path access, Delta Lake
+  API, Iceberg REST, Unity REST and Delta Sharing. Documented refusals (no
+  path/Delta API/Iceberg REST/Unity REST access to filtered/masked tables) are
+  safety witnesses, not positive cases.
+- **delta-raw.B05/B14 (US-056-AC5).** Owners and `MANAGE` holders can drop
+  filters/masks; `EXCEPT` principals, filter/mask UDF owners and metastore
+  admins see unfiltered, unmasked data. Each is visible only to excluded
+  identities; ordinary identities cannot reach them.
+- **delta-raw.B07 (US-056-AC6).** Extend distinctness vectors so original
+  null, original absence, view-omission `withheld`, each catalog transform
+  output and `reversed` stay distinct on the disclosure transport, with
+  `storageEffect` per field; a NULL-returning mask is the retained negative
+  control (P01).
+- **delta-raw.B08 (US-056-AC6).** `original-authorized` maps to a separately
+  granted unmasked object; one mask per column resolves per user; predicate
+  evaluation over masked versus original values is observed (P03, Q6) before
+  any disclosure-profile claim.
+- **delta-raw.L08 (US-057-AC4), plan label P05.** Historical reads under
+  table-level row filters or column masks are `unsupported` ("Time travel isn't
+  supported with table-level row filters or column masks"); the ABAC
+  time-travel Beta (DBR 19+, managed Delta with catalog commits, column mapping
+  on both versions, not on dedicated compute, fails closed when the policy
+  column is missing) is a separate candidate with its own receipt.
+- **delta-raw.L10 (US-057-AC6), plan label P05.** Deep/shallow clones and
+  Delta Sharing of filtered/masked tables are refused natively; materialized
+  views and streaming tables carry the refresh identity's filtered/masked data
+  (not found on the inspected pages; verify at execution) so the refresh
+  identity is in `EXCEPT` or the copy is declared permanently transformed; AI
+  Search indexes cannot be created from such tables (a refusal, not a bypass);
+  token propagation into time travel, clones and shares is declared.
+- **delta-raw.L01/L02 (US-057-AC1).** Remain required positive cases. Under
+  CONTRACT-063 they can pass only through the consumer-owned protected write
+  path (plan slice B-SFP-017: a service applying `evaluateSecurityWrite` to
+  original and proposed state before `MERGE`, ordinary identities without
+  direct write grants, its own receipt and actor). Q10 accepted 2026-10-14;
+  until that path passes, no `qualified` statement is published for
+  `unity-delta-raw` and read-side evidence is reported as `candidate` or
+  `unsupported`.
+
+Open questions Q6 (operator semantics over masked columns), Q7 (UDF execution
+authority), Q8 (subject identity stability) and Q9 (ABAC release status) are
+decided by execution at the admitted workspace, not assumed.
 
 
 ### B08 query-use binding controls

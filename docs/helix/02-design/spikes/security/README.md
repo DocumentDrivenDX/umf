@@ -63,7 +63,8 @@ handling still need separate qualification.
 
 ## Acceptance
 
-The 132 required cases in `../../../03-test/security/cases.json` allocate all
+The 145 required cases in `../../../03-test/security/cases.json` (132 original
+plus 13 field-protection P-cases added 2026-10-14, all `not-run`) allocate all
 28 criteria; native/backend implementation remains open. `acceptance.ts` executes
 reviewed bound test runners afresh and checks command/run identity, source hashes,
 AC citations, exact expected/observed assertions and native inventory metadata.

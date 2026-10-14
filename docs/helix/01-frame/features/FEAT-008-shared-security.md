@@ -59,6 +59,18 @@ Source-level policy declarations currently do not establish installed enforcemen
   incomplete, invalid or untrusted required facts must never authorize disclosure.
 - SEC-05: Distinguish canonical null/absence, withheld fields and transformed
   values; declare allowed query use of protected fields.
+- SEC-13: Masking transforms are named, versioned catalog entries with declared
+  determinism, reversibility, information-disclosure profile and per-operator
+  query use; unknown transforms are preserved and block interpretation.
+  (Added 2026-10-14 by owner direction; proposal P-A of the
+  [field-protection plan](../../04-build/security-field-protection-plan.md).)
+- SEC-14: Tokenization and encryption are field-protection declarations that
+  change stored data; detokenization and decryption are separate privileged
+  actions. Joinability, format preservation, key/vault custody and propagation
+  into history, snapshots, exports, feeds and caches are declared obligations.
+  Enforcement is unqualified until a consumer profile supplies evidence.
+  (Added 2026-10-14; proposal P-B. SEC-10 covers propagation generically;
+  SEC-14 adds the stored-data and reverse-action obligations.)
 
 ### Binding qualification
 
@@ -73,6 +85,11 @@ Source-level policy declarations currently do not establish installed enforcemen
 ### Authority lifecycle
 
 - SEC-09: Evaluate both original and proposed write state and field mutation authority.
+- SEC-15: Mutating a field requires an `original` read disposition on that field
+  for the subject, or an explicitly declared blind-write permission. Bindings
+  must refuse, or prove impossible, any path that writes a transformed or
+  withheld value back as canonical data. (Added 2026-10-14; proposal P-C.
+  This is the write-side consequence of masking that SEC-09 does not state.)
 - SEC-10: Declare current authority, retained ownership, revocation ordering,
   paging invalidation and propagation into history, feeds, caches and exports.
 - SEC-11: Distinguish private integrity/authorization observation from public disclosure.
@@ -99,11 +116,21 @@ no latency SLA is invented before owner capacity targets are supplied.
 Multiple owners require an explicit quantifier. Cross-document equal labels do
 not share authority. Partial authorization observations cannot prove absence.
 Unsupported native masks, historical access or policy composition refuse admission.
+A native column-privilege refusal is a whole-statement outcome, never a per-cell
+`withheld` disposition. A backend that offers only read-side mechanisms reports
+writes `unsupported` unless a consumer-owned protected write path is itself
+qualified. Tokenized fields disclose tokens as their stored canonical value;
+plaintext recovery is a separate `reversed` outcome, never an `original` one.
 
 ## Success Metrics
 
-All twelve security requirements have a story and design owner; all required
+All fifteen security requirements have a story and design owner; all required
 backend criteria pass independently, with no unqualified equivalence claims.
+SEC-13..15 (2026-10-14) have design owners in SD-008 and contract text in
+CONTRACT-062/063; their story allocation (US-079 semantics, US-056/057 native
+cases) is recorded in the field-protection plan and remains an open frame item
+until the stories are amended. No implementation or native evidence exists for
+SEC-13..15 yet; every related support claim is `not-run`.
 
 ## Constraints and Assumptions
 
