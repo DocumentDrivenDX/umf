@@ -1,0 +1,5 @@
+# Original security acceptance boundary audit
+
+Current inventory retains132 required cases. Truss and Ashlar each have30 missing executable commands. Recent original/native lock installers and ordinary acquisition tests do not close these cases. The Truss named-source policy fixture models Staff, Project, Resource, Ownership and Assignment as Records; it has no Client type or Relationship element. The retained original populated-record test asserts zero stored edges. The full Truss procedure explicitly requires two Projects sharing a Client, original registered relationship/type IDs and actual selected graph homes.
+
+Next implementation is the complete original public-catalog ontology/typed-edge population and independent ordinary-caller visibility/endpoint workflow, composed with admitted owner/compiler context and guarded publication. Keep the current component receipts qualified, and allocate B01/B02 only when their original native requirements pass. This audit inspects current sources and command allocation; it does not rerun or infer acceptance results. All132 obligations remain unchanged.
