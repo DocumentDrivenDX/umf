@@ -201,3 +201,15 @@ wrapped graph labels; structured metadata uses full-width disclosures. Export
 panels remain inside the viewport. Browser entry-point typechecking is part of
 `bun run typecheck`. Visual evidence and limitations:
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
+
+The SQL page also opens a worker-owned Truss browser catalog using the original
+reviewed bundle from Truss `a75e614e`. Build it with
+`bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
+build. The retained archive binds the original manifest and every original asset;
+the build needs no sibling checkout or network download. The worker keeps its
+owner capability private and accepts only open/register/close commands against the
+fixed local Products model. Registration uses actual generic Truss catalog tables
+and preserves the original model including opaque action declarations. It does
+not register action authority, issue selection-read grants or execute UPDATEs.
+The browser verifier checks registration, unchanged retry, second-tab exclusion
+and catalog/incarnation retention after reload under a `/umf/` base path.

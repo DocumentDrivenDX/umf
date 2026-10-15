@@ -10,6 +10,7 @@ on:
       - 'docs/helix/02-design/contracts/**'
       - 'docs/helix/04-build/evidence/actions-documentation*'
       - 'docs/helix/04-build/evidence/actions-certification*'
+      - 'docs/helix/03-test/fixtures/bulk-update/local-products-input.json'
       - 'tests/security/preparation-program-original/program-configuration.json'
       - 'tests/security/preparation-program-original/program-request.json'
       - 'fixtures/actions/**'
@@ -55,6 +56,7 @@ on:
       - 'docs/helix/02-design/contracts/**'
       - 'docs/helix/04-build/evidence/actions-documentation*'
       - 'docs/helix/04-build/evidence/actions-certification*'
+      - 'docs/helix/03-test/fixtures/bulk-update/local-products-input.json'
       - 'tests/security/preparation-program-original/program-configuration.json'
       - 'tests/security/preparation-program-original/program-request.json'
       - 'fixtures/actions/**'
@@ -138,6 +140,10 @@ jobs:
         run: python3 scripts/build-document-research-release.py
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
+      - name: Check browser action integration types
+        run: bun x tsc -p docs/helix/05-deploy/microsite/tsconfig.actions.json
+      - name: Build pinned Truss browser catalog assets
+        run: bun docs/helix/05-deploy/microsite/build-truss-browser.ts
       - name: Build original browser SQL-to-actions compiler
         run: bun docs/helix/05-deploy/microsite/build-action-compiler.ts
       - name: Build schema explorer and domain-pack catalog
