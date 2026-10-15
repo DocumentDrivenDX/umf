@@ -177,6 +177,17 @@ SearchIndex and SearchBinding shapes, and their validation rules, are defined in
 CONTRACT-074. They are part of this extension so that search semantics are
 authored and reviewed with the rest of the document.
 
+### Notes for consumers
+
+- Timestamp and date Fields cannot be Key components (CONTRACT-040 blocks temporal
+  Key equality). A table keyed on a time bucket authors a separate, non-temporal
+  key Field holding the bucket (for example an integer bucket number or canonical
+  text such as `2026-10-15T14`), alongside the timestamp Field itself.
+- ColumnSets are the authored physical facts that typed access relies on. A
+  consumer that emits its own DDL should emit it from the same UMF documents and
+  bindings, and check in CI that its DDL matches the ColumnSets; `verify()`
+  (CONTRACT-072) also detects drift when the application starts.
+
 ## Precedence and Compatibility
 
 Core contracts own value meaning; CONTRACT-042 owns physical placement; this

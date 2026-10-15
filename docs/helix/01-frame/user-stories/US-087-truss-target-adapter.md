@@ -67,6 +67,7 @@ CONTRACT-069 packet and is `qualified` only when both pass.
 - [ ] **US-087-AC5** — Given a committed or rejected invocation made with an idempotency key, when the same caller repeats it with the same key and equal input, then the call returns the original outcome unchanged, without re-evaluating preconditions and with no new journal or feed entry; repeating the key with different input returns Truss's request-conflict refusal without a business write.
 - [ ] **US-087-AC6** — Given a bulk command compiled through Weft's Truss mutation backend, when the maintainer calls `seal()` and then `submit(manifest)` on the Truss plan, then Truss materializes and seals a CONTRACT-903 manifest under its own selection and guard custody, `submit()` hands that sealed manifest to CONTRACT-904 coordination run by Truss and returns a `BulkJob`, and the manifest items, batch outcomes and job status equal those from Truss's own bulk path on an identically seeded store.
 - [ ] **US-087-AC7** — Given a Field whose Truss value definition requires authored lexical spelling to round-trip (for example an exact decimal token or an offset-bearing timestamp), when an action input or bulk assignment would write that Field through the SDK, then the adapter refuses before Truss admission and no write occurs, while reads still decode the value.
+- [ ] **US-087-AC8** — Given an input that fails one or more preconditions and an input that passes, when each is checked with the generated `validate()` through `TrussTarget` and through Truss's native preview operation, then each call reaches Truss's preview and no admission, the `ValidationResult` failures and validity equal what the preview reports, `complete` is true only when Truss reports that every check was evaluated and false when the preview stops at the first failure, and no state, journal or feed entry changes.
 
 ## Edge Cases
 
@@ -93,6 +94,7 @@ CONTRACT-069 packet and is `qualified` only when both pass.
 | truss_idempotent_replay | US-087-AC5 | Same key with equal and different input | Original outcome unchanged; request-conflict refusal; no new writes |
 | truss_bulk_manifest_parity | US-087-AC6 | Compiled command; twin stores | Equal sealed manifest, batch outcomes and job status |
 | truss_lexical_spelling_refusal | US-087-AC7 | Spelling-sensitive decimal and timestamp Fields | Refusal before admission; reads decode |
+| truss_validate_maps_preview | US-087-AC8 | Failing and passing inputs; SDK `validate()` and native preview | Equal findings; `complete` as Truss reports; no writes |
 
 ## Dependencies
 

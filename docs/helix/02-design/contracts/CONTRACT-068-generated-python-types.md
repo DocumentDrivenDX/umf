@@ -43,9 +43,9 @@ only from the CONTRACT-071 catalog; execution belongs to CONTRACT-072 targets.
 | `models.py` | Row model `<Record>`, `<Record>Create`, `<Record>Patch`, named projection models |
 | `keys.py` | `<Record>Key` DTOs with `KEY_IDENTITY` |
 | `fields.py` | Typed field expressions attached as `<Record>.c` and the `<Record>.objects` query root |
-| `codecs.py` | `encode_<Record>_create`, `encode_<Record>_patch`, `decode_<Record>`, projection and action codecs |
+| `codecs.py` | Typed `encode_<Record>_create`, `encode_<Record>_patch`, `decode_<Record>`, projection and action codec functions, each a thin call into `umf_access` with the Record's generated metadata |
 | `actions.py` | `<Action>` references, `<Action>Input`, `<Action>Output`, `<Action>Rejected`, and the generated `Actions` and `ReplayingActions` clients |
-| `fields.py` | Also the `<Record>.s` search namespace and `<Record>Update` TypedDicts |
+| `fields.py` | Also the `<Record>.s` search namespace and per-Record query roots with typed `update()` signatures |
 | `__init__.py` | Public models, keys, actions; `MISSING` re-exported from Pydantic |
 
 ### Model configuration
@@ -127,8 +127,11 @@ intentional override whose checker diagnostic the `umf_access` runtime package
 suppresses internally, so generated and developer code see none. Relationship
 attributes are `Related[<Record>, TargetKey]`. `<Record>.s.<index>` exposes
 CONTRACT-074 search indexes. `<Record>.objects` is a query root whose chaining
-methods return `Self`; `<Record>Update` is a generated `TypedDict` of mutable
-fields used to type bulk `.update(**values)`. The query root of each Record
+methods return `Self`; each Record's query root declares bulk `.update()` with one
+explicit keyword-only parameter per mutable field, typed `T | MISSING` (plus
+`None` when the field admits null) with default `MISSING`. Explicit parameters,
+not `**values: Unpack[TypedDict]`, because ty does not reject unknown keys in
+unpacked TypedDict keyword arguments. The query root of each Record
 declares `.into()` as generated overloads that accept only that Record's declared
 projection models (CONTRACT-067 `projections`), so a projection of another Record
 fails type checking. CONTRACT-071 defines the full
@@ -148,6 +151,14 @@ For each selected CONTRACT-900 action:
   the target Record's Key DTO.
 - `<Action>Output` has one field per declared output; graph-write recipes have no
   business outputs and return the runtime's typed receipt instead.
+- `Committed[<Action>Output]` also carries `created` and `changed`: tuples of the
+  generated Key DTOs of the Records in the action's write frame.
+- Every client method takes a keyword-only `timeout: timedelta | None = None`
+  and raises `ActionTimedOut` when the deadline expired before commit
+  (CONTRACT-072 Timeouts).
+- Each client method has a companion `<action>.validate(input) ->
+  ValidationResult` (CONTRACT-072) that checks the input against the target
+  without changing anything.
 - `<Action>Rejected` is an exception carrying `code` typed as a `Literal` union of
   the action's failure codes and `retryable: bool` from the declaration.
 - The generated `Actions` class takes a CONTRACT-072 `ActionExecutor` and has one
@@ -171,6 +182,13 @@ For each selected CONTRACT-900 action:
   constructs SQL.
 
 ### Codecs and errors
+
+Generated code is a thin typed layer: classes, signatures and inert metadata
+tables (Field IDs, carriers, presence, facets, Key order, action markers).
+Validation and conversion logic lives in the `umf_access` runtime and is driven by
+that metadata, so a runtime fix within the pinned runtime ABI reaches every
+generated package without regeneration. Generated code contains no hand-coded
+validation branches beyond Pydantic field declarations.
 
 `encode_*` functions return new `dict[str, object]` keyed by authored Field IDs,
 carrying CONTRACT-072 transport carriers. `decode_*` functions accept the ordered

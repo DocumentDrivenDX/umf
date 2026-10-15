@@ -42,6 +42,7 @@ annotations, not coverage.
 | US-086-AC4 | `bulk_over_limit_refuses` (conformance case `bulk.limit`) | Exactly `maxItems` matches execute; `maxItems + 1` matches raise `ActionRefused` with `BULK_LIMIT` from both `preview()` and `execute()`, return no partial list, and leave all rows unchanged. | `@covers US-086-AC4` |
 | US-086-AC5 | `bulk_plan_drift_refuses` (conformance case `bulk.drift` using a catalog fixture whose recorded digest differs) | `preview()` and `execute()` raise `PLAN_DRIFT`; the recording connection sees zero statements. | `@covers US-086-AC5` |
 | US-086-AC6 | `bulk_raw_has_no_manifest_path` (static case plus conformance case `bulk.no_manifest`) | A `plan.seal()` or `plan.submit(...)` call on a raw-table plan is a checker error; after `execute()` no manifest, job or control objects exist in the target schema. | `@covers US-086-AC6` |
+| US-086-AC7 | `bulk_timeout_commits_nothing` (conformance case `bulk.timeout`, run on `postgresql` and `lakebase`) | While a second connection locks the table, `execute(timeout=200ms)` raises `ActionTimedOut` and an independent read shows every selected row unchanged. With the commit-loss wrapper holding the COMMIT acknowledgement past the deadline, the outcome follows US-085-AC4 and is never `ActionTimedOut`. | `@covers US-086-AC7` |
 
 ## Executable Proof
 

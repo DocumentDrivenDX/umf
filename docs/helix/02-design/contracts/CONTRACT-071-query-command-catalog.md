@@ -123,12 +123,16 @@ Deliberate choices:
 ### Typing rules
 
 Static checking is the first gate after generation; the DSL is designed so that a
-pinned type checker (pyright and mypy, both without plugins) rejects these errors
+pinned type checker (pyright, mypy and ty, all without plugins) rejects these errors
 before any build or run. Profiles MUST pin mypy's `check_untyped_defs` (or
 `strict`), because mypy otherwise skips unannotated function bodies, and MUST run
-pyright in the environment where the pinned dependencies are installed. The
+pyright and ty in the environment where the pinned dependencies are installed.
+Generated code targets Python 3.11 and later. The `umf_access` runtime carries
+the checker-specific suppressions its operator overloads need (for mypy, pyright
+and ty); generated code needs none. The
 [DSL typing spike](../../04-build/evidence/typed-persistence/dsl-typing-spike/README.md)
-records both checkers rejecting every row below:
+records pyright, mypy and ty, targeting Python 3.11, rejecting every row below that
+it covers:
 
 | Error | How it is rejected |
 | --- | --- |
@@ -137,15 +141,18 @@ records both checkers rejecting every row below:
 | Wrong parameter type | `Column[Order, datetime] >= Param[str]` has no matching overload |
 | Column from another record | `Column` and `Predicate` are generic over the owning Record; `Order.objects.filter(Customer.c.name == x)` is a `Predicate[Customer]` where `Predicate[Order]` is required |
 | Wrong `==` / `!=` operand | Python falls back to `object.__eq__` returning `bool`; the enclosing `filter` rejects `bool` |
-| Unknown, generated or immutable update field, or wrong value type | `.update(**values: Unpack[<Record>Update])` with a generated `TypedDict` of mutable fields |
+| Unknown, generated or immutable update field, or wrong value type | `.update()` is generated per Record with one explicit keyword-only parameter per mutable field |
 | Wrong query arguments at call sites | Generated catalog functions have exact keyword signatures and return types |
+| Column from a Record not in the query | `.join(Matter.c.client)` changes the query type to `Joined[Matter, Client, R]`, whose `filter` accepts `Predicate[Matter] | Predicate[Client]`; columns of any other Record are rejected. Columns of a left-joined Record are typed `T | None` in results |
+| Aggregate misuse | `avg_` without `scale` is a missing keyword argument; `sum_` over a `Column[O, str]` has no matching overload; aggregate results are typed `Agg[O, T | None]`, so `.select(Order.c.status, sum_(Order.c.amount))` rows are `tuple[str, Decimal | None]` |
 | Wrong result use | Generated catalog functions declare exact return types: `.all()` gives `list[R]`, `.first()` gives `R | None`, `.select(a, b)` gives `tuple[A, B]` rows, `.page()` gives `Page[R, K]`. Inside declaration modules pyright infers these; mypy infers `Any` for unannotated declarations, so call sites, not declarations, carry this guarantee |
 | Projection of another Record | `.into()` on each Record's query root is a set of generated overloads accepting only that Record's declared projection models |
 | `None` passed as "absent" to an optional filter | `if_present` accepts only `Param[T | MISSING]`; a `Param[T | None]` has no matching overload |
 
 `Param` is covariant, so a `Param[str]` is accepted where a nullable string column
-is compared. `.select` overloads cover up to eight columns; wider projections use
-a declared projection model with `.into`.
+is compared. `.select` overloads accept columns, aggregate expressions
+(`Agg[O, T]`) and bucket expressions (`Bucket[O, T]`) and cover up to eight
+items; wider projections use a declared projection model with `.into`.
 
 Result and helper types:
 
@@ -212,6 +219,14 @@ whose backend has not yet delivered that requirement.
 | `.select(*cols)`, `.into(P)` | Typed tuple or declared projection | existing |
 | `if_present(p, f)` | Optional filter applied only when `p` is not `MISSING` | variant expansion (no Weft change) |
 | `.filter(...).update(**values)` | Bulk update through the named action, including `None` for nullable Fields | existing for string/boolean equality; WR-A9, WR-I5 otherwise |
+| `sum_(c)`, `min_(c)`, `max_(c)`, `avg_(c, scale=n)`, `count()`, `count_distinct(c)`, `approx_count_distinct(c)` | Aggregates under S11, used in `.select(...)` after `.group_by(...)` or over the whole filtered set | WR-A10 (`count()` and `sum_` exist today) |
+| `c.bucket_width(w)`, `c.date_bucket(unit, zone=z)` | Fixed-width and date buckets (S12) as group keys; `zone` is required for instants | WR-A10 |
+| `.order_by(sum_(c).desc(), ...)` | Ordering groups by aggregates or group keys, with the group key as tiebreak | WR-A10 |
+| `c.starts_with(p)` | Binary, case-sensitive prefix match (S13) | WR-A11 |
+| `c.matches_all_terms(q)`, `c.matches_any_term(q)` | Unranked term filters using a declared keyword index's analyzer (S14) | WR-A11 |
+| `.page(size=n, after=c, snapshot=True)` | Snapshot pages (S15; CONTRACT-072 Continuations) | WR-A12 |
+| `c.is_distinct_from(v)`, `c.is_not_distinct_from(v)` | Null-safe inequality and equality (S16), never UNKNOWN | WR-A13 |
+| `.join(M.c.rel)` | Follow a declared to-one relationship; inner when required, left when optional (S17); later predicates, ordering and `.select` may use the joined Record's columns | WR-A14 (equality joins exist today) |
 | `.search(...)` | Ranked search (CONTRACT-074) | tranche C |
 
 `include` of full related rows is expressed as two catalog queries (keys, then
@@ -238,7 +253,12 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   single-tenant administrative for CONTRACT-073 authorization; it defaults to
   false. `sessionPrincipal` is `human` or `service` and declares what the host's
   connections for this target authenticate as (per-user connections or a service
-  account); it governs CONTRACT-073 attribution. None of these is inferred, and the
+  account); it governs CONTRACT-073 attribution. `schemaBinding` is `qualified`
+  (statements name each table's schema from the binding) or `search-path`
+  (statements name tables without a schema and the host binds the schema per
+  connection; Weft WR-B7, CONTRACT-072 schema-neutral targets). With
+  `search-path`, nothing in the catalog, generated code or call sites names a
+  schema, so one catalog serves every deployment of an application. None of these is inferred, and the
   SDK never creates or inspects connections to check them.
 - Compilation renders each captured query to canonical Weft SQL text, submits it
   with the pinned UMF documents, the target binding and the target's `security`
@@ -254,9 +274,9 @@ compiles each action selected in the stage-one package through Weft's action
 lowering into a catalog entry of kind `action`. Engine targets (CONTRACT-069) get
 no action entries; their adapters execute actions through the engine.
 
-Stage two owns exactly three reserved paths inside the stage-one package:
-`<package>/queries.py`, `<package>/_umf/catalog.json` and
-`<package>/_umf/catalog-manifest.json`. CONTRACT-067 reserves these paths and its
+Stage two owns exactly four reserved paths inside the stage-one package:
+`<package>/queries.py`, `<package>/_umf/catalog.json`,
+`<package>/_umf/catalog-manifest.json` and `<package>/_umf/privileges.json`. CONTRACT-067 reserves these paths and its
 writer and drift check ignore them. The catalog manifest records an inventory of
 the stage-two files and the stage-one `inputDigest` the catalog was built
 against; if the checked-in stage-one manifest has a different digest the catalog
@@ -337,10 +357,48 @@ target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
   Weft; a Weft plan-template capability that binds values without recompilation
   is the intended replacement.
 
+### Privilege report
+
+Because every statement a package can run is in its catalog, stage two also writes
+`<package>/_umf/privileges.json`: for each target, the tables and columns each
+entry reads or writes, the operations used (`SELECT`, `INSERT`, `UPDATE`, `DELETE`,
+`MERGE`), the functions it calls (for example role-membership checks) and the
+search indexes it uses, plus a proposed least-privilege grant script in the
+target's own syntax (Postgres and Lakebase `GRANT`, Unity Catalog `GRANT`). The
+report is review material for the host, which owns credentials and applies grants;
+the SDK never executes it. A role granted exactly this report is sufficient for
+every catalog entry and nothing else the SDK runs.
+
+### Timeouts and streams
+
+Every generated function takes a keyword-only `timeout: timedelta | None = None`
+(CONTRACT-072 Timeouts). Declarations ending in `.page(...)` also generate a
+`<name>_stream` function (CONTRACT-072 Streams) for bounded exports beyond one
+page.
+
+### Async calls
+
+Generated functions are overloaded on the target type (CONTRACT-072 Async
+targets): with a sync target they return the result; with an async target they
+return an awaitable of the same result type. Declarations are written once.
+
 ### Bounds
 
 At most 1,000 declarations per package, 16 variants per declaration, 64
 parameters per declaration and Weft's own statement and plan bounds.
+
+## Prior Art
+
+Palantir's Ontology SDK generates a per-application typed client from an ontology,
+offers typed filters, link traversal, aggregations, vector search, a `$snapshot`
+paging option and write-only-through-actions with validation results and returned
+edits, and since its 2.0 release splits a thin generated layer from a shared
+client. This contract follows the same shape. It differs deliberately: queries
+are compiled at build time rather than sent to a platform service; `is_in` and
+`!=` are included with stated null semantics; page sizes are capped; prefix
+matching is binary and case-sensitive; and authorization stays with the target
+platform, with the privilege report as the counterpart to the OSDK's scoped
+application token.
 
 ## Precedence and Compatibility
 

@@ -91,8 +91,11 @@ different code are different inputs. Dependencies MUST pin exact versions,
 including `umf_access` (recorded in the result as `runtimeAbi`), `pydantic` (2.14
 or later for the stable `MISSING` sentinel) and the
 type checkers whose static claims the profile makes, with their exact
-configuration (for mypy at least `check_untyped_defs`; for pyright the strictness
-level and the environment it resolves dependencies from). Artifact content MUST NOT
+configuration (for mypy at least `check_untyped_defs`; for pyright and ty the
+strictness level and the environment they resolve dependencies from). The first
+profile supports Python 3.11 and later, Pydantic 2.14 or later, and pyright, mypy
+and ty; generated code must type-check cleanly under every checker the profile
+names. Artifact content MUST NOT
 locate or load a profile, template, plugin or dependency.
 
 `assertionKinds` is drawn from a UMF-owned enumeration keyed to the existing
@@ -130,11 +133,12 @@ semantics in every mode.
 ### Package layout
 
 The candidate contains `<package>/__init__.py`, `models.py`, `keys.py`,
-`fields.py` (the `c` and `s` namespaces, query roots and `<Record>Update`
-TypedDicts), `codecs.py`, `actions.py` (when actions are selected), `py.typed`,
+`fields.py` (the `c` and `s` namespaces and query roots with typed `update()`
+signatures), `codecs.py`, `actions.py` (when actions are selected), `py.typed`,
 and `<package>/_umf/manifest.json` and `_umf/sources.json`. The paths
-`<package>/queries.py`, `<package>/_umf/catalog.json` and
-`<package>/_umf/catalog-manifest.json` are reserved for CONTRACT-071 stage two;
+`<package>/queries.py`, `<package>/_umf/catalog.json`,
+`<package>/_umf/catalog-manifest.json` and `<package>/_umf/privileges.json` are
+reserved for CONTRACT-071 stage two;
 this stage never writes them and its writer and drift check ignore them. Shared
 runtime types (`Param`, `Column`, `Vector`, `Page`, `Scored`, outcomes) are
 imported from `umf_access`, not generated. The manifest holds

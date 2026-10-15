@@ -40,6 +40,9 @@ acceptance evidence for any AC.
 | US-081-AC4 | `keys_and_action_types` | `OrderLineKey` fields follow declared Key order; `KEY_IDENTITY` equals the UMF `CoreKeyIdentity` plus document and core identity; `BUNDLE_INPUT_DIGEST` equals the manifest digest; `hash(key)` raises `TypeError`. `ShipOrderInput` types its entity parameter as `OrderKey` and its optional parameter as `T \| MISSING`; `ShipOrderRejected.code` is a `Literal` of the declared codes. | `@covers US-081-AC4` |
 | US-081-AC5 | `decode_checks_columns` | `decode_Order` refuses duplicate, missing and unexpected columns before building a mapping (asserted with a spy on mapping construction) and returns a validated `Order` for a valid row whose values equal the carriers' meaning. | `@covers US-081-AC5` |
 | US-081-AC6 | `static_and_isolated_import` | pyright and mypy at the pinned versions and configuration report no errors on `static/models/positive/` and exactly the expected rule and line for each file in `static/models/negative/`; a control file proves imports resolved. Generated source contains no `alias`, `validation_alias` or `serialization_alias`; with the `placedAt` to `placed_at` override, `OrderCreate(placed_at=...)` type-checks and encodes the key `placedAt`; every attribute docstring contains its source pointer. In a clean virtual environment with only the profile's pins, importing the package opens no file or socket beyond module loading and `sys.modules` contains none of the forbidden packages. | `@covers US-081-AC6` |
+| US-081-AC7 | `runtime_fix_without_regeneration` | Build two `umf_access` wheels with the same runtime ABI, one with a seeded defect in the shared decimal-scale validator. Under the defective wheel, `OrderCreate(amount=Decimal("1.234"), ...)` validates and encodes; under the fixed wheel the same call raises `ValueError` naming `amount` and the scale rule. The generated package's file digests and the `umf-access check` exit status are identical in both runs. | `@covers US-081-AC7` |
+| US-081-AC8 | `generated_codecs_are_thin` | Parsing every generated module with `ast` finds each `encode_*` and `decode_*` body to be one `return` of a call into `umf_access` whose arguments include the module's metadata table; metadata tables contain only literals and name references; no `If`, `Raise`, `Try`, `Compare`, `For` or `While` node appears outside Pydantic field declarations. | `@covers US-081-AC8` |
+| US-081-AC9 | `clean_on_three_checkers` | In the pinned Python 3.11 environment, pyright, mypy and ty at their profile versions and configuration report zero diagnostics on the generated commerce package and `static/models/positive/`; a search of generated source finds no `type: ignore`, `pyright: ignore` or `ty: ignore`; the US-081-AC1 encodings produce the same mappings on Python 3.11. | `@covers US-081-AC9` |
 
 ## Executable Proof
 
@@ -48,6 +51,7 @@ Planned commands (not implemented), run inside the isolated profile environment:
 ```sh
 python -m pytest python/umf_access/tests/test_generated_models.py python/umf_access/tests/test_codecs.py python/umf_access/tests/test_golden_vectors.py
 python -m pytest python/umf_access/tests/test_static_corpus.py python/umf_access/tests/test_isolated_import.py
+python -m pytest python/umf_access/tests/test_runtime_driven_codecs.py
 bun test tests/compilation/access-golden-vectors.test.ts
 ```
 
@@ -70,8 +74,10 @@ statuses and observed diagnostics.
 - `tests/compilation/python/static/models/{positive,negative}/` with
   `expected.json`; seeded from the spike's `e9.py` cases and extended to Create,
   Key and action input types.
-- A pinned virtual environment built from the profile's dependency list; no
-  global packages.
+- A pinned Python 3.11 virtual environment built from the profile's dependency
+  list, including pyright, mypy and ty; no global packages.
+- Two locally built `umf_access` wheels with the same runtime ABI, one carrying a
+  seeded decimal-scale defect, used only by `runtime_fix_without_regeneration`.
 
 ## Edge Cases and Failure Modes
 

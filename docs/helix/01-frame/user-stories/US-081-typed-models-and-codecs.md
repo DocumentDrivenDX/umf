@@ -13,7 +13,7 @@ ddx:
 
 # US-081: Use typed models, keys and codecs
 
-**Feature:** [[FEAT-028]]. **Feature Requirements:** TM-03, TM-04.
+**Feature:** [[FEAT-028]]. **Feature Requirements:** TM-03, TM-04, TM-07, TM-08.
 **PRD Requirements:** FR-52. **Priority:** P0 within the proposal.
 
 ## Story
@@ -34,6 +34,9 @@ Pydantic validation alone is not enough for exact meaning: strict mode still
 does not check decimal scale without rounding, timestamp kinds or nested
 mutation. Generated codecs therefore own every conversion, revalidate the whole
 value graph and agree with UMF's own validators on a shared golden-vector corpus.
+The generated layer stays thin: codec functions pass the Record's generated
+metadata to validation and conversion code in the `umf_access` runtime, so a
+runtime fix within the pinned ABI reaches the package without regenerating it.
 
 A design-time spike at
 `docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/` showed that
@@ -63,6 +66,9 @@ implementation or acceptance result.
 - [ ] **US-081-AC4** — Given a Record with an ordered composite Key and a selected action with entity, optional and required value parameters, when I use `<Record>Key` and `<Action>Input`, then Key components keep declared order, `KEY_IDENTITY` equals UMF's `CoreKeyIdentity` plus document and core identity, `BUNDLE_INPUT_DIGEST` is exposed separately, Key DTOs are unhashable, entity parameters are typed as the target Key DTO, optional parameters are `T | MISSING`, and `<Action>Rejected.code` is a `Literal` union of the declared failure codes.
 - [ ] **US-081-AC5** — Given a column inventory and row from a target, when I call `decode_<Record>`, then a duplicate, missing or unexpected column refuses before any mapping is built, a valid row is fully revalidated, and decoded values equal the exact meaning of their transport carriers.
 - [ ] **US-081-AC6** — Given the pinned pyright and mypy with the profile's checker configuration, when they check the model positive and negative corpora, then the positive corpus reports no errors, each negative case reports its expected diagnostic, no generated field has an alias (a `names` override changes the constructor parameter name while codecs still emit the authored Field ID), each generated attribute's docstring cites its UMF source pointer, and importing the generated package in an isolated environment containing only the profile's pinned dependencies performs no I/O and loads none of the compiler, the `umf` document package, Weft, Truss or Ashlar.
+- [ ] **US-081-AC7** — Given an unchanged generated package and two `umf_access` builds with the same pinned runtime ABI, one with a seeded defect in the shared decimal-scale validator that accepts `Decimal("1.234")` for `numeric(12,2)` and one without it, when the same `OrderCreate` value is validated and encoded under each build, then the defective build accepts it and the fixed build refuses it with the field and rule named, while the package bytes and `umf-access check` result are identical in both runs.
+- [ ] **US-081-AC8** — Given the generated `models.py`, `keys.py`, `codecs.py` and `actions.py`, when their syntax trees are inspected, then each codec function body is a single call into `umf_access` passing the Record's or action's generated metadata, metadata tables contain only literals and references to generated or runtime names, and no generated module contains `if`, `raise`, `try`, comparisons or loops outside Pydantic field declarations.
+- [ ] **US-081-AC9** — Given the generated commerce package with actions and the profile's pinned Python 3.11 environment, Pydantic, pyright, mypy and ty, when each checker checks the package and the positive model corpus with the profile configuration targeting Python 3.11, then each reports zero diagnostics, generated source contains no `type: ignore`, `pyright: ignore` or `ty: ignore` comment, and the package imports and runs the US-081-AC1 encodings on Python 3.11.
 
 ## Edge Cases
 
@@ -87,12 +93,15 @@ implementation or acceptance result.
 | keys_and_action_types | US-081-AC4 | Composite Key; action with entity, optional and required parameters | Order, identity, unhashable, typed parameters and failure codes |
 | decode_checks_columns | US-081-AC5 | Duplicate, missing, extra column; valid row | Refusal before mapping; validated model |
 | static_and_isolated_import | US-081-AC6 | Positive and negative corpora; `names` override; clean virtual environment | Expected checker outcomes; alias-free names and docstrings; import without I/O or forbidden modules |
+| runtime_fix_without_regeneration | US-081-AC7 | One package; runtime builds with and without a seeded scale defect | Verdict follows the runtime; package bytes and drift check unchanged |
+| generated_codecs_are_thin | US-081-AC8 | Syntax trees of the generated modules | Codecs delegate with metadata; no validation branches in generated code |
+| clean_on_three_checkers | US-081-AC9 | Generated package and positive corpus on Python 3.11 with pyright, mypy and ty | Zero diagnostics; no suppression comments; runs on 3.11 |
 
 ## Dependencies
 
 US-080 (the generated package); US-082 for the regenerate-and-fix refactoring flow that TM-04 also requires; CONTRACT-040/049 value and Key meaning;
 CONTRACT-067/068/070; CONTRACT-072 transport carriers; Pydantic 2.14 or later and
-pinned checkers per ADR-004. Feature requirements TM-03, TM-04; PRD FR-52.
+pinned checkers per ADR-004. Feature requirements TM-03, TM-04, TM-07, TM-08; PRD FR-52.
 TD-081 owns implementation detail; STP-081 owns the test mapping.
 
 ## Out of Scope

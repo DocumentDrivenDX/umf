@@ -101,6 +101,7 @@ Outcomes and raised failures are those of CONTRACT-072.
 | Serialization failure, deadlock, or Delta concurrent-modification conflict | `Conflict(retained=False)`; nothing committed |
 | Connection lost or timeout after COMMIT was sent, on `postgresql`/`lakebase` | Reconciled as below |
 | Connection lost or timeout after the committing statement was sent, on `unity-catalog`/`spark-delta` | `Indeterminate`; never retried automatically |
+| Deadline expired before the commit was sent (statement cancelled, transaction rolled back) | `TimedOut`; nothing committed |
 | Postcondition false or error, constraint violation, other native error | `ActionFailed(code, cause)` wrapping the native error; transaction rolled back |
 
 The program reports a false precondition and a failed role check by markers that

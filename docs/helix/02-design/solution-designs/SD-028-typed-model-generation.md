@@ -41,6 +41,8 @@ CONTRACT-051 document access is unchanged.
 | TM-04 | Alias-free attributes, source-map docstrings, `names` overrides, manifest diff | US-081 / STP-081 |
 | TM-05 | Host writer: inventory check, staging directory and swap; `umf-access check` | US-080 / STP-080 |
 | TM-06 | Literal renderer; profiles passed explicitly, never located from metadata | US-080 / STP-080 |
+| TM-07 | Thin generated layer: classes, signatures and inert metadata tables; codec functions call metadata-driven validation and conversion in `umf_access` | US-081 / STP-081 |
+| TM-08 | Python 3.11 emitter target; profile pins for Pydantic, pyright, mypy and ty; checker suppressions confined to `umf_access` | US-081 / STP-081 |
 | NFR portability and bounds | Pure generator, JCS digests, no host globals, CONTRACT-067 limits | Both STPs; TP-001 |
 
 ## Solution Approaches
@@ -108,19 +110,22 @@ imports only the standard library, its own modules, pinned dependencies and the
 
 ADR-002 TypeScript on Bun, with byte parity in real Chromium. Generated code
 targets Pydantic 2.14 or later for the stable `MISSING` sentinel, with exact pins
-for Python, Pydantic, pyright and mypy recorded in the profile. A profile
+for Python (3.11 and later), Pydantic, pyright, mypy and ty recorded in the
+profile. A profile
 compatibility spike must show that `MISSING` behaves as specified under strict
-validation and both pinned checkers before the profile qualifies. A local DSL
+validation and every pinned checker before the profile qualifies. A local DSL
 typing spike exists under build evidence; it is design input, not qualification.
 
 ## Traceability
 
-STP-080 owns US-080 acceptance; STP-081 owns US-081 acceptance. The build gate
+STP-080 owns US-080 acceptance; STP-081 owns US-081 acceptance, including TM-07
+(US-081-AC7, US-081-AC8) and TM-08 (US-081-AC9). The build gate
 needs: a fixture for every CONTRACT-070 conflict row, byte-identical Bun and
 Chromium output, hand-edit and drift refusals, static positive and negative
-corpora on each pinned checker, exact-value and presence counterexamples, and
-golden-vector agreement with UMF core validators. Draft plans are not passing
-evidence.
+corpora on each pinned checker, exact-value and presence counterexamples,
+golden-vector agreement with UMF core validators, and proof that a patched
+runtime within the pinned ABI changes validation without regeneration. Draft
+plans are not passing evidence.
 
 ## Concern Alignment
 

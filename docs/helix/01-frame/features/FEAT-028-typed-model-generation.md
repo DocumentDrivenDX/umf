@@ -83,19 +83,33 @@ rather than hidden.
 - **TM-06:** Document metadata must never cause code execution, network access,
   dependency installation, profile or template loading. Names and strings reach
   generated source only through literal escaping.
+- **TM-07:** Generated code must be a thin typed layer: classes, signatures and
+  inert metadata tables (Field IDs, carriers, presence, facets, Key order, action
+  markers). Validation and conversion must live in the `umf_access` runtime and be
+  driven by that metadata, so a runtime fix within the pinned runtime ABI reaches
+  every generated package without regeneration. Generated codec functions are thin
+  calls into the runtime and contain no validation branches beyond Pydantic field
+  declarations.
+- **TM-08:** Generated code must target Python 3.11 and later with Pydantic 2.14
+  or later, and must type-check cleanly, with no suppression comments, under every
+  checker the profile names; the first profile names pyright, mypy and ty. Any
+  checker-specific suppressions the operator overloads need live in the
+  `umf_access` runtime, never in generated code.
 
 ### Non-Functional Requirements
 
 The same inputs and profile must produce identical bytes in Bun and in real
 Chromium. Zero silent rounding or coercion is permitted in the supported subset.
-Every support claim names the exact Pydantic, Python, pyright and mypy versions,
+Every support claim names the exact Pydantic, Python, pyright, mypy and ty versions,
 the profile subset and its evidence. CONTRACT-067 sets finite resource bounds;
 over-limit requests refuse and output is never truncated.
 
 ## User Stories
 
 - US-080 — Author access views and generate a reviewable typed package.
-- US-081 — Use generated models, Key DTOs and codecs in application code.
+- US-081 — Use generated models, Key DTOs and codecs in application code,
+  with validation driven by the runtime and clean checks on pyright, mypy and ty
+  (TM-03, TM-04, TM-07, TM-08).
 
 ## Edge Cases and Error Handling
 

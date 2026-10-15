@@ -65,7 +65,8 @@ time. The raw-table target then:
 
 | Native result | Postgres / Lakebase signal | Delta signal | Outcome |
 | --- | --- | --- | --- |
-| Committed | COMMIT acknowledged | Commit result with table versions | `Committed(output, receipt)` |
+| Committed | COMMIT acknowledged | Commit result with table versions | `Committed(output, receipt, created, changed)` |
+| Deadline before commit | `statement_timeout` cancellation (SQLSTATE `57014`) or client deadline before COMMIT is sent; rolled back | Driver cancellation before the committing statement is sent | `TimedOut` |
 | Precondition false | Program's declared precondition marker | Same, folded into statement result | `Rejected(code)` |
 | Authorization | Program's role-check marker; SQLSTATE `42501` | Program's role-check marker | `Denied` |
 | Concurrency | SQLSTATE `40001`, `40P01` | Delta concurrent-modification exception | `Conflict(retained=False)` |
@@ -97,6 +98,36 @@ committed table versions}` from the native commit result. If the pinned platform
 does not return versions, the target is unqualified for actions and `verify()`
 reports it.
 
+**Validation (AT-07).** Each executable entry also records Weft's validate-only
+program (WR-B4). `validate()` runs the same pre-checks as `invoke` (entry refused,
+pins, idle connection), then runs that program in a transaction it always rolls
+back, and returns `ValidationResult` with every failing declared code and
+`complete=True`; nothing is committed even when every check passes
+(US-085-AC8). The program also returns the Keys of created and changed entities,
+which the adapter decodes with the generated Key codecs into `Committed.created`
+and `Committed.changed` (US-085-AC9).
+
+**Async (AT-08).** `AsyncPostgresTarget` and `AsyncLakebaseTarget` share the
+`invoke`, `validate`, classification and reconciliation code with the sync
+adapters over psycopg 3's `AsyncConnection`; only I/O calls differ
+(US-085-AC10).
+
+**Timeouts (AT-09).** Every call takes a keyword-only `timeout`; `None` uses the
+target's required `default_timeout`. Inside the transaction the adapter runs
+`SET LOCAL statement_timeout` and also keeps a client-side deadline. Expiry before
+the commit phase flag is set cancels the statement, rolls back and returns
+`TimedOut`, raised as `ActionTimedOut`. Expiry after the flag is set is handled
+exactly as a lost connection, so the outcome is reconciled or `Indeterminate`
+and never `TimedOut` (US-085-AC11).
+
+**Composite actions and per-user sessions (AT-10, AT-04).** Related changes are
+one action with several effects; Weft lowers them into one program, which runs in
+the single `SERIALIZABLE` transaction above (US-085-AC12). Neither the generated
+clients nor the runtime offer a transaction across action calls. A target whose
+configuration declares `sessionPrincipal: human` compiles `person-required`
+actions and records the human-session host obligation in the entry; the receipt
+records the committing connection's `current_user` (US-085-AC13).
+
 Trade-off: refusing early and loudly over providing partial guarantees. There is
 no fallback to a weaker isolation level, separate statements or retries.
 
@@ -124,6 +155,12 @@ Planned files (none exist yet):
 | US-085-AC5 | Build-time refusal entries with CONTRACT-073 codes; runtime raises `ActionRefused` with the recorded code |
 | US-085-AC6 | `ReplayingActions` typed to `ReplayingActionExecutor` with a runtime protocol check; idle-transaction check raising `ActionRefused` |
 | US-085-AC7 | `unity-catalog` atomic-block submission, catalog-commit check in `verify()`, delta receipt |
+| US-085-AC8 | Validate-only program in the entry; always-rolled-back transaction; `ValidationResult` with every failing code |
+| US-085-AC9 | Returned Keys decoded into `Committed.created` and `Committed.changed` with generated Key codecs |
+| US-085-AC10 | `AsyncPostgresTarget` and `AsyncLakebaseTarget` sharing the sync procedure; generated async overloads |
+| US-085-AC11 | `SET LOCAL statement_timeout` and client deadline; `TimedOut` before the commit phase flag; commit-loss path after it |
+| US-085-AC12 | Multi-effect program in one transaction; no cross-action transaction surface |
+| US-085-AC13 | `sessionPrincipal: human` build path, recorded host obligation and `current_user` receipt |
 
 ## API/Interface Design
 
@@ -132,6 +169,7 @@ Planned files (none exist yet):
 | `Actions.<action>(input)` | CONTRACT-068 | Typed entry point; validates and encodes only |
 | `ReplayingActions` | CONTRACT-068 | Not available on raw tables; rejected statically and by a runtime protocol check |
 | `ActionExecutor.invoke`, `ActionOutcome`, `Receipt` | CONTRACT-072 | Target protocol and outcome union |
+| `ActionExecutor.validate`, `ValidationResult`, `AsyncActionExecutor`, `ActionTimedOut` | CONTRACT-072 | Validation, async invocation and timeouts |
 | `ActionDenied`, `ActionConflict`, `ActionIndeterminate`, `ActionRefused`, `ActionFailed` | CONTRACT-072 | Raised failures |
 | Action catalog entries, `roleMappings`, `administrativeSingleTenant`, `security` | CONTRACT-071, CONTRACT-073 | Program, markers, obligations, refusals; target configuration |
 | Refusal codes carried by `ActionRefused` | CONTRACT-073 | `NATIVE_PROFILE_UNSUPPORTED`, `ROLE_MAPPING_MISSING`, `TRANSACTION_STATE` |
@@ -148,7 +186,8 @@ of the catalog's inputs.
 
 ## Integration Points
 
-Weft action lowering (W-4, Weft WR-B4) produces the program and precondition markers; if
+Weft action lowering (W-4, Weft WR-B4) produces the program, precondition
+markers, the validate-only program and the returned created and changed Keys; if
 Weft refuses, the build fails with Weft's diagnostics. psycopg 3 transaction
 status and SQLSTATE; Databricks SQL connector or Spark session commit results.
 The host supplies connections, roles and grants; the runtime creates none.
@@ -175,6 +214,12 @@ from `reconnect=` runs only the `pg_xact_status` query.
 | US-085-AC5 | `raw_action_unsupported_refuses_at_build` | Catalog refusal entries with expected codes; zero statements at run time | UMF build tests |
 | US-085-AC6 | `raw_action_runtime_preconditions_refuse` | Checker error and `TypeError` for `ReplayingActions`; `ActionRefused` with `TRANSACTION_STATE`; zero statements; host transaction state unchanged | UMF static + conformance |
 | US-085-AC7 | `uc_action_atomic_block_and_receipt` | Statement text is one atomic block; receipt UUIDs and versions equal `DESCRIBE HISTORY`; refusal without catalog commits | Managed Unity Catalog lane |
+| US-085-AC8 | `raw_action_validate_reports_all` | Both failing codes, `complete=True`; valid input has no failures; rollback and no change observed independently (Weft WR-B4) | UMF conformance + native lane |
+| US-085-AC9 | `raw_action_returns_created_and_changed_keys` | `created` and `changed` equal independently read Keys; static types are Key DTO tuples (Weft WR-B4) | UMF static + native lane |
+| US-085-AC10 | `async_raw_action_matches_sync` | Async outcomes, receipts and validation results equal sync ones on the same fixtures; awaitable types on pinned checkers | UMF static + native lane |
+| US-085-AC11 | `raw_action_timeouts` | `ActionTimedOut` with no change before commit; after COMMIT is sent, reconciled outcome or `ActionIndeterminate`, never `ActionTimedOut` | UMF conformance + native lane |
+| US-085-AC12 | `multi_effect_action_atomic` | Both rows or neither; both Keys in `created`; public-surface inventory finds no cross-action transaction API | UMF conformance + native lane |
+| US-085-AC13 | `person_required_on_human_target` | Entry compiles with the human-session obligation; each receipt names its connection's `current_user` | UMF build + native lane |
 
 STP-085 owns the authoritative mapping and commands.
 

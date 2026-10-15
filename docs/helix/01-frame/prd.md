@@ -723,21 +723,30 @@ and target qualification.
   models, Key DTOs, typed column and index expressions and action types from
   pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
   rounded; unknown content and a complete assertion report are retained; output
-  is checked in and drift-checked. FEAT-028, US-080 and US-081 govern this.
+  is checked in and drift-checked. Generated code is a thin typed layer over the
+  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
+  and ty. FEAT-028, US-080 and US-081 govern this.
 - **FR-53 — Precompiled typed queries and search.** An application developer
   must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
   commands in a schema-first, expression-first Python DSL with no string column
   references, have a pinned type checker reject type, column, record and argument
   errors, and have every declaration compiled at build time through Weft for each
   selected target into a checked-in catalog. At runtime only catalog entries
-  execute, with validated values bound as parameters. FEAT-029 and US-082 to
-  US-084 govern this.
+  execute, with validated values bound as parameters. The DSL also covers exact
+  aggregates and buckets, prefix and term filters, null-safe distinctness and
+  to-one joins; reads offer snapshot pages where the platform supports them,
+  bounded streams, per-call timeouts and async calls; catalogs can be
+  schema-neutral, and the build writes a least-privilege report per target.
+  FEAT-029 and US-082 to US-084 govern this.
 - **FR-54 — Typed actions and native execution targets.** An application developer
   must be able to invoke UMF actions through generated typed clients with typed
   outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
   local Spark/Delta tables through the host's native SQL connection. The native
   SQL action profile states which action guarantees hold per platform and refuses
-  the rest. FEAT-030, US-085 and US-086 govern this.
+  the rest. Actions can be validated without effect, return the Keys they created
+  and changed, take per-call timeouts (a timeout before commit commits nothing),
+  run async on Postgres and Lakebase, and compose related changes as one
+  multi-effect action. FEAT-030, US-085 and US-086 govern this.
 - **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
   SDK by implementing its target protocols over their own protected paths: Truss
   for reads, actions and bulk commands; Ashlar for publication-pinned reads.

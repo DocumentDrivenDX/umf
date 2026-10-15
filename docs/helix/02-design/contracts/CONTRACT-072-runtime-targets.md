@@ -56,8 +56,7 @@ has one member. `kind` is one of `postgresql`, `lakebase`, `spark-delta`,
 `unity-catalog`, `truss` or `ashlar`. Catalog entries execute only on a target
 whose identity equals their pins (CONTRACT-071).
 
-`verify()` MUST run before a target's first statement and whenever the host
-reconnects. It observes, through the host connection, the server or runtime
+`verify()` MUST run before a target's first statement on a database. It observes, through the host connection, the server or runtime
 version and, for every table a catalog entry references, its native identity and
 column shape, then compares them with the binding and CONTRACT-070 ColumnSets:
 
@@ -72,6 +71,26 @@ automatically, so a Lakebase target qualifies a major version plus an explicit
 set of observed minor versions; an unlisted minor refuses until qualified.
 Verification checks shape and identity only; it confers no authorization and
 does not prove the shape stays unchanged after it runs.
+
+Verification results are cached per process, keyed by the target identity, the
+database identity (Postgres system identifier and database name) and, for
+schema-neutral targets, the resolved schema of every referenced table. Hosts that
+wrap a new pooled connection per request (for example per-user pools) pay only a
+cheap resolution check per connection: on first use of a connection object the
+runtime reads the resolved schemas with one catalog query and reuses a cached
+verification when the key matches. Hosts may verify eagerly when a pool is
+created, and may set a cache lifetime; the default lasts for the process.
+
+**Schema-neutral targets.** A `postgresql` or `lakebase` target whose catalog
+configuration sets `schemaBinding: "search-path"` (CONTRACT-071) runs statements
+that name tables without a schema (Weft WR-B7). The host binds the schema once
+per connection, typically with a role-level `search_path`; generated code and
+call sites never take a schema. `verify()` additionally checks that each
+referenced table resolves through the session's `search_path` to exactly one
+relation and that `pg_catalog` is searched first, and records the resolved schema
+in the cache key. A connection whose path resolves a table differently from the
+cached verification is verified again; one that resolves nothing, or resolves a
+table to a schema the host did not intend, raises `TargetMismatch`.
 
 `TargetIdentity.digest()` is the lowercase SHA-256 hex of the JCS encoding of the
 complete observed identity. For Ashlar the identity also carries the resolved
@@ -92,6 +111,16 @@ is equal; otherwise the call raises `StaleContinuation` before any statement is
 sent. Passing `None` starts a new read. Continuations are not persisted by the
 runtime and carry no authorization.
 
+Pages are live by default: keyset continuation never repeats a row, but rows
+inserted or changed between pages may be missed or seen. A declaration with
+`.page(..., snapshot=True)` reads every page of one continuation at the same table
+versions, recorded in the `Continuation`; no row is skipped or repeated because of
+concurrent writes. Snapshot pages compile for `unity-catalog` and `spark-delta`
+(Delta `VERSION AS OF`, Weft WR-A12) and are inherent on Ashlar; they refuse at
+catalog build on `postgresql`, `lakebase` and Truss. A snapshot continuation whose
+versions are no longer readable (for example after Delta retention removed them)
+raises `StaleContinuation`.
+
 ### Protocols
 
 ```python
@@ -101,6 +130,7 @@ class ReadTarget(Protocol):
 @runtime_checkable
 class ActionExecutor(Protocol):
     def invoke(self, action: ActionRef, input: EncodedInput) -> ActionOutcome: ...
+    def validate(self, action: ActionRef, input: EncodedInput) -> ValidationResult: ...
 
 @runtime_checkable
 class ReplayingActionExecutor(ActionExecutor, Protocol):
@@ -137,17 +167,77 @@ decoded. Streams are bounded by the catalog entry's page or count limits and are
 closed by the caller. `BoundParams` holds values already validated and encoded by
 CONTRACT-068 codecs, keyed by catalog parameter name.
 
+`validate` checks an input without changing anything: parameter validation,
+authorization and every precondition, not only the first false one. It returns
+`ValidationResult{valid: bool, failures: tuple[ValidationFailure, ...],
+complete: bool}`, where each failure is `{code, parameter | None}` using the
+action's declared failure codes or CONTRACT-068 parameter rule names. `complete`
+is false when the target can report only the first failure (for example an engine
+preview that stops early). Raw-table targets run Weft's validate-only program in a
+transaction that always rolls back (Weft WR-B4); Truss maps its preview operation.
+A valid result is advisory: state can change before `invoke`.
+
+### Timeouts
+
+Every generated query, stream, action and bulk call accepts `timeout:
+timedelta | None`. `None` uses the target's configured `default_timeout`; targets
+MUST be constructed with a default, so no call runs unbounded. The runtime applies
+the deadline natively (`SET LOCAL statement_timeout` inside the transaction on
+Postgres and Lakebase; the driver's query timeout and cancellation on Databricks
+and Spark) and also enforces it client-side.
+
+- A read that exceeds its deadline raises `QueryTimeout`; no partial result is
+  returned.
+- An action or bulk call whose deadline expires before the commit is sent is
+  cancelled and rolled back. Its outcome is `TimedOut`: **nothing was committed**.
+- If the deadline expires after the commit was sent, the outcome is decided exactly
+  as for a lost connection (CONTRACT-073): reconciled to `Committed` or
+  `Conflict` on Postgres and Lakebase, otherwise `Indeterminate`.
+- `Indeterminate` is therefore the only outcome in which a timed-out write may have
+  committed.
+
+### Composing actions
+
+Each action is one atomic unit on one store (CONTRACT-900); the runtime offers no
+transaction spanning several action calls. Changes that must commit together, such
+as a note and its reminder, are authored as one action whose recipe has several
+effects. On raw tables that action runs as one transaction under CONTRACT-073.
+
+### Streams
+
+A declaration ending in `.page(...)` also generates a `<name>_stream(target, ...,
+max_rows: int, page_size: int | None = None)` function that yields typed rows
+across pages until the result is exhausted or `max_rows` is reached; `max_rows`
+is required and has no fixed ceiling. It is the documented path for exports larger
+than one page. On `postgresql` and `lakebase` the stream reads every page inside
+one `REPEATABLE READ READ ONLY` transaction on the host connection, so the stream
+sees one consistent snapshot; on `unity-catalog` and `spark-delta` it uses
+snapshot pages. Each page still obeys the 1,000-row page bound; the timeout applies
+per page.
+
+### Async targets
+
+Each protocol has an async counterpart (`AsyncReadTarget`, `AsyncActionExecutor`,
+`AsyncReplayingActionExecutor`, `AsyncBulkTarget`) with the same semantics and
+`async def` methods, and `RowStream` has an async iterator form. Generated catalog
+functions and action clients are overloaded on the target type: a sync target
+returns a value, an async target returns an awaitable of the same type, so one
+generated package serves both. In 0.1 the async raw-table adapters are
+`AsyncPostgresTarget` and `AsyncLakebaseTarget` over psycopg 3's async connection;
+other targets are sync only until their drivers' async support is qualified.
+
 ### Outcomes
 
 `ActionOutcome` is exactly one of:
 
 | Outcome | Meaning | Generated client behavior |
 | --- | --- | --- |
-| `Committed(output, receipt)` | Business change committed | Returns typed output and receipt |
+| `Committed(output, receipt, created, changed)` | Business change committed; `created` and `changed` are the Keys of entities the action created and changed (CONTRACT-900 `identities: created-and-changed`) | Returns typed output, receipt and Keys |
 | `Rejected(code)` | Declared business failure (a false precondition, or CONTRACT-901 `ENTITY_MISSING`); no change | Raises `<Action>Rejected` |
 | `Denied` | Authorization failure, including a failed in-program role check; no change | Raises `ActionDenied` |
 | `Replayed(original)` | Equal retained request under an idempotency key; the original outcome is returned | Returns or raises the original |
 | `Conflict(retained: bool)` | Concurrency or serialization failure; nothing committed | Raises `ActionConflict(retained)`. `retained=False`: the caller may retry as a new attempt. `retained=True`: a durable tx/1 conflict recorded under an idempotency key; terminal for that key |
+| `TimedOut` | Deadline expired before the commit was sent; rolled back, nothing committed | Raises `ActionTimedOut` |
 | `Indeterminate` | Commit outcome unknown and not reconcilable (CONTRACT-073) | Raises `ActionIndeterminate`; never retried automatically |
 
 Two failures are raised by the executor rather than returned as outcomes:
@@ -243,7 +333,9 @@ changes protocol shapes is a new ABI.
 
 | Error | Condition |
 | --- | --- |
-| `TargetMismatch` | Version, identity or shape differs from pins, or result columns are inconsistent |
+| `TargetMismatch` | Version, identity or shape differs from pins, result columns are inconsistent, or a schema-neutral table resolves unexpectedly |
+| `QueryTimeout` | A read or stream page exceeded its deadline |
+| `ActionTimedOut` | Outcome `TimedOut`: deadline expired before commit; nothing committed |
 | `NotCompiledForTarget` | No catalog entry matches the target identity |
 | `ObligationUnmet` | A Weft host obligation cannot be applied |
 | `StaleContinuation` | A continuation was passed to a target whose identity digest differs from the one that produced it |

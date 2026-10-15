@@ -18,7 +18,7 @@ ddx:
 # Weft requirements for the UMF typed data access SDK
 
 **Audience:** the Weft maintainers and implementation agent. **Status:** draft
-requirements from UMF, 2026-10-15. Weft owns the design and implementation of
+requirements from UMF, 2026-10-15, amended the same day with WR-A10 to WR-A14 and WR-B7. Weft owns the design and implementation of
 everything below; UMF owns the semantics stated in "Shared semantics" and will
 not implement a competing lowering for any form Weft delivers.
 
@@ -141,6 +141,53 @@ Truss on PostgreSQL and Ashlar on Databricks. The requirements below extend that
   - `NOT IN` is the S2 negation.
 - **S9 Ranges.** `x BETWEEN a AND b` means `x >= a AND x <= b`.
 - **S10 Bounds.** Unchanged unless stated: `LIMIT` and page size at most 1,000.
+- **S11 Aggregates.**
+  - Aggregates ignore null and missing inputs. Over no non-null inputs, `SUM`,
+    `MIN`, `MAX` and `AVG` return null and `COUNT` returns 0.
+  - `SUM` is exact: integers sum to an exact integer (text carrier when outside
+    signed 64-bit), decimals to an exact decimal whose scale is the input scale.
+  - `MIN` and `MAX` follow S4 ordering.
+  - `AVG` takes an explicit result scale and rounds the exact quotient half-even to
+    that scale. A request without a scale refuses.
+  - `COUNT(DISTINCT x)` is exact. An approximate distinct count is a separate
+    function whose output is labeled approximate, with the backend's algorithm and
+    documented error bound in the output descriptor.
+- **S12 Buckets.**
+  - A fixed-width bucket of a numeric value `x` with width `w` is
+    `floor(x / w) * w`, computed exactly.
+  - A date bucket truncates to `day`, ISO `week` (starting Monday), `month`,
+    `quarter` or `year`.
+  - Dates and local timestamps bucket by their own calendar values. Instants bucket
+    only with an explicit IANA time zone parameter and are converted to that zone
+    first.
+- **S13 Prefix match.**
+  - `STARTS_WITH(x, p)` is TRUE when the Unicode scalar sequence of `x` begins with
+    that of `p`. It is binary, case-sensitive and does no normalization (S4).
+  - An empty prefix matches every non-null value; a null or missing `x` is UNKNOWN.
+  - Lowering must not interpret `%`, `_` or escape characters in `p`.
+- **S14 Term match.**
+  - `MATCHES_ALL_TERMS(x, q)` and `MATCHES_ANY_TERM(x, q)` tokenize `x` and `q` with
+    the analyzer of a declared keyword index on `x` (UMF CONTRACT-074).
+  - They are TRUE when every term (or any term) of `q` occurs in `x`. They are
+    unranked boolean filters, and `q` is plain terms with no operators.
+  - Without a declared keyword index on the target, they refuse.
+- **S15 Snapshot pages.**
+  - A snapshot page reads every page of one continuation at the same table versions,
+    so no row is skipped or repeated because of concurrent writes.
+  - The continuation records those versions.
+  - Pages without a snapshot read live data. Keyset continuation then never repeats
+    a row, but rows inserted or changed between pages may be missed or seen.
+- **S16 Null-safe distinctness.** `x IS DISTINCT FROM v` is TRUE when exactly one
+  side is null or missing, or both are present and unequal; FALSE otherwise. It is
+  never UNKNOWN. `IS NOT DISTINCT FROM` is its complement. On property stores,
+  missing and null are not distinct from each other.
+- **S17 Relationship joins.**
+  - A join follows one declared UMF relationship from a Record to a to-one target
+    (each source row has at most one target row). It never multiplies source rows.
+  - A required relationship is an inner join. An optional one is a left join whose
+    target columns are null when there is no target.
+  - Joins are only along declared relationships, one hop per join, at most four
+    joins per query; arbitrary join conditions are not offered.
 
 ## Tranche A: query forms
 
@@ -168,6 +215,32 @@ specific diagnostic. Tranche B backends must support all of tranche A.
   - On Truss, instants stored as RFC 3339 text with the author's offset must
     compare by UTC instant. If that cannot be lowered exactly, refuse on Truss and
     say so.
+- **WR-A10 Aggregates and buckets:**
+  - `SUM`, `MIN`, `MAX`, `AVG` (with scale), `COUNT`, `COUNT(DISTINCT)` and an
+    approximate distinct count, under S11.
+  - `GROUP BY` exact values, fixed-width buckets and date buckets (S12), up to 1,000
+    groups.
+  - `ORDER BY` any group key or aggregate output, with the complete group key
+    appended as the tiebreak (the analogue of S6).
+- **WR-A11 Prefix and term filters:** `STARTS_WITH` (S13) on string fields;
+  `MATCHES_ALL_TERMS` and `MATCHES_ANY_TERM` (S14) on fields covered by a declared
+  keyword index.
+- **WR-A12 Snapshot pages (S15):**
+  - On Delta and Unity Catalog, pin each page of a snapshot continuation with
+    `VERSION AS OF`.
+  - Expose the pinned versions in the continuation output.
+  - Ashlar pages are already pinned to a publication.
+  - On Postgres and Lakebase, refuse snapshot pages (only live pages there) unless
+    Weft proposes an exact mechanism.
+- **WR-A13 Null-safe distinctness:** `IS [NOT] DISTINCT FROM` (S16) for every
+  comparable field type.
+- **WR-A14 Relationship joins (S17):**
+  - Joins along declared to-one relationships, inner or left as S17 requires,
+    with predicates, projections and ordering over columns of joined Records.
+  - Builds on Weft's existing equality joins and left-join contract. Output
+    descriptors identify each column's Record and Field.
+  - Refuse to-many joins; use `HAS_RELATED`, `RELATED_KEYS` or related pages for
+    those.
 - **WR-A9 Bulk UPDATE extensions (CONTRACT-009):**
   - `SET field = NULL` where the Field admits null.
   - `SET` values for integer, decimal, date, instant and local timestamp fields.
@@ -187,10 +260,23 @@ primary     = "(", predicate, ")"
             | column, "IS", [ "NOT" ], ( "NULL" | "MISSING" )
             | column, [ "NOT" ], "IN", "(", ( parameter | value, { ",", value } ), ")"
             | column, [ "NOT" ], "BETWEEN", value, "AND", value
+            | column, "IS", [ "NOT" ], "DISTINCT", "FROM", value
+            | "STARTS_WITH", "(", column, ",", value, ")"
+            | ( "MATCHES_ALL_TERMS" | "MATCHES_ANY_TERM" ), "(", column, ",", value, ")"
             | "HAS_RELATED", "(", column, ",", "KEY", "(", key_value, { ",", key_value }, ")", ")" ;
 compare_op  = "=" | "<>" | "<" | "<=" | ">" | ">=" ;
 order       = "ORDER", "BY", order_item, { ",", order_item } ;
-order_item  = column, [ "ASC" | "DESC" ], [ "NULLS", ( "FIRST" | "LAST" ) ] ;
+order_item  = ( column | aggregate | bucket ), [ "ASC" | "DESC" ], [ "NULLS", ( "FIRST" | "LAST" ) ] ;
+aggregate   = ( "SUM" | "MIN" | "MAX" ), "(", column, ")"
+            | "AVG", "(", column, ",", "SCALE", positive_integer_literal, ")"
+            | "COUNT", "(", ( "*" | "DISTINCT", column ), ")"
+            | "APPROX_COUNT_DISTINCT", "(", column, ")" ;
+bucket      = "BUCKET_WIDTH", "(", column, ",", value, ")"
+            | "DATE_BUCKET", "(", date_unit, ",", column, [ ",", "ZONE", value ], ")" ;
+date_unit   = "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" ;
+group_item  = column | bucket ;
+(* Projections may also be aggregate or bucket expressions with AS names;
+   GROUP BY takes group_item, { ",", group_item }. *)
 update_set  = field, "=", ( value | "NULL" ) ;
 ```
 
@@ -209,6 +295,16 @@ continuation tuple as API arguments or typed parameters.
   - Bindings come from UMF CONTRACT-042 physical bindings plus the `umf.access`
     extension's ColumnSets (CONTRACT-070), which give exact native column types.
     Missing or incompatible column facts refuse.
+- **WR-B7 Schema-neutral statements on Postgres and Lakebase.**
+  - A binding may leave table schemas unqualified, meaning the host binds the
+    schema once per connection through the role's `search_path`.
+  - Lowering then emits unqualified table and type names, and qualifies every
+    system object with `pg_catalog`, for example `pg_catalog.pg_has_role`, so
+    `search_path` cannot redirect it.
+  - The compile output records a host obligation: `search_path` resolves each
+    table to the intended schema and keeps `pg_catalog` first (its default).
+  - One compiled catalog then serves every deployment of an app, each with its
+    own schema name.
 - **WR-B2 Reads on Postgres and Lakebase.** All of tranche A, with output decoders
   for every WR-I4 carrier.
 - **WR-B3 Set-based mutations on Postgres and Lakebase.**
@@ -223,11 +319,15 @@ continuation tuple as API arguments or typed parameters.
     `unlink`), explicit-key selectors, and CONTRACT-901 `rules/1` preconditions
     and postconditions.
   - The program runs in one `SERIALIZABLE` transaction.
+  - A second, validate-only program evaluates parameter checks and every
+    precondition (not only the first false one), reports all failing codes, and
+    always rolls back.
   - Preconditions are evaluated before effects, and the first false one returns
     its failure code.
   - Role-membership checks come from the target's pinned role mapping.
   - The program captures `pg_current_xact_id()` for the receipt.
-  - Output identifies the effects and the precondition codes.
+  - Output identifies the effects and the precondition codes, and the program
+    returns the Keys of created and changed entities.
 - **WR-B5 Reads on Unity Catalog and Spark/Delta.**
   - All of tranche A, with explicit `NULLS FIRST`/`LAST`.
   - Instants are read through epoch-microsecond text, never through Python
@@ -282,18 +382,34 @@ contribute the first cases with tranche A. Minimum coverage:
 - String ordering with non-ASCII characters (binary order).
 - Bulk `SET NULL` refused for a non-nullable Field.
 - Bulk selection larger than `maxItems` refused with no effect.
+- Aggregates over all-null groups and empty inputs; `AVG` with scale rounding at a
+  half-even tie; `SUM` of decimals keeping input scale; date buckets for instants in
+  two time zones across a DST change.
+- `STARTS_WITH` with a prefix containing `%`, `_` and a backslash.
+- Snapshot pages on Delta with a concurrent write between pages: no skipped or
+  repeated rows.
+- `IS DISTINCT FROM` over every combination of null, missing and present values.
+- A left join along an optional relationship with and without a target row; a
+  refused to-many join.
+- The same schema-neutral statement run under two roles whose `search_path`
+  names different schemas, returning each schema's rows; a table shadowing
+  attempt does not redirect `pg_catalog` functions.
 
 ## Priority
 
 1. WR-I6, WR-I3 and WR-I4: the inputs and outputs UMF needs to call Weft at all.
-2. WR-A1, WR-A2, WR-A3, WR-A5 and WR-A8, plus WR-B1 and WR-B2: comparisons, nulls,
-   OR/NOT, ordering and temporal values on raw Postgres and Lakebase. This is the
-   first use-case path.
-3. WR-A4, WR-A6 and WR-A7: membership, general keyset pages, counts and existence.
+2. WR-A1, WR-A2, WR-A3, WR-A5, WR-A8 and WR-A13, plus WR-B1, WR-B2 and WR-B7:
+   comparisons, nulls, OR/NOT, null-safe distinctness, ordering and temporal values
+   on raw Postgres and Lakebase, with schema-neutral statements. This is the first
+   use-case path; the first consumer (an apps host on Lakebase, Postgres 18) needs
+   it.
+3. WR-A4, WR-A6, WR-A7, WR-A10 and WR-A11: membership, general keyset pages,
+   counts and existence, aggregates and buckets, prefix and term filters, and
+   WR-A14 relationship joins.
 4. WR-I5, WR-A9 and WR-B3: bulk updates on raw tables.
 5. WR-B4: actions on Postgres and Lakebase.
 6. Tranche A on the Truss and Ashlar backends.
-7. WR-B5 and WR-B6: Unity Catalog and Spark.
+7. WR-B5 and WR-B6: Unity Catalog and Spark, with WR-A12 snapshot pages.
 8. WR-I1 release.
 9. Tranche C.
 
@@ -303,6 +419,14 @@ Connections, sessions, credentials and execution; runtime retries; authenticatio
 or human attribution; schema migrations; embedding computation; search index
 creation; the Python DSL and its type checking (UMF); action declaration meaning
 (UMF CONTRACT-900/901).
+
+## Prior art
+
+Palantir's Ontology SDK offers similar typed filters, aggregations (sum, avg, min,
+max, exact and approximate distinct; exact, fixed-width, range and date-bucket
+groupings), a `$snapshot` paging option, and action application returning
+validation results and edits. WR-A10 to WR-A12 and the WR-B4 additions close the
+same gaps, with exactness rules stated explicitly.
 
 ## Questions for Weft
 

@@ -67,6 +67,12 @@ result through the CONTRACT-072 tx/1 table:
 | tx/1 `unsupported`, `expired` | `ActionRefused` with Truss's code |
 | tx/1 `failed`, other Truss errors with a known rollback | `ActionFailed` with Truss's code and error |
 
+`TrussTarget.validate()` sends the action identity and encoded input to Truss's
+action preview operation, never to admission, and maps Truss's findings to
+`ValidationResult` failures with Truss's codes. `complete` is copied from what
+Truss reports: true only when Truss says it evaluated every check, false when its
+preview stops at the first failure (US-087-AC8).
+
 Only concurrency conflicts become `Conflict`. A failure injected before COMMIT
 keeps Truss's classification: a confirmed rollback with no effects, raised as
 `ActionFailed`, never relabeled `Conflict` (CONTRACT-069). The adapter never
@@ -120,6 +126,7 @@ the suite must fail), `python/umf_access/build/truss.py`,
 | US-087-AC5 | `conformance/actions.py` replay cases (enabled for executors that support keys) |
 | US-087-AC6 | `conformance/bulk.py` Truss-plan cases; Truss twin-store bulk witness |
 | US-087-AC7 | `conformance/values.py` lexical-spelling refusal case; Truss value-definition fixture |
+| US-087-AC8 | `conformance/actions.py` validation cases honoring `complete`; Truss witness comparing with its native preview |
 
 ## API/Interface Design
 
@@ -168,6 +175,7 @@ do not reveal hidden existence.
 | US-087-AC5 | `truss_idempotent_replay` | Original outcome byte-equal; request-conflict refusal; no new journal or feed entry | UMF conformance; Truss witness |
 | US-087-AC6 | `truss_bulk_manifest_parity` | Sealed manifest, submitted `BulkJob`, batch outcomes and job status equal Truss's bulk path | Truss witness |
 | US-087-AC7 | `truss_lexical_spelling_refusal` | `LEXICAL_SPELLING_REQUIRED` before admission; no write; read decodes | UMF conformance; Truss witness |
+| US-087-AC8 | `truss_validate_maps_preview` | Findings equal Truss's preview; `complete` as Truss reports; no admission, state, journal or feed change | UMF conformance; Truss witness |
 
 STP-087 owns the authoritative allocation between UMF and Truss.
 

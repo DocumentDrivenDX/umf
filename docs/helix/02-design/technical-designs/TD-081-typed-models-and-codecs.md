@@ -56,6 +56,21 @@ local naivety, surrogate rejection). Generated models attach them with
 `Annotated[..., AfterValidator(...)]` parameterized by authored facets, so the
 emitted code stays small and the logic is tested once against UMF's validators.
 
+**Thin generated layer (TM-07).** Generated modules hold classes, signatures and
+inert metadata tables: Field IDs, carriers, presence, facets, Key order and action
+markers. Each generated codec function is one call into `umf_access.codec_support`
+that passes the instance or column inventory together with the Record's or
+action's metadata table. All validation and conversion logic is runtime code
+driven by that table, so a runtime fix within the pinned ABI changes behavior for
+every generated package without regeneration (US-081-AC7), and generated source
+contains no validation branches beyond Pydantic field declarations (US-081-AC8).
+
+**Python 3.11 and three checkers (TM-08).** The emitter writes Python 3.11
+syntax and imports `MISSING` from Pydantic 2.14 or later. Generated source must
+check cleanly, without suppression comments, on the profile's pinned pyright, mypy
+and ty; any suppression the operator overloads need sits in `umf_access`
+(US-081-AC9).
+
 **Codecs revalidate.** `encode_*` reads raw attribute values from the instance,
 validates the whole graph through `model_validate` on a fresh dict, then maps
 Python names to authored Field IDs and converts to the CONTRACT-072 carriers,
@@ -82,7 +97,7 @@ Planned new paths:
 - `src/access/generate/emit-python.ts` — models, keys, codecs and action type emission (shared with TD-080).
 - `python/umf_access/src/umf_access/types.py` — `StrictModel`, `MISSING` re-export, `Vector`, error types.
 - `python/umf_access/src/umf_access/values.py` — carrier validators and transport conversions.
-- `python/umf_access/src/umf_access/codec_support.py` — inventory checks and revalidation helpers used by generated codecs.
+- `python/umf_access/src/umf_access/codec_support.py` — metadata-driven encode and decode, inventory checks and revalidation, called by every generated codec function.
 - `tests/compilation/python/static/models/` — positive and negative static corpora with expected diagnostics.
 
 ## API/Interface Design
@@ -123,6 +138,9 @@ values into storage. Imports perform no I/O.
 | US-081-AC4 | `keys_and_action_types` | Key order, `KEY_IDENTITY`, `__hash__ is None`, separate digest constant, action input and failure-code types | `python/umf_access/tests/test_generated_models.py` |
 | US-081-AC5 | `decode_checks_columns` | Inventory refusals before mapping; full revalidation on decode | `python/umf_access/tests/test_codecs.py` |
 | US-081-AC6 | `static_and_isolated_import` | Corpora pass and fail as expected on both pinned checkers; no `alias`, `validation_alias` or `serialization_alias` in generated source; override renames the parameter but not the encoded key; docstrings cite pointers; isolated import loads no forbidden module and opens no file or socket | `python/umf_access/tests/test_static_corpus.py`, `python/umf_access/tests/test_isolated_import.py` |
+| US-081-AC7 | `runtime_fix_without_regeneration` | One generated package under two runtime builds with the same ABI, one with a seeded scale defect; verdict follows the runtime; package bytes and `umf-access check` unchanged | `python/umf_access/tests/test_runtime_driven_codecs.py` |
+| US-081-AC8 | `generated_codecs_are_thin` | Syntax-tree inspection: each codec body is one runtime call with metadata; metadata tables are literals and name references; no `if`, `raise`, `try`, comparison or loop outside field declarations | `python/umf_access/tests/test_runtime_driven_codecs.py` |
+| US-081-AC9 | `clean_on_three_checkers` | pyright, mypy and ty at pinned versions, targeting Python 3.11, report zero diagnostics on the generated package and positive corpus; no suppression comment in generated source; encodings run on 3.11 | `python/umf_access/tests/test_static_corpus.py` |
 
 STP-081 is the authoritative mapping. All tests are planned and UNTESTED.
 
@@ -130,7 +148,9 @@ STP-081 is the authoritative mapping. All tests are planned and UNTESTED.
 
 Generated code is replaced only through US-080's writer; rolling back reverts the
 consumer's package directory. Changes to `umf_access` value helpers are a runtime
-release; a change that alters accepted values is a new ABI version, not a patch.
+release. A fix that brings validation into line with CONTRACT-068 stays within the
+pinned ABI and reaches packages without regeneration; a change to the contract's
+accepted values or to the metadata table format is a new ABI version, not a patch.
 
 ## Implementation Sequence
 

@@ -61,7 +61,13 @@ inside the transaction; the preview result is advisory and is not reused. The
 sentinel check aborts the unit with `ActionRefused` carrying `BULK_LIMIT`.
 Outcome classification, commit-loss reconciliation and receipts reuse TD-085.
 `execute()` returns `BulkOutcome {selected, changed, receipt}`, or raises
-`ActionConflict`, `ActionIndeterminate`, `ActionFailed` or `ActionRefused`.
+`ActionConflict`, `ActionIndeterminate`, `ActionTimedOut`, `ActionFailed` or
+`ActionRefused`.
+
+**Timeouts (AT-09).** `preview()` and `execute()` take a keyword-only `timeout`
+with the target's `default_timeout` as fallback, applied with TD-085's deadline
+procedure: expiry before the commit is sent rolls back and raises
+`ActionTimedOut`; expiry after it follows commit-loss handling (US-086-AC7).
 
 Raw-table targets are `BulkTarget[AtomicBulkPlan]`, and `AtomicBulkPlan` has no
 `seal()` or `submit()` method, so a call to either is a static error; no manifest
@@ -85,12 +91,13 @@ Planned files (none exist yet):
 
 | AC | Component realization |
 | --- | --- |
-| US-086-AC1 | Generated `<Record>Update` TypedDict (CONTRACT-068) and `build/commands.py` catalog entries |
+| US-086-AC1 | Generated `update()` signature with explicit keyword-only parameters (CONTRACT-068) and `build/commands.py` catalog entries |
 | US-086-AC2 | Read-only preview transaction or query with sentinel |
 | US-086-AC3 | Atomic execution per platform; TD-085 classification and receipts |
 | US-086-AC4 | `maxItems + 1` sentinel in preview and execute; `BULK_LIMIT` |
 | US-086-AC5 | Runtime instantiation and digest comparison before connection use |
 | US-086-AC6 | `AtomicBulkPlan` type without `seal()` or `submit()`; no manifest writer on raw targets |
+| US-086-AC7 | TD-085 deadline procedure in `execute()`; `TimedOut` before the commit phase flag |
 
 ## API/Interface Design
 
@@ -136,6 +143,7 @@ values.
 | US-086-AC4 | `bulk_over_limit_refuses` | `BULK_LIMIT` at `maxItems + 1`; success at exactly `maxItems`; no row changed on refusal | UMF conformance + native lane |
 | US-086-AC5 | `bulk_plan_drift_refuses` | `PLAN_DRIFT`; recording connection sees zero statements | UMF conformance |
 | US-086-AC6 | `bulk_raw_has_no_manifest_path` | Static error for `seal()`; no manifest or control objects after execute | UMF static and conformance |
+| US-086-AC7 | `bulk_timeout_commits_nothing` | `ActionTimedOut` and no changed row when the deadline passes before commit; commit-loss outcome, never `ActionTimedOut`, after the commit is sent | UMF conformance + native lane |
 
 STP-086 owns the authoritative mapping and commands.
 

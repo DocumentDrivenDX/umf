@@ -5,11 +5,11 @@ bad.py:6: error: Unsupported operand types for > ("Column[Order, Decimal]" and "
 bad.py:7: error: Argument 1 to "filter" of "Query" has incompatible type "bool"; expected "Predicate[Order]"  [arg-type]
 bad.py:8: error: Argument 1 to "filter" of "Query" has incompatible type "Predicate[Customer]"; expected "Predicate[Order]"  [arg-type]
 bad.py:9: error: "OrderColumns" has no attribute "ammount"; maybe "amount"?  [attr-defined]
-bad.py:10: error: Argument "amount" to "update" of "OrderQuery" has incompatible type "str"; expected "Decimal"  [arg-type]
+bad.py:10: error: Argument "amount" to "update" of "OrderQuery" has incompatible type "Literal['10']"; expected "Decimal | MISSING"  [arg-type]
 bad.py:11: error: Unexpected keyword argument "placed_at" for "update" of "OrderQuery"  [call-arg]
 bad.py:11: note: "update" defined in "shop.models"
 bad.py:12: error: Unsupported operand types for >= ("Column[Order, datetime]" and "Param[str]")  [operator]
 bad.py:13: error: Argument 1 to "select" of "Query" has incompatible type "Column[Customer, str]"; expected "Column[Order, Any]"  [arg-type]
 bad.py:14: error: Unexpected keyword argument "ammount" for "OrderPatch"; did you mean "amount"?  [call-arg]
-good.py:20: note: Revealed type is "Any"
-good.py:21: note: Revealed type is "def (since: dsl.Param[datetime.datetime], memo: dsl.Param[str | None]) -> Any"
+good.py:21: note: Revealed type is "Any"
+good.py:22: note: Revealed type is "def (since: dsl.Param[datetime.datetime], memo: dsl.Param[str | None]) -> Any"

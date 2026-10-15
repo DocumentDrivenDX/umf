@@ -2,7 +2,7 @@
   "kind": "scoped-design-structure",
   "base": "160c88c40b670a025d63b7637fcca02030e72b54",
   "status": "pass",
-  "newArtifacts": 47,
+  "newArtifacts": 48,
   "modifiedDocuments": 7,
   "newArtifactIds": [
     "ADR-004",
@@ -49,10 +49,11 @@
     "US-086",
     "US-087",
     "US-088",
+    "umf.research-palantir-osdk",
     "umf.typed-persistence-design",
     "umf.weft-requirements-typed-access"
   ],
-  "acceptanceCriteria": 57,
+  "acceptanceCriteria": 81,
   "checks": [
     "new ID uniqueness outside historical evidence/spikes",
     "required sections",

@@ -44,6 +44,12 @@ annotations, not coverage.
 | US-085-AC5 | `raw_action_unsupported_refuses_at_build` (UMF build test) | Policy, `person-required` on a `service`-principal target, handler and unmapped-role actions and a two-effect `spark-delta` action each produce a refusal entry with `NATIVE_PROFILE_UNSUPPORTED` or `ROLE_MAPPING_MISSING` for exactly the affected target; other targets still compile; invoking a refused action raises `ActionRefused` with the recorded code and the recording connection sees zero statements. | `@covers US-085-AC5` |
 | US-085-AC6 | `raw_action_runtime_preconditions_refuse` (static case `tests/static/replaying_actions_raw_bad.py`; conformance case `actions.runtime_refusals`) | Pyright and mypy reject `ReplayingActions(raw_target)`; at run time that construction raises `TypeError`; a connection inside a host transaction raises `ActionRefused` with `TRANSACTION_STATE`; zero statements are sent and the host transaction status is unchanged afterwards. | `@covers US-085-AC6` |
 | US-085-AC7 | `uc_action_atomic_block_and_receipt` (managed Unity Catalog lane) | The submitted text is a single `BEGIN ATOMIC ... END` block; receipt table UUIDs and versions equal `DESCRIBE DETAIL` and `DESCRIBE HISTORY`; with one table lacking catalog commits the action refuses at build or `verify()` and no statement runs. | `@covers US-085-AC7` |
+| US-085-AC8 | `raw_action_validate_reports_all` (conformance case `actions.validate`, run on `postgresql` and `lakebase`; needs Weft WR-B4) | For an input making "order is paid" and a second declared precondition false, `validate()` returns `valid=False`, `complete=True` and both codes; for a valid input it returns `valid=True` with no failures. The server shows each call's transaction rolled back, and an independent read shows identical rows before and after. | `@covers US-085-AC8` |
+| US-085-AC9 | `raw_action_returns_created_and_changed_keys` (conformance case `actions.returned_keys`; static case `tests/static/committed_keys_types.py`; needs Weft WR-B4) | After `shipOrder` commits, `Committed.created == (ShipmentKey(...),)` and `Committed.changed == (OrderKey(...),)`, equal to Keys read independently; pinned pyright and mypy reveal both as tuples of the action's generated Key DTOs. | `@covers US-085-AC9` |
+| US-085-AC10 | `async_raw_action_matches_sync` (conformance action cases rerun with `AsyncPostgresTarget` and `AsyncLakebaseTarget`) | For the commit, rejection, denial and conflict fixtures, awaited outcomes, raised failures, receipts and `validate()` results equal those of the sync target; the server observes one `SERIALIZABLE` transaction per call; static cases reveal an awaitable of the sync result type. | `@covers US-085-AC10` |
+| US-085-AC11 | `raw_action_timeouts` (conformance case `actions.timeout`; lock held by a second connection; fault-injecting wrapper holding the COMMIT acknowledgement) | With the lock held, `timeout=200ms` raises `ActionTimedOut` and an independent read shows no change. With the acknowledgement held past the deadline, the call returns `Committed` or raises `ActionConflict` matching an independent fresh-connection observation when a reconnection factory is given, raises `ActionIndeterminate` without one, and never raises `ActionTimedOut`. | `@covers US-085-AC11` |
+| US-085-AC12 | `multi_effect_action_atomic` (conformance case `actions.multi_effect`; `created` needs Weft WR-B4) | `addNoteWithReminder` commits both rows in one transaction (same `xmin` observed) with both Keys in `Committed.created`; with the reminder violating a check constraint it raises `ActionFailed` and neither row exists. An inventory of public callables in `umf_access` and the generated package finds no method that begins, joins or commits a transaction across action calls. | `@covers US-085-AC12` |
+| US-085-AC13 | `person_required_on_human_target` (build test plus native lane) | With `sessionPrincipal: human`, the `person-required` action compiles and its entry records the human-session host obligation. Invoked through connections logged in as `alice` and `bob`, each receipt records the committing `current_user`. | `@covers US-085-AC13` |
 
 ## Executable Proof
 
@@ -56,6 +62,8 @@ python -m pytest python/umf_access/tests/native/test_actions.py --umf-target pos
 python -m pytest python/umf_access/tests/native/test_actions.py --umf-target lakebase
 python -m pytest python/umf_access/tests/native/test_actions.py --umf-target spark-delta
 python -m pytest python/umf_access/tests/native/test_actions.py --umf-target unity-catalog
+python -m pytest python/umf_access/tests/native/test_async_actions.py --umf-target postgresql
+python -m pytest python/umf_access/tests/native/test_async_actions.py --umf-target lakebase
 ```
 
 The native test module runs the shared `umf_access.conformance` action cases
@@ -80,6 +88,11 @@ Delta, and actions that need policy authorization, `person-required` (on service
 attribution, a handler and an unmapped role. Pinned role maps per target.
 Owned, isolated databases or schemas with explicit cleanup; a dedicated Unity
 Catalog schema with one managed table with catalog commits and one without.
+An `addNoteWithReminder` action with two effects and a check constraint on
+`Reminder`, a `person-required` action, one target configured with
+`sessionPrincipal: human` and login roles `alice` and `bob`, and a second
+connection that holds table locks for timeout cases. Validation and returned-Key
+cases need Weft WR-B4 and report not-run until the pinned Weft admits it.
 Concurrency fixtures use explicit barriers, not sleeps. Expected values come
 from independent queries, not from the adapter under test.
 

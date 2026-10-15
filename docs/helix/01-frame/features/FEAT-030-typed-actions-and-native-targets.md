@@ -94,6 +94,31 @@ further hazard: a retry after an unknown outcome can apply a change twice.
   suite for the capabilities it claims: identity and verify refusals, carrier
   round trips, read bounds, duplicate-column refusal, outcome classification
   including injected commit loss, and bulk preview/execute agreement.
+- **AT-07:** Each generated action method must have a companion
+  `validate(input)` that calls `ActionExecutor.validate()` and returns
+  `ValidationResult{valid, failures, complete}`. It checks parameters,
+  authorization and every precondition, not only the first false one, and changes
+  nothing; on raw tables it runs Weft's validate-only program in a transaction
+  that always rolls back. `complete` is false when a target can report only the
+  first failure. A valid result is advisory. `Committed` must also carry
+  `created` and `changed`: the generated Key DTOs of the entities the action
+  created and changed.
+- **AT-08:** Action clients must be overloaded on the executor type like catalog
+  functions: an async executor returns an awaitable of the same outcome, with the
+  same classification. In 0.1 the async action executors are
+  `AsyncPostgresTarget` and `AsyncLakebaseTarget` over psycopg 3's async
+  connection; other targets stay sync only until their drivers' async support is
+  qualified.
+- **AT-09:** Every action and bulk call must take `timeout: timedelta | None`;
+  `None` uses the target's required default. A deadline that expires before the
+  commit is sent cancels and rolls back the call, whose outcome is `TimedOut`
+  (raised as `ActionTimedOut`): nothing was committed. A deadline that expires
+  after the commit is sent is decided as a lost connection: reconciled on Postgres
+  and Lakebase, otherwise `Indeterminate`. `Indeterminate` stays the only outcome
+  in which a timed-out write may have committed.
+- **AT-10:** Changes that must commit together are authored as one action with
+  several effects, which runs as one transaction on raw tables under CONTRACT-073.
+  The runtime must offer no transaction spanning several action calls.
 
 ### Non-Functional Requirements
 
@@ -106,8 +131,11 @@ suite and native witnesses pass on its pinned version.
 
 - US-085 — Invoke typed actions on raw tables: generated typed clients and
   outcomes, the raw-table adapters, the native profile, the conformance suite and
-  commit loss (AT-01, AT-02, AT-03, AT-04, AT-06).
-- US-086 — Run precompiled bulk commands on raw tables (AT-05).
+  commit loss, validation and returned Keys, async invocation on Postgres and
+  Lakebase, timeouts, multi-effect actions and per-user connections (AT-01,
+  AT-02, AT-03, AT-04, AT-06, AT-07, AT-08, AT-09, AT-10).
+- US-086 — Run precompiled bulk commands on raw tables, with timeouts (AT-05,
+  AT-09).
 
 Catalog reads on raw tables, including `verify()` drift detection and the Lakebase
 unlisted-minor refusal, are US-083 (FEAT-029).
@@ -134,6 +162,12 @@ unlisted-minor refusal, are US-083 (FEAT-029).
   the target pins makes `verify()` raise `TargetMismatch`.
 - An Ashlar target has no `ActionExecutor`, so an action client cannot be built
   for it (FEAT-031).
+- A call whose deadline expires before the commit is sent raises
+  `ActionTimedOut` with nothing committed; after the commit is sent, the deadline
+  is handled like a lost connection.
+- A valid `validate()` result reserves nothing; a later `invoke` can still be
+  rejected, denied or conflict. `validate()` never commits, even when every check
+  passes.
 
 ## Success Metrics
 

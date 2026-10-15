@@ -85,14 +85,14 @@ Weft is the only SQL lowering for every target; UMF builds no interim lowering.
 UMF's requests to Weft are written as
 [the Weft requirements](weft-requirements-typed-access.md) and were delivered to
 Weft as `docs/helix/00-discover/umf-typed-access-requirements-input.md` (Weft
-commit `bfe0b88`). A Weft agent is implementing them. UMF work proceeds in
+commits `bfe0b88` and `c7431eb`). A Weft agent is implementing them. UMF work proceeds in
 parallel: generation, types, DSL and static typing need no Weft change, and each
 catalog slice is qualified per target as the matching Weft requirement lands.
 
 | ID | Owner | Needed capability | Weft requirements | Blocks |
 | --- | --- | --- | --- | --- |
 | W-0 | Weft | Compile inputs and outputs the catalog needs: structural digest, logical SQL echo, carriers, raw-table security profile | WR-I3, WR-I4, WR-I6 | B-TP-006 onward |
-| W-1 | Weft | Tranche A query forms (comparisons, null tests, OR/NOT, IN, ordering, general keyset pages, counts, temporal values) | WR-A1 to WR-A8 | Forms beyond today's Weft subset, per target |
+| W-1 | Weft | Tranche A query forms (comparisons, null tests, OR/NOT, IN, ordering, general keyset pages, counts, temporal values, aggregates and buckets, prefix and term filters, snapshot pages) | WR-A1 to WR-A12 | Forms beyond today's Weft subset, per target |
 | W-2 | Weft | Raw-table read backends: Postgres and Lakebase, then Unity Catalog and Spark/Delta, over UMF bindings and `umf.access` ColumnSets | WR-B1, WR-B2, WR-B5 | B-TP-008, B-TP-009 |
 | W-3 | Weft | Bulk UPDATE extensions and plan templates; set-based mutations on raw tables. Weft's existing Truss mutation backend admits only string and boolean fields | WR-A9, WR-I5, WR-B3, WR-B6 | B-TP-007, B-TP-011 |
 | W-4 | Weft | Action lowering on Postgres and Lakebase, then Unity Catalog and Spark/Delta | WR-B4, WR-B6 | B-TP-010 |
@@ -173,6 +173,36 @@ recorded review with dispositions, and the typing spike. Implementation readines
 additionally requires the owner decisions below and an execution budget. Runtime
 completion requires every claimed native and engine gate.
 
+## First Consumer Feedback
+
+Praxis, an apps host for a law firm, reviewed the proposal as a prospective first
+consumer: per-application Postgres/Lakebase schemas, per-user connection pools
+with a service account for batch work, Python 3.11, and ty as its gating type
+checker. Its feedback is reflected as follows:
+
+- **Schema-neutral catalogs** (`schemaBinding: "search-path"`, Weft WR-B7): no
+  schema in the catalog, generated code or call sites; the host binds it per
+  connection.
+- **Per-user connections**: targets declare `sessionPrincipal: human`; per-user
+  pools satisfy `person-required` actions, and a separate `service` target serves
+  batch jobs. `verify()` results are cached so per-request pooled connections pay
+  only a schema-resolution check.
+- **Timeouts**: every call takes a timeout; `TimedOut` means nothing committed;
+  only `Indeterminate` may hide a commit.
+- **Query forms**: aggregates with group-by (WR-A10), null-safe
+  `is_distinct_from` (WR-A13) and typed joins along declared to-one relationships
+  (WR-A14); to-many walks use `.related()`. Bounded streams replace raising the
+  page cap for exports.
+- **Composing writes**: one action with several effects, not a transaction across
+  actions.
+- **Type checkers**: the typing spike passes on pyright, mypy and ty targeting
+  Python 3.11, after switching bulk `update()` to explicit keyword parameters.
+- **Toolchain**: Pydantic 2.14 or later is required for the stable `MISSING`
+  sentinel.
+- **Priority**: Lakebase (Postgres 18) is this consumer's first target, so
+  B-TP-008 starts as soon as Weft WR-B1, WR-B2 and WR-B7 land, in parallel with
+  the Truss slices.
+
 ## Owner Decisions Recorded
 
 - Weft is the only SQL lowering. UMF writes Weft requirements early and does not
@@ -195,6 +225,9 @@ completion requires every claimed native and engine gate.
    projections with timestamp or binary fields and returns exact tokens as text.
 2. Where `umf_access` is published from and its release cadence.
 3. Implementation spending ceiling.
+4. Dated milestones for the first consumer's Lakebase path (B-TP-001 to B-TP-005
+   and B-TP-008), which depend on Weft's delivery of WR-I3/I4/I6, WR-A1 to A8,
+   WR-A13 and WR-B1/B2/B7.
 
 ## Review and Independent Opinion
 

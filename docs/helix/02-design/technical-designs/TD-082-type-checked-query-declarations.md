@@ -21,7 +21,7 @@ ddx:
 ## Scope
 
 The `umf_access` DSL classes, the generated `fields.py` (column namespaces, query
-roots and `<Record>Update` TypedDicts), the static corpora, and capture inside
+roots with typed `update()` signatures), the static corpora, and capture inside
 `umf-access catalog`. Compilation through Weft and execution are TD-083.
 CONTRACT-068 and CONTRACT-071 are authoritative.
 
@@ -41,9 +41,12 @@ starting point, not code to copy. Its core choices are kept:
 - `<Record>.c` is a `ClassVar` holding a `@final` columns class, so
   `Order.c.amount` is a `Column[Order, Decimal]` while `order.amount` stays a
   `Decimal`.
-- `<Record>.objects` is a query root whose chaining methods return `Self`;
-  `update(**values: Unpack[<Record>Update])` uses a generated `TypedDict` with
-  only mutable, non-generated fields.
+- `<Record>.objects` is a query root whose chaining methods return `Self`.
+  Its generated `update()` has one explicit keyword-only parameter per mutable,
+  non-generated field, typed `T | MISSING` (plus `None` when the field admits
+  null) with default `MISSING`. The spike first used
+  `**values: Unpack[<Record>Update]`; ty does not reject unknown keys there, so
+  explicit parameters replace it.
 - `select` has positional-only overloads for one to eight columns.
 
 Added beyond the spike, and unqualified until the corpora show them on both
@@ -58,11 +61,33 @@ whose override diagnostic the runtime package suppresses internally; and a
 runtime `__bool__` on `Predicate` that raises `TypeError`. Field expressions raise `QueryOutsideCatalog` unless a capture
 context is active (a context variable set only by the catalog tool).
 
+**Aggregates and buckets (QC-07).** `sum_`, `min_`, `max_` and `avg_` are
+overloaded functions returning `Agg[O, T | None]`; `sum_` and `avg_` have
+overloads only for numeric columns, so a `Column[O, str]` has no match, and
+`avg_` takes `scale` as a required keyword-only argument. `count()` and
+`count_distinct` return `Agg[O, int]`, since a count over no input is 0. `bucket_width` and `date_bucket` are
+methods on numeric and temporal columns returning `Bucket[O, T]`. The `.select`
+overloads accept `Column[O, T]`, `Agg[O, T]` and `Bucket[O, T]` items and yield
+the same tuple element type for each, up to eight items. US-082-AC7 adds these
+cases to the positive and negative corpora; they are unqualified until every
+pinned checker shows them.
+
+**Joins and distinctness (QC-13).** `.join(M.c.rel)` is defined only on
+to-one relationship attributes and returns `Joined[O1, O2, R]`. Its `filter`
+accepts `Predicate[O1] | Predicate[O2]`, so a predicate on any other Record has no
+match. A join along an optional relationship marks the joined Record's columns as
+nullable, so `.select` yields `T | None` for them. Further joins add Records up to
+the S17 limit of four. `is_distinct_from` and `is_not_distinct_from` take
+`T | None | Param[T | None]` and return `Predicate[O]` (US-082-AC8).
+
 **Checker configuration.** The spike shows mypy 2.4.0 reports only 2 of the 9
 `bad.py` errors with default settings, because it skips unannotated function
 bodies (with `--check-untyped-defs` it reports all 9). The profile therefore
-pins `check_untyped_defs = true` for mypy and records a complete pyright
-configuration file, and the corpus runner fails if either configuration differs.
+pins `check_untyped_defs = true` for mypy and records complete pyright and ty
+configuration files targeting Python 3.11, and the corpus runner fails if any
+configuration differs. Every corpus runs on all three checkers; ty results are
+recorded per case like the others (US-082-AC9). Suppressions the runtime's
+operator overloads need are kept inside `umf_access`.
 Whether stricter modes (`--strict`, pyright `strict`) are also qualified is a
 profile decision tested with the same corpora. mypy also infers `Any` as the return type of
 a declaration with no return annotation, so result-type misuse is tested at
@@ -86,15 +111,15 @@ Planned new paths:
 
 - `python/umf_access/src/umf_access/dsl/` — `Column`, `Predicate`, `Param`, `Related`, `Query`, terminals, `if_present`, decorators.
 - `python/umf_access/src/umf_access/capture.py` — capture context, signature checks, determinism check, variant expansion.
-- `src/access/generate/emit-python.ts` — `fields.py` emission (columns classes, query roots, Update TypedDicts, docstrings).
+- `src/access/generate/emit-python.ts` — `fields.py` emission (columns classes, query roots, typed `update()` signatures, docstrings).
 - `tests/compilation/python/static/queries/{positive,negative,refactor}/` with `expected.json`.
-- `tests/compilation/python/static/checker-config/` — pinned `pyrightconfig.json` and `mypy.ini`.
+- `tests/compilation/python/static/checker-config/` — pinned `pyrightconfig.json`, `mypy.ini` and ty configuration, all targeting Python 3.11.
 
 ## API/Interface Design
 
 | Surface | Contract | Use |
 | --- | --- | --- |
-| Field expressions, query roots, Update TypedDicts | CONTRACT-068 | Generated typed attributes |
+| Field expressions, query roots, typed `update()` signatures | CONTRACT-068 | Generated typed attributes |
 | DSL forms, typing rules, capture, refusals | CONTRACT-071 | Developer-facing declaration surface |
 | `names` overrides and manifest diff | CONTRACT-067 | Refactoring flow |
 
@@ -126,6 +151,9 @@ injection through column or ordering names.
 | US-082-AC4 | `refactor_by_regeneration` | Regenerated packages make the unchanged corpus fail at every affected site; override variant passes; docstrings cite pointers | `python/umf_access/tests/test_refactor_regeneration.py` |
 | US-082-AC5 | `runtime_guards_and_no_strings` | `TypeError` from `__bool__`; `QueryOutsideCatalog`; public-surface inventory finds no string-accepting column, lookup, ordering or query-text API | `python/umf_access/tests/test_dsl_runtime.py` |
 | US-082-AC6 | `capture_refusals` | Each capture error code; no files written | `python/umf_access/tests/test_capture.py` |
+| US-082-AC7 | `aggregate_typing` | `avg_` without `scale` and `sum_` over a string column fail on both checkers with expected diagnostics; grouped `select` reveals `Agg` and `Bucket` items and typed call-site tuple rows | `tests/compilation/python/static/queries/{positive,negative}/`, `python/umf_access/tests/test_static_corpus.py` |
+| US-082-AC8 | `join_typing` | `Joined[Order, Customer, R]`; foreign-Record filter rejected on pyright, mypy and ty; inner-join columns `T`, left-join columns `T \| None` at call sites | `tests/compilation/python/static/queries/{positive,negative}/` |
+| US-082-AC9 | `ty_rejects_typing_table` | ty, pinned and targeting Python 3.11, passes the positive corpus and reports the expected rule and line for every negative file, including unknown and wrongly typed `update()` keywords | `python/umf_access/tests/test_static_corpus.py` |
 
 STP-082 is the authoritative mapping. All tests are planned and UNTESTED; the
 spike is design evidence only.
