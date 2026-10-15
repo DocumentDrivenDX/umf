@@ -12250,3 +12250,7 @@ A live Databricks actor recheck failed instead of establishing the independent p
 ### Independent current-query artifact replay — 2026-10-15
 
 [Retained packet](evidence/security/weft-current-object-root-20261015/README.md) verifies exact Weft a6168847 source/evidence pins, unpublished wheel/native-module correspondence, and 111 original Python controls under a separately observed Python 3.14.8 embedding. This qualifies artifact custody and existing source-only behavior; current native issuer, typed SQL lowering and guarded release remain open. No backend case is promoted; all 158 cases remain in scope.
+
+### Exhaustive finite route composition — 2026-10-15
+
+The original compiled kernel and route evaluator pass all 13,122 finite truth/order cases in Bun and Chromium. Six private weakenings are detected; the security directory suite passes 304 tests and 4,684 assertions. Source-only coverage does not promote backend cases; current native lowering/held-context integration remains open. See [retained evidence](evidence/security/three-valued-route-exhaustion-20261015/README.md).
