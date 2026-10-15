@@ -21,5 +21,6 @@
       "environment": "Original browser-driver in pinned mcr.microsoft.com/playwright:v1.63.0-noble Linux arm64 image, with existing dependency cache additionally mounted read-only at its original absolute path to resolve managed-worktree node_modules symlink."
     }
   },
-  "releaseChecks": "Native command CI passed both runs at7886ce0e; source-bound schema-browser correction passes locally in original Bun1.3.14 Linux; updated CI and Astra checker review pending."
+  "releaseChecks": "Atc3140922 Ubuntu CI run38796126228 passed all implementation/build/browser/guide gates, including actual SQL-to-actions UPDATE. Only final page-signature verification failed:12stale/5valid. Astra independent checker reproduction and12refusal controls pass. Latest8b1b074f workflow and signing/deployed-origin verification remain open.",
+  "ciEvidence": "https://github.com/DocumentDrivenDX/umf/actions/runs/38796126228"
 }
