@@ -1,0 +1,44 @@
+{
+  "status": "supplemental-native-control-passed",
+  "timeUtc": "2026-10-15T11:03:07.278404+00:00",
+  "scope": "Excluded-owner stored-map conflict plus fresh canonical Resource enrollment. Differential original/guard-removed SQL behavior; no actual HMAC collision or ordinary-authority exploit.",
+  "parentReviewSha256": "2195900da219b27cddf36d1e27533c4be61bb29a91509e83382d9ebc75b364c8",
+  "parentArchiveSha256": "5c0132f17fabe2ced4f4b79b4fea39350c90d77b9e3a01c14cd450cf565852d0",
+  "baseSourcesStillMatchRoot": true,
+  "rootSourcesEdited": false,
+  "acceptanceCasesPromoted": [],
+  "original": {
+    "nativeReceipt": "original-native.json",
+    "observations": 68,
+    "seconds": 6.978114417,
+    "sqlstate": "55000",
+    "freshCanonicalRowAbsent": true,
+    "vaultInjectionRolledBack": true,
+    "cleanup": {
+      "containerAbsent": true,
+      "volumesAbsent": true
+    }
+  },
+  "guardRemoved": {
+    "nativeReceipt": "guard-removed-native.json",
+    "observations": 68,
+    "seconds": 5.7981067920000005,
+    "commitSucceeded": true,
+    "freshId": "RFRESH",
+    "committedPlaintext": "conflicting-private",
+    "requestedPlaintext": "alpha'\\\ud83d\ude00",
+    "cleanup": {
+      "containerAbsent": true,
+      "volumesAbsent": true
+    }
+  },
+  "sourceCorrespondence": "Both private probes use identical driver and source closure; only the ambiguity IF guard is removed in the SQL mutant. The driver differs from the accepted candidate runner only to create a fresh parent, test commit/rollback/readback and mark this receipt supplemental.",
+  "sourcePins": "pins.json",
+  "limits": [
+    "This is an intentionally corrupted initial vault mapping introduced by the excluded administrator, not a computed HMAC collision.",
+    "Each independent fixture uses its own fresh key; the differential claim is guard behavior, not equal token bytes across fixtures.",
+    "Original refusal is observed through an errored transaction and subsequent independent readback; unsafe COMMIT is followed by independent canonical/vault join readback.",
+    "No changes to P08 assertion, runner, acceptance binding, obligation unverified status, or full-gate frozen sources.",
+    "Native controls do not refine all SQL/cryptographic/ACL/custody behavior or qualify production tokenization."
+  ]
+}

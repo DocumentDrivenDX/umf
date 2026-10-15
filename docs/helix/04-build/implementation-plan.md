@@ -11967,3 +11967,44 @@ unbound, 34 criteria. It exits 1 solely for those missing implementations. The
 all 158 assertions, allocations and timeouts remain unchanged. Evidence validation
 has 218 checks and the same 88 failed IDs as before; the added P05 freshness check
 passes. The security goal remains active.
+
+
+### PostgreSQL 18 stored-token stand-in — 2026-10-15
+
+B-SFP-010 implements original `pg-raw.P08` / `US-056-AC6` as the planned
+stored-token stand-in. PostgreSQL 18.6/pgcrypto 1.4 stores deterministic HMAC
+values in the canonical Resource token Field, with plaintext and ephemeral key
+material under a separate excluded NOLOGIN owner. The shared obligation
+inspector consumes retained authored policy/catalog/core/ontology products;
+independent exact recipe/domain/owner/pin checks bind that declaration to the
+selected native witness before SQL. It does not compile policy permission.
+
+The prebinding native corpus passes 65 observations, including independent Python
+HMAC values and equality pairs, typed storageEffect transport, actual SCRAM
+identity and wrong-password controls, vault/key/enroll/detokenizer 42501 refusals,
+owner/FORCE RLS/barrier inventory, excluded EXECUTE weakening/restoration and an
+ambiguous-token mapping that refuses 55000 before effects. Row eligibility uses
+the fixed qualified raw SESSION_USER membership profile. Full acceptance is
+established separately by the fresh gate; original assertion, criterion and 60s
+budget remain unchanged. See `evidence/security/pg18-stored-token-20261015/`.
+
+Every tokenize obligation remains unverified: stored custody, five propagation
+channels, reverse and vault-write action. Dump and replica plaintext/key copies
+are explicitly declared as requiring excluded custody, not enforced or proved;
+L10 remains separate. This is not a tokenization provider, general security0.2
+Cell lineage, crypto custody, current-authority lifecycle, protected writes or
+Truss/Ashlar/Delta qualification.
+
+A separate conditional vault model permits arbitrary digest collisions and
+checks preservation of existing mappings and successful equality correspondence.
+Its three UNSAT laws and one SAT omitted-guard witness assume exact identity,
+atomic modeled enrollment and no excluded state mutation. They do not prove SQL,
+HMAC, ACLs, key/vault custody, lifecycle or propagation, and do not upgrade any
+obligation. M2 and the overall security goal remain active.
+
+The fresh full 158-case gate accepted the original P08 stand-in assertion and all
+previous 42 cases: 43 accepted, 115 required unbound, 34 criteria. Exit 1 is solely
+for those missing implementations. Evidence validation has 219 checks and exactly
+the same 88 failed IDs as before; the new P08 freshness check passes. Every
+original assertion, criterion and timeout is preserved. All tokenize obligations
+remain unverified; no tokenization enforcement is claimed. The goal stays active.
