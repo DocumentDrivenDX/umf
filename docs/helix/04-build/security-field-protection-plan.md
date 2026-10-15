@@ -1167,3 +1167,57 @@ Existing20 conditional models and758 recognized saved formulas replay without
 a resolver/native refinement claim. Formal receipts now report their actual
 interpreter. Evidence validation has219 checks/86 failed IDs, no new failures and
 two resolved formal-audit checks versus the previous88-failure baseline.
+
+
+### Fixed native assignment-intent component — 2026-10-15
+
+Original pg-raw.P04 remains unbound under its unchanged assertion and60s deadline.
+The retained PostgreSQL18.6 source-bound component exercises800 selected checks:
+original and blind positives; separate ordinary-object/Field negatives; transformed
+and withheld mask-output/unrelated assignments; no-op and NULL/int64 cases;
+actual same-session masked/withheld guesses including NULL; complete selected
+business-row/effect checks; all-nine effective owner/carrier privileges; absent
+Resource Keys; nonvacuous UPDATE-only versus old/new/aliased/whole-row RETURNING;
+strict public error channels; and removed-guard equality/preimage counterexamples.
+
+Both logical guards consume captured native Staff facts and Resource before
+values. Their existing unchanged-Field semantics remain intact. Native explicit
+assignment intent is stricter: check authorization before hidden equality, return
+only acknowledgment to authorized callers, and disclose no affected count.
+The exact supported authored source must be admitted before fixed SQL installation;
+substituted/unknown source refuses. Actual catalog premises and exact routine body
+are asserted. No general compiler or source/authority/lifecycle refinement follows.
+
+Seven conditional response-only formulas replay5UNSAT/2SAT, with NULL/SQL/timing/
+locking refinement excluded. Native finite NULL controls are separate evidence.
+Evidence and failed initial runs are retained in
+`evidence/security/pg18-mask-write-20261015/`.
+Independent final implementation review and the original binding/full gate remain
+required. The last whole gate is still43 accepted/115 unbound of158 required,
+34 criteria; the shared implementation goal remains active.
+
+
+### Fixed P04 profile accepted — 2026-10-15
+
+The original pg-raw.P04 binding now passes freshly:807 governed observations in
+41.2s under the unchanged60s deadline. Independent Astra replay passes806 checks,
+39 diagnostic/source controls, five actual native weakenings and13 binding checks.
+All158 original assertions, allocations and deadlines are preserved; only P04's
+execution/evidence/source metadata changes. The full gate reaccepts all43 earlier
+cases and accepts P04, yielding44 accepted/114 required unbound/158 cases and34
+criteria. P03/B08 and the full shared implementation goal remain open.
+
+The earlier planned/component paragraphs describe intermediate checkpoints.
+The final evidence packet includes exact source/runtime pins, role/DDL premises,
+full business-state witnesses for refusal phases, native counterexamples,
+conditional formal formulas, independent archive and fresh gate. This qualifies
+only the exact authored PG18.6 raw profile. Privileged-role probes are the named
+owner/read-all routes and effective privileges, with fresh trusted bootstrap/no
+extra memberships as a premise; continuous role/DDL closure is not proved.
+
+A general mutation producer still must retain actual explicit assignment Field
+intent independently of before/after equality. It cannot infer intent from a
+changed-Field set or use a logical no-op permit as native assignment authority.
+General source lowering and current-authority/lifecycle integration remain
+required beyond this fixed native binding. No SQL refinement theorem follows
+from the seven response-only conditional formulas.

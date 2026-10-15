@@ -12008,3 +12008,29 @@ for those missing implementations. Evidence validation has 219 checks and exactl
 the same 88 failed IDs as before; the new P08 freshness check passes. Every
 original assertion, criterion and timeout is preserved. All tokenize obligations
 remain unverified; no tokenization enforcement is claimed. The goal stays active.
+
+
+### Fixed native mask-write intent — 2026-10-15
+
+The original pg-raw.P04 now passes freshly with807 governed observations in41.2s
+under its original60s deadline. The exact authored PG18.6 raw binding independently
+checks ordinary object/Field authority and original-read or declared/granted blind
+permission before hidden comparison, including explicit no-op assignments. The
+logical delta guard's existing no-op contract is unchanged. Captured native facts,
+nullable int64 cases, tagged reads, direct-SQL/RETURNING controls, complete selected
+business-state witnesses and exact role/DDL/routine inventory are retained under
+`evidence/security/pg18-mask-write-20261015/`.
+
+Independent Astra evidence passes806 native checks,39 source/diagnostic controls,
+five actual native weakenings and13 applied-binding controls. Seven response-only
+conditional queries replay5UNSAT/2SAT without SQL/native refinement. Named privileged
+role probes and fresh trusted bootstrap are explicit premises; generic mutation
+producer intent/source lowering and current-authority/lifecycle closure remain open.
+
+The whole158-case gate reaccepts all43 previous cases and P04:44 accepted,
+114 required unbound,34 criteria. Every original assertion, allocation and deadline
+is unchanged. Both strict typing configurations pass. Evidence validation has220
+checks and86 failed IDs, unchanged from the immediate stored-query-source baseline;
+P04 freshness passes. Targeted HELIX checks pass; the global historical two-blocker/
+twelve-warning baseline remains. P03/B08, all remaining backends and the complete
+implementation goal remain active.

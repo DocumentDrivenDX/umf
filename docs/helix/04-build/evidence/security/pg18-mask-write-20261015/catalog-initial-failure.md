@@ -1,0 +1,1 @@
+The first full catalog replay failed because its expected pg_constraint inventory omitted PostgreSQL18 contype n NOT NULL rows. Actual: resource n,p; subject n,n,n,n,p,c,n. The corrected expectation requires all six n constraints plus two keys and the read-class check. No constraint was filtered from the inventory. The preimage is retained.

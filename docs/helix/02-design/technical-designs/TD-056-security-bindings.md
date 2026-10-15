@@ -2288,3 +2288,83 @@ lineage. The control is not an admitted route or completion of P03/B08.
 Evidence: `../../04-build/evidence/security/pg18-query-observations-20261015/`.
 No native current-authority, protected query producer or whole-backend qualification
 follows from this component.
+
+
+## Planned fixed native mask write guard — 2026-10-15
+
+The next P04 witness uses a closed PostgreSQL18.6 raw profile with a canonical
+nullable int64 amount and a one-String-Key Staff record mapped from actual SCRAM
+SESSION_USER. Private Staff facts select original, inline constant0 transformed,
+withheld or denied read and independently grant ordinary object update, Field
+update and an explicitly bound blind action. The exact same authored condition
+meaning is exercised by legacy evaluateSecurityWrite and the current canonical
+catalog-write kernel on captured native facts. No permit boolean is passed to SQL.
+
+The fixed owner-native SECURITY DEFINER routine must independently enforce this
+closed source profile: require writable READ COMMITTED before source/data access,
+stabilize private authority facts before reading, require ordinary update plus ordinary Field update and an actual original read
+OR the separately declared/granted blind action for every explicit amount
+assignment before looking up or comparing the hidden Resource value. Only then
+lock the original Resource row and use IS DISTINCT FROM to avoid redundant DML.
+A native changed-only check would expose whether a supplied guess equals the
+hidden value through acknowledgment versus42501. The logical delta guard retains
+its existing no-op semantics; this stricter native command-intent obligation is
+separate and must never be described as exact no-op parity. Check both states;
+in this selected
+subject-only condition profile the authority inputs are identical in both states.
+Unknown source shapes or resource-dependent conditions are outside this profile
+and must refuse qualification, not be dropped. This is a fixed native binding
+witness, not a general policy-to-SQL or query compiler.
+
+The protected routine returns only an acknowledgment. Ordinary base SELECT and
+column UPDATE/RETURNING remain denied independently; that direct-SQL refusal
+cannot substitute for routine enforcement. Masked/withheld writers must fail for
+both the mask output0 and an unrelated201, leaving canonical data/effects fixed.
+Original and explicit blind positives, null and no-op cases, separate ordinary
+permission failures and blind-grant revocation must be tested. Actual old/new
+RETURNING must not reveal a masked/withheld preimage. A separate excluded weakened
+definer must demonstrate the real write-back/preimage failure, then be removed
+and the original canonical state restored. No withheld output is represented as
+SQL NULL; any read transport retains a disposition tag.
+
+P04 remains unbound until the unchanged original assertion is satisfied under
+its60s deadline with an independent native oracle, exact source/runtime/role/DDL
+inventory and cleanup. Broader catalog transform/write/provider support, authority
+revocation lifecycle, protected manifests, graph and Delta remain separately
+required. No whole acceptance criterion is completed by this fixed profile.
+
+The implementation component now retains800 selected checks, both logical guards
+on captured native facts, all-nine effective carrier/owner privilege inventories,
+post-write tagged reads and strict public diagnostic channels. Seven conditional
+response-only formulas replay5UNSAT/2SAT, including the changed-only equality
+counterexample. Evidence is retained under
+`../../04-build/evidence/security/pg18-mask-write-20261015/`.
+Independent final implementation review and the
+original P04 binding/full acceptance replay remain required; this component does
+not promote P04 or any other case.
+
+
+### Fixed P04 profile accepted — 2026-10-15
+
+The original pg-raw.P04 binding now passes freshly:807 governed observations in
+41.2s under the unchanged60s deadline. Independent Astra replay passes806 checks,
+39 diagnostic/source controls, five actual native weakenings and13 binding checks.
+All158 original assertions, allocations and deadlines are preserved; only P04's
+execution/evidence/source metadata changes. The full gate reaccepts all43 earlier
+cases and accepts P04, yielding44 accepted/114 required unbound/158 cases and34
+criteria. P03/B08 and the full shared implementation goal remain open.
+
+The earlier planned/component paragraphs describe intermediate checkpoints.
+The final evidence packet includes exact source/runtime pins, role/DDL premises,
+full business-state witnesses for refusal phases, native counterexamples,
+conditional formal formulas, independent archive and fresh gate. This qualifies
+only the exact authored PG18.6 raw profile. Privileged-role probes are the named
+owner/read-all routes and effective privileges, with fresh trusted bootstrap/no
+extra memberships as a premise; continuous role/DDL closure is not proved.
+
+A general mutation producer still must retain actual explicit assignment Field
+intent independently of before/after equality. It cannot infer intent from a
+changed-Field set or use a logical no-op permit as native assignment authority.
+General source lowering and current-authority/lifecycle integration remain
+required beyond this fixed native binding. No SQL refinement theorem follows
+from the seven response-only conditional formulas.
