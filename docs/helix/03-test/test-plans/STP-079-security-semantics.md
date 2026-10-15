@@ -19,7 +19,7 @@ ddx:
 
 ## Story Reference
 
-**User Story:** [[US-079]] **Technical Design:** [[TD-079]]
+**User Story:** [[US-079-security-semantics]] **Technical Design:** [[TD-079-security-semantics]]
 **Solution Design:** [[SD-008]] **Project Test Plan:** TP-001.
 
 ## Scope and Objective
@@ -43,6 +43,34 @@ case can be represented as a pass.
 | US-079-AC8 | S08 | Predicate/order/group/join/aggregate uses disclosed representation or explicit original-use action; withheld use refuses. | `@covers US-079-AC8` required in exercising test | contract/browser |
 | US-079-AC9 | S09 | Preserve unknown rules and native source byte content where promised; unknown security meaning blocks interpretation. | `@covers US-079-AC9` required in exercising test | contract/browser |
 | US-079-AC10 | S10 | Same policy/facts/diagnostics and refusal outcomes in Bun and Chromium, no host globals or external requests. | `@covers US-079-AC10` required in exercising test | contract/browser |
+
+### Field-protection allocation — 2026-10-15 UTC
+
+These are required semantic cases under accepted FEAT-008 SEC-13..15 and
+CONTRACT-062/063. Every case also exercises US-079-AC10 in real Chromium.
+All 13 are `not-run`, without runner bindings; this allocation supplies no pass.
+
+| Case | Criteria | Required independent assertion |
+| --- | --- | --- |
+| S13 | US-079-AC11, US-079-AC12 | Resolve exact pinned catalog/transform/version and qualified input/output Field domains; foreign or missing references refuse. |
+| S14 | US-079-AC11, US-079-AC3, US-079-AC9 | Preserve unknown catalog/version/kind/member and native source content through JSON/YAML; unknown meaning blocks interpretation. |
+| S15 | US-079-AC12 | Additive security0.1-to0.2 migration preserves legacy constant meaning; rollback refuses any non-constant reference without changing the source. |
+| S16 | US-079-AC13, US-079-AC8 | Positive and missing-property refusal controls cover predicate, join, group, order and aggregate dependencies: equality predicates/join/group require retained equality, order requires retained order, and each selected aggregate requires its declared input properties. Omitted queryUse defaults to prohibited. Deterministic transforms report implied equality even if omitted from authored properties. |
+| S17 | US-079-AC13 | Random tokenization cannot admit disclosed equality join/group; a weakened validator ignoring that dependency must be distinguished. |
+| S18 | US-079-AC11, US-079-AC3 | Catalogs over256 transforms, more than32 typed parameters or literals exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. |
+| S19 | US-079-AC14 | Constant, partial, fixed-length-redact, range-bucket, truncate-date and prefix-only exact outputs match independently authored Python expectations; keyed/vault operations are not executed by UMF. |
+| S20 | US-079-AC14, US-079-AC7 | Canonical null, absence, withheld, transformed null, changed output domain and stored token survive disposition transport distinctly. |
+| S21 | US-079-AC15, US-079-AC3 | Hash declarations require an algorithm and declared salt custody (none or keyed); unsalted hash requires retained equality and a mandatory dictionary-attack warning obligation. Tokenize/encrypt declarations require complete stored custody and propagation metadata; keyed/vault reversibility requires a distinct reverse action. Declarations remain unverified native obligations. |
+| S22 | US-079-AC15 | Reverse action is distinct from read/field/original-authorized actions; ordinary/original disposition exposes stored token and never implies plaintext recovery. |
+| S23 | US-079-AC15 | History, snapshots, exports, feeds and caches each have explicit propagation declarations; missing or unknown required meaning refuses and source is preserved. |
+| S24 | US-079-AC16 | Field mutation without original disposition or explicit field-bound blind-write permission refuses, including a proposed value equal to the mask output. |
+| S25 | US-079-AC16, US-079-AC15 | Stored-transformed field mutation additionally requires the exact declared vault-write action; unrelated read/original/reverse permissions cannot substitute. |
+
+Implement real failing assertions and independent oracle expectations before
+implementing each slice. Register exact commands, sources and assertion IDs in
+`cases.json` only when those exercising runners exist. Missing APIs, partial
+closure or unavailable native custody cannot be replaced by a passing placeholder.
+No native US-056/057 obligation is discharged by a semantic case.
 
 ## Executable Proof
 

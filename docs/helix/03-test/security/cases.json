@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "scope": "FEAT-008 first security qualification; planned required tests, not execution evidence; 2026-10-14 amendment adds 13 field-protection P-cases (pg-raw.P01-P05/P07/P08, delta-raw.P01-P04/P07/P08), all not-run; no case retired or promoted",
+  "scope": "FEAT-008 required qualification; 158 required cases: original132, 13 field-protection native P-cases and 13 semantic S13-S25. Allocation is not execution; no case retired or promoted.",
   "cases": [
     {
       "id": "S01",
@@ -568,6 +568,300 @@
       "timeoutMs": 30000,
       "assertionIds": [
         "S12"
+      ]
+    },
+    {
+      "id": "S13",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC11",
+        "US-079-AC12",
+        "US-079-AC10"
+      ],
+      "name": "protection-reference-resolution",
+      "assertion": "Resolve exact pinned catalog/transform/version and qualified input/output Field domains; foreign or missing references refuse. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S13"
+      ]
+    },
+    {
+      "id": "S14",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC11",
+        "US-079-AC3",
+        "US-079-AC9",
+        "US-079-AC10"
+      ],
+      "name": "unknown-protection-preservation",
+      "assertion": "Preserve unknown catalog/version/kind/member and native source content through JSON/YAML; unknown meaning blocks interpretation. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S14"
+      ]
+    },
+    {
+      "id": "S15",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC12",
+        "US-079-AC10"
+      ],
+      "name": "protection-migration-rollback",
+      "assertion": "Additive security0.1-to0.2 migration preserves legacy constant meaning; rollback refuses any non-constant reference without changing the source. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S15"
+      ]
+    },
+    {
+      "id": "S16",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC13",
+        "US-079-AC8",
+        "US-079-AC10"
+      ],
+      "name": "effective-query-disclosure",
+      "assertion": "Positive and missing-property refusal controls cover predicate, join, group, order and aggregate dependencies: equality predicates/join/group require retained equality, order requires retained order, and each selected aggregate requires its declared input properties. Omitted queryUse defaults to prohibited. Deterministic transforms report implied equality even if omitted from authored properties. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S16"
+      ]
+    },
+    {
+      "id": "S17",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC13",
+        "US-079-AC10"
+      ],
+      "name": "random-token-query-refusal",
+      "assertion": "Random tokenization cannot admit disclosed equality join/group; a weakened validator ignoring that dependency must be distinguished. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S17"
+      ]
+    },
+    {
+      "id": "S18",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC11",
+        "US-079-AC3",
+        "US-079-AC10"
+      ],
+      "name": "protection-bounds",
+      "assertion": "Catalogs over256 transforms, more than32 typed parameters or literals exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S18"
+      ]
+    },
+    {
+      "id": "S19",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC14",
+        "US-079-AC10"
+      ],
+      "name": "pure-protection-independent-oracle",
+      "assertion": "Constant, partial, fixed-length-redact, range-bucket, truncate-date and prefix-only exact outputs match independently authored Python expectations; keyed/vault operations are not executed by UMF. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S19"
+      ]
+    },
+    {
+      "id": "S20",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC14",
+        "US-079-AC7",
+        "US-079-AC10"
+      ],
+      "name": "protection-disposition-transport",
+      "assertion": "Canonical null, absence, withheld, transformed null, changed output domain and stored token survive disposition transport distinctly. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S20"
+      ]
+    },
+    {
+      "id": "S21",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC15",
+        "US-079-AC3",
+        "US-079-AC10"
+      ],
+      "name": "protection-custody-declarations",
+      "assertion": "Hash declarations require an algorithm and declared salt custody (none or keyed); unsalted hash requires retained equality and a mandatory dictionary-attack warning obligation. Tokenize/encrypt declarations require complete stored custody and propagation metadata; keyed/vault reversibility requires a distinct reverse action. Declarations remain unverified native obligations. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S21"
+      ]
+    },
+    {
+      "id": "S22",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC15",
+        "US-079-AC10"
+      ],
+      "name": "independent-reverse-action",
+      "assertion": "Reverse action is distinct from read/field/original-authorized actions; ordinary/original disposition exposes stored token and never implies plaintext recovery. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S22"
+      ]
+    },
+    {
+      "id": "S23",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC15",
+        "US-079-AC10"
+      ],
+      "name": "protection-propagation-declarations",
+      "assertion": "History, snapshots, exports, feeds and caches each have explicit propagation declarations; missing or unknown required meaning refuses and source is preserved. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S23"
+      ]
+    },
+    {
+      "id": "S24",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC16",
+        "US-079-AC10"
+      ],
+      "name": "mask-write-back-admission",
+      "assertion": "Field mutation without original disposition or explicit field-bound blind-write permission refuses, including a proposed value equal to the mask output. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S24"
+      ]
+    },
+    {
+      "id": "S25",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC16",
+        "US-079-AC15",
+        "US-079-AC10"
+      ],
+      "name": "stored-transform-vault-write",
+      "assertion": "Stored-transformed field mutation additionally requires the exact declared vault-write action; unrelated read/original/reverse permissions cannot substitute. Replay the same independent expectations in Bun and real Chromium.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "S25"
       ]
     },
     {

@@ -693,7 +693,7 @@
       "status": "passed"
     },
     {
-      "id": "all-28-criteria-allocated-to-145-required-cases",
+      "id": "all-34-criteria-allocated-to-158-required-cases",
       "status": "passed"
     },
     {
@@ -811,8 +811,8 @@
   ],
   "scope": "Current retained source freshness, allocation and managed-source execution metadata correspondence within trusted reviewed runners; no source authentication, semantic completeness or native deployment acceptance",
   "productionAcceptance": "open",
-  "requiredCases": 145,
-  "allocatedCriteria": 28,
+  "requiredCases": 158,
+  "allocatedCriteria": 34,
   "passingFreshCases": [
     "S01",
     "S02",
@@ -825,6 +825,7 @@
     "S09",
     "S10",
     "S11",
+    "S12",
     "pg-raw.B01",
     "pg-raw.B02",
     "pg-raw.B03",
@@ -840,5 +841,5 @@
     "pg-raw.L01",
     "pg-raw.L02"
   ],
-  "sourceDigest": "b3fd80151448ea975a42f7dfac91c2f2f2e136ef7832e56b0309fd7e7cbed1a9"
+  "sourceDigest": "8fe9ad0d3a4e87385bae6774b3a690d2045b5c459fb93a4028d6c2bbb51b5934"
 }

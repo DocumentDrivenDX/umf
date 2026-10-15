@@ -14,7 +14,7 @@ const errors: string[] = [];
 const ids = new Set<string>();
 const allocated = new Set<string>();
 // Security semantics migrated from the colliding US-055 identity to US-079.
-const requiredCriteria = new Set([[79, 10], [56, 10], [57, 8]].flatMap(([story, count]) =>
+const requiredCriteria = new Set([[79, 16], [56, 10], [57, 8]].flatMap(([story, count]) =>
   Array.from({length: count!}, (_, i) => `US-${String(story).padStart(3, "0")}-AC${i + 1}`)));
 const execution: unknown[] = [];
 const allowedRoots: Record<string, string[]> = {

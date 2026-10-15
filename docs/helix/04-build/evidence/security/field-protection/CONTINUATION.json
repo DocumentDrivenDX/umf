@@ -38,24 +38,23 @@
     "P-C": "applied: FEAT-008 SEC-15",
     "P-D": "applied: CONTRACT-062 section 'Field protection catalog and 0.2.0 disposition reference' (proposed, unimplemented)",
     "P-E": "applied: CONTRACT-063 section 'Field protection receipt members'; PG 18 and UC citations with 2026-10-13 inspection date",
-    "P-F": "applied: 13 not-run cases added (pg-raw.P01-P05/P07/P08, delta-raw.P01-P04/P07/P08); B04/B05/B14/B07/B08/L08/L10 expansions; S13-S25 allocation to STP-079 still open",
+    "P-F": "Native protection13 plus semantic S13-S25 allocated; all26 remain not-run.",
     "P-G": "applied: SD-008 section 'Field protection decisions'",
     "Q10": "accepted 2026-10-14: B-SFP-017 in scope, unqualified until evidence",
-    "Q13": "enlarged single gate of 145 cases (recorded assumption following owner direction)"
+    "Q13": "Enlarged single required gate158 cases,34 criteria."
   },
   "gate": {
-    "requiredCases": 145,
+    "requiredCases": 158,
     "originalRequiredCases": 132,
-    "addedNotRunCases": 13,
+    "addedNotRunCases": 26,
     "acceptedCases": 26,
-    "openCases": 119,
-    "acceptanceReceiptCurrent": false,
-    "note": "Latest full-gate source checkpoint77d76abc accepted26/145 with119 missing bindings. Subsequent governing status text changed S12 contract pins; historical count is not a fresh gate result for current sources."
+    "openCases": 132,
+    "acceptanceReceiptCurrent": true,
+    "note": "Fresh final gate:26 accepted of158;132 missing runner bindings; no protection behavior qualified."
   },
   "blockers": [
     "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
-    "PostgreSQL 18.x minor/image and Anonymizer install decision (Q3) not yet selected",
-    "Semantic cases S13-S25 not yet allocated in STP-079/US-079 or cases.json"
+    "PostgreSQL 18.x minor/image and Anonymizer install decision (Q3) not yet selected"
   ],
   "tokenUsage": {
     "ceiling": "unknown",
@@ -64,10 +63,10 @@
       "B-SFP-000": "not measured"
     }
   },
-  "nextAction": "Finish B-SFP-001 catalog wire schema/package and inspection surface; allocate S13-S25 and original failing runners before implementing catalog interpretation. Continue native original store/anchor/guard composition separately.",
+  "nextAction": "Implement B-SFP-001 catalog wire schema/package and inspection surface; bind concrete failing S13-S25 runners before interpretation. Continue current native authorization/guard composition.",
   "validation": {
-    "validate-evidence.py": "93 failed of 202 after amendment versus 91 failed on the unmodified origin/main tree; the two new failures are fresh-gate-plan-and-tooling (expected: plan digest changed) and fresh-formal.json (expected: contract bytes changed); the renamed 145-case check fails on the pre-existing US-055 criterion-ID expectation",
-    "check-acceptance-allocation.py": "passed, 8 checks",
+    "validate-evidence.py": "202 checks, 88 failures; failure IDs equal retained baseline: True. Not a passing release gate.",
+    "check-acceptance-allocation.py": "passed,9 controls",
     "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
   },
   "integration": {
@@ -79,11 +78,11 @@
     "validatorIdentity": "US-079 aligns with governing cases and acceptance.ts",
     "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
     "freshGate": {
-      "requiredCases": 145,
+      "requiredCases": 158,
       "executed": 26,
       "accepted": 26,
-      "missingBindings": 119,
-      "receipt": "docs/helix/04-build/evidence/security/full-gate-20261014-r2/receipt.json"
+      "missingBindings": 132,
+      "receipt": "docs/helix/04-build/evidence/security/protection-allocation-20261015/acceptance.json"
     }
   },
   "inProgressSlices": [

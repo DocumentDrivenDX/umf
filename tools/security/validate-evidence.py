@@ -464,9 +464,9 @@ plan_path = 'docs/helix/03-test/security/cases.json'
 plan = json.loads(Path(plan_path).read_text())
 gate = json.loads((root/'acceptance.json').read_text())
 allocated = {ac for case in plan['cases'] for ac in case['covers']}
-expected = {f'US-{story:03d}-AC{i}' for story, count in [(79,10),(56,10),(57,8)] for i in range(1,count+1)}
-checks.append({'id': 'all-28-criteria-allocated-to-145-required-cases',
-               'status': 'passed' if allocated == expected and len(plan['cases']) == 145 and all(c['required'] for c in plan['cases']) else 'failed'})
+expected = {f'US-{story:03d}-AC{i}' for story, count in [(79,16),(56,10),(57,8)] for i in range(1,count+1)}
+checks.append({'id': 'all-34-criteria-allocated-to-158-required-cases',
+               'status': 'passed' if allocated == expected and len(plan['cases']) == 158 and all(c['required'] for c in plan['cases']) else 'failed'})
 checks.append({'id': 'fresh-gate-plan-and-tooling', 'status': 'passed' if gate['planDigest'] == digest(plan_path)
                and all(digest(p) == value for p,value in gate['gateSourceDigests'].items()) else 'failed'})
 fresh_case_ids=set()

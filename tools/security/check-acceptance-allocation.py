@@ -16,17 +16,19 @@ for story in stories:
  ids=re.findall(r'\*\*(US-\d+-AC\d+)\*\*',text)
  if len(ids)!=len(set(ids)) or not ids:raise RuntimeError('Ambiguous authoritative criteria')
  required.extend(ids)
-if len(required)!=28:raise RuntimeError('Governing story criterion count changed')
+if len(required)!=34:raise RuntimeError('Governing story criterion count changed')
 plan=json.loads(frozen[str(plan_path.relative_to(base))])
 allocated={ac for case in plan['cases'] for ac in case['covers']}
 if allocated!=set(required):raise RuntimeError('Actual case plan does not match governing security stories')
 observations=[]
 scenarios=[('complete',required,[]),
  ('missing-semantic',[x for x in required if x!='US-079-AC8'],['unallocated US-079-AC8']),
+ ('missing-protection',[x for x in required if x not in {f'US-079-AC{i}' for i in range(11,17)}],
+  [f'unallocated US-079-AC{i}' for i in range(11,17)]),
  ('retired-semantic',[x.replace('US-079','US-055') for x in required],
-  ['allocation-control: unrelated or unknown acceptance criterion US-055-AC'+str(i) for i in range(1,11)]+['unallocated US-079-AC'+str(i) for i in range(1,11)]),
+  ['allocation-control: unrelated or unknown acceptance criterion US-055-AC'+str(i) for i in range(1,17)]+['unallocated US-079-AC'+str(i) for i in range(1,17)]),
  ('unrelated',required+['US-055-AC1'],['allocation-control: unrelated or unknown acceptance criterion US-055-AC1']),
- ('unknown',required+['US-079-AC11'],['allocation-control: unrelated or unknown acceptance criterion US-079-AC11'])]
+ ('unknown',required+['US-079-AC17'],['allocation-control: unrelated or unknown acceptance criterion US-079-AC17'])]
 for name,covers,expected in scenarios:
  with tempfile.TemporaryDirectory(prefix='umf-gate-allocation-') as folder:
   root=Path(folder)
@@ -48,24 +50,24 @@ with tempfile.TemporaryDirectory(prefix='umf-gate-allocation-executing-') as fol
  for original in [gate,helper]:
   relative=str(original.relative_to(base));target=root/relative
   target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(frozen[relative])
- runner='\n'.join('// @covers '+ac for ac in [*required,'US-079-AC11'])+'''\nimport {createHash} from 'node:crypto';
+ runner='\n'.join('// @covers '+ac for ac in [*required,'US-079-AC17'])+'''\nimport {createHash} from 'node:crypto';
 const paths=['runner.ts','oracle.json','implementation.ts'];
 const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
 const id=Bun.env.UMF_SECURITY_CASE_ID;
 const covers=JSON.parse(Bun.env.UMF_ALLOCATION_REQUIRED!);
-if(id==='unknown-execution')covers.push('US-079-AC11');
+if(id==='unknown-execution')covers.push('US-079-AC17');
 console.log(JSON.stringify({status:'passed',id,backend:'semantic',runId:Bun.env.UMF_SECURITY_RUN_ID,command:['bun','runner.ts'],covers,versions:{bun:Bun.version},sourceDigests,observations:[{assertionId:id,expected:1,observed:1}]}));
 '''
  (root/'runner.ts').write_text(runner);(root/'oracle.json').write_text('{}');(root/'implementation.ts').write_text('export const metadataFixture=true;')
  cases=[]
- for identifier,covers in [('unknown-execution',required+['US-079-AC11']),('valid-after-error',required),('valid-after-error',required)]:
+ for identifier,covers in [('unknown-execution',required+['US-079-AC17']),('valid-after-error',required),('valid-after-error',required)]:
   cases.append({'id':identifier,'backend':'semantic','required':True,'covers':covers,'command':['bun','runner.ts'],'testSource':'runner.ts','oracleSource':'oracle.json','implementationSources':['implementation.ts'],'assertionIds':[identifier],'timeoutMs':10000})
  target=root/'docs/helix/03-test/security/cases.json';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps({'cases':cases}))
  import os
  result=subprocess.run(['bun',str(root/gate.relative_to(base))],cwd=root,env={**os.environ,'UMF_ALLOCATION_REQUIRED':json.dumps(required)},capture_output=True,text=True,timeout=15)
  receipt=json.loads((root/'docs/helix/04-build/evidence/security/acceptance.json').read_text())
- if result.returncode!=1 or receipt['allocatedAcceptanceCriteria']!=28:raise AssertionError('Invalid allocation execution must fail')
- if receipt['errors']!=['unknown-execution: unrelated or unknown acceptance criterion US-079-AC11','duplicate case valid-after-error']:raise AssertionError(receipt['errors'])
+ if result.returncode!=1 or receipt['allocatedAcceptanceCriteria']!=34:raise AssertionError('Invalid allocation execution must fail')
+ if receipt['errors']!=['unknown-execution: unrelated or unknown acceptance criterion US-079-AC17','duplicate case valid-after-error']:raise AssertionError(receipt['errors'])
  executions=receipt['execution']
  if len(executions)!=3:raise AssertionError('All original fixture runners must execute')
  for label,row,expected in zip(['unknown-execution','valid-after-error','duplicate-execution'],executions,[False,True,False]):

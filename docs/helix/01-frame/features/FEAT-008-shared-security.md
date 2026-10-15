@@ -127,10 +127,11 @@ plaintext recovery is a separate `reversed` outcome, never an `original` one.
 All fifteen security requirements have a story and design owner; all required
 backend criteria pass independently, with no unqualified equivalence claims.
 SEC-13..15 (2026-10-14) have design owners in SD-008 and contract text in
-CONTRACT-062/063; their story allocation (US-079 semantics, US-056/057 native
-cases) is recorded in the field-protection plan and remains an open frame item
-until the stories are amended. No implementation or native evidence exists for
-SEC-13..15 yet; every related support claim is `not-run`.
+CONTRACT-062/063; their story allocation is now explicit in US-079-AC11..AC16 and S13..S25,
+with the existing US-056/057 native P-cases retained. The gate contains 158
+required cases after adding those 13 semantic cases; none is retired or promoted.
+The internal source-preservation foundation does not interpret transforms;
+SEC-13..15 semantic interpretation and native qualification remain `not-run`.
 
 ## Constraints and Assumptions
 

@@ -425,3 +425,22 @@ the downstream semantics remain required. The latest retained full gate recorded
 original source pins. This governing-text addition changes the S12 contract
 pin; that old full-gate result is not current for the new sources. No case is
 added, retired or promoted by this preliminary source checkpoint.
+
+
+## Execution checkpoint — complete semantic allocation (2026-10-15 UTC)
+
+US-079-AC11..AC16 now own the accepted protection-catalog/reference, query
+disclosure, pure output, custody/reversal and write-admission requirements.
+STP-079 and cases.json allocate S13..S25 to those exact criteria plus browser
+parity. All 13 remain not-run without exercising runners. The required gate is
+now 158 cases (original132 + native P13 + semantic13), covering34 criteria.
+Existing145 cases and all their required flags/statuses/assertions are preserved.
+This supersedes the earlier145-case current tally and unallocated-S13..S25
+residue; historical receipts retain their original145-case scope.
+
+The current evidence validator already used US-079; the earlier stale-US-055
+residue text described a historical state and is no longer a current defect.
+Allocation controls now distinguish unknown US-079-AC17 from newly required
+AC11..AC16. This amendment is test/requirements allocation, not implementation
+or support evidence. B-SFP-001 and all downstream unimplemented slices remain
+open. Fresh gate results and scope are retained with this checkpoint.
