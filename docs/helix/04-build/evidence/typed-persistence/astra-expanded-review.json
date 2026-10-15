@@ -1,0 +1,147 @@
+{
+  "kind": "design-review",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "reviewedCommit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "scope": "Expanded FEAT-028–031, ADR-004, CONTRACT-067–074, US/TD/STP-080–088, typed-persistence-design and Weft handoff, against core and CONTRACT-900–904",
+  "verdictAtReviewedCommit": "Not implementation-ready: coherent architecture with blocking normative interface contradictions and omissions.",
+  "findings": [
+    {
+      "id": "AE01",
+      "severity": "P1",
+      "issue": "Action identity lacks complete declaration pin and issued revision",
+      "location": "CONTRACT-068 Actions; CONTRACT-069 Actions; CONTRACT-901 Revision and deployment",
+      "counterexample": "Redeploy the same module/action ID with changed effects; an old client selects the new meaning.",
+      "proposedRepair": "Pin original full declaration bytes and resolve through trusted registration to exact issued RevisionRef.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE02",
+      "severity": "P1",
+      "issue": "SDK loses complete original tx/1 result",
+      "location": "CONTRACT-072 Outcomes; CONTRACT-068 Actions; CONTRACT-900 Executor obligations",
+      "counterexample": "Committed drops changes/noOp/verification and Conflict drops its code; reserved ENTITY_MISSING is outside the generated Literal union.",
+      "proposedRepair": "Preserve complete original result and protected-safe codes, with typed convenience accessors and exact receipt profile.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE03",
+      "severity": "P1",
+      "issue": "Bulk control API omits original attempt custody and recovery",
+      "location": "CONTRACT-072 Bulk plans; CONTRACT-069 Bulk; CONTRACT-904 control protocol",
+      "counterexample": "Submit commits but acknowledgement disappears before a job reference is returned.",
+      "proposedRepair": "Retain complete control unions, submit key, original host-issued attempt capability and protected recovery reference.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE04",
+      "severity": "P1",
+      "issue": "Raw native frame and authorization obligations are incomplete",
+      "location": "CONTRACT-073 Obligations by platform; CONTRACT-072 verification; CONTRACT-900 frame; CONTRACT-901 roles/1",
+      "counterexample": "DELETE cascades outside the frame; service current_user membership silently substitutes for roles/1 authenticated-human membership.",
+      "proposedRepair": "Admit and fence complete native dependency/side-effect closure; refuse human-role profile on service sessions.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE05",
+      "severity": "P1",
+      "issue": "Commit reconciliation lacks original store/incarnation custody",
+      "location": "CONTRACT-073 Commit-loss reconciliation and receipt row",
+      "counterexample": "Reconnect reaches a different or restored cluster where the same xid has unrelated committed status.",
+      "proposedRepair": "Verify original writer/store/incarnation continuity before status; otherwise indeterminate; known abort alone is not a concurrency conflict.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE06",
+      "severity": "P1",
+      "issue": "Continuation omits full ordering tuple and query binding",
+      "location": "CONTRACT-072 Continuations; CONTRACT-071 generated functions; Weft requirements S7",
+      "counterexample": "Paging amount DESC,id ASC cannot resume from id alone; another filter accepts the same cursor.",
+      "proposedRepair": "Carry all sort values, hidden transport descriptors, catalog/query/variant/parameter and target identity.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE07",
+      "severity": "P1",
+      "issue": "Raw atomic and frozen-manifest command profiles/carriers are conflated",
+      "location": "CONTRACT-071 Build tool/Catalog entries; CONTRACT-073 Bulk; TD-086; CONTRACT-902",
+      "counterexample": "A frozen/batch Plan is reselected and executed as one atomic set update; selection-only digest misses a changed update program.",
+      "proposedRepair": "Separate versioned execution artifacts/profiles; owner-prepared action binding; Weft-owned complete parameter-hole/digest scheme.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE08",
+      "severity": "P1",
+      "issue": "Async search hydration can violate original filter",
+      "location": "CONTRACT-074 DSL and Results",
+      "counterexample": "Stale tenant-A candidate now belongs to tenant B and unfiltered get returns it.",
+      "proposedRepair": "Reapply original predicate in bounded hydration under current admission; count/drop stale nonmatches and qualify shortfall semantics.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE09",
+      "severity": "P2",
+      "issue": "Key selection is ambiguous and nested absence rules contradict",
+      "location": "CONTRACT-067 request/closure; CONTRACT-068 Keys; CONTRACT-070 RecordView/Conflict rules",
+      "counterexample": "Multiple Keys have one RecordKey with no choice; nullable unbound item requires both missing=true and missing=false.",
+      "proposedRepair": "Select explicit query Key; use exact referenced Key DTOs or refuse; define nested occurrence presence alternatives.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE10",
+      "severity": "P2",
+      "issue": "Optional null comparison semantics are not executable as specified",
+      "location": "CONTRACT-071 helper/variant/runtime rules; Weft requirements S2",
+      "counterexample": "Present nullable parameter binds None to column=:p, producing UNKNOWN although helper prose promises IS NULL.",
+      "proposedRepair": "Choose SQL equality plus explicit null tests or explicit null-sensitive lowering/variant policy; test all three states.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE11",
+      "severity": "P2",
+      "issue": "Writer ownership and search execution artifacts are incomplete",
+      "location": "CONTRACT-067 Host writer; CONTRACT-071 stage ownership/artifacts; CONTRACT-074 fusion/hydration",
+      "counterexample": "Stage-one replacement loses ignored stage-two paths; concurrent writers race; one SQL artifact lacks hybrid legs/hydration.",
+      "proposedRepair": "Preserve stage ownership with serialized recoverable publication and stale checks; define bounded search-program artifact.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    },
+    {
+      "id": "AE12",
+      "severity": "P2",
+      "issue": "Scope propagation and execution slice dependencies contradict",
+      "location": "FEAT-029; CONTRACT-071 remaining gates; US/STP-083 AC2; B-TP-007/B-TP-009",
+      "counterexample": "Tests reject every non-Key order despite WR-A5/A6; raw bulk precedes its shared execution qualification.",
+      "proposedRepair": "Align form matrix through ACs/tests; gate raw bulk on action foundation and Truss bulk on gateway/control prerequisites.",
+      "disposition": "accepted; correction in progress; focused rereview pending"
+    }
+  ],
+  "siblingObservations": {
+    "weft": "94b2de5e303fe53f0c9432458119b6fe1eef187c",
+    "truss": "a9cfb6912071b170fb4b57dc1b30b24b21cc24da",
+    "ashlar": "855ab296dc750f505ddb9cbe536ef4a3a168e576",
+    "qualification": "Read-only current-source observations; not evidence of adoption by the reviewed UMF commit. Weft mutation contract006; Truss bulk contract013. CONTRACT905 absent from reviewed UMF commit."
+  },
+  "strengths": [
+    "Weft owns all SQL lowering.",
+    "Protected engine storage and Ashlar publication boundaries remain explicit.",
+    "Raw/replaying capabilities and target-specific qualification are separated.",
+    "Deferred native and expanded typing evidence is honestly recorded."
+  ],
+  "planRequirements": [
+    "Shared UMF semantics and separate command profiles before compiler/runtime ABI.",
+    "Weft owns exact command/search artifacts, security inputs and structural digest corpus.",
+    "Truss read adoption precedes qualified gateway/control and manifest composition.",
+    "Raw action admission/outcome/receipt foundation precedes raw bulk.",
+    "Search artifact and stale-filter semantics precede native search qualification.",
+    "Propagate every correction through FEAT/US/TD/STP and pin cross-repository dependencies."
+  ],
+  "limitations": [
+    "Design review only; no implementation or native certification.",
+    "Explicitly deferred native witnesses, typing spike, release arrangements and spending ceiling are not themselves defects.",
+    "Delta sole-writer assumption is explicit but concurrent SDK creates still require qualification.",
+    "Original astra-review.json remains historical and unchanged."
+  ]
+}
