@@ -1,7 +1,8 @@
 /** Private selected-source correspondence; no policy/domain/runtime admission. */
 import {copyJson} from '../../model/json';
+import {readCandidateCoreSource,isIssuedCandidateCoreSource} from './core-source-candidate';
 import type {SecurityRef} from './types';
-const sources=new WeakMap<object,any>();
+const sources=new WeakMap<object,any>(),sourceHandles=new WeakMap<object,unknown>();
 const fail=():never=>{throw Error('SECURITY_ASSOCIATION_CANDIDATE_UNSUPPORTED');};
 const id=(r:SecurityRef)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
 function shape(v:any,keys:string[]){if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))fail();}
@@ -14,7 +15,7 @@ export interface CandidateRecordAssociationPlan {
  readonly endpoints:readonly {role:string;target:SecurityRef;key:unknown;fields:readonly SecurityRef[]}[];
 }
 export function resolveCandidateRecordAssociation(input:unknown,document:unknown,entities:unknown):CandidateRecordAssociationPlan {
- const s:any=copyJson(input),d:any=copyJson(document),choices:any=copyJson(entities);
+ const s:any=copyJson(input),d:any=readCandidateCoreSource(document),choices:any=copyJson(entities);
  shape(s,['kind','type','keyId','endpoints']);if(s.kind!=='record-members')fail();ref(s.type);text(s.keyId);
  if(!['0.7.0','0.8.0'].includes(d.umf)||!Array.isArray(d.modules)||!Array.isArray(choices)||choices.length>256)fail();
  const keys=new Map<string,string>();for(const e of choices){shape(e,['type','keyId']);ref(e.type);text(e.keyId);if(keys.has(id(e.type)))fail();keys.set(id(e.type),e.keyId);}
@@ -29,7 +30,7 @@ export function resolveCandidateRecordAssociation(input:unknown,document:unknown
   for(const f of e.fields){ref(f);if(f.documentId!==s.type.documentId||fields.has(id(f))||!source.members.some((m:any)=>m.module===f.moduleId&&m.element===f.elementId))fail();fields.add(id(f));}
   return {role:e.role,target:e.target,key,fields:e.fields};
  });
- const plan=freeze({kind:'candidate-record-association/0.1',type:s.type,key,sourceRecord:source,endpoints});sources.set(plan,d);return plan;
+ const plan=freeze({kind:'candidate-record-association/0.1',type:s.type,key,sourceRecord:source,endpoints});sources.set(plan,d);if(isIssuedCandidateCoreSource(document))sourceHandles.set(plan,document);return plan;
 }
 
 function canonical(v:any):string{return Array.isArray(v)?'['+v.map(canonical).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);}
@@ -60,11 +61,11 @@ export function requireCandidateEndpointDomainCorrespondence(plan:CandidateRecor
  * Retained query-use declarations are not compiler or runtime authorization. */
 export function requireCandidateAssociationClassifications(plan:CandidateRecordAssociationPlan,input:unknown):unknown {
  const document=sources.get(plan);if(!document)return fail();
- return checkCandidateRecordClassifications(document,[plan.type,...plan.endpoints.map(e=>e.target)],input);
+ return checkCandidateRecordClassifications(sourceHandles.get(plan)??document,[plan.type,...plan.endpoints.map(e=>e.target)],input);
 }
 /** Coverage utility over captured source content; caller must establish core validity. */
 export function checkCandidateRecordClassifications(source:unknown,scope:unknown,input:unknown):unknown {
- const packet:any=copyJson({source,scope,input}),document=packet.source,declarations=packet.input;
+ const shared=isIssuedCandidateCoreSource(source),packet:any=copyJson({...(!shared?{source}:{}),scope,input}),document=shared?readCandidateCoreSource(source):packet.source,declarations=packet.input;
  if(!Array.isArray(packet.scope)||packet.scope.length>257)fail();packet.scope.forEach((r:any)=>{ref(r);if(r.documentId!==document.id)fail();});
  if(!Array.isArray(declarations)||declarations.length>257)return fail();
  const required=new Map<string,SecurityRef>(packet.scope.map((r:SecurityRef)=>[id(r),r])),seen=new Set<string>();

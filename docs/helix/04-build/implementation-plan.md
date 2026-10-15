@@ -11817,3 +11817,15 @@ admission; no criterion or backend/lifecycle work is removed. Next complete
 the0.2 interpretation/compiler/property path and owner-profile compatibility,
 then full write admission and native current-authority/store/program/nonce/fullxid
 selector/finalizer/seal integration. The goal remains active.
+
+### Security source/compiler prerequisite increment — 2026-10-15
+
+CONTRACT-062/TD-079/STP-079 now specify nullable versus identity-domain typing,
+DTO-only constant/context domains, immutable shared source/root custody and compact
+scoped conditions. The private candidate implementation preserves old transport
+and plain-JSON preview behavior; copied handles do not gain issuance.221
+security/date tests (3063 assertions), strict types and browser build pass.
+See `evidence/security/candidate-domain-closure-20261015/` for baseline failures,
+source captures, formal judgment scope, independent review and unchanged gate
+execution. This does not complete the full0.2 interpreter or qualify S24/S25;
+required backend/current-authority work and the active security goal remain open.

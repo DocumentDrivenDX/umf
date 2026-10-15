@@ -433,3 +433,61 @@ substitute for full catalog-aware disposition and exact vault-write admission.
 Full0.2 interpretation, actual owner-purpose compatibility, current authority and
 all native/backend/lifecycle work remain required; the goal stays active.
 See `evidence/security/write-protection-20261015/` from the HELIX build root.
+
+
+## Full0.2 logical-program integration path — design2026-10-15
+
+The existing candidate policy checker still consumes the historical policy
+prototype and assumes every transformed directive is an inline constant. A schema
+import swap cannot interpret catalog references: use one actual source/type-closed
+program with exact policy/catalog/ontology/core pins, scoped typed conditions and
+true-permit disposition composition. Reuse original resolvers; never silently
+rewrite0.2 source into0.1 or manufacture endpoint Fields.
+
+Prerequisite corrections now allow nullable scalar terms and closure-only
+constant/output/context domains while retaining live membership and non-null
+Keys. The compact condition emitter shares the original scoped encoder, retains
+exact association-handle indices and avoids repeating full source archives in
+each condition. General program issuance and runtime evaluation remain unfinished.
+
+The shared program must preflight resource costs before calling helpers that copy
+source closures: current whole-ontology checks copy per entity/association, and
+legacy condition transport repeats the full closure per rule/target. Prefer one
+issued source snapshot with shared Field/Key/association tables and compact
+indices; if a phase still expands, charge every source/target/node incidence
+before allocation. A source-node cap alone does not bound target expansion.
+No aggregate CPU/heap theorem follows from post-copy text limits.
+
+The runtime needs separate typed Record rows and directed Relationship incidence
+rows, retaining record-key versus opaque-existential witnesses and original
+lexical occurrence correlation. Complete endpoint Records do not prove complete
+relationship inventory. Preflight relation/role/witness-attribute coverage even
+on empty resources and constant-false branches. Unknown facts use the original
+strong-Kleene and permit/require/forbid rules; known null and absence remain
+distinct. Logical nonoriginal catalog directives do not execute crypto.
+
+Full write admission additionally needs discriminated ownership association
+selectors and old/proposed graph-incidence comparison. Storage classification
+must cover every target Field and refuse omitted/canonical downgrade of stored
+outputs. The owner selects one exact storage transform when outputs are shared;
+presentation transforms do not select storage identity. Check its exact vault
+write action in every selected state. For0.2 owner profiles, read requires read
+purpose, normal Field actions field, blind actions field-only plus separate exact
+per-Field mapping/ID and actual grant, vault writes vault-write-only. Ordinary
+read+field purpose combinations remain permitted outside the blind slot. Existing
+CRUD/ownership/policy owner checks remain; purpose metadata never supplies a
+grant, authenticated route inventory or competing Weft originalAction mapping.
+
+Astra's full design/dependency packet is retained with this stage's evidence.
+All of these remaining program/runtime/write/native obligations remain required;
+no S24/S25 case is promoted by source typing or compact IR alone.
+
+The implemented prerequisite uses private WeakMap-issued core-source handles,
+issued immutable ontology roots and cached source indexes. Association checks
+share the root's exact frozen core source; target scopes share the same documents
+and ontology. A normalization fast path requires the exact root-owned association
+handles; independently checked sources retain the existing source-equality path.
+Detached public transport is unchanged. Compact conditions remain bound to their
+exact ordered table and original scope. These are source custody/type checks, not
+a full catalog program, runtime authority, authentication or an aggregate memory
+proof. The general0.2 interpreter gate remains closed.

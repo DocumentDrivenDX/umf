@@ -771,3 +771,53 @@ substitute for full catalog-aware disposition and exact vault-write admission.
 Full0.2 interpretation, actual owner-purpose compatibility, current authority and
 all native/backend/lifecycle work remain required; the goal stays active.
 See `evidence/security/write-protection-20261015/` from the HELIX build root.
+
+### Shared source/type/condition prerequisites — 2026-10-15
+
+The full catalog-aware program path requires exact source-domain typing and a
+shared immutable source closure before rule-by-target compilation. This increment
+admits nullable scalar attributes/typed constants while preserving non-null Keys,
+and resolves DTO/domain-only constant/output and explicitly allowlisted context
+Fields from the exact pinned closure without inventing live Record membership.
+
+Private core-source handles capture complete valid immutable detached documents.
+Issued ontology roots share those sources with association checks and cache entity
+indexes across target scopes. Public transport remains detached. Compact condition
+IR reuses the original scoped encoder, rebases exact association indices and binds
+consumption to the original ordered issued table and entity scope. Copies,
+residual expressions, missing declarations and hostile descriptors refuse. No
+root API, native permit, fact coverage, aggregate resource theorem or full0.2
+interpretation is added. Source sharing removes repeated retained source copies;
+future program compilation must still charge rule-target expansion before work.
+
+Strict types, browser build and221 security/date tests (3063 assertions) pass.
+Independent review and original158-case gate receipts are retained under
+`evidence/security/candidate-domain-closure-20261015/`. Conditional Boolean
+judgment analysis separates domain membership, context allowance, Key nullability
+and compact table/scope correspondence; it is not implementation refinement or
+native proof. The full catalog compiler, Record/graph fact runtime, graph-aware
+write comparisons, actual vault-write authorization and all backend acceptance
+work remain required. S24/S25 remain required and unbound; the goal stays active.
+
+Astra Ultra independently captured39 selected final source pins and replayed128
+observations in Bun and actual Chromium with full parity, zero external requests
+and no page errors. Seven single-guard mutants and one explicitly paired
+core/candidate Key weakening fail at the exact independently expected rows. The
+single candidate-Key weakening survives because the original core Key validator
+still rejects it; this redundant defense and a corrected mutation selector setup
+failure are retained. The eleven conditional queries replay as8UNSAT/3SAT.
+No actionable blocker remains within this prerequisite scope. The historical89
+observation review excludes the later source-sharing refactor and stays separate.
+
+The first full gate run is retained separately: a late contract custody paragraph
+caused observed source drift (including S17's own source-custody refusal). It is
+not used as final current evidence. The complete unchanged gate is rerun after
+all production source and governing contract edits are frozen.
+
+The final frozen158-case run accepts all37 bound cases with121 missing required
+bindings and no unexpected runner failures. All34 acceptance criteria remain
+allocated; every original assertion, command, timeout and required status is
+unchanged. Freshness remains213 checks with the same88 failing IDs as the prior
+increment. Four governed security artifacts validate; the global implementation
+plan retains its pre-existing two blockers/twelve warnings. No stale historical
+receipt was patched into qualification. See the increment's `receipt.json`.

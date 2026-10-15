@@ -1,6 +1,7 @@
 /** Private draft normalization. No public ontology version, fact authority,
  * policy admission or runtime permission is established by these plans. */
 import {copyJson} from '../../model/json';
+import {readCandidateCoreSource} from './core-source-candidate';
 import type {SecurityRef} from './types';
 type RelationshipRef={documentId:string;moduleId:string;relationshipId:string};
 export interface CandidateRelationshipPlan {
@@ -21,7 +22,7 @@ function freeze(value:any):any{if(value&&typeof value==='object'){for(const item
  * remain caller obligations. Only the selected directed singular relationship
  * and original Record Key/member correspondence are normalized here. */
 export function resolveCandidateRelationship(selector:unknown,document:unknown,entities:unknown):CandidateRelationshipPlan {
- const packet:any=copyJson(selector),model:any=copyJson(document),identities:any=copyJson(entities);
+ const packet:any=copyJson(selector),model:any=readCandidateCoreSource(document),identities:any=copyJson(entities);
  shape(packet,['kind','relationship','witness','endpoints']);if(packet.kind!=='core-relationship')fail();
  shape(packet.relationship,['documentId','moduleId','relationshipId']);for(const v of Object.values(packet.relationship))text(v);
  if(!['0.7.0','0.8.0'].includes(model.umf)||packet.relationship.documentId!==model.id||!Array.isArray(model.modules)||!Array.isArray(identities)||identities.length>256)fail();

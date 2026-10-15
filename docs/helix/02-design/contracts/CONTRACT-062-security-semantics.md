@@ -1120,3 +1120,51 @@ represent declared vault actions as permission. Full catalog-aware original
 disposition and exact stored-transform vault-write enforcement remain required
 for B-SFP-006 and original S24/S25 acceptance; legacy correction alone does not
 qualify those complete cases.
+
+
+### Candidate source-domain fidelity and compact condition IR — 2026-10-15
+
+The draft0.2 candidate typer MUST distinguish a core Field definition from live
+Record membership. Typed constants, inline constant output domains and explicitly
+allowlisted context Fields MAY resolve from any exact Field in the original
+pinned core-document closure, including DTO/domain-only definitions. Such a
+reference MUST NOT give that Field subject/resource/witness ownership, introduce
+a live Record, or create fact coverage. Live attribute/disclosure inputs still
+MUST belong to their exact declared target; context still requires its explicit
+ontology.context allowlist and a separately trusted typed runtime value. Record,
+missing, foreign and stale references do not become Field domains.
+
+The existing five-family scalar equality profile (boolean/string/integer/decimal/
+binary, scalar-one, explicit decimal facets and known semantics) MUST preserve
+required versus absent-allowed nullability in its exact domain signature. Nullable
+attributes and typed null constants are supported; identity and endpoint Key
+components remain required and non-null. Constants still undergo original core
+literal validation. A future runtime MUST distinguish known null from absent/
+unknown values; this source-typing correction does not itself evaluate facts.
+
+The private compact condition IR MUST reuse the original issued expression's
+scoped encoder. Association indices name the exact supplied issued association
+table; missing/extra/copied declarations and copied or residual expressions
+refuse, including omitted unused declarations. Reordering that same table may
+rebase indices without changing lexical occurrence/term custody. Record-member
+endpoint Fields and native graph role/side endpoints remain distinct. Opaque
+existential witnesses do not acquire Record identity/attributes.
+
+A compact condition retains only its kind and expression; source archives belong
+to the containing shared program rather than being duplicated per condition.
+Compact handles are process-local implementation artifacts, not policy/permission
+credentials or independently trusted JSON. Their JSON copies do not gain issuance. A program consumer MUST check the exact
+ordered issued association table and original entity/source scope retained for
+that compact handle; issuance alone does not establish index/source correspondence.
+The original full-source transport remains available and MUST retain byte-meaning
+and regeneration checks. This IR alone is not a full0.2 interpreter, fact supply,
+compiler/native admission, or S24/S25 qualification.
+
+The private shared-source path MUST capture a complete valid core document as a
+detached deeply immutable snapshot before issuing its process-local handle. An
+issued ontology root owns those sources and original association checks. Target
+scopes MAY share that root and its indexes; copied handles/roots/scopes MUST NOT
+gain issuance. Public source transport reads remain detached. The plain-JSON
+association preview path retains its existing snapshot and explicitly scoped
+qualifier behavior. Shared references reduce source duplication but establish no
+aggregate heap/CPU bound, source authenticity, fact coverage or enforcement grant.

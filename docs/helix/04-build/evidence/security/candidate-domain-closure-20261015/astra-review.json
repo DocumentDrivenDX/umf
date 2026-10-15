@@ -1,0 +1,97 @@
+{
+  "review": "Astra independent final shared-source/root, nullable/DTO/context and compact-condition review",
+  "timestampUtc": "2026-10-15T05:38:37.536859+00:00",
+  "repository": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "baseline": "6afddd95fa9b7c6745b3bb6ca74bb45e42d52cb6",
+  "status": "No actionable remaining blocker found within this private source-typing/custody prerequisite scope",
+  "sourcePins": "source-pins-after.json",
+  "selectedSourceCount": 39,
+  "sourceUnchangedDuringFinalControls": true,
+  "sourcePinScope": "Recursive static relative-import closure of four candidate entry modules, all new dependencies, three test files, root export fingerprint, lockfile and cases. Selected provenance, not full runtime or node_modules closure.",
+  "independentControls": {
+    "total": 128,
+    "typing": 56,
+    "compact": 33,
+    "sharedSourceRootScope": 39,
+    "Bun": "Bun 1.4.2",
+    "Chromium": "153.0.8010.12",
+    "allPassed": true,
+    "fullRowParity": true,
+    "externalRequests": 0,
+    "pageErrors": [],
+    "hostGlobalsAbsent": true
+  },
+  "sourceMutationControls": {
+    "originalControl": 1,
+    "killedSingleGuardMutants": 7,
+    "killedPairedCoreAndCandidateKeyMutant": 1,
+    "exactExpectedFailureSets": true,
+    "additionalRetainedSingleCandidateKeySurvivor": "Original src/validation/keys.ts KEY_FIELD_REQUIRED independently rejects nullable Keys before the weakened candidate check; retained as redundant defense, not counted as killed",
+    "initialSetupFailure": "Wrong exact mutation selector for a TypeScript nonnull assertion; retained separately, corrected without changing expectations"
+  },
+  "repositoryTestsIndependentlyRun": {
+    "tests": 11,
+    "assertions": 80,
+    "result": "pass",
+    "log": "parent-tests.log"
+  },
+  "conditionalModel": {
+    "source": "parent-formal.py",
+    "independentlyReplayed": true,
+    "Z3": "4.15.4",
+    "queries": 11,
+    "UNSAT": 8,
+    "SAT": 3,
+    "review": "Correctly limited to explicitly defined Boolean judgments; no extraction, TypeScript/core-validator/native/resource refinement. Positive and weakened controls prevent an all-refuse interpretation."
+  },
+  "findingsResolved": [
+    "Compact issuance alone did not bind numeric indices; final private WeakMap checks exact ordered issued table and original entity scope. Final independent mutations discriminate both checks."
+  ],
+  "custodyReview": [
+    "Issued complete core snapshots are detached and deeply frozen; copied/spoofed handles cannot inherit issuance",
+    "Issued immutable ontology root owns original checks and Field index; target scopes share data without sharing target identity",
+    "Original association handles permit direct shared-root comparison; independently checked handles still require exact source/classification correspondence",
+    "Public transport reads detach; compact handles are private process artifacts, not source/permission credentials",
+    "Live attributes/disclosure inputs remain exact members; context requires explicit allowlist; DTO constants/output remain distinct; original core keys remain nonnull"
+  ],
+  "historicalEvidence": "../typing-controls/review.json retains exact pre-shared-source 89-control isolated replay; 18 intended typing positives failed against actual baseline. New qualification does not inherit that result without replay.",
+  "caseMetadata": "158 IDs/order/assertions/covers/status/runners/timeouts preserved; only additive core-source implementation fingerprints on existing cases; S24/S25 entire rows unchanged",
+  "remainingRequiredWork": [
+    "Canonical .2 catalog-aware source/type-closed program and actual action/fact/disposition runtime",
+    "Complete Record/graph incidence coverage and old/proposed mutation semantics",
+    "Exhaustive canonical/stored classification and exact storage transform/vault-write grants in all required states",
+    "Precharge repeated copying/validation/target expansion; no total CPU/heap theorem from this component",
+    "Source authentication, runtime authority, native compiler/profile and protected release qualification"
+  ],
+  "artifactSha256": {
+    "oracle.ts": "619c7b7dda265fb8808870233d96846affb39ae755c9915ee86cbb9accf49b4a",
+    "all-oracle.ts": "0fc006725bd367e219ae5412c74afdac22fcb5bec162311c2d743204d1351468",
+    "run-all.ts": "6036baf065e60e98f78eb4d28009fe41aca21d766ae00dae467f20410a9d5fd5",
+    "run-browser.ts": "e1fbfe9631f02998f840bb8226ab71a94f410d7aa4444b125f98600eab951afd",
+    "current-results.json": "ad436ee7c46373a2ba69162e2e443ded5df6ebfe0f6425e22666fa8d43fc6d2a",
+    "browser-results.json": "80eb61841430101cb6f09b4494344ef16b3bd50a35936201fedcc1d216cfe9e2",
+    "bun.log": "6b135e95d6c71d25491fa039ad1645f13297e88ed0ea7072c09cfe1e4287fff2",
+    "browser-run.log": "daf6ba755c4e0bad945ca75163070264fdee57aa6381af02826762c18952b9e9",
+    "parent-tests.log": "780e935daafc340f74b438f16ad9030f92ee65a9b6fe22a079dbaf030fa36bd3",
+    "source-pins-before.json": "229a26ac36a9412d2af705717a6da3b085c5b0c80b72152bc4e135e7e2dffbed",
+    "source-pins-after.json": "229a26ac36a9412d2af705717a6da3b085c5b0c80b72152bc4e135e7e2dffbed",
+    "case-metadata-check.json": "5662325fac3710312fa514e456f160708c97cfd3d5145b3a5df579cd03bc260d",
+    "mutations.py": "ad47f035aa2beb5914483c7c890451b3b5c1d0c7e391f471f891a6f8d4b01f4d",
+    "mutations.log": "c4b343326716e2f9c38d1bbaac773acf5efb770eaeace977e1ef9d93ca4ef780",
+    "mutation-results.json": "0374eeeb6541f35b95d82df6b48fdd077ebe5e4fa8ffaf98e5f8afac282e0b45",
+    "mutations-initial-selector-setup.py": "d8b850f101c68b1af02e81d25ff72484b2a90094f0e9a7c4e13f57770109b439",
+    "mutations-initial-selector-setup.log": "91543ae378134f6768474b4af07fcc71aeeee904cd6c859e53340c45bfaa2700",
+    "mutations-redundant-key-survivor.py": "8bb1e81bf5bb9ec2e06961c3728289b1be083e195bcafd5920558444da40f4a5",
+    "mutations-redundant-key-survivor.log": "6b0dd3dec009941a0d263f880cccd1a891c427b673896421bf93bc61663938f6",
+    "mutation-development-results.json": "9cf7af7d334577cf6a228428572106df4b77cf28532584f4f912837cd8ead29d",
+    "parent-formal.py": "ebfecbff3bf089086aa63b209a6b80b11dac7cae92b6777bea784de29527c60c",
+    "parent-formal-replay.json": "4e157e345b1eb1134e444515830513e5c7706947bc6e390eebf98dfc5982e9b7",
+    "governance/CONTRACT-062-security-semantics.md": "a5f522e5af7d1c1db488bc160f55b0f6cbabe5d23085e64760191dbc34e00a70",
+    "governance/STP-079-security-semantics.md": "1c5a52b497818e6fe0b8964d1e53aa97ea02e9e370b1314e9a499e048e158389",
+    "governance/TD-079-security-semantics.md": "754ea47e01f28e83ac44481a32a608410a77ed1f5b52ba4aea40a27084587419"
+  },
+  "acceptancePromotions": [],
+  "repositoryEditsByReviewer": false,
+  "nativeJobsRun": false,
+  "parentFullGate": "Not independently rerun or qualified by this receipt"
+}

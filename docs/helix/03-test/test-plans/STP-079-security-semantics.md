@@ -410,3 +410,25 @@ substitute for full catalog-aware disposition and exact vault-write admission.
 Full0.2 interpretation, actual owner-purpose compatibility, current authority and
 all native/backend/lifecycle work remain required; the goal stays active.
 See `evidence/security/write-protection-20261015/` from the HELIX build root.
+
+
+## Candidate closure and compact-IR prerequisites — 2026-10-15
+
+Test nullable scalar attribute/null constant agreement; reject null for required
+Keys. Resolve constants, inline outputs and explicit context from closure-only
+Fields while rejecting inferred live ownership, non-Fields, missing/foreign refs
+and undeclared context. Preserve original source cuts and exact domains.
+Compare compact IR with the original complete source transport for nested
+record-member, native graph record-key and opaque witnesses; rebase only the
+same issued association table, reject copies, residuals and omitted unused
+declarations without invoking accessors. Add actual source mutation controls and
+independent Bun/Chromium expectations. These prerequisites do not replace the
+full catalog-aware action/fact/disposition/vault-write tests for original S24/S25.
+
+Shared-source controls must check detached immutable capture, rejection of invalid
+or accessor-bearing input, exact source reference sharing across associations and
+scopes, copied-root/scope refusal, and detached public transport. Compact controls
+must reject reordered tables at consumption and fresh source scopes even when
+JSON is equal. Run strict types, browser build, security/date regression and the
+original158-case gate without changing required assertions or deadlines. Boolean
+judgment proofs remain conditional and do not replace implementation/native tests.
