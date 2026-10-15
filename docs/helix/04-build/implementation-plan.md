@@ -12266,3 +12266,7 @@ implemented here. Independent route calls do not share the atomic batch ledger:
 whole-query accounting is explicitly open. Weft's current-scalar consumer is a
 compiling, unfrozen candidate. No backend case is promoted; all 158 original cases
 remain required and the retained gate stays 45 accepted / 113 unimplemented.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+Astra-reviewed independent current-query edge evidence passes17 native SQL cases and4 exact prepare refusals; all harness findings are fixed and final owned container/volumes are absent. No backend case is promoted. Truss has now supplied its concrete private-pipe/child handoff; the next implementation is the original UMF Bun child against that contract, followed by real native capture and typed-result lineage integration. See the [retained packet](evidence/security/current-scalar-native-edges-20261015/README.md).

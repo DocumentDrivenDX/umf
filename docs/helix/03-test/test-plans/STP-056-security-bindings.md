@@ -1886,3 +1886,7 @@ Require actual raw and graph capture fixtures and native source inventories;
 copying the raw fixture does not qualify graph storage. Databricks/Ashlar need
 independent principals, native compute/publication and current-authority evidence.
 No row is passed by this table; all named missing tests remain required.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+The finite physical oracle passes17 actual current-query SQL cases and4 original-boundary refusals on PostgreSQL18.6. Require exact code/stage for negative inputs, original text/OID/domain checks, negative SQL sensitivity and owned container/volume absence. These conditional stage-value cases do not replace native action/issuer/sideband/release acceptance. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).

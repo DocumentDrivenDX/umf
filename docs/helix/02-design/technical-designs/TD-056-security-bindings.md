@@ -2698,3 +2698,7 @@ mapping remain separately qualified. Delta/Ashlar also retain separate native
 issuer/publication/current-authority obligations.
 
 Preimplementation callable witnesses are retained in [the proposal packet](../../04-build/evidence/security/native-computation-driver-proposal-20261015/README.md): supplied-cut alternate read-purpose admission and original local extension issuance/import refusal. They do not execute an actual Weft designation or native issuer and promote no acceptance case.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+Independent conditional PG18.6 execution now passes17 UTF8/signed64/operator edge cases and4 exact pre-execution refusals through the actual retained current-query object. COUNT logical meaning stays separate from its native bounded text codec. Authored stage eligibility/modes/scopes remain assumptions; current source/caller/Subject capture, private result/contributor sidebands and guarded release are still absent. This does not qualify B08/P03 or a backend profile. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
