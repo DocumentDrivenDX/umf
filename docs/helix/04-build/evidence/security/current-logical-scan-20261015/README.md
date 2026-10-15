@@ -70,3 +70,16 @@ with corrected inventories. Within-run plan/source pins stay exact. Fresh formal
 replay passes758formulas/42receipts; evidence validation has221checks with the
 same86failed IDs. Final root gate is independent of the reviewer receipt that
 accurately recorded it pending at review time. No backend case is promoted.
+
+## Final committed compiler provenance
+
+Weft remote main75b7c24b31300c8cea5ed57516b75d910ee011df now contains the final
+lineage0.2 source/schema/fixtures. Root replays its actual final producer SHA
+a78a3c04b69cf669f1f7ee9dfc91f4a1b1e495692684a16012f418ce1084862e:
+262checks/18reports pass, and all18reports are byte-identical to the independently
+reviewed earlier candidate. Every selected owner source/schema/fixture digest
+matches the exact final committed blob (final-weft-provenance.json). The earlier
+pending-provenance notes remain historical; this supplement resolves that item.
+Protocol0.2 is still a candidate; no hermetic independent build, native authority,
+backend acceptance or P03/B08 completion is inferred. Owner-native primitive and
+workspace test receipts remain explicitly owner-reported.

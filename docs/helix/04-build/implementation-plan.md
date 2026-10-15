@@ -12154,3 +12154,11 @@ selected source pins remain exact. Fresh formal replay passes758 formulas across
 overall goal remains active. Astra integration review verifies both exact source
 inventories and unchanged behavioral metadata; final document custody supplement
 records the appended execution notes separately.
+
+Final compiler provenance follow-up: Weft remote main75b7c24 now contains the
+lineage0.2 candidate. Root actual final producer replay passes262checks/18reports;
+all18reportbytes equal the Astra-reviewed candidate, and all selected committed
+source/schema/fixture digests verify. `current-logical-scan-20261015/final-weft-*`
+retains exact provenance, separately qualified from owner-native/build evidence.
+No runtime/test/schema/case definition changed in this provenance-only follow-up;
+45accepted/113unbound and the active overall goal remain.
