@@ -77,7 +77,7 @@ test('ownership policy-change action cannot borrow permission from only one upda
 test('create/delete policy-used ownership inventory checks are independent of target fields',()=>{
   for(const operation of ['create','delete'] as const){
     const f=writeFixture();
-    f.policy.rules=[f.policy.rules.find(r=>r.id==='writer')!,{id:'inventory-dependency',effect:'require',actions:['read'],target:[f.profile.type],condition:{op:'exists',association:f.profile.ownershipAssociations[0]!,as:'owner',where:{op:'literal',value:true}}}];
+    f.policy.rules=[f.policy.rules.find(r=>r.id==='writer')!,f.policy.rules.find(r=>r.id==='blind-writer')!,{id:'inventory-dependency',effect:'require',actions:['read'],target:[f.profile.type],condition:{op:'exists',association:f.profile.ownershipAssociations[0]!,as:'owner',where:{op:'literal',value:true}}}];
     f.profile.policyFields=[];
     const writer=f.policy.rules.find(r=>r.id==='writer')!;writer.actions=writer.actions.filter(a=>a!=='change-policy');
     const request=operation==='create'?{operation,proposed:f.proposed}:{operation,original:f.original};

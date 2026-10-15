@@ -42,7 +42,7 @@ const refKey=(value:SecurityRef):string=>{
   if([r.documentId,r.moduleId,r.elementId].some(x=>typeof x!=='string'||!x.length))return fail();return id(value);
 };
 
-function evaluator(policyInput:SecurityPolicy,resolutionInput:SecurityResolution,cutInput:SecurityFactCut,requestInput:SecurityEvaluationRequest) {
+function evaluator(policyInput:SecurityPolicy,resolutionInput:SecurityResolution,cutInput:SecurityFactCut,requestInput:SecurityEvaluationRequest,captureOriginal?:(field:SecurityRef)=>void) {
   const inspected=requireSecurityInterpretation(policyInput,resolutionInput);
   const policy=inspected.source as unknown as SecurityPolicy,resolution=inspected.resolution as unknown as SecurityResolution;
   const cut=copyJson(cutInput) as unknown as SecurityFactCut,request=copyJson(requestInput) as unknown as SecurityEvaluationRequest;
@@ -229,7 +229,7 @@ function evaluator(policyInput:SecurityPolicy,resolutionInput:SecurityResolution
       }
     }
     const output:SecurityOutput[]=request.output.map(r=>{
-      const d=disposition(r);if(d.kind==='withheld')return {field:r,disposition:'withheld'};
+      const d=disposition(r);if(d.kind==='original')captureOriginal?.(r);if(d.kind==='withheld')return {field:r,disposition:'withheld'};
       if(d.kind==='transformed')return {field:r,disposition:'transformed',outputType:d.field,value:d.value};
       if(!cover.get(id(type.type))?.has(id(r)))fail();
       const v=value(resource,r);if(v!==undefined)return {field:r,disposition:'original',value:v};
@@ -251,4 +251,15 @@ export function evaluateSecurityCollection(policy:SecurityPolicy,resolution:Secu
       if(result.decision==='indeterminate'||result.decision==='conflict')return {status:'refused',rows:[]};if(result.decision==='permit')rows.push(result.output);}
     return {status:'evaluated',rows};
   }catch{return {status:'refused',rows:[]};}
+}
+
+/** Internal write guard: reuses original scoped composition before absent-cell transport.
+ * Captures are discarded unless the entire projection permits; never a credential. */
+export function evaluateSecurityOriginalRead(policy:SecurityPolicy,resolution:SecurityResolution,cut:SecurityFactCut,action:string,fields:SecurityRef[],resource:SecurityFact):{decision:SecurityDecision;originalFields:SecurityRef[]}{
+ const originalFields:SecurityRef[]=[];
+ try{
+  const request=copyJson({action,output:fields}) as unknown as Omit<SecurityEvaluationRequest,'resources'>;
+  const result=evaluator(policy,resolution,cut,{...request,resources:[resource]},field=>originalFields.push(field))(copyJson(resource) as unknown as SecurityFact);
+  return {decision:result.decision,originalFields:result.decision==='permit'?originalFields:[]};
+ }catch(error){return {decision:error instanceof Error&&error.message==='SECURITY_MASK_CONFLICT'?'conflict':'indeterminate',originalFields:[]};}
 }

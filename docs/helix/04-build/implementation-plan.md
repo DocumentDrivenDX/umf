@@ -11801,3 +11801,19 @@ or permission. Every custody/propagation obligation stays unverified. Full
 compiler/property admission, S24/S25, current Subject/action/owner/source checks,
 original store/program/nonce/fullxid, selector/finalizer/seal composition and
 remaining backend/lifecycle cases are the next required work.
+
+
+### Security legacy write-read guard checkpoint — 2026-10-15
+
+[Retained correction receipt](evidence/security/write-protection-20261015/receipt.json)
+records the actual0.1 write-back fix and mandatory owner-profile migration.
+Original read disposition or exact Field-bound blind permission is now checked
+on both update states; ordinary field grants do not become blind grants.
+All210 regressions,42 independent exact-decision Bun/Chromium rows, strict types,
+build,13 source controls and conditional19-query analysis pass. The unchanged
+158-case gate accepts37 bound cases, with121 required bindings missing.
+S24/S25 remain open for full catalog-aware disposition and exact vault-write
+admission; no criterion or backend/lifecycle work is removed. Next complete
+the0.2 interpretation/compiler/property path and owner-profile compatibility,
+then full write admission and native current-authority/store/program/nonce/fullxid
+selector/finalizer/seal integration. The goal remains active.

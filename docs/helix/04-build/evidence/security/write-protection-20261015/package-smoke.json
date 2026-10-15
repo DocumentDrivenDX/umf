@@ -1,0 +1,19 @@
+{
+  "status": "built-write-read-correction-passed",
+  "bun": "1.4.2",
+  "sourceDigests": {
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
+    "src/extensions/security/evaluate.ts": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524",
+    "tests/security/write-fixture.ts": "61c6729514bdaf6ecc6be6daeb18b0938aba48bd80d90440d05f389e8269fc36",
+    "tools/security/write-read-package-smoke.ts": "b2604341563c87a0d5a150ec19dbecd5881bbef9ecfdd6e4c3aecc40672cd8be",
+    "dist/umf.js": "562331d8a3b791e564fea78d277af9fe5ebb65aecbc0d56825550eb91804d1f3",
+    "dist/src/index.d.ts": "00a965e8714806dd7a761dcf06ef6e41e941b9a6e088c886711fa317559fa247",
+    "dist/src/extensions/security/write.d.ts": "c500d135a5dbff8e897224f38740faa8cca6b47ee25a21e46c025c5351909717"
+  },
+  "explicitBlindPermit": true,
+  "maskedMutationDenied": true,
+  "legacyOmissionRefused": true,
+  "inputUnchanged": true,
+  "scope": "Actual emitted library API and declaration smoke only; legacy correction, no full S24/S25, catalog, native or current-authority qualification."
+}

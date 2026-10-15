@@ -1065,3 +1065,58 @@ snapshot/text/parameter budgets and the purpose-context bound apply independentl
 no total pipeline resource theorem is claimed. Errors retain their original
 source codes or `PROTECTION_DECLARATIONS`. The complete crypto/function/query/
 policy/native gates remain separate; requireProtectionInterpretation stays closed.
+
+
+### Mandatory legacy write read-protection binding — design2026-10-15
+
+The previously admitted0.1 writer evaluated only mutation actions with empty
+outputs; it could therefore permit changes to withheld/transformed Fields.
+A retained actual-evaluator counterexample includes proposed==mask output.
+This violates SEC-15 and must be corrected in the existing entry point.
+
+SecurityWriteProfile MUST additionally contain source-owner supplied
+`readProtection:{version:"umf.security.write-read/0.1.0",readAction,blindWriteActions}`.
+No omitted/legacy/default binding establishes permission. The profile, including
+this component, is trusted owner input and MUST NOT be accepted from a client or
+policy archive. No string spelling or grant list infers either designation.
+Unknown members/versions, missing components, undeclared actions and malformed
+bindings refuse. This version denotes only the legacy0.1 read-disposition guard,
+not general catalog/ontology0.2 interpretation.
+
+The exact readAction MUST belong to the ontology. blindWriteActions is an explicit
+array of at most4096 `{field,action}` entries, with at most one entry for each
+Field of this exact target type. Every action MUST be declared and MUST differ
+from readAction, all CRUD/normal field/ownership/policy actions. Multiple explicitly
+bound Fields MAY share one blind action; no binding is inferred for another
+Field. An empty array explicitly declares no blind-write action. Ordinary field
+mutation permission is still separately required and never becomes blind-write
+permission. Existing owner rules govern any ordinary read/field role overlap.
+
+For each mutated Field in each selected state, the evaluator MUST establish a
+permitted exact blind action bound to that Field OR a permitted exact read action
+whose composed disposition is original for that Field. Create selects proposed,
+delete selects original, update selects both, at the existing same-generation
+cut. This conservative all-state rule also covers null/absence transitions.
+No-op update Fields do not acquire an invented mutation. Canonical absence under
+a composed original read is original for this guard, even though cell transport
+reports absent. Original null is likewise allowed. Withheld, transformed and
+conflicting dispositions are never original, even when proposed data equals a
+mask output. The original evaluator's scoped disposition composition MUST be
+reused, including true-permit mask collection, withholding dominance and conflict
+handling; no second mask composer or caller-supplied disposition is admissible.
+
+A genuinely permitted alternative satisfies this OR even if the other alternative
+is indeterminate; malformed/unknown source or binding still refuses preflight.
+If neither alternative establishes permission, unknown/conflict never becomes
+permit. Capture of original Fields is atomic: a later error discards all captured
+Fields. Internal capture callbacks MUST NOT enter the public request/profile API.
+The minimum selected-state step allowance is reserved across all possible
+ordinary, unique blind-action and read calls in the entire operation, including
+both update states; comparison retains its separate bounded ledger. No total pipeline CPU/heap theorem is claimed. This pure decision does
+not authenticate a host cut or make native effects atomic.
+
+The correction MUST NOT relax the general0.2/catalog interpretation gate or
+represent declared vault actions as permission. Full catalog-aware original
+disposition and exact stored-transform vault-write enforcement remain required
+for B-SFP-006 and original S24/S25 acceptance; legacy correction alone does not
+qualify those complete cases.

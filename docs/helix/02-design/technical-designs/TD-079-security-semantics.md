@@ -382,3 +382,54 @@ compiler/property dependency, S24/S25, all remaining backend/lifecycle cases and
 original current-authority/native composition remain required. No vault calls,
 crypto execution, native reversal or permission are introduced. The goal remains
 active. Existing raw-native qualification remains PostgreSQL17.9.
+
+
+## Legacy write protection correction — design2026-10-15
+
+Reuse the original scoped disposition resolver in evaluate.ts through an internal
+original-Field capture path; public access outputs remain unchanged. Capture only
+fully permitted projections and clear partial results on any failure. write.ts
+requires the versioned trusted readProtection component, validates complete exact
+Field/action bindings, evaluates blind grants and original read disposition for
+each changed Field/state, and reserves one per-state budget across possible calls.
+The write fixture must explicitly author/grant blind authority where existing
+write-state tests intend mutation despite a withheld read; retain separate
+negative tests with no blind grant. Omitted old profiles fail closed.
+
+The actual baseline gap, failing tests and source preimages are retained in
+`docs/helix/04-build/evidence/security/write-protection-20261015/`. Truss reports
+no existing read/write profile consumer; its query originalAction designation
+remains separate. Full0.2 catalog-aware disposition, owner-purpose compatibility
+and vault-write admission are still required. No S24/S25 promotion follows from
+this legacy correction alone.
+
+
+## Actual legacy write guard correction — 2026-10-15
+
+The admitted0.1 evaluateSecurityWrite now requires a trusted versioned
+readProtection component. It checks exact Field-bound blind grants or composed
+original read disposition in every selected state, preserves original null and
+canonical absence, and refuses omitted legacy bindings. Mutation grants remain
+independent. Capture reuses the original scoped resolver and discards partial
+results atomically. Original state budgets are strictly checked before a single
+operation allowance is partitioned across all possible calls in both update
+states; the comparison ledger remains separately bounded.
+
+Actual baseline counterexamples and ten failing-before regression tests were
+retained before implementation. All210 related tests (2983 assertions), strict
+types and browser build pass. Independent Python fixtures specify42 exact
+decisions, replayed identically in Bun1.4.2 and Chromium153.0.8010.12 through the
+public API; a fresh root replay retains92 matching observations. Thirteen actual
+source controls reproduce exact named assertion failures. Conditional formal
+analysis retains19 queries (11UNSAT/8SAT), including a weak per-state-budget
+countermodel; this is not implementation/native refinement. Astra independently
+reviews source, old-HEAD reproduction, exact expectations and budget algebra.
+
+The fresh original158-case gate still accepts all37 bound cases, with121
+required bindings missing. Assertions, criteria, layers, deadlines and command
+bindings are unchanged; only relevant source fingerprints were added. S24/S25
+remain required and unbound: this necessary admitted-legacy correction does not
+substitute for full catalog-aware disposition and exact vault-write admission.
+Full0.2 interpretation, actual owner-purpose compatibility, current authority and
+all native/backend/lifecycle work remain required; the goal stays active.
+See `evidence/security/write-protection-20261015/` from the HELIX build root.
