@@ -444,3 +444,35 @@ Allocation controls now distinguish unknown US-079-AC17 from newly required
 AC11..AC16. This amendment is test/requirements allocation, not implementation
 or support evidence. B-SFP-001 and all downstream unimplemented slices remain
 open. Fresh gate results and scope are retained with this checkpoint.
+
+
+## Execution checkpoint — B-SFP-001 catalog envelope (2026-10-15)
+
+B-SFP-001 remains **in progress**. The independently versioned structural
+package at `spec/extensions/security-protection/` now describes the catalog
+envelope and transform identity subset only. Internal `catalog.ts` inspects
+exact vocabulary/version, nonempty catalog/transform identities, the 256-entry
+bound and duplicate exact `{id,version}` pairs. It snapshots source through core
+JSON controls, retains unknown payload/native content, and never normalizes
+Unicode or uses concatenated labels as identity. Its `valid` result qualifies
+only that structural subset; `complete` is always false and
+`requireProtectionInterpretation` always refuses interpretation. No public root export
+or S13–S25 acceptance promotion is made.
+
+Six focused tests,137 existing security tests, strict library/tool typechecking,
+13 real Chromium controls and66 package registrations pass. Four isolated source
+controls distinguish the original implementation from removal of duplicate
+checking, removal of the transform-count bound and accidental admission of an
+unimplemented catalog. These are component observations, not formal or native
+proof. The initial red run proves only that the module was absent, not a
+behavioral regression. Evidence: `evidence/security/protection-catalog-20261015/`.
+
+Before complete interpretation, specify the nested wire representation of typed
+parameters and parameterized disclosure properties (`prefix(n)`, `suffix(n)`,
+`range(bucket)`), function-specific parameters, hash salt custody and propagation
+declarations under CONTRACT-062. Their accepted semantic requirements remain
+unchanged; the scaffold deliberately leaves those payloads opaque rather than
+inventing executable meaning. Then implement full catalog/domain validation and
+bind the original S13–S25 runners, including Bun/Chromium parity and independent
+oracles. The shared gate remains26 accepted of158 with132 missing bindings; this
+component does not change its governing plan or promote a case.

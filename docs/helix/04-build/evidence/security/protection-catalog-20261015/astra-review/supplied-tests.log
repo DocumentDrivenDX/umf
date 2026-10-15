@@ -1,0 +1,16 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/protection/catalog.test.ts:
+(pass) envelope inspection preserves uninterpreted payload and never grants interpretation [7.79ms]
+(pass) exact pair identities reject duplicates without separator collisions or normalization [0.09ms]
+(pass) malformed envelopes and structural bounds refuse without truncation [1.21ms]
+(pass) snapshot does not invoke getters; public metadata cannot redefine built-in schema [0.09ms]
+
+tests/security/protection/source.test.ts:
+(pass) protection source preserves unknown catalog content in JSON and YAML [2.54ms]
+(pass) protection boundary refuses host imports/globals and accepts library source [1.48ms]
+
+ 6 pass
+ 0 fail
+ 51 expect() calls
+Ran 6 tests across 2 files. [630.00ms]

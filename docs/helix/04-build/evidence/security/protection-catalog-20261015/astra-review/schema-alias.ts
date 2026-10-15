@@ -1,0 +1,10 @@
+import manifest from '/Users/erik/.codex/worktrees/security-main-integration/umf/spec/extensions/security-protection/package.json';
+import {inspectProtectionCatalog} from '/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/protection/catalog';
+const sample=(vocabulary='umf.security.protection')=>({vocabulary,version:'0.1.0',id:'c',revision:'r',transforms:[]});
+const before=inspectProtectionCatalog(sample());
+const original=manifest.schema.properties.vocabulary.const;
+manifest.schema.properties.vocabulary.const='future';
+const afterOriginal=inspectProtectionCatalog(sample());
+const afterMutated=inspectProtectionCatalog(sample('future'));
+manifest.schema.properties.vocabulary.const=original;
+console.log(JSON.stringify({before:before.valid,afterOriginal:afterOriginal.valid,afterMutated:afterMutated.valid}));

@@ -513,5 +513,8 @@ Package split (one catalog or two), `withhold` as a transform for NULL-only
 backends (refused for now), salt custody for keyed hashes, detokenize as action
 versus disposition (action selected here, pending Weft query-profile review)
 and per-field masks inside shared property bags remain open questions Q1, Q2,
-Q11, Q12 and Q14 in the plan. Draft 2020-12 schema text for
-`spec/extensions/security-protection/` does not yet exist.
+Q11, Q12 and Q14 in the plan. The Draft 2020-12 envelope/identity scaffold at
+`spec/extensions/security-protection/` now exists; full transform/domain schema
+text and catalog interpretation remain unfinished. Internal inspection validates
+only envelope/identity structure, always reports `complete:false`, and the
+interpretation requirement always refuses. This does not qualify S13–S25.

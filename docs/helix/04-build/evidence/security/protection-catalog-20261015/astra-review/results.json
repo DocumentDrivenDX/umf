@@ -1,0 +1,247 @@
+{
+  "status": "passed",
+  "bun": "1.4.2",
+  "controls": [
+    {
+      "id": "package-schema-exact-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "baseline-envelope-only",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "require-never-admits-baseline",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "empty-transforms-structural-only",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-vocabulary",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-version",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-id",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-revision",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-transforms",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-id-\"\"",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-id-0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-id-null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-revision-\"\"",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-revision-0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-revision-null",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-version-retained-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-vocabulary-retained-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[null]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[{\"id\":\"a\"}]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[{\"version\":\"1\"}]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[{\"id\":\"\",\"version\":\"1\"}]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[{\"id\":\"a\",\"version\":\"\"}]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bad-transform-[{\"id\":1,\"version\":\"1\"}]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-same-pair-different-payload",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "exact-pairs-controlcharacters-unicode-no-collision",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "count-256",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "count-257",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "input-and-result-detached-both-directions",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "prior-output-does-not-affect-next-inspection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nested-getter-not-called",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "toJSON-not-called",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "proto-key-retained-without-pollution",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "cycle-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "hidden-field-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "symbol-field-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "depth-limit-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "node-limit-refuses",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-NaN",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-Infinity",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-9007199254740992",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-undefined",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "non-json-payload-() => 1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "json-opaque-roundtrip",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "yaml-opaque-roundtrip",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "exported-metadata-cannot-admit-foreign-envelope",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "generic-registry-preserves-semantics-unchecked",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "scope": "Independent envelope, exact identity, source-copy, inherited JSON refusal, generic-registry incompleteness and package correspondence controls; no transform semantics, native enforcement, total allocation bound, Proxy sandbox or full acceptance qualification."
+}

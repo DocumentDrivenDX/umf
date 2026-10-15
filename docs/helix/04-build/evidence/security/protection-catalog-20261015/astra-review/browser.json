@@ -1,0 +1,90 @@
+{
+  "status": "catalog-envelope-component-passed",
+  "chromium": "153.0.8010.12",
+  "bun": "1.4.2",
+  "observations": [
+    {
+      "id": "known-envelope",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "never-complete",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-payload-preserved",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "require-refuses-unimplemented",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "source-isolated",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unknown-version-incomplete",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "exact-pairs-no-normalization",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-pair-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bound-positive",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "bound-refusal",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "getters-never-called",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "metadata-isolated",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "host-globals-absent",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "externalRequests": 0,
+  "sourceDigests": {
+    "src/extensions/security/protection/catalog.ts": "a0588ace10785c807376f05bfb89cb59c34a026c537371a8ff836128d7a64d5b",
+    "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
+    "spec/extensions/security-protection/schema.json": "d4f7fbb69c2091e504bdf9942f925d52be54ec22f5e61e12f3e1db1d9e5f3d5d",
+    "spec/extensions/security-protection/package.json": "e684074bf5629f58edc9074d2115be11f269b79ebd8e26a42da6c09af4f7624d",
+    "tests/security/protection/catalog.test.ts": "647c2a52adcac5d976ebfc29bb262134c5ea42a73f79adf0dbd323712c6ba5e8",
+    "tests/security/protection/source.test.ts": "d9387e2dd89993fa7a4455733142b2e1761d56f72ccd32b94216fc6a1ddacb94",
+    "tools/security/protection-catalog-browser.ts": "434adf5cfa759a17c298b1874025844e9ec4913154096a48e2489a80a5252c76",
+    "tools/security/protection-boundary.ts": "deabc28a4d27dff28cce2fdad3ad455518118453e63d13b910e5d3570763fd10",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04"
+  },
+  "bundleSha256": "1909efcbee4dd3fb827ae9cd6252010536402a925d4b830e1f7830ea68cdbaa1",
+  "acceptanceCasesPromoted": [],
+  "scope": "Envelope and exact transform identities only. Interpretation always refuses. No domain/query/custody/policy0.2, native enforcement or full S13-S25 qualification."
+}
