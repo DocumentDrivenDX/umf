@@ -12290,3 +12290,15 @@ inactive assignment denies without rendering. This is conditional computation
 evidence, not SQL/native authorization, contributor lineage or guarded release.
 All original backend cases remain required and acceptance stays 45/158.
 See [retained interop evidence](evidence/security/weft-current-child-20261015/README.md).
+
+### Separate live-original integer SUM source — 2026-10-15
+
+Distinct original source revisions preserve the String read mask and introduce
+an exact independent Project-membership action for live required signed64 SUM.
+Original helper checks agree in Bun/Chromium; ten qualified Z3 design-algebra
+queries retain concrete unsafe-alternative witnesses, without implementation
+refinement or native aggregation claims. The old SUM negatives stay unchanged.
+Actual compiler capability, exact accumulation, contributor bags, authenticated
+source/Subject/current authority and guarded release remain pending. All original
+backend cases remain required; acceptance stays 45/158 accepted, 113 unimplemented.
+See [retained source evidence](evidence/security/live-original-integer-sum-20261015/README.md).
