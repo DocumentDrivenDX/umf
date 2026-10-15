@@ -1664,10 +1664,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B01.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B01.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql"
@@ -1690,14 +1690,14 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B02.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B02.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql",
-        "tools/security/pg-association.py",
+        "tests/security/native/pg18-replay/association.py",
         "tools/security/reviewed-python.py"
       ],
       "timeoutMs": 90000,
@@ -1718,10 +1718,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B03.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B03.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql"
@@ -1744,10 +1744,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B04.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B04.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql"
@@ -1770,10 +1770,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B05.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B05.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql",
@@ -1797,10 +1797,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B06.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B06.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql"
@@ -1823,10 +1823,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B07.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B07.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql",
@@ -2144,7 +2144,8 @@
         "src/validation/keys.ts",
         "src/validation/relationships.ts",
         "src/validation/schema-properties.ts",
-        "src/validation/schema.ts"
+        "src/validation/schema.ts",
+        "src/validation/internal-schema.ts"
       ],
       "timeoutMs": 90000,
       "assertionIds": [
@@ -2227,14 +2228,14 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B11.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B11.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql",
-        "tools/security/pg-inventory.py",
+        "tests/security/native/pg18-replay/inventory.py",
         "tools/security/reviewed-python.py"
       ],
       "timeoutMs": 90000,
@@ -2276,19 +2277,19 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tools/security/pg-raw-identity-probe.py"
+        "tests/security/native/pg18-replay/identity.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B13.json",
-      "testSource": "tools/security/pg-raw-identity-probe.py",
-      "oracleSource": "tests/security/native/pg-raw-identity-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B13.json",
+      "testSource": "tests/security/native/pg18-replay/identity.py",
+      "oracleSource": "tests/security/native/pg18-replay/identity-oracle.json",
       "implementationSources": [
-        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg18-replay/membership.py",
         "tests/security/native/pg-raw-membership.sql",
         "tests/security/native/pg-raw-membership-oracle.json",
         "tests/security/native/pg-raw-composite-identity.sql",
         "tests/security/native/pg-raw-hash-identity.sql",
-        "tools/security/pg-inventory.py",
-        "tools/security/pg-raw-identity-runtime.ts",
+        "tests/security/native/pg18-replay/inventory.py",
+        "tools/security/pg18-replay/identity-runtime.ts",
         "tools/security/pg-runtime-dependencies.py",
         "tests/security/native/pg-runtime-dependency-inventory.json",
         "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
@@ -2385,10 +2386,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B14.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B14.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql"
@@ -2411,10 +2412,10 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-membership.py"
+        "tests/security/native/pg18-replay/membership.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B15.json",
-      "testSource": "tests/security/native/pg-raw-membership.py",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B15.json",
+      "testSource": "tests/security/native/pg18-replay/membership.py",
       "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
       "implementationSources": [
         "tests/security/native/pg-raw-membership.sql",
@@ -2439,16 +2440,16 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tests/security/native/pg-raw-scale.py"
+        "tests/security/native/pg18-replay/scale.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B16.json",
-      "testSource": "tests/security/native/pg-raw-scale.py",
-      "oracleSource": "tests/security/native/pg-raw-scale-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B16.json",
+      "testSource": "tests/security/native/pg18-replay/scale.py",
+      "oracleSource": "tests/security/native/pg18-replay/scale-oracle.json",
       "implementationSources": [
-        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg18-replay/membership.py",
         "tests/security/native/pg-raw-membership.sql",
         "tests/security/native/pg-raw-membership-oracle.json",
-        "tools/security/pg-raw-B16-runtime.ts",
+        "tools/security/pg18-replay/scale-runtime.ts",
         "tests/security/native/pg-runtime-dependency-inventory.json",
         "tools/security/pg-runtime-dependencies.py",
         "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
@@ -2545,20 +2546,20 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tools/security/pg-raw-write-probe.py"
+        "tests/security/native/pg18-replay/write.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L01.json",
-      "testSource": "tools/security/pg-raw-write-probe.py",
-      "oracleSource": "tests/security/native/pg-raw-write-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-L01.json",
+      "testSource": "tests/security/native/pg18-replay/write.py",
+      "oracleSource": "tests/security/native/pg18-replay/write-oracle.json",
       "implementationSources": [
-        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg18-replay/membership.py",
         "tests/security/native/pg-raw-membership.sql",
         "tests/security/native/pg-raw-membership-oracle.json",
         "tests/security/native/pg-raw-write.sql",
-        "tools/security/pg-inventory.py",
-        "tools/security/pg-write-inventory.py",
-        "tools/security/pg-raw-write-runtime.ts",
-        "tools/security/pg-raw-write-typecheck.json",
+        "tests/security/native/pg18-replay/inventory.py",
+        "tests/security/native/pg18-replay/write-inventory.py",
+        "tools/security/pg18-replay/write-runtime.ts",
+        "tools/security/pg18-replay/write-typecheck.json",
         "tools/security/pg-runtime-dependencies.py",
         "tests/security/native/pg-runtime-dependency-inventory.json",
         "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
@@ -2655,21 +2656,21 @@
       "status": "implemented",
       "command": [
         "python3",
-        "tools/security/pg-raw-field-write-probe.py"
+        "tests/security/native/pg18-replay/field-write.py"
       ],
-      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L02.json",
-      "testSource": "tools/security/pg-raw-field-write-probe.py",
-      "oracleSource": "tests/security/native/pg-raw-field-write-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-L02.json",
+      "testSource": "tests/security/native/pg18-replay/field-write.py",
+      "oracleSource": "tests/security/native/pg18-replay/field-write-oracle.json",
       "implementationSources": [
-        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg18-replay/membership.py",
         "tests/security/native/pg-raw-membership.sql",
         "tests/security/native/pg-raw-membership-oracle.json",
         "tests/security/native/pg-raw-write.sql",
         "tests/security/native/pg-raw-field-write.sql",
-        "tools/security/pg-inventory.py",
-        "tools/security/pg-write-inventory.py",
-        "tools/security/pg-raw-field-write-runtime.ts",
-        "tools/security/pg-raw-field-write-typecheck.json",
+        "tests/security/native/pg18-replay/inventory.py",
+        "tests/security/native/pg18-replay/write-inventory.py",
+        "tools/security/pg18-replay/field-write-runtime.ts",
+        "tools/security/pg18-replay/field-write-typecheck.json",
         "tools/security/pg-runtime-dependencies.py",
         "tests/security/native/pg-runtime-dependency-inventory.json",
         "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",

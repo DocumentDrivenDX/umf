@@ -1,0 +1,20 @@
+{
+  "tests/security/native/pg-raw-membership.py": "tests/security/native/pg18-replay/membership.py",
+  "tools/security/pg-raw-identity-probe.py": "tests/security/native/pg18-replay/identity.py",
+  "tests/security/native/pg-raw-scale.py": "tests/security/native/pg18-replay/scale.py",
+  "tools/security/pg-raw-write-probe.py": "tests/security/native/pg18-replay/write.py",
+  "tools/security/pg-raw-field-write-probe.py": "tests/security/native/pg18-replay/field-write.py",
+  "tests/security/native/pg-raw-identity-oracle.json": "tests/security/native/pg18-replay/identity-oracle.json",
+  "tests/security/native/pg-raw-scale-oracle.json": "tests/security/native/pg18-replay/scale-oracle.json",
+  "tests/security/native/pg-raw-write-oracle.json": "tests/security/native/pg18-replay/write-oracle.json",
+  "tests/security/native/pg-raw-field-write-oracle.json": "tests/security/native/pg18-replay/field-write-oracle.json",
+  "tools/security/pg-raw-identity-runtime.ts": "tools/security/pg18-replay/identity-runtime.ts",
+  "tools/security/pg-raw-B16-runtime.ts": "tools/security/pg18-replay/scale-runtime.ts",
+  "tools/security/pg-raw-write-runtime.ts": "tools/security/pg18-replay/write-runtime.ts",
+  "tools/security/pg-raw-field-write-runtime.ts": "tools/security/pg18-replay/field-write-runtime.ts",
+  "tools/security/pg-raw-write-typecheck.json": "tools/security/pg18-replay/write-typecheck.json",
+  "tools/security/pg-raw-field-write-typecheck.json": "tools/security/pg18-replay/field-write-typecheck.json",
+  "tools/security/pg-inventory.py": "tests/security/native/pg18-replay/inventory.py",
+  "tools/security/pg-write-inventory.py": "tests/security/native/pg18-replay/write-inventory.py",
+  "tools/security/pg-association.py": "tests/security/native/pg18-replay/association.py"
+}

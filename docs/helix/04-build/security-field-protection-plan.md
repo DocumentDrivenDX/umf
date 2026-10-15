@@ -943,3 +943,31 @@ privilege weakening/restoration controls. Its retained inventory binds actual
 native ACLs and source bytes. This does not replay other B/L/P cases on18, qualify
 Truss/Ashlar, install a general compiler or close native current-authority and
 lifecycle custody. M2 remains open until its entire required scope is evidenced.
+
+
+### Additive PostgreSQL 18 replay of existing native cases (2026-10-15)
+
+M2/B-SFP-007 replays the original fourteen accepted raw cases B01–B07, B11,
+B13–B16 and L01/L02 using separate sources under
+`tests/security/native/pg18-replay/`. Exact PostgreSQL18.6 image/server/client
+builds are observed afresh. All original17.9 runners, oracles and individual
+receipts remain byte-identical; prior evidence and the mechanical mapping are
+retained under `evidence/security/pg18-replay-20261015/`. Only execution/source/
+evidence bindings change. Every original assertion, criterion and timeout remains.
+
+The replay retains the original actual driver paths (Bun SQL for B05; inventoried
+pg8.16.3 and original Truss runtime for identity/scale/writes), immutable hash
+collision strings and expected hash, all1k/100k/1M scale populations/plans and
+1ms timeout/recovery vectors, and all original read/write/field/effect/journal
+expectations. Engine declarations change only in additive18 oracles. A version
+upgrade never changes expected data to match an observed failure. Single-statement
+permission/timeout/domain errors require exit3, empty stdout and exact native
+primary SQLSTATE; intentional multi-error recovery retains its distinct protocol.
+Native image qualification precedes SQL. Ownership-checked container and anonymous
+volume cleanup precedes receipt publication; inventory digests include cleanup.
+
+This is fresh engine-version evidence for the declared original fixed vectors.
+It does not complete M2 or any full backend profile: additional field-protection
+procedures, remaining P/B/L cases, native current-authority/effect custody and
+actual Truss/Ashlar/Delta consumers remain required. Never infer18 evidence from
+an old17.9 receipt. The full158-case gate remains authoritative for actual execution.
