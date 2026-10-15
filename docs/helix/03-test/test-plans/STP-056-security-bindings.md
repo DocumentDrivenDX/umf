@@ -1855,3 +1855,10 @@ closure and lifecycle admission remain outside this fixed archive result.
 Original P07's assertion, acceptance criterion and60s deadline are preserved;
 all other157 case definitions are exact. The fresh governed gate and final
 browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/`.
+
+
+### Native actor preflight evidence integrity — 2026-10-15
+
+Exercise pending-before-CLI, preexisting-success invalidation, stage-specific partial failures, unknown counts, malformed response/configuration and redaction with synthetic non-credential fixtures. Check aliases, duplicate ordinary actors, one-actor insufficiency and mismatched contexts. Use actual owned subprocess termination and overlapping processes to verify pending visibility, working-directory-independent canonical output and latest-pending-attempt publication; older success must not overwrite newer failure, and a terminal attempt may not republish. Retain source-drift and evidence-write failure controls. Test malformed host text before URL normalization, including controls/space and credentials/query/fragment material. No synthetic actor supplies native identity/grant evidence.
+
+Independently retain one live native observation outcome using configured profiles, including sanitized failure; never reuse historical success after an incomplete attempt. Two independent non-installer principals, a dedicated disposable namespace/compute and real SQL/grant inventories remain required for original Delta/Ashlar backend cases. This POSIX host-tool work changes no semantic/browser kernel and closes no original native acceptance case.

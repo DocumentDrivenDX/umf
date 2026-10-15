@@ -2457,3 +2457,12 @@ closure and lifecycle admission remain outside this fixed archive result.
 Original P07's assertion, acceptance criterion and60s deadline are preserved;
 all other157 case definitions are exact. The fresh governed gate and final
 browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/`.
+
+
+## Native actor observation failure custody — 2026-10-15
+
+The earlier successful native actor samples above are historical observations, not evidence of current authentication or independent ordinary principals. Every new observation attempt must replace the source-repository canonical receipt with an explicit pending attempt before invoking native authentication. Failure, interruption or incomplete identity/context observation must retain sanitized stage/profile/error codes and partial selected metadata, with actor availability unknown rather than fabricated zero. Retain no credentials, raw CLI responses or authentication diagnostics. Identity availability alone establishes neither ordinary-role grants nor backend authority.
+
+For the POSIX development helper, a stable sidecar `flock` serializes pending claims and final conditional publication. Only the exact current pending attempt may publish once; an older overlapping completion returns superseded without replacing the newer receipt. Atomic rename and owned-process termination tests qualify visibility after process abort, not power-loss durability or a hermetic/continuous source-custody theorem. The sidecar is never unlinked while participating attempts may exist. Canonical output resolves from original source location, independently of caller working directory.
+
+Reject whitespace/control/non-ASCII host text before URL parsing and retain only supported HTTPS/DNS context syntax, selected IDs and exact native CLI version. Distinct aliases/ordinary duplicates or different configured workspaces do not establish two non-installer principals. Configured context still requires independent native SQL/server/grant verification. Current probe results and exact source preimages are retained in the native-actor preflight execution packet; all Delta/Ashlar native qualification remains unimplemented pending real independent actors and dedicated test resources.
