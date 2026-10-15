@@ -1,8 +1,124 @@
+// docs/helix/05-deploy/microsite/bulk-intent.ts
+function encode(value) {
+  const text = JSON.stringify(value);
+  if (text.length > 1024 * 1024)
+    throw Error("Bounded bulk intent required");
+  parse(text);
+  return text;
+}
+function parse(text) {
+  if (typeof text !== "string" || text.length > 1024 * 1024)
+    throw Error("Invalid bulk intent");
+  const value = JSON.parse(text);
+  if (value?.profile !== "umf.demo.bulk-intent/1" || !/^submit$|^claim:[0-9]{1,5}$/.test(value.slot) || typeof value.context !== "string" || !value.context || !value.input || typeof value.input !== "object")
+    throw Error("Original bulk intent required");
+  return value;
+}
+async function transaction(mode, run) {
+  const db = await new Promise((resolve, reject) => {
+    const request = indexedDB.open("umf-products-demo-control", 1);
+    request.onupgradeneeded = () => request.result.createObjectStore("intents");
+    request.onerror = () => reject(request.error);
+    request.onblocked = () => reject(Error("Bulk journal blocked"));
+    request.onsuccess = () => resolve(request.result);
+  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction("intents", mode, mode === "readwrite" ? { durability: "strict" } : undefined);
+      let value, failure;
+      const fail = (error) => {
+        failure = error;
+        try {
+          tx.abort();
+        } catch {
+          reject(error);
+        }
+      };
+      tx.oncomplete = () => resolve(value);
+      tx.onabort = () => reject(failure ?? tx.error ?? Error("Bulk journal aborted"));
+      tx.onerror = () => {
+        failure ??= tx.error;
+      };
+      if (mode === "readwrite" && tx.durability !== "strict") {
+        fail(Error("Strict bulk journal durability required"));
+        return;
+      }
+      try {
+        run(tx.objectStore("intents"), (result) => {
+          value = result;
+        }, fail);
+      } catch (error) {
+        fail(error);
+      }
+    });
+  } finally {
+    db.close();
+  }
+}
+function readBulkIntents() {
+  return transaction("readonly", (object, set, fail) => {
+    const result = {}, request = object.openCursor();
+    request.onsuccess = () => {
+      try {
+        const cursor = request.result;
+        if (!cursor) {
+          set(result);
+          return;
+        }
+        if (typeof cursor.key === "string" && cursor.key.startsWith("bulk:")) {
+          const value = parse(cursor.value);
+          if (cursor.key !== "bulk:" + value.slot)
+            throw Error("Bulk intent slot differs");
+          result[value.slot] = value;
+        }
+        cursor.continue();
+      } catch (error) {
+        fail(error);
+      }
+    };
+  });
+}
+function reserveBulkIntent(value) {
+  const text = encode(value);
+  return transaction("readwrite", (object, set, fail) => {
+    const request = object.get("bulk:" + value.slot);
+    request.onsuccess = () => {
+      try {
+        if (request.result !== undefined) {
+          parse(request.result);
+          throw Error("Original bulk intent retained; recover it");
+        }
+        object.add(text, "bulk:" + value.slot);
+        set(undefined);
+      } catch (error) {
+        fail(error);
+      }
+    };
+  });
+}
+function settleBulkIntent(value) {
+  const text = encode(value);
+  return transaction("readwrite", (object, set, fail) => {
+    const request = object.get("bulk:" + value.slot);
+    request.onsuccess = () => {
+      try {
+        const previous = parse(request.result);
+        if (previous.context !== value.context || JSON.stringify(previous.input) !== JSON.stringify(value.input))
+          throw Error("Original bulk intent changed");
+        object.put(text, "bulk:" + value.slot);
+        set(undefined);
+      } catch (error) {
+        fail(error);
+      }
+    };
+  });
+}
+
 // docs/helix/05-deploy/microsite/seal-intent.ts
 var database = "umf-products-demo-control";
 var store = "intents";
 var referenceFields = ["profile", "storeId", "incarnation", "requestKey", "attempt", "manifestSha256", "planSha256", "modelSha256"];
-function parse(value) {
+function parse2(value) {
   if (value === undefined)
     return null;
   if (typeof value !== "string" || value.length > 8 * 1024 * 1024)
@@ -12,9 +128,9 @@ function parse(value) {
     throw Error("Retained seal intent requires reconciliation");
   return intent;
 }
-function encode(value) {
+function encode2(value) {
   const text = JSON.stringify(value);
-  parse(text);
+  parse2(text);
   return text;
 }
 function same(a, b) {
@@ -69,7 +185,7 @@ function readSealIntent() {
     const request = object.get("current");
     request.onsuccess = () => {
       try {
-        result(parse(request.result));
+        result(parse2(request.result));
       } catch (error) {
         fail(error);
       }
@@ -77,12 +193,12 @@ function readSealIntent() {
   });
 }
 async function reserveSealIntent(value) {
-  const text = encode(value);
+  const text = encode2(value);
   await transact("readwrite", (object, result, fail) => {
     const request = object.get("current");
     request.onsuccess = () => {
       try {
-        if (parse(request.result))
+        if (parse2(request.result))
           throw Error("Original seal intent already retained; recover it");
         object.add(text, "current");
         result(value);
@@ -93,12 +209,12 @@ async function reserveSealIntent(value) {
   });
 }
 async function settleSealIntent(value) {
-  const text = encode(value);
+  const text = encode2(value);
   await transact("readwrite", (object, result, fail) => {
     const request = object.get("current");
     request.onsuccess = () => {
       try {
-        const previous = parse(request.result);
+        const previous = parse2(request.result);
         if (!previous || !same(previous.reference, value.reference))
           throw Error("Original seal intent changed; reconciliation required");
         object.put(text, "current");
@@ -149,6 +265,17 @@ var closeStore = document.querySelector("#store-close");
 var previewStore = document.querySelector("#store-preview");
 var sealStore = document.querySelector("#store-seal");
 var recoverStore = document.querySelector("#store-recover");
+var bulkButtons = Object.fromEntries(["submit", "recover-submit", "claim", "recover-claim", "review"].map((name) => [name, document.querySelector("#store-" + name)]));
+var bulkIntents = {};
+function submittedJob() {
+  const result = bulkIntents.submit?.outcome;
+  return result?.status === "submitted" ? result.state.job : null;
+}
+function bulkContext() {
+  if (!intent)
+    throw Error("Original seal intent required");
+  return JSON.stringify(intent.reference);
+}
 var storeStatus = document.querySelector("#store-status");
 var catalogOutput = document.querySelector("#catalog");
 var intent = null;
@@ -160,6 +287,9 @@ async function refreshIntent() {
     if (intent && !retained)
       throw Error("Original intent unexpectedly missing");
     intent = retained;
+    bulkIntents = await readBulkIntents();
+    if (Object.values(bulkIntents).some((record) => record.context !== bulkContext()))
+      throw Error("Bulk intent belongs to another original seal");
     intentError = "";
     if (intent)
       preview = null;
@@ -184,6 +314,12 @@ function buttons() {
   previewStore.disabled = busy || !prepared || !!intent || !!intentError;
   sealStore.disabled = busy || !prepared || !preview || !!intent || !!intentError;
   recoverStore.disabled = busy || !prepared || !intent || !!intentError;
+  const blocked = busy || !prepared || !!intentError;
+  bulkButtons.submit.disabled = blocked || intent?.outcome?.outcome !== "sealed" || !!bulkIntents.submit;
+  bulkButtons["recover-submit"].disabled = blocked || !bulkIntents.submit;
+  bulkButtons.claim.disabled = blocked || !submittedJob() || !!bulkIntents["claim:0"];
+  bulkButtons["recover-claim"].disabled = blocked || !bulkIntents["claim:0"];
+  bulkButtons.review.disabled = blocked || !submittedJob();
 }
 function requestStore(command, payload) {
   if (waiting)
@@ -218,7 +354,7 @@ function detach() {
   preview = null;
 }
 async function localOperation(command) {
-  let payload;
+  let payload, bulkRecord;
   if (busy)
     return;
   busy = true;
@@ -245,6 +381,32 @@ async function localOperation(command) {
         throw Error("Original seal intent required");
       payload = { reference: intent.reference };
     }
+    if (command === "submit" || command === "claim") {
+      const slot = command === "submit" ? "submit" : "claim:0";
+      if (bulkIntents[slot])
+        throw Error("Original control retained; recover it");
+      if (intent?.outcome?.outcome !== "sealed")
+        throw Error("Original sealed manifest required");
+      const control = { requestKey: crypto.randomUUID(), attempt: crypto.randomUUID() };
+      if (command === "claim" && !submittedJob())
+        throw Error("Original submitted job required");
+      payload = command === "submit" ? { key: crypto.randomUUID(), reference: intent.reference, control } : { job: submittedJob(), control };
+      bulkRecord = { profile: "umf.demo.bulk-intent/1", slot, context: bulkContext(), input: payload };
+      await reserveBulkIntent(bulkRecord);
+      bulkIntents[slot] = bulkRecord;
+      intentChannel.postMessage({ changed: true });
+    }
+    if (command === "recover-submit" || command === "recover-claim") {
+      bulkRecord = bulkIntents[command === "recover-submit" ? "submit" : "claim:0"];
+      if (!bulkRecord)
+        throw Error("Original bulk control required");
+      payload = bulkRecord.input;
+    }
+    if (command === "review") {
+      payload = submittedJob();
+      if (!payload)
+        throw Error("Original submitted job required");
+    }
   } catch (error) {
     storeStatus.textContent = "Operation not sent";
     catalogOutput.textContent = error instanceof Error ? error.message : String(error);
@@ -257,7 +419,17 @@ async function localOperation(command) {
   try {
     const result = await requestStore(command, payload);
     catalogOutput.textContent = JSON.stringify(result, null, 2);
-    if (result.outcome === "unavailable") {
+    if (bulkRecord) {
+      const retained = { ...bulkRecord, outcome: result };
+      await settleBulkIntent(retained);
+      bulkIntents[retained.slot] = retained;
+      intentChannel.postMessage({ changed: true });
+      storeStatus.textContent = (retained.slot === "submit" ? "Submission: " : "Claim: ") + result.status;
+      if (result.status === "control-unknown" || result.status === "unresolved")
+        detach();
+    } else if (command === "review") {
+      storeStatus.textContent = result.state ? "Job: " + result.state.status : "Job review: " + result.status;
+    } else if (result.outcome === "unavailable") {
       storeStatus.textContent = "Store is in use in another tab";
       detach();
     } else if (result.outcome === "closed") {
@@ -317,6 +489,8 @@ closeStore.addEventListener("click", () => void localOperation("close"));
 previewStore.addEventListener("click", () => void localOperation("preview"));
 sealStore.addEventListener("click", () => void localOperation("seal"));
 recoverStore.addEventListener("click", () => void localOperation("recover"));
+for (const [command, button] of Object.entries(bulkButtons))
+  button.addEventListener("click", () => void localOperation(command));
 sql.addEventListener("input", () => {
   preview = null;
   buttons();

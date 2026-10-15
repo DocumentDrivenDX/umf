@@ -204,11 +204,11 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `62b3e302`. Build it with
+reviewed bundle from Truss `b120e1de`. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
-owner capability private and accepts open/register/preview/seal/recover/close commands against the
+owner capability private and accepts open/register/preview/seal/recover/submit/recover-submit/claim/recover-claim/review/close commands against the
 fixed local Products model. Prepare UPDATE registers the actual generic Truss
 catalog, then asks Truss to admit the original local action and separately issue
 its selection-read grant. The original owner, action and grant capabilities stay
@@ -234,3 +234,17 @@ absence and uncertain storage outcomes. These metadata are not authority.
 The Chromium test deliberately drops an actual sealed acknowledgement, closes the owner tab
 and recovers the same bytes from an already-open second tab. It also refuses an injected pre-dispatch storage
 quota failure. The website test publicly loads four rows, verifies exact load receipt/data after a dropped actual preparation acknowledgement and reload, then selects three rows into batches [2,1]. No administrative seeding is used.
+
+
+The browser can queue the sealed manifest, claim its first batch and review the
+job using original Truss APIs. Before either first dispatch, a strict atomic
+IndexedDB reservation retains the complete input, distinct submission key and
+control request/attempt, bound to the original seal reference. A pending record
+blocks fresh dispatch even from a stale tab; recovery reuses the exact input with
+fresh private engine capabilities. All returned result variants are retained.
+Unknown and unresolved outcomes detach the worker without a new request or
+attempt. The first-claim control is retained even after recovery: neither lease
+expiry nor observing a recovered claim grants execution eligibility. No batch
+execution is exposed in this component. The browser verifier drops the actual
+initial submission and claim acknowledgements, reopens and recovers the original
+job, fence and lease, and verifies zero committed batches and unchanged manifest.

@@ -9,7 +9,7 @@ scope.onmessage=event=>{
  const id=event.data?.id,command=event.data?.command,payload=event.data?.payload;
  pending=pending.then(async()=>{
   try{
-   if(!Number.isSafeInteger(id)||!['open','register','preview','seal','recover','close'].includes(command))throw Error('Unknown store request');
+   if(!Number.isSafeInteger(id)||!['open','register','preview','seal','recover','submit','recover-submit','claim','recover-claim','review','close'].includes(command))throw Error('Unknown store request');
    if(command==='open'){
     if(current)throw Error('Store already opened');
     const {openBrowserStore}=await import('./truss-browser/store.js');
@@ -48,7 +48,12 @@ scope.onmessage=event=>{
      }else if(command==='seal'){
       if(!frozen)throw Error('Original materialization required');
       scope.postMessage({id,result:await current.store.seal(current.owner,action,readGrant,frozen.work,{requestKey:payload?.requestKey,attempt:payload?.attempt})});
-     }else scope.postMessage({id,result:await current.store.recoverSeal(current.owner,action,readGrant,payload?.reference)});
+     }else if(command==='submit')scope.postMessage({id,result:await current.store.submit(current.owner,action,readGrant,payload)});
+     else if(command==='recover-submit')scope.postMessage({id,result:await current.store.recoverSubmit(current.owner,action,readGrant,payload)});
+     else if(command==='claim')scope.postMessage({id,result:await current.store.claim(current.owner,action,readGrant,payload)});
+     else if(command==='recover-claim')scope.postMessage({id,result:await current.store.recoverClaim(current.owner,action,readGrant,payload)});
+     else if(command==='review')scope.postMessage({id,result:await current.store.reviewJob(current.owner,action,readGrant,payload)});
+     else scope.postMessage({id,result:await current.store.recoverSeal(current.owner,action,readGrant,payload?.reference)});
     }
    }
   }catch(error){scope.postMessage({id,error:error instanceof Error?error.message:String(error)});}

@@ -26,6 +26,12 @@ declare module '*truss-browser/store.js' {
  |{outcome:'failure';code:string;control:{requestKey:string;attempt:string};reference?:SealReference;sqlState?:string;reason:string;settlement:'not_dispatched'|'current_attempt_rolled_back'};
  export interface LoadInput {target:{documentId:string;module:string;record:string};rows:{fields:{module:string;field:string;value:string}[]}[];request:{requestKey:string;attempt:string}}
  export type LoadOutcome={outcome:'loaded';request:{requestKey:string;attempt:string};objects:{id:string;typeId:string;version:string}[];journal:string[]}|{outcome:'refused'|'unresolved'|'conflict'|'unknown'|'failure';code:string;[key:string]:unknown};
+ export interface JobRef {namespace:string;id:string}
+ export interface SubmitInput {key:string;reference:SealReference;control:{requestKey:string;attempt:string}}
+ export interface ClaimInput {job:JobRef;control:{requestKey:string;attempt:string}}
+ export interface JobState {status:'queued'|'running'|'completed';job:JobRef;manifestSha256:string;nextBatch:number;committedBatches:number;unresolvedBatch:null;stop:null}
+ export type SubmitResult={status:'submitted';state:JobState}|{status:'conflict';code:'TOKEN_REUSE'}|{status:'unsupported';code:string}|{status:'control-unknown';operation:'submit';control:SubmitInput['control']}|{status:'control-failure';operation:'submit';control:SubmitInput['control'];code:'CONTROL_NONCOMMIT';settlement:'current_attempt_rolled_back'}|{status:'unresolved';code:'not_found';operation:'submit';control:SubmitInput['control']};
+ export type ClaimResult={status:'claimed';job:JobRef;batch:number;fence:string;leaseUntil:string}|{status:'idle';job:JobRef}|{status:'conflict';code:'TOKEN_REUSE'}|{status:'unsupported';code:string}|{status:'control-unknown';operation:'claim';control:ClaimInput['control']}|{status:'control-failure';operation:'claim';control:ClaimInput['control'];code:'CONTROL_NONCOMMIT';settlement:'current_attempt_rolled_back'}|{status:'unresolved';code:'not_found';operation:'claim';control:ClaimInput['control']};
  export type StoreOpen={outcome:'unavailable';reason:'store_in_use'}|{
   outcome:'available';owner:LocalOwner;store:{
    info(owner:LocalOwner):StoreInfo;
@@ -39,6 +45,11 @@ declare module '*truss-browser/store.js' {
    loadObjects(owner:LocalOwner,input:LoadInput):Promise<LoadOutcome>;
    recoverLoad(owner:LocalOwner,input:LoadInput):Promise<LoadOutcome>;
    readObjects(owner:LocalOwner,target:LoadInput['target']):Promise<{id:string;typeId:string;version:string;fields:{module:string;field:string;value:string}[]}[]>;
+   submit(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:SubmitInput):Promise<SubmitResult>;
+   recoverSubmit(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:SubmitInput):Promise<SubmitResult>;
+   claim(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:ClaimInput):Promise<ClaimResult>;
+   recoverClaim(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:ClaimInput):Promise<ClaimResult>;
+   reviewJob(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:JobRef):Promise<{state:JobState;manifest:Artifact}|{status:'unsupported';code:'JOB_UNAVAILABLE'}>;
    close(owner:LocalOwner):Promise<void>;
   }
  };

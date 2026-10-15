@@ -1,3 +1,4 @@
+import {readBulkIntents,reserveBulkIntent,settleBulkIntent,type BulkIntent} from './bulk-intent';
 import {readSealIntent,reserveSealIntent,settleSealIntent,type SealIntent as Intent} from './seal-intent';
 // The browser transports requests; original Rust WASM owns SQL/model/action semantics.
 const sql=document.querySelector<HTMLTextAreaElement>('#sql')!;
@@ -26,11 +27,15 @@ const closeStore=document.querySelector<HTMLButtonElement>('#store-close')!;
 const previewStore=document.querySelector<HTMLButtonElement>('#store-preview')!;
 const sealStore=document.querySelector<HTMLButtonElement>('#store-seal')!;
 const recoverStore=document.querySelector<HTMLButtonElement>('#store-recover')!;
+const bulkButtons=Object.fromEntries(['submit','recover-submit','claim','recover-claim','review'].map(name=>[name,document.querySelector<HTMLButtonElement>('#store-'+name)!]));
+let bulkIntents:Record<string,BulkIntent>={};
+function submittedJob(){const result=bulkIntents.submit?.outcome as any;return result?.status==='submitted'?result.state.job:null;}
+function bulkContext(){if(!intent)throw Error('Original seal intent required');return JSON.stringify(intent.reference);}
 const storeStatus=document.querySelector<HTMLElement>('#store-status')!;
 const catalogOutput=document.querySelector<HTMLElement>('#catalog')!;
 let intent:Intent|null=null,intentError='Intent journal not yet read',preview:any=null;
 async function refreshIntent(){
- try{const retained=await readSealIntent();if(intent&&!retained)throw Error('Original intent unexpectedly missing');intent=retained;intentError='';if(intent)preview=null;}
+ try{const retained=await readSealIntent();if(intent&&!retained)throw Error('Original intent unexpectedly missing');intent=retained;bulkIntents=await readBulkIntents();if(Object.values(bulkIntents).some(record=>record.context!==bulkContext()))throw Error('Bulk intent belongs to another original seal');intentError='';if(intent)preview=null;}
  catch(error){intentError=error instanceof Error?error.message:String(error);throw error;}
 }
 const intentChannel=new BroadcastChannel('umf-products-demo-control');
@@ -42,6 +47,12 @@ function buttons(){
  previewStore.disabled=busy||!prepared||!!intent||!!intentError;
  sealStore.disabled=busy||!prepared||!preview||!!intent||!!intentError;
  recoverStore.disabled=busy||!prepared||!intent||!!intentError;
+ const blocked=busy||!prepared||!!intentError;
+ bulkButtons.submit!.disabled=blocked||intent?.outcome?.outcome!=='sealed'||!!bulkIntents.submit;
+ bulkButtons['recover-submit']!.disabled=blocked||!bulkIntents.submit;
+ bulkButtons.claim!.disabled=blocked||!submittedJob()||!!bulkIntents['claim:0'];
+ bulkButtons['recover-claim']!.disabled=blocked||!bulkIntents['claim:0'];
+ bulkButtons.review!.disabled=blocked||!submittedJob();
 }
 function requestStore(command:string,payload?:unknown):Promise<any>{
  if(waiting)throw Error('Store request already pending');
@@ -54,7 +65,7 @@ function requestStore(command:string,payload?:unknown):Promise<any>{
 }
 function detach(){worker?.terminate();worker=undefined;available=false;prepared=false;preview=null;}
 async function localOperation(command:string){
- let payload:unknown;
+ let payload:unknown,bulkRecord:BulkIntent|undefined;
  if(busy)return;busy=true;buttons();
  try{
   await refreshIntent();
@@ -68,11 +79,33 @@ async function localOperation(command:string){
    payload={requestKey:reference.requestKey,attempt:reference.attempt};
   }
   if(command==='recover'){if(!intent)throw Error('Original seal intent required');payload={reference:intent.reference};}
+  if(command==='submit'||command==='claim'){
+   const slot=command==='submit'?'submit':'claim:0';
+   if(bulkIntents[slot])throw Error('Original control retained; recover it');
+   if(intent?.outcome?.outcome!=='sealed')throw Error('Original sealed manifest required');
+   const control={requestKey:crypto.randomUUID(),attempt:crypto.randomUUID()};
+   if(command==='claim'&&!submittedJob())throw Error('Original submitted job required');
+   payload=command==='submit'?{key:crypto.randomUUID(),reference:intent.reference,control}:{job:submittedJob(),control};
+   bulkRecord={profile:'umf.demo.bulk-intent/1',slot,context:bulkContext(),input:payload};
+   await reserveBulkIntent(bulkRecord);bulkIntents[slot]=bulkRecord;intentChannel.postMessage({changed:true});
+  }
+  if(command==='recover-submit'||command==='recover-claim'){
+   bulkRecord=bulkIntents[command==='recover-submit'?'submit':'claim:0'];
+   if(!bulkRecord)throw Error('Original bulk control required');payload=bulkRecord.input;
+  }
+  if(command==='review'){payload=submittedJob();if(!payload)throw Error('Original submitted job required');}
+
  }catch(error){storeStatus.textContent='Operation not sent';catalogOutput.textContent=error instanceof Error?error.message:String(error);busy=false;buttons();return;}
  buttons();storeStatus.textContent=command==='seal'?'Seal pending; original intent saved':'Working…';
  try{
   const result=await requestStore(command,payload);catalogOutput.textContent=JSON.stringify(result,null,2);
-  if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
+  if(bulkRecord){
+   const retained={...bulkRecord,outcome:result};
+   await settleBulkIntent(retained);bulkIntents[retained.slot]=retained;intentChannel.postMessage({changed:true});
+   storeStatus.textContent=(retained.slot==='submit'?'Submission: ':'Claim: ')+result.status;
+   if(result.status==='control-unknown'||result.status==='unresolved')detach();
+  }else if(command==='review'){storeStatus.textContent=result.state?'Job: '+result.state.status:'Job review: '+result.status;}
+  else if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
   else if(result.outcome==='closed'){storeStatus.textContent='Store closed';detach();}
   else if(result.outcome==='available'){available=true;prepared=false;await refreshIntent();storeStatus.textContent='Local Truss store opened';}
   else if(result.outcome==='bootstrap-unavailable'){storeStatus.textContent='Sample loading requires recovery; original request retained';detach();}
@@ -94,6 +127,7 @@ closeStore.addEventListener('click',()=>void localOperation('close'));
 previewStore.addEventListener('click',()=>void localOperation('preview'));
 sealStore.addEventListener('click',()=>void localOperation('seal'));
 recoverStore.addEventListener('click',()=>void localOperation('recover'));
+for(const [command,button] of Object.entries(bulkButtons))button.addEventListener('click',()=>void localOperation(command));
 sql.addEventListener('input',()=>{preview=null;buttons();});
 buttons();
 void refreshIntent().catch(error=>{storeStatus.textContent='Seal journal unavailable; no new seal allowed';catalogOutput.textContent=String(error);}).finally(buttons);
