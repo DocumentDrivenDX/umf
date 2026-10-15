@@ -821,3 +821,60 @@ unchanged. Freshness remains213 checks with the same88 failing IDs as the prior
 increment. Four governed security artifacts validate; the global implementation
 plan retains its pre-existing two blockers/twelve warnings. No stale historical
 receipt was patched into qualification. See the increment's `receipt.json`.
+
+### Canonical0.2 logical source compiler — 2026-10-15
+
+The private `catalog-program-candidate.ts` now compiles actual canonical0.2
+policy/catalog/ontology/core sources, retaining their original version and exact
+pins. It constructs one immutable shared source closure, caches target scopes,
+and emits compact lexically scoped conditions per actual rule-target pair.
+Genuine unpinned policies use null catalog input and retain inline constants;
+no legacy rewrite, synthetic catalog or invented rule is used.
+
+All actual unused pure definitions are checked directly by transform index through
+the existing recipe checker. Parameters and every recipe share a private work/text
+budget and Field index. Unsupported wire-valid regex recipes refuse the entire
+program; partial definition results clear. Non-pure declarations retain exact
+source-domain/action-purpose obligations as unverified and never execute crypto
+or vault code. Actual output refinements remain input-dependent.
+
+Before per-target helpers run, source/expanded AST, target count, repeated
+condition text and conservative typed descriptor costs are charged. Original
+condition/inline literals consume a second compiler-owned normalization ledger
+shared across all target scopes. Independent review reproduced a short-exponent
+normalization counterexample before this correction; its source and observed
+result are retained. The original explicit bindings remain frozen beside their
+typed effects. Selected pure-function APIs keep their existing selected-rule
+requirements. Source index/classification caches depend on original issued
+immutable identity, retaining conflict checks for independently captured sources.
+
+This is a logical source program, not a runtime decision or authority credential.
+All source-program handles are process-local and complete:false/authority:false;
+public0.2 interpretation remains closed. Actual Record/graph facts and independent
+coverage, current native authority, graph-aware write comparison, exact owner
+profiles/read/blind/vault grants and all fullS24/S25 assertions remain required.
+See `evidence/security/catalog-program-20261015/` for scoped execution evidence.
+
+The final security/date regression passes229 tests (3110 assertions); strict types
+and browser build pass. The unchanged158-case gate accepts all37 bound cases,
+allocates all34 criteria and retains121 missing required bindings, with no
+unexpected execution failure. Evidence freshness remains213 checks with the same88
+failing IDs as the preceding increment. Four governed security artifacts validate;
+the global plan's pre-existing two blockers/twelve warnings remain unchanged.
+
+Conditional formal analysis retains9 queries (3UNSAT/6SAT): unbounded declaration
+index rebasing under exact-lookup/inverse assumptions, component text-charge
+algebra and shared-ledger versus per-target-reset controls. It does not prove
+executable compiler refinement, core validation cost, total runtime resources,
+source authenticity, fact coverage or native authority. No required test case is
+retired, weakened or promoted by this source compiler increment.
+
+Astra Ultra independently replayed699 controls in both Bun and actual Chromium
+(111 new compiler,128 source/scope,460 pure-function), with full parity, zero
+external requests/page errors and no host-global leakage. Seven actual source
+weakenings fail exactly the independently expected rows; the original control
+passes. Nineteen repository tests (127 assertions) and the9 conditional queries
+also replay. All61 selected source pins stay stable and the full cases.json is
+byte-identical to7a940678. The pre-correction numeric witness and final weakened/
+corrected comparison are retained. No actionable blocker remains within this
+private compiler scope; full runtime/native authority andS24/S25 stay unqualified.

@@ -16,14 +16,24 @@ function identity(r:any,relationship=false){reference(r,relationship);return JSO
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
 const issuedExpressions=new WeakSet<object>(),expressionSources=new WeakMap<object,unknown>(),expressionChecks=new WeakMap<object,readonly CandidateAssociationChecks[]>();
 const expressionEntities=new WeakMap<object,unknown>();
+// Issued immutable source checks permit reuse across rule-target conditions.
+const sharedDocuments=new WeakMap<object,{document:any;fields:Map<string,any>;encoded:string}>();
+const sharedClassifications=new WeakMap<object,readonly {key:string;encoded:string}[]>();
+function sourceFor(checks:CandidateAssociationChecks){
+ requireIssuedCandidateAssociationChecks(checks);const document:any=readCandidateAssociationSourceReference(checks);let source=sharedDocuments.get(document);
+ if(!source){const fields=new Map<string,any>();for(const module of document.modules)for(const field of module.elements)fields.set(JSON.stringify([document.id,module.id,field.id]),field);source={document,fields,encoded:canonical(document)};sharedDocuments.set(document,source);}return source;
+}
+function classificationsFor(checks:CandidateAssociationChecks){
+ let rows=sharedClassifications.get(checks);if(!rows){rows=(checks.classifications as any[]).map(record=>({key:identity(record.type),encoded:canonical({...record,fields:[...record.fields].sort((a:any,b:any)=>identity(a.ref)<identity(b.ref)?-1:identity(a.ref)>identity(b.ref)?1:0)})}));sharedClassifications.set(checks,rows);}return rows;
+}
 export function normalizeCandidateAssociationExpression(input:unknown,available:readonly CandidateAssociationChecks[],contextInput?:unknown,entityScope?:unknown):{readonly expression:unknown;readonly residuals:readonly {path:string;reason:string}[]}{
  const packet:any=copyJson({input,...(contextInput===undefined?{}:{context:contextInput})}),expression=packet.input,contexts=Object.hasOwn(packet,'context')?packet.context:{},bindings=new Map<string,CandidateAssociationChecks>();
- const sourceCache=new WeakMap<object,{document:any;fields:Map<string,any>}>(),models=new Map<string,string>(),classifications=new Map<string,string>();
+ const models=new Map<string,string>(),classifications=new Map<string,string>();
  if(!Array.isArray(available))return fail();const length=Object.getOwnPropertyDescriptor(available,'length');if(!length||!('value'in length)||typeof length.value!=='number'||!Number.isSafeInteger(length.value)||length.value<0||length.value>256)return fail();const count=length.value;
  for(let i=0;i<count;i++){
   const item=Object.getOwnPropertyDescriptor(available,String(i));if(!item||!('value'in item))return fail();const checks=item!.value;requireIssuedCandidateAssociationChecks(checks);
-  const captured=sourceFor(checks).document,encoded=canonical(captured),existing=models.get(captured.id);if(existing!==undefined&&existing!==encoded)fail();models.set(captured.id,encoded);
-  for(const record of checks.classifications as any[]){const key=identity(record.type),encoded=canonical({...record,fields:[...record.fields].sort((a:any,b:any)=>identity(a.ref)<identity(b.ref)?-1:identity(a.ref)>identity(b.ref)?1:0)}),existing=classifications.get(key);if(existing!==undefined&&existing!==encoded)fail();classifications.set(key,encoded);}
+  const source=sourceFor(checks),captured=source.document,encoded=source.encoded,existing=models.get(captured.id);if(existing!==undefined&&existing!==encoded)fail();models.set(captured.id,encoded);
+  for(const {key,encoded} of classificationsFor(checks)){const existing=classifications.get(key);if(existing!==undefined&&existing!==encoded)fail();classifications.set(key,encoded);}
   const graph=checks.kind==='candidate-graph-relationship-checks/0.1',key=identity(graph?checks.plan.relationship:checks.plan.type,graph);if(bindings.has(key))fail();bindings.set(key,checks);
  }
  if(entityScope!==undefined){
@@ -41,7 +51,6 @@ export function normalizeCandidateAssociationExpression(input:unknown,available:
  for(const [name,context] of Object.entries(contexts) as [string,any][]){shape(context,['association','endpoint']);if(typeof context.endpoint!=='string'||!context.endpoint)fail();const checks=bindings.get(identity(context.association,Object.hasOwn(context.association??{},'relationshipId')));if(!checks)fail();const endpoint=checks!.plan.endpoints.find(e=>e.role===context.endpoint);if(!endpoint)fail();resolvedContexts.set(name,{checks:checks!,endpoint});}
  if(entityScope!==undefined)for(const [name,binding] of resolvedContexts){const intrinsic:any=resolveCandidateEntityTerm(entityScope,{kind:name,identity:true});if(canonical(intrinsic.term.type)!==canonical(binding.endpoint.target)||canonical(intrinsic.term.key)!==canonical(binding.endpoint.key))fail();}
  const residuals:{path:string;reason:string}[]=[];let nodes=0;
- function sourceFor(checks:CandidateAssociationChecks){let source=sourceCache.get(checks);if(!source){const document:any=readCandidateAssociationSourceReference(checks),fields=new Map<string,any>();for(const module of document.modules)for(const field of module.elements)fields.set(JSON.stringify([document.id,module.id,field.id]),field);source={document,fields};sourceCache.set(checks,source);}return source;}
  function term(value:any,scope:CandidateAssociationScope,path:string):unknown{
   if(entityScope!==undefined&&['subject','resource','context','constant'].includes(value?.kind))return {entity:resolveCandidateEntityTerm(entityScope,value)};
   if((value?.kind==='subject'||value?.kind==='resource')&&Object.hasOwn(contexts,value.kind)){

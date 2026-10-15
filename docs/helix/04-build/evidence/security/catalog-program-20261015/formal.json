@@ -1,0 +1,79 @@
+{
+  "status": "conditional-source-table-and-resource-laws",
+  "z3": "4.15.4",
+  "scope": "No executable/compiler/native refinement. Source/type closure, literal hooks, actual ordered tables, lexical occurrences and source custody require retained concrete controls. Original core validation and total runtime heap/CPU are not bounded here.",
+  "queries": [
+    {
+      "id": "unbounded-index-rebasing-preserves-original-source",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt": "(declare-sort SourceDeclaration 0)\n(declare-fun selected () SourceDeclaration)\n(declare-fun originalDecode (Int) SourceDeclaration)\n(declare-fun inverse (Int) Int)\n(declare-fun permutation (Int) Int)\n(declare-fun originalIndex (SourceDeclaration) Int)\n(assert (let ((a!1 (forall ((arbitrary SourceDeclaration))\n             (= (originalDecode (originalIndex arbitrary)) arbitrary)))\n      (a!2 (forall ((position Int))\n             (= (inverse (permutation position)) position)))\n      (a!3 (originalDecode (inverse (permutation (originalIndex selected))))))\n  (and a!1 a!2 (distinct a!3 selected))))\n",
+      "model": null,
+      "scope": "Arbitrary declaration domain and integer index; assumes exact original lookup and inverse rebasing. Not implementation refinement."
+    },
+    {
+      "id": "wrong-table-pairing-countermodel",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-sort SourceDeclaration 0)\n(declare-fun a () SourceDeclaration)\n(declare-fun originalDecode (Int) SourceDeclaration)\n(declare-fun permutation (Int) Int)\n(declare-fun originalIndex (SourceDeclaration) Int)\n(declare-fun b () SourceDeclaration)\n(assert (let ((a!1 (distinct (originalDecode (permutation (originalIndex a))) a)))\n  (and (distinct a b)\n       (= (originalIndex a) 0)\n       (= (originalIndex b) 1)\n       (= (originalDecode 0) a)\n       (= (originalDecode 1) b)\n       (= (permutation 0) 1)\n       (= (permutation 1) 0)\n       a!1)))\n",
+      "model": "[a = SourceDeclaration!val!0,\n b = SourceDeclaration!val!1,\n originalIndex = [SourceDeclaration!val!1 -> 1, else -> 0],\n originalDecode = [1 -> SourceDeclaration!val!1,\n                   else -> SourceDeclaration!val!0],\n permutation = [1 -> 0, else -> 1]]",
+      "scope": "Concrete two-declaration negative population; issuance alone does not bind an ordered table."
+    },
+    {
+      "id": "nonempty-rebased-population",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-sort SourceDeclaration 0)\n(declare-fun a () SourceDeclaration)\n(declare-fun originalDecode (Int) SourceDeclaration)\n(declare-fun inverse (Int) Int)\n(declare-fun permutation (Int) Int)\n(declare-fun originalIndex (SourceDeclaration) Int)\n(declare-fun b () SourceDeclaration)\n(assert (let ((a!1 (originalDecode (inverse (permutation (originalIndex a))))))\n  (and (distinct a b)\n       (= (originalIndex a) 0)\n       (= (originalIndex b) 1)\n       (= (originalDecode 0) a)\n       (= (originalDecode 1) b)\n       (= (permutation 0) 1)\n       (= (permutation 1) 0)\n       (= (inverse 1) 0)\n       (= (inverse 0) 1)\n       (= a!1 a))))\n",
+      "model": "[a = SourceDeclaration!val!0,\n b = SourceDeclaration!val!1,\n inverse = [0 -> 1, else -> 0],\n originalIndex = [SourceDeclaration!val!1 -> 1, else -> 0],\n originalDecode = [1 -> SourceDeclaration!val!1,\n                   else -> SourceDeclaration!val!0],\n permutation = [1 -> 0, else -> 1]]",
+      "scope": "Concrete nonempty population, not an arbitrary-population SAT theorem."
+    },
+    {
+      "id": "admitted-text-charge-bounds-assumed-expansion",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt": "(declare-fun expanded () Int)\n(declare-fun charge () Int)\n(declare-fun descriptor () Int)\n(declare-fun operands () Int)\n(declare-fun conditionText () Int)\n(declare-fun nodes () Int)\n(declare-fun targets () Int)\n(declare-fun sourceNodes () Int)\n(assert (and (>= sourceNodes 0)\n     (<= sourceNodes 4096)\n     (>= targets 0)\n     (<= targets 4096)\n     (>= nodes 0)\n     (<= nodes 65536)\n     (>= operands 0)\n     (<= operands (* 2 nodes))\n     (>= conditionText 0)\n     (>= descriptor 128)\n     (= charge (+ conditionText (* operands descriptor)))\n     (>= expanded 0)\n     (<= expanded charge)\n     (<= charge 64000000)\n     (> expanded 64000000)))\n",
+      "model": null,
+      "scope": "Conditional cost model assumes descriptor/text upper bound; no source parser, original core validation, heap or CPU theorem."
+    },
+    {
+      "id": "node-count-alone-does-not-bound-expanded-text",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-fun expanded () Int)\n(declare-fun charge () Int)\n(declare-fun descriptor () Int)\n(declare-fun conditionText () Int)\n(declare-fun operands () Int)\n(declare-fun nodes () Int)\n(declare-fun targets () Int)\n(declare-fun sourceNodes () Int)\n(assert (and (>= sourceNodes 0)\n     (<= sourceNodes 4096)\n     (>= targets 0)\n     (<= targets 4096)\n     (>= nodes 0)\n     (<= nodes 65536)\n     (>= operands 0)\n     (<= operands (* 2 nodes))\n     (>= conditionText 0)\n     (>= descriptor 128)\n     (= charge (+ conditionText (* operands descriptor)))\n     (>= expanded 0)\n     (<= expanded charge)\n     (= nodes 1)\n     (= operands 2)\n     (= conditionText 100)\n     (= descriptor 40000000)\n     (= expanded charge)\n     (> expanded 64000000)))\n",
+      "model": "[operands = 2,\n conditionText = 100,\n descriptor = 40000000,\n expanded = 80000100,\n charge = 80000100,\n nodes = 1,\n sourceNodes = 0,\n targets = 0]",
+      "scope": "Weak AST-only control allows replicated domain text beyond the declared limit."
+    },
+    {
+      "id": "nonempty-budgeted-program-population",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-fun charge () Int)\n(declare-fun expanded () Int)\n(declare-fun descriptor () Int)\n(declare-fun conditionText () Int)\n(declare-fun operands () Int)\n(declare-fun nodes () Int)\n(declare-fun targets () Int)\n(declare-fun sourceNodes () Int)\n(assert (and (>= sourceNodes 0)\n     (<= sourceNodes 4096)\n     (>= targets 0)\n     (<= targets 4096)\n     (>= nodes 0)\n     (<= nodes 65536)\n     (>= operands 0)\n     (<= operands (* 2 nodes))\n     (>= conditionText 0)\n     (>= descriptor 128)\n     (= charge (+ conditionText (* operands descriptor)))\n     (>= expanded 0)\n     (<= expanded charge)\n     (= sourceNodes 5)\n     (= targets 2)\n     (= nodes 10)\n     (= operands 8)\n     (= conditionText 400)\n     (= descriptor 256)\n     (= expanded charge)\n     (<= charge 64000000)))\n",
+      "model": "[sourceNodes = 5,\n nodes = 10,\n conditionText = 400,\n expanded = 2448,\n charge = 2448,\n targets = 2,\n operands = 8,\n descriptor = 256]",
+      "scope": "Nonempty finite resource population."
+    },
+    {
+      "id": "shared-literal-ledger-cannot-admit-excess-work",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt": "(declare-fun limit () Int)\n(declare-fun increment () Int)\n(declare-fun priorWork () Int)\n(declare-fun admittedWork () Int)\n(assert (and (>= priorWork 0)\n     (>= increment 0)\n     (= limit 100000)\n     (= admittedWork (+ priorWork increment))\n     (<= admittedWork limit)\n     (> (+ priorWork increment) limit)))\n",
+      "model": null,
+      "scope": "Abstract prechecked additive ledger; original numeric hook correspondence is concrete test/review evidence."
+    },
+    {
+      "id": "per-target-reset-countermodel",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-fun increment () Int)\n(declare-fun priorWork () Int)\n(assert (and (= priorWork 60000)\n     (= increment 60000)\n     (<= priorWork 100000)\n     (<= increment 100000)\n     (> (+ priorWork increment) 100000)))\n",
+      "model": "[increment = 60000, priorWork = 60000]",
+      "scope": "Resetting the ledger per target admits an aggregate excess."
+    },
+    {
+      "id": "nonzero-shared-literal-population",
+      "expected": "sat",
+      "result": "sat",
+      "smt": "(declare-fun limit () Int)\n(declare-fun admittedWork () Int)\n(declare-fun increment () Int)\n(declare-fun priorWork () Int)\n(assert (and (>= priorWork 0)\n     (>= increment 0)\n     (= limit 100000)\n     (= admittedWork (+ priorWork increment))\n     (= priorWork 3000)\n     (= increment 4000)\n     (<= admittedWork limit)))\n",
+      "model": "[increment = 4000,\n limit = 100000,\n priorWork = 3000,\n admittedWork = 7000]",
+      "scope": "Concrete nonempty shared budget population."
+    }
+  ]
+}

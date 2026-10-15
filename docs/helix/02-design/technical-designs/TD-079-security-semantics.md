@@ -491,3 +491,41 @@ Detached public transport is unchanged. Compact conditions remain bound to their
 exact ordered table and original scope. These are source custody/type checks, not
 a full catalog program, runtime authority, authentication or an aggregate memory
 proof. The general0.2 interpreter gate remains closed.
+
+### Canonical source program implementation — 2026-10-15
+
+`catalog-program-candidate.ts` is the distinct canonical0.2 compiler. It inspects
+original source, precharges source and rule-target expansion, checks exact closure
+pins, and builds one issued ontology root. Target scopes are cached per exact
+entity; each rule-target condition uses the existing scoped normalizer and compact
+encoder with no residuals. The private program owns immutable source and tables;
+it is not exported from the public root or interpreted as a native permit.
+
+`checkProtectionFunctionDefinitions` shares the existing recipe checker through
+a module-private context created from actual parameter validation. A single budget
+and recipe Field index cover all pure definitions, including unused entries. It
+uses actual transform indices; no source rule/disclosure is synthesized. Public
+selected inspection/evaluation still requires an actual selected disclosure and
+its exact input/output domains. Unsupported recipes refuse. Actual output checks
+remain input-dependent. Non-pure source obligations are separately checked and
+retained as unverified. Genuine no-protection policies take a real null-catalog
+branch and retain inline constants, without calling a fake catalog.
+
+Normalization caches source Field indexes/canonical model strings by original
+immutable source identity and classification strings by issued check identity.
+It retains mixed-source/classification conflict checks and source-equality fallback;
+cache entries never replace issuance or source correspondence. Expansion and text
+limits are explicit component limits, not a total execution resource theorem.
+The next required stage is a Record/graph fact-cut reference runtime with separate
+complete incidence coverage, followed by graph-aware write comparison and actual
+owner/read/blind/vault action evaluation. NoS24/S25 promotion follows compilation.
+
+The compiler also precharges condition-source text times target count and a
+conservative maximum source Field/Key descriptor cost times actual equality
+operands. A private64000000-unit limit refuses before normalizing conditions.
+The scope-set factory privately creates one ProtectionLiteralBudget shared across
+all target scopes; original condition and inline constant checks use it. Callers
+cannot supply an alternate checker/context. This addresses an independently
+reproduced short-exponent normalization gap without changing core value semantics.
+Source validation and all aggregate runtime heap/CPU behavior remain outside that
+component bound. Explicit bindings are retained alongside their typed effects.

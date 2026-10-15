@@ -21,7 +21,7 @@ const signatures:Record<string,readonly string[]>={
  'generalize/truncate-date':['calendar','unit'],
 };
 function freeze<T>(value:T):T {
- if(value!==null&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;
+ if(value!==null&&typeof value==='object'&&!Object.isFrozen(value)){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;
 }
 function fail(message:string):never{throw new UmfError('PROTECTION_FUNCTION',message);}
 function scalar(field:Element):void {
@@ -55,31 +55,35 @@ function checkedValue(location:ProtectionFieldLocation,value:Json,budget:Protect
  parseGregorianDate((value as {date:string}).date);
 }
 interface Parameter {field:Json;value:Json;location:ProtectionFieldLocation}
-function inspect(policy:unknown,catalog:unknown,closure:unknown,requestInput:unknown,evaluate:boolean):ProtectionFunctionResult {
- const budget=new ProtectionLiteralBudget();
- const parameters=checkProtectionParametersWithinBudget(policy,catalog,closure,budget),diagnostics:Diagnostic[]=[...parameters.diagnostics];
+function inspect(policy:unknown,catalog:unknown,closure:unknown,requestInput:unknown,evaluate:boolean,definitionContext?:{parameters:ProtectionParameterValidation;budget:ProtectionLiteralBudget;fields:ReturnType<typeof protectionFieldIndex>}):ProtectionFunctionResult {
+ const budget=definitionContext?.budget??new ProtectionLiteralBudget();
+ const parameters=definitionContext?.parameters??checkProtectionParametersWithinBudget(policy,catalog,closure,budget),diagnostics:Diagnostic[]=[...parameters.diagnostics];
  let selection:Json=null,input:Json=null,value:Json=null,inputDomain:Json=null,outputDomain:Json=null,valueProfile:string|null=null;
  const finish=(status:FunctionStatus)=>{if(status==='refused')value=null;return freeze<ProtectionFunctionResult>({status,complete:false,authority:false,policy:parameters.policy,catalog:parameters.catalog,closure:parameters.closure,selection,input,value,inputDomain,outputDomain,valueProfile,diagnostics});};
  try{
   selection=copyJson(requestInput);
   if(selection===null||typeof selection!=='object'||Array.isArray(selection))fail('Exact selection object required');
-  const request=selection as Record<string,Json>,names=evaluate?['ruleIndex','disclosureIndex','value']:['ruleIndex','disclosureIndex'];
+  const request=selection as Record<string,Json>,names=definitionContext?['transformIndex']:evaluate?['ruleIndex','disclosureIndex','value']:['ruleIndex','disclosureIndex'];
   if(Object.keys(request).length!==names.length||Object.keys(request).some(key=>!names.includes(key))||names.some(key=>!Object.hasOwn(request,key))
-   ||![request.ruleIndex,request.disclosureIndex].every(n=>typeof n==='number'&&Number.isSafeInteger(n)&&n>=0))fail('Closed selection with nonnegative safe indices and explicit present value required');
+   ||!(definitionContext?[request.transformIndex]:[request.ruleIndex,request.disclosureIndex]).every(n=>typeof n==='number'&&Number.isSafeInteger(n)&&n>=0))fail('Closed selection with nonnegative safe indices and explicit present value required');
   if(evaluate)input=request.value!;
   if(parameters.status==='refused')return finish('refused');
   const p=parameters.policy as any,c=parameters.catalog as any;
-  const disposition=p.rules[request.ruleIndex as number]?.disclosure?.[request.disclosureIndex as number]?.disposition;
-  if(disposition?.kind!=='transformed'||disposition.vocabulary!=='umf.security.protection')fail('Actual selected catalog disposition required');
-  const transform=c.transforms.find((t:any)=>t.id===disposition.transform&&t.version===disposition.version);
-  if(!transform)fail('Exact selected transform missing');
-  const selectedDisclosure=p.rules[request.ruleIndex as number].disclosure[request.disclosureIndex as number];
-  const sameRef=(a:any,b:any)=>['documentId','moduleId','elementId'].every(key=>a?.[key]===b?.[key]);
-  if(!sameRef(selectedDisclosure.field,transform.inputDomain)||!sameRef(disposition.field,transform.outputDomain))fail('Selected policy input/output Fields must equal the exact transform domains; no inferred domain inclusion');
+  let transform:any;
+  if(definitionContext){transform=c.transforms[request.transformIndex as number];if(!transform)fail('Exact transform definition missing');}
+  else{
+   const disposition=p.rules[request.ruleIndex as number]?.disclosure?.[request.disclosureIndex as number]?.disposition;
+   if(disposition?.kind!=='transformed'||disposition.vocabulary!=='umf.security.protection')fail('Actual selected catalog disposition required');
+   transform=c.transforms.find((t:any)=>t.id===disposition.transform&&t.version===disposition.version);
+   if(!transform)fail('Exact selected transform missing');
+   const selectedDisclosure=p.rules[request.ruleIndex as number].disclosure[request.disclosureIndex as number];
+   const sameRef=(a:any,b:any)=>['documentId','moduleId','elementId'].every(key=>a?.[key]===b?.[key]);
+   if(!sameRef(selectedDisclosure.field,transform.inputDomain)||!sameRef(disposition.field,transform.outputDomain))fail('Selected policy input/output Fields must equal the exact transform domains; no inferred domain inclusion');
+  }
   const operation=transform.kind+'/'+transform.function,expected=signatures[operation],isDate=operation==='generalize/truncate-date';
   if(!expected)fail('Transform has no qualified pure reference recipe; native/keyed/vault code is never executed');
   if(transform.determinism!=='deterministic'||transform.reversibility!=='none')fail('Pure reference function requires deterministic/non-reversing declaration');
-  const fields=protectionFieldIndex(parameters.closure),resolve=(ref:any)=>{const result=fields.get(ref);if(!result)fail('Exact qualified Field missing');scalar(result.field);return result;};
+  const fields=definitionContext?.fields??protectionFieldIndex(parameters.closure),resolve=(ref:any)=>{const result=fields.get(ref);if(!result)fail('Exact qualified Field missing');scalar(result.field);return result;};
   const from=resolve(transform.inputDomain),to=resolve(transform.outputDomain);
   const coreValueFamilies=['boolean','integer','decimal','string','binary'];
   if(!isDate&&(!coreValueFamilies.includes(from.field.scalarType!)||!coreValueFamilies.includes(to.field.scalarType!)))fail('No selected value profile for temporal/float input or output');
@@ -146,3 +150,19 @@ function inspect(policy:unknown,catalog:unknown,closure:unknown,requestInput:unk
 export function inspectProtectionFunction(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):ProtectionFunctionResult{return inspect(policy,catalog,closure,selection,false);}
 /** Present typed input only; no row authorization or canonical mutation. */
 export function evaluateProtectionValue(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):ProtectionFunctionResult{return inspect(policy,catalog,closure,selection,true);}
+
+/** Private compiler path. Inspect actual definitions, including unused ones, without invented rules.
+ * Non-pure declarations are retained for separate custody/authority checks and never executed here. */
+export function checkProtectionFunctionDefinitions(policy:unknown,catalog:unknown,closure:unknown):ProtectionParameterValidation & {definitions:readonly {transformIndex:number;inputDomain:Json;outputDomain:Json;valueProfile:string|null}[]}{
+ const budget=new ProtectionLiteralBudget(),parameters=checkProtectionParametersWithinBudget(policy,catalog,closure,budget);
+ const definitions:{transformIndex:number;inputDomain:Json;outputDomain:Json;valueProfile:string|null}[]=[],diagnostics=[...parameters.diagnostics];
+ let refused=parameters.status==='refused';
+ const fields=refused?undefined:protectionFieldIndex(parameters.closure);
+ if(!refused)for(const [transformIndex,transform] of (parameters.catalog as any).transforms.entries()){
+  if(!['mask','generalize'].includes(transform.kind))continue;
+  const result=inspect(null,null,null,{transformIndex},false,{parameters,budget,fields:fields!});
+  if(result.status!=='reference-ready'){refused=true;diagnostics.push(...result.diagnostics.filter(d=>d.severity==='error').map(d=>({...d,path:'/transforms/'+transformIndex+d.path})));break;}
+  definitions.push({transformIndex,inputDomain:result.inputDomain,outputDomain:result.outputDomain,valueProfile:result.valueProfile});
+ }
+ return freeze({...parameters,status:refused?'refused':'validated-parameters',validated:refused?[]:parameters.validated,definitions:refused?[]:definitions,diagnostics});
+}

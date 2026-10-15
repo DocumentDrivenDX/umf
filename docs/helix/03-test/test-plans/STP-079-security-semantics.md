@@ -432,3 +432,23 @@ must reject reordered tables at consumption and fresh source scopes even when
 JSON is equal. Run strict types, browser build, security/date regression and the
 original158-case gate without changing required assertions or deadlines. Boolean
 judgment proofs remain conditional and do not replace implementation/native tests.
+
+### Canonical source compiler controls — 2026-10-15
+
+Exercise actual canonical catalog and genuine null-catalog paths. Require exact
+policy/ontology/catalog/core pins; refuse missing/extra/stale sources, unknown
+required members, copied handles and residual conditions. Test every actual
+rule-target pair, unused invalid recipes, nullable/DTO output domains, live input
+membership, non-permit disclosures, duplicate identities and binding correspondence.
+Confirm original source version/bytes, lexical occurrence/ordered association
+indices, shared immutable closure and atomic refusal without a partial handle.
+
+Direct definition tests must use empty rules and actual unused transform indices,
+retain an unchanged policy, and preserve public selected-disclosure refusal. Check
+shared catalog work exhaustion, unsupported/date/decimal/output recipe conditions,
+nonexecuting non-pure obligation declarations, and caller inability to inject a
+validated context. Mutation controls must distinguish removing unused-definition
+checks, exact pin/domain checks, issuance, live membership and expansion precharge.
+Test repeated/mixed-source normalization to detect cache poisoning or cross-scope
+reuse. Independent Bun/Chromium parity and conditional formal analysis remain
+separate from native admission and fullS24/S25 qualification.

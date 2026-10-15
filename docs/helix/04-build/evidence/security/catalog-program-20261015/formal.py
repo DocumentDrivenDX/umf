@@ -1,0 +1,20 @@
+import z3,json
+out=[]
+def query(name,formula,expected,scope):
+ s=z3.Solver();s.set(timeout=10000);s.add(formula);smt=s.sexpr();result=str(s.check());assert result==expected,(name,result,s.reason_unknown());out.append({'id':name,'expected':expected,'result':result,'smt':smt,'model':str(s.model()) if result=='sat' else None,'scope':scope})
+D=z3.DeclareSort('SourceDeclaration');c=z3.Const('selected',D);x=z3.Const('arbitrary',D);i=z3.Int('position');index=z3.Function('originalIndex',D,z3.IntSort());decode=z3.Function('originalDecode',z3.IntSort(),D);perm=z3.Function('permutation',z3.IntSort(),z3.IntSort());inverse=z3.Function('inverse',z3.IntSort(),z3.IntSort())
+original=z3.ForAll([x],decode(index(x))==x);inverseLaw=z3.ForAll([i],inverse(perm(i))==i)
+query('unbounded-index-rebasing-preserves-original-source',z3.And(original,inverseLaw,decode(inverse(perm(index(c))))!=c),'unsat','Arbitrary declaration domain and integer index; assumes exact original lookup and inverse rebasing. Not implementation refinement.')
+a,b=z3.Consts('a b',D)
+query('wrong-table-pairing-countermodel',z3.And(a!=b,index(a)==0,index(b)==1,decode(0)==a,decode(1)==b,perm(0)==1,perm(1)==0,decode(perm(index(a)))!=a),'sat','Concrete two-declaration negative population; issuance alone does not bind an ordered table.')
+query('nonempty-rebased-population',z3.And(a!=b,index(a)==0,index(b)==1,decode(0)==a,decode(1)==b,perm(0)==1,perm(1)==0,inverse(1)==0,inverse(0)==1,decode(inverse(perm(index(a))))==a),'sat','Concrete nonempty population, not an arbitrary-population SAT theorem.')
+sourceNodes,targets,nodes,operands,conditionText,descriptor,expanded,charge=z3.Ints('sourceNodes targets nodes operands conditionText descriptor expanded charge')
+bounds=z3.And(sourceNodes>=0,sourceNodes<=4096,targets>=0,targets<=4096,nodes>=0,nodes<=65536,operands>=0,operands<=2*nodes,conditionText>=0,descriptor>=128,charge==conditionText+operands*descriptor,expanded>=0,expanded<=charge)
+query('admitted-text-charge-bounds-assumed-expansion',z3.And(bounds,charge<=64000000,expanded>64000000),'unsat','Conditional cost model assumes descriptor/text upper bound; no source parser, original core validation, heap or CPU theorem.')
+query('node-count-alone-does-not-bound-expanded-text',z3.And(bounds,nodes==1,operands==2,conditionText==100,descriptor==40000000,expanded==charge,expanded>64000000),'sat','Weak AST-only control allows replicated domain text beyond the declared limit.')
+query('nonempty-budgeted-program-population',z3.And(bounds,sourceNodes==5,targets==2,nodes==10,operands==8,conditionText==400,descriptor==256,expanded==charge,charge<=64000000),'sat','Nonempty finite resource population.')
+work,increment,limit,admit=z3.Ints('priorWork increment limit admittedWork');ledger=z3.And(work>=0,increment>=0,limit==100000,admit==work+increment)
+query('shared-literal-ledger-cannot-admit-excess-work',z3.And(ledger,admit<=limit,work+increment>limit),'unsat','Abstract prechecked additive ledger; original numeric hook correspondence is concrete test/review evidence.')
+query('per-target-reset-countermodel',z3.And(work==60000,increment==60000,work<=100000,increment<=100000,work+increment>100000),'sat','Resetting the ledger per target admits an aggregate excess.')
+query('nonzero-shared-literal-population',z3.And(ledger,work==3000,increment==4000,admit<=limit),'sat','Concrete nonempty shared budget population.')
+print(json.dumps({'status':'conditional-source-table-and-resource-laws','z3':z3.get_version_string(),'scope':'No executable/compiler/native refinement. Source/type closure, literal hooks, actual ordered tables, lexical occurrences and source custody require retained concrete controls. Original core validation and total runtime heap/CPU are not bounded here.','queries':out},indent=2))

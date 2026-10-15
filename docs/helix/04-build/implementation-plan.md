@@ -11829,3 +11829,16 @@ See `evidence/security/candidate-domain-closure-20261015/` for baseline failures
 source captures, formal judgment scope, independent review and unchanged gate
 execution. This does not complete the full0.2 interpreter or qualify S24/S25;
 required backend/current-authority work and the active security goal remain open.
+
+### Security canonical source program — 2026-10-15
+
+The next source-compiler stage implements canonical0.2 catalog and genuine
+null-catalog paths without a0.1 rewrite or invented rules. It reuses actual
+pure-function recipes for unused definitions, preserves exact source/binding
+closure and compact lexical conditions, precharges rule-target/text expansion,
+and meters original condition/inline literal normalization across target scopes.
+The independently reproduced short-exponent gap is corrected on this compiler
+path. Non-pure custody/authority stays unverified, and no public/native admission
+or fullS24/S25 qualification follows. Record/graph fact runtime and actual write
+and native enforcement remain open. Scoped evidence is retained in
+`evidence/security/catalog-program-20261015/`; the security goal stays active.

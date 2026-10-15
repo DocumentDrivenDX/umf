@@ -1168,3 +1168,59 @@ gain issuance. Public source transport reads remain detached. The plain-JSON
 association preview path retains its existing snapshot and explicitly scoped
 qualifier behavior. Shared references reduce source duplication but establish no
 aggregate heap/CPU bound, source authenticity, fact coverage or enforcement grant.
+
+### Canonical0.2 logical source compilation — 2026-10-15
+
+A private canonical compiler MUST consume the original0.2 policy and exact pinned
+ontology/core closure. It MUST NOT rewrite it to0.1, fabricate selected rules for
+unused transforms, invent graph endpoint Fields, or treat checked source as an
+authority credential. Unknown required policy/catalog meaning, residual conditions,
+missing source pins or invalid unused definitions MUST refuse the entire program.
+No partially compiled handle may escape. The general public interpretation gate
+remains closed until the full admitted runtime and enforcement contract is met.
+
+A policy with a protection pin MUST use its exact catalog and validate all typed
+parameters, all pure function definitions (including unused ones), actual selected
+input/output domains, and declared non-pure/reverse/vault obligations. Definition
+checking MUST reuse the selected function recipe checks and one private work/text
+budget across the entire catalog. It must select an actual definition by safe
+index, without inventing a disclosure. Definition applicability does not imply
+that every input satisfies output refinements. Non-pure directives remain
+nonexecuting and all reported custody/authority obligations stay unverified.
+
+A genuine unpinned0.2 policy MAY compile with no catalog (explicit null). It MUST
+retain actual inline constants and original source semantics; it MUST NOT acquire
+an unpinned or synthetic catalog. Every disclosure input MUST be a member Field of
+every actual rule target. Source-only output domains do not become live members.
+Rule IDs, action/target/disclosure identities, declared action membership and
+binding endpoint/type correspondence MUST be exact and unique where required.
+
+Before any repeated rule-target normalization, the compiler MUST count the whole
+source expression forest and all target expansion. The initial private profile
+admits at most4096 source expression nodes,4096 rule-target pairs and65536 expanded
+condition nodes. Excess work refuses explicitly before those helpers run. This is
+a defined expansion bound, not an aggregate snapshot heap/CPU theorem. Source
+key/string text is independently bounded to4000000 UTF-16 units after snapshot.
+All selected sources must be known complete core0.8.0; ontology/core pin sets
+coincide exactly. Association source indexes and canonical classification checks
+may be cached only for their original issued immutable checks/sources.
+
+The compiled process-local handle MUST resolve only by exact private issuance. It
+owns one immutable core/ontology closure, the original policy/catalog, definition
+and obligation tables, and compact conditions bound to the original ordered
+association table and target scopes. JSON copies are not compiled programs.
+Compilation alone supplies no Record or graph incidence facts, coverage, current
+principal/action authority, runtime decision, original-read/blind-write grant,
+vault permission or native admission. FullS24/S25 remain required.
+
+Compilation additionally MUST precharge repeated condition text and a conservative
+source-descriptor/domain text bound (including qualified DTO refs and complete Key
+components) before normalization. The initial expanded text charge is limited
+to64000000 UTF-16 units; literal-only conditions do not acquire operand-domain
+charges. This conservative capacity check is not an exact byte/heap estimator.
+Original numeric literal normalization and refinements for conditions and inline
+disclosures MUST consume one compiler-owned work/text budget across every target
+scope, using the existing tracked core checker. A short exponent must not bypass
+that ledger. The ledger is distinct from the whole-catalog recipe budget and
+does not establish a bound for core source validation or a total CPU/heap theorem.
+The explicit binding input MUST remain frozen in the program's source closure.

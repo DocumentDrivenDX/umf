@@ -3,6 +3,7 @@
  */
 import {copyJson} from '../../model/json';
 import {checkSchemaLiteral} from '../../model/schema-literals';
+import {ProtectionLiteralBudget} from './protection/literals';
 import {createValidator} from '../../validation/schema';
 import documentSchema from '../../../spec/core/schema-properties-document.schema.json';
 import {resolveCandidateSecurityOntology,requireIssuedCandidateSecurityOntology} from './ontology-checks-candidate';
@@ -38,6 +39,11 @@ export function createCandidateEntityTermScopeFromChecks(checkedInput:unknown,ta
  const result=freeze({kind:'candidate-entity-term-scope/0.1',ontology,documents:checked.documents,target});
  scopes.set(result,{...index,target,checked});return result;
 }
+/** One compiler-owned literal budget across every target scope; callers cannot inject a checker. */
+export function createCandidateEntityTermScopeSet(checkedInput:unknown):(target:unknown)=>unknown{
+ requireIssuedCandidateSecurityOntology(checkedInput);const budget=new ProtectionLiteralBudget();
+ return target=>{const result=createCandidateEntityTermScopeFromChecks(checkedInput,target);scopes.get(result as object).literalBudget=budget;return result;};
+}
 /** Private original source root; never reconstructed from scope metadata or JSON copies. */
 export function readCandidateEntityTermScopeRoot(scope:unknown):unknown{
  if(!scope||typeof scope!=='object'||!scopes.has(scope))fail();return scopes.get(scope as object).checked;
@@ -66,7 +72,7 @@ export function resolveCandidateEntityTerm(scopeInput:unknown,termInput:unknown)
   descriptor={kind:'context-attribute',field:value.field};domain='scalar:'+canonical(scalar(scope.fields.get(id(value.field)).field));
  }else if(value?.kind==='constant'){
   shape(value,['kind','field','value']);ref(value.field);if(!literalShape(value.value))fail();const source=scope.fields.get(id(value.field));if(!source)fail();
-  domain='scalar:'+canonical(scalar(source.field));checkSchemaLiteral(source.document,source.field,value.value);
+  domain='scalar:'+canonical(scalar(source.field));if(scope.literalBudget)scope.literalBudget.check(source.document,source.field,value.value);else checkSchemaLiteral(source.document,source.field,value.value);
   descriptor={kind:'constant',field:value.field,value:value.value};
  }else return fail();
  const result=freeze({kind:'candidate-entity-term/0.1',term:descriptor,domain});terms.set(result,{scope:scopeInput,domain});return result;
