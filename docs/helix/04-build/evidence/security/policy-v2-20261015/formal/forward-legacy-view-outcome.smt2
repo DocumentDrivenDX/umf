@@ -1,0 +1,18 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-sort JsonValue 0)
+(declare-fun legacy_outcome (JsonValue JsonValue JsonValue) Int)
+(declare-fun same_admitted_facts () JsonValue)
+(declare-fun v1 () JsonValue)
+(declare-fun r2 () JsonValue)
+(declare-fun v2 () JsonValue)
+(declare-fun source () (Array Int JsonValue))
+(assert
+ (let ((?x14 (store (store source 0 v2) 1 r2)))
+(let ((?x15 (store ?x14 0 v1)))
+(let ((?x38 (legacy_outcome (select ?x15 2) (select ?x15 3) same_admitted_facts)))
+(let ((?x35 (select source 3)))
+(let ((?x53 (select source 2)))
+(let ((?x31 (legacy_outcome ?x53 ?x35 same_admitted_facts)))
+(and (distinct ?x31 ?x38) true))))))))
+(check-sat)

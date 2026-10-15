@@ -445,3 +445,12 @@ export type {SecurityDisclosureBatch} from './extensions/security/disclosure';
 export {readProtectionSource,writeProtectionSource} from './extensions/security/protection/source';
 export {protectionPackage,inspectProtectionCatalog,requireProtectionInterpretation} from './extensions/security/protection/catalog';
 export type {ProtectionCatalogInspection} from './extensions/security/protection/catalog';
+
+// Proposed security0.2 source representation, never policy/native activation.
+export {securityV2Package,inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource} from './extensions/security/policy-representation-v2';
+export type {SecurityPolicyV2Inspection,SecurityPolicySourceMigration} from './extensions/security/policy-representation-v2';
+export {resolveSecurityProtectionSources} from './extensions/security/protection/references';
+export type {SecurityProtectionSourceResolution} from './extensions/security/protection/references';
+
+export {evaluateSecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
+export type {SecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';

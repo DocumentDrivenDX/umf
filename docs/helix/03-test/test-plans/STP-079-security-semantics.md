@@ -132,3 +132,40 @@ These component checks do not bind or pass S13–S25. Core domains, function
 behavior, query dependencies, reverse/write permission binding and physical
 obligations remain required. Receipts and independent review are retained under
 `../../04-build/evidence/security/protection-wire-20261015/`.
+
+
+## Policy0.2 migration and legacy embedding component plan — 2026-10-15
+
+`tests/security/protection/policy-v2.test.ts` exercises representation frames,
+new revisions, bounded sources/targets, exact catalog pins/version lookup,
+unknown promotion refusals and forward legacy constant semantics. Original
+attestations must refuse after migration; separately authored fixture cuts name
+the new revision. Missing project assignment denies and incomplete coverage
+refuses. A catalog transform named `constant` never becomes an inline constant.
+
+`tools/security/policy-v2-browser.ts` replays the same public-root observations in
+Bun and real Chromium; `policy-v2-mutations.py` requires exact named failures
+under weakened classification, text bounds and omission of semantic embedding.
+`policy-v2-package-smoke.ts` exercises the standard built package exports.
+`prove-policy-source-migration.py` records conditional frame/guard checks and
+weakened SAT controls, not executable or native refinement.
+
+These component receipts alone do not bind S15. Its unchanged full assertion
+requires a reviewed independent oracle for forward constant meaning and all
+nonconstant rollback refusals, identical Bun/Chromium expectations, original
+source retention and fresh governed runner evidence. S13 additionally requires
+qualified immutable core Field domains; source-address lookup is insufficient.
+General protection semantics, backend acceptance and the full158-case gate
+remain required.
+
+
+### S15 governed execution checkpoint
+
+`protection/migration-oracle.ts` is the independently authored finite oracle;
+`protection/migration-acceptance.ts S15` binds fresh case/run identity and executes
+it in Bun and real Chromium through the root API. The original S15 assertion is
+unchanged. All149 controls per runtime, parity, source custody and browser
+boundary checks produce304 matching observations. The full158-case gate accepts
+S15 and the earlier26 cases;131 bindings remain missing. Evidence:
+`../../04-build/evidence/security/policy-v2-20261015/acceptance.json`.
+S13/core-domain closure, S14 and all later protection/native cases remain open.

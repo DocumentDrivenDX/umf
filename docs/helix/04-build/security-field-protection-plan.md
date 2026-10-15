@@ -510,3 +510,36 @@ Next is B-SFP-002: the additive security0.2 reference carrier and loss-aware
 migration/rollback. Full transform interpretation remains B-SFP-003–006 work;
 all13 semantic protection cases and native protection cases remain unqualified.
 The full shared gate remains required; no narrower release criterion replaces it.
+
+
+## Execution checkpoint — B-SFP-002 in progress (2026-10-15)
+
+The canonical security0.2 wire package preserves the existing record/relationship
+prototype grammar and adds exact catalog pins/references. Immutable source
+migration preserves every body member and refuses classification drift or
+unrepresentable rollback. Exact source lookup returns retained snapshot indices,
+not domain or permission authority. The public legacy-body access embedding
+requires the existing0.1 typed closure and preserves the original0.2 revision;
+stale host cuts refuse. It does not activate general0.2 or protection functions.
+
+S15 is now bound to an independently authored oracle and reviewed fresh runner.
+All149 oracle controls pass identically in Bun1.4.2 and Chromium153.0.8010.12;
+the full gate accepts its304 observations. The assertion, coverage and other157
+cases are unchanged. The whole gate now accepts27 of158 required cases;131
+missing bindings remain. Earlier26 cases still pass, including the original
+PostgreSQL17.9 subset, not a new PostgreSQL18 qualification.
+
+156 security unit tests, strict types,22 public-root Bun/Chromium controls,
+four mutation variants with exact intended failures,67 package registrations,
+390 schema compilations and the actual standard built package smoke pass.
+Eleven conditional Z3 queries prove frame/guard properties over immutable maps
+and the shared legacy outcome function (sixUNSAT/fiveSAT); executable refinement,
+all0.2 semantics and native admission are not proved. Review harness setup and
+expectation mistakes are retained separately from passing implementation evidence.
+
+B-SFP-002 remains in progress: S13 still needs qualified core-domain reference
+closure and S14 its full reviewed unknown-transform runner. Then finish function,
+disclosure/query and physical obligations through the remaining planned slices.
+The freshness validator reports203 checks/88 failures, the same failing IDs as
+the prior88-failure baseline; this is not a passing release gate. Evidence and
+selected-source custody: `evidence/security/policy-v2-20261015/`.

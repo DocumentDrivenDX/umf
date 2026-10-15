@@ -165,3 +165,28 @@ custody declarations in Bun and Chromium. Mutation controls must distinguish
 omitted identity/bound/propagation checks. These component tests do not close
 S13–S25; their concrete full-scope runners and independent behavior oracles remain
 required under STP-079.
+
+
+## Policy0.2 representation and legacy semantic embedding — 2026-10-15
+
+The canonical `security-v0.2` schema retains the prior record/relationship draft
+and adds exact protection catalog pins and dispositions. Representation migration
+changes only version/revision, preserves unknown/native/literal content and
+refuses known/unknown classification drift; it never refreshes host cuts.
+Catalog source resolution returns immutable snapshot coordinates and does not
+establish core domains, function meaning or authority.
+
+The explicit single-resource legacy-body access operation retains the original
+0.2 source/revision, requires a body fully admitted by the existing0.1 typed
+closure, and delegates through a private version-only semantic view to the
+existing evaluator. The private view is never returned or installed. All
+protection pins and unknown/new meaning refuse. Existing0.1 public/native gates
+continue to reject0.2 source. This is a specified semantic embedding, not a new
+compiler profile or protection interpreter. Current/proposed write-state and
+native admission remain separate obligations.
+
+Source frame/guard Z3 models are conditional over immutable maps and the same
+legacy outcome function. Executable tests and public-root Bun/Chromium replay
+supply separate implementation observations; neither is a general0.2 or physical
+refinement theorem. Retained evidence is under
+`04-build/evidence/security/policy-v2-20261015/` (from the HELIX root).

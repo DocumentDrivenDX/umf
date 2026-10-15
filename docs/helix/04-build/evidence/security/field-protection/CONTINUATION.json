@@ -53,10 +53,10 @@
     "requiredCases": 158,
     "originalRequiredCases": 132,
     "addedNotRunCases": 26,
-    "acceptedCases": 26,
-    "openCases": 132,
+    "acceptedCases": 27,
+    "openCases": 131,
     "acceptanceReceiptCurrent": true,
-    "note": "Fresh final gate:26 accepted of158;132 missing runner bindings; no protection behavior qualified."
+    "note": "Fresh final gate:27 accepted of158;131 missing runner bindings. S15 legacy constant migration/rollback qualified; no general protection/native admission."
   },
   "blockers": [
     "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
@@ -66,12 +66,13 @@
     "ceiling": "unknown",
     "basis": "unknown",
     "perSlice": {
-      "B-SFP-000": "not measured"
+      "B-SFP-000": "not measured",
+      "B-SFP-002": "not measured; goal has no token ceiling"
     }
   },
-  "nextAction": "Implement B-SFP-002 security0.2 exact protection-reference carrier and additive migration/explicit rollback refusal; then B-SFP-003 domain/function/query closure. Continue current native authorization/guard composition separately.",
+  "nextAction": "Complete B-SFP-002 S13 qualified immutable core-domain reference resolution and S14 full unknown-transform runner, then B-SFP-003 function/disclosure/query closure. Continue native current-authorization/guard composition separately.",
   "validation": {
-    "validate-evidence.py": "202 checks, 88 failures; failure IDs equal retained baseline: True. Not a passing release gate.",
+    "validate-evidence.py": "203 checks,88 failures; same failing IDs as retained88-failure baseline. Not a passing release gate.",
     "check-acceptance-allocation.py": "passed,9 controls",
     "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
   },
@@ -85,11 +86,19 @@
     "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
     "freshGate": {
       "requiredCases": 158,
-      "executed": 26,
-      "accepted": 26,
-      "missingBindings": 132,
-      "receipt": "docs/helix/04-build/evidence/security/protection-wire-20261015/acceptance.json"
+      "executed": 27,
+      "accepted": 27,
+      "missingBindings": 131,
+      "receipt": "docs/helix/04-build/evidence/security/policy-v2-20261015/acceptance.json"
     }
   },
-  "inProgressSlices": []
+  "inProgressSlices": [
+    {
+      "id": "B-SFP-002",
+      "scope": "Wire references, migration and explicit legacy embedding implemented; S15 accepted. S13 qualified core domains and S14 full runner remain open.",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/policy-v2-20261015/receipt.json"
+      ]
+    }
+  ]
 }

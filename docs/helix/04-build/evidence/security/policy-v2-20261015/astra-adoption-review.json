@@ -1,0 +1,22 @@
+{
+  "status": "reviewed-no-actionable-finding",
+  "createdUtc": "2026-10-15T02:14:18.579400+00:00",
+  "scope": "Mechanical independent oracle adoption, governed wrapper source and S15-only runner binding; no source edits or full gate rerun by reviewer.",
+  "checks": "checks.json",
+  "sourceDigests": "source-pins.json",
+  "independentEvidence": "../results.json (149 actual Bun/Chromium controls, full observation parity)",
+  "wrapper": "Source reviewed: exact fresh case/run/command, independently authored oracle in Bun/browser, no empty/passing-false row, all observations checked, source-before/after equality, host globals/network/page errors, structured aggregate S15 receipt.",
+  "gateStatus": "Parent full shared gate running at review time. No final acceptance outcome inferred; parent fresh execution receipt must establish it.",
+  "qualification": "Unchanged S15 legacy migration/rollback assertion can be qualified by the bound finite independent semantic oracle and actual fresh governed Bun/Chromium execution. No S13/domain/function/native closure is inferred.",
+  "scopeLimits": [
+    "Synthetic host attestations; logical results, not credentials or native policy activation.",
+    "Finite controls, conditional formal laws; no universal implementation/refinement theorem.",
+    "Selected source endpoint custody only; installed dependencies/runtime/source ABA remain trusted."
+  ],
+  "findings": [],
+  "artifactSha256": {
+    "checks.json": "dcb5a1377d4469506d55cc5c6e2244c27309703260f847b14baf2b633b4400ba",
+    "source-pins.json": "a9c10e0f6a627d7f43ce2181510a97bf87c24742ca92a8be69632d33c59353dc",
+    "adoption.diff": "54e4b71b5d7b37a2d33f3077af33e41002b86846bbf5e264038fd1bf9ef9fd08"
+  }
+}

@@ -18,7 +18,9 @@ ddx:
 **Version:** proposed `umf.security` 0.1.0. **Status:** draft; not core admission.
 A minor revision `umf.security` 0.2.0 and a companion extension
 `umf.security.protection` 0.1.0 are specified in §Field protection catalog
-(2026-10-14) as proposed text; neither is implemented or evidenced.
+(2026-10-14). Wire inspection, source lookup and representation migration have
+component evidence; general0.2 interpretation, protection domain/function
+interpretation and native admission remain unimplemented.
 
 ## Purpose
 
@@ -519,6 +521,76 @@ transform, version or kind is preserved and blocks interpretation. Migration
 non-constant transform is referenced, because rollback must not broaden access
 (§Precedence and Compatibility). Disposition transport carries `storageEffect`
 per field so a consumer can distinguish a stored token from a plaintext value.
+
+### Protection pins and loss-aware representation migration — 2026-10-15
+
+The canonical proposed security0.2 wire schema includes the existing draft
+record/relationship-reference grammar and adds protection references. It does
+not promote the prototype's typed checker or any0.2 policy to native admission.
+The older spike schema remains a preserved narrower prototype subset; no
+competing0.2 policy meaning or second compiler designation is introduced.
+
+A policy has at most one optional `protection:{id,revision}` pin, with exact
+nonempty strings. A catalog-reference disposition requires this pin. Its
+`vocabulary` is exactly `umf.security.protection`; `transform`/`version` name the
+exact catalog entry, and it has no inline `value`. The retained legacy constant
+has inline `value` and no `vocabulary`. A catalog entry named `constant` is not
+an inline constant. Catalog lookup compares the original id/revision and exact
+transform/version pair; it never selects by name alone or normalizes labels.
+Source resolution returns only coordinates into its retained immutable policy
+and catalog snapshots (rule, disclosure and transform indices), not duplicated
+transform payload per use. These are source locations, never logical/native
+identity reconstructed from row positions. Matching source addresses does not resolve Field domains, establish function
+meaning, verify custody or grant an action. The protected target Field and
+output Field remain available for later core-domain comparison; their reference
+labels alone do not establish domain equality.
+
+Representation upgrade takes a security0.1 source and an explicit nonempty new
+policy revision, preserves every other member (including ontology pin, rules,
+exact literal carriers and native archive), and changes only version/revision.
+It does not perform the separate prototype operation that explicitly rebinds an
+ontology. Unknown source content is retained and reported. If an opaque0.1
+member collides with newly reserved `protection` or transformed-disposition
+`vocabulary`, automatic upgrade refuses with retained source and no target;
+unknown metadata must not silently acquire new meaning. Any known/unknown
+member-classification change in either direction also requires explicit authoring. Invalid target shape
+also refuses rather than deleting content or changing selectors.
+
+Downgrade requires an explicit new revision, a valid0.2 source, no protection
+pin or catalog-reference disposition, and an unchanged body representable by
+security0.1. It refuses catalog transforms even when their name/version is
+`constant`/`0.1.0`, relationship-only selectors and other unrepresentable meaning.
+Unused protection pins also require explicit authoring instead of automatic
+removal. Unknown members that remain unknown in the destination are retained
+with diagnostics; representation migration is not activation. On refusal no
+activatable target is returned. Source/target are detached immutable snapshots;
+no caller source is mutated. The representation reports `complete:false` and
+`authority:false`; all interpretation and binding gates remain separate.
+
+Direct-object representation operations use a private4,000,000 UTF-16 cumulative
+key/string ledger after the bounded core JSON snapshot and before schema regex
+checks. Target construction is checked against the same ledger. This does not
+claim a preallocation, total heap or total CPU bound for the core snapshot.
+
+### Explicit legacy-body semantic embedding
+
+`evaluateSecurityPolicyV2LegacyAccess` evaluates only a security0.2 policy whose
+body is fully interpretable by the security0.1 engine against its admitted
+ontology0.1/core-domain subset. It refuses protection pins (including unused
+pins), unknown meaning and relationship-only grammar. It constructs a private
+semantic view changing only the version tag to0.1, retains the original id and
+revision, then requires the existing typed closure and evaluator. The view is
+never returned as an installable policy. The retained source remains0.2.
+
+Fact cuts must attest the original0.2 policy revision and current generation;
+this operation never refreshes attestations. Missing or incomplete required dependency coverage,
+untrusted or stale cuts and unsupported source yield indeterminate with no
+output. The result carries `authority:false`; permit is a logical decision,
+not a credential, compiler designation or native installation. Existing0.1
+public interpretation and native binding gates continue to reject0.2 sources.
+This single-resource access operation does not implement general0.2, protection
+functions, new ontology semantics, collection admission, current/proposed write-state
+validation or query compiler lineage.
 
 ### Tokenization, `original` and `reversed`
 
