@@ -23,12 +23,18 @@ export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';c
 export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,cut:unknown,request:unknown):CandidateCatalogCollectionResult {
  try{return run(handle,owner,cut,request,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
 }
+/** Complete supplied typed population; not a compiler readset or native credential. */
+export function evaluateCandidateCatalogScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogCollectionResult {
+ try{return run(handle,owner,cut,selection,true,undefined,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
+}
 /** owner/cut must originate from a trusted host. This function does not authenticate their provenance. */
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
- const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut,request}=packet;
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
+ const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut}=packet;
+ let request:any=packet.request;
+ if(scanPopulation){shape(request,['type','fields']);request={action:owner?.disclosure?.readAction,resources:[],targets:[request.type],fields:request.fields};}
  shape(owner,['version','id','revision','storage'],['disclosure']);shape(cut,['version','trusted','generation','expectedGeneration','policy','ontology','protection','domains','owner','subject','facts','graphs','coverage','graphCoverage','context','valueProfiles','maxFacts','maxSteps']);shape(request,['action','resources','targets','fields']);
  if(owner.version!=='umf.security.logical-owner/0.1'||cut.version!=='umf.security.logical-facts/0.1'||cut.trusted!==true||typeof cut.generation!=='string'||!cut.generation||cut.generation!==cut.expectedGeneration||typeof owner.id!=='string'||!owner.id||typeof owner.revision!=='string'||!owner.revision)fail('Unadmitted logical cut');
  const pin=(actual:any,expected:any,keys:string[])=>{shape(actual,keys);if(keys.some(k=>actual[k]!==expected[k]))fail('Stale source/owner pin');};
@@ -75,6 +81,11 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   factIdentity.set(fact,key);inventory.set(key,fact);const rows=byType.get(id(fact.type))??[];rows.push(fact);byType.set(id(fact.type),rows);
  }
  const subject=inventory.get(selector(cut.subject))??fail('Missing subject fact');if(id(subject.type)!==id(ontology.subject))fail('Wrong subject type');
+ if(scanPopulation){
+  const target=entity(request.targets[0]),candidates=byType.get(id(target.type))??[];
+  if(cut.facts.length+cut.graphs.length+candidates.length>cut.maxFacts)fail('Aggregate scan facts exhausted');
+  step(candidates.length);request.resources=candidates.map((row:any)=>({type:row.type,key:row.key}));
+ }
  const resources=request.resources.map((s:any)=>inventory.get(selector(s))??fail('Missing requested fact'));
  const covered=new Map<string,{complete:boolean;fields:Set<string>}>();for(const c of cut.coverage){shape(c,['type','complete','fields']);const e=entity(c.type),key=id(c.type);list(c.fields,4096);if(covered.has(key)||typeof c.complete!=='boolean')fail('Invalid Record coverage');const set=new Set<string>();for(const r of c.fields){const name=ref(r);if(set.has(name)||!member(e.type,name))fail('Invalid covered Field');set.add(name);}covered.set(key,{complete:c.complete,fields:set});}
  for(const [type,c] of covered)for(const row of byType.get(type)??[])for(const name of c.fields){step();if(!projections.get(row)!.has(name)&&!absences.get(row)!.has(name))fail('Declared projection is missing');}

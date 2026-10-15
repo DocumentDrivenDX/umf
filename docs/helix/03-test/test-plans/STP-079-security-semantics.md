@@ -640,3 +640,25 @@ The existing abstract fact-consistency proof replays2UNSAT/2SAT and keeps absenc
 and null distinct. Its premise of exact source-kind classification is precisely
 what the observed old source-report boundary failed to establish; that proof is
 not promoted to Rust/compiler or native refinement by these regression results.
+
+
+### Complete typed scan reference for query read admission — 2026-10-15
+
+CONTRACT-062's private complete logical scan operation closes the gap between
+caller-selected collection resources and a full typed scan. Implement it inside
+the existing current collection runtime, deriving selectors only after the
+complete supplied fact inventory has validated. Reuse exactly the issued program,
+owner read action, coverage/action/disposition preflight and output ledger; charge
+the derived selector population before allocation and preserve aggregate fact
+limits. Existing action/collection entry points retain their subset semantics.
+
+Verify flat and graph-witness counterparts, active/inactive/different-project
+authority, original/withheld/transformed/absent/null cells, field-free row reads,
+source-scoped empty-population checks, caller selection/action substitution,
+malformed unselected facts, late unknown/conflict atomic refusal and operation
+limits. Compare the explicit new scan against independently authored expected
+rows; a legal old subset collection is not a full-scan credential. Browser parity
+and all affected current kernel/native acceptance source closures must replay.
+
+Source-only compiler readsets and native permission/dispatch remain separate
+requirements; no SQL/query compiler or backend authority is introduced in UMF.

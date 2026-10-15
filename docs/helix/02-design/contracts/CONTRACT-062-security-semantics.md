@@ -1503,3 +1503,34 @@ owner derives them from actual queries. Owner provenance, actual ORIGINAL read
 permission, fixed runtime/key scope, mixed-mode physical integration and native
 current-authority/dispatch enforcement remain separate obligations. No P03/B08
 case is promoted by this pure source inspector.
+
+
+### Private complete logical scan candidate (2026-10-15)
+
+`evaluateCandidateCatalogScan(handle, owner, cut, selection)` is a private
+reference operation over an originally issued current catalog program. Selection
+has exactly `{type, fields}`; caller-provided action, resource selectors, query
+predicates, limits, modes and native bindings are not admitted here. The operation
+uses the owner's explicitly declared read action and the existing current
+collection kernel. It selects every validated fact of the exact target type from
+the supplied complete cut, once in original fact order. The caller cannot omit
+an inconvenient row or repeat a selector through this operation.
+
+The original complete owner, typed facts, Key identity, coverage, graph witnesses,
+source pins and all action dependencies must pass before output. Every candidate
+row receives the same current read/disposition evaluation as the collection
+operation. Denials filter; indeterminate/conflict, missing coverage, invalid
+literals, stale pins, unsupported rendering or exhausted original operation
+budgets refuse the whole result. Selection retains original Field order. Empty
+Field selection yields one empty tuple per permitted row, making row-read duties
+explicit for a field-free aggregate. Empty populations still preflight the full
+source-scoped operation and output dependencies.
+
+The result uses the existing collection result shape and always has
+complete:false/authority:false. The cut's trusted/completeness assertions remain
+external premises, not authenticated native credentials. Selection is not a
+compiler-issued readset: Weft must derive exact occurrence-sensitive scan/Field
+dependencies from its original AST, and the native consumer must bind those
+requirements and actual current authority before execution. This operation does
+not parse queries, choose query-use modes, grant original-value actions, perform
+aggregates, register a backend, or qualify P03/B08. It is not a public root API.

@@ -12097,3 +12097,28 @@ Astra Ultra final availability review has no scoped blocker:12 regressions,20
 additional controls,10 current/legacy controls, five byte comparisons and11
 committed blob checks pass. Original failing witnesses and the exact review
 archive remain retained; no native or optional-source admission is claimed.
+
+
+### Complete logical scan reference — 2026-10-15
+
+CONTRACT-062, TD-079 and STP-079 now specify a private complete typed logical scan
+without caller-selected resource subsets or action overrides. All target facts
+are visited; denial filters rows and late unknown/conflict refuses atomic release.
+Field-free requests retain row-read duties. Flat and graph typed facts share the
+same rules. This remains conditional on supplied source completeness.
+
+The security suite passes297 tests/3664 expectations; Bun/Chromium scan controls
+pass78 observations each. The independent abstract prefix-fold model passes six
+UNSAT/four SAT checks with explicit premises, without implementation refinement.
+Astra Ultra kernel review passes69 controls, eight source weakenings and27 focused
+tests/198 expectations. Actual pinned Weft0.2 candidate reports pass262 exact host
+correspondence checks over18 reports after repairing three verifier sensitivity
+gaps; the original verifier source is retained. Final committed Weft0.2 provenance
+remains pending. Native Truss0.66 artifact custody is separately qualified.
+
+Retained evidence is in `evidence/security/current-logical-scan-20261015/`.
+Both strict typing configurations pass. The fresh original158-case gate remains
+45accepted/113unbound/34criteria; no cases or assertions changed. The evidence
+validator retains221 checks and the same86 failed IDs after fresh formal replay.
+Current native admission, trusted cuts, backend implementations and P03/B08 remain
+open; the full goal remains active.
