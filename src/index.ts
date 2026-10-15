@@ -463,3 +463,5 @@ export type {ProtectionQueryPropertyInspection} from './extensions/security/prot
 
 export * from './adapters/gregorian-date';
 export {inspectProtectionFunction,evaluateProtectionValue,type ProtectionFunctionResult} from './extensions/security/protection/functions';
+export {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from './extensions/security/protection/disclosure';
+export type {SecurityDisclosureBatchV2,SecurityDisclosureColumnV2,SecurityDisclosureCellV2,SecurityDisclosureInspectionV2} from './extensions/security/protection/disclosure';

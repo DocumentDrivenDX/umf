@@ -272,3 +272,43 @@ Total accepted cases are33, with125 bindings missing; no required assertion,
 coverage, layer or timeout changed. Source custody and final Astra review are
 retained under `../../04-build/evidence/security/protection-functions-20261015/`.
 S20 and full function-property/compiler/native obligations remain open.
+
+
+## S20 transport verification — design2026-10-15
+
+S20 retains US-079-AC14/7/10 and its original assertion/layer/timeout. Independent
+Python fixtures MUST distinguish original null, absent, withheld, transformed
+null, changed output Field and positive original stored token/ciphertext. Replay
+identical expected source trees and refusals in Bun and real Chromium through
+the root codec APIs with JSON/YAML round trips. Tests cite all three AC IDs.
+
+Adversarial controls include stale policy/catalog/core pins, duplicate/reordered
+qualified identities, rectangular arity, missing values vs explicit null,
+wrong original/output domains, hidden values on absent/withheld, unsupported
+reverse, unknown members/tags/profiles, unknown empty-column metadata, invalid
+Gregorian dates, original stored-token type checks, storage-tag downgrade and
+read-time transformation over a stored canonical Field. Include accepted exact
+bounds and exceeding bounds, and shared multi-cell ledger exhaustion. Refusal
+MUST retain source where copy succeeds and expose no partial validated batch.
+
+Mutation controls must remove exact selected-field checks, storage binding,
+null/absent/withheld shape constraints, pins, unknown rejection and atomicity;
+the exercising tests must fail for the intended cause. Conditional symbolic
+UNSAT laws retain SAT countermodels for weakened guards. The independent fixture
+source, fresh generation receipt, both-runtime observations, source fingerprints
+and final review are retained together. A standalone test/proof is not whole-gate
+admission. Native row authorization and custody remain independently unverified.
+
+
+### S20 whole-gate result — 2026-10-15
+
+The fresh whole158-case gate accepts S20 with358 matching observations and all33
+previously bound cases. There are34 accepted/124 required unbound cases; the
+release gate remains failed/open. Independent160-fixture Python expectations
+(38 positive/122 refusal) and175 observations per Bun/Chromium runtime retain
+JSON/YAML/source/null/token/domain distinctions and explicit runtime/serialization
+controls. The first gate's native B11 timeout is retained, as are its unchanged
+isolated passing replay and the final full replay. No criterion or timeout changed.
+Evidence: `../../04-build/evidence/security/protection-disclosure-20261015/`.
+Neither finite transport acceptance nor conditional formal laws grant native,
+compiler, source-authentication, storage-custody or row-policy authority.

@@ -21,8 +21,10 @@ ddx:
 A minor revision `umf.security` 0.2.0 and a companion extension
 `umf.security.protection` 0.1.0 are specified in §Field protection catalog
 (2026-10-14). Wire inspection, source lookup and representation migration have
-component evidence; general0.2 interpretation, protection domain/function
-interpretation and native admission remain unimplemented.
+component evidence. Qualified core-domain resolution, six pure reference function
+classes and a separate catalog transport profile have scoped implementations;
+general0.2 interpretation, complete property/compiler admission and native
+protection admission remain unfinished.
 
 ## Purpose
 
@@ -861,3 +863,90 @@ bounds; it always reports `complete:false`, and the interpretation requirement
 always refuses. Core domain closure, function-specific parameters, query
 admissibility and policy/native action binding remain unfinished. This does not
 qualify S13–S25.
+
+
+### Catalog disposition transport 0.2.0 — design2026-10-15
+
+The separate `umf.security.disclosure/0.2.0` codec MUST retain distinctions between
+canonical null, absence, withholding, transformed null, changed output domains
+and stored token/ciphertext carriers. The existing0.1 codec is unchanged.
+This catalog transport profile validates data and source correspondence only;
+it MUST NOT authenticate rows, evaluate policy conditions, assert transformation
+execution, infer target membership or grant read/reverse/write authority.
+
+The exact envelope is `{version,policy,protection,domains,columns,rows}`:
+`version` is `umf.security.disclosure/0.2.0`; `policy` and `protection` are exact
+`{id,revision}` pins equal to the supplied policy/catalog. `domains` is an array
+of exact `{documentId,revision}` pins in bijection with the supplied core closure
+pins, independent of order. Duplicate/missing/stale/extra pins refuse. Source
+policy0.2, protection0.1 and core0.8 closure MUST pass exact known-source/domain
+resolution and original typed parameter checks. Caller pins are not provenance.
+
+Each ordered column is `{field,storageEffect,storageTransform?,valueProfile?}`.
+`field` is an exact qualified canonical Field reference; duplicates refuse.
+`storageEffect` is `canonical` or `stored-transformed`. A stored column MUST
+supply `storageTransform:{id,version}` selecting an exact catalog tokenize or
+encrypt declaration with `custody.storageEffect:"stored-transformed"` and
+`outputDomain` exactly equal to this canonical Field. Its distinct `inputDomain`
+models pre-storage source data, never a replacement domain for original cells.
+Canonical columns MUST omit storageTransform and MUST refuse when this catalog
+already declares that Field as a stored transform output. Storage metadata is a
+supplied declaration, not proof of native storage/custody. It describes the
+underlying column even when a cell is a read-time presentation transform.
+
+Rows are rectangular arrays in column order. A cell is exactly one of:
+
+- `{disposition:"original",value}`: present typed value checked against the
+  canonical column Field, including original null when that Field allows null.
+  For a stored column this is the token/ciphertext, not recovered plaintext.
+- `{disposition:"absent"}`: no value; the canonical Field MUST explicitly have
+  `nullability:"absent-allowed"`.
+- `{disposition:"withheld"}`: no value, including no disguised SQL-null value.
+- `{disposition:"transformed",selection:{ruleIndex,disclosureIndex},outputDomain,
+  transform:{id,version},value,valueProfile?}`: nonnegative safe indices select
+  an actual catalog-reference disposition in the supplied policy. Its protected
+  Field MUST equal the canonical column Field and the selected transform's
+  inputDomain; outputDomain MUST equal both disposition.field and the transform's
+  outputDomain. Transform id/version MUST agree exactly. The present value is
+  checked independently against that output Field. No domain inclusion or
+  transform execution is inferred. A transform over a stored token MUST name
+  that canonical token Field as its input. `reversed` is unsupported and refuses;
+  transport never implies the separately required reverseAction permission.
+
+All qualified refs are exact closed `{documentId,moduleId,elementId}` objects.
+Ref and pin string members are nonempty and at most4096 UTF-16 units.
+Every column binding and optional profile MUST validate even with zero rows or
+only withheld cells. Ordinary values use the original core literal checker,
+including refinements and supported containers. A column or transformed-cell
+`valueProfile` MAY explicitly select only `umf-gregorian-date/1.0.0` for a
+scalar-one date Field with known nullability, no itemType/nonempty references,
+facets/default/allowedValues. CONTRACT-066 owns date parsing; no temporal family
+label implicitly selects it. Other profiles refuse. The optional column profile
+applies to original cells; transformed cells select their own output profile.
+No generic float/time/timestamp value semantics are added.
+
+`inspectSecurityDisclosureV2(input,policy,catalog,closure)` returns immutable
+`{status,source,batch,policy,catalog,closure,complete:false,authority:false,
+diagnostics}`. Success status is `validated-disclosure` with batch equal to the
+retained source snapshot; refusal status is `refused` with batch null. Any unknown
+member/version/tag, invalid literal, mismatch or exhaustion refuses the whole
+batch. No partial accepted rows/cells escape. Bounded JSON source remains in
+source on semantic refusal; source-copy failures may return source null.
+Unknown content remains preservable using readProtectionSource/writeProtectionSource.
+
+`encodeSecurityDisclosureV2(input,policy,catalog,closure,format="json")` returns
+validated JSON or YAML text. `decodeSecurityDisclosureV2(text,policy,catalog,
+closure,format="json")` returns the validated immutable batch. Both throw
+`SECURITY_DISCLOSURE_V2` on refusal; callers use inspection/raw source operations
+to retain refused source. Neither invokes the legacy policy interpreter or a
+shadow policy. There are no native calls, key material, SQL or vault operations.
+
+Bounds are256 columns,4096 rows and16384 cells, with no trimming. Each canonical
+literal encoding is at most4096 UTF-16 units. A private shared100000 work/retained
+identity-text budget spans parameter and all cell checks. A separate4000000
+cumulative key/string UTF-16 ledger bounds the retained batch after the original
+core JSON snapshot and before semantic checks. Core snapshot depth/value and4000000-unit serialized text limits
+still apply; no preallocation or total heap/CPU theorem is claimed. Exhaustion
+reports `resource-exhausted` and returns no validated batch. Zero columns/rows
+are permitted when all supplied metadata is valid. Array order is retained;
+identity never depends on delimiter concatenation or Unicode normalization.

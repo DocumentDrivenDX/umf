@@ -276,3 +276,31 @@ string repetition. Exact coefficient arithmetic never converts values to Number.
 Function results retain source and do not prove authored property facts, actual
 compiler dependencies or native authority. Full B-SFP-003 and B-SFP-004 remain
 open until their complete required exits are independently qualified.
+
+
+## Catalog transport implementation — design2026-10-15
+
+CONTRACT-062 owns the distinct0.2 transport interface and original stored-carrier
+rule. `protection/disclosure.ts` owns its types, exact envelope/column/cell checks
+and atomic immutable result. Imports are limited to existing core JSON/literal/
+types, protection domain/parameter/private budget/index modules, preservation
+and the explicit Gregorian adapter. Public root exports inspection, encoding,
+decoding and named transport types. The legacy disclosure module is unchanged;
+no fake legacy policy, ontology or competing native admission path is created.
+
+The codec resolves original canonical and transformed output Fields separately.
+Stored original tokens use the actual canonical token Field, never a plaintext
+Field with a storage-domain override. Storage declarations are checked even in
+empty/withheld batches. Presentation transforms do not claim physical writes.
+One private literal ledger spans all cells and parameters; failure clears the
+validated batch. The existing source-boundary test plus strict typecheck/browser
+build enforce portable imports. Consumer identities, raw-table/graph bindings,
+row provenance, compiler lineage and current authorization remain host-owned.
+
+STP-079 allocates independent Python expectations, Bun/Chromium root API replay,
+source mutation controls and conditional formal laws. The formal abstraction
+models disjoint tagged carriers, exact supplied source/domain correspondence and
+atomic refusal; it assumes executable parser/checker refinement and does not
+prove native authenticity, custody or policy correctness. Original S20 acceptance
+must run through the unchanged158-case gate before promotion. No criterion is
+removed when a transport case passes.

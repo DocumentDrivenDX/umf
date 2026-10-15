@@ -11771,3 +11771,18 @@ Owner-directed consistent consumer timestamp equality starts with CONTRACT-065 a
 Owner direction (2026-10-14) started the build-out of the [security field-protection plan](security-field-protection-plan.md). Slice B-SFP-000 applied proposals P-A..P-G in authority order: FEAT-008 SEC-13/14/15 (catalog transforms, tokenization obligations, mask write-back refusal), CONTRACT-062 §Field protection catalog and 0.2.0 disposition reference, CONTRACT-063 §Field protection receipt members with PostgreSQL 18 and Unity Catalog citations, SD-008 §Field protection decisions, STP-056/057, `03-test/security/{pg-raw,delta-raw}.md` and `cases.json`. Thirteen required `not-run` cases were added (pg-raw.P01–P05/P07/P08, delta-raw.P01–P04/P07/P08); privileged-bypass, distinctness, query-use, historical-read and propagation obligations extend B04/B05/B14/B07/B08/L08/L10 procedurally. Q10 (consumer-owned Unity Catalog write path, B-SFP-017) is accepted and unqualified; Q13 is resolved as an enlarged single gate.
 
 Gate arithmetic: 145 required cases (132 original plus 13 added), 26 accepted (unchanged), 119 open. This is a documentation amendment: no protection semantics, PostgreSQL 18 or Unity Catalog evidence exists, no receipt was produced or promoted, and the committed `acceptance.json` still carries the 132-case plan digest, so the next gate run must re-execute it. `validate-evidence.py` now expects 145 cases; its pre-existing `US-055-AC*` criterion expectation and stale freshness checks are recorded in the plan as unknowns. Continuation: `evidence/security/field-protection/CONTINUATION.json`. Next: B-SFP-001.
+
+
+### Catalog protection transport progress — 2026-10-15
+
+The fresh unchanged158-case security gate accepts34 cases, with124 required
+runner bindings missing. S20 adds358 source-pinned Bun/Chromium observations
+for exact0.2 data transport including original stored tokens; all prior33 cases
+pass. Related189 tests, strict types, standard package smoke,391 schemas/67
+registrations, ten source mutations and conditional15-query Z3 analysis pass.
+The first B11 native timeout, unchanged isolated success, final full replay and
+Astra review are retained in `evidence/security/protection-disclosure-20261015/`.
+The dedicated `security-field-protection-plan.md` records detailed scope and
+remaining work. Full property/compiler, S21-S25, native current-authorization and
+selector/seal integration remain open. No native authority or complete-goal
+claim follows; all required cases remain in scope.

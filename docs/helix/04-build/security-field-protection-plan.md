@@ -658,3 +658,49 @@ protection case remains required. The next semantic step is exact0.2 transport
 for canonical null/absence/withheld/transformed null/changed domain/stored-token
 identity; current native Subject/action/owner/source authorization and guarded
 permit/selector/seal composition remain the next physical boundary.
+
+
+## Catalog disclosure transport qualification — 2026-10-15
+
+CONTRACT-062's separate0.2 codec now retains canonical null, absence, withholding,
+transformed null, changed output domains and original stored token/ciphertext.
+Canonical stored columns name the actual storage-transform output Field; a
+pre-storage domain never overrides original-value checking. Presentation outputs
+have their own exact selected policy/transform domains. All supplied pins and
+column metadata validate even with empty/withheld rows. Unknown meaning refuses
+atomically while bounded source remains preserved. Encoding/decoding is JSON/YAML
+through the portable root API; the legacy0.1 transport is unchanged.
+
+The fresh unchanged158-case gate accepts34 cases, including358 S20 observations;
+all earlier33 cases pass. Required missing bindings remain124. The independent
+Python corpus has160 fixtures (38 positive/122 refused) and175 observations per
+runtime, with Bun1.4.2/Chromium153.0.8010.12 parity. Finite date/container/refinement,
+stored original token/ciphertext, exact16,384-cell bounds, shared budgets, source
+preservation and serialization-limit controls are included. The first whole-gate
+attempt had a B11 Docker exec timeout; its full receipt/log remain retained.
+Unchanged B11 then passed in9.886s, followed by this fresh whole-gate replay.
+No timeout, assertion, coverage, layer or required case was relaxed.
+
+All189 related tests (2583 assertions), strict types, standard built ESM/types,
+391 schemas and67 registrations pass. Ten actual source-mutation variants detect
+precise missing guards. Conditional Z3 analysis retains10UNSAT laws and5SAT
+countermodels; it assumes executable refinement and proves no native permission,
+source authenticity or storage custody. Astra's source-pinned independent review,
+oracle adoption, both-runtime checks and exact sources are retained in
+`evidence/security/protection-disclosure-20261015/` from the HELIX build root.
+Freshness validation reports210 checks/88 failures, the same failed-ID set
+as the preceding baseline. The overall gate remains failed/open.
+
+B-SFP-004's declared S19/S20 implementation exits are met; its complete upstream
+B-SFP-003 property-fact/compiler dependency remains open. S21-S25 and all remaining
+native/backend/lifecycle cases remain required. Transport success never evaluates
+row policy conditions, proves actual transform execution or grants read/reverse/
+write permission. Existing qualified raw native cases remain PostgreSQL17.9;
+separate Truss18.6 component evidence does not promote the raw18 profile.
+
+Owner Git inventory verifies Truss remote mainb77cf1f0 and Weft remote mainc0c6449
+(including the reviewed placeholder patch/receipt). Temporary native checkout
+`.git` files are missing; preserve primary dirty work and repair/recreate managed
+checkout metadata before native edits. Next: full property/compiler admission,
+S21-S25 and original anchor/store/program/nonce/fullxid guarded current-authority,
+selector and seal composition. No required work is removed and the goal stays active.

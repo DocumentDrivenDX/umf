@@ -1,0 +1,5112 @@
+{
+  "oracleVersion": "s20-independent-fixtures/0.1",
+  "scope": "Finite source/domain/disposition transport, never authorization, execution, native storage or custody proof",
+  "base": {
+    "policy": {
+      "vocabulary": "umf.security",
+      "version": "0.2.0",
+      "id": "s20-policy",
+      "revision": "p1",
+      "ontology": {
+        "documentId": "uninterpreted-ontology",
+        "revision": "o1"
+      },
+      "protection": {
+        "id": "s20-protection",
+        "revision": "c1"
+      },
+      "rules": [
+        {
+          "id": "rule-nullify",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "nullify",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-mask",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "mask",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-tokenize",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "tokenize",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "token"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-encrypt",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "encrypt",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "cipher"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-token-mask",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "token-mask",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-date-truncate",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "date-truncate",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "date-output"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "native": {
+        "opaque": "preserved, never authenticated"
+      }
+    },
+    "catalog": {
+      "vocabulary": "umf.security.protection",
+      "version": "0.1.0",
+      "id": "s20-protection",
+      "revision": "c1",
+      "transforms": [
+        {
+          "id": "nullify",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "null-out"
+        },
+        {
+          "id": "mask",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "value",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "masked"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "constant"
+        },
+        {
+          "id": "tokenize",
+          "version": "v1",
+          "kind": "tokenize",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "token"
+          },
+          "determinism": "random",
+          "reversibility": "vault",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "custody": {
+            "owner": "declared-owner",
+            "formatPreserving": false,
+            "storageEffect": "stored-transformed",
+            "propagation": {
+              "history": "unverified-history",
+              "snapshots": "unverified-snapshots",
+              "exports": "unverified-exports",
+              "feeds": "unverified-feeds",
+              "caches": "unverified-caches"
+            },
+            "vaultRef": "opaque-not-executable"
+          },
+          "reverseAction": "reverse-token"
+        },
+        {
+          "id": "encrypt",
+          "version": "v1",
+          "kind": "encrypt",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "cipher"
+          },
+          "determinism": "keyed-deterministic",
+          "reversibility": "keyed",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "custody": {
+            "owner": "declared-owner",
+            "formatPreserving": false,
+            "storageEffect": "stored-transformed",
+            "propagation": {
+              "history": "unverified-history",
+              "snapshots": "unverified-snapshots",
+              "exports": "unverified-exports",
+              "feeds": "unverified-feeds",
+              "caches": "unverified-caches"
+            },
+            "keyRef": "opaque-not-executable"
+          },
+          "reverseAction": "reverse-cipher"
+        },
+        {
+          "id": "token-mask",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "token"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "value",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "masked"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "constant"
+        },
+        {
+          "id": "date-truncate",
+          "version": "v1",
+          "kind": "generalize",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "date"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "date-output"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "calendar",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "umf-gregorian-date/1.0.0"
+              }
+            },
+            {
+              "name": "unit",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "month"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "truncate-date"
+        }
+      ],
+      "native": {
+        "opaque": "never execute: () => { throw \"native\"; }\r\n\ud83d\ude00"
+      }
+    },
+    "closure": {
+      "pins": [
+        {
+          "documentId": "s20-core",
+          "revision": "d1"
+        }
+      ],
+      "documents": [
+        {
+          "revision": "d1",
+          "document": {
+            "umf": "0.8.0",
+            "id": "s20-core",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "amount",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "other-amount",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "other-text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "bool",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "decimal",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {},
+                    "facets": {
+                      "precision": 30,
+                      "scale": 3
+                    }
+                  },
+                  {
+                    "id": "binary",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "date",
+                    "kind": "field",
+                    "scalarType": "date",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "date-output",
+                    "kind": "field",
+                    "scalarType": "date",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "token",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "cipher",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "parameter-text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "record",
+                    "kind": "record",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "batch": {
+      "version": "umf.security.disclosure/0.2.0",
+      "policy": {
+        "id": "s20-policy",
+        "revision": "p1"
+      },
+      "protection": {
+        "id": "s20-protection",
+        "revision": "c1"
+      },
+      "domains": [
+        {
+          "documentId": "s20-core",
+          "revision": "d1"
+        }
+      ],
+      "columns": [
+        {
+          "field": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "storageEffect": "canonical"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "disposition": "original",
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "absent"
+          }
+        ],
+        [
+          {
+            "disposition": "withheld"
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 0,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "nullify",
+              "version": "v1"
+            },
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 1,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "mask",
+              "version": "v1"
+            },
+            "value": {
+              "string": "masked"
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "six-state-canonical-roundtrip",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "reason": "original null, absent, withheld, transformed null and changed output remain distinct"
+    },
+    {
+      "id": "stored-original-random-token",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "reason": "canonical Field is exact storage output; no token execution or reversal"
+    },
+    {
+      "id": "stored-original-keyed-cipher",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "cipher"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "encrypt",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "binaryHex": "0001aB"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stored-original-null",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stored-absent",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "absent"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stored-withheld",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "withheld"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stored-token-presentation-transform",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 4,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                },
+                "transform": {
+                  "id": "token-mask",
+                  "version": "v1"
+                },
+                "value": {
+                  "string": "masked"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplied-transform-value-is-not-execution-proof",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 1,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                },
+                "transform": {
+                  "id": "mask",
+                  "version": "v1"
+                },
+                "value": {
+                  "string": "not the constant result"
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "reason": "data-only validation cannot establish hidden-input evaluation"
+    },
+    {
+      "id": "presentation-token-from-canonical-input",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 2,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "token"
+                },
+                "transform": {
+                  "id": "tokenize",
+                  "version": "v1"
+                },
+                "value": {
+                  "string": "opaque-token"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-large-integer",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "9007199254740993"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-integer-exponent",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "1e3"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-signed-integer-zero",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "-0"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-decimal-lexeme",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "decimal"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "decimalToken": "12.340"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-decimal-negative-zero",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "decimal"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "decimalToken": "-0.000"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-binary-leading-zero",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "binary"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "binaryHex": "0001aB"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-boolean-false",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "bool"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "boolean": false
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-unicode-no-normalization",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "e\u0301/\u00e9/\ud83d\ude00/\ufeff"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-escaped-text",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "\u0000\t\r\n\"\\"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zero-rows-valid",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "zero-columns-zero-rows",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": []
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "duplicate-rows-are-a-bag",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ],
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "columns-order-preserved",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "bool"
+              },
+              "storageEffect": "canonical"
+            },
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "boolean": false
+                }
+              },
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "42"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-original-0001-01-01",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "0001-01-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-original-2000-02-29",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-original-9999-12-31",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "9999-12-31"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-original-null",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-transformed-explicit-profile",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 5,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "date-output"
+                },
+                "transform": {
+                  "id": "date-truncate",
+                  "version": "v1"
+                },
+                "value": {
+                  "date": "2000-02-01"
+                },
+                "valueProfile": "umf-gregorian-date/1.0.0"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "extra--batch",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-policy",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/policy/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-protection",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/protection/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-domains-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-columns-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-columns-0-field",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-0-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-1-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/1/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-2-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/2/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-3-0",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/3/0/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-3-0-selection",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/3/0/selection/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-3-0-transform",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/3/0/transform/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extra--batch-rows-3-0-outputDomain",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/3/0/outputDomain/unknown",
+          "value": {
+            "preserve": "opaque"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/version",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-policy-id",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/policy/id",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-policy-revision",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/policy/revision",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-protection-id",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/protection/id",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-protection-revision",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/protection/revision",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-domains-0-documentId",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains/0/documentId",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "stale--batch-domains-0-revision",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains/0/revision",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-policy",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/policy"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-protection",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/protection"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-domains",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/domains"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-columns",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/columns"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-rows",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/rows"
+        }
+      ]
+    },
+    {
+      "id": "missing--batch-columns-0-storageEffect",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/columns/0/storageEffect"
+        }
+      ]
+    },
+    {
+      "id": "missing-pin",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "duplicate-pin",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains",
+          "value": [
+            {
+              "documentId": "s20-core",
+              "revision": "d1"
+            },
+            {
+              "documentId": "s20-core",
+              "revision": "d1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "extra-pin",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/domains",
+          "value": [
+            {
+              "documentId": "s20-core",
+              "revision": "d1"
+            },
+            {
+              "documentId": "foreign",
+              "revision": "d1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "closure-revision",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/revision",
+          "value": "d2"
+        }
+      ]
+    },
+    {
+      "id": "core-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/umf",
+          "value": "0.7.0"
+        }
+      ]
+    },
+    {
+      "id": "policy-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/policy/version",
+          "value": "0.3.0"
+        }
+      ]
+    },
+    {
+      "id": "catalog-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/catalog/version",
+          "value": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "catalog-kind",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/catalog/transforms/5/kind",
+          "value": "future"
+        }
+      ]
+    },
+    {
+      "id": "catalog-member",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/catalog/transforms/5/future",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "policy-member",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/policy/future",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "core-member",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/0/future",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "duplicate-column",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            },
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "foreign-field",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "missing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "non-field",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "record"
+          }
+        }
+      ]
+    },
+    {
+      "id": "empty-reference",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field/moduleId",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "short-row",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "long-row",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4",
+          "value": [
+            {
+              "disposition": "transformed",
+              "selection": {
+                "ruleIndex": 1,
+                "disclosureIndex": 0
+              },
+              "outputDomain": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "transform": {
+                "id": "mask",
+                "version": "v1"
+              },
+              "value": {
+                "string": "masked"
+              }
+            },
+            {
+              "disposition": "transformed",
+              "selection": {
+                "ruleIndex": 1,
+                "disclosureIndex": 0
+              },
+              "outputDomain": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "transform": {
+                "id": "mask",
+                "version": "v1"
+              },
+              "value": {
+                "string": "masked"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "row-not-array",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4",
+          "value": {}
+        }
+      ]
+    },
+    {
+      "id": "cell-not-object",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4",
+          "value": null
+        }
+      ]
+    },
+    {
+      "id": "missing-original-value",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/rows/0/0/value"
+        }
+      ]
+    },
+    {
+      "id": "withheld-value",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/2/0/value",
+          "value": {
+            "string": "SECRET"
+          }
+        }
+      ]
+    },
+    {
+      "id": "absent-value",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/1/0/value",
+          "value": null
+        }
+      ]
+    },
+    {
+      "id": "unknown-disposition",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/disposition",
+          "value": "reversed"
+        }
+      ]
+    },
+    {
+      "id": "positional-cell-field-forbidden",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wrong-original-domain",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/value",
+          "value": {
+            "string": "100"
+          }
+        }
+      ]
+    },
+    {
+      "id": "raw-number",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/value",
+          "value": 100
+        }
+      ]
+    },
+    {
+      "id": "raw-bool",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/value",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "literal-extra",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/value",
+          "value": {
+            "integerToken": "1",
+            "string": "secret"
+          }
+        }
+      ]
+    },
+    {
+      "id": "required-null-refusal",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/0/nullability",
+          "value": "required"
+        }
+      ]
+    },
+    {
+      "id": "required-absence-refusal",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/0/nullability",
+          "value": "required"
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "absent"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transformed-wrong-rule",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/selection/ruleIndex",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "transformed-wrong-disclosure",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/selection/disclosureIndex",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "transformed-negative-rule",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/selection/ruleIndex",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "id": "transformed-fraction-rule",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/selection/ruleIndex",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "transformed-boolean-rule",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/selection/ruleIndex",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "transformed-wrong-transform",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/transform/id",
+          "value": "tokenize"
+        }
+      ]
+    },
+    {
+      "id": "transformed-wrong-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/transform/version",
+          "value": "v2"
+        }
+      ]
+    },
+    {
+      "id": "transformed-same-family-output-substitution",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/outputDomain",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "other-text"
+          }
+        }
+      ]
+    },
+    {
+      "id": "transformed-wrong-value-wrapper",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/value",
+          "value": {
+            "integerToken": "1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "transformed-same-family-input-substitution",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "other-amount"
+          }
+        }
+      ]
+    },
+    {
+      "id": "transformed-missing-value",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "remove",
+          "path": "/batch/rows/4/0/value"
+        }
+      ]
+    },
+    {
+      "id": "transformed-policy-output-substitution",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/policy/rules/1/disclosure/0/disposition/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "other-text"
+          }
+        }
+      ]
+    },
+    {
+      "id": "transformed-policy-input-substitution",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/policy/rules/1/disclosure/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "other-amount"
+          }
+        }
+      ]
+    },
+    {
+      "id": "canonical-tag-on-known-token",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageEffect",
+          "value": "canonical"
+        },
+        {
+          "op": "remove",
+          "path": "/batch/columns/0/storageTransform"
+        }
+      ]
+    },
+    {
+      "id": "stored-missing-transform",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "remove",
+          "path": "/batch/columns/0/storageTransform"
+        }
+      ]
+    },
+    {
+      "id": "stored-wrong-storage-id",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageTransform/id",
+          "value": "encrypt"
+        }
+      ]
+    },
+    {
+      "id": "stored-wrong-storage-version",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageTransform/version",
+          "value": "v2"
+        }
+      ]
+    },
+    {
+      "id": "stored-extra-storage-member",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageTransform/future",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "stored-input-field-is-not-stored-field",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stored-same-family-stored-substitution",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "other-text"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stored-plaintext-in-token-field",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows/0/0/value",
+          "value": {
+            "integerToken": "100"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stored-unsupported-storage-effect",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageEffect",
+          "value": "plaintext"
+        }
+      ]
+    },
+    {
+      "id": "canonical-with-storage-transform",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageTransform",
+          "value": {
+            "id": "tokenize",
+            "version": "v1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zero-row-stored-metadata-refusal",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": []
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/storageTransform/id",
+          "value": "missing"
+        }
+      ]
+    },
+    {
+      "id": "zero-row-stored-output-mismatch",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "storageEffect": "stored-transformed",
+              "storageTransform": {
+                "id": "tokenize",
+                "version": "v1"
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "tk_00_A\ud83d\ude00"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": []
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns/0/field",
+          "value": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zero-row-source-pin-refusal",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": []
+        },
+        {
+          "op": "set",
+          "path": "/batch/protection/revision",
+          "value": "different"
+        }
+      ]
+    },
+    {
+      "id": "withheld-cannot-hide-unknown-value-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "unknown"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "withheld"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "absent-cannot-hide-unknown-value-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "unknown"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "absent"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-0000-01-01",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "0000-01-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-10000-01-01",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "10000-01-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-1900-02-29",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "1900-02-29"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2000-02-30",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-30"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2001-13-01",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2001-13-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2001-01-00",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2001-01-00"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2001-1-01",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2001-1-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2001-01-01\n",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2001-01-01\n"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-\uff12\uff10\uff10\uff11-01-01",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "\uff12\uff10\uff10\uff11-01-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-invalid-2001-01-01T00:00:00Z",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2001-01-01T00:00:00Z"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-no-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-unknown-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "other"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nondate-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-transformed-no-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 5,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "date-output"
+                },
+                "transform": {
+                  "id": "date-truncate",
+                  "version": "v1"
+                },
+                "value": {
+                  "date": "2000-02-01"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-transformed-wrong-profile",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "transformed",
+                "selection": {
+                  "ruleIndex": 5,
+                  "disclosureIndex": 0
+                },
+                "outputDomain": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "date-output"
+                },
+                "transform": {
+                  "id": "date-truncate",
+                  "version": "v1"
+                },
+                "value": null,
+                "valueProfile": "other"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-refinement-allowedValues",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/7/allowedValues",
+          "value": [
+            {
+              "date": "2000-02-29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "date-refinement-default",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/7/default",
+          "value": {
+            "date": "2000-02-29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "date-refinement-facets",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical",
+              "valueProfile": "umf-gregorian-date/1.0.0"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "date": "2000-02-29"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/7/facets",
+          "value": {
+            "calendar": "gregorian"
+          }
+        }
+      ]
+    },
+    {
+      "id": "late-cell-invalid-whole-batch",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/rows/4/0/value",
+          "value": {
+            "integerToken": "1"
+          }
+        }
+      ],
+      "reason": "No earlier canonical or withheld row may survive as validated output"
+    },
+    {
+      "id": "row-count-4096",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "expand": {
+        "kind": "rows",
+        "rows": 4096
+      }
+    },
+    {
+      "id": "row-count-4097",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "rows",
+        "rows": 4097
+      }
+    },
+    {
+      "id": "column-count-256",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "expand": {
+        "kind": "columns",
+        "columns": 256,
+        "rows": 0
+      }
+    },
+    {
+      "id": "column-count-257",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "columns",
+        "columns": 257,
+        "rows": 0
+      }
+    },
+    {
+      "id": "cell-count-16384",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "expand": {
+        "kind": "columns",
+        "columns": 4,
+        "rows": 4096
+      }
+    },
+    {
+      "id": "cell-count-16385",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "columns",
+        "columns": 5,
+        "rows": 3277
+      }
+    },
+    {
+      "id": "canonical-string-literal-units-4096",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "expand": {
+        "kind": "string",
+        "length": 4083
+      }
+    },
+    {
+      "id": "canonical-string-literal-units-4097",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "string",
+        "length": 4084
+      }
+    },
+    {
+      "id": "shared-string-budget-90",
+      "expected": "validated-disclosure",
+      "changes": [],
+      "expand": {
+        "kind": "repeated-string",
+        "rows": 90,
+        "length": 999
+      }
+    },
+    {
+      "id": "shared-string-budget-101",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "repeated-string",
+        "rows": 101,
+        "length": 999
+      }
+    },
+    {
+      "id": "opaque-source-text-budget",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "opaque",
+        "length": 4000001
+      }
+    },
+    {
+      "id": "batch-text-budget",
+      "expected": "refused",
+      "changes": [],
+      "expand": {
+        "kind": "batch-text",
+        "length": 4000001
+      }
+    },
+    {
+      "id": "wire-duplicate-top-member",
+      "expected": "refused",
+      "changes": [],
+      "wire": {
+        "format": "json",
+        "text": "{\"version\":\"umf.security.disclosure/0.2.0\",\"version\":\"umf.security.disclosure/0.2.0\"}"
+      }
+    },
+    {
+      "id": "wire-malformed-json",
+      "expected": "refused",
+      "changes": [],
+      "wire": {
+        "format": "json",
+        "text": "{\"rows\":["
+      }
+    },
+    {
+      "id": "wire-wrong-top-type",
+      "expected": "refused",
+      "changes": [],
+      "wire": {
+        "format": "json",
+        "text": "[]"
+      }
+    },
+    {
+      "id": "wire-yaml-duplicate",
+      "expected": "refused",
+      "changes": [],
+      "wire": {
+        "format": "yaml",
+        "text": "version: umf.security.disclosure/0.2.0\nversion: umf.security.disclosure/0.2.0\n"
+      }
+    },
+    {
+      "id": "policy-false-condition-is-not-executed",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/policy/rules/0/condition/value",
+          "value": false
+        },
+        {
+          "op": "set",
+          "path": "/policy/rules/1/condition/value",
+          "value": false
+        }
+      ]
+    },
+    {
+      "id": "core-pin-set-order-independent",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/pins",
+          "value": [
+            {
+              "documentId": "s20-core",
+              "revision": "d1"
+            },
+            {
+              "documentId": "other-core",
+              "revision": "other-r1"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents",
+          "value": [
+            {
+              "revision": "d1",
+              "document": {
+                "umf": "0.8.0",
+                "id": "s20-core",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "amount",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "text",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "other-amount",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "other-text",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "bool",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "decimal",
+                        "kind": "field",
+                        "scalarType": "decimal",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {},
+                        "facets": {
+                          "precision": 30,
+                          "scale": 3
+                        }
+                      },
+                      {
+                        "id": "binary",
+                        "kind": "field",
+                        "scalarType": "binary",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "date",
+                        "kind": "field",
+                        "scalarType": "date",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "date-output",
+                        "kind": "field",
+                        "scalarType": "date",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "token",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "cipher",
+                        "kind": "field",
+                        "scalarType": "binary",
+                        "cardinality": "one",
+                        "nullability": "absent-allowed",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter-text",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "revision": "other-r1",
+              "document": {
+                "umf": "0.8.0",
+                "id": "other-core",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "text",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/domains",
+          "value": [
+            {
+              "documentId": "other-core",
+              "revision": "other-r1"
+            },
+            {
+              "documentId": "s20-core",
+              "revision": "d1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-supported-array",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements",
+          "value": [
+            {
+              "id": "amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "bool",
+              "kind": "field",
+              "scalarType": "boolean",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "decimal",
+              "kind": "field",
+              "scalarType": "decimal",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {},
+              "facets": {
+                "precision": 30,
+                "scale": 3
+              }
+            },
+            {
+              "id": "binary",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "date",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "date-output",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "token",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "cipher",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "parameter-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "container",
+              "kind": "field",
+              "cardinality": "array",
+              "nullability": "required",
+              "itemType": {
+                "module": "m",
+                "element": "amount"
+              },
+              "extensions": {}
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "container"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "array": [
+                    {
+                      "integerToken": "9007199254740993"
+                    },
+                    null
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-array-nested-wrong-domain",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements",
+          "value": [
+            {
+              "id": "amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "bool",
+              "kind": "field",
+              "scalarType": "boolean",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "decimal",
+              "kind": "field",
+              "scalarType": "decimal",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {},
+              "facets": {
+                "precision": 30,
+                "scale": 3
+              }
+            },
+            {
+              "id": "binary",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "date",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "date-output",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "token",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "cipher",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "parameter-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "container",
+              "kind": "field",
+              "cardinality": "array",
+              "nullability": "required",
+              "itemType": {
+                "module": "m",
+                "element": "amount"
+              },
+              "extensions": {}
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "container"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "array": [
+                    {
+                      "string": "not integer"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-supported-map",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements",
+          "value": [
+            {
+              "id": "amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "bool",
+              "kind": "field",
+              "scalarType": "boolean",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "decimal",
+              "kind": "field",
+              "scalarType": "decimal",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {},
+              "facets": {
+                "precision": 30,
+                "scale": 3
+              }
+            },
+            {
+              "id": "binary",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "date",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "date-output",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "token",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "cipher",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "parameter-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "container",
+              "kind": "field",
+              "cardinality": "map",
+              "nullability": "required",
+              "itemType": {
+                "module": "m",
+                "element": "amount"
+              },
+              "extensions": {}
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "container"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "map": {
+                    "a": {
+                      "integerToken": "1"
+                    },
+                    "\ud83d\ude00": null
+                  }
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-map-nested-wrong-domain",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements",
+          "value": [
+            {
+              "id": "amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "bool",
+              "kind": "field",
+              "scalarType": "boolean",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "decimal",
+              "kind": "field",
+              "scalarType": "decimal",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {},
+              "facets": {
+                "precision": 30,
+                "scale": 3
+              }
+            },
+            {
+              "id": "binary",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "date",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "date-output",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "token",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "cipher",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "parameter-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            },
+            {
+              "id": "container",
+              "kind": "field",
+              "cardinality": "map",
+              "nullability": "required",
+              "itemType": {
+                "module": "m",
+                "element": "amount"
+              },
+              "extensions": {}
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "container"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "map": {
+                    "a": {
+                      "boolean": true
+                    }
+                  }
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-refinement-equivalent-numeric",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "1e2"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/0/allowedValues",
+          "value": [
+            {
+              "integerToken": "100"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "original-refinement-outside-allowed",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "101"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/closure/documents/0/document/modules/0/elements/0/allowedValues",
+          "value": [
+            {
+              "integerToken": "100"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal-unpaired-surrogate",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "text"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "string": "\ud800"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal-binary-odd-hex",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "binary"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "binaryHex": "abc"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal-binary-nonhex",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "binary"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "binaryHex": "GG"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal-integer-rounding",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "integerToken": "1.5"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal-decimal-rounding",
+      "expected": "refused",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "decimal"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": {
+                  "decimalToken": "0.0001"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "null-core-date-without-calendar-does-not-interpret-date",
+      "expected": "validated-disclosure",
+      "changes": [
+        {
+          "op": "set",
+          "path": "/batch/columns",
+          "value": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "storageEffect": "canonical"
+            }
+          ]
+        },
+        {
+          "op": "set",
+          "path": "/batch/rows",
+          "value": [
+            [
+              {
+                "disposition": "original",
+                "value": null
+              }
+            ]
+          ]
+        }
+      ],
+      "reason": "Original core nullability owns null, no nonnull temporal value semantics are inferred"
+    }
+  ],
+  "requiredStates": [
+    "canonical-null",
+    "absent",
+    "withheld",
+    "transformed-null",
+    "changed-output-domain",
+    "stored-original-token"
+  ],
+  "expectedBaseStates": [
+    {
+      "disposition": "original",
+      "value": null
+    },
+    {
+      "disposition": "absent"
+    },
+    {
+      "disposition": "withheld"
+    },
+    {
+      "disposition": "transformed",
+      "value": null,
+      "outputDomain": {
+        "documentId": "s20-core",
+        "moduleId": "m",
+        "elementId": "text"
+      }
+    },
+    {
+      "disposition": "transformed",
+      "value": {
+        "string": "masked"
+      },
+      "outputDomain": {
+        "documentId": "s20-core",
+        "moduleId": "m",
+        "elementId": "text"
+      }
+    }
+  ]
+}
