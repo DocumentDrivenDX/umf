@@ -515,3 +515,26 @@ browser parity qualify logical admission only: native statement/effect closure,
 opaque replacement intent, authentication/current authority, query/compiler lineage
 and remaining physical/backend acceptance cases retain their separate obligations.
 An accepted S24/S25 semantic receipt does not qualify any native backend profile.
+
+
+## Stored-Field conditional query source controls — 2026-10-15
+
+`tests/security/stored-query-corpus.ts` supplies independently authored expected
+outcomes for the private source selector in Bun and Chromium. Controls cover all
+five operators; authored/implied equality; omitted/prohibited and separately
+original-authorized modes; random-token join/group; actual stored output versus
+plaintext input; live type/Field membership; complete unrelated storage entries;
+duplicate/missing/wrong-version/output/canonical-downgrade/unknown owner content;
+forged program handles; unsupported dependencies and bounded source shapes.
+Snapshots must remain immutable, source inputs unchanged and getter calls zero.
+A withheld read policy must not be misreported as a source-selection failure or
+as read permission: storage classification and effective disclosure are separate.
+
+The extracted validator must preserve existing action/collection/write behavior,
+including graph/raw ownership and null/absence. The legacy public query-property
+suite must remain unchanged. Run strict library/tools typing, the real-browser
+probe `tools/security/stored-query-browser.ts` without Bun/Node globals, focused
+logical regressions and the fresh full required-case gate. Add the extracted
+validator to the affected case source fingerprints without changing assertions,
+allocations or timeouts. P03/B08 stay unbound; these are source consistency tests,
+not native query admission or proof of key/provider correspondence.

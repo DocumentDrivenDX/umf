@@ -1,6 +1,7 @@
 """Reproducible Z3 checks; scopes and assumptions are part of every result."""
 import hashlib
 import json
+import sys
 from pathlib import Path
 import z3
 
@@ -239,7 +240,8 @@ def digest(path):
 sources = [HERE / "prove.py", ROOT / "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
            ROOT / "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md"]
 receipt = {"solver": "Z3", "solverVersion": z3.get_version_string(),
-           "command": "/private/tmp/umf-security-proof-venv/bin/python3 docs/helix/02-design/spikes/security/prove.py",
+           "command": f"{sys.executable} docs/helix/02-design/spikes/security/prove.py",
+           "pythonVersion": sys.version,
            "sourceDigests": {str(p.relative_to(ROOT)): digest(p) for p in sources},
            "cases": results, "nativeInstallationProven": False,
            "scope": "Conditional formal proofs, not complete extension/backend acceptance"}

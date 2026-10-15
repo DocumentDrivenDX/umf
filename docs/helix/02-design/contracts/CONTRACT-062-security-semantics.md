@@ -1467,3 +1467,39 @@ limits also apply. These are explicit operation ledgers, not a total CPU/heap
 bound. Finite independent S24/S25 evidence qualifies this private semantic guard;
 source authentication, query/compiler lineage, native enforcement and physical
 statement/effect custody remain separate required obligations.
+
+
+### Private stored-Field query source inspection — 2026-10-15
+
+`inspectCandidateStoredQueryProperties(program,owner,use)` resolves conditional
+query properties for an ORIGINAL canonical stored Field without constructing a
+transformed read disposition. `program` MUST be the exact originally issued
+catalog-program handle; copied handles refuse. This private operation is not
+exported by the public root and is not a compiler or query admission interface.
+
+`owner` retains the existing `umf.security.logical-owner/0.1` shape and complete
+live type/Field storage map. Every designation MUST name an actual ontology
+member, be unique and preserve canonical/stored-transform distinctions. Unknown
+members, incomplete maps, canonical downgrades and mismatched transform outputs
+refuse. The optional existing disclosure read action is checked against the
+original ontology purpose, but does not grant read permission.
+
+`use` is exactly `{type,field,operator,required}`. The Field MUST belong to that
+live type and its selected owner storage designation MUST be stored-transformed,
+with exact tokenize/encrypt transform id/version and output domain. The transform's
+input domain is not the canonical query domain. Operator/required property bounds
+and comparison follow the existing conditional query helper, using the same
+literal budget for parameter validation and property comparison. No invented
+transformed policy, plaintext override, original-action substitution, custody
+verification or reverse permission is introduced.
+
+The detached immutable result retains owner/use, original policy/catalog/closure
+and ontology plus a conditional property report on successful source resolution.
+A source-resolution refusal has no selection or property report. The result
+always carries `complete:false, authority:false`; a successful source selection
+may still report prohibited, missing properties or requires-original-action.
+Dependency requirements remain supplied assumptions until the existing compiler
+owner derives them from actual queries. Owner provenance, actual ORIGINAL read
+permission, fixed runtime/key scope, mixed-mode physical integration and native
+current-authority/dispatch enforcement remain separate obligations. No P03/B08
+case is promoted by this pure source inspector.

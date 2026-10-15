@@ -7,6 +7,7 @@ import {GREGORIAN_DATE_PROFILE,parseGregorianDate} from '../../adapters/gregoria
 import {securityAnd,securityOr,securityNot,type SecurityTruth,type SecurityDecision} from './logic';
 import {evaluateIssuedProtectionDefinition} from './protection/functions';
 import type {SecurityOutput} from './evaluate';
+import {validateCandidateCatalogStorage} from './catalog-storage-candidate';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';
 const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_RUNTIME: '+message);};
 const id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
@@ -81,13 +82,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const known=(f:any,r:any)=>value(f,r)!==undefined||absences.get(f)!.has(id(r));
  const admitField=(type:any,r:any,rows:any[])=>{step();complete(type);if(!covered.get(id(type))?.fields.has(id(r)))fail('Missing Field coverage');for(const f of rows){step();if(!known(f,r))fail('Missing Field projection');}};
  // Every actual canonical Field has an explicit owner storage designation.
- const storage=new Map<string,any>();for(const c of owner.storage){shape(c,['type','field','storageEffect'],['storageTransform']);const e=entity(c.type),name=ref(c.field),key=JSON.stringify([id(c.type),name]);if(storage.has(key)||!member(e.type,name))fail('Invalid storage designation');
-  const stored=(program.catalog?.transforms??[]).filter((t:any)=>t.custody?.storageEffect==='stored-transformed'&&id(t.outputDomain)===name);
-  if(c.storageEffect==='canonical'){if(Object.hasOwn(c,'storageTransform')||stored.length)fail('Canonical downgrade');}
-  else if(c.storageEffect==='stored-transformed'){shape(c.storageTransform,['id','version']);const t=stored.find((t:any)=>t.id===c.storageTransform.id&&t.version===c.storageTransform.version);if(!t||!['tokenize','encrypt'].includes(t.kind))fail('Exact stored output transform required');}
-  else fail('Unsupported storage effect');storage.set(key,c);
- }
- for(const e of entities.values())for(const f of e.fields)if(!storage.has(JSON.stringify([id(e.type),id(f.ref)])))fail('Incomplete owner storage map');
+ const storage=validateCandidateCatalogStorage(program,owner,()=>step());
  const associations=program.ontology.associations,graphTables=new Map<string,{checks:any;rows:any[]}>();
  for(const checks of associations)if(checks.kind==='candidate-graph-relationship-checks/0.1')graphTables.set(relationId(checks.plan.relationship),{checks,rows:[]});
  const graphIdentities=new Set<string>();for(const row of cut.graphs){step();shape(row,['relationship','witness','endpoints']);const rk=relationship(row.relationship),table=graphTables.get(rk)??fail('Undeclared graph relationship'),plan=table.checks.plan;list(row.endpoints,2);

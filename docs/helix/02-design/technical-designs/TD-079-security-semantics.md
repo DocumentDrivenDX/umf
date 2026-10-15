@@ -672,3 +672,28 @@ Neither interface change is implemented or approved by this observation componen
 
 See `../../04-build/evidence/security/pg18-query-observations-20261015/` for
 source-pinned design review, native evidence and qualification limits.
+
+
+### Exact stored-Field source selection — 2026-10-15
+
+The private `inspectCandidateStoredQueryProperties` resolves an actual issued
+catalog program plus a detached complete logical-owner map and exact live
+(type, Field) selection. It invokes the existing property-comparison kernel on
+the selected storage transform directly. It does not construct a read transform
+or replace the policy/catalog. The stored output Field is the canonical query
+domain; the pre-storage input domain is separately retained for diagnosis.
+
+The action kernel and this inspector now share one owner storage validator,
+including complete unrelated members, duplicates, exact output transforms and
+canonical downgrade refusals. The existing public transformed-disposition helper
+retains its API and behavior. Source resolution may succeed when an actual read
+would withhold or transform the Field: no action, facts or current read permission
+are supplied to this source-only operation. All reports remain conditional and
+non-authoritative, including authored/implied property distinctions and default
+prohibition. The exact private contract is in CONTRACT-062.
+
+This closes the pure stored-source resolution gap identified above. Existing
+Weft-owned query lineage must still consume the result under actual ORIGINAL-read
+permission, source/key/domain correspondence, mixed-mode physical integration,
+current authority and dispatch refusal before the P03/B08 boundary can qualify.
+No new compiler/profile owner or public root API is introduced.

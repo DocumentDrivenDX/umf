@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.P01",
   "backend": "pg-raw",
-  "runId": "d2d967ca-7251-46c2-b6e5-c44827b7e65a",
+  "runId": "d464933e-35b3-4da3-83d1-ce4e0059c87d",
   "command": [
     "python3",
     "tests/security/native/pg18-column-withhold.py"
@@ -1683,12 +1683,12 @@
       "expected": [
         "umf_sec_alice",
         "umf_sec_alice",
-        809
+        798
       ],
       "observed": [
         "umf_sec_alice",
         "umf_sec_alice",
-        809
+        798
       ]
     },
     {
@@ -3106,12 +3106,12 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "b35c7bb47c8db07ec6bbd56c34d5f3ffa1b71810f4f0843d08c72707a560c3a0",
+      "containerId": "4ac7d04bf307ce7b96c9fbae951821b53d369a7dcaa32ad25fc2b6d125fa6f43",
       "ownedAnonymousVolumes": [
-        "8b32fc0fc8444de880731223eb891c98ac131c4009964f9a3f8be64780b2af72"
+        "2dd495c3995edcc0c9aee7604bf64ad3f486951e953b7d935165e0dad0f5a211"
       ]
     },
-    "digest": "91be045961ea52cd2a164921784a0e183dad26bc9b4743174b714c651991bd07"
+    "digest": "d67462c1a886d9cda3c4378d8ce21e3b631d2a65ddf17441a6bee61bc4415257"
   },
   "scope": "Fixed PostgreSQL18.6 native column SELECT refusal over membership-filtered raw relational carrier; independent authored rows and attacks. No general compiler/native backend qualification. Refusal is an operation outcome with no Cells. Other B/L/P cases remain independently unqualified on PostgreSQL18;17.9 receipts are not replay evidence."
 }

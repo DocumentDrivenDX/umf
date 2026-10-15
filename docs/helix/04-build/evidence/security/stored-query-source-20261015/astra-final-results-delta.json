@@ -1,0 +1,40 @@
+{
+  "status": "no-actionable-issue-in-appended-results-paragraph",
+  "scope": "Read-only final measured-results documentation addendum; no tests or native jobs rerun.",
+  "previousReview": "/private/tmp/stored-query-source-astra-20261015/review.json",
+  "previousReviewSha256": "7e5d292ae220d1888a38242d60ad1813ac365a9abebc05300dc3d163c9cf4a3f",
+  "previousArchiveUnchangedSha256": "369e0e57b71b466b7cbdc293f4399b55329a6b2ca80780c3947c64f2db9c37b6",
+  "onlyChangedOriginalPin": {
+    "docs/helix/04-build/security-field-protection-plan.md": {
+      "before": "5a79ab16bf97f0fb06d8c3bc35d0f22c7b5d8e6ce0d00cb97c02cc9745c2fc9c",
+      "after": "b0a4486c5f397f2f1f21033492f341a00900e71d077c78e5fb8cd06df16a5b0c"
+    }
+  },
+  "otherOriginalPinsUnchanged": 80,
+  "verifiedRetainedEvidence": {
+    "requiredCases": 158,
+    "criteria": 34,
+    "executedAccepted": 43,
+    "requiredUnbound": 115,
+    "wholeGateStatus": "failed solely for missing bindings; not full acceptance",
+    "initialGateAdditionalFailure": "S12 missing configured solver environment, retained",
+    "validatorChecks": 219,
+    "previousFailed": 88,
+    "currentFailed": 86,
+    "newFailureIds": [],
+    "resolvedIds": [
+      "formal-replay-audit-coverage-results",
+      "fresh-formal-replay-audit.json"
+    ],
+    "rootRegression": "retained log 293 pass / 3556 assertions",
+    "parentComponentReceipt": "30 Chromium source controls and both strict typechecks passed",
+    "formal": "retained 20 conditional models and 758 saved-formula replays across 42 selected receipts; no new resolver/native refinement claim"
+  },
+  "independentReviewCountsUnchanged": {
+    "BunAndChromiumEach": 253,
+    "publicHelperComparisons": 45,
+    "detectedWeakenings": 9
+  },
+  "limitations": "This addendum inspects retained parent execution evidence, not independently repeated gate/browser/typecheck/formula runs. P03/B08 and all 115 unbound cases remain open. Existing source review and archive remain immutable.",
+  "sourcePins": "source-pins.json"
+}

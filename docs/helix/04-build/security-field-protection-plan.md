@@ -1138,3 +1138,32 @@ No original case assertion, allocation, command or timeout changes. P03 remains
 not-run/unbound and the last full gate remains 43 accepted/115 required unbound
 across 158 cases/34 criteria. This component is not a new acceptance receipt or
 formal refinement proof. The overall implementation goal stays active.
+
+
+### Stored-Field conditional query resolver — 2026-10-15
+
+The private stored-query source inspector now resolves the actual canonical
+stored output Field through the complete original owner storage map. It shares
+storage-map validation with the action kernel and conditional property comparison
+with the public transformed helper. No synthetic plaintext read transformation,
+new compiler owner or public root export is added. A selected source report is
+not a read permit; effective policy dispositions and native current authority
+remain separate. Tests and source-pinned independent review are retained under
+`evidence/security/stored-query-source-20261015/`.
+
+Only S24/S25 implementation-source metadata gains the extracted storage validator.
+All158 original case assertions, allocations, commands and timeouts remain
+unchanged. P03/B08 are not promoted by this pure source work. The overall goal
+remains active; mixed-mode physical integration and actual compiler dispatch
+remain required.
+
+The fresh full gate reaccepts all43 existing cases, with115 required unbound and
+34 criteria. Independent Astra review passes253 Bun/Chromium controls,45 complete
+public-helper comparisons and nine detected weakenings; parent regression passes
+293 tests/3556 assertions plus30 Chromium source controls and both strict typing
+checks. The first S12 attempt lacked the explicit solver environment and is
+retained as failed; the final whole gate selects the verified environment.
+Existing20 conditional models and758 recognized saved formulas replay without
+a resolver/native refinement claim. Formal receipts now report their actual
+interpreter. Evidence validation has219 checks/86 failed IDs, no new failures and
+two resolved formal-audit checks versus the previous88-failure baseline.

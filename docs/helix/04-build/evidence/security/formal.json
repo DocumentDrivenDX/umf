@@ -1,10 +1,11 @@
 {
   "solver": "Z3",
   "solverVersion": "4.15.4",
-  "command": "/private/tmp/umf-security-proof-venv/bin/python3 docs/helix/02-design/spikes/security/prove.py",
+  "command": "/private/tmp/umf-write-comparison-proof-env-20261013/bin/python docs/helix/02-design/spikes/security/prove.py",
+  "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
   "sourceDigests": {
-    "docs/helix/02-design/spikes/security/prove.py": "2ec99fc12e5127a345350d522f4b86e1b0d16f8a687c3e897af55ca860519a03",
-    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "755b2e91a87edda89657142e3785f51cf5bd210073fe3828254ec349c8378f32",
+    "docs/helix/02-design/spikes/security/prove.py": "a4feae5d26023414b556b2009032ea0d8770b44b7cfcbfbf97d0dfb0170517d6",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "8a912f3a9c334c2a5d4bb37f71b640a52be819a17d1a899889d84d4671b6d55d",
     "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "a2ef9ce52ce65db723ae89a10b7c1d207a278b2ea6e9e3bb903713abb3e988b3"
   },
   "cases": [

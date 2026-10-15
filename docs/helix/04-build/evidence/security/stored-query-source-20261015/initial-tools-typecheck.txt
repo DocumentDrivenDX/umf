@@ -1,0 +1,2 @@
+tests/security/stored-query.test.ts(6,74): error TS2769: No overload matches this call. Argument of type 'true' is not assignable to parameter of type 'undefined'.
+Corrected expect(any) to expect(Boolean(row.passed)); no oracle expectation or runtime implementation changed.

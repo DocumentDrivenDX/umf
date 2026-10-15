@@ -13,12 +13,13 @@
     "docs/helix/04-build/evidence/security/existence-truth-formal.json": "000b7ead929184d6e91c5e416744b3ecae0c1b9717da93dc0f3f6b0b9d11b31c",
     "docs/helix/04-build/evidence/security/existence-unbounded-formal.json": "9f11a78dc53766952e1fe670d18a8837501a96ccfca832bb6976cabfc9e5aee0",
     "docs/helix/04-build/evidence/security/field-write-fold-formal.json": "7feaaa02a61ceb77c3225137e9bbe6b49f033037f771f8f93c5b1449424f60b9",
-    "docs/helix/04-build/evidence/security/formal.json": "b1bb7a977d4da85166b534a48d1f82e46814b02cb5c3277edafaf10970f1897a",
+    "docs/helix/04-build/evidence/security/formal.json": "26d0a138b0bef8b21abdf7e9ea33ddefeeeeff54f947f2f1a89fcd2a69dc9eb0",
     "docs/helix/04-build/evidence/security/graph-endpoints-formal.json": "192a12694e99e566904108b9ea4f06ae5df868e4451654a394160c4a53806ad4",
     "docs/helix/04-build/evidence/security/graph-key-correspondence-formal.json": "988f8fbd8fbeabc22b0966ede314c947bfb5822db72cfb42d2cbd6445e2ead73",
     "docs/helix/04-build/evidence/security/hash-key-formal.json": "c4f505008c373867f0a16305cc0a2a09ff088274009143312eca555339a5a5e3",
     "docs/helix/04-build/evidence/security/inventory-wire-size-formal.json": "fbd758441dbf0dd98e4c1dc04a2e573336918b834eea47dfb5cf403de7396ed0",
-    "docs/helix/04-build/evidence/security/mask-query-formal.json": "d76bba13543433ac6994bc918492cfd9ecdeaf7f33bfb90da1f236c1dc783cfa",
+    "docs/helix/04-build/evidence/security/kind-completeness-formal.json": "1cdb87df4d8efaf437f90e90b1e8420dc545f7dfe65a6e0a481c1f3b80d143fc",
+    "docs/helix/04-build/evidence/security/mask-query-formal.json": "1bfd5b44ee9d0a1309ae8f5116db5abcc47a9358e58a1a039dbedc13f35c0ee4",
     "docs/helix/04-build/evidence/security/multipublisher-custody-formal.json": "eb800aa8157e0b18903a1881b906cdc0698421bfb814651c8bc9deaa4bb8d394",
     "docs/helix/04-build/evidence/security/namespace-native-domain-formal.json": "0496534a7caa93f7e1958e9011800a1c5004b6522d22ad299e852bc1f1cbb1ce",
     "docs/helix/04-build/evidence/security/obligation-custody-formal.json": "b6c1c9415f1adb94abcceeb23d376b66c405ea5c78087f482f9c863099420ac6",
@@ -34,8 +35,10 @@
     "docs/helix/04-build/evidence/security/publication-retirement-formal.json": "10d6a78f187422c560b586af94591a0b26a281ea0d9c6f036e7854a7babdecc5",
     "docs/helix/04-build/evidence/security/publisher-state-formal.json": "a26dcbfc1782050b57ae43a72efafe2c6ee6881ea794ad8aed7215ac9bf77ec7",
     "docs/helix/04-build/evidence/security/record-home-correspondence-formal.json": "0c3cccfeb7ab05aef38a0fc89542877f17bc42c13b076a355008abe747982240",
+    "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json": "ce37b3f700909e539287ffd2ce1cd790468b642ba1a9412fa788d2c20c965fce",
     "docs/helix/04-build/evidence/security/scoped-composition-formal.json": "d9a3fea1f76f91bf44a331639424bfd8f4b7d02326b911f0b7c67171788ea8aa",
-    "docs/helix/04-build/evidence/security/source-demands-formal.json": "afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501",
+    "docs/helix/04-build/evidence/security/scoped-obligations-formal.json": "d063094d6bc08d92d3581799b50768fdecaa0ed781b893b0bcef5b1ee37e9bfc",
+    "docs/helix/04-build/evidence/security/source-demands-formal.json": "6bd93edfe29ef4cafc161fb3ce3ab070e61dc13c3ba5004991869af52091eb25",
     "docs/helix/04-build/evidence/security/source-disposition-closure-formal.json": "40ac2d642f37b00c93089b86cdc7b536f85463ca9b625bfff00726dd9ed21678",
     "docs/helix/04-build/evidence/security/type-key-formal.json": "d5b7429eab0734b877d09e35ad4523dc1191bf33226109930f9a1322f48008a2",
     "docs/helix/04-build/evidence/security/type-selection-formal.json": "a30235e35c06d6cff7af7c189ba220b7fed71431cc24c6e67db9efb043385901",
@@ -1477,6 +1480,51 @@
     },
     {
       "id": "docs/helix/04-build/evidence/security/inventory-wire-size-formal.json/queries/8/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/0/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/0/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/0/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/1/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/1/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/1/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/2/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/2/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/kind-completeness-formal.json/cases/2/positivePopulation/smt",
       "expected": "sat",
       "observed": "sat"
     },
@@ -3111,6 +3159,51 @@
       "observed": "sat"
     },
     {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/0/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/0/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/0/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/1/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/1/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/1/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/2/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/2/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json/cases/2/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
       "id": "docs/helix/04-build/evidence/security/scoped-composition-formal.json/cases/0/violation/smt",
       "expected": "unsat",
       "observed": "unsat"
@@ -3152,6 +3245,186 @@
     },
     {
       "id": "docs/helix/04-build/evidence/security/scoped-composition-formal.json/cases/2/positive/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/0/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/0/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/0/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/1/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/1/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/1/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/2/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/2/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/2/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/3/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/3/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/3/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/4/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/4/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/4/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/5/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/5/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/5/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/6/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/6/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/6/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/7/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/7/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/7/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/8/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/8/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/8/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/9/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/9/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/9/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/10/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/10/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/10/positivePopulation/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/11/violation/smt",
+      "expected": "unsat",
+      "observed": "unsat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/11/negativeControl/smt",
+      "expected": "sat",
+      "observed": "sat"
+    },
+    {
+      "id": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json/cases/11/positivePopulation/smt",
       "expected": "sat",
       "observed": "sat"
     },
@@ -3582,6 +3855,7 @@
     "docs/helix/04-build/evidence/security/graph-key-correspondence-formal.json": 9,
     "docs/helix/04-build/evidence/security/hash-key-formal.json": 6,
     "docs/helix/04-build/evidence/security/inventory-wire-size-formal.json": 9,
+    "docs/helix/04-build/evidence/security/kind-completeness-formal.json": 9,
     "docs/helix/04-build/evidence/security/mask-query-formal.json": 15,
     "docs/helix/04-build/evidence/security/multipublisher-custody-formal.json": 42,
     "docs/helix/04-build/evidence/security/namespace-native-domain-formal.json": 12,
@@ -3598,7 +3872,9 @@
     "docs/helix/04-build/evidence/security/publication-retirement-formal.json": 15,
     "docs/helix/04-build/evidence/security/publisher-state-formal.json": 69,
     "docs/helix/04-build/evidence/security/record-home-correspondence-formal.json": 30,
+    "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json": 9,
     "docs/helix/04-build/evidence/security/scoped-composition-formal.json": 9,
+    "docs/helix/04-build/evidence/security/scoped-obligations-formal.json": 36,
     "docs/helix/04-build/evidence/security/source-demands-formal.json": 15,
     "docs/helix/04-build/evidence/security/source-disposition-closure-formal.json": 6,
     "docs/helix/04-build/evidence/security/type-key-formal.json": 9,

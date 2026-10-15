@@ -31,6 +31,13 @@ export function inspectProtectionQueryProperties(policy:unknown,catalog:unknown,
  if(disposition?.kind!=='transformed'||disposition.vocabulary!=='umf.security.protection'){add('PROTECTION_QUERY_SELECTION','/use','Actual catalog disposition required');return finish('refused');}
  const transform=c.transforms.find((t:any)=>t.id===disposition.transform&&t.version===disposition.version);
  if(!transform){add('PROTECTION_QUERY_SELECTION','/use','Exact selected transform missing');return finish('refused');}
+ return compareSelectedProtectionQueryProperties(parameters,use,transform,budget,diagnostics);
+}
+/** Internal conditional kernel. Selection must be resolved by its source owner; no admission. */
+export function compareSelectedProtectionQueryProperties(parameters:ProtectionParameterValidation,use:Json,transform:any,budget:ProtectionLiteralBudget,diagnostics:Diagnostic[]):ProtectionQueryPropertyInspection {
+ const u=use as any,authoredProperties:Json[]=[],impliedProperties:Json[]=[],effectiveProperties:Json[]=[],requiredProperties:Json[]=[],missingProperties:Json[]=[];
+ const finish=(status:ProtectionQueryPropertyInspection['status'])=>freeze<ProtectionQueryPropertyInspection>({status,complete:false,authority:false,policy:parameters.policy,catalog:parameters.catalog,closure:parameters.closure,use,authoredProperties,impliedProperties,effectiveProperties,requiredProperties,missingProperties,diagnostics});
+ const add=(code:string,path:string,message:string)=>diagnostics.push({code,path,message,severity:'error'});
  const fields=protectionFieldIndex(parameters.closure);
  const key=(property:Json):string=>{
   budget.step();
