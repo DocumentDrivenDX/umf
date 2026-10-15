@@ -1,0 +1,26 @@
+[
+  {
+    "file": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+    "exit": 0,
+    "stdout": "{\n  \"instance\": \"docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md\",\n  \"type\": \"contract\",\n  \"catalog\": \"/Users/erik/.codex/plugins/cache/helix/helix/0.17.0/workflows/activities\",\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"check\": \"placeholder.bracket_token\",\n      \"message\": \"possible template token '[Transform]'\",\n      \"line\": 415\n    }\n  ],\n  \"summary\": {\n    \"blocking\": 0,\n    \"warning\": 1,\n    \"info\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "file": "docs/helix/02-design/technical-designs/TD-079-security-semantics.md",
+    "exit": 0,
+    "stdout": "{\n  \"instance\": \"docs/helix/02-design/technical-designs/TD-079-security-semantics.md\",\n  \"type\": \"technical-design\",\n  \"catalog\": \"/Users/erik/.codex/plugins/cache/helix/helix/0.17.0/workflows/activities\",\n  \"findings\": [],\n  \"summary\": {\n    \"blocking\": 0,\n    \"warning\": 0,\n    \"info\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "file": "docs/helix/03-test/test-plans/STP-079-security-semantics.md",
+    "exit": 0,
+    "stdout": "{\n  \"instance\": \"docs/helix/03-test/test-plans/STP-079-security-semantics.md\",\n  \"type\": \"story-test-plan\",\n  \"catalog\": \"/Users/erik/.codex/plugins/cache/helix/helix/0.17.0/workflows/activities\",\n  \"findings\": [],\n  \"summary\": {\n    \"blocking\": 0,\n    \"warning\": 0,\n    \"info\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "file": "docs/helix/04-build/security-field-protection-plan.md",
+    "exit": 0,
+    "stdout": "{\n  \"instance\": \"docs/helix/04-build/security-field-protection-plan.md\",\n  \"type\": \"implementation-plan\",\n  \"catalog\": \"/Users/erik/.codex/plugins/cache/helix/helix/0.17.0/workflows/activities\",\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"check\": \"placeholder.bracket_token\",\n      \"message\": \"possible template token '[Transform]'\",\n      \"line\": 186\n    }\n  ],\n  \"summary\": {\n    \"blocking\": 0,\n    \"warning\": 1,\n    \"info\": 0\n  }\n}\n",
+    "stderr": ""
+  }
+]

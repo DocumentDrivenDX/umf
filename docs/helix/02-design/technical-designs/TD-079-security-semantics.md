@@ -190,3 +190,34 @@ legacy outcome function. Executable tests and public-root Bun/Chromium replay
 supply separate implementation observations; neither is a general0.2 or physical
 refinement theorem. Retained evidence is under
 `04-build/evidence/security/policy-v2-20261015/` (from the HELIX root).
+
+
+## Qualified core-domain closure — 2026-10-15
+
+The protection resolver owns an extension-level, storage-independent closure;
+it does not introduce CONTRACT-045's proposed successor core envelope or resolve
+native schemas by name. Caller-supplied exact pins select detached core0.8
+snapshots. Core validation must be valid and complete, and every occurrence must
+resolve to an explicit Field. Tuple maps preserve exact document/module/element
+identity independently of closure order. All coordinates are cleared on failure.
+
+The retained snapshots preserve distinct input/output definitions, all known
+scalar families, containers and unspecified core labels. Bare reference roles
+remain opaque, consistent with CONTRACT-040. The boundary does not infer authored
+record-type provenance, native equivalence, value/function applicability,
+ontology validity or authority from revision labels. It refuses unknown source
+meaning rather than treating wire validity as semantic admission.
+
+`protection/domains.ts` owns closure snapshots, pin/document bijection and core
+Field lookup; `references.ts` continues to own exact catalog source addresses;
+`catalog.ts` owns wire/local bounds, and `source.ts` JSON/YAML preservation.
+Function/type compatibility, parameter literal validation, query-use dependencies
+and native enforcement remain later admission gates, not extra meanings attached
+to the coordinate result.
+
+The independent S13/S14 oracle compares authored expected definitions/refusals
+and JSON/YAML trees in Bun and Chromium. Conditional Z3 models cover exact
+identity/revision/Field guards and atomic refusal; they assume the correctness of
+core validation, map construction and snapshot/encoding operations. They do not
+prove executable or native refinement. Evidence is under
+`04-build/evidence/security/protection-domains-20261015/` from the HELIX root.

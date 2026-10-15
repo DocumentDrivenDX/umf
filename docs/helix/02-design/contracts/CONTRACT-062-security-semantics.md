@@ -572,6 +572,46 @@ key/string ledger after the bounded core JSON snapshot and before schema regex
 checks. Target construction is checked against the same ledger. This does not
 claim a preallocation, total heap or total CPU bound for the core snapshot.
 
+### Qualified protection core-domain resolution
+
+`resolveSecurityProtectionDomains(policy,catalog,closure)` resolves the exact
+source addresses above against a storage-independent core closure. `closure`
+is `{pins:[{documentId,revision}],documents:[{revision,document}]}` with at most256
+entries in each array. Strings are exact/nonempty. Pins and documents MUST be
+in bijection by document id and revision; duplicates, missing, extra or stale
+entries refuse. Closure, pin and document-entry unknown members are retained
+but refuse resolution. All inputs are detached immutable snapshots. A private
+4,000,000 UTF-16 key/string ledger bounds the closure after the core snapshot
+and before document/schema validation; it is not a snapshot allocation theorem.
+
+Every document MUST validate as known core0.8 (`valid` and `complete`) using the
+core validator. Every qualified reference MUST resolve to an explicit Field,
+never an inferred kind, Record, Group or relationship. Resolve all catalog
+input/output domains, parameter Fields and range-bucket Fields, including
+unused transforms, and every catalog-disposition protected/output Field in the
+policy. Unknown policy/catalog meaning refuses even when its address resolves.
+A failure clears all resolved coordinates; no partial-success output is exposed.
+
+Success reports `status:"resolved-domains"`, `complete:false`, `authority:false`,
+retained `policy`, `catalog`, `closure`, diagnostics and a `domains` array. Each
+occurrence is `{source:"policy"|"catalog",path,ref,definition:{documentIndex,
+moduleIndex,elementIndex}}`. Paths identify source occurrences; coordinates
+identify definitions only inside the retained immutable closure. Qualified refs,
+not array order, determine identity. Preserve every distinct input/output Field
+and its complete definition, including scalar family, containers, nullability,
+facets and referenced definitions. Do not normalize labels or literal carriers.
+
+This resolves known core definitions, not native domains or transform function
+applicability. A known core Field may lack a scalar family, have unspecified
+availability/cardinality, or represent a temporal/container/record domain whose
+literal or function semantics need further qualification. Bare reference roles
+remain opaque links; no authored record-type provenance is inferred (CONTRACT-040).
+Resolution MUST NOT
+invent defaults, equate different domains, check casts by name, qualify parameter
+values, admit a function, validate an ontology/policy condition or grant access.
+Those gates remain required under the transform and physical contracts. Caller
+revision-label agreement is not source authentication or native authority.
+
 ### Explicit legacy-body semantic embedding
 
 `evaluateSecurityPolicyV2LegacyAccess` evaluates only a security0.2 policy whose

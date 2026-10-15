@@ -169,3 +169,39 @@ boundary checks produce304 matching observations. The full158-case gate accepts
 S15 and the earlier26 cases;131 bindings remain missing. Evidence:
 `../../04-build/evidence/security/policy-v2-20261015/acceptance.json`.
 S13/core-domain closure, S14 and all later protection/native cases remain open.
+
+
+## Qualified domain and preservation runners — 2026-10-15
+
+`tests/security/protection/domains.test.ts` covers exact pins, every declared
+Field occurrence (including unused transforms/parameters/buckets), all-or-nothing
+refusal, source immutability, all known core families/containers and the256-entry
+positive/overflow bounds. Unknown core/source meaning, stale revisions, ambiguous
+closures and foreign or non-Field references must refuse without coordinates.
+These assertions do not establish literal/function applicability.
+
+`tests/security/protection/domains-oracle.ts` is independently authored.
+`bun tests/security/protection/domains-acceptance.ts S13` and the corresponding
+`S14` command require fresh gate-provided case/run identity; they execute the
+actual public root API in Bun and real Chromium, compare complete observations,
+check selected source endpoints and browser boundaries, and emit structured
+receipts. S13 has111 independent controls; S14 has54, including known-domain
+success to avoid a vacuous unknown-only refusal test. The original assertions,
+coverage and all other156 cases remain unchanged.
+
+S14 preserves the JSON-compatible unknown tree and opaque native source text,
+including exact literal carriers and CRLF/Unicode, through both JSON and YAML.
+It does not claim unchanged YAML comment/layout text or authenticate archives.
+`tools/security/protection-domain-mutations.py` requires exact intended failures
+under weakened revision, Field-kind, unknown-source, partial-result and text-bound
+checks. The conditional domain formal script and actual built package smoke are
+separate supporting evidence; the whole158-case gate remains required.
+
+
+### S13/S14 governed acceptance checkpoint
+
+The final whole158-case gate accepts both new bindings: S13 has228 matching
+observations and S14 has114. All prior27 bound cases pass;129 bindings remain
+missing. This closes the B-SFP-002 slice exit only. Full protection applicability,
+parameter values, query-use and backend qualification remain open. Retained
+fresh receipt: `../../04-build/evidence/security/protection-domains-20261015/acceptance.json`.

@@ -1,0 +1,21 @@
+{
+  "status": "reviewed-no-actionable-finding",
+  "createdUtc": "2026-10-15T02:33:39.159154+00:00",
+  "scope": "Exact S13/S14 oracle adoption, governed wrapper source and two-case binding; no execution or source changes by reviewer.",
+  "checks": "checks.json",
+  "sourceDigests": "source-pins.json",
+  "independentEvidence": "../results.json (S13=111,S14=54 in Bun and Chromium)",
+  "qualification": "Both unchanged original assertions are now exercised by the independently authored finite expectations. Exact fresh governed receipts must establish acceptance; no domain/function or native authority is inferred.",
+  "wrapperReview": "Fresh distinct case/run/command; same independent oracle in Bun/browser; nonempty passing rows; complete parity; current endpoint source pins; browser globals/network/page-error checks; case aggregate structured receipt.",
+  "gateStatus": "Parent governed rehearsals/full shared gate pending at binding review. No outcome inferred.",
+  "limits": [
+    "Selected source subset; not complete root SDK/runtime dependency provenance or held-source/ABA proof.",
+    "Core definitions and supplied revisions, not source authentication, function/literal/domain equivalence, ontology or native permission.",
+    "Historical exact independent 26-source replay remains separately retained."
+  ],
+  "findings": [],
+  "artifactSha256": {
+    "checks.json": "555bbb606d8985e72de51d3805aa5f2bcbf81e04b4ffab838765a8f3b792b690",
+    "source-pins.json": "cc07c00c16e193b2976625ccbba558b428406e15a846dca17d9ddb70f0443a6f"
+  }
+}

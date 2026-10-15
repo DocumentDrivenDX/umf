@@ -1,0 +1,11 @@
+import {createHash} from 'node:crypto';
+import {domainFixture} from '../../tests/security/protection/domain-fixture';
+const name='@umf/core',api=await import(name),f=domainFixture();
+if(typeof api.resolveSecurityProtectionDomains!=='function')throw Error('Missing built package export');
+const result=api.resolveSecurityProtectionDomains(f.policy,f.catalog,f.closure);
+if(result.status!=='resolved-domains'||result.complete!==false||result.authority!==false||result.domains.length!==6)throw Error('Built package domain closure differs');
+const bad=structuredClone(f.closure);bad.documents[0]!.revision='stale';
+const refused=api.resolveSecurityProtectionDomains(f.policy,f.catalog,bad);if(refused.status!=='refused'||refused.domains.length)throw Error('Built package stale closure admitted');
+const paths=['package.json','src/index.ts','src/extensions/security/protection/domains.ts','spec/extensions/security-protection/domain-resolution.schema.json','tools/security/protection-domains-package-smoke.ts','tests/security/protection/domain-fixture.ts','dist/umf.js','dist/src/index.d.ts','dist/src/extensions/security/protection/domains.d.ts'];
+const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
+await Bun.write('docs/helix/04-build/evidence/security/protection-domains-20261015/package-smoke.json',JSON.stringify({status:'built-package-domains-passed',bun:Bun.version,sourceDigests,occurrences:result.domains.length,staleRefusal:true,scope:'Actual standard built package/API declaration smoke; no function/native qualification or full dependency provenance.'},null,2)+'\n');console.log(JSON.stringify({status:'built-package-domains-passed',bun:Bun.version}));

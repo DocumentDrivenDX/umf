@@ -454,3 +454,5 @@ export type {SecurityProtectionSourceResolution} from './extensions/security/pro
 
 export {evaluateSecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
 export type {SecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
+export {resolveSecurityProtectionDomains} from './extensions/security/protection/domains';
+export type {ProtectionCoreClosure,ProtectionDomainOccurrence,SecurityProtectionDomainResolution} from './extensions/security/protection/domains';

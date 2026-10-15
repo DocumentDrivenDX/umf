@@ -1,0 +1,18 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-sort Revision 0)
+(declare-sort ExactIdentity 0)
+(declare-datatypes ((QualifiedField 0)) (((field (document ExactIdentity) (module ExactIdentity) (element ExactIdentity)))))
+(declare-fun known_source () Bool)
+(declare-fun known_core () Bool)
+(declare-fun is_explicit_field () Bool)
+(declare-fun has_pin () Bool)
+(declare-fun pinned_revision () Revision)
+(declare-fun actual_revision () Revision)
+(declare-fun selected () QualifiedField)
+(declare-fun requested () QualifiedField)
+(assert
+ (let (($x14 (= actual_revision pinned_revision)))
+(let (($x13 (= requested selected)))
+(and $x13 $x14 has_pin is_explicit_field known_core known_source))))
+(check-sat)

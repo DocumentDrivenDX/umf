@@ -17,10 +17,16 @@
       "receipts": [
         "docs/helix/04-build/evidence/security/protection-wire-20261015/receipt.json"
       ]
+    },
+    {
+      "id": "B-SFP-002",
+      "scope": "Declared exact reference/migration/preservation exit met; S01-S12 and S13-S15 accepted. Core definitions only; no function/native admission.",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/protection-domains-20261015/receipt.json"
+      ]
     }
   ],
   "remainingSlices": [
-    "B-SFP-002",
     "B-SFP-003",
     "B-SFP-004",
     "B-SFP-005",
@@ -52,11 +58,12 @@
   "gate": {
     "requiredCases": 158,
     "originalRequiredCases": 132,
-    "addedNotRunCases": 26,
-    "acceptedCases": 27,
-    "openCases": 131,
+    "addedNotRunCases": 23,
+    "acceptedCases": 29,
+    "openCases": 129,
     "acceptanceReceiptCurrent": true,
-    "note": "Fresh final gate:27 accepted of158;131 missing runner bindings. S15 legacy constant migration/rollback qualified; no general protection/native admission."
+    "note": "Fresh full gate:29 accepted of158;129 missing runner bindings. S13/S14/S15 qualified within semantic case scope; no general function/native admission.",
+    "addedRequiredCases": 26
   },
   "blockers": [
     "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
@@ -70,9 +77,9 @@
       "B-SFP-002": "not measured; goal has no token ceiling"
     }
   },
-  "nextAction": "Complete B-SFP-002 S13 qualified immutable core-domain reference resolution and S14 full unknown-transform runner, then B-SFP-003 function/disclosure/query closure. Continue native current-authorization/guard composition separately.",
+  "nextAction": "Execute B-SFP-003: transform applicability, typed parameter/domain checks, effective disclosure and actual compiler-derived query dependency admission; continue native current-authorization/guard composition separately.",
   "validation": {
-    "validate-evidence.py": "203 checks,88 failures; same failing IDs as retained88-failure baseline. Not a passing release gate.",
+    "validate-evidence.py": "205 checks,88 failures; same failing IDs as retained88-failure baseline. Not a passing release gate.",
     "check-acceptance-allocation.py": "passed,9 controls",
     "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
   },
@@ -86,19 +93,11 @@
     "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
     "freshGate": {
       "requiredCases": 158,
-      "executed": 27,
-      "accepted": 27,
-      "missingBindings": 131,
-      "receipt": "docs/helix/04-build/evidence/security/policy-v2-20261015/acceptance.json"
+      "executed": 29,
+      "accepted": 29,
+      "missingBindings": 129,
+      "receipt": "docs/helix/04-build/evidence/security/protection-domains-20261015/acceptance.json"
     }
   },
-  "inProgressSlices": [
-    {
-      "id": "B-SFP-002",
-      "scope": "Wire references, migration and explicit legacy embedding implemented; S15 accepted. S13 qualified core domains and S14 full runner remain open.",
-      "receipts": [
-        "docs/helix/04-build/evidence/security/policy-v2-20261015/receipt.json"
-      ]
-    }
-  ]
+  "inProgressSlices": []
 }

@@ -543,3 +543,34 @@ disclosure/query and physical obligations through the remaining planned slices.
 The freshness validator reports203 checks/88 failures, the same failing IDs as
 the prior88-failure baseline; this is not a passing release gate. Evidence and
 selected-source custody: `evidence/security/policy-v2-20261015/`.
+
+
+## Execution checkpoint — B-SFP-002 exit met (2026-10-15)
+
+B-SFP-002 is complete within its declared reference/migration/preservation scope:
+S01–S12 still pass, and S13–S15 now have reviewed fresh runner bindings accepted
+by the original whole158-case gate. New S13 resolves all exact catalog and policy
+Field occurrences against immutable core0.8 closures; S14 preserves unknown and
+native JSON-compatible content through JSON/YAML and refuses unknown meaning.
+The independent oracle passes111 S13 and54 S14 expectations per runtime, with228
+and114 matching governed observations in Bun1.4.2/Chromium153.0.8010.12. Only the
+two cases' runner bindings changed; their assertions/coverage and other156 rows
+are unchanged.
+
+The whole gate accepts29 cases and reports129 missing bindings. All earlier27
+cases still pass; the original PostgreSQL17.9 native subset remains the qualified
+version, not PostgreSQL18. All162 security tests (2193 assertions), strict types,
+391 schema compilations,67 package registrations and the standard built package
+smoke pass. Six source mutation variants require exact intended failures.
+Eleven conditional Z3 guard/reference checks pass (sixUNSAT/fiveSAT); these assume
+core validation and map/snapshot correctness and do not prove executable/native
+refinement or source authenticity.
+
+This slice does not complete a protection interpreter, validate parameter values
+or domain compatibility, infer record-type provenance, validate an ontology,
+qualify a function/query or grant access. Known core definitions may still lack
+literal/function semantics. B-SFP-003 must now implement transform-specific
+applicability, typed parameter validation and effective disclosure/query-use
+admission against actual compiler-derived dependencies. Remaining slices and all
+backend cases remain required. Evidence:
+`evidence/security/protection-domains-20261015/`.
