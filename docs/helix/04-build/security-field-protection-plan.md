@@ -611,3 +611,50 @@ The original native accepted subset remains PostgreSQL17.9; separately retained
 PG18 bridge identity components do not establish current authorization, guarded
 permits or protected selector/seal composition. Evidence:
 `evidence/security/protection-query-20261015/`.
+
+
+## Execution checkpoint — pure reference functions/S19 (2026-10-15)
+
+The reference evaluator now implements every original S19 class: constant,
+partial, fixed-length-redact, prefix-only, exact integer/fixed-scale-decimal
+range-bucket and explicitly selected Gregorian date truncation. Supplemental
+null-out is distinct transformed null. Signatures are closed and typed; every
+present input and output is independently checked against its own exact selected
+Field domain. Native/keyed/vault and unqualified regex code never execute.
+Constant and null propagation cannot bypass invalid input, signatures or output
+constraints. Short partial masks intentionally expose whole short inputs, and
+zero-count string operations intentionally emit empty strings; no confidentiality
+or cryptographic irreversibility follows.
+
+CONTRACT-066 and `adapters/gregorian-date.ts` provide the separately governed
+`umf-gregorian-date/1.0.0` recipe. It is explicitly selected by the transform's
+calendar parameter, preserves source and does not change ordinary core temporal
+validation/defaults/Keys or infer a timezone/native calendar. This completes the
+value-profile dependency for the date reference subset; it does not qualify a
+native date codec. Exact policy input/output Fields must match the selected
+transform domains; equal family labels do not prove applicability.
+
+The original unchanged S19 runner freshly regenerates the independent Python
+fixture bytes before actual public-root Bun/Chromium replay. There are459
+fixtures (260 positive/199 refusals) plus the146097-date400-year digest. Ten
+wire-valid hash/token/encrypt declarations still refuse with the non-pure recipe
+cause; four field-substitution controls and thirty independent decimal readiness
+controls support applicability. The fresh whole158-case gate accepts33 cases,
+including928 S19 observations; all earlier32 still pass. Required unbound cases
+remain125. This supersedes the preceding32/126 tally.
+
+All184 related tests (2390 assertions), strict types, the actual built ESM and
+declarations,391 schema compilations and67 package registrations pass. Eight
+actual source-mutation variants distinguish input/output, selected-domain,
+signature, floor, overlap and calendar guards. Nineteen independent conditional
+Z3 checks retain16UNSAT laws and3SAT controls; they do not prove complete parser,
+TypeScript, compiler or native refinement. Freshness validation reports209checks
+and88failures, exactly the prior failed-ID set; the overall release gate remains
+failed/open. Evidence: `evidence/security/protection-functions-20261015/`.
+
+B-SFP-003 remains open for complete property-fact/compiler admission; B-SFP-004
+remains open for S20 disposition transport. Every other required backend and
+protection case remains required. The next semantic step is exact0.2 transport
+for canonical null/absence/withheld/transformed null/changed domain/stored-token
+identity; current native Subject/action/owner/source authorization and guarded
+permit/selector/seal composition remain the next physical boundary.

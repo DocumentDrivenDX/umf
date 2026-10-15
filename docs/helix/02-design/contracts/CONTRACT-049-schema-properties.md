@@ -307,3 +307,13 @@ identity. Unresolved target Key equality cannot become a missing-endpoint or
 minimum-participation failure; those dependent checks remain unresolved.
 CSV interpretation and domain-graph lexical conversion are explicit consumer
 operations retaining original bytes and remain outside this library operation.
+
+
+### Explicit operation-profile dependency — security date truncation
+
+CONTRACT-066 separately specifies `umf-gregorian-date/1.0.0` for explicitly
+selected civil-date operations. It does not change ordinary core temporal
+validation, defaults or Key semantics. A caller must satisfy that profile's
+Field/value restrictions; parsing a token is not complete core/native admission.
+The security reference function must select the exact profile explicitly and
+retain its source. No implementation qualification follows from this link.

@@ -50,7 +50,7 @@
     "P-C": "applied: FEAT-008 SEC-15",
     "P-D": "applied: CONTRACT-062 section 'Field protection catalog and 0.2.0 disposition reference' (proposed, unimplemented)",
     "P-E": "applied: CONTRACT-063 section 'Field protection receipt members'; PG 18 and UC citations with 2026-10-13 inspection date",
-    "P-F": "Native protection13 and semantic S13-S25 allocated. S13-S18 now accepted in qualified semantic scopes; remaining20 added cases not-run.",
+    "P-F": "Native protection13 and semantic S13-S25 allocated. S13-S19 now accepted in qualified semantic scopes; remaining19 added cases not-run.",
     "P-G": "applied: SD-008 section 'Field protection decisions'",
     "Q10": "accepted 2026-10-14: B-SFP-017 in scope, unqualified until evidence",
     "Q13": "Enlarged single required gate158 cases,34 criteria."
@@ -58,11 +58,11 @@
   "gate": {
     "requiredCases": 158,
     "originalRequiredCases": 132,
-    "addedNotRunCases": 20,
-    "acceptedCases": 32,
-    "openCases": 126,
+    "addedNotRunCases": 19,
+    "acceptedCases": 33,
+    "openCases": 125,
     "acceptanceReceiptCurrent": true,
-    "note": "Fresh full gate:32 accepted of158;126 missing runner bindings. S16-S18 conditional semantic cases qualified, not function applicability/compiler lineage/native admission.",
+    "note": "Fresh full gate:33 accepted of158;125 missing runner bindings. S19 all six pure reference classes qualified with explicit date profile, not general interpreter/compiler/native admission.",
     "addedRequiredCases": 26
   },
   "blockers": [
@@ -77,9 +77,9 @@
       "B-SFP-002": "not measured; goal has no token ceiling"
     }
   },
-  "nextAction": "Finish B-SFP-003 transform-specific applicability and actual compiler-derived query dependencies; continue native current Subject/action/owner/source authorization and guarded permit composition against the single issued store/immutable anchor, coordinating Truss engine selector/seal ABI.",
+  "nextAction": "Implement and independently qualify S20 exact0.2 disposition transport without inferring authorization. Finish B-SFP-003 actual property/compiler admission. Continue native current Subject/action/owner/source authorization and guarded permit composition against the original issued store/immutable anchor and actual D full xid, coordinating Truss selector/seal ABI.",
   "validation": {
-    "validate-evidence.py": "208 checks,88 failures; same failing IDs as prior baseline; not a passing release gate.",
+    "validate-evidence.py": "209checks,88failures; same failing IDs as prior baseline; not a passing release gate.",
     "check-acceptance-allocation.py": "passed,9 controls",
     "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
   },
@@ -93,17 +93,22 @@
     "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
     "freshGate": {
       "requiredCases": 158,
-      "executed": 32,
-      "accepted": 32,
-      "missingBindings": 126,
-      "receipt": "docs/helix/04-build/evidence/security/protection-query-20261015/acceptance.json"
+      "executed": 33,
+      "accepted": 33,
+      "missingBindings": 125,
+      "receipt": "docs/helix/04-build/evidence/security/protection-functions-20261015/acceptance.json"
     }
   },
   "inProgressSlices": [
     {
       "id": "B-SFP-003",
-      "scope": "Generic typed declarations and conditional property comparison implemented; function-specific applicability and actual compiler dependency admission remain open.",
-      "receipt": "docs/helix/04-build/evidence/security/protection-query-20261015/receipt.json"
+      "scope": "Typed declarations, conditional query properties and pure signature/domain applicability implemented; authored property facts and actual compiler dependency admission remain open.",
+      "receipt": "docs/helix/04-build/evidence/security/protection-functions-20261015/receipt.json"
+    },
+    {
+      "id": "B-SFP-004",
+      "scope": "S19 all six named pure classes accepted with independent Python/Bun/Chromium evidence; S20 transport remains required.",
+      "receipt": "docs/helix/04-build/evidence/security/protection-functions-20261015/receipt.json"
     }
   ]
 }

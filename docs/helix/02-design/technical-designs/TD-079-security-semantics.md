@@ -247,3 +247,32 @@ These are bounded interpretation guards, not a theorem about total heap/CPU.
 Function names/arity, parameter-domain/output compatibility, actual compiler
 lineage and native enforcement remain required B-SFP-003 and later work.
 Evidence: `04-build/evidence/security/protection-query-20261015/` from HELIX root.
+
+
+## Pure reference functions and explicit date dependency — 2026-10-15
+
+CONTRACT-062 now owns exact parameter signatures and present-input/output
+checks; CONTRACT-066 owns the explicitly selected civil-date recipe. Core
+CONTRACT-049 and the existing instant recipe remain unchanged. Security does
+not infer a calendar from the scalar family. Every selected policy Field must
+match the transform's exact qualified domain; arbitrary domain inclusion is
+not inferred from successful lookup or equal family labels.
+
+Module boundaries: `protection/functions.ts` owns closed selected signatures,
+Field applicability, literal/domain checks and pure results. It imports only
+existing security domain/parameter/budget modules, core JSON/literal/types, and
+the independent `adapters/gregorian-date.ts` recipe. The adapter owns ten-byte
+civil-date parsing/truncation without host Date, clock, locale or timezone APIs.
+Public root exports are `inspectProtectionFunction`, `evaluateProtectionValue`,
+`parseGregorianDate`, `truncateGregorianDate` and their named result/profile
+types. Constructor/function/SQL text is never executed. Neither module imports
+backend, tooling or test code.
+
+`bun test tests/security tests/adapters/gregorian-date.test.ts` checks existing
+semantic boundaries plus every new function. The existing source boundary guard
+remains intact. Original literal budget accounting is shared through parameter,
+input, arithmetic and output checks; canonical output limits are checked before
+string repetition. Exact coefficient arithmetic never converts values to Number.
+Function results retain source and do not prove authored property facts, actual
+compiler dependencies or native authority. Full B-SFP-003 and B-SFP-004 remain
+open until their complete required exits are independently qualified.

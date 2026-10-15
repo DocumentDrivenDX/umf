@@ -460,3 +460,6 @@ export {validateProtectionParameters} from './extensions/security/protection/par
 export type {ProtectionParameterValidation} from './extensions/security/protection/parameters';
 export {inspectProtectionQueryProperties} from './extensions/security/protection/queries';
 export type {ProtectionQueryPropertyInspection} from './extensions/security/protection/queries';
+
+export * from './adapters/gregorian-date';
+export {inspectProtectionFunction,evaluateProtectionValue,type ProtectionFunctionResult} from './extensions/security/protection/functions';

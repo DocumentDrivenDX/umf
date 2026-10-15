@@ -11,6 +11,8 @@ ddx:
       kind: informed_by
     - id: SD-008
       kind: informed_by
+    - id: CONTRACT-066
+      kind: informed_by
 ---
 
 # CONTRACT-062: Shared security semantics
@@ -493,6 +495,117 @@ function behavior, effective disclosure, action distinctness, native custody or
 propagation. Unknown members remain preserved and block complete interpretation;
 `native` remains an opaque top-level archive. Typed literals reuse core carriers
 rather than JSON Number, including integer/decimal/binary exactness.
+
+### Pure reference function signatures — design refinement2026-10-15
+
+The following closed signatures refine the previously unspecified parameter
+names. They are under implementation/review; wire inspection and conditional
+property comparison do not admit their execution. Names are exact and the entire
+parameter-name set must match; order is immaterial, and no default parameter is
+inserted. Every parameter retains its original qualified Field and literal and
+must satisfy that Field through the original core checker. Counts use exact
+integer literals, not JSON Number or lossy floating-point conversion.
+
+| Kind/function | Required parameters | Value rule |
+| --- | --- | --- |
+| mask/constant | `value` | Return the exact typed parameter, also checked against outputDomain; never coerce it to the input type |
+| mask/null-out | none | Return transformed null; outputDomain must explicitly admit null |
+| mask/partial | `prefix`, `suffix`, `padding`, `unit` | Nonnegative counts, exactly one Unicode scalar padding, unit=`unicode-scalar`; retain the first min(prefix,length) scalars, then at most suffix remaining tail scalars without overlap, replacing each middle scalar with padding |
+| mask/fixed-length-redact | `length`, `padding`, `unit` | Nonnegative output scalar count, one scalar padding, unit=`unicode-scalar`; return exactly length repetitions |
+| generalize/prefix-only | `length`, `unit` | Nonnegative count and unit=`unicode-scalar`; return at most length input scalars |
+| generalize/range-bucket | `width`, `origin` | Exact integer or fixed-scale-decimal operands in the same scalar family/decimal scale as input; positive width; return origin+floor((input-origin)/width)*width, with floor toward negative infinity |
+| generalize/truncate-date | `calendar`, `unit` | calendar=`umf-gregorian-date/1.0.0` explicitly selects CONTRACT-066; unit=`year`, `quarter`, `month` or `day`; use its exact Field/value rules and validate the output under that same profile |
+
+Before any evaluation, every function must resolve explicit scalar-one input,
+output and parameter Fields with known scalar family and nullability, validate
+the entire closed signature and every parameter, validate the present input
+against its own domain, and validate the final output against its own domain.
+Neither constant/null-out nor null propagation bypasses those checks. The
+ordinary reference subset uses boolean/integer/fixed-scale-decimal/string/binary
+value families; temporal/float domains need a separately selected value profile,
+even if a particular null could otherwise pass a structural check. Ordinary
+core value semantics own non-temporal checks; only an explicitly selected
+CONTRACT-066 date operation may supply its separate date-value recipe. Unknown
+value semantics/refinements refuse rather than being caught and ignored.
+
+A partial mask deliberately exposes the entire input when its scalar length is
+no greater than prefix+suffix. Zero-length prefix/fixed-redaction returns an
+empty string. These are explicit disclosure choices, not confidentiality claims;
+no safe minimum redaction or irreversibility is inferred.
+
+All these pure functions require `determinism: deterministic` and
+`reversibility: none`; none is a cryptographic irreversibility guarantee. String
+functions require explicit scalar-one/string input/output and known nullability.
+Numeric buckets require scalar-one input/output in the same numeric family and
+scale; declared input, parameter and output refinements remain independently
+checked. Domain compatibility does not promise that every possible input yields
+a valid output: an output violating its own width/range/allowedValues refuses.
+The selected policy disclosure Field and disposition output Field must exactly
+match the transform's qualified inputDomain and outputDomain respectively.
+Separate references resolving successfully is not a proof of domain inclusion
+or applicability; no cross-Field alias/subtyping evidence is admitted by this
+reference surface. No field definition is rewritten to make an output fit. Integer bucket outputs use canonical base-ten integer tokens. Decimal outputs
+use the exact coefficient followed by `e-` and the declared scale (scale zero
+omits the exponent); no fraction passes through a JavaScript Number. Numeric
+zero is rendered without a negative sign, while original source spelling remains
+retained. Output scalar/domain selection never follows the input by default.
+
+Constant and null-out do not implicitly propagate input null. Other admitted
+functions propagate a present null only when both input and output explicitly
+admit it. Missing input is not null, and must refuse value evaluation rather
+than creating a cell. The output is a typed literal, not a canonical-field write
+or authorization grant. Source input/domain identity and output/domain identity
+remain distinct and retained even when values compare equal.
+
+Counts are bounded0..4096 and string results must fit the existing4096-unit
+canonical typed-literal limit. Output size must be checked before repetition or
+big-integer expansion. Exact numeric arithmetic shares the private literal
+ledgers and refuses resource exhaustion, never rounds or truncates a value to
+fit a budget. Unicode normalization, grapheme clustering and native collation
+are not inferred from scalar units.
+
+`regex-replace` remains a declared pattern/replacement operation until a
+separately versioned bounded regex engine profile is specified and qualified;
+no authored JavaScript regex is executed. Hash, tokenize, encrypt and keyed/vault
+operations do not execute through this pure function surface. Their complete
+declaration and native-obligation checks remain required in later slices.
+
+Function/value evaluation does not attest authored disclosure-property facts or
+actual compiler dependencies. In particular, stable output equality does not
+reflect canonical equality, and a displayed order is not an original-value
+query rewrite. The conditional property API remains conditional until those
+independent obligations and physical bindings are discharged. Full S19 retains
+all six named functions and both runtimes; an implementation of only some cannot
+promote that case.
+
+### Pure reference API — design refinement2026-10-15
+
+`inspectProtectionFunction(policy,catalog,closure,selection)` accepts exactly
+`selection:{ruleIndex,disclosureIndex}` with nonnegative safe integer indices.
+`evaluateProtectionValue` accepts the same inputs with exactly
+`selection:{ruleIndex,disclosureIndex,value}`, where value is a present typed
+literal, including explicit null. Unknown selection members refuse. Both use
+the original policy/catalog sources and pinned core closure defined above.
+
+The immutable result retains `policy`, `catalog`, `closure`, `selection`,
+`input`, `value`, `inputDomain`, `outputDomain`, `valueProfile`, `diagnostics`,
+`complete:false` and `authority:false`. Inspector status is `reference-ready`
+or `refused`; evaluator status is `transformed` or `refused`. Refusal always
+clears the output `value` to null; successful transformed null is distinguished
+by status and retained explicit selection.value. Inspecting without an input
+is not a claim that all possible inputs satisfy the output domain.
+`valueProfile` names the exact selected Gregorian recipe for date operations
+and is otherwise null. Source selection/domain coordinates may remain diagnostic
+on refusal; they never activate a function, permission or query.
+
+Literal/resource errors and malformed/unknown shapes refuse with retained
+JSON-compatible source and diagnostics. The pure boundary reports
+`PROTECTION_FUNCTION`, `PROTECTION_FUNCTION_VALUE` or
+`PROTECTION_FUNCTION_BOUND`; original core/domain errors remain identified.
+There is no fallback coercion or native-code execution. This is a reference
+value operation, not row authorization, native enforcement or canonical data
+mutation. `requireProtectionInterpretation` remains closed pending the full
+interpreted policy/function/query/native obligations.
 
 ### Effective disclosure and query-use admissibility
 

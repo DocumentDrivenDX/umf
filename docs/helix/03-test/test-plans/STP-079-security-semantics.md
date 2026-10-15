@@ -239,3 +239,36 @@ unbound cases remain126. The overall gate is failed/open, and B-SFP-003 remains
 in progress for function applicability and actual compiler-derived dependencies.
 See the retained `protection-query-20261015/acceptance.json`; the previous29/129
 tally describes the preceding checkpoint.
+
+
+## Pure reference function verification — design2026-10-15
+
+S19 retains all six original named function classes; supplemental null-out and
+non-pure refusal tests cannot replace any of them. Independently authored Python
+fixtures must supply original Field definitions, literal inputs/parameters and
+exact outputs/refusals. A mechanical adapter constructs real pinned source and
+replays those expectations against the public API in Bun and Chromium. Positive
+wire-valid keyed/vault/hash declarations must still refuse execution.
+
+The Gregorian dependency must also agree with an independent Python datetime
+400-year cycle digest, plus malformed, century-boundary and foreign-temporal
+refusals. The cycle is finite evidence, not automatic core/native date admission.
+Mutation controls must distinguish omitted original-input/output checks, closed
+signatures, negative-floor correction, overlapping suffix, selected domain
+binding and explicit calendar selection. Symbolic proofs retain SAT weakened
+controls and qualify their parser/domain/executable-refinement premises. Source
+metadata, guards and request shape remain frozen throughout a whole-gate replay.
+S19 is not promoted by unit/standalone proof success; S20 disposition transport
+and every other remaining backend/function criterion stay required.
+
+
+### S19 whole-gate result — 2026-10-15
+
+S19 is accepted by the fresh whole158-case run with928 matching observations.
+The source-pinned runner regenerated the459 independent Python fixtures exactly
+before replaying them and the146097-date digest in Bun1.4.2 and
+Chromium153.0.8010.12; Python3.9.6 was observed. All32 earlier bound cases pass.
+Total accepted cases are33, with125 bindings missing; no required assertion,
+coverage, layer or timeout changed. Source custody and final Astra review are
+retained under `../../04-build/evidence/security/protection-functions-20261015/`.
+S20 and full function-property/compiler/native obligations remain open.
