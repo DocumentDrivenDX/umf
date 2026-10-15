@@ -509,14 +509,21 @@ record-to-table identity convention within the same pack/version.
 
 ## Owner direction: generated typed persistence substrate
 
-The owner requests design-time UMF-to-Python generation for a robust typed
-persistence interface targeting PostgreSQL and Spark SQL / Unity Catalog, owned
-in the UMF repository. Truss and Ashlar should be evaluated as adopters of a
-shared generated substrate while retaining their mutable-graph and immutable-
-publication execution semantics. The requested deliverable is HELIX specifications,
-an Astra review and a prompt for an independent Claude opinion. This direction
-authorizes specification work, not implementation, migrations or production adoption.
+The owner requested design-time UMF-to-Python generation for typed persistence on
+PostgreSQL and Spark SQL / Unity Catalog, owned in the UMF repository, with Truss
+and Ashlar as adopters. After an independent review the owner directed a broader
+schema-first data access SDK:
 
-[FEAT-028](../01-frame/features/FEAT-028-python-model-generation.md), FEAT-029
-and FEAT-030 frame the proposal. The proposal does not displace the previously
-selected TableSpec-first integration priority.
+- typed models;
+- a precompiled, expression-first query and search DSL with no string column
+  references;
+- typed action clients;
+- execution on raw tables through the host platform's native SQL interface
+  (Postgres, Lakebase, Unity Catalog/Spark SQL) and on Truss and Ashlar through
+  their own protocols.
+
+This direction authorizes specification work, not implementation, migrations or
+production adoption.
+
+[FEAT-028](../01-frame/features/FEAT-028-typed-model-generation.md) to FEAT-031
+frame the proposal. It does not displace the TableSpec-first integration priority.

@@ -1,14 +1,15 @@
 # UMF project documentation
 
-## Proposed typed persistence generation
+## Proposed typed data access SDK
 
 [Design and build handoff](04-build/typed-persistence-design.md) indexes draft
-FR-52–54, FEAT-028–030, compiler/generated-access/adoption contracts and six
-story/design/test slices. The compiler belongs in UMF and runs at design/build
-time; generated Python packages need no compiler runtime. PostgreSQL and
-Spark/Delta/Unity Catalog targets retain separate semantic/enforcement limits.
-Truss and Ashlar adoption preserves their own execution protocols. These specs
-do not claim implementation, native acceptance or consumer adoption.
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-074 and nine
+story/design/test slices (080 to 088). A TypeScript generator emits typed Python
+models and action clients from UMF; a build step compiles typed query, search and
+bulk declarations through Weft into a checked-in catalog; the `umf_access`
+runtime executes catalog entries on raw tables or through Truss and Ashlar
+adapters. These specs do not claim implementation, native acceptance or consumer
+adoption.
 
 **Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
 

@@ -709,35 +709,45 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 
 The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
 
-### Subsystem: Physical Bindings and Authored Generation — typed persistence
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
 
 Owner-directed design extension; release sequencing remains separately selected.
+This subsystem adds an **Application Developer** persona: a Python developer who
+reads, searches and changes data described by UMF without writing SQL. The
+Schema Integration Maintainer remains responsible for authored models, bindings
+and target qualification.
 
-- **FR-52 — Generated Python instance models.** A maintainer must be able to
-  compile pinned UMF selections into statically inspectable Python instance
-  models, preserving explicitly bound presence/null carriers, default declarations without
-  execution, ordered key DTOs and exact
-  values. Generation must retain unknown source content and a complete selected
-  assertion support report, refuse uninterpreted relevant semantics and reproduce
-  the same source bytes. The compiler runs at design/build time; generated
-  applications require no compiler or JavaScript runtime. FEAT-028 and US-080/081
-  govern this capability.
-- **FR-53 — Generated PostgreSQL access.** A maintainer must be able to generate
-  typed physical declarations and qualified codecs from explicit PostgreSQL
-  bindings. Ordinary SQLAlchemy mappings and generic engine storage must remain
-  distinct. Truss adoption must preserve fixed generic storage and protected
-  execution, transaction, journal and feed semantics. Connections, query lowering,
-  migrations and business execution stay consumer-owned. FEAT-029 and US-082/084
-  govern this capability.
-- **FR-54 — Generated analytical table access.** A maintainer must be able to
-  generate Spark schemas, Delta/Unity Catalog declaration proposals and typed
-  materialized-row boundaries from explicit bindings. Static types must not claim
-  arbitrary DataFrame correctness or catalog key enforcement. Ashlar adoption
-  must preserve exact publication vectors, retention, source/ACK custody and
-  fencing. FEAT-030 and US-083/085 govern this capability.
+- **FR-52 — Generated typed models.** A maintainer must be able to author
+  instance-view, native-column and search choices in the `umf.access` extension
+  and generate, deterministically and offline, statically inspectable Python
+  models, Key DTOs, typed column and index expressions and action types from
+  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
+  rounded; unknown content and a complete assertion report are retained; output
+  is checked in and drift-checked. FEAT-028, US-080 and US-081 govern this.
+- **FR-53 — Precompiled typed queries and search.** An application developer
+  must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
+  commands in a schema-first, expression-first Python DSL with no string column
+  references, have a pinned type checker reject type, column, record and argument
+  errors, and have every declaration compiled at build time through Weft for each
+  selected target into a checked-in catalog. At runtime only catalog entries
+  execute, with validated values bound as parameters. FEAT-029 and US-082 to
+  US-084 govern this.
+- **FR-54 — Typed actions and native execution targets.** An application developer
+  must be able to invoke UMF actions through generated typed clients with typed
+  outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
+  local Spark/Delta tables through the host's native SQL connection. The native
+  SQL action profile states which action guarantees hold per platform and refuses
+  the rest. FEAT-030, US-085 and US-086 govern this.
+- **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
+  SDK by implementing its target protocols over their own protected paths: Truss
+  for reads, actions and bulk commands; Ashlar for publication-pinned reads.
+  Generated code never reaches engine storage directly. FEAT-031, US-087 and
+  US-088 govern this.
 
 Acceptance for FR-52 requires deterministic generation, static positive/negative
-examples and exact-value/presence counterexamples. FR-53 additionally requires
-pinned PostgreSQL native and Truss protocol witnesses. FR-54 requires separately
-qualified Spark/Delta, managed Unity Catalog and Ashlar publication witnesses.
-Specifications and local-only tests establish none of those native support claims.
+corpora and exact-value/presence counterexamples. FR-53 requires static corpora
+on pinned pyright and mypy, catalog refusals for Weft-unsupported forms, and
+native read and search witnesses per target. FR-54 requires native action and
+bulk witnesses per target and the shared conformance suite. FR-55 requires
+engine-local adoption designs and engine witnesses. Specifications and
+local-only tests establish none of those native support claims.
