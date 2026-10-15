@@ -26,6 +26,20 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - actionExpressionLimits — constants depth 32, nodes 512, text 65536; limits are profile bounds, not a throughput guarantee.
 - actionsPackage — the exact extension registration package; it is not a general executor feature manifest.
 
+## Portable plans and frozen manifests
+
+These operations inspect supplied artifacts and construct inert bytes. They do not install an executor, authenticate a selection cut, issue a read grant or authorize business writes. Current-main API contracts and the separately pinned browser-local demonstration are different source cohorts.
+
+- prepareActionPlanModel(model: ActionPlanModelPin, action: PortableActionPin, context: ActionPlanInspectionContext): ActionPlanArtifact — returns the exact preparation artifact for the admitted explicit-Key constant-set subset, bound to original supplied model/action source, schema and this producer build. It does not register the action with a store.
+- inspectActionPlan(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionPlanInspection — checks artifact integrity, original model/action binding, input constants and the caller-installed selection interpreter. It retains source and diagnostics; eligibility is portable interpretation, not executed selection or current authorization.
+- assessActionPlan(inspection: ActionPlanInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext): ActionPlanAssessment — freshly reinspects the original plan and checks exact companion capability claims. Unknown or unsupported obligations block compatibility. Evidence locators are not fetched or authenticated; executionVerified remains false.
+- constructActionManifest(input: ActionManifestConstruction, context: ActionPlanInspectionContext): ConstructedActionManifest — constructs invocation and batch bytes from the exact plan, supplied ordered rows, guards and original core Key receipts. The result explicitly has sealed:false, complete:false and authority:false. It does not select rows, issue guards, seal work or execute changes.
+- inspectActionManifest(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionManifestInspection — checks the retained plan, action source, complete typed inputs, identity/version correspondence and exact batch partition. It does not establish native seal custody or the authenticity of a store-issued cut.
+- assessActionManifest(inspection: ActionManifestInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext): ActionPlanAssessment — freshly inspects the manifest and assesses its original plan against companion capabilities. Compatibility does not verify stored execution, a current principal or replay authority.
+- validateBulkOutcome(input: ActionPlanArtifact): BulkOutcomeValidation — checks artifact integrity and the known bulk result union, including embedded manifest artifacts and ordered item verification carriers. Structural validity does not establish original control custody, a business commit, rollback or permission to redispatch.
+
+[CONTRACT-902](../../../02-design/contracts/CONTRACT-902-portable-action-plan.md), [CONTRACT-903](../../../02-design/contracts/CONTRACT-903-frozen-action-manifest.md) and [CONTRACT-904](../../../02-design/contracts/CONTRACT-904-bulk-action-coordination.md) own these proposed versioned companion profiles. Exact types live in plan-types.ts, manifest-types.ts, manifest-construction.ts and bulk.ts alongside the public exports. Capability assessment and source inspection remain separate from an executor's current authority and durable outcomes.
+
 ## Public types
 
 <!-- generated:public-types:start -->
@@ -48,9 +62,21 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionInputs
 - ActionInspection
 - ActionKeyReference
+- ActionManifest
+- ActionManifestConstruction
+- ActionManifestInspection
 - ActionObligation
 - ActionObligationKind
 - ActionParameter
+- ActionPlanArtifact
+- ActionPlanAssessment
+- ActionPlanCapabilities
+- ActionPlanCapability
+- ActionPlanDiagnostic
+- ActionPlanInspection
+- ActionPlanInspectionContext
+- ActionPlanModelPin
+- ActionPlanSelectionInspector
 - ActionReference
 - ActionRelationshipReference
 - ActionRule
@@ -58,10 +84,16 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionRuleReference
 - ActionRuleState
 - ActionValueBinding
+- BulkOutcomeValidation
 - CompiledActionRule
 - CompiledActionSelector
+- ConstructedActionManifest
 - InspectedAction
+- PortableActionPin
+- PortableActionPlan
+- PreparedActionPlanModel
 - SelectedActionIdentity
+- SelectedActionRow
 <!-- generated:public-types:end -->
 
 The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-900/901 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
