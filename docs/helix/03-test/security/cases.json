@@ -3015,12 +3015,18 @@
       "assertion": "Withheld fields are never granted at column level and no ordinary role holds table-level SELECT on a table with withheld columns; selecting a withheld column refuses the whole statement with SQLSTATE 42501, reported as a statement-level refusal and never as a per-cell withheld disposition; permitted columns still match the oracle.",
       "required": true,
       "layer": "native",
-      "status": "not-run",
-      "command": null,
-      "evidence": null,
-      "testSource": null,
-      "oracleSource": null,
-      "implementationSources": [],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg18-column-withhold.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg18-column-withhold-P01.json",
+      "testSource": "tests/security/native/pg18-column-withhold.py",
+      "oracleSource": "tests/security/native/pg18-column-withhold-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg18-column-withhold.sql",
+        "tests/security/native/pg-raw-membership.sql"
+      ],
       "timeoutMs": 60000,
       "assertionIds": [
         "pg-raw.P01"

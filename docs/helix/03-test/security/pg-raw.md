@@ -1046,3 +1046,27 @@ binding. The earlier three-argument version-only fixture remains an explicitly
 unqualified protocol witness. Full B09/L12 and public compiler activation remain
 open. Astra independently verified 123 expectation checks, five custody records
 and all seven pins, finding no remaining actionable issue in this component.
+
+
+### PostgreSQL 18 column-privilege qualification procedure (2026-10-15)
+
+P01 executes `tests/security/native/pg18-column-withhold.py` against the exact
+PostgreSQL 18.6 image digest in its independent oracle. Three fresh ordinary TCP
+SCRAM identities retain their original membership-filtered row sets. Only
+id/label/public-note columns are granted through an ordinary inherited reader
+role; secret/audit columns have no ordinary or PUBLIC SELECT, and no ordinary
+table SELECT exists. Null remains a native permitted value. Direct, mixed,
+whole-row, empty, LIMIT 0, expressions, filter/order/group/join/aggregate, COPY,
+prepared execution and invoker-view access to withheld columns must refuse the
+entire statement with SQLSTATE 42501 and no result rows or per-cell disposition.
+
+The excluded installer separately grants table, column, inherited table, PUBLIC
+column, pg_read_all_data and owner-view routes. The original ordinary identity
+must actually disclose the independent secret oracle under each weakened route;
+restoration must recover denial and exact permitted rows. These are retained
+negative controls, never ordinary profile paths. Pin engine/image/client builds,
+source digests, role/membership/ACL/policy inventories and authentication controls;
+cleanup only the generated container with the matching ownership label. Original
+P01 assertions/criteria/60s timeout remain unchanged. This is fixed native raw
+carrier qualification only: all other cases remain separately required and no
+17.9 receipt is promoted to PostgreSQL18 or complete backend qualification.

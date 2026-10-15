@@ -931,3 +931,15 @@ fresh independent full semantic assertions and real browser parity. The result
 remains incomplete and non-authoritative. Native guarded consumers, physical
 statement/effect closure, current-authority custody, query lineage and all remaining
 backend cases keep the overall implementation goal active.
+
+
+### PostgreSQL 18 native implementation increment (2026-10-15)
+
+Begin M2/B-SFP-007–008 with P01 on image
+`postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336`
+(PostgreSQL18.6). The column-privilege runner observes real SCRAM identities,
+complete statement refusals and permitted null/text rows, plus excluded-installer
+privilege weakening/restoration controls. Its retained inventory binds actual
+native ACLs and source bytes. This does not replay other B/L/P cases on18, qualify
+Truss/Ashlar, install a general compiler or close native current-authority and
+lifecycle custody. M2 remains open until its entire required scope is evidenced.
