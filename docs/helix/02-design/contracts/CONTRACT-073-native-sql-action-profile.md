@@ -41,6 +41,13 @@ program and the adapter together must guarantee. Truss and Ashlar targets are
 governed by CONTRACT-069 instead. Handler bindings (`kind:"handler"`) are out of
 scope; such actions refuse on raw tables.
 
+Raw atomic catalog commands use a separately named companion execution profile,
+`umf.actions.native-bulk/0.1`, requiring the same qualified native transaction,
+authorization, failure and receipt obligations below plus a bounded set-based
+program. This is NOT CONTRACT-902's frozen selection/plan profile, CONTRACT-904
+bulk/1 or CONTRACT-905 local-bulk/1. Weft must produce this explicit program;
+the SDK cannot cast or relabel an existing engine mutation plan into it.
+
 ## Normative Surface
 
 ### Obligations by platform
@@ -72,12 +79,43 @@ These mechanisms are candidates. Each target claims action support only after th
 CONTRACT-072 conformance suite and native witnesses pass on its pinned platform
 version.
 
+### Admission and atomic-result requirements
+
+Every supported program must distinguish actual role denial, each declared
+precondition failure, missing entity, admitted no-op and successful effect using
+Weft-owned result markers from the SAME atomic unit. Folding a condition into
+`WHERE` and observing zero changed rows is insufficient: it cannot by itself
+distinguish those outcomes. A target that cannot produce the required markers
+refuses that action at build time. No native error-text parsing is permitted.
+
+Bulk selection, complete-population validation, maxItems enforcement and all
+effects must share one admitted native snapshot/atomic unit. Preview is advisory
+and cannot supply the execution count or authorization. On single-statement
+Delta, the qualified statement must enforce the bound even with concurrent
+writers and an optimizer that could otherwise skip a check; a separate SELECT
+followed by UPDATE is not a supported substitute. Missing enforcement or exact
+commit receipts leaves that target/capability unqualified and refuses execution.
+
+The sole-writer host obligation on Delta is necessary but not sufficient to
+prove uniqueness: two concurrent calls from the same SDK are still writers.
+The profile additionally requires a qualified serialized per-Key writer path or
+native conflict protocol that prevents duplicate creates, including concurrent
+absent-Key MERGEs. Without original host/native enforcement and independent
+concurrency witnesses, Key-bearing creates refuse. No new lock service or
+external control store is implied by this requirement.
+
 ### Native session actor profile
 
-`umf.actions.native-session/0.1` is a CONTRACT-900 actor profile. The actor is
-the authenticated native session principal (`current_user` on Postgres and
-Lakebase, `current_user()` on Databricks), recorded in the receipt. It makes no
-claim that a human subject acted and carries no delegation.
+`umf.actions.native-session/0.1` is a CONTRACT-900 actor profile. Capture the
+native authenticated session identity and effective execution identity separately
+in the original outcome's attribution metadata: on Postgres/Lakebase use
+`session_user` and `current_user`; role switching or SECURITY DEFINER can make
+them differ. Databricks uses its independently qualified session/current-user
+mapping. Neither a principal label nor `sessionPrincipal:"human"` is itself
+authentication evidence. The host's qualified connection/authentication binding
+must establish the declared interpretation. The native-session profile makes no
+human/delegation claim by itself; a separately qualified human target retains its
+recorded host obligation. Receipt's `{store,epoch,version}` shape stays unchanged.
 
 The SDK uses whatever connection the host supplies: per-user connections or a
 service account. A target configuration declares which (`sessionPrincipal`,
@@ -118,8 +156,16 @@ new connection, and closes it:
 | `pg_xact_status` | Outcome |
 | --- | --- |
 | `committed` | `Committed(output, receipt)` with that transaction ID as the receipt version |
-| `aborted` | `Conflict(retained=False)`: nothing committed and the cause cannot be observed |
+| `aborted` | `ActionFailed("ABORTED_CAUSE_UNKNOWN", cause)`: known noncommit with the original disconnect/error retained; status alone cannot prove concurrency or license conflict retry |
 | `in progress` after a bounded wait recorded in the target configuration, `NULL`, or any error | `Indeterminate` |
+
+The new connection MUST independently match the original database/store identity
+and qualified writer endpoint before inspecting the xid; a wrong database/cluster,
+unverified replica or unavailable identity yields Indeterminate. Capture the
+complete typed output and receipt prerequisites before COMMIT; a committed status
+with missing output/custody cannot fabricate a result and remains Indeterminate.
+Only explicit native concurrency evidence yields Conflict. The adapter never
+derives retryability from generic abort status.
 
 Without a factory, or if reconnection fails, the outcome is `Indeterminate`. The
 adapter never resends the program. `unity-catalog` and `spark-delta` targets have

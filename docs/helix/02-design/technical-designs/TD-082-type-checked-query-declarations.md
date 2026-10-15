@@ -52,8 +52,7 @@ checkers (CONTRACT-071 lists them): terminal objects typed `Page[R, K]` with
 `group_by().count()`; `Related[O, K]` with `.has(key)`; `.include_keys` returning
 rows typed `WithKeys[R, K]`; per-Record `.into()` overloads accepting only the
 Record's declared projections; `if_present` overloads accepting only
-`Param[T | MISSING]` (a `Param[T | None]` is rejected, since `None` means
-`IS NULL`); the `Column.__eq__` override, which makes `Column` unhashable and
+`Param[T | MISSING]` (a `Param[T | None]` without MISSING is rejected as absence; None remains a present SQL-null operand under S2); the `Column.__eq__` override, which makes `Column` unhashable and
 whose override diagnostic the runtime package suppresses internally; and a
 runtime `__bool__` on `Predicate` that raises `TypeError`. Field expressions raise `QueryOutsideCatalog` unless a capture
 context is active (a context variable set only by the catalog tool).
@@ -150,3 +149,5 @@ runtime and regenerating.
 | A checker release changes inference for overloaded dunders | Exact checker pins per profile; corpus rerun before any pin change |
 | mypy's `Any` return hides result misuse inside declarations | Result checks rely on generated call-site signatures; documented as a known limit |
 | Developers disable `check_untyped_defs` locally | CI runs the corpus with the pinned configuration and fails on a mismatch |
+
+US-082-AC6 additionally captures absent, explicit null and non-null parameters independently: only MISSING selects omission, equality to None stays UNKNOWN, and explicit is_null() is a separate predicate. Two captures cannot establish purity or sandbox trusted developer-module execution.

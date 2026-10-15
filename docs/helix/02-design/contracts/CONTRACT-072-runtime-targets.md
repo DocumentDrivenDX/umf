@@ -71,7 +71,7 @@ Any difference raises `TargetMismatch`. Lakebase applies minor versions
 automatically, so a Lakebase target qualifies a major version plus an explicit
 set of observed minor versions; an unlisted minor refuses until qualified.
 Verification checks shape and identity only; it confers no authorization and
-does not prove the shape stays unchanged after it runs.
+does not prove the shape stays unchanged after it runs. For action claims, the host supplies pinned `nativeAdmission` descriptors: declared native relation identities, dependency-closure/profile digest, the qualified action-time unchanged-closure fence, authenticated principal/profile correspondence and original writer-incarnation/restore-epoch custody. CONTRACT-073 requires admission at the effect transaction; first-use shape verification is insufficient. Missing or changed proof refuses the affected action. Reconnect must establish original namespace continuity before transaction reconciliation; otherwise return Indeterminate. Native descriptors confer no action or role authority.
 
 `TargetIdentity.digest()` is the lowercase SHA-256 hex of the JCS encoding of the
 complete observed identity. For Ashlar the identity also carries the resolved
@@ -85,12 +85,26 @@ whose index needs a host embedder and has none raises `ObligationUnmet`.
 ### Continuations
 
 `Page[R, K]` carries `items: tuple[R, ...]` and `next_after: Continuation[K] |
-None`. A `Continuation[K]` is an immutable runtime value holding the last Key of
-the page and the `TargetIdentity.digest()` of the target that read it. Passing it
-back as `after` resumes the keyset only on a target whose current identity digest
-is equal; otherwise the call raises `StaleContinuation` before any statement is
-sent. Passing `None` starts a new read. Continuations are not persisted by the
-runtime and carry no authorization.
+None`. A continuation is an immutable value containing `key:K`,
+`sortValues:tuple[EncodedValue,...]`, `targetIdentityDigest`, `catalogDigest`,
+`entryName`, `variantDigest` and `argumentsDigest`. `sortValues` covers EVERY
+declared ordering component, including the complete appended Key and explicit
+null/missing markers, in the exact mixed-direction/null-placement order. The
+catalog variant defines those carriers and ordering; a Key alone cannot resume
+general WR-A6 ordering. Hidden sort/Key outputs are retained as continuation data
+even when the returned projection excludes them; their disclosure must be
+authorized by the original read path or that page form refuses.
+
+`argumentsDigest` is JCS/SHA-256 of the validated encoded non-continuation
+arguments, including optional-parameter presence. Entry/variant/catalog and all
+target identity fields must match the current call; any mismatch, wrong sort
+inventory/carrier or changed filter raises `StaleContinuation` before dispatch.
+The initial call uses `after=None`. Target identity includes the engine's
+accepted model/action binding context and, on Ashlar, its publication vector.
+The SDK does not promise a cross-page snapshot on mutable raw tables; callers
+requiring that property must supply a qualified shared snapshot/transaction.
+Continuations are process-local, not persisted or authenticated credentials, and
+confer no authorization; the engine still admits each read independently.
 
 ### Protocols
 
@@ -117,7 +131,7 @@ client over `ActionExecutor` and a `ReplayingActions` client over
 `ReplayingActionExecutor`, so type checking rejects passing a raw-table target to
 `ReplayingActions`.
 
-Raw-table executors resolve `action` to the catalog entry of kind `action` for
+Raw-table executors resolve the exact source-bound `action` to the catalog entry of kind `action` for
 their pinned target and run its statement program under CONTRACT-073; a missing
 entry raises `NotCompiledForTarget`. Engine executors pass the action identity to
 the engine (CONTRACT-069).
@@ -139,16 +153,28 @@ CONTRACT-068 codecs, keyed by catalog parameter name.
 
 ### Outcomes
 
+Engine outcomes retain an immutable `original: OriginalOutcome` alongside every
+typed projection and every raised engine failure. It contains the complete
+original authorized result (all members, unknown content, revision, changes,
+noOp, verification, code and receipt), the exact source-bound ActionRef and the
+original request identity/recovery context supplied by the engine. If original
+transport bytes are supplied, retain those exact bytes as well. Never rebuild an
+original result from a reduced projection, later status or a new invocation.
+Opaque issuer/recovery capabilities remain out of band with the engine; this
+carrier cannot mint, serialize or authenticate them. Only already-authorized
+result content may be exposed, and it MUST NOT be logged automatically.
+Raw-table outcomes use `original=None` and retain their own native diagnostics.
+
 `ActionOutcome` is exactly one of:
 
 | Outcome | Meaning | Generated client behavior |
 | --- | --- | --- |
-| `Committed(output, receipt)` | Business change committed | Returns typed output and receipt |
+| `Committed(output, receipt, original)` | Invocation committed, including a net no-op | Returns typed output/receipt and complete original outcome when engine-owned |
 | `Rejected(code)` | Declared business failure (a false precondition, or CONTRACT-901 `ENTITY_MISSING`); no change | Raises `<Action>Rejected` |
-| `Denied` | Authorization failure, including a failed in-program role check; no change | Raises `ActionDenied` |
+| `Denied(code, original)` | Authorization failure, including a failed in-program role check; no change | Raises `ActionDenied` preserving the protected-safe native/engine code |
 | `Replayed(original)` | Equal retained request under an idempotency key; the original outcome is returned | Returns or raises the original |
-| `Conflict(retained: bool)` | Concurrency or serialization failure; nothing committed | Raises `ActionConflict(retained)`. `retained=False`: the caller may retry as a new attempt. `retained=True`: a durable tx/1 conflict recorded under an idempotency key; terminal for that key |
-| `Indeterminate` | Commit outcome unknown and not reconcilable (CONTRACT-073) | Raises `ActionIndeterminate`; never retried automatically |
+| `Conflict(retained: bool, code, original)` | Explicit concurrency/version/token-conflict result; nothing committed | Raises `ActionConflict` preserving code and complete original result; retained is determined by the original result/protocol, never key presence alone |
+| `Indeterminate(original)` | Original outcome currently unknown | Raises `ActionIndeterminate`; host/engine may reconcile original custody; never retried automatically |
 
 Two failures are raised by the executor rather than returned as outcomes:
 
@@ -159,8 +185,17 @@ Two failures are raised by the executor rather than returned as outcomes:
 - `ActionFailed(code, cause)`: execution started and was rolled back with a known
   outcome: a postcondition false or erroring, a constraint violation, another
   native error during the program, or a tx/1 `failed` result. `cause` wraps the
-  native exception unchanged; for engines `code` is the engine's code. Nothing
-  committed.
+  native exception unchanged; for engines `code` and `original` preserve the
+  engine's classification. Nothing committed. A proven abort with unknown cause
+  is `ActionFailed("ABORTED_CAUSE_UNKNOWN", cause)`, never an invented conflict.
+
+`Rejected`, `Replayed`, refused and failed engine results also retain `original`.
+Exception projections expose the original protected-safe code without dropping
+unknown result members. A committed no-op retains `noOp:true`, empty net changes
+and original verification; it is not described as a business change. Replay
+preserves the complete original result, not only its typed output. Indeterminate
+retains the original request/recovery context for the engine's existing lookup;
+the SDK's lack of an action lookup convenience does not discard that custody.
 
 CONTRACT-901 tx/1 results map to these as follows. Executors for engines that
 speak tx/1 (CONTRACT-069) MUST use this table; raw-table executors produce the
@@ -170,7 +205,7 @@ same outcomes from native signals (CONTRACT-073).
 | --- | --- |
 | `committed` | `Committed(output, receipt)`; `Replayed(Committed(...))` when the executor's result identifies a retained replay |
 | `rejected` | `Rejected(code)`; `Replayed(Rejected(code))` when identified as a replay |
-| `conflict` | `Conflict(retained=True)` when the request carried an idempotency key (for example `EXPECTED_VERSION` recorded under the key, or `TOKEN_REUSE`); otherwise `Conflict(retained=False)` |
+| `conflict` | Preserve original code/result; `retained=True` only when original protocol evidence identifies a retained terminal conflict. A pre-admission `TOKEN_REUSE` does not become a newly retained outcome merely because a key was supplied |
 | `denied` | `Denied` |
 | `unsupported`, `expired` | `ActionRefused(code)` |
 | `failed` | `ActionFailed(code)`, including `TRANSIENT_ABORT` after the executor's own bounded internal retries |
@@ -189,7 +224,29 @@ after that:
 | Plan | Targets | Methods |
 | --- | --- | --- |
 | `AtomicBulkPlan` | Raw tables (CONTRACT-073) | `preview()`; `execute() -> BulkOutcome`, where `BulkOutcome` is `{selected, changed, receipt}`: the number of selected identities, the number of rows changed and the commit receipt. Failures raise as for actions (`ActionConflict`, `ActionIndeterminate`, `ActionFailed`, `ActionRefused`) |
-| `ManifestBulkPlan` | Truss (CONTRACT-069) | `preview()`; `seal() -> Manifest`, a sealed CONTRACT-903 manifest; `submit(manifest) -> BulkJob`, which hands the sealed manifest to CONTRACT-904 coordination and returns the job reference and its reported status. Host workers run the batches through the engine; the SDK runs no worker loop. There is no `execute()` |
+| `ManifestBulkPlan` | Truss (CONTRACT-069) | `preview()`; `seal(*, attempt: ControlAttempt) -> SealControlResult`; `submit(sealed, *, submission_key: str, attempt: ControlAttempt) -> SubmitControlResult`; `recover_control(recovery: ControlRecoveryRef) -> ControlResult`. Host workers execute batches through the engine. There is no `execute()` |
+
+`SealControlResult` and `SubmitControlResult` retain the COMPLETE original
+engine materialize/submit unions: sealed/submitted success, original Refusal,
+TOKEN_REUSE conflict, ControlUnknown and ControlFailure. Their typed convenience
+views never replace the original result. `ControlAttempt` is an opaque original
+host/engine-issued durable attempt capability, supplied out of band; the adapter
+neither fabricates it nor turns its recovery reference into authority. `sealed`
+is the exact original Artifact with its issuer-owned seal custody. `submission_key`
+is the original stable caller submission key, explicitly required and retained
+with the exact request. A changed request under that key follows CONTRACT-904.
+
+`recover_control` delegates to original `recoverControl` under current engine
+authorization and preserves its full result. After unknown seal/submit ACK,
+retain the SAME attempt/recovery/request and block fresh mutation; do not issue a
+new seal, job, key or attempt as an implicit retry. Known control noncommit is
+ControlFailure, not business Conflict. Engine `status`, `review`, `lookup`,
+`reconcile` and `cancel` remain available through the host's original qualified
+bulk-control client; the adapter must retain its association with the plan/job
+and must not replace those APIs with a lossy BulkJob status. No worker loop,
+lease/fence handling or business retry is introduced in the SDK. Browser-local
+CONTRACT-905 has its separately admitted control/owner profile; it is never
+silently mapped to native human bulk authority.
 
 ### Transport carriers
 

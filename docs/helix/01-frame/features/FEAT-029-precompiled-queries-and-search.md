@@ -111,8 +111,7 @@ are never parsed as SQL or search syntax.
 
 - A form that type-checks but that Weft cannot lower for some selected target
   fails the build with `WEFT_BLOCKED`.
-- Ordering by anything other than the complete unique Key, or an unbounded list,
-  fails the build in 0.1.
+- Unsupported ordering or an unbounded list fails the build; admitted general ordering appends the complete selected Key as a deterministic tie-breaker.
 - More than 16 optional-filter variants fails with `VARIANT_LIMIT`.
 - Two captures that differ fail with `CAPTURE_NONDETERMINISTIC`.
 - A target whose identity differs from the entry pins raises
@@ -159,6 +158,6 @@ provide the targets that execute catalog entries.
 ## Out of Scope
 
 Free-form or ad-hoc SQL, lazily executed querysets, ORM sessions and change
-tracking, pandas-style masks and `query()` strings, non-key ordering and full
+tracking, pandas-style masks and `query()` strings, unsupported ordering and full
 related-row includes in 0.1, index building and embedding production, and
 multi-Record search (`search_across` is a later candidate).

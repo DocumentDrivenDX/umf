@@ -104,7 +104,7 @@ the disposition is not `exact` and strict generation refuses.
 
 ### Keys
 
-`<Record>Key` preserves declared component order. Its constant `KEY_IDENTITY` is
+`<Record>Key` aliases the exact `RecordView.selectedKey` DTO. Each additionally referenced Key gets a distinct `<Record><KeyId>Key` DTO and identity; generation refuses a reference whose Key cannot be represented, rather than coercing alternate Keys. Each DTO preserves declared component order. Its constant `KEY_IDENTITY` is
 `{documentId, coreVersion, module, element, key}`, matching UMF's
 `CoreKeyIdentity` plus document and core identity; it carries no build digest.
 The manifest's input digest is exposed separately as `BUNDLE_INPUT_DIGEST`. Key
@@ -140,16 +140,20 @@ CONTRACT-071 capture raises `QueryOutsideCatalog`. They never produce SQL.
 
 For each selected CONTRACT-900 action:
 
-- `<Action>` is an immutable `ActionRef` constant naming the action's module and
-  ID and its input and output types. It is what `@command(action=...)` and
-  executors receive.
+- `<Action>` is an immutable `ActionRef` constant with its input/output types and
+  `source:{documentId,coreVersion,module,action,documentSha256,actionPointer,
+  invocation:{id,version}}`. The digest is of the exact retained UTF-8 document
+  source; the pointer identifies the original action declaration. Complete source
+  context, not a same-named action, is its compilation identity. It is what
+  `@command(action=...)` and executors receive. It is not an issued action revision,
+  role grant, seal or authorization capability.
 - `<Action>Input` has one field per parameter. Value parameters use their Field
   carrier; optional parameters are `T | MISSING`. Entity parameters are typed as
-  the target Record's Key DTO.
+  the exact parameter-declared Key DTO, not an inferred primary Key.
 - `<Action>Output` has one field per declared output; graph-write recipes have no
   business outputs and return the runtime's typed receipt instead.
 - `<Action>Rejected` is an exception carrying `code` typed as a `Literal` union of
-  the action's failure codes and `retryable: bool` from the declaration.
+  the action's failure codes plus reserved `ENTITY_MISSING`, and `retryable: bool` from the original classified result. Protocol refusals retain their separate exception types.
 - The generated `Actions` class takes a CONTRACT-072 `ActionExecutor` and has one
   method per action, `def <action>(self, input: <Action>Input) ->
   Committed[<Action>Output]` (`Committed[None]` for recipes without business
@@ -165,7 +169,9 @@ For each selected CONTRACT-900 action:
 - Client methods map CONTRACT-072 outcomes: `Committed` returns the output and
   receipt; `Replayed` returns or raises the original result; `Rejected` raises
   `<Action>Rejected`; `Denied` raises `ActionDenied`; `Conflict(retained)` raises
-  `ActionConflict`; `Indeterminate` raises `ActionIndeterminate`. `ActionRefused`
+  `ActionConflict`; `Indeterminate` raises `ActionIndeterminate`. Every engine
+  projection/exception retains CONTRACT-072's complete `original` result, safe
+  code and original source/revision/recovery context. `ActionRefused`
   and `ActionFailed` raised by the executor propagate unchanged. Each method
   validates and encodes the input and delegates to the executor. It never
   constructs SQL.

@@ -39,7 +39,8 @@ query modules, and calls Weft's Python binding as a build-time compiler. Weft ow
 SQL dialects, lowering, backend bindings, parameter carriers and result decoders;
 this contract never constructs native SQL itself. Execution belongs to
 CONTRACT-072. Single-entity writes go through generated action clients
-(CONTRACT-068), not this catalog. Ad-hoc runtime queries are out of scope for 0.1.
+(CONTRACT-068); their raw-table statement programs are also catalog entries as
+defined below. Ad-hoc runtime queries are out of scope for 0.1.
 
 ## Normative Surface
 
@@ -76,6 +77,14 @@ parameters and literals, ending in a terminal. Capture calls it once with symbol
 parameters; any I/O, randomness or dependence on mutable global state is outside
 the contract, and the tool captures twice and refuses differing results with
 `CAPTURE_NONDETERMINISTIC`.
+
+Query modules are explicitly selected TRUSTED build-time Python code, not inert
+UMF metadata. Import/capture executes that code in the host build environment;
+two equal captures cannot prove purity or prevent side effects. This is not a
+sandbox or an authorization mechanism. Do not import modules selected by an
+untrusted document, plugin discovery or remote reference. Record module bytes
+and trusted dependency/profile pins in catalog provenance. The no-artifact-code
+rule concerns inert UMF data; it does not pretend Python imports are passive.
 
 ### Conventions
 
@@ -128,7 +137,7 @@ before any build or run. Profiles MUST pin mypy's `check_untyped_defs` (or
 `strict`), because mypy otherwise skips unannotated function bodies, and MUST run
 pyright in the environment where the pinned dependencies are installed. The
 [DSL typing spike](../../04-build/evidence/typed-persistence/dsl-typing-spike/README.md)
-records both checkers rejecting every row below:
+records only its enumerated cases; the table below is the required acceptance surface, with uncovered forms explicitly unqualified below:
 
 | Error | How it is rejected |
 | --- | --- |
@@ -150,16 +159,15 @@ a declared projection model with `.into`.
 Result and helper types:
 
 - `Page[R, K]` carries `items: tuple[R, ...]` and `next_after: Continuation[K] |
-  None`, where `K` is the Record's Key DTO. `Continuation[K]` records the target
-  identity digest (CONTRACT-072); passing it to a target with a different identity
-  raises `StaleContinuation`.
+  None`, where `K` is the RecordView's explicitly selected Key DTO. `Continuation[K]` records the target
+identity, catalog/entry/variant and encoded filter digests plus every sort value
+(CONTRACT-072); changing any of these raises `StaleContinuation`.
 - `.include_keys(rel, limit=n)` changes the row type from `R` to `WithKeys[R, K]`,
   with `row: R` and `keys: RelatedKeys[K]`, where `RelatedKeys[K]` has
   `items: tuple[K, ...]` and `truncated: bool` (true when more than `n` related
   keys exist). Like `.select` and `.into`, it returns a new query type rather than
   `Self`.
-- `if_present(p, f)` accepts only `Param[T | MISSING]`. `None` is a value, meaning
-  `IS NULL` where the column admits null; it never means "absent".
+- `if_present(p, f)` accepts only `Param[T | MISSING]`. `MISSING` alone omits a filter. `None` is a present SQL-null value: comparison with it yields UNKNOWN under S2; it does not rewrite equality to `IS NULL`. Use explicit `.is_null()` for that predicate. `Param[T | None | MISSING]` has two presence variants; null stays in the present variant and is never a third variant.
 - `Column` overrides `__eq__`, which makes it unhashable. The narrower `__eq__`
   signature is an intentional override; the `umf_access` runtime package
   suppresses the checker's override diagnostic internally, so developer code sees
@@ -180,7 +188,8 @@ column attributes carry docstrings citing their UMF source pointer, so editor
 go-to-definition reaches the authored meaning.
 
 The remaining gates, in order, are the catalog build (forms Weft cannot compile
-for every selected target, unbounded reads, non-key ordering), target `verify()`
+for every selected target, unbounded reads, ordering without a complete unique
+Key tiebreak or unsupported WR-A6 continuation), target `verify()`
 before first use (CONTRACT-072) and codec validation of every bound value.
 
 ### DSL surface in 0.1
@@ -228,7 +237,7 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   scanning or entry-point discovery.
 - `targets` is an ordered list of `{id, backendId, backendVersion,
   targetProfile, bindingSource, platform, security, roleMappings,
-  administrativeSingleTenant}`. `platform` names the CONTRACT-072 target kind and
+  administrativeSingleTenant, sessionPrincipal, nativeAdmission}`. `platform` names the CONTRACT-072 target kind and
   its pinned versions. `security` names the pinned `umf.security` policy and
   ontology source that Weft's compiler (0.5) requires; it is part of the request
   identity and its digest. `roleMappings` is an exact map from each action role ID
@@ -236,18 +245,20 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   selected action has role authorization. `administrativeSingleTenant` is a
   boolean, valid only for `spark-delta` targets, that declares the target
   single-tenant administrative for CONTRACT-073 authorization; it defaults to
-  false. `sessionPrincipal` is `human` or `service` and declares what the host's
+  false. `nativeAdmission` carries CONTRACT-072 host/native proof descriptors; `sessionPrincipal` is `human` or `service` and declares what the host's
   connections for this target authenticate as (per-user connections or a service
   account); it governs CONTRACT-073 attribution. None of these is inferred, and the
-  SDK never creates or inspects connections to check them.
+  SDK never creates connections. Native verification/admission through host connections must establish the claimed principal/profile correspondence before action execution; a host label alone proves nothing.
 - Compilation renders each captured query to canonical Weft SQL text, submits it
   with the pinned UMF documents, the target binding and the target's `security`
   source to the pinned Weft version, and records Weft's response. A blocked response for any variant on any target
   fails the build with Weft's diagnostics retained.
-- Commands compile through Weft's mutation compiler against the named action's
-  CONTRACT-902 plan-model preparation, using witness parameter values of the
-  correct carriers. The catalog records the lowered statement template and its
-  structural digest (Weft output with parameter values removed).
+- Truss manifest commands compile through Weft's mutation compiler against the
+  named action's original CONTRACT-902 preparation and its exact invocation
+  profile, using witness values of the correct carriers. Raw-table commands
+  instead require Weft's distinct CONTRACT-073 `umf.actions.native-bulk/0.1`
+  program output; they MUST NOT reinterpret a CONTRACT-902 plan as a raw atomic
+  SQL program. Missing owner output refuses with `WEFT_BLOCKED`.
 
 Actions are compiled too. For every raw-table target (CONTRACT-073), the tool
 compiles each action selected in the stage-one package through Weft's action
@@ -283,6 +294,33 @@ carrier}[], outputs, obligations, structuralDigest}`:
 - `outputs` is Weft's ordered result descriptor list with decoders, and
   `obligations` are Weft's host obligations, retained verbatim.
 
+Those artifact alternatives apply only to reads. Command variants MUST instead
+retain one of these closed, distinct carriers:
+
+- `kind:"truss-command"` with `originalPlan` (complete original CONTRACT-902
+  Artifact), `preparation` (exact original preparation/source bytes and producer
+  identity), `sourcePins`, `lowering` (complete original Weft selection result,
+  preflights, parameters, identity/Key/version outputs, bounds and obligations),
+  `parameters`, `maxItems`, and `structuralDigest`.
+- `kind:"native-command"` with `profile:"umf.actions.native-bulk/0.1"`, the
+  complete original Weft `program`, preflight/count/role/precondition markers,
+  `sourcePins`, `parameters`, `maxItems`, `receipt`, `obligations`, and
+  `structuralDigest`. It has no CONTRACT-902/903 manifest semantics.
+
+`sourcePins` retains exact original logical documents, ActionRef source,
+preparation/producer when applicable, invocation profile, backend/profile,
+binding and security source identities/digests. Retain complete owner artifacts,
+not a SQL summary or a page artifact standing in for a mutation plan.
+
+`structuralDigest` is `{owner,version,sha256}` supplied by the SAME pinned Weft
+compile/instantiate interface. Its versioned projection includes complete
+non-value plan/program, lowering/preflight/output/bound/obligation and source/
+profile meaning; only declared parameter VALUE slots may vary. UMF never defines
+it by stripping SQL or locally hashing an edited plan. Until WR-I3/I5 supply and
+qualify this owner interface, SDK command catalog generation/instantiation refuses
+with `WEFT_BLOCKED`; the separate browser free-SQL proof does not need this SDK
+catalog surface. Read structural digests carry the same owner/version tag.
+
 Action entries (`kind:"action"`, raw-table targets only) have no variants. An
 executable action entry is `{name, kind, targetId, weft, umfPins, action:{module,
 id}, logicalRequest, program, parameters, outputs, preconditions, roleChecks,
@@ -314,7 +352,7 @@ def deactivate_stale(target: BulkTarget[P], *, cutoff: int) -> P: ...
 
 A `Param[K | None]` page cursor in a declaration becomes a `Continuation[K] |
 None` argument of the generated function; the runtime checks the continuation's
-identity digest and binds its Key. Bulk functions return the plan type of their
+complete target/catalog/query/variant/argument context and binds its full effective sort tuple, including the selected Key. Bulk functions return the plan type of their
 target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
 
 ### Runtime rules
@@ -331,9 +369,12 @@ target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
   decoding rules) MUST be enforced by the CONTRACT-072 target before execution.
 - Bulk commands return a `BulkPlan`. Because Weft's mutation plans embed
   constant values, the target instantiates the plan by calling the pinned Weft
-  compiler with the catalog's SQL template and the validated parameter values,
-  then MUST verify that the lowered selection's structural digest equals the
-  catalog's. A mismatch refuses with `PLAN_DRIFT`. This is the only runtime use of
+  compiler with the catalog's logical template and validated parameter values,
+  then MUST compare the COMPLETE owner/version/digest tuple for the original
+  plan/program AND lowering with the catalog's. A mismatch refuses with
+  `PLAN_DRIFT` before any store/control operation. Matching structure never issues
+  authority or substitutes for source/revision checks at sealing/effect time.
+  This is the only runtime use of
   Weft; a Weft plan-template capability that binds values without recompilation
   is the intended replacement.
 
@@ -379,3 +420,9 @@ Truss runtime binding 0.4 when the target reports 0.5 raises
 - [ ] Every DSL row has a positive and a Weft-blocked negative case per target.
 - [ ] Runtime refuses unpinned targets, plan drift and stale continuations; no runtime path accepts SQL text.
 - [ ] Every variant records logical SQL, the full Weft request identity and its execution artifact.
+
+### Search execution artifacts
+
+Search variants use `{kind:"search-program",version,sourcePins,legs,embedding,fusion,hydration,maxK,maxDepth,outputs,obligations,structuralDigest}` from the pinned Weft interface. Each leg names its exact native statement/artifact and parameters, ordering and score conversion; embedding binds the model identity; fusion fixes the algorithm and bounds. Hydration names bounded catalog entries reapplying the original filters and native admission. All nested artifacts and obligations participate in the owner/version digest. Runtime executes only this finite program and supplies values; it invents no SQL. Unsupported program outputs refuse with `WEFT_BLOCKED`.
+
+Grouped counts must remain bounded by an admitted limit/page; a global aggregate returning one row may count an arbitrarily large population but must use an exact integer result carrier.

@@ -30,21 +30,9 @@ selection lowering. The Truss path is TD-087.
 
 **Build.** Capture renders the declaration to Weft mutation SQL
 (`UPDATE <Record> SET <field> = :p ... WHERE ...`) with named parameters only.
-The build calls Weft's `compileMutation` with the model, the action's CONTRACT-902
-plan-model preparation and witness values of the right carriers, then lowers the
-selection through the target's raw-table selection backend with the plan's
-`maxItems`. It records `{sqlTemplate, parameters, maxItems, lowering summary,
-structuralDigest}` per target, where the digest is computed over Weft's plan and
-lowering with parameter values removed. A blocked response fails the build with
-`WEFT_BLOCKED`. The named action's CONTRACT-073 refusals (US-085) are applied to
-the command on the same target.
+The build requests the distinct Weft-owned `umf.actions.native-bulk/0.1` program described by CONTRACT-071/073. It records the complete atomic program, preflights, role/precondition checks, source/action pins, count/limit proof, parameters, obligations and owner/version structural digest. It must not reuse CONTRACT-902 frozen/batch preparation as a raw atomic carrier. Missing owner output fails with `WEFT_BLOCKED`.
 
-**Instantiate.** The generated function validates arguments with CONTRACT-068
-codecs and calls `target.plan(entry, params)`. The target calls the pinned Weft
-compiler with the recorded template and the validated values, lowers the
-selection again, recomputes the structural digest and compares it with the
-catalog. A difference raises `PLAN_DRIFT` before any connection use. This is the
-only runtime use of Weft; a Weft plan-template capability (W-3, Weft WR-I5) would replace it.
+**Instantiate.** Validate parameters, call the same pinned Weft owner interface and compare its complete structural digest before connection use. Only declared parameter holes may differ. UMF never recomputes a local stripped-SQL digest. Templates may remove runtime compilation after WR-I5 qualifies.
 
 **Preview.** On `postgresql`/`lakebase`, `preview()` opens a `READ ONLY`
 `SERIALIZABLE` transaction, runs the preflight and the selection with a
@@ -131,7 +119,7 @@ values.
 | AC | Test | Assertion | Owner |
 | --- | --- | --- | --- |
 | US-086-AC1 | `bulk_command_compiles_typed` | Checker diagnostics for bad fields and values; catalog entry members; `WEFT_BLOCKED` with Weft diagnostics | UMF static and build tests |
-| US-086-AC2 | `bulk_preview_is_read_only` | Identities equal an independent query; table versions and txid unchanged | UMF conformance + native lane |
+| US-086-AC2 | `bulk_preview_is_read_only` | Identities equal an independent query; business state, journal/audit mutation records and table data versions unchanged; transaction-ID allocation alone is not a mutation witness | UMF conformance + native lane |
 | US-086-AC3 | `bulk_execute_all_or_nothing` | All selected rows changed or none; conflict and commit-loss outcomes as TD-085 | UMF conformance + native lane |
 | US-086-AC4 | `bulk_over_limit_refuses` | `BULK_LIMIT` at `maxItems + 1`; success at exactly `maxItems`; no row changed on refusal | UMF conformance + native lane |
 | US-086-AC5 | `bulk_plan_drift_refuses` | `PLAN_DRIFT`; recording connection sees zero statements | UMF conformance |

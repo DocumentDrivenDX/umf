@@ -83,3 +83,5 @@ implementing the DSL; they must fail first for missing modules and then for the
 right reasons. Each AC needs a real assertion with its `@covers` tag. Done only
 when both checkers produce exactly the expected diagnostics and all runtime and
 capture tests pass, with evidence recorded.
+
+US-082-AC6 also asserts three runtime bindings (MISSING/null/non-null): only omission removes the filter; equality to null yields UNKNOWN, while explicit is_null() selects nulls. Count only presence variants. Retain exact trusted module source and build-tool pins; no sandbox claim.

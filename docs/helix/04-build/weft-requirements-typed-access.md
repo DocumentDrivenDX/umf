@@ -69,7 +69,7 @@ Truss on PostgreSQL and Ashlar on Databricks. The requirements below extend that
   - an ordered parameter list with names and carriers (WR-I4);
   - an ordered output-column list with field identity, carrier and decoder;
   - host obligations (session settings, search path, isolation);
-  - a **structural digest** of the statement with parameter values removed;
+  - a **structural digest** `{owner,version,sha256}` from a Weft-owned, versioned projection and golden corpus; read artifacts cover the full compiled statement, and command artifacts cover the complete plan/program, preparation, source/security pins, lowering, preflights, identity/Key/version descriptors, bounds and obligations. Only declared parameter holes may vary; UMF must not invent a stripping/hash algorithm;
   - an echo of the logical Weft SQL and request identity;
   - deterministic diagnostics, or a `blocked` status with reasons.
 
@@ -90,7 +90,7 @@ Truss on PostgreSQL and Ashlar on Databricks. The requirements below extend that
 - **WR-I5 Mutation plan templates.** Compile a bulk UPDATE once with typed
   parameter placeholders and later instantiate the plan from parameter values
   without recompiling. The instantiated plan must have the template's structural
-  digest. Until this exists UMF recompiles at runtime and compares digests.
+  digest. Until templates exist UMF may recompile only through the same pinned owner interface and compare its complete structural digest. Without that interface the catalog path is WEFT_BLOCKED. Existing browser free-SQL compilation does not depend on SDK templates. Raw commands require a distinct native-bulk/0.1 program, never a cast of a frozen/batch CONTRACT-902 plan.
 - **WR-I6 Security input for raw tables.** Compile request 0.5 requires `security`.
   Provide an explicit profile for raw-table targets meaning "native privileges
   only; no Weft row policy". It is recorded in the compile output and is not a
@@ -125,15 +125,14 @@ Truss on PostgreSQL and Ashlar on Databricks. The requirements below extend that
   - Missing sorts with null.
   - String order follows S4.
 - **S6 Determinism.** Every ordered read ends with the Record's complete unique
-  Key, ascending, appended after the requested sort keys unless it is already a
-  prefix. Ties therefore have one order.
+  Key, ascending, appended after the requested sort keys unless that complete unique Key already terminates the effective ordering. Ties therefore have one order.
 - **S7 Keyset continuation.**
   - A page's continuation is the tuple of the last row's values for every sort key,
     including the appended Key.
   - The next page holds the rows strictly after that tuple in the full ordering,
     with per-column direction and null placement. This is lexicographic order,
     not a single tuple `>`.
-  - Continuations are API arguments or typed parameters, never text.
+  - Continuations are API arguments or typed parameters, never text. CONTRACT-072 additionally binds them to target, catalog, entry/variant, ordering and encoded non-cursor arguments; authorized hidden sort values must be transported when omitted from the public projection.
 - **S8 Membership.**
   - `x IN (list)` is TRUE if any element equals `x`, UNKNOWN if `x` is null or
     missing, FALSE otherwise; an empty list gives FALSE.
@@ -314,3 +313,7 @@ creation; the Python DSL and its type checking (UMF); action declaration meaning
    compile request 0.5 or a new request version?
 4. For WR-B4, should action lowering be a new Weft entry point or an extension of
    the mutation compiler?
+
+### Catalog program boundary
+
+WR-I3/I5 must expose separately versioned read, Truss command, native atomic command and search execution-program artifacts (CONTRACT-071). Search programs enumerate legs, embedding operations, fusion, bounded hydration entries and all per-leg obligations; runtime invention of SQL is prohibited. None remains SQL NULL under S2, including in an if_present present variant; only MISSING omits a filter.
