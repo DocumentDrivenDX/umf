@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/bin/bun",
+    "test",
+    "tests/security"
+  ],
+  "exitCode": 0,
+  "sourceDigestsBeforeAfter": {
+    "src/extensions/security/read-projection-candidate.ts": "8481b4e2e7a3fbfce9d76e5ba57350739f0afd0fd3a0df6b7ec60acd4d912cd0",
+    "tests/security/read-projection-corpus.ts": "820b215a9eabd62048261e26f213f7b26744e11010980865268e4c5700dd06b9",
+    "tests/security/read-projection-candidate.test.ts": "a74f26b22b6b18700356d7744f4c686a6167f0f42937fdbbc25c29e336930cc5"
+  },
+  "logSha256": "16346ebc48af4a07036b39334e2669f252f294b2bcaa86abe97d49b6adcaf377"
+}

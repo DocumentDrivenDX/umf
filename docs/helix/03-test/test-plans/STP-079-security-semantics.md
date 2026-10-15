@@ -734,3 +734,16 @@ For S08/S16/S20/S22 and P03/B08 prerequisites, compose original field-free rule 
 ### Exhaustive finite route composition — 2026-10-15
 
 Exhaust the finite eight-guard read/route composition with known absence, duplicate/conflicting transforms, withheld/original/missing dispositions and independent forbid/require. Compare original rule truths and selected branches in forward/reverse orders in Bun and real Chromium; retain semantic mutation controls. This adds logical coverage, not native acceptance. See [retained evidence](../../04-build/evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Operator-free read projection metadata — 2026-10-15
+
+US-079-AC3/AC7/AC10 gain component checks in
+`tests/security/read-projection-corpus.ts` and its Bun wrapper. Exercise qualified
+flat/graph Fields, protected missing versus withheld, stored live token identity,
+legacy scalar NULL transform, duplicate permit occurrences, no permit, complete
+owner/source refusal, closed/scoped selections and opaque handles, immutable
+snapshots, actual rendered output-domain correspondence and prohibited query use
+independent of read metadata. Check whole serialized-result limits at -1/exact/+1
+including framing, plus large invalid selection refusal without echo. Run the
+same portable corpus in Chromium. No native case or source permission is inferred;
+r3 transport is unchanged and no backend adoption is implied by helper tests.

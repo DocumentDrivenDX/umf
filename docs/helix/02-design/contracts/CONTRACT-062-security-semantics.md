@@ -1627,3 +1627,23 @@ constant mask may produce its valid typed DTO without inventing a live input
 where the renderer is qualified to do so. Whole-query value admission must not
 confuse read-value availability with original-input presence. Existing permission
 helpers and current selected-optional compiler refusals keep their scoped meaning.
+
+### Operator-free conditional read-projection metadata — 2026-10-15
+
+A source-only projection inspector MUST accept the original issued policy
+program, validated owner and qualified Type/Field selection without inventing
+scan identifiers, query operators, paths or original-use actions. It MUST retain
+all applicable read conditions and every permit-source occurrence, including
+explicit disposition and original/default/missing/withheld distinctions. Output
+Field metadata retains original identity, revision and complete definition.
+Stored transformed values refer to their current live Field, never an implicit
+pre-storage clear value. Query-use prohibition does not prohibit read metadata.
+
+These alternatives do not select an active rule, prove scalar availability,
+compute a uniform output domain or grant permission. Empty-output typing requires
+a nonempty set of compatible output projections plus original descriptor
+correspondence; actual policy/disclosure folding, eligibility, native authority
+and guarded release remain independent. Unknown/conflicting/withheld/missing
+output cases cannot become guessed scalar domains. Metadata refusal is atomic.
+The initial private helper bounds serialized output including framing to4,000,000
+UTF-16 code units; that is not a UTF-8 frame limit or aggregate heap/work theorem.

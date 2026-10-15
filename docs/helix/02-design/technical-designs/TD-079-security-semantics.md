@@ -941,3 +941,26 @@ Route activation must reconstruct its plan from the original program and supplie
 The bounded private mixed operation list also accepts `read-rules` with exactly one Record type. Evaluate the complete typed population through the original compiled field-free read conditions, retaining private row selectors/rule truth/actual eligibility decisions. The leaf uses the same detached owner/cut and cumulative operation/text/literal ledger as every neighboring read-render/action leaf. Count inventory once plus every typed population visit and explicit action target. No caller truth, guard, mode, branch or read action override is accepted. Any late structural/preflight/retention/budget failure erases every operation result.
 
 This supplies actual eligibility evidence for native-host route activation without demanding public disclosure of hidden original operands. A missing protected public projection can therefore refuse rendering while field-free eligibility and a separately supplied action check complete. Completion still preserves denied/unknown/conflicting action/read outcomes; it never issues action designations, scalar values, occurrence completeness or query/native permission. Exact issued original query/use/action correspondence and authenticated held native release remain consumer obligations. Rule evidence includes denied selectors and is strictly private host diagnostic material.
+
+### Private operator-free read projection inspection — 2026-10-15
+
+`inspectCandidateReadProjection(handle, owner, {type, field})` in
+`src/extensions/security/read-projection-candidate.ts` enumerates conditional
+read-disclosure source alternatives through the original issued program. It
+validates complete owner storage, exact read purpose and catalog parameters,
+retains relevant require/forbid/permit conditions and per-permit source positions,
+and returns complete pinned Field definitions for original/transformed domains.
+No query-use function is called or fabricated. Alternatives intentionally retain
+individual source occurrences; consumers must use the original runtime fold,
+including typed equivalence of legacy transform literals, rather than infer
+conflict or activation from lexical differences in those occurrences.
+
+Result flags remain `complete:false, authority:false`; source inspection does
+not authenticate the owner or facts. The helper supports Field metadata across
+flat and graph ontologies without qualifying any physical scalar/collection
+codec. Native hosts must require nonempty unanimous supported projection
+identities/exposures and still enforce complete policy/disclosure admission.
+Domains include source descriptors and cannot be treated as selected output by
+array position. Work/output limits refuse without partial alternatives or echo
+of an unvalidated selection. Existing r3 child protocol and all registered
+native cohorts remain unchanged; a future bridge needs explicit version/pins.

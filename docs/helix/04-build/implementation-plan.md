@@ -12373,3 +12373,15 @@ digests/sizes match local public wheel and checksums. This is artifact/consumer
 correspondence only: no database rerun, Linux/aggregate/native authority or
 release-readiness promotion. Earlier CI native receipt remains immutable.
 Acceptance45/158,113 unimplemented unchanged. See [exact evidence](evidence/security/published-weft-cohort-20261015/README.md).
+
+### Operator-free read projection source inspection — 2026-10-15
+
+Private inspectCandidateReadProjection(handle,owner,{type,field}) now retains
+conditional original disclosure alternatives and pinned Field metadata for flat
+and graph types. It invents no query operator/action and grants no authority.
+25focusedBun/Chromiumchecks and312securitytests/4776assertions pass; typecheck
+passes. Framing/invalid-selection bound defect found by Astra is corrected.
+Original source-fold/descriptor/native admission remain required; empty metadata
+is not a permission or a guessed scalar domain. No r3 child protocol/bundle or
+backend cohort changes here. No case promoted:45/158 accepted,113 unimplemented.
+See [source, final portable evidence and review](evidence/security/read-projection-20261015/README.md).
