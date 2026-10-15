@@ -12071,3 +12071,29 @@ No UMF public API/core/schema or original acceptance binding changes. The latest
 whole gate remains45accepted/113unbound across158 required cases/34criteria.
 Current read-mode lowering, mixed-mode physical integration, native authority
 and P03/B08 remain open; the full goal stays active.
+
+
+### Selected query availability repair — 2026-10-15
+
+Independent actual compiler probes found source-only lineage accepting selected
+absent-allowed Fields while reporting ideal nullable:false without an availability
+domain. Weft main84bc26c1f38f989e492abd5fbed07122eb1668bb now checks actual
+selected descriptors before both report issuers, including plain outputs and
+hidden operands. Selected optional values refuse; unrelated optional Fields do
+not break required projections or field-free COUNT. Historical failing6/8/12
+request receipts and the actual repaired12/12 replay are retained under
+`evidence/security/current-query-availability-20261015/`.
+
+All75 existing current source-owner checks pass with the repaired binary; all five
+required-field reports remain byte-identical. Eight unique committed Weft source/
+witness paths, both final binaries and the owner's10 current/legacy controls are
+independently verified. The existing conditional fact-fold model replays2UNSAT/
+2SAT with explicit source-classification premises, without compiler refinement.
+The original158-case acceptance plan is unchanged:45accepted/113unbound remain
+per the latest full gate. Backend read-mode lowering, actual binding/seed and
+complete current native authority remain required; the full goal stays active.
+
+Astra Ultra final availability review has no scoped blocker:12 regressions,20
+additional controls,10 current/legacy controls, five byte comparisons and11
+committed blob checks pass. Original failing witnesses and the exact review
+archive remain retained; no native or optional-source admission is claimed.

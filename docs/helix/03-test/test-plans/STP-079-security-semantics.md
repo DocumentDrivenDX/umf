@@ -590,3 +590,53 @@ Five focused/current resolver tests pass107 expectations. Current native fact
 custody, actual query read-mode lowering, key scope, mixed-mode physical execution
 and P03/B08 acceptance remain unfinished. Existing conditional formal models are
 not extended or promoted to compiler/native refinement by these tests.
+
+
+### Selected availability must remain explicit in query lineage — 2026-10-15
+
+An independent source-only probe of committed Weft main05b68633 and producer
+8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1
+changes the actual selected token Field to absent-allowed under a new exact
+core revision/digest. Projection, predicate, hidden ordering and self-join
+currently succeed while the property use reports ideal nullable:false without
+separate availability. Retaining original core bytes is necessary but does not
+justify interpreting that ideal type as an actual required/nonnullable value.
+
+UMF allows explicit null only for absent-allowed Fields and distinguishes null
+from absence. No alternate nullable facet is invented. Until Weft explicitly
+represents and qualifies both meanings, selected absent-allowed values must
+refuse on this lineage subset. The required-nonnull original predicate remains
+supported; field-free COUNT preserves its scan without inventing a dependency
+on an unrelated optional Field. The independent six-request regression is
+`tools/security/current-query-absence.py`; the original producer passes2 and
+fails4 intended controls. Exact requests/results are retained under
+`evidence/security/current-query-availability-20261015/`.
+
+The Weft owner is repairing this source boundary, preserving all required-field
+reports. This finding is source-reporting evidence, not native execution or a
+backend leak. Existing current named required-field qualification remains scoped
+to its exact domains; no P03/B08 or native acceptance follows.
+
+
+#### Repaired selected availability boundary
+
+The fixed Weft producer6069d58a2009ca2d5f5d65557e5a7d71900c1343ad3ef792f4e3f375e6a3fc65
+resolves each actual selected Field through its original scan owner and catalog
+member descriptor before issuing either lineage0.1 or legacy property reports.
+Selected availability must be explicitly required; projected values and hidden
+predicate/order/group/join/aggregate dependencies are checked. Unselected optional
+fields do not force a fake dependency into field-free COUNT. This is an explicit
+subset refusal until both actual null and absence semantics can be represented.
+
+The independent regression expanded chronologically from6 to8 to12 requests,
+preserving every earlier expectation and witness. The original producer passes2
+and fails10 final cases; the repaired producer passes12, including right-hand
+operands and later output/order positions. Refusals require the intended
+WFT-APPLICATION-LINEAGE-AVAILABILITY diagnostic and zero partial stdout. All75
+current required-field correspondence controls still pass, and all five original
+reports are byte-identical. Native query admission and P03/B08 remain unqualified.
+
+The existing abstract fact-consistency proof replays2UNSAT/2SAT and keeps absence
+and null distinct. Its premise of exact source-kind classification is precisely
+what the observed old source-report boundary failed to establish; that proof is
+not promoted to Rust/compiler or native refinement by these regression results.
