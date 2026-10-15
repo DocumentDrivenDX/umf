@@ -12200,3 +12200,8 @@ private producer invocation/registration custody from current authenticated
 same-store execution. Native ABI/mode/property/relationship admission and release
 authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
 promoted and the overall goal remains active.
+
+
+### Query value origin/source spike — 2026-10-15
+
+Executed the CONTRACT-062 / TD-079 / STP-079 per-occurrence source/domain constraints with 31 fresh-context formal queries (17 UNSAT / 14 SAT), 73 matching Bun/Chromium controls, 445 original-source issuer checks across 27 reports, and 109 explicit-new-source issuer checks across seven reports. Fourteen isolated PostgreSQL 18.6 primitives establish only the observed type/class/count/order behavior. The new canonical source fixture supplies explicit ontology/catalog modes and separate original-purpose actions while preserving live Field descriptors. A Weft-issued designation/lowering profile and Truss protected read consumer remain unfinished. Independent review corrected source-hash custody and cleanup-reporting defects; failed/calibration/preimage evidence is retained. Both TypeScript configurations pass. Evidence and precise proof limits: [query-value source packet](evidence/security/query-value-sources-20261015/README.md). The original full gate remains 45/158 accepted, 113 unimplemented, 34 criteria; a fresh full-gate execution and current selected source fingerprints were verified. No case is promoted.

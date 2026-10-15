@@ -683,3 +683,26 @@ order/occurrence retention and monotone cumulative budget refusal, including a
 SAT countermodel for independent-reset budgets. This is not a compiler or native
 refinement proof. Keep all158 original required cases/34criteria; no case is
 promoted by these component controls. Original P03/B08/native gates remain.
+
+
+### Query value-origin and operation-metadata controls — 2026-10-15
+
+Support original S08/S16/S20/S22 and pg-raw.P03/B08 obligations without promoting
+them: distinguish original live Fields, read DTOs and stored pre-input DTOs;
+check separate-action/no-reverse paths; reject incompatible operand domains and
+unknown/conflicting mode sources; retain null/absence/withheld distinctions.
+Formal positives include separately authorized original use under presentation
+withholding, original stored-token use remaining token typed, compatible disclosed
+use and exact direction retention. Weakened controls must expose raw fallback,
+plaintext substitution, row-emptiness bypass, mismatched key scope, deterministic
+many-to-one grouping and swapped direction positions.
+
+The actual source verifier must compare the whole independent direction vector,
+including default ASC, explicit DESC and two mixed-position queries with the
+same original plan bytes. Preserve all previous report bytes. A finite isolated
+PG18 primitive probe supplies actual type/operator/count/order observations; no
+actor/policy/registration/current-authority claim follows. Formal proofs must
+state supplied source/mode/type/scope correctness as premises, without compiler,
+TypeScript or SQL refinement. Retain exact solver/native sources and failures.
+The original158case definitions/34criteria remain unchanged and the full goal
+continues to require all missing backend implementations.

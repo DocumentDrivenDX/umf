@@ -1,0 +1,262 @@
+{
+  "status": "conditional-query-value-origin-model-passed",
+  "solverVersion": "4.15.4",
+  "checks": [
+    {
+      "id": "stored-original-never-prestorage",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "25594837d771b0d57251322826cc7e67b948bfdd67a68dec43d37ebb3b0276c0",
+      "model": null
+    },
+    {
+      "id": "disclosed-dto-cannot-use-original-domain",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "21cde5779757b985c175aa8047eaa960110f463ed4f37ac5a847e094e47ea940",
+      "model": null
+    },
+    {
+      "id": "nullable-read-output-not-overwritten-by-required-live",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "d59efff5fd7c2040bc81ffac1fd9ed03895950d85881942b04e152fe635ace7d",
+      "model": null
+    },
+    {
+      "id": "withheld-disclosed-value-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "24972d35700b65b42bb988b355d2f17e4e2c14414f7df8704fa06183ab6db653",
+      "model": null
+    },
+    {
+      "id": "explicit-absence-is-not-a-scalar-value",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "6b0747584656c7d2e18697e513d29c271c590cca29b32e2377842fe7e577ca38",
+      "model": null
+    },
+    {
+      "id": "missing-original-designation-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "56b3184d5285e4c2e9220793d90753d446d9810be061a37141844eba062c34c5",
+      "model": null
+    },
+    {
+      "id": "matching-properties-do-not-issue-authority",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "213246a70aa4134108425371d379f3de668f3cc9fd02ef53b24114f48122bad7",
+      "model": null
+    },
+    {
+      "id": "original-action-does-not-bypass-read-row-restriction",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "e6dc8e6a28dd71e14f6e1cfd46191a363725cf2b3cf8fa0292ef7c5dbd6fb290",
+      "model": null
+    },
+    {
+      "id": "conflicting-source-modes-have-no-route",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b9d1927756cce5e28bddbde3e88a57f043ab5ea435dd7bc67f39eb2cc422cdd2",
+      "model": null
+    },
+    {
+      "id": "prohibition-refuses-even-empty-query",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "bfa39c669ae574f77170f8b524179459b19e56215a7a8fee60ea4f5f1c5a0bb6",
+      "model": null
+    },
+    {
+      "id": "selected-compiler-gap-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "f5e1e401b870ac1b4acf6a9c95933255bdac75d93681b1b28e1e69b6060fa656",
+      "model": null
+    },
+    {
+      "id": "paired-properties-do-not-replace-common-scope",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "60374817ec0ff84d11b80a7c496c8a35e2bd43c31915ddd3e0d7ebadd78bfe66",
+      "model": null
+    },
+    {
+      "id": "random-token-disclosed-pair-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "6779f7a187ec5931fb23895cd15495934dd929861d90b7204d44160814e836cc",
+      "model": null
+    },
+    {
+      "id": "separate-original-under-presentation-withholding-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "0735311872cd475049ff4ec11f1c1376eecc35297858b5133495595f799d9418",
+      "model": "[same_native_scope = True,\n pre_storage_domain = 0,\n read_dto_domain = 0,\n live_domain = 0,\n source_rows = 0,\n paired_operation = True,\n current_action_permission = True,\n stored = True,\n read_disposition = 2,\n verified_sources = True,\n effective_mode = 2,\n read_value_available = False,\n distinct_action = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n original_action_purpose = True,\n retained_properties = False,\n live_present = True,\n catalog_mode = 2,\n reverse_grant = False,\n operand_domain = 0,\n read_row_eligible = True,\n ontology_mode = 2,\n exact_designation = True,\n complete_compiler = True]"
+    },
+    {
+      "id": "typed-disclosed-dto-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "990b3953e6ba6f7edd25404c7f998322e81e17b53d16b07324bff011e339fe69",
+      "model": "[paired_operation = False,\n random_token = True,\n live_domain = 0,\n read_dto_domain = 1,\n same_native_scope = False,\n source_rows = 0,\n pre_storage_domain = 0,\n no_selected_gaps = True,\n dto_nullable = False,\n operand_nullable = False,\n retained_properties = True,\n read_disposition = 1,\n effective_mode = 1,\n catalog_mode = 1,\n read_row_eligible = True,\n verified_sources = True,\n operand_domain = 1,\n read_value_available = True,\n ontology_mode = 1,\n complete_compiler = True]"
+    },
+    {
+      "id": "equal-bytes-do-not-merge-authority-routes",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "27205ceb949b9e207eb08a83098adede17408ed16791ebdd4d5f51ee76576a21",
+      "model": "[catalog_mode = 0,\n source_rows = 0,\n live_domain = 0,\n read_dto_domain = 0,\n pre_storage_domain = 0,\n ontology_mode = 0,\n stored = True,\n operand_domain = 0,\n read_disposition = 0,\n effective_mode = 2,\n live_present = False,\n read_value_available = False,\n retained_properties = True,\n exact_designation = False]"
+    },
+    {
+      "id": "weak-domain-check-misbinds-original-to-dto",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a7de39b7fd36dd297bf81db2170beba3677bc2dce6725be24d97d6d65c9e866f",
+      "model": "[pre_storage_domain = 0,\n paired_operation = False,\n random_token = True,\n live_domain = 0,\n read_dto_domain = 1,\n same_native_scope = False,\n source_rows = 0,\n no_selected_gaps = True,\n retained_properties = True,\n operand_domain = 0,\n read_disposition = 1,\n catalog_mode = 1,\n effective_mode = 1,\n verified_sources = True,\n read_row_eligible = True,\n read_value_available = True,\n ontology_mode = 1,\n complete_compiler = True]"
+    },
+    {
+      "id": "weak-action-check-accepts-unrelated-action",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "984a7fb1c7f1de78798bdcdd7d8fd5e1081b43e937d1cb92db1d188081e86a2f",
+      "model": "[stored = False,\n read_disposition = 2,\n same_native_scope = True,\n read_value_available = False,\n catalog_mode = 2,\n pre_storage_domain = 0,\n read_dto_domain = 0,\n live_domain = 0,\n source_rows = 0,\n paired_operation = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n live_present = True,\n current_action_permission = True,\n effective_mode = 2,\n verified_sources = True,\n operand_domain = 0,\n read_row_eligible = True,\n ontology_mode = 2,\n exact_designation = False,\n complete_compiler = True]"
+    },
+    {
+      "id": "weak-empty-branch-skips-prohibition",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "64626934219628269afd27c7a7f93067fb6fb59a8fe32fc6777524ae141181eb",
+      "model": "[pre_storage_domain = 0,\n read_value_available = True,\n effective_mode = 0,\n read_disposition = 1,\n read_dto_domain = 0,\n catalog_mode = 0,\n operand_domain = 0,\n live_domain = 0,\n ontology_mode = 0,\n source_rows = 0]"
+    },
+    {
+      "id": "known-absence-cannot-be-original-operand",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "f0fa1b995a077b099c29a81b038bcbbbdc669e67f123b900db0e2dc21d4f73f6",
+      "model": null
+    },
+    {
+      "id": "valid-rendered-dto-need-not-invent-live-input",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "7ebed40f23b080beb338f11b5cc1034fa4d9537a50962df96b5b590d9ae1e70e",
+      "model": "[same_native_scope = False,\n paired_operation = False,\n random_token = True,\n pre_storage_domain = 0,\n read_dto_domain = 0,\n live_domain = 0,\n source_rows = 0,\n no_selected_gaps = True,\n dto_nullable = False,\n operand_nullable = False,\n read_value_available = True,\n live_present = False,\n read_disposition = 1,\n retained_properties = True,\n catalog_mode = 1,\n effective_mode = 1,\n verified_sources = True,\n operand_domain = 0,\n read_row_eligible = True,\n ontology_mode = 1,\n complete_compiler = True]"
+    },
+    {
+      "id": "same-domain-still-distinct-live-origin",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "e559078b201054822320a3f2fcd6450716d7a1d968d024531f613537e2ce2b41",
+      "model": "[source_rows = 0,\n read_value_available = True,\n read_disposition = 0,\n same_native_scope = True,\n read_dto_domain = 0,\n pre_storage_domain = 0,\n paired_operation = True,\n current_action_permission = True,\n verified_sources = True,\n effective_mode = 2,\n stored = True,\n distinct_action = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n original_action_purpose = True,\n live_present = True,\n catalog_mode = 2,\n reverse_grant = False,\n read_row_eligible = True,\n operand_domain = 0,\n exact_designation = True,\n ontology_mode = 2,\n live_domain = 0,\n complete_compiler = True]"
+    },
+    {
+      "id": "domain-only-check-cannot-prevent-prestorage-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "1f2978ff4aa2555a0f36fc8d0fe8b6df58ef6d0e4e17816f35894bf34b3eb330",
+      "model": "[read_disposition = 0,\n source_rows = 0,\n read_value_available = True,\n same_native_scope = True,\n read_dto_domain = 0,\n pre_storage_domain = 0,\n paired_operation = True,\n current_action_permission = True,\n verified_sources = True,\n effective_mode = 2,\n stored = True,\n distinct_action = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n original_action_purpose = True,\n live_present = True,\n catalog_mode = 2,\n read_row_eligible = True,\n operand_domain = 0,\n exact_designation = True,\n ontology_mode = 2,\n live_domain = 0,\n complete_compiler = True]"
+    },
+    {
+      "id": "hidden-original-cannot-unmask-public-projection",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "887c722b5aa0a583995064b0bd030ac46951e2b8b328e92b3622ee744cae9c5b",
+      "model": null
+    },
+    {
+      "id": "hidden-original-cannot-retype-dto-projection",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "cd3836c89ea91cf6f9183c0e2832579547e2f686a49a2647cb55fb61ab7f4efa",
+      "model": null
+    },
+    {
+      "id": "per-use-dual-domains-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "3f191b6b4a942d84e0dd72b979f3e9c068a7f96bd07095cb9487753816b61eee",
+      "model": "[source_rows = 0,\n pre_storage_domain = 0,\n live_domain = 0,\n same_native_scope = True,\n read_dto_domain = 1,\n paired_operation = True,\n current_action_permission = True,\n read_disposition = 1,\n verified_sources = True,\n effective_mode = 2,\n read_value_available = True,\n distinct_action = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n original_action_purpose = True,\n live_present = True,\n catalog_mode = 2,\n public_projection_domain = 1,\n operand_domain = 0,\n read_row_eligible = True,\n ontology_mode = 2,\n exact_designation = True,\n complete_compiler = True]"
+    },
+    {
+      "id": "weak-global-field-map-unmasks-output",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "33e0ae975c426676ecd84f3d70870412dd1af1de6b246ad855ada60498c37522",
+      "model": "[stored = True,\n catalog_mode = 2,\n source_rows = 0,\n same_native_scope = True,\n pre_storage_domain = 0,\n read_dto_domain = 0,\n live_domain = 0,\n paired_operation = True,\n public_projection_origin = 0,\n current_action_permission = True,\n read_disposition = 2,\n verified_sources = True,\n effective_mode = 2,\n read_value_available = False,\n distinct_action = True,\n no_selected_gaps = True,\n live_nullable = False,\n operand_nullable = False,\n original_action_purpose = True,\n live_present = True,\n operand_domain = 0,\n read_row_eligible = True,\n ontology_mode = 2,\n exact_designation = True,\n complete_compiler = True]"
+    },
+    {
+      "id": "deterministic-transform-need-not-be-injective",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "1c79fe92f5b09f6c13f6d6c9ed0d0548b9da4332b7b8ae0c879e234571997680",
+      "model": "[pre_storage_domain = 0,\n ontology_mode = 0,\n input_y = 5,\n source_rows = 0,\n catalog_mode = 0,\n live_present = False,\n operand_domain = 0,\n live_domain = 0,\n input_x = 4,\n stored = False,\n read_value_available = True,\n effective_mode = 0,\n read_disposition = 1,\n read_dto_domain = 0,\n deterministic_transform = [else -> 6]]"
+    },
+    {
+      "id": "per-scope-functions-need-not-share-equality",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "07f449b7df1353c48e317abf22e0e98a0933327fa4d2b8343f2dccc6573bf603",
+      "model": "[ontology_mode = 0,\n input_y = 4,\n read_dto_domain = 0,\n source_rows = 0,\n stored = False,\n catalog_mode = 0,\n live_present = False,\n read_value_available = True,\n effective_mode = 0,\n operand_domain = 0,\n read_disposition = 1,\n pre_storage_domain = 0,\n live_domain = 0,\n input_x = 4,\n deterministic_transform = [else -> 5],\n other_key_scope = [else -> 6]]"
+    },
+    {
+      "id": "exact-directions-forbid-position-loss",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "acd1470487bc4785a53db8497c08c20d1066c4e51596538066a518e6b57ce213",
+      "model": null
+    },
+    {
+      "id": "global-order-capabilities-hide-position-swap",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "69c7c2a06ff9f2c797b2f51822563fa02b52e1a93fd50db0c60a7e8573e55fe2",
+      "model": "[read_dto_domain = 0,\n effective_mode = 0,\n pre_storage_domain = 0,\n read_value_available = False,\n live_present = False,\n source_rows = 0,\n operand_domain = 0,\n catalog_mode = 0,\n emitted_directions = Store(K(Int, False), 0, True),\n ontology_mode = 0,\n live_domain = 0,\n stored = False,\n read_disposition = 0,\n original_directions = Store(K(Int, True), 0, False)]"
+    }
+  ],
+  "selectedSourceDigests": {
+    "tools/security/prove-query-value-sources.py": "8d934058b75685d2e07142c445464406ce5d2badf3c781b05e7a1bcf86e80437",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "6cb4c2d9a728eb076f655d1eea7969fe9b93647a3bdb80632e5f266ee8dc2386",
+    "docs/helix/02-design/technical-designs/TD-079-security-semantics.md": "1c5aeeda3dbbd8d50c0319f8e14b43803a6a1edbcb920e47c378b4f885ea867a",
+    "docs/helix/03-test/test-plans/STP-079-security-semantics.md": "637f304aae076e8c1b5c68c68a2fa4fe4d27e7bc823b56972bd6bf2c822a741b"
+  },
+  "acceptanceCasesPromoted": [],
+  "scope": "Candidate mode conjunction/source/domain model, with source authenticity/completeness, faithful selected dispositions, mode ownership, actual descriptors and native scope correctness as external premises. Per-value read eligibility is distinct from collection filtering. Transformed here means a catalog-backed successful read value; source-only legacy constant probes are separate observations. This candidate scalar profile refuses explicit absence until qualified presence/operator encoding; legacy permission to observe known absence is a different claim. Shows constraints and weakening countermodels; no actual compiler, TypeScript, SQL, custody, current-authority or whole-query refinement/admission proof."
+}

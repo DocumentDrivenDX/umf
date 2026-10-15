@@ -869,3 +869,43 @@ identity and original live same-store transaction context, never claimed source
 flags/actions. These are design constraints; native ABI approval and execution
 evidence remain open. Exact selected Weft source/schema/fixture closure is already
 retained in the prior current-logical-scan final-weft-provenance packet.
+
+
+### Query value-source algebra and lowering prerequisites — 2026-10-15
+
+Separate three coordinates: original Field/core type; selected value source and
+descriptor; authorization route. Disclosed ORIGINAL selects the live Field,
+disclosed TRANSFORMED selects its actual output descriptor, and disclosed
+WITHHELD has no scalar value. Explicit absence is not a scalar NULL. An exact
+original-authorized route can select a present live value despite presentation
+withholding, but always needs its separate source-bound action. Stored originals
+remain token/ciphertext Fields; storage input DTOs are not live canonical data.
+
+Candidate initial-cohort composition: each applicable mode is a constraint on
+the route. Disclosed requires the disclosed route; original-authorized requires
+the original route; prohibited permits none. Their intersection must be nonempty.
+Do not silently pick a source winner or infer a privilege ordering from equal
+values. This conservative conjunction is a proposed Weft-cohort rule for peer
+review; no existing conditional helper is reclassified as whole-query admission.
+Multiple-stage function facts, current native scope and descriptor compatibility
+remain explicit prerequisites, not caller boolean credentials.
+
+Use a formal finite mode/source selection model and unbounded deterministic
+function counterexamples. Prove conditional source/domain fidelity, prohibition
+independent of row count, exact separate-action gating, no original-to-reverse
+promotion, pair-scope requirements and full direction-vector retention. Retain
+positive witnesses plus weakened-domain/action/mode/pair/direction controls.
+A primitive PG18 VALUES probe observes changed DTO types/nullability, incompatible
+operator refusal before LIMIT0, generalized value classes, key-scope differences,
+and ASC/DESC position effects. It uses an isolated owner context and proves no
+public actor, row-level policy, native registration or protected execution.
+
+Actual Weft source reports now distinguish hidden ASC/DESC and mixed direction
+positions. The older ApplicationPlan expression list omits those positions;
+report.orderDirections and the new retained typed context carry them. Two mixed
+direction queries can have identical whole ApplicationPlan bytes/global
+capabilities but opposite direction vectors. Keep this actual witness alongside
+the formal model; do not infer a producer loss, since the original report retains
+the information. Weft reports there is still no committed native0.2 SQL lowerer
+or canonical policy/catalog0.2 originalAction designation; those are next cohort
+implementation requirements, distinct from legacy relationship profile0.2.

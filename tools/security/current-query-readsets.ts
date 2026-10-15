@@ -11,13 +11,16 @@ const observations:any[]=[],check=(id:string,ok:boolean)=>{if(!ok)throw Error(id
 const canonical=(x:any):string=>x&&typeof x==='object'?Array.isArray(x)?'['+x.map(canonical).join(',')+']':'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}':JSON.stringify(x);
 const same=(a:any,b:any)=>canonical(a)===canonical(b),ref=(elementId:string)=>({documentId:'domain',moduleId:'m',elementId}),identity=(element:string)=>({documentId:'domain',module:'m',element,revision:source.closure.pins[0]!.revision});
 const logicalType=(field:string)=>{const definition:any=source.closure.documents[0]!.document.modules[0]!.elements.find(x=>x.id===field);if(!definition||definition.kind!=='field'||definition.nullability!=='required'||definition.cardinality!=='one')throw Error('Original required scalar source changed');return {family:definition.scalarType,facets:definition.facets??{},nullable:false};};
-const queryCases:[string,string,string[],string[][]][]=[
- ['projection-read','SELECT r.token FROM Resource r',['s0'],[['s0','outputs/0/expression','token','projection']]],
- ['hidden-read-false-zero',"SELECT r.resourceId FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.token LIMIT 0",['s0'],[['s0','outputs/0/expression','resourceId','projection'],['s0','filters/1/left','token','predicate'],['s0','order/0','token','order']]],
- ['distinct-selfjoin-false-zero',"SELECT COUNT(DISTINCT s.token) FROM Resource r JOIN Resource s ON r.token=s.token WHERE FALSE AND r.token='opaque-token' LIMIT 0",['s0','s1'],[['s0','joins/0/on/0/left','token','join'],['s1','joins/0/on/0/right','token','join'],['s0','filters/1/left','token','predicate'],['s1','outputs/0/argument','token','aggregate']]],
- ['field-free-false-zero','SELECT COUNT(*) FROM Resource r WHERE TRUE AND FALSE LIMIT 0',['s0'],[]],
- ['distinct-required','SELECT COUNT(DISTINCT r.token) AS unique_tokens FROM Resource r',['s0'],[['s0','outputs/0/argument','token','aggregate']]],
- ['sum-unsupported','SELECT SUM(r.salary) FROM Resource r LIMIT 0',['s0'],[['s0','outputs/0/argument','salary','aggregate']]],
+const queryCases:[string,string,string[],string[][],string[]][]=[
+ ['projection-read','SELECT r.token FROM Resource r',['s0'],[['s0','outputs/0/expression','token','projection']],[]],
+ ['hidden-read-false-zero',"SELECT r.resourceId FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.token LIMIT 0",['s0'],[['s0','outputs/0/expression','resourceId','projection'],['s0','filters/1/left','token','predicate'],['s0','order/0','token','order']],['asc']],
+ ['hidden-read-desc-false-zero',"SELECT r.resourceId FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.token DESC LIMIT 0",['s0'],[['s0','outputs/0/expression','resourceId','projection'],['s0','filters/1/left','token','predicate'],['s0','order/0','token','order']],['desc']],
+ ['mixed-order-id-asc-token-desc-zero','SELECT r.resourceId FROM Resource r ORDER BY r.resourceId ASC , r.token DESC LIMIT 0',['s0'],[['s0','outputs/0/expression','resourceId','projection'],['s0','order/0','resourceId','order'],['s0','order/1','token','order']],['asc','desc']],
+ ['mixed-order-id-desc-token-asc-zero','SELECT r.resourceId FROM Resource r ORDER BY r.resourceId DESC, r.token ASC  LIMIT 0',['s0'],[['s0','outputs/0/expression','resourceId','projection'],['s0','order/0','resourceId','order'],['s0','order/1','token','order']],['desc','asc']],
+ ['distinct-selfjoin-false-zero',"SELECT COUNT(DISTINCT s.token) FROM Resource r JOIN Resource s ON r.token=s.token WHERE FALSE AND r.token='opaque-token' LIMIT 0",['s0','s1'],[['s0','joins/0/on/0/left','token','join'],['s1','joins/0/on/0/right','token','join'],['s0','filters/1/left','token','predicate'],['s1','outputs/0/argument','token','aggregate']],[]],
+ ['field-free-false-zero','SELECT COUNT(*) FROM Resource r WHERE TRUE AND FALSE LIMIT 0',['s0'],[],[]],
+ ['distinct-required','SELECT COUNT(DISTINCT r.token) AS unique_tokens FROM Resource r',['s0'],[['s0','outputs/0/argument','token','aggregate']],[]],
+ ['sum-unsupported','SELECT SUM(r.salary) FROM Resource r LIMIT 0',['s0'],[['s0','outputs/0/argument','salary','aggregate']],[]],
 ];
 const sourceFiles=['tools/security/current-query-readsets.ts','src/extensions/security/catalog-runtime-candidate.ts','src/extensions/security/catalog-program-candidate.ts','src/extensions/security/stored-query-candidate.ts','src/extensions/security/catalog-storage-candidate.ts','tests/security/protection/current-query-source.json','tests/security/protection/current-query-read-scenarios.json','bun.lock','package.json'];
 const pins=async()=>Object.fromEntries(await Promise.all(sourceFiles.map(async path=>[path,sha(new Uint8Array(await Bun.file(path).arrayBuffer()))]))),before=await pins();
@@ -27,11 +30,12 @@ for(const variant of ['r1-undisclosed','r2-allowed','r2-revoked']){
  if(variant==='r2-revoked'){cut.generation=cut.expectedGeneration='logical-revoked-cut-r1';cut.facts.find((r:any)=>r.type.elementId==='Assignment').fields.find((f:any)=>f.field.elementId==='active').value={boolean:false};}
  const program=compileCandidateCatalogProgram(policy,source.catalog,source.closure,source.ontology),documentJson=JSON.stringify(source.closure.documents[0]!.document);
  const opaqueSources=[['policy',policy,policy.id,policy.revision],['catalog',source.catalog,source.catalog.id,source.catalog.revision],['ontology',source.ontology,source.ontology.documentId,source.ontology.revision],['owner',owner,owner.id,owner.revision],['logical-cut',cut,'logical-cut-fixture',cut.generation]].map(([role,value,documentId,revision])=>{const utf8=JSON.stringify(value);return {role,identity:{documentId,revision},mediaType:'application/json',utf8,sha256:sha(utf8)};});
- for(const [name,sql,scanIds,expectedFields]of queryCases){
+ for(const [name,sql,scanIds,expectedFields,expectedDirections]of queryCases){
   const label=variant+':'+name,request={interfaceVersion:'weft-application-lineage/0.2-candidate',modules:[{documentJson,pin:{documentId:'domain',revision:source.closure.pins[0]!.revision,umfVersion:'0.8.0',sha256:sha(documentJson)},selectedModuleIds:['m']}],sql,parameters:{},opaqueSources},raw=JSON.stringify(request);
   const proc=Bun.spawn([binary],{stdin:'pipe',stdout:'pipe',stderr:'pipe'});proc.stdin.write(raw);proc.stdin.end();const [stdout,stderr,exit]=await Promise.all([new Response(proc.stdout).text(),new Response(proc.stderr).text(),proc.exited]);check(label+':actual-issuer',exit===0&&stderr==='');const report=JSON.parse(stdout);
   check(label+':exact-source',report.sourceRequestJson===raw&&report.sourceRequestSha256===sha(raw)&&report.sqlSha256===sha(sql));check(label+':no-native-authority',report.version==='weft.application.lineage/0.2-candidate'&&report.authority===false&&report.securityReady===false);
   check(label+':original-plan',report.applicationPlanSha256===sha(report.applicationPlanJson));
+  check(label+':original-order-directions',same(report.orderDirections,expectedDirections));
   check(label+':opaque-source-custody',same(report.unresolvedSources,opaqueSources.map(({role,identity,mediaType,sha256})=>({role,identity,mediaType,sha256,status:'uninterpreted'}))));
   check(label+':exact-model-pins',same(report.modelPins,request.modules.map(x=>x.pin)));
   const reads=report.readRequirements;
