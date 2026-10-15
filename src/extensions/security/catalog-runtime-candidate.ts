@@ -27,6 +27,32 @@ export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,
 export function evaluateCandidateCatalogScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogCollectionResult {
  try{return run(handle,owner,cut,selection,true,undefined,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
 }
+export interface CandidateCatalogScanBatchResult {status:'rendered'|'refused';complete:false;authority:false;scans:readonly {scan:string;rows:CandidateCatalogCollectionResult['rows'];valueProfiles:CandidateCatalogCollectionResult['valueProfiles']}[]}
+/** Atomic logical preparation only: supplied occurrence completeness is a host premise. */
+export function evaluateCandidateCatalogScanBatch(handle:unknown,ownerInput:unknown,cutInput:unknown,requestsInput:unknown):CandidateCatalogScanBatchResult {
+ const refused=()=>freeze({status:'refused',complete:false,authority:false,scans:[]});
+ try{
+  readCandidateCatalogProgram(handle);
+  const packet:any=copyJson({owner:ownerInput,cut:cutInput,requests:requestsInput}),{owner,cut,requests}=packet;
+  if(!Array.isArray(requests)||requests.length<1||requests.length>256)fail('Nonempty bounded scan occurrences required');
+  if(!Number.isSafeInteger(cut.maxFacts)||cut.maxFacts<1||cut.maxFacts>10000)fail('Invalid aggregate fact budget');
+  const ledger=new CandidateSecurityOperationBudget(cut.maxSteps),pending=[packet];
+  while(pending.length){ledger.step();const x=pending.pop();if(typeof x==='string')ledger.snapshotText(x.length);else if(x&&typeof x==='object')for(const [key,value] of Object.entries(x)){ledger.snapshotText(key.length);pending.push(value);}}
+  const names=new Set<string>();let visits=0;
+  list(cut.facts,cut.maxFacts);list(cut.graphs,cut.maxFacts);
+  for(const request of requests){shape(request,['scan','type','fields']);if(typeof request.scan!=='string'||request.scan.length>32||!/^[st][0-9]+$/.test(request.scan)||names.has(request.scan))fail('Unique compiler scan occurrence required');names.add(request.scan);ref(request.type);
+   for(const fact of cut.facts){ledger.step();if(id(fact.type)===id(request.type))visits++;}
+   if(cut.facts.length+cut.graphs.length+visits>cut.maxFacts)fail('Aggregate scan visits exhausted');
+  }
+  const scans=[];
+  for(const request of requests){
+   const result=run(handle,owner,cut,{type:request.type,fields:request.fields},true,ledger,true) as CandidateCatalogCollectionResult;
+   if(result.status!=='rendered')fail('Whole scan batch refused');
+   scans.push({scan:request.scan,rows:result.rows,valueProfiles:result.valueProfiles});
+  }
+  return freeze({status:'rendered',complete:false,authority:false,scans});
+ }catch{return refused();}
+}
 /** owner/cut must originate from a trusted host. This function does not authenticate their provenance. */
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}

@@ -12162,3 +12162,41 @@ source/schema/fixture digests verify. `current-logical-scan-20261015/final-weft-
 retains exact provenance, separately qualified from owner-native/build evidence.
 No runtime/test/schema/case definition changed in this provenance-only follow-up;
 45accepted/113unbound and the active overall goal remain.
+
+
+### Atomic complete scan batches and direct issuer bridge — 2026-10-15
+
+CONTRACT-062/TD-079/STP-079 now define and exercise private ordered multi-scan
+logical preparation. One immutable supplied cut/program and one operation ledger
+cover every occurrence, including field-free/self-join/graph scans. Aggregate
+facts include every target visit. Any source/limit/disclosure failure erases the
+entire batch; independent per-scan success does not authorize partial release.
+
+The combined suite passes342tests/3987expectations. Both strict TypeScript
+configurations pass. Final Bun/Chromium corpus passes56controls. An initially
+masked text-budget control is isolated with larger metadata/two scans; original
+receipts and exact earlier source are preserved. The abstract unbounded prefix
+composition model replays6UNSAT/4SAT with explicit source/outcome/cost premises,
+without implementation or native refinement. Exact committed Weft CLI issuer
+passes280host controls/18reports through batch composition; operator properties,
+modes and unsupported aggregates remain separate whole-query obligations.
+
+The optional original Python bridge in Weftc0de9f1e independently returns all18
+original reports byte-identically and refuses6malformed/ordinary-compile controls.
+Exact dev-wheel custody,8committed interface pins and40unchanged earlier core/
+schema/fixture pins verify. This is functional evidence, not a root build,
+performance, publication or native authority claim. Current action ESM identity
+and all3browser corpora are refreshed without changing historical enrollment.
+
+The whole original158-case gate still passes45implemented cases, with113explicit
+unimplemented bindings/34criteria. All158case definitions remain exact; within-run
+plan/source pins are unchanged. Evidence validation retains221checks and the same
+86failed IDs. Component-to-AC4/6/10 traceability, original test-authoring correction
+and all scoped evidence are in `evidence/security/atomic-scan-batch-20261015/`.
+
+Truss confirms no supported registered native multi-scan consumer exists. The
+reviewed source-packet direction preserves original Artifacts and separates
+private producer invocation/registration custody from current authenticated
+same-store execution. Native ABI/mode/property/relationship admission and release
+authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
+promoted and the overall goal remains active.

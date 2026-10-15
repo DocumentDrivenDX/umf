@@ -821,3 +821,51 @@ and all affected current kernel/native acceptance source closures must replay.
 
 Source-only compiler readsets and native permission/dispatch remain separate
 requirements; no SQL/query compiler or backend authority is introduced in UMF.
+
+
+### Atomic scan composition and native issuer boundary — 2026-10-15
+
+Use the existing catalog runtime module and shared CandidateSecurityOperationBudget
+for ordered multi-scan logical preparation. Snapshot owner/cut/requests once at
+entry, validate unique bounded compiler occurrence labels, precharge aggregate
+fact visits and invoke the original complete-scan kernel with one shared ledger.
+Keep all rendered scans local until every occurrence succeeds; discard the entire
+result on any refusal. Do not expose a second policy parser/compiler or reset a
+work/literal budget per scan. Existing single-scan APIs and semantics remain.
+
+Truss main652a3f5e has no registered protected multi-scan read consumer. Its private
+OriginalPreparationProgram/PendingPreparationProgram, retained preparation SQL
+and resolve_preparation_program_binding are original mutation0.1 custody and
+identity resolution only. Do not reinterpret them as read permissions.
+
+Proposed native read-program source packet for owner review (not a frozen public
+protocol): `{version,compiler,security,binding}`. Version is a separately named
+read-program candidate. `compiler` retains the original exact Weft request/report
+Artifacts plus selected compiler source/binary/schema pins; `security` retains
+original policy/catalog-or-null/ontology/core-closure/owner/bindings Artifacts;
+`binding` retains original native runtime manifest/mapping Artifacts under their
+existing owners. An Artifact is original mediaType/utf8/sha256, not regenerated
+JSON. Explicit source pin correspondence and immutable original bytes precede any
+backend admission. Runtime facts, caller assertions and trusted:true cuts do not
+belong in the stored program as authority. Truss must independently register and
+authenticate the actual issuer, caller, complete fact sources/current context,
+mode/property capabilities and final publication ordering. A source packet/hash
+or diagnostic JSON boolean never supplies those guarantees.
+
+Open: exact native registered issuer/consumer ABI, supported relationship
+observation admission, physical capability/action binding and native lease
+protocol. Review this proposed packet with Truss and Weft before implementation;
+keep the pure scan-batch reference separately usable as the logical oracle.
+
+Native-owner review of this proposal identifies existing transport-only types
+`ExactArtifact(identity,bytes_base64,sha256)` and `ProfilePin(identity,version,sha256)`
+in Truss contracts.py, while private preparation custody already retains original
+mediaType/utf8/sha256 Artifact and outer bytes. Preserve this original Artifact
+shape for the separate read cohort rather than normalizing it into another
+protocol. Registration must invoke/capture the producer through owner-private
+custody and retain original packet/report/source bytes, installed mapping/runtime
+and authenticated control enrollment. Consumption takes a committed registration
+identity and original live same-store transaction context, never claimed source
+flags/actions. These are design constraints; native ABI approval and execution
+evidence remain open. Exact selected Weft source/schema/fixture closure is already
+retained in the prior current-logical-scan final-weft-provenance packet.

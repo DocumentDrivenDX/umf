@@ -1534,3 +1534,32 @@ dependencies from its original AST, and the native consumer must bind those
 requirements and actual current authority before execution. This operation does
 not parse queries, choose query-use modes, grant original-value actions, perform
 aggregates, register a backend, or qualify P03/B08. It is not a public root API.
+
+
+### Atomic complete logical scan batches — 2026-10-15
+
+The private `evaluateCandidateCatalogScanBatch(handle,owner,cut,requests)` accepts
+one original compiled program and one detached supplied logical cut. `requests`
+is a nonempty ordered array of at most256 exact `{scan,type,fields}` objects.
+`scan` is a unique Weft occurrence label matching `[st][0-9]+`; type/fields are
+existing qualified references. Each occurrence remains separate, including self
+joins and field-free scans. Requests cannot designate actions, resource subsets,
+completion flags or native permissions. The trusted adapter remains responsible
+for supplying the whole original compiler-issued population; arbitrary supplied
+JSON cannot establish compiler completeness or issuance.
+
+All scans MUST share one operation work, snapshot-text and literal ledger. The
+aggregate fact limit charges the original facts/graph witnesses once plus every
+target fact visit across occurrences, before rendering. Source, limit or scan
+refusal at any occurrence MUST return `status:refused,scans:[]` for the entire
+batch, including failures after an earlier positive scan. A rendered result
+retains ordered `{scan,rows,valueProfiles}` entries with existing Cell tags and
+`complete:false,authority:false`. No result prefix may escape on refusal. Empty
+row populations retain preflight/read-purpose obligations.
+
+This is logical read preparation, not query evaluation. Relationship-observation
+duties, operator property/mode checks, aggregate semantics and exact compiler
+source/AST completeness remain mandatory separate whole-query obligations. A
+rendered scan batch alone MUST NOT become executable query admission. Native
+source/caller authentication, current-authority guards and final-release custody
+remain CONTRACT-063 obligations; no historical mutation cohort is widened.

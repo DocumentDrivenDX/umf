@@ -662,3 +662,24 @@ and all affected current kernel/native acceptance source closures must replay.
 
 Source-only compiler readsets and native permission/dispatch remain separate
 requirements; no SQL/query compiler or backend authority is introduced in UMF.
+
+
+### Atomic scan batch controls — 2026-10-15
+
+Exercise flat/graph positive self joins, ordered distinct scan labels, field-free
+read duties, denied rows and empty target preflight. A late missing disclosure,
+unknown target, stale cut or malformed request must erase every earlier scan.
+Reject empty/over256/duplicate/invalid scan labels, caller actions/subsets and
+extra members. Preserve detached frozen results, no getter invocation, original
+input immutability and copied/forged program refusal. Distinguish a deliberately
+reset per-scan work ledger from the shared ledger: find a cut where each original
+single scan passes but the combined batch exceeds work, literal or text limits.
+Charge aggregate target visits across occurrences against maxFacts.
+
+Run identical independently authored controls in Bun and Chromium with host
+globals absent and no outside requests. Formal analysis must state exact complete
+scan outcomes/faithful leaf kernel as premises and prove atomic result release,
+order/occurrence retention and monotone cumulative budget refusal, including a
+SAT countermodel for independent-reset budgets. This is not a compiler or native
+refinement proof. Keep all158 original required cases/34criteria; no case is
+promoted by these component controls. Original P03/B08/native gates remain.

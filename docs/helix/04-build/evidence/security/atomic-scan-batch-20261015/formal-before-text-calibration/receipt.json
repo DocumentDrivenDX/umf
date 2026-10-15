@@ -1,0 +1,93 @@
+{
+  "status": "conditional-atomic-scan-batch-passed",
+  "solverVersion": "4.15.4",
+  "checks": [
+    {
+      "id": "initial-local-prefix",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "bd471d4e16abb897348475f0ebb8c4b6a81b7f12fcd5c3fe1333dc96fefe332a",
+      "model": null
+    },
+    {
+      "id": "step-retains-every-occurrence",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "0e836d33d8ae8d38422d2045bee5b6fb681d90ca20e60b6834f446afdf60561d",
+      "model": null
+    },
+    {
+      "id": "late-failure-forbids-whole-release",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "19b2abefcbdb70fa54d194e91a1b007736d29128f2d9f10ae3c63eecaab94245",
+      "model": null
+    },
+    {
+      "id": "release-contains-every-source-position",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b85e5494c09bc188000e46292bb574fb5401375a15d121573e6b3bf424c6dd64",
+      "model": null
+    },
+    {
+      "id": "over-budget-prefix-cannot-release",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "09a697d348b306e4e0e0d9a4eb7cdb17a882bbedf2ecd37befad0506d1be528b",
+      "model": null
+    },
+    {
+      "id": "two-occurrences-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "6b2206e2d7871eb767cd3c61adac408e6faad59f883fdb4f530f796f1e5481ee",
+      "model": "[local_scans = K(Int, True),\n source_preflight = True,\n bad = False,\n visited_prefix = 2,\n limit = 3,\n scan_count = 2,\n scan_ok = [else -> True],\n k!8 = [else ->\n        If(0 <= Var(0),\n           If(1 <= Var(0), If(2 <= Var(0), 2, 1), 0),\n           -1)],\n prefix_cost = [else ->\n                If(k!8(Var(0)) == 1,\n                   1,\n                   If(k!8(Var(0)) == 2,\n                      2,\n                      If(k!8(Var(0)) == 0, 0, 6)))],\n cost = [else ->\n         If(Or(k!8(Var(0)) == 0, k!8(Var(0)) == 1), 1, 5)]]"
+    },
+    {
+      "id": "reset-budgets-hide-cumulative-exhaustion",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a59d532d933b014d11ba216f8509f89e56c46e7e53fcccbe20a01302d194d32c",
+      "model": "[local_scans = K(Int, True),\n source_preflight = True,\n limit = 10,\n visited_prefix = 2,\n bad = False,\n scan_count = 2,\n scan_ok = [else -> True],\n cost = [else ->\n         If(Or(k!18(Var(0)) == 1, k!18(Var(0)) == 0), 6, 5)],\n prefix_cost = [else ->\n                If(k!18(Var(0)) == 1,\n                   6,\n                   If(k!18(Var(0)) == 2,\n                      12,\n                      If(k!18(Var(0)) == 0, 0, 7)))],\n k!18 = [else ->\n         If(0 <= Var(0),\n            If(1 <= Var(0), If(2 <= Var(0), 2, 1), 0),\n            -1)]]"
+    },
+    {
+      "id": "prefix-release-hides-late-failure",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "e8592be101a11afbf7e14b5435e8c85204ed71f5f6463f1991aae0ed56604487",
+      "model": "[local_scans = Lambda(k!0, Not(1 <= k!0)),\n source_preflight = True,\n bad = False,\n visited_prefix = 1,\n limit = 3,\n scan_count = 2,\n prefix_cost = [else ->\n                If(k!46(Var(0)) == 2,\n                   2,\n                   If(k!46(Var(0)) == 1,\n                      1,\n                      If(k!46(Var(0)) == 0, 0, 6)))],\n scan_ok = [else -> Not(1 <= Var(0))],\n cost = [else ->\n         If(Or(k!46(Var(0)) == 1, k!46(Var(0)) == 0), 1, 5)],\n k!46 = [else ->\n         If(0 <= Var(0),\n            If(1 <= Var(0), If(2 <= Var(0), 2, 1), 0),\n            -1)]]"
+    },
+    {
+      "id": "empty-source-preflight-cannot-release",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "4a2a7097b69cb3c8dd932f925af0147d3e6d65e45da33b6d2e98d9e1d22b23fa",
+      "model": null
+    },
+    {
+      "id": "logical-batch-is-not-native-authority",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "c09de75b16d1c036c49c0395e1e6a2b04126ca64a0195dee9f81ddc8dc375ad3",
+      "model": "[local_scans = K(Int, True),\n source_preflight = True,\n bad = False,\n visited_prefix = 1,\n limit = 3,\n scan_count = 1,\n native_authenticated = False,\n scan_ok = [else -> True],\n cost = [else ->\n         If(And(0 <= Var(0), Not(1 <= Var(0))), 1, 3)],\n prefix_cost = [else ->\n                If(And(0 <= Var(0), 1 <= Var(0)),\n                   1,\n                   If(And(0 <= Var(0), Not(1 <= Var(0))),\n                      0,\n                      4))]]"
+    }
+  ],
+  "selectedSourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-atomic-scan-batch.py": "1d04d00f8a2c39d0074e5b176c78fec7ff742dc2a6d43e9feece994e49e3f131",
+    "src/extensions/security/catalog-runtime-candidate.ts": "8d17b30d71352e35bcc646f6c97467c2f38051a187e0227ae4d31ededfe2c30e",
+    "tests/security/catalog-scan-batch-corpus.ts": "17d43863f5045709d553dc73e8aa7def3f81048d2ec5630455425b3f235ceaf7"
+  },
+  "acceptanceCasesPromoted": [],
+  "scope": "Unbounded abstract prefix composition with faithful supplied scan outcomes/costs, complete exact enumeration and unique occurrence labels as premises. Array indices retain occurrence order. Proves atomic release and conditional budget accumulation; does not establish TS traversal, actual work/text/literal cost correspondence, compiler readset completeness, native authentication, property/mode admission, SQL execution or publication authority."
+}

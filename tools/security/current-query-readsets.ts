@@ -4,7 +4,7 @@ import source from '../../tests/security/protection/current-query-source.json';
 import scenarios from '../../tests/security/protection/current-query-read-scenarios.json';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {inspectCandidateStoredQueryProperties} from '../../src/extensions/security/stored-query-candidate';
-import {evaluateCandidateCatalogScan} from '../../src/extensions/security/catalog-runtime-candidate';
+import {evaluateCandidateCatalogScan,evaluateCandidateCatalogScanBatch} from '../../src/extensions/security/catalog-runtime-candidate';
 const [binary,expectedSha,output]=process.argv.slice(2);if(!binary||!/^[a-f0-9]{64}$/.test(expectedSha??'')||!output)throw Error('Exact producer, SHA256 and output directory required');
 const sha=(x:string|Uint8Array)=>createHash('sha256').update(x).digest('hex'),hashBinary=async()=>sha(new Uint8Array(await Bun.file(binary).arrayBuffer()));if(await hashBinary()!==expectedSha)throw Error('Producer mismatch');
 const observations:any[]=[],check=(id:string,ok:boolean)=>{if(!ok)throw Error(id);observations.push({id,passed:true});},id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
@@ -56,8 +56,13 @@ for(const variant of ['r1-undisclosed','r2-allowed','r2-revoked']){
 
    check(label+':'+scan.scan+':complete-source-rows',canonical(logical.rows)===canonical(expectedRows));scans.push({scan:scan.scan,selection,logical});
   }
-  await Bun.write(output+'/'+variant+'-'+name+'.request.json',raw);await Bun.write(output+'/'+variant+'-'+name+'.report.json',stdout);results.push({variant,query:name,scans,properties,unsupportedSources:reads.unsupportedSources});
+  const batchRequests=reads.scans.map((scan:any)=>({scan:scan.scan,type:scan.target,fields:[...new Map(reads.fields.filter((field:any)=>field.scan===scan.scan).map((field:any)=>[id(field.field),field.field])).values()]}));
+  const scanBatch=evaluateCandidateCatalogScanBatch(program,owner,cut,batchRequests);
+  const expectedBatch=scanIds.map(scan=>{const fields=[...new Set(expectedFields.filter(f=>f[0]===scan).map(f=>f[2]!))];return {scan,rows:variant==='r2-revoked'?[]:[fields.map(field=>({field:ref(field),disposition:'original',value:field==='salary'?{integerToken:'100'}:{string:field==='resourceId'?'r1':'opaque-token'}}))],valueProfiles:[]};});
+  const batchRefused=variant==='r1-undisclosed'&&expectedFields.some(f=>f[2]==='token');
+  check(label+':whole-read-preparation-atomic',same(scanBatch,{status:batchRefused?'refused':'rendered',complete:false,authority:false,scans:batchRefused?[]:expectedBatch}));
+  await Bun.write(output+'/'+variant+'-'+name+'.request.json',raw);await Bun.write(output+'/'+variant+'-'+name+'.report.json',stdout);results.push({variant,query:name,scans,scanBatch,properties,unsupportedSources:reads.unsupportedSources});
  }
 }
 const after=await pins();check('producer-and-selected-sources-unchanged',await hashBinary()===expectedSha&&JSON.stringify(before)===JSON.stringify(after));
-await Bun.write(output+'/receipt.json',JSON.stringify({status:'correspondence-passed',acceptanceReceipt:false,casePromoted:null,producerSha256:expectedSha,selectedSourceDigests:after,controls:observations.length,observations,results,scope:'Fresh actual compiler-issued readsets matched to complete supplied logical scans under separately authored r1/r2/changed-assignment source packets. False/zero-limit syntax does not erase pre-query row/Field read duties. This does not execute queries, apply aggregate semantics, infer query-use mode/action grants, authenticate cut completeness or qualify native/backend/P03/B08 authority.'},null,2)+'\n');console.log(JSON.stringify({status:'correspondence-passed',controls:observations.length}));
+await Bun.write(output+'/receipt.json',JSON.stringify({status:'correspondence-passed',acceptanceReceipt:false,casePromoted:null,producerSha256:expectedSha,selectedSourceDigests:after,controls:observations.length,observations,results,scope:'Fresh actual compiler-issued readsets matched to complete supplied logical scans under separately authored r1/r2/changed-assignment source packets. Ordered occurrence reads now compose atomically with shared operation ledgers; property/mode/unsupported-source obligations remain separate and this is not executable whole-query admission. False/zero-limit syntax does not erase pre-query row/Field read duties. This does not execute queries, apply aggregate semantics, infer query-use mode/action grants, authenticate cut completeness or qualify native/backend/P03/B08 authority.'},null,2)+'\n');console.log(JSON.stringify({status:'correspondence-passed',controls:observations.length}));
