@@ -1,0 +1,118 @@
+{
+  "kind": "independent-astra-security-review",
+  "date": "2026-10-15",
+  "base": "c57d283ece30326bcb06607ca5d2384fc69ddef4",
+  "scope": "Private source-derived route activation using the original logical kernel read-rule trace on a supplied complete typed population. Includes the new trace mode and focused existing-runtime regression; no scalar operands, query execution, compiler designation or native authority.",
+  "disposition": "No remaining blocking finding within this component scope. One independently reproduced retention-bound defect was fixed and checked at exact boundaries before final capture.",
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "priority": 2,
+      "issue": "Empty-population activation checked neither the retained source-plan bound nor final result framing. A valid inspected plan of 4002460 UTF16 units returned evaluated with zero rows and a 4002535-unit result. Nonempty paths also omitted framing from their accounting.",
+      "fix": "Check exact empty evaluated-result framing plus the retained plan before the trace scan; charge each serialized row and only intervening commas before retaining it.",
+      "evidence": [
+        "before-empty-retention-fix.ts",
+        "empty-retention-probe.ts",
+        "empty-retention-probe.json",
+        "retention-boundary-calibration.json",
+        "oracle.ts",
+        "mutants/empty-initial-retention-guard-omitted/result.json",
+        "mutants/result-framing-charge-omitted/result.json"
+      ],
+      "verification": "Independent empty result 3999999 and4000000 accepted;4000001 refused. Separate empty/one-/two-row exact4000000 controls pass and each +1 refuses. Actual source inspection succeeds before each activation.",
+      "limit": "Resource-contract defect, not an authorization bypass or total heap/CPU bound."
+    }
+  ],
+  "sourceAssessment": {
+    "custody": "The helper snapshots owner/cut/use, reconstructs the source route plan from the original WeakMap-issued program and whole owner, and asks the original kernel for a type-only complete-population read trace. It accepts no caller guard, rule truth, mode, action or resource subset. All results are detached/frozen; source/cut/shape/budget errors erase plan and rows.",
+    "trace": "Original scoped rule indices and F/T/U truth are retained for every validated target Record, including denied rows. Existing source/cut/member/graph/coverage preflight is reused, including empty populations. Trace traversal and encoded retention share the condition operation and literal/work/text ledgers; failures release no prefix. Existing action/collection return shapes remain unchanged.",
+    "activation": "Only actual field-free read permit can activate a branch. Any true original contributor activates its group; exclusions preserve withheld priority, distinct-transform conflict and original/missing fallback. Require/forbid and unknown read outcomes remain distinct. All scoped source conditions must have corresponding original trace entries. No branch truth is assumed from source metadata.",
+    "resultMeaning": "Selected means an actual source alternative was chosen. It can still have prohibited/conflicting mode constraints, missing properties, unresolved public projection, or separate original-action duties. Field-free eligibility is distinct from selected Field disclosure. Denied-row selectors and rule truth are private host diagnostics, not safe public read output.",
+    "domains": "This increment returns no scalar value or absence encoding. Canonical stored tokens are not replaced with pre-storage plaintext; hidden original-use alternatives do not unmask public projection. Exact Weft occurrence/designation, scalar presence/domain, paired runtime/key scope and current native permission remain integration requirements.",
+    "bounds": "Source-plan preparation and trace evaluation retain separate bounded costs; no whole-query cumulative ledger is claimed. Final serialized retained-result size includes framing and commas. The finite branch/source limits and supplied-cut limits do not establish total allocation/CPU bounds.",
+    "apiBoundary": "No public root export, native call, new compiler owner, permission designation or acceptance case was introduced."
+  },
+  "independentExecution": {
+    "oracle": {
+      "controls": 121,
+      "bun": "1.4.2",
+      "chromium": "153.0.8010.12",
+      "fullParity": true,
+      "pageErrors": 0,
+      "externalRequests": 0,
+      "hostGlobals": "Bun/process undefined",
+      "provenance": "Previously independently authored Person/Asset/Link core and flat/graph fixtures, new independent expected route truths/selections. No repository fixture helper imported by oracle.ts.",
+      "coverage": "All64 literal-truth combinations; equivalent/distinct masks; require/forbid/unknown/null; protected missing projection; canonical stored token; flat/Record/opaque graph membership; complete order and late outcomes; empty preflight; source/cut/owner/shape/getter/forgery refusals; shared trace budgets; exact framing bounds.",
+      "receipt": "browser-result.json"
+    },
+    "mutations": {
+      "variants": 12,
+      "allDetectedBothRuntimes": true,
+      "errorsCountedAsDetection": false,
+      "ids": [
+        "empty-initial-retention-guard-omitted",
+        "result-framing-charge-omitted",
+        "ignore-read-permit",
+        "false-contributors-active",
+        "exclusions-ignored",
+        "unknown-truth-coerced",
+        "row-permission-forced",
+        "population-truncated",
+        "original-rule-index-lost",
+        "per-trace-literal-reset",
+        "late-budget-prefix-escape",
+        "empty-dependencies-skipped"
+      ],
+      "receipt": "mutation-results.json",
+      "isolatedBudgetWitness": "At300rows original refuses atomically; per-trace literal-reset evaluates300, while deliberate late-prefix escape evaluates211. The frozen control detects both separately."
+    },
+    "existingBehaviorRegression": {
+      "sourceRoutes": 112,
+      "mixedOperations": 49,
+      "runtime": "Bun1.4.2",
+      "allPassed": true,
+      "receipt": "existing-behavior-regression.json"
+    },
+    "repositoryFocusedTest": {
+      "tests": 1,
+      "assertions": 481,
+      "allPassed": true,
+      "receipt": "root-focused-test.log"
+    },
+    "formal": {
+      "queries": 12,
+      "unsat": 8,
+      "sat": 4,
+      "solver": "4.15.4",
+      "freshDistinctContexts": true,
+      "receipt": "formal/receipt.json",
+      "scope": "Exact retained64-state observation relation against independently authored finite Boolean fold, with coverage/uniqueness and weakened exclusions/contributor/value-admission countermodels. Not arbitrary condition, TypeScript, SQL, source authentication or native authorization refinement."
+    }
+  },
+  "historicalEvidence": [
+    "The original oversized empty-result witness and helper preimage are retained. Parent475 browser/formal receipts before the fix are preserved separately from current481 evidence.",
+    "The initial500row shared-budget negative failed upstream in original and both reset/prefix mutants, so it did not distinguish the targeted guards. Calibration retained25..500 rows; the final oracle freezes300 with independent small-positive control. Initial masked mutation results remain historical and are not counted as successful sensitivity.",
+    "Parent initial formal replay used a new Solver in the same Context; current proof uses a distinct z3.Context. The historical receipt remains, not labeled as a fresh-context replay.",
+    "The first parent full gate ran against the pre-fix generated build and is retained by parent. Final review Bun/Chromium/mutations and selected regressions ran after regenerated action plan identity; all captured source hashes remain unchanged.",
+    "Parent build/strict-type/broad346test and full158gate work is separate. The focused481 assertions,121 both-runtime controls,12 both-runtime mutations,161 prior controls and12 proof queries listed above were executed independently. Final parent full gate is pending at this receipt."
+  ],
+  "qualificationLimits": [
+    "Trusted supplied cut completeness/currentness and program/owner custody are premises, not credentials.",
+    "Actual branch selection does not establish scalar availability, query-use permission, original-action authorization, read projection admission, paired transform/key scope or guarded native release.",
+    "The trace is private and includes denied Record keys/policy truth. No public disclosure safety claim applies to this diagnostic data.",
+    "Finite source/graph/Boolean controls and selected regressions do not establish universal expression/kernel refinement.",
+    "All158 original case definitions are byte-identical to basec57d283e; no assertions, criteria, timeouts, runner bindings or statuses were promoted.",
+    "905 selected/static-relative file hashes include the root barrel dependency reach and final generated identity, but not a hermetic dynamic/package/runtime provenance theorem. The compact archive contains120 focused selected source copies and a complete905-entry endpoint hash map."
+  ],
+  "selectedSources": {
+    "count": 905,
+    "copiedFocusedSources": 120,
+    "endpointStable": true,
+    "pins": "final-source-pins.json",
+    "helperSha256": "6a2cf50a8c15d2feecd1da73abaa79f4da547aca834d263f2aa999f23a607552",
+    "runtimeSha256": "ca30c10ae6bf963326329460ee20a72ace6b24afbd5126e86755896ed1a8a5d5",
+    "generatedIdentitySha256": "a812f386f73b08d1af699ce41aecf0b7b9f788163bb6d0312763480df46722ce"
+  },
+  "acceptanceCasesPromoted": [],
+  "rootSourcesEditedByReviewer": false
+}

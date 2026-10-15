@@ -1,0 +1,18 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun context_4 () Bool)
+(declare-fun context_1 () Bool)
+(declare-fun context_0 () Bool)
+(declare-fun context_2 () Bool)
+(declare-fun context_5 () Bool)
+(declare-fun context_3 () Bool)
+(assert
+ (let (($x14 (not context_4)))
+(let (($x11 (or context_0 context_1)))
+(let (($x16 (not $x11)))
+(let (($x17 (and context_2 $x16 $x14)))
+(let (($x22 (not context_1)))
+(let (($x21 (not context_0)))
+(let (($x76 (or (and $x21 $x22 context_2 (not context_3) $x14 (not context_5)) (and $x21 $x22 context_2 context_3 $x14 (not context_5)) (and $x21 $x22 context_2 (not context_3) $x14 context_5) (and $x21 $x22 context_2 context_3 $x14 context_5))))
+(and (distinct $x76 $x17) true)))))))))
+(check-sat)

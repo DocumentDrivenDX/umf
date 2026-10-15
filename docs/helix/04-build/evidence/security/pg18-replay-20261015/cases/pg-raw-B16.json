@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B16",
   "backend": "pg-raw",
-  "runId": "d0c62a08-f015-422b-a743-93e8e9b70894",
+  "runId": "4c3b6bca-5eab-4e8c-a1aa-808ffef624c5",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/scale.py"
@@ -966,7 +966,7 @@
         [
           {
             "state": "text",
-            "text": "352"
+            "text": "357"
           }
         ]
       ],
@@ -974,7 +974,7 @@
         [
           {
             "state": "text",
-            "text": "352"
+            "text": "357"
           }
         ]
       ]
@@ -1865,9 +1865,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.093,
+            "Planning Time": 0.095,
             "Triggers": [],
-            "Execution Time": 6.136
+            "Execution Time": 6.165
           }
         ],
         "excludedAssessorPlan": [
@@ -1935,9 +1935,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.098,
+            "Planning Time": 0.091,
             "Triggers": [],
-            "Execution Time": 0.057
+            "Execution Time": 0.059
           }
         ]
       },
@@ -2071,9 +2071,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.098,
+            "Planning Time": 0.116,
             "Triggers": [],
-            "Execution Time": 681.631
+            "Execution Time": 680.69
           }
         ],
         "excludedAssessorPlan": [
@@ -2141,9 +2141,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.108,
+            "Planning Time": 0.098,
             "Triggers": [],
-            "Execution Time": 2.903
+            "Execution Time": 2.912
           }
         ]
       },
@@ -2225,8 +2225,8 @@
               "Actual Rows": 1.0,
               "Actual Loops": 1,
               "Disabled": false,
-              "Shared Hit Blocks": 7003418,
-              "Shared Read Blocks": 3221,
+              "Shared Hit Blocks": 7003419,
+              "Shared Read Blocks": 3220,
               "Shared Dirtied Blocks": 0,
               "Shared Written Blocks": 0,
               "Local Hit Blocks": 0,
@@ -2252,8 +2252,8 @@
                   "Disabled": false,
                   "Filter": "security_raw.allowed(id)",
                   "Rows Removed by Filter": 500001,
-                  "Shared Hit Blocks": 7003418,
-                  "Shared Read Blocks": 3221,
+                  "Shared Hit Blocks": 7003419,
+                  "Shared Read Blocks": 3220,
                   "Shared Dirtied Blocks": 0,
                   "Shared Written Blocks": 0,
                   "Local Hit Blocks": 0,
@@ -2288,7 +2288,7 @@
                 "Deforming": true
               }
             },
-            "Execution Time": 6751.452
+            "Execution Time": 6622.584
           }
         ],
         "excludedAssessorPlan": [
@@ -2306,8 +2306,8 @@
               "Actual Rows": 1.0,
               "Actual Loops": 1,
               "Disabled": false,
-              "Shared Hit Blocks": 3233,
-              "Shared Read Blocks": 3127,
+              "Shared Hit Blocks": 3234,
+              "Shared Read Blocks": 3126,
               "Shared Dirtied Blocks": 0,
               "Shared Written Blocks": 0,
               "Local Hit Blocks": 0,
@@ -2332,8 +2332,8 @@
                   "Workers Planned": 2,
                   "Workers Launched": 2,
                   "Single Copy": false,
-                  "Shared Hit Blocks": 3233,
-                  "Shared Read Blocks": 3127,
+                  "Shared Hit Blocks": 3234,
+                  "Shared Read Blocks": 3126,
                   "Shared Dirtied Blocks": 0,
                   "Shared Written Blocks": 0,
                   "Local Hit Blocks": 0,
@@ -2357,8 +2357,8 @@
                       "Actual Rows": 1.0,
                       "Actual Loops": 3,
                       "Disabled": false,
-                      "Shared Hit Blocks": 3233,
-                      "Shared Read Blocks": 3127,
+                      "Shared Hit Blocks": 3234,
+                      "Shared Read Blocks": 3126,
                       "Shared Dirtied Blocks": 0,
                       "Shared Written Blocks": 0,
                       "Local Hit Blocks": 0,
@@ -2383,8 +2383,8 @@
                           "Actual Rows": 333333.33,
                           "Actual Loops": 3,
                           "Disabled": false,
-                          "Shared Hit Blocks": 3233,
-                          "Shared Read Blocks": 3127,
+                          "Shared Hit Blocks": 3234,
+                          "Shared Read Blocks": 3126,
                           "Shared Dirtied Blocks": 0,
                           "Shared Written Blocks": 0,
                           "Local Hit Blocks": 0,
@@ -2413,9 +2413,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.164,
+            "Planning Time": 0.178,
             "Triggers": [],
-            "Execution Time": 15.172
+            "Execution Time": 17.937
           }
         ]
       }
@@ -2657,7 +2657,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-3jf475j_",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-es0soibp",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -2898,7 +2898,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-otbjhkmr",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-h6le3lid",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3094,7 +3094,7 @@
               [
                 {
                   "state": "text",
-                  "text": "352"
+                  "text": "357"
                 }
               ]
             ],
@@ -3102,7 +3102,7 @@
               [
                 {
                   "state": "text",
-                  "text": "352"
+                  "text": "357"
                 }
               ]
             ]
@@ -3223,7 +3223,7 @@
         "journalEvidence": {
           "originalQueries": 76,
           "leases": 4,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-t6przwxp",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-zz70_gqf",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3369,13 +3369,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "38d845d996a2bc325cbc9010f00ff4203df5ba65d986b2ca9fba9f0a9378b659",
+      "containerId": "114049594f7852c977fa8cc9fdf25a4562bf18f5f4ebcfb69642f7288aed4ee2",
       "ownedAnonymousVolumes": [
-        "96c43a725cb2a0d67c3631ff81612570f5cb9deae7093c610abff331a0c0eb2c"
+        "dedc43e74420c4ebfd572bcb9c93db5ddc60fca53b5ce5e23419688f284f6dcd"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "ee3a2d1ac4135763e8543401a0523ee7f953e0d009077958af6869765f5c65f2"
+    "digest": "c8639b129dc9f2bf4c7ab913973f535a89dc41c77457e2dc53c492b9e19a3d0a"
   },
   "scope": "Authored PostgreSQL18.6 forced-RLS raw profile at stable cut, exact total populations 1k/100k/1M, independent counts/samples, paired native plans and actual-driver text aggregate/native timeout/no partial output/failed transaction/explicit same-session recovery. No arbitrary workload SLA, streaming/final-publication, full diagnostic closure, graph or Delta qualification."
 }
