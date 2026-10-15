@@ -204,7 +204,7 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `f8495ec6`. Build it with
+reviewed bundle from Truss `62b3e302`. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
@@ -214,14 +214,14 @@ catalog, then asks Truss to admit the original local action and separately issue
 its selection-read grant. The original owner, action and grant capabilities stay
 inside the worker and are issued afresh after reopen. Preview invokes the original compiler/lowerer against real Truss rows and
 constructs the original UMF frozen manifest; seal and recovery use Truss custody.
-Sample-data bootstrap and action execution remain unfinished.
+Prepare UPDATE loads the four original samples through public `loadObjects`, reads the actual generic Truss rows through `readObjects`, and commits the exact original load input/control to a strict IndexedDB admission transaction before its first dispatch. Every later prepare/reopen calls `recoverLoad`; missing recovery stops preparation and never redispatches a load. It replays the creation receipt without resetting current values. All unsuccessful load outcomes remain visible and detach the worker. Action batch execution remains unfinished.
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
 
 The local compiler is pinned to Weft `535b5c7`, original local model `b8ce3cfe`
 and preparation `6f5e6946`. Historical native compiler assets remain retained
 separately and are not relabelled. The compiler and catalog now use the same
-local model; sample rows remain examples until Truss action execution is wired.
+local model; the examples and actual Truss rows are displayed separately.
 
 Before seal dispatch, the page saves the original request key, attempt, source
 intent and inert seal reference in an atomic, strict-durability IndexedDB transaction.
@@ -233,5 +233,4 @@ control outcomes and receipt/manifest bytes are retained, including unresolved
 absence and uncertain storage outcomes. These metadata are not authority.
 The Chromium test deliberately drops an actual sealed acknowledgement, closes the owner tab
 and recovers the same bytes from an already-open second tab. It also refuses an injected pre-dispatch storage
-quota failure. The website test selects zero rows from its unpopulated real store;
-Truss's administrative three-row fixture is not used as website bootstrap.
+quota failure. The website test publicly loads four rows, verifies exact load receipt/data after a dropped actual preparation acknowledgement and reload, then selects three rows into batches [2,1]. No administrative seeding is used.

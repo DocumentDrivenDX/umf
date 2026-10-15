@@ -1,3 +1,4 @@
+import {admitOriginalLoad} from './load-intent';
 // Opaque Truss capabilities stay in this worker. Messages use a fixed model and owned mutation compiler; no arbitrary backend SQL.
 import type {StoreOpen,LocalAction,SelectionReadGrant,Materialization} from './truss-browser/store.js';
 const scope=globalThis as unknown as DedicatedWorkerGlobalScope;
@@ -25,7 +26,16 @@ scope.onmessage=event=>{
      const issued=await current.store.registerAction(current.owner,request.action.identity);
      const granted=await current.store.grantSelectionRead(current.owner,issued.action);
      action=issued.action;readGrant=granted.grant;frozen=undefined;modelSha256=issued.model.sha256;
-     scope.postMessage({id,result:{outcome:'prepared',registration:registration.outcome,catalog:await current.store.catalog(current.owner),modelSha256:issued.model.sha256,preparationSha256:issued.preparation.sha256,selectionRead:granted.declaration}});
+     // This exact source-retained input/control is reused across retries and reloads.
+     // Loading replays its creation receipt; it never resets existing product values.
+     const target={documentId:request.modelPin.documentId,module:'sales',record:'products'};
+     const loadInput={target,rows:input.seed.products.map((row:{id:string;name:string})=>({fields:[{module:'sales',field:'product-id',value:row.id},{module:'sales',field:'product-name',value:row.name}]})),request:{requestKey:'umf-products-demo-initial-load-b8-v1',attempt:'original-load-v1'}};
+     const admission=await admitOriginalLoad(loadInput);
+     const loaded=admission==='first'?await current.store.loadObjects(current.owner,loadInput):await current.store.recoverLoad(current.owner,loadInput);
+     if(loaded.outcome!=='loaded'){scope.postMessage({id,result:{outcome:'bootstrap-unavailable',load:loaded}});return;}
+     const rows=await current.store.readObjects(current.owner,target);
+
+     scope.postMessage({id,result:{outcome:'prepared',load:loaded,rows,registration:registration.outcome,catalog:await current.store.catalog(current.owner),modelSha256:issued.model.sha256,preparationSha256:issued.preparation.sha256,selectionRead:granted.declaration}});
     }else if(command==='close'){await current.store.close(current.owner);current=undefined;action=undefined;readGrant=undefined;frozen=undefined;modelSha256=undefined;scope.postMessage({id,result:{outcome:'closed'}});}
     else{
      if(!action||!readGrant||!modelSha256)throw Error('Fresh issued action and read grant required');

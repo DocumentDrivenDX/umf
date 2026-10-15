@@ -25,7 +25,7 @@ try {
    return Reflect.apply(originalAdd,this,[value,...args]);
   };
   const descriptor=Object.getOwnPropertyDescriptor(Worker.prototype,'onmessage');if(!descriptor?.set)throw Error('Worker event instrumentation unavailable');
-  Object.defineProperty(Worker.prototype,'onmessage',{...descriptor,set:function(this:Worker,listener:any){descriptor.set!.call(this,typeof listener==='function'?function(this:Worker,event:MessageEvent){if(test.__dropSealAck&&event.data?.result?.outcome==='sealed'){test.__dropSealAck=false;test.__droppedSeal=event.data.result;return;}listener.call(this,event);}:listener);}});
+  Object.defineProperty(Worker.prototype,'onmessage',{...descriptor,set:function(this:Worker,listener:any){descriptor.set!.call(this,typeof listener==='function'?function(this:Worker,event:MessageEvent){if(test.__dropPreparedAck&&event.data?.result?.outcome==='prepared'){test.__dropPreparedAck=false;test.__droppedPrepared=event.data.result;return;}if(test.__dropSealAck&&event.data?.result?.outcome==='sealed'){test.__dropSealAck=false;test.__droppedSeal=event.data.result;return;}listener.call(this,event);}:listener);}});
  });
  await page.goto(origin+'/action-compiler.html');
  await page.waitForFunction(()=>document.querySelector('#status')?.textContent!=='Loading compiler…');
@@ -45,15 +45,18 @@ try {
  await page.locator('#store-open').click();
  await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
  const opened=JSON.parse((await page.locator('#catalog').textContent())!);
- await page.locator('#store-register').click();
- await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
- const registered=JSON.parse((await page.locator('#catalog').textContent())!);
+ await page.evaluate(()=>{(globalThis as any).__dropPreparedAck=true;});
+ await page.locator('#store-register').click();await page.waitForFunction(()=>!!(globalThis as any).__droppedPrepared);
+ const registered=await page.evaluate(()=>(globalThis as any).__droppedPrepared);
+ if(registered.load.outcome!=='loaded'||registered.load.objects.length!==4||registered.load.journal.length!==4||registered.rows.length!==4)throw Error('Public Truss object loading/reading differs');
  if(registered.outcome!=='prepared'||!['registered','unchanged'].includes(registered.registration)||registered.catalog.types.length!==1||registered.catalog.properties.length!==2||registered.catalog.keys.length!==1)throw Error('Actual catalog registration differs');
  if(['owner','action','grant','readGrant'].some(key=>Object.hasOwn(registered,key)))throw Error('Worker exposed authority capability');
  if(registered.preparationSha256!=='6f5e69462c327da970f07ca1f6253dbacc4db0badf1335b7d91e3f38eb67ad40'||registered.selectionRead.profile.id!=='umf.actions.local-store-read'||registered.selectionRead.fields.length!==2)throw Error('Original action/read-grant preparation differs');
  if(registered.catalog.document.sourceSha256!=='b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27')throw Error('Catalog source differs');
- await page.locator('#store-register').click();
- await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
+ await page.reload();await page.locator('#store-open').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
+ await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
+ const loadRecovered=JSON.parse((await page.locator('#catalog').textContent())!);
+ if(JSON.stringify(loadRecovered.load)!==JSON.stringify(registered.load)||JSON.stringify(loadRecovered.rows)!==JSON.stringify(registered.rows))throw Error('Lost public load acknowledgement changed original receipt or data');
  const second=await page.context().newPage();await second.goto(origin+'/action-compiler.html');await second.locator('#store-open').click();
  await second.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store is in use in another tab');
  await page.locator('#store-close').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store closed');
@@ -61,15 +64,16 @@ try {
  const reopened=JSON.parse((await page.locator('#catalog').textContent())!);
  if(reopened.info.storeId!==opened.info.storeId||reopened.info.incarnation!==opened.info.incarnation||JSON.stringify(reopened.catalog)!==JSON.stringify(registered.catalog))throw Error('Catalog or incarnation changed on reopen');
  await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
- const reissued=JSON.parse((await page.locator('#catalog').textContent())!);if(reissued.preparationSha256!==registered.preparationSha256||JSON.stringify(reissued.selectionRead)!==JSON.stringify(registered.selectionRead))throw Error('Reopened action/read preparation differs');
+ const reissued=JSON.parse((await page.locator('#catalog').textContent())!);if(JSON.stringify(reissued.load)!==JSON.stringify(registered.load)||JSON.stringify(reissued.rows)!==JSON.stringify(registered.rows))throw Error('Public load replay or persisted rows differ');if(reissued.preparationSha256!==registered.preparationSha256||JSON.stringify(reissued.selectionRead)!==JSON.stringify(registered.selectionRead))throw Error('Reopened action/read preparation differs');
  await page.locator('#store-close').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store closed');
- // Public bootstrap is not implemented: this real store is empty, rather than administratively seeded.
+ // Production public loading persists four original sample products and replays across reopen.
  await page.locator('#store-open').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
  await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
- await page.locator('#store-preview').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Frozen manifest: 0 items, 0 batches');
+ await page.locator('#sql').fill("UPDATE products SET name = 'Bulk' WHERE name = 'Sample'");
+ await page.locator('#store-preview').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Frozen manifest: 3 items, 2 batches');
  const materialized=JSON.parse((await page.locator('#catalog').textContent())!);
- if(materialized.plan.sha256!=='bdb85e7964878ea94041aa738ffa6aa3cdc07280b92dd971c03860143ec1e57f')throw Error('Engine-owned compiler differs from original default plan');
- if(materialized.count!==0||JSON.parse(materialized.manifest.utf8).items.length!==0||['work','owner','action','grant'].some(key=>Object.hasOwn(materialized,key)))throw Error('Empty native materialization/custody differs');
+ if(JSON.parse(materialized.plan.utf8).inputs.assignments[0].value.string!=='Bulk')throw Error('Engine-owned compiler differs from bulk UPDATE');
+ if(materialized.count!==3||JSON.parse(materialized.manifest.utf8).items.length!==3||JSON.stringify(materialized.batches.map((b:any)=>b.count))!=='[2,1]'||['work','owner','action','grant'].some(key=>Object.hasOwn(materialized,key)))throw Error('Three-row native materialization/custody differs');
  await page.evaluate(()=>{(globalThis as any).__denyIntentWrite=true;});await page.locator('#store-seal').click();
  await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Operation not sent');
  if(await page.evaluate(()=>(globalThis as any).__sealDispatches.length)!==0)throw Error('Seal dispatched before failed persistence');
@@ -91,10 +95,31 @@ try {
  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
  if(errors.length||external.length||writes.length)throw Error(JSON.stringify({errors,external,writes}));
  await page.screenshot({path:join(tmpdir(),'umf-browser-action-compiler-20261015.png'),fullPage:true});
+ // Explicit host failure injection after committed load admission but before native dispatch.
+ // A fresh page must recover absence, rather than create products under the old attempt.
+ const interrupted=await browser.newContext();let interruptLoad=true;
+ await interrupted.route('**/*',async route=>{
+  const request=route.request();if(!request.url().startsWith(origin+'/')||request.method()!=='GET')throw Error('Unexpected interruption-test request');
+  if(interruptLoad&&request.url().endsWith('/truss-catalog-worker.js')){
+   interruptLoad=false;const original=await Bun.file(join(root,'truss-catalog-worker.js')).text();
+   const call='await current.store.loadObjects(current.owner, loadInput)';
+   if(!original.includes(call))throw Error('Load interruption boundary unavailable');
+   return route.fulfill({contentType:'text/javascript',body:original.replace(call,'(()=>{throw Error("Injected interruption after load reservation");})()')});
+  }
+  return route.continue();
+ });
+ const interruptedPage=await interrupted.newPage();await interruptedPage.goto(origin+'/action-compiler.html');
+ await interruptedPage.locator('#store-open').click();await interruptedPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
+ await interruptedPage.locator('#store-register').click();await interruptedPage.waitForFunction(()=>document.querySelector('#catalog')?.textContent?.includes('Injected interruption after load reservation'));
+ await interruptedPage.reload();await interruptedPage.locator('#store-open').click();await interruptedPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
+ await interruptedPage.locator('#store-register').click();await interruptedPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Sample loading requires recovery; original request retained');
+ const absent=JSON.parse((await interruptedPage.locator('#catalog').textContent())!);
+ if(absent.load.outcome!=='unresolved'||absent.load.code!=='not_found'||await interruptedPage.locator('#store-preview').isEnabled())throw Error('Missing load recovery redispatched or allowed preparation');
+ await interrupted.close();
  const hashes:Record<string,string>={};
  for(const path of ['action-compiler.html','action-compiler.js','action-compiler/model.json','action-compiler/weft_wasm_bg.wasm','action-compiler/weft_wasm.js','truss-catalog-worker.js','truss-browser/store.js','truss-browser/manifest.json','truss-browser/layout.sql','truss-browser/model.json']){const response=await page.request.get(origin+'/'+path);if(!response.ok())throw Error('Asset unavailable: '+path);hashes[path]=createHash('sha256').update(await response.body()).digest('hex');}
- for(const path of ['docs/helix/05-deploy/microsite/verify-action-compiler.ts','docs/helix/05-deploy/microsite/build-action-compiler.ts','docs/helix/05-deploy/microsite/action-compiler.ts','docs/helix/05-deploy/microsite/seal-intent.ts','docs/helix/05-deploy/microsite/truss-catalog-worker.ts','docs/helix/05-deploy/microsite/build-truss-browser.ts','docs/helix/03-test/fixtures/bulk-update/local-products-input.json','docs/helix/03-test/fixtures/bulk-update/local-products-model.json','docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json'])hashes[path]=createHash('sha256').update(new Uint8Array(await Bun.file(resolve(import.meta.dir,'../../../..',path)).arrayBuffer())).digest('hex');
- const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss catalog/grants, empty-store materialization and seal recovery after dropped acknowledgement; no public data bootstrap or execution',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,actionReadPreparation:true,emptyMaterialization:true,persistBeforeSeal:true,quotaRefusalBeforeDispatch:true,lostSealAckRecovery:true,existingTabTakeover:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
+ for(const path of ['docs/helix/05-deploy/microsite/verify-action-compiler.ts','docs/helix/05-deploy/microsite/build-action-compiler.ts','docs/helix/05-deploy/microsite/action-compiler.ts','docs/helix/05-deploy/microsite/seal-intent.ts','docs/helix/05-deploy/microsite/load-intent.ts','docs/helix/05-deploy/microsite/truss-catalog-worker.ts','docs/helix/05-deploy/microsite/build-truss-browser.ts','docs/helix/03-test/fixtures/bulk-update/local-products-input.json','docs/helix/03-test/fixtures/bulk-update/local-products-model.json','docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json'])hashes[path]=createHash('sha256').update(new Uint8Array(await Bun.file(resolve(import.meta.dir,'../../../..',path)).arrayBuffer())).digest('hex');
+ const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss catalog/grants, public four-object loading/replay, three-row [2,1] materialization and seal recovery after dropped acknowledgement; no batch execution',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,actionReadPreparation:true,publicDataLoading:true,loadReplay:true,loadAckLossRecovery:true,loadMissingRecoveryNoRedispatch:true,threeRowMaterialization:true,persistBeforeSeal:true,quotaRefusalBeforeDispatch:true,lostSealAckRecovery:true,existingTabTakeover:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
  await Bun.write(new URL('../../04-build/evidence/bulk-update/website-compiler-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report));
 }finally{await browser.close();server?.stop(true);}

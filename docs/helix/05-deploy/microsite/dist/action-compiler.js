@@ -268,7 +268,11 @@ async function localOperation(command) {
       prepared = false;
       await refreshIntent();
       storeStatus.textContent = "Local Truss store opened";
+    } else if (result.outcome === "bootstrap-unavailable") {
+      storeStatus.textContent = "Sample loading requires recovery; original request retained";
+      detach();
     } else if (result.outcome === "prepared") {
+      document.querySelector("#stored-products").textContent = JSON.stringify(result.rows, null, 2);
       prepared = true;
       preview = null;
       await refreshIntent();

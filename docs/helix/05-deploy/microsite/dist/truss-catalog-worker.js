@@ -1,3 +1,54 @@
+// docs/helix/05-deploy/microsite/load-intent.ts
+async function admitOriginalLoad(input) {
+  const text = JSON.stringify({ profile: "umf.demo.load-intent/1", input });
+  if (new TextEncoder().encode(text).length > 1024 * 1024)
+    throw Error("Bounded original load intent required");
+  const db = await new Promise((resolve, reject) => {
+    const request = indexedDB.open("umf-products-demo-control", 1);
+    request.onupgradeneeded = () => request.result.createObjectStore("intents");
+    request.onerror = () => reject(request.error ?? Error("Load journal unavailable"));
+    request.onblocked = () => reject(Error("Load journal blocked"));
+    request.onsuccess = () => resolve(request.result);
+  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction("intents", "readwrite", { durability: "strict" });
+      let admission = "recover", failure;
+      const fail = (error) => {
+        failure = error;
+        try {
+          tx.abort();
+        } catch {
+          reject(error);
+        }
+      };
+      tx.oncomplete = () => resolve(admission);
+      tx.onabort = () => reject(failure ?? tx.error ?? Error("Load journal transaction aborted"));
+      tx.onerror = () => {
+        failure ??= tx.error ?? Error("Load journal transaction failed");
+      };
+      if (tx.durability !== "strict") {
+        fail(Error("Strict load journal durability required"));
+        return;
+      }
+      const object = tx.objectStore("intents"), request = object.get("load");
+      request.onsuccess = () => {
+        try {
+          if (request.result === undefined) {
+            object.add(text, "load");
+            admission = "first";
+          } else if (request.result !== text)
+            throw Error("Original load intent differs; reconciliation required");
+        } catch (error) {
+          fail(error);
+        }
+      };
+    });
+  } finally {
+    db.close();
+  }
+}
+
 // docs/helix/05-deploy/microsite/truss-catalog-worker.ts
 var scope = globalThis;
 var current;
@@ -40,7 +91,16 @@ scope.onmessage = (event) => {
           readGrant = granted.grant;
           frozen = undefined;
           modelSha256 = issued.model.sha256;
-          scope.postMessage({ id, result: { outcome: "prepared", registration: registration.outcome, catalog: await current.store.catalog(current.owner), modelSha256: issued.model.sha256, preparationSha256: issued.preparation.sha256, selectionRead: granted.declaration } });
+          const target = { documentId: request.modelPin.documentId, module: "sales", record: "products" };
+          const loadInput = { target, rows: input.seed.products.map((row) => ({ fields: [{ module: "sales", field: "product-id", value: row.id }, { module: "sales", field: "product-name", value: row.name }] })), request: { requestKey: "umf-products-demo-initial-load-b8-v1", attempt: "original-load-v1" } };
+          const admission = await admitOriginalLoad(loadInput);
+          const loaded = admission === "first" ? await current.store.loadObjects(current.owner, loadInput) : await current.store.recoverLoad(current.owner, loadInput);
+          if (loaded.outcome !== "loaded") {
+            scope.postMessage({ id, result: { outcome: "bootstrap-unavailable", load: loaded } });
+            return;
+          }
+          const rows = await current.store.readObjects(current.owner, target);
+          scope.postMessage({ id, result: { outcome: "prepared", load: loaded, rows, registration: registration.outcome, catalog: await current.store.catalog(current.owner), modelSha256: issued.model.sha256, preparationSha256: issued.preparation.sha256, selectionRead: granted.declaration } });
         } else if (command === "close") {
           await current.store.close(current.owner);
           current = undefined;

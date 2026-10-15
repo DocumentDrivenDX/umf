@@ -24,6 +24,8 @@ declare module '*truss-browser/store.js' {
  |{outcome:'unresolved';code:'not_found';reference:SealReference}
  |{outcome:'refused';code:string;control:{requestKey:string;attempt:string};reason:string}
  |{outcome:'failure';code:string;control:{requestKey:string;attempt:string};reference?:SealReference;sqlState?:string;reason:string;settlement:'not_dispatched'|'current_attempt_rolled_back'};
+ export interface LoadInput {target:{documentId:string;module:string;record:string};rows:{fields:{module:string;field:string;value:string}[]}[];request:{requestKey:string;attempt:string}}
+ export type LoadOutcome={outcome:'loaded';request:{requestKey:string;attempt:string};objects:{id:string;typeId:string;version:string}[];journal:string[]}|{outcome:'refused'|'unresolved'|'conflict'|'unknown'|'failure';code:string;[key:string]:unknown};
  export type StoreOpen={outcome:'unavailable';reason:'store_in_use'}|{
   outcome:'available';owner:LocalOwner;store:{
    info(owner:LocalOwner):StoreInfo;
@@ -34,6 +36,9 @@ declare module '*truss-browser/store.js' {
    materialize(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,input:{sql:string;parameters:Record<string,{string:string}>;batchSize:number;maxItems:number}):Promise<Materialization>;
    seal(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,work:FrozenWork,input:{requestKey:string;attempt:string}):Promise<SealOutcome>;
    recoverSeal(owner:LocalOwner,action:LocalAction,grant:SelectionReadGrant,reference:SealReference):Promise<SealOutcome>;
+   loadObjects(owner:LocalOwner,input:LoadInput):Promise<LoadOutcome>;
+   recoverLoad(owner:LocalOwner,input:LoadInput):Promise<LoadOutcome>;
+   readObjects(owner:LocalOwner,target:LoadInput['target']):Promise<{id:string;typeId:string;version:string;fields:{module:string;field:string;value:string}[]}[]>;
    close(owner:LocalOwner):Promise<void>;
   }
  };

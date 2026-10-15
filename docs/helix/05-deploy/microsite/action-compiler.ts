@@ -75,7 +75,8 @@ async function localOperation(command:string){
   if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
   else if(result.outcome==='closed'){storeStatus.textContent='Store closed';detach();}
   else if(result.outcome==='available'){available=true;prepared=false;await refreshIntent();storeStatus.textContent='Local Truss store opened';}
-  else if(result.outcome==='prepared'){prepared=true;preview=null;await refreshIntent();storeStatus.textContent='UPDATE prepared';}
+  else if(result.outcome==='bootstrap-unavailable'){storeStatus.textContent='Sample loading requires recovery; original request retained';detach();}
+  else if(result.outcome==='prepared'){document.querySelector('#stored-products')!.textContent=JSON.stringify(result.rows,null,2);prepared=true;preview=null;await refreshIntent();storeStatus.textContent='UPDATE prepared';}
   else if(result.outcome==='materialized'){if(result.input.sql!==sql.value){preview=null;storeStatus.textContent='Statement changed; preview again';}else{preview=result;storeStatus.textContent=`Frozen manifest: ${result.count} items, ${result.batches.length} batches`;}}
   else if(command==='seal'||command==='recover'){
    if(!intent)throw Error('Original intent unexpectedly unavailable');
