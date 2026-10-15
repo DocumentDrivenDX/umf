@@ -22,7 +22,7 @@ function expansion(policy:any):{targets:number;nodes:number;operands:number;cond
  }return {targets,nodes,operands,conditionText};
 }
 /** Catalog must be null for a genuinely unpinned policy; no synthetic catalog or rules. */
-export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:unknown,closureInput:unknown,ontologyInput:unknown,bindingsInput:unknown=[]):unknown{
+export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:unknown,closureInput:unknown,ontologyInput:unknown,bindingsInput:unknown=[],extensionClosure?:unknown):unknown{
  const packet:any=copyJson({policy:policyInput,catalog:catalogInput,closure:closureInput,ontology:ontologyInput,bindings:bindingsInput});textBound(packet);
  const inspection=inspectSecurityPolicyV2Source(packet.policy);if(!inspection.valid||inspection.diagnostics.some(d=>d.code==='SECURITY_V2_UNKNOWN'))fail('Known canonical policy source required');
  let policy:any=inspection.source,catalog:any=null,definitions:any[]=[],obligations:any[]=[],functionDefinitions:unknown=null;
@@ -35,7 +35,7 @@ export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:
   const declared=inspectProtectionObligations(typed.policy,typed.catalog,typed.closure,packet.ontology);if(declared.status==='refused')fail('Exact declared obligations/purposes required');
   functionDefinitions=typed;policy=typed.policy;catalog=typed.catalog;definitions=[...typed.definitions];obligations=[...declared.obligations];
  }else if(packet.catalog!==null)fail('Unpinned policy cannot acquire catalog semantics');
- const root=resolveCandidateSecurityOntology(packet.ontology,packet.closure.documents),ontology:any=root.ontology;
+ const root=resolveCandidateSecurityOntology(packet.ontology,packet.closure.documents,extensionClosure),ontology:any=root.ontology;
  if(policy.ontology.documentId!==ontology.documentId||policy.ontology.revision!==ontology.revision)fail('Exact ontology pin required');
  const pins=new Map(packet.closure.pins.map((p:any)=>[p.documentId,p.revision]));
  if(pins.size!==ontology.documents.length||ontology.documents.some((p:any)=>pins.get(p.documentId)!==p.revision))fail('Ontology and core closure pins must coincide');
@@ -82,7 +82,7 @@ export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:
    const condition=compileCandidateAssociationCondition(normalized,root.associations);requireIssuedCandidateCompactCondition(condition,root.associations,scope);conditions.push(freeze({ruleIndex,target,condition,scope}));
   }
  }
- const source=freeze({policy,catalog,ontology:root,closure:{pins:packet.closure.pins,documents:root.documents},definitions,functionDefinitions,obligations,bindings:packet.bindings,conditions,charged:{...charged,descriptorUnits,expandedText}});
+ const source=freeze({...(extensionClosure===undefined?{}:{extensionClosure}),policy,catalog,ontology:root,closure:{pins:packet.closure.pins,documents:root.documents},definitions,functionDefinitions,obligations,bindings:packet.bindings,conditions,charged:{...charged,descriptorUnits,expandedText}});
  const handle=Object.freeze({kind:'candidate-catalog-program/0.1',complete:false,authority:false});programs.set(handle,source);return handle;
 }
 /** Private runtime bridge: only the exact original compiled handle resolves. */

@@ -14,11 +14,11 @@ const fail=():never=>{throw Error('SECURITY_ONTOLOGY_CANDIDATE_UNRESOLVED');};
 const id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
 function shape(v:any,keys:string[]):void{if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))fail();}
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
-export function resolveCandidateSecurityOntology(input:unknown,documentsInput:unknown):{readonly kind:'candidate-security-ontology-checks/0.1';readonly ontology:unknown;readonly documents:unknown;readonly associations:readonly CandidateAssociationChecks[]}{
+export function resolveCandidateSecurityOntology(input:unknown,documentsInput:unknown,extensionClosure?:unknown):{readonly kind:'candidate-security-ontology-checks/0.1';readonly ontology:unknown;readonly documents:unknown;readonly associations:readonly CandidateAssociationChecks[]}{
  const packet:any=copyJson({ontology:input,documents:documentsInput}),ontology=packet.ontology;if(!Boolean(check(ontology))||!Array.isArray(packet.documents)||packet.documents.length>256)fail();
  const pins=new Map<string,string>(),documents=new Map<string,any>(),sourceHandles=new Map<string,unknown>();
  for(const pin of ontology.documents){if(pins.has(pin.documentId))fail();pins.set(pin.documentId,pin.revision);}
- for(const entry of packet.documents){shape(entry,['revision','document']);const handle=captureCandidateCoreSource(entry.document),document=readCandidateCoreSource(handle);if(documents.has(document.id)||pins.get(document.id)!==entry.revision)fail();entry.document=document;documents.set(document.id,document);sourceHandles.set(document.id,handle);}
+ for(const entry of packet.documents){shape(entry,['revision','document']);const handle=captureCandidateCoreSource(entry.document,extensionClosure),document=readCandidateCoreSource(handle);if(documents.has(document.id)||pins.get(document.id)!==entry.revision)fail();entry.document=document;documents.set(document.id,document);sourceHandles.set(document.id,handle);}
  if(documents.size!==pins.size)fail();
  const entities=new Map<string,any>(),sourceFields=new Set<string>();
  for(const document of documents.values())for(const module of document.modules)for(const field of module.elements)if(field.kind==='field')sourceFields.add(id({documentId:document.id,moduleId:module.id,elementId:field.id}));

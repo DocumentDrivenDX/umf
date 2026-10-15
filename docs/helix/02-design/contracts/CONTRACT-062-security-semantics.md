@@ -1225,6 +1225,31 @@ that ledger. The ledger is distinct from the whole-catalog recipe budget and
 does not establish a bound for core source validation or a total CPU/heap theorem.
 The explicit binding input MUST remain frozen in the program's source closure.
 
+For the first actions-bearing source subset, the private compiler accepts an
+optional sixth `extensionClosure` argument. The ontology resolver accepts the
+same closure as its third argument and core-source capture as its second.
+`createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}])`
+issues a process-local closure using the original `registerActions` semantics
+and retaining its exact package manifest. Only that explicit singleton selection
+is supported in this initial profile. Missing registration keeps existing
+unknown-extension refusal; forged/copied closures, unknown versions, additional
+vocabularies and malformed action content cannot become complete core sources.
+The original action extension and whole document MUST remain unchanged in the
+retained source. The compiler retains the original issued extension closure.
+
+This closure selects local source validation, not source authentication, native
+support, action-role membership or permission. No caller-supplied hash, callback
+or semantic-ready flag issues it. A fresh private registry is created for each
+capture so mutation of another registry cannot widen later captures.
+The original exported actions package is a detached deeply immutable snapshot
+before any consumer can obtain it; later-consumer snapshots alone cannot defend
+against mutation before that consumer loads. Issuance and consumption also
+compare the current original package with the retained package identity.
+Protection catalog/domain stages do not yet consume this additional closure and remain
+fail-closed for actions-bearing sources; this increment qualifies the genuinely
+unpinned/null-catalog source-compilation path only. Original native owner
+bindings, compiler provenance and guarded consumer admission remain required.
+
 
 ### Private canonical action kernel (2026-10-15)
 

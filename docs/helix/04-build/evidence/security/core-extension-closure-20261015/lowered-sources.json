@@ -1,0 +1,147 @@
+{
+  "protocol": "local-preparation-source-prototype/0.1",
+  "status": "lowered-sources",
+  "complete": false,
+  "authority": false,
+  "originalSources": {
+    "policy": {
+      "mediaType": "application/json",
+      "utf8": "{\"vocabulary\":\"umf.security\",\"version\":\"0.2.0\",\"id\":\"bulk-products-policy\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"bulk-demo-ontology\",\"revision\":\"ontology-1\"},\"rules\":[{\"id\":\"products-original-read\",\"effect\":\"permit\",\"actions\":[\"bulk-prepare-read\"],\"target\":[{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"products\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"product-id\"},\"disposition\":{\"kind\":\"original\"}},{\"field\":{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"product-name\"},\"disposition\":{\"kind\":\"original\"}}]},{\"id\":\"products-name-write\",\"effect\":\"permit\",\"actions\":[\"bulk-name-write\"],\"target\":[{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"products\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+      "sha256": "ca7315da22b526766108551a6879dba88db09f98a55d6928e2f815a7f3991992"
+    },
+    "ontology": {
+      "mediaType": "application/json",
+      "utf8": "{\"version\":\"0.2.0\",\"documentId\":\"bulk-demo-ontology\",\"revision\":\"ontology-1\",\"documents\":[{\"documentId\":\"product-action-demo\",\"revision\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\"},{\"documentId\":\"bulk-subject-domain\",\"revision\":\"subject-domain-1\"}],\"subject\":{\"documentId\":\"bulk-subject-domain\",\"moduleId\":\"identity\",\"elementId\":\"person\"},\"entities\":[{\"type\":{\"documentId\":\"bulk-subject-domain\",\"moduleId\":\"identity\",\"elementId\":\"person\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"bulk-subject-domain\",\"moduleId\":\"identity\",\"elementId\":\"principal-id\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"products\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"product-id\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"product-action-demo\",\"moduleId\":\"sales\",\"elementId\":\"product-name\"},\"protection\":\"unprotected\"}]}],\"associations\":[],\"context\":[],\"actions\":[\"bulk-prepare-read\",\"bulk-name-write\"],\"actionPurposes\":[{\"action\":\"bulk-prepare-read\",\"purposes\":[\"read\"]},{\"action\":\"bulk-name-write\",\"purposes\":[\"field\"]}]}",
+      "sha256": "3fda3d68fcf5b138b4156edcddfc3c7604eb60cdadf80454183e8663e6cc6340"
+    },
+    "catalog": null,
+    "closure": {
+      "mediaType": "application/json",
+      "utf8": "{\"pins\":[{\"documentId\":\"product-action-demo\",\"revision\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\"},{\"documentId\":\"bulk-subject-domain\",\"revision\":\"subject-domain-1\"}],\"documents\":[{\"revision\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"document\":{\"umf\":\"0.8.0\",\"id\":\"product-action-demo\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"product-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"product-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"products\",\"name\":\"products\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"product-id\"},{\"module\":\"sales\",\"element\":\"product-name\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"product-id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"set-name\",\"name\":\"Set product name\",\"description\":\"Set one product name using a typed value input.\",\"parameters\":[{\"id\":\"products\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"products\",\"key\":\"pk\"},\"required\":true},{\"id\":\"name-value\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"customer-write\",\"record\":{\"module\":\"sales\",\"element\":\"products\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"products\\\"}\",\"references\":[{\"parameter\":\"products\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"product-name\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"set-name\",\"kind\":\"set\",\"entity\":{\"parameter\":\"products\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"value\":{\"parameter\":\"name-value\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"bulk-editor\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}},{\"revision\":\"subject-domain-1\",\"document\":{\"umf\":\"0.8.0\",\"id\":\"bulk-subject-domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"identity\",\"namespace\":\"identity\",\"elements\":[{\"id\":\"principal-id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"person\",\"kind\":\"record\",\"members\":[{\"module\":\"identity\",\"element\":\"principal-id\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"identity\",\"element\":\"principal-id\"}]}],\"extensions\":{}}]}]}}]}",
+      "sha256": "1d4b2055695386a728bc68905c373326efa861833b34b659493b3d069dfde0b2"
+    },
+    "bindings": {
+      "mediaType": "application/json",
+      "utf8": "[]",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "originalPlan": {
+    "mediaType": "application/json",
+    "sha256": "041333f151764cfd3488fa6e3938b65711313428ab33a6c4fcd3deb59accf4b6",
+    "utf8": "{\"action\":{\"documentSha256\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"identity\":{\"action\":\"set-name\",\"module\":\"sales\"},\"invocation\":{\"id\":\"umf.actions.tx\",\"version\":\"1\"}},\"execution\":{\"atomicity\":\"batch\",\"batchSize\":2,\"conflict\":\"stop\",\"partition\":\"manifest-order\",\"selection\":\"frozen\"},\"inputs\":{\"assignments\":[{\"field\":{\"element\":\"product-name\",\"module\":\"sales\"},\"input\":\"name-value\",\"value\":{\"string\":\"Foo\"}}],\"entityParameter\":\"products\"},\"limits\":{\"maxItems\":10000,\"maxManifestBytes\":16777216},\"model\":{\"documentId\":\"product-action-demo\",\"revision\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"sha256\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"umfVersion\":\"0.8.0\"},\"protocol\":\"umf.actions.plan/1\",\"selection\":{\"artifact\":{\"mediaType\":\"application/json\",\"sha256\":\"f4309cc780955559ac8e11a6437bbb91b46366f88c1c1611c70f3cd9783f6d50\",\"utf8\":\"{\\\"key\\\":{\\\"element\\\":\\\"products\\\",\\\"key\\\":\\\"pk\\\",\\\"module\\\":\\\"sales\\\"},\\\"predicate\\\":{\\\"compare\\\":{\\\"field\\\":{\\\"element\\\":\\\"product-id\\\",\\\"module\\\":\\\"sales\\\"},\\\"op\\\":\\\"eq\\\",\\\"value\\\":{\\\"string\\\":\\\"bar\\\"}}},\\\"protocol\\\":\\\"weft.update-selection/1\\\",\\\"record\\\":{\\\"element\\\":\\\"products\\\",\\\"module\\\":\\\"sales\\\"}}\"},\"dependencies\":[{\"element\":\"product-id\",\"module\":\"sales\"}],\"profile\":{\"id\":\"weft.update-selection\",\"version\":\"1\"}},\"source\":{\"mediaType\":\"application/json\",\"sha256\":\"fbd705cb33c37bd9f59570d0e79c9e6bac01968366569dc17774babcb7065294\",\"utf8\":\"{\\\"dialect\\\":\\\"weft-mutation/0.1.0\\\",\\\"parameters\\\":{},\\\"sql\\\":\\\"UPDATE products SET name = 'Foo' WHERE id = 'bar'\\\"}\"},\"target\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}"
+  },
+  "originalModel": {
+    "mediaType": "application/json",
+    "utf8": "{\"umf\":\"0.8.0\",\"id\":\"product-action-demo\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"product-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"product-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"products\",\"name\":\"products\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"product-id\"},{\"module\":\"sales\",\"element\":\"product-name\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"product-id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"set-name\",\"name\":\"Set product name\",\"description\":\"Set one product name using a typed value input.\",\"parameters\":[{\"id\":\"products\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"products\",\"key\":\"pk\"},\"required\":true},{\"id\":\"name-value\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"customer-write\",\"record\":{\"module\":\"sales\",\"element\":\"products\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"products\\\"}\",\"references\":[{\"parameter\":\"products\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"product-name\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"set-name\",\"kind\":\"set\",\"entity\":{\"parameter\":\"products\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"value\":{\"parameter\":\"name-value\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"bulk-editor\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}",
+    "sha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5"
+  },
+  "target": {
+    "documentId": "product-action-demo",
+    "moduleId": "sales",
+    "elementId": "products"
+  },
+  "subject": {
+    "documentId": "bulk-subject-domain",
+    "moduleId": "identity",
+    "elementId": "person"
+  },
+  "authoredActionPurposes": [
+    {
+      "action": "bulk-prepare-read",
+      "purposes": [
+        "read"
+      ]
+    },
+    {
+      "action": "bulk-name-write",
+      "purposes": [
+        "field"
+      ]
+    }
+  ],
+  "action": {
+    "pin": {
+      "documentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+      "identity": {
+        "action": "set-name",
+        "module": "sales"
+      },
+      "invocation": {
+        "id": "umf.actions.tx",
+        "version": "1"
+      }
+    },
+    "roles": [
+      "bulk-editor"
+    ],
+    "personRequired": true
+  },
+  "literalRules": [
+    {
+      "ruleIndex": 0,
+      "ruleId": "products-original-read",
+      "actions": [
+        "bulk-prepare-read"
+      ],
+      "target": {
+        "documentId": "product-action-demo",
+        "moduleId": "sales",
+        "elementId": "products"
+      },
+      "condition": {
+        "op": "literal",
+        "value": true
+      },
+      "disclosure": [
+        {
+          "field": {
+            "documentId": "product-action-demo",
+            "moduleId": "sales",
+            "elementId": "product-id"
+          },
+          "disposition": {
+            "kind": "original"
+          }
+        },
+        {
+          "field": {
+            "documentId": "product-action-demo",
+            "moduleId": "sales",
+            "elementId": "product-name"
+          },
+          "disposition": {
+            "kind": "original"
+          }
+        }
+      ]
+    },
+    {
+      "ruleIndex": 1,
+      "ruleId": "products-name-write",
+      "actions": [
+        "bulk-name-write"
+      ],
+      "target": {
+        "documentId": "product-action-demo",
+        "moduleId": "sales",
+        "elementId": "products"
+      },
+      "condition": {
+        "op": "literal",
+        "value": true
+      },
+      "disclosure": []
+    }
+  ],
+  "residuals": [],
+  "requiredNativeGuards": [
+    "original-source-and-compiler-provenance",
+    "issued-store-and-enrolled-program-correspondence",
+    "owner-action-purpose-and-field-binding",
+    "current-authenticated-human-and-action-role",
+    "current-module-owner-and-source-cut",
+    "original-anchor-nonce-D-fullxid-one-shot-claim",
+    "protected-selector-and-finalizer"
+  ]
+}
