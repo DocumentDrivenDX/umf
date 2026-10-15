@@ -2,7 +2,7 @@
 
 ## Browser SQL-to-actions compiler
 
-`bun docs/helix/05-deploy/microsite/build-action-compiler.ts` builds the original
+`bun docs/helix/05-deploy/microsite/build-action-compiler.ts` builds the reviewed local-profile
 Weft WASM compiler and its exact pinned UMF preparation cohort into static assets.
 It needs no compiler service or mutable Weft checkout. The retained compressed
 WASM and wrapper are verified against their original SHA256 before publication.
@@ -13,8 +13,9 @@ blocked. Example rows are explicitly unchanged by this compiler-only stage.
 
 The full browser-local Truss path is a separate CONTRACT-905 cohort using an
 issued local-store owner and independent selection-read grant. It requires a
-fresh matching Weft build, actual Truss PGlite provider and independently qualified
-sealing/effects/durability. The unchanged person-required native cohort cannot be
+matching Weft lowering plus independently qualified action registration, selection
+grants, sealing, effects and recovery. Local compilation and the actual Truss
+PGlite core catalog are qualified separately below. The unchanged person-required native cohort cannot be
 relabeled as local ownership. GitHub Pages remains the publishing target.
 
 Owner direction (2026-10-08): build a browsable schema explorer for domain
@@ -213,3 +214,8 @@ and preserves the original model including opaque action declarations. It does
 not register action authority, issue selection-read grants or execute UPDATEs.
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
+
+The local compiler is pinned to Weft `535b5c7`, original local model `b8ce3cfe`
+and preparation `6f5e6946`. Historical native compiler assets remain retained
+separately and are not relabelled. The compiler and catalog now use the same
+local model; sample rows remain examples until Truss action execution is wired.

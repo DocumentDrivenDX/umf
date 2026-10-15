@@ -84,6 +84,49 @@ function passStringToWasm0(arg, malloc, realloc) {
     return ptr;
 }
 /**
+ * Original ontology Subject/Record/Key source selection only; no authority.
+ * @param {string} request
+ * @param {string} selection
+ * @returns {string}
+ */
+export function inspect_security_mapping_subject_key_json(request, selection) {
+    let deferred3_0;
+    let deferred3_1;
+    try {
+        const ptr0 = passStringToWasm0(request, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(selection, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ret = wasm.inspect_security_mapping_subject_key_json(ptr0, len0, ptr1, len1);
+        deferred3_0 = ret[0];
+        deferred3_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+
+/**
+ * Pure logical preparation; never native execution admission.
+ * @param {string} request
+ * @returns {string}
+ */
+export function prepare_security_mapping_json(request) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(request, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.prepare_security_mapping_json(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
  * @param {string} request
  * @returns {string}
  */
@@ -111,7 +154,9 @@ function takeFromExternrefTable0(idx) {
 const MutationCompilerFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_mutationcompiler_free(ptr >>> 0, 1));
-
+/**
+ * Host-installed action preparation. Compiles plans; grants no execution authority.
+ */
 export class MutationCompiler {
 
     __destroy_into_raw() {
