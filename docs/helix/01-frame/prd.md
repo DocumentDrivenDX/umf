@@ -708,3 +708,7 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 | [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
 
 The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+
+## Browser-local action demo — owner clarification, 2026-10-15
+
+Keep GitHub Pages. Compilation runs in the browser with original Weft WASM; Bun builds static assets. The first no-service executable demo uses actual Truss browser-local sample storage through a separately qualified local-owner actor/policy/invocation profile. Do not simulate native authenticated people/services or weaken the unchanged person-required cohort. CONTRACT-905 defines the explicit additive branch; native protected sealing/execution remains separately required.

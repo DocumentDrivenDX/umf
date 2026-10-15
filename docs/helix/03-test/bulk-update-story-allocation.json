@@ -47,6 +47,13 @@
           "assertion": "Given duplicate JSON members, unpaired surrogates, overflowing bytes/depth/nodes or a mutated owner preparation artifact, when inspection/preparation runs with an explicit Registry, then it refuses without partial eligible output and preserves the original input/callback registry.",
           "state": "planned",
           "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC7",
+          "plannedTest": "local_profile_bundle",
+          "assertion": "Given exact local-owner actor/policy/invocation declarations, preparation admits only the complete known bundle against original action semantics; mixed native/local, unknown versions and incomplete resources refuse, preserving native tx1 and historical sources.",
+          "state": "planned",
+          "layer": "portable-contract"
         }
       ]
     },
@@ -100,6 +107,13 @@
           "id": "US-903-AC7",
           "plannedTest": "pure_construction",
           "assertion": "Given exact original plan bytes, resolved-action and snapshot basis declarations, ordered selected entity/guard rows and their original core Key tuple receipts, construction verifies every receipt against the pinned model, derives all action inputs/frame versions and deterministic batches, and returns an unsealed Artifact or atomically refuses. Receipt source/identity/value/bytes substitution, unknown members, duplicate work, overflow and malformed input refuse; no native selection, ordering, authorization or seal is attested.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC8",
+          "plannedTest": "local_companion",
+          "assertion": "Given native or local-owner invocation intent, portable manifest construction retains the exact original profile/pins and assessment selects the corresponding exact bulk companion/claims; native delegated-human and local-owner claims cannot substitute and execution remains unverified.",
           "state": "planned",
           "layer": "portable-contract"
         }

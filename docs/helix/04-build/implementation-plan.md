@@ -12200,3 +12200,7 @@ private producer invocation/registration custody from current authenticated
 same-store execution. Native ABI/mode/property/relationship admission and release
 authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
 promoted and the overall goal remains active.
+
+## Browser-local declaration profile — 2026-10-15
+
+Owner clarification keeps GitHub Pages with browser WASM compilation and local sample execution. CONTRACT-905 defines a separate local-owner bundle, independent selection-read grant and local bulk companion, preserving tx1/human/delegation semantics. [Portable evidence](evidence/bulk-update/local-profile-20261015/receipt.json) records346regression tests/4016assertions,56original action tests/343assertions, both strict TypeScript checks, actual Chromium and Astra58independent controls. The two review findings (selection-read policy mapping and allocation) are resolved. [Owned source handoff](evidence/bulk-update/local-profile-20261015/README.md) retains exact new model/preparation/request/seed/provenance. Actual Weft local compilation, Truss PGlite schema/capabilities/lowering/sealing/execution/durability and protected native66 completion remain open; no executable backend claim is made.

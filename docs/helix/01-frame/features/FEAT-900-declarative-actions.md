@@ -160,7 +160,11 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 
 | Story | Owned output | Design/test allocation |
 | --- | --- | --- |
-| [US-902](../user-stories/US-902-portable-action-plans.md) | 6 planned criteria: bulk-update-portable-action-plans | [TD-902](../../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../../03-test/test-plans/STP-902-portable-action-plans.md) |
-| [US-903](../user-stories/US-903-frozen-action-manifests.md) | 7 planned criteria including pure construction: bulk-update-frozen-action-manifests | [TD-903](../../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../../03-test/test-plans/STP-903-frozen-action-manifests.md) |
+| [US-902](../user-stories/US-902-portable-action-plans.md) | 7 planned criteria including local profile pairing: bulk-update-portable-action-plans | [TD-902](../../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../../03-test/test-plans/STP-902-portable-action-plans.md) |
+| [US-903](../user-stories/US-903-frozen-action-manifests.md) | 8 planned criteria including construction/local companion: bulk-update-frozen-action-manifests | [TD-903](../../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../../03-test/test-plans/STP-903-frozen-action-manifests.md) |
 
 The [machine-readable bulk allocation](../../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+
+## Browser-local profile addition — 2026-10-15
+
+PAP-UMF-05: Keep the static website and execute local sample work through a separately named local-owner profile over original action/model/Key/manifest meanings. Old native/human semantics and producer pins remain unchanged. Exact actor+policy+invocation pairing, independent local bulk claims, relevant unknown/mixed-profile refusal, genuine Truss storage and original Weft lowering are mandatory. Public activation depends on actual browser storage/atomicity/recovery tests; metadata validity is not runtime support. CONTRACT-905 governs this branch, allocated to US-902-AC7 and US-903-AC8.
