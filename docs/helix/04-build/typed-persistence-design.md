@@ -225,9 +225,6 @@ checker. Its feedback is reflected as follows:
    projections with timestamp or binary fields and returns exact tokens as text.
 2. Where `umf_access` is published from and its release cadence.
 3. Implementation spending ceiling.
-4. Dated milestones for the first consumer's Lakebase path (B-TP-001 to B-TP-005
-   and B-TP-008), which depend on Weft's delivery of WR-I3/I4/I6, WR-A1 to A8,
-   WR-A13 and WR-B1/B2/B7.
 
 ## Review and Independent Opinion
 
